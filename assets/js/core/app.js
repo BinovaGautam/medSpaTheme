@@ -1,8 +1,8 @@
 /**
- * PreetiDreams Medical Spa Theme - Main Application
+ * Medical Spa Theme - Core Application
  *
- * Modern JavaScript application for interactive medical spa website
- * Built with ES6+ modules, accessibility focus, and performance optimization
+ * Main application orchestrator for the medical spa WordPress theme.
+ * Handles component initialization, performance monitoring, and global functionality.
  *
  * @author PreetiDreams Development Team
  * @version 2.0.0
@@ -10,31 +10,39 @@
 
 'use strict';
 
-/**
- * Main Medical Spa Application Class
- */
 class MedicalSpaApp {
     constructor() {
-        this.config = {
-            debug: false,
-            analytics: true,
-            performance: true,
-            accessibility: true
-        };
-
+        this.version = '2.0.0';
+        this.debug = window.location.hostname === 'localhost' || window.location.hostname.includes('dev');
+        this.components = new Map();
         this.modules = new Map();
-        this.isInitialized = false;
         this.performance = {
             startTime: performance.now(),
-            marks: new Map()
+            marks: new Map(),
+            metrics: new Map()
+        };
+
+        // Configuration from WordPress
+        this.config = window.medicalSpaTheme || {
+            ajaxUrl: '/wp-admin/admin-ajax.php',
+            nonce: '',
+            version: '1.0.0',
+            components: {},
+            settings: {}
         };
 
         // Bind methods
         this.init = this.init.bind(this);
-        this.handleDOMReady = this.handleDOMReady.bind(this);
-        this.handleWindowLoad = this.handleWindowLoad.bind(this);
+        this.markPerformance = this.markPerformance.bind(this);
+        this.measurePerformance = this.measurePerformance.bind(this);
+        this.logPerformance = this.logPerformance.bind(this);
 
-        this.log('App constructor initialized');
+        // Auto-initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', this.init);
+        } else {
+            this.init();
+        }
     }
 
     /**
@@ -42,447 +50,382 @@ class MedicalSpaApp {
      */
     async init() {
         try {
-            this.mark('init-start');
+            this.markPerformance('app-init-start');
 
-            // Check for DOM ready state
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', this.handleDOMReady);
-            } else {
-                await this.handleDOMReady();
+            console.log(`🏥 Medical Spa Theme v${this.version} initializing...`);
+
+            // Set up global event listeners
+            this.setupGlobalEvents();
+
+            // Initialize core functionality
+            this.setupAccessibility();
+            this.setupAnalytics();
+            this.setupErrorHandling();
+
+            // Initialize modules
+            await this.initializeModules();
+
+            // Load and initialize components
+            await this.loadComponents();
+
+            this.markPerformance('app-init-end');
+            this.measurePerformance('app-initialization', 'app-init-start', 'app-init-end');
+
+            console.log(`✅ Medical Spa Theme initialized successfully in ${this.getMetric('app-initialization')}ms`);
+
+            // Log performance metrics
+            if (this.debug) {
+                this.logPerformance();
             }
 
-            // Handle window load for performance-dependent features
-            if (document.readyState === 'complete') {
-                await this.handleWindowLoad();
-            } else {
-                window.addEventListener('load', this.handleWindowLoad);
-            }
-
-            this.mark('init-end');
-            this.log('App initialization completed');
+            // Dispatch custom event
+            this.dispatchEvent('medicalSpaAppReady', {
+                version: this.version,
+                components: Array.from(this.components.keys()),
+                initTime: this.getMetric('app-initialization')
+            });
 
         } catch (error) {
-            this.handleError('App initialization failed', error);
+            console.error('❌ Medical Spa Theme initialization failed:', error);
+            this.handleError(error, 'app_initialization_failed');
         }
     }
 
     /**
-     * Handle DOM ready state
+     * Load component scripts dynamically
      */
-    async handleDOMReady() {
-        try {
-            this.mark('dom-ready-start');
+    async loadComponents() {
+        this.markPerformance('components-load-start');
 
-            // Initialize core modules first
-            await this.initializeCoreModules();
+        const componentPromises = [];
 
-            // Initialize UI components
-            await this.initializeUIComponents();
-
-            // Setup global event listeners
-            this.setupGlobalListeners();
-
-            // Initialize accessibility features
-            if (this.config.accessibility) {
-                await this.initializeAccessibility();
-            }
-
-            this.isInitialized = true;
-            this.mark('dom-ready-end');
-
-            // Dispatch custom ready event
-            this.dispatchEvent('medSpaDOMReady', {
-                modules: Array.from(this.modules.keys()),
-                performance: this.getPerformanceMetrics()
-            });
-
-        } catch (error) {
-            this.handleError('DOM ready handling failed', error);
+        // Load mobile menu component
+        if (this.config.components?.mobileMenu !== false) {
+            componentPromises.push(this.loadComponent('mobile-menu'));
         }
+
+        // Load treatment filter component
+        if (this.config.components?.treatmentFilter) {
+            componentPromises.push(this.loadComponent('treatment-filter'));
+        }
+
+        // Wait for all components to load
+        await Promise.all(componentPromises);
+
+        this.markPerformance('components-load-end');
+        this.measurePerformance('components-loading', 'components-load-start', 'components-load-end');
+
+        console.log(`📦 Components loaded in ${this.getMetric('components-loading')}ms`);
     }
 
     /**
-     * Handle window load state
+     * Load individual component
      */
-    async handleWindowLoad() {
+    async loadComponent(componentName) {
         try {
-            this.mark('window-load-start');
-
-            // Initialize performance-dependent features
-            await this.initializePerformanceFeatures();
-
-            // Initialize analytics
-            if (this.config.analytics) {
-                await this.initializeAnalytics();
-            }
-
-            // Cleanup and optimization
-            this.optimizePerformance();
-
-            this.mark('window-load-end');
-
-            // Dispatch custom load event
-            this.dispatchEvent('medSpaFullyLoaded', {
-                totalLoadTime: performance.now() - this.performance.startTime,
-                performance: this.getPerformanceMetrics()
+            // Components are already loaded via WordPress wp_enqueue_script
+            // Just register them as available
+            this.components.set(componentName, {
+                name: componentName,
+                loaded: true,
+                initialized: false
             });
 
+            console.log(`✅ Component registered: ${componentName}`);
+
         } catch (error) {
-            this.handleError('Window load handling failed', error);
+            console.error(`❌ Failed to load component: ${componentName}`, error);
         }
     }
 
     /**
      * Initialize core modules
      */
-    async initializeCoreModules() {
-        const coreModules = [
-            { name: 'utils', path: './utils.js' },
-            { name: 'api', path: './api.js' }
-        ];
+    async initializeModules() {
+        // Performance monitoring module
+        this.modules.set('performance', {
+            mark: this.markPerformance,
+            measure: this.measurePerformance,
+            getMetric: this.getMetric.bind(this),
+            getMetrics: () => this.performance.metrics
+        });
 
-        for (const module of coreModules) {
-            try {
-                const moduleClass = await import(module.path);
-                const instance = new moduleClass.default();
-                this.modules.set(module.name, instance);
-                this.log(`Core module '${module.name}' initialized`);
-            } catch (error) {
-                this.handleError(`Failed to load core module '${module.name}'`, error);
-            }
-        }
+        // Analytics module
+        this.modules.set('analytics', {
+            track: this.trackEvent.bind(this),
+            page: this.trackPageView.bind(this),
+            conversion: this.trackConversion.bind(this)
+        });
+
+        // Accessibility module
+        this.modules.set('accessibility', {
+            manageFocus: this.manageFocus.bind(this),
+            announceToScreenReader: this.announceToScreenReader.bind(this),
+            setupSkipLinks: this.setupSkipLinks.bind(this)
+        });
+
+        console.log('🔧 Core modules initialized');
     }
 
     /**
-     * Initialize UI components
+     * Set up global event listeners
      */
-    async initializeUIComponents() {
-        const uiComponents = [
-            { name: 'mobileMenu', path: '../components/mobile-menu.js', selector: '.mobile-menu-toggle' },
-            { name: 'bookingForm', path: '../components/booking-form.js', selector: '.consultation-form' },
-            { name: 'treatmentFilter', path: '../components/treatment-filter.js', selector: '.treatment-filters' },
-            { name: 'testimonialCarousel', path: '../components/testimonial-carousel.js', selector: '.testimonial-carousel' },
-            { name: 'imageGallery', path: '../components/image-gallery.js', selector: '.image-gallery' },
-            { name: 'scrollEffects', path: '../components/scroll-effects.js', selector: 'body' }
-        ];
-
-        for (const component of uiComponents) {
-            try {
-                // Check if component is needed on current page
-                if (document.querySelector(component.selector)) {
-                    const componentClass = await import(component.path);
-                    const instance = new componentClass.default(component.selector);
-                    this.modules.set(component.name, instance);
-
-                    // Initialize the component
-                    if (typeof instance.init === 'function') {
-                        await instance.init();
-                    }
-
-                    this.log(`UI component '${component.name}' initialized`);
-                }
-            } catch (error) {
-                this.handleError(`Failed to load UI component '${component.name}'`, error);
-            }
-        }
-    }
-
-    /**
-     * Setup global event listeners
-     */
-    setupGlobalListeners() {
-        // Keyboard navigation
-        document.addEventListener('keydown', this.handleGlobalKeydown.bind(this));
-
-        // Click tracking for analytics
-        document.addEventListener('click', this.handleGlobalClick.bind(this));
-
-        // Form submissions
-        document.addEventListener('submit', this.handleGlobalSubmit.bind(this));
-
-        // Resize handler with throttling
+    setupGlobalEvents() {
+        // Responsive design handlers
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
-                this.handleResize();
-            }, 150);
+                this.dispatchEvent('responsiveBreakpointChange', {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    breakpoint: this.getCurrentBreakpoint()
+                });
+            }, 250);
         });
 
-        // Scroll handler with throttling
+        // Scroll performance optimization
         let scrollTimeout;
+        let isScrolling = false;
         window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                isScrolling = true;
+                this.dispatchEvent('scrollStart');
+            }
+
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
-                this.handleScroll();
-            }, 16); // ~60fps
+                isScrolling = false;
+                this.dispatchEvent('scrollEnd');
+            }, 150);
+        }, { passive: true });
+
+        // Click tracking for analytics
+        document.addEventListener('click', (event) => {
+            this.handleGlobalClick(event);
         });
 
-        this.log('Global event listeners setup completed');
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (event) => {
+            this.handleGlobalKeyboard(event);
+        });
+
+        console.log('🎯 Global event listeners attached');
+    }
+
+    /**
+     * Handle global click events
+     */
+    handleGlobalClick(event) {
+        const target = event.target.closest('[data-track]');
+        if (target) {
+            const trackingData = target.dataset.track;
+            try {
+                const data = JSON.parse(trackingData);
+                this.trackEvent('element_clicked', {
+                    ...data,
+                    element: target.tagName.toLowerCase(),
+                    text: target.textContent?.trim().substring(0, 50)
+                });
+            } catch (e) {
+                this.trackEvent('element_clicked', {
+                    action: trackingData,
+                    element: target.tagName.toLowerCase()
+                });
+            }
+        }
+
+        // Track CTA button clicks
+        if (target && target.classList.contains('btn')) {
+            this.trackEvent('cta_clicked', {
+                button_text: target.textContent?.trim(),
+                button_class: target.className,
+                page_location: window.location.pathname
+            });
+        }
     }
 
     /**
      * Handle global keyboard events
      */
-    handleGlobalKeydown(event) {
-        // Escape key - close modals, menus
-        if (event.key === 'Escape') {
-            this.closeAllModals();
-            this.closeAllMenus();
+    handleGlobalKeyboard(event) {
+        // Skip links (Alt + S)
+        if (event.altKey && event.key === 's') {
+            event.preventDefault();
+            this.focusSkipLink();
+            return;
         }
 
-        // Handle accessibility shortcuts
-        if (event.altKey) {
-            switch (event.key) {
-                case 'm':
-                    // Alt+M: Focus main navigation
-                    event.preventDefault();
-                    this.focusMainNavigation();
-                    break;
-                case 'c':
-                    // Alt+C: Focus main content
-                    event.preventDefault();
-                    this.focusMainContent();
-                    break;
-                case 'b':
-                    // Alt+B: Open booking form
-                    event.preventDefault();
-                    this.openBookingForm();
-                    break;
-            }
+        // Help modal (Alt + H)
+        if (event.altKey && event.key === 'h') {
+            event.preventDefault();
+            this.showKeyboardShortcuts();
+            return;
+        }
+
+        // Mobile menu (Alt + M)
+        if (event.altKey && event.key === 'm') {
+            event.preventDefault();
+            this.dispatchEvent('toggleMobileMenu');
+            return;
         }
     }
 
     /**
-     * Handle global clicks for analytics
+     * Accessibility setup
      */
-    handleGlobalClick(event) {
-        const target = event.target.closest('a, button, [data-track]');
+    setupAccessibility() {
+        // Create skip links
+        this.setupSkipLinks();
 
-        if (target) {
-            // Track link clicks
-            if (target.tagName === 'A') {
-                this.trackEvent('link_click', {
-                    url: target.href,
-                    text: target.textContent.trim(),
-                    location: window.location.pathname
-                });
-            }
-
-            // Track button clicks
-            if (target.tagName === 'BUTTON' || target.hasAttribute('data-track')) {
-                this.trackEvent('button_click', {
-                    action: target.getAttribute('data-track') || target.textContent.trim(),
-                    location: window.location.pathname
-                });
-            }
-
-            // Track CTA clicks
-            if (target.classList.contains('btn-primary') || target.classList.contains('btn-phone')) {
-                this.trackEvent('cta_click', {
-                    type: target.classList.contains('btn-phone') ? 'phone' : 'booking',
-                    text: target.textContent.trim(),
-                    location: window.location.pathname
-                });
-            }
-        }
-    }
-
-    /**
-     * Handle global form submissions
-     */
-    handleGlobalSubmit(event) {
-        const form = event.target;
-
-        // Track form submissions
-        this.trackEvent('form_submit', {
-            formId: form.id || 'unnamed',
-            formClass: form.className,
-            location: window.location.pathname
-        });
-
-        // Add loading state
-        const submitButton = form.querySelector('[type="submit"]');
-        if (submitButton) {
-            submitButton.classList.add('loading');
-            submitButton.disabled = true;
-        }
-    }
-
-    /**
-     * Handle window resize
-     */
-    handleResize() {
-        this.dispatchEvent('medSpaResize', {
-            width: window.innerWidth,
-            height: window.innerHeight,
-            isMobile: window.innerWidth < 768
-        });
-    }
-
-    /**
-     * Handle window scroll
-     */
-    handleScroll() {
-        const scrollY = window.scrollY;
-        const scrollPercent = (scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-
-        this.dispatchEvent('medSpaScroll', {
-            scrollY,
-            scrollPercent,
-            direction: this.lastScrollY > scrollY ? 'up' : 'down'
-        });
-
-        this.lastScrollY = scrollY;
-    }
-
-    /**
-     * Initialize accessibility features
-     */
-    async initializeAccessibility() {
-        // Skip links
-        this.createSkipLinks();
-
-        // Focus management
+        // Manage focus for keyboard users
         this.setupFocusManagement();
 
-        // Reduced motion handling
-        this.handleReducedMotion();
+        // ARIA live region for announcements
+        this.createAriaLiveRegion();
 
-        // High contrast handling
-        this.handleHighContrast();
-
-        this.log('Accessibility features initialized');
+        console.log('♿ Accessibility features initialized');
     }
 
     /**
-     * Create skip links for accessibility
+     * Create skip links for keyboard navigation
      */
-    createSkipLinks() {
-        const skipLinks = document.createElement('div');
-        skipLinks.className = 'skip-links sr-only-focusable';
-        skipLinks.innerHTML = `
-            <a href="#main-navigation" class="skip-link">Skip to navigation</a>
-            <a href="#main-content" class="skip-link">Skip to main content</a>
-            <a href="#contact-form" class="skip-link">Skip to booking form</a>
+    setupSkipLinks() {
+        const skipLinksHTML = `
+            <div class="skip-links sr-only-focusable" role="navigation" aria-label="Skip links">
+                <a href="#main" class="skip-link">Skip to main content</a>
+                <a href="#navigation" class="skip-link">Skip to navigation</a>
+                <a href="#consultation" class="skip-link">Skip to consultation form</a>
+            </div>
         `;
 
-        document.body.insertBefore(skipLinks, document.body.firstChild);
+        document.body.insertAdjacentHTML('afterbegin', skipLinksHTML);
     }
 
     /**
-     * Setup focus management
+     * Focus management for accessibility
      */
     setupFocusManagement() {
-        // Add focus indicators to dynamic elements
-        document.addEventListener('focusin', (event) => {
-            if (event.target.matches('button, a, input, select, textarea')) {
-                event.target.classList.add('focused');
+        // Trap focus in modals
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Tab') {
+                const modal = document.querySelector('.modal:not(.hidden)');
+                if (modal) {
+                    this.trapFocus(event, modal);
+                }
             }
         });
-
-        document.addEventListener('focusout', (event) => {
-            event.target.classList.remove('focused');
-        });
     }
 
     /**
-     * Handle reduced motion preference
+     * Create ARIA live region for screen reader announcements
      */
-    handleReducedMotion() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            document.documentElement.classList.add('reduce-motion');
-            this.config.animations = false;
+    createAriaLiveRegion() {
+        const liveRegion = document.createElement('div');
+        liveRegion.setAttribute('aria-live', 'polite');
+        liveRegion.setAttribute('aria-atomic', 'true');
+        liveRegion.className = 'sr-only';
+        liveRegion.id = 'aria-live-region';
+        document.body.appendChild(liveRegion);
+    }
+
+    /**
+     * Announce message to screen readers
+     */
+    announceToScreenReader(message) {
+        const liveRegion = document.getElementById('aria-live-region');
+        if (liveRegion) {
+            liveRegion.textContent = message;
+            setTimeout(() => {
+                liveRegion.textContent = '';
+            }, 1000);
         }
     }
 
     /**
-     * Handle high contrast preference
+     * Focus skip link
      */
-    handleHighContrast() {
-        if (window.matchMedia('(prefers-contrast: high)').matches) {
-            document.documentElement.classList.add('high-contrast');
+    focusSkipLink() {
+        const skipLink = document.querySelector('.skip-link');
+        if (skipLink) {
+            skipLink.focus();
         }
     }
 
     /**
-     * Initialize performance features
+     * Show keyboard shortcuts help
      */
-    async initializePerformanceFeatures() {
-        // Lazy loading
-        const lazyLoadModule = await import('../modules/lazy-loading.js');
-        const lazyLoader = new lazyLoadModule.default();
-        this.modules.set('lazyLoader', lazyLoader);
+    showKeyboardShortcuts() {
+        const shortcuts = [
+            'Alt + S: Focus skip links',
+            'Alt + M: Toggle mobile menu',
+            'Alt + H: Show this help',
+            'Escape: Close modals/menus'
+        ];
 
-        // Smooth scroll
-        const smoothScrollModule = await import('../modules/smooth-scroll.js');
-        const smoothScroll = new smoothScrollModule.default();
-        this.modules.set('smoothScroll', smoothScroll);
+        this.announceToScreenReader('Keyboard shortcuts: ' + shortcuts.join(', '));
 
-        this.log('Performance features initialized');
-    }
-
-    /**
-     * Initialize analytics
-     */
-    async initializeAnalytics() {
-        try {
-            const analyticsModule = await import('./analytics.js');
-            const analytics = new analyticsModule.default();
-            this.modules.set('analytics', analytics);
-
-            // Track page view
-            this.trackPageView();
-
-            this.log('Analytics initialized');
-        } catch (error) {
-            this.handleError('Analytics initialization failed', error);
+        if (this.debug) {
+            console.log('⌨️ Keyboard Shortcuts:', shortcuts);
         }
     }
 
     /**
-     * Optimize performance after load
+     * Trap focus within element
      */
-    optimizePerformance() {
-        // Remove unused CSS (if implemented)
-        this.removeUnusedCSS();
+    trapFocus(event, container) {
+        const focusableElements = container.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
 
-        // Preload critical resources
-        this.preloadCriticalResources();
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
 
-        // Setup intersection observers
-        this.setupIntersectionObservers();
-
-        this.log('Performance optimization completed');
-    }
-
-    /**
-     * Utility methods
-     */
-
-    /**
-     * Get module instance
-     */
-    getModule(name) {
-        return this.modules.get(name);
-    }
-
-    /**
-     * Dispatch custom event
-     */
-    dispatchEvent(eventName, detail = {}) {
-        const event = new CustomEvent(eventName, { detail });
-        document.dispatchEvent(event);
-    }
-
-    /**
-     * Track analytics event
-     */
-    trackEvent(eventName, properties = {}) {
-        const analytics = this.getModule('analytics');
-        if (analytics && typeof analytics.track === 'function') {
-            analytics.track(eventName, properties);
+        if (event.shiftKey) {
+            if (document.activeElement === firstElement) {
+                event.preventDefault();
+                lastElement.focus();
+            }
+        } else {
+            if (document.activeElement === lastElement) {
+                event.preventDefault();
+                firstElement.focus();
+            }
         }
+    }
+
+    /**
+     * Focus management helper
+     */
+    manageFocus(element, options = {}) {
+        if (typeof element === 'string') {
+            element = document.querySelector(element);
+        }
+
+        if (element) {
+            if (options.preventScroll) {
+                element.focus({ preventScroll: true });
+            } else {
+                element.focus();
+            }
+
+            if (options.announce) {
+                this.announceToScreenReader(options.announce);
+            }
+        }
+    }
+
+    /**
+     * Analytics setup
+     */
+    setupAnalytics() {
+        // Track page view
+        this.trackPageView();
+
+        // Set up conversion tracking
+        this.setupConversionTracking();
+
+        console.log('📊 Analytics initialized');
     }
 
     /**
@@ -490,123 +433,281 @@ class MedicalSpaApp {
      */
     trackPageView() {
         this.trackEvent('page_view', {
-            url: window.location.href,
-            title: document.title,
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname,
             referrer: document.referrer
         });
     }
 
     /**
-     * Performance marking
+     * Track custom event
      */
-    mark(name) {
-        const now = performance.now();
-        this.performance.marks.set(name, now);
+    trackEvent(eventName, properties = {}) {
+        const eventData = {
+            event: eventName,
+            timestamp: Date.now(),
+            session_id: this.getSessionId(),
+            user_agent: navigator.userAgent,
+            viewport: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            },
+            ...properties
+        };
 
-        if (this.config.performance) {
-            performance.mark(`medSpa:${name}`);
+        // Send to analytics service (Google Analytics, etc.)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', eventName, properties);
         }
+
+        // Log in debug mode
+        if (this.debug) {
+            console.log('📊 Analytics Event:', eventName, eventData);
+        }
+
+        // Store locally for debugging
+        this.storeAnalyticsEvent(eventData);
     }
 
     /**
-     * Get performance metrics
+     * Track conversion events
      */
-    getPerformanceMetrics() {
-        const metrics = {};
-
-        for (const [name, time] of this.performance.marks) {
-            metrics[name] = Math.round(time - this.performance.startTime);
-        }
-
-        return metrics;
-    }
-
-    /**
-     * Logging utility
-     */
-    log(message, data = null) {
-        if (this.config.debug) {
-            console.log(`[MedicalSpaApp] ${message}`, data || '');
-        }
-    }
-
-    /**
-     * Error handling
-     */
-    handleError(message, error) {
-        console.error(`[MedicalSpaApp] ${message}:`, error);
-
-        // Track error for analytics
-        this.trackEvent('javascript_error', {
-            message,
-            error: error.message,
-            stack: error.stack,
-            url: window.location.href
+    trackConversion(type, data = {}) {
+        this.trackEvent('conversion', {
+            conversion_type: type,
+            conversion_value: data.value || 0,
+            conversion_category: data.category || 'medical_spa',
+            ...data
         });
     }
 
     /**
-     * Helper methods for accessibility
+     * Set up conversion tracking for forms
      */
-    closeAllModals() {
-        document.querySelectorAll('[data-modal].active').forEach(modal => {
-            modal.classList.remove('active');
+    setupConversionTracking() {
+        // Track consultation form submissions
+        document.addEventListener('submit', (event) => {
+            const form = event.target;
+            if (form.matches('.consultation-form, [data-track-conversion]')) {
+                this.trackConversion('form_submission', {
+                    form_type: form.dataset.formType || 'consultation',
+                    form_location: window.location.pathname
+                });
+            }
+        });
+
+        // Track phone number clicks
+        document.addEventListener('click', (event) => {
+            if (event.target.matches('a[href^="tel:"]')) {
+                this.trackConversion('phone_call', {
+                    phone_number: event.target.href.replace('tel:', ''),
+                    source_location: window.location.pathname
+                });
+            }
         });
     }
 
-    closeAllMenus() {
-        document.querySelectorAll('[data-menu].open').forEach(menu => {
-            menu.classList.remove('open');
+    /**
+     * Error handling setup
+     */
+    setupErrorHandling() {
+        window.addEventListener('error', (event) => {
+            this.handleError(event.error, 'javascript_error', {
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno
+            });
         });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            this.handleError(event.reason, 'unhandled_promise_rejection');
+        });
+
+        console.log('🛠️ Error handling initialized');
     }
 
-    focusMainNavigation() {
-        const nav = document.querySelector('#main-navigation, nav[role="navigation"]');
-        if (nav) nav.focus();
+    /**
+     * Handle errors
+     */
+    handleError(error, type, additionalData = {}) {
+        const errorData = {
+            error_type: type,
+            error_message: error.message || error.toString(),
+            error_stack: error.stack,
+            timestamp: Date.now(),
+            user_agent: navigator.userAgent,
+            url: window.location.href,
+            ...additionalData
+        };
+
+        // Log error
+        console.error(`❌ ${type}:`, error);
+
+        // Track error in analytics
+        this.trackEvent('error_occurred', errorData);
+
+        // Store error for debugging
+        this.storeError(errorData);
     }
 
-    focusMainContent() {
-        const main = document.querySelector('#main-content, main');
-        if (main) main.focus();
+    /**
+     * Performance monitoring methods
+     */
+    markPerformance(name) {
+        this.performance.marks.set(name, performance.now());
+        if (performance.mark) {
+            performance.mark(name);
+        }
     }
 
-    openBookingForm() {
-        const bookingForm = this.getModule('bookingForm');
-        if (bookingForm && typeof bookingForm.open === 'function') {
-            bookingForm.open();
+    measurePerformance(name, startMark, endMark) {
+        const startTime = this.performance.marks.get(startMark);
+        const endTime = this.performance.marks.get(endMark);
+
+        if (startTime && endTime) {
+            const duration = endTime - startTime;
+            this.performance.metrics.set(name, duration);
+
+            if (performance.measure) {
+                performance.measure(name, startMark, endMark);
+            }
+
+            return duration;
+        }
+
+        return null;
+    }
+
+    getMetric(name) {
+        return this.performance.metrics.get(name);
+    }
+
+    logPerformance() {
+        console.group('📈 Performance Metrics');
+        this.performance.metrics.forEach((value, key) => {
+            console.log(`${key}: ${value.toFixed(2)}ms`);
+        });
+        console.groupEnd();
+    }
+
+    /**
+     * Utility methods
+     */
+    getCurrentBreakpoint() {
+        const width = window.innerWidth;
+        if (width < 576) return 'xs';
+        if (width < 768) return 'sm';
+        if (width < 992) return 'md';
+        if (width < 1200) return 'lg';
+        if (width < 1400) return 'xl';
+        return '2xl';
+    }
+
+    getSessionId() {
+        let sessionId = sessionStorage.getItem('medical_spa_session_id');
+        if (!sessionId) {
+            sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('medical_spa_session_id', sessionId);
+        }
+        return sessionId;
+    }
+
+    storeAnalyticsEvent(eventData) {
+        try {
+            const events = JSON.parse(localStorage.getItem('medical_spa_analytics') || '[]');
+            events.push(eventData);
+            // Keep only last 100 events
+            if (events.length > 100) {
+                events.splice(0, events.length - 100);
+            }
+            localStorage.setItem('medical_spa_analytics', JSON.stringify(events));
+        } catch (e) {
+            console.warn('Could not store analytics event:', e);
+        }
+    }
+
+    storeError(errorData) {
+        try {
+            const errors = JSON.parse(localStorage.getItem('medical_spa_errors') || '[]');
+            errors.push(errorData);
+            // Keep only last 20 errors
+            if (errors.length > 20) {
+                errors.splice(0, errors.length - 20);
+            }
+            localStorage.setItem('medical_spa_errors', JSON.stringify(errors));
+        } catch (e) {
+            console.warn('Could not store error:', e);
         }
     }
 
     /**
-     * Placeholder methods for future implementation
+     * Custom event system
      */
-    removeUnusedCSS() {
-        // TODO: Implement CSS optimization
+    dispatchEvent(eventName, detail = {}) {
+        const customEvent = new CustomEvent(`medicalSpa:${eventName}`, {
+            detail: {
+                timestamp: Date.now(),
+                source: 'MedicalSpaApp',
+                ...detail
+            },
+            bubbles: true,
+            cancelable: true
+        });
+
+        document.dispatchEvent(customEvent);
+
+        if (this.debug) {
+            console.log(`🎪 Event dispatched: medicalSpa:${eventName}`, detail);
+        }
     }
 
-    preloadCriticalResources() {
-        // TODO: Implement resource preloading
+    addEventListener(eventName, callback) {
+        document.addEventListener(`medicalSpa:${eventName}`, callback);
     }
 
-    setupIntersectionObservers() {
-        // TODO: Implement intersection observers for animations
+    removeEventListener(eventName, callback) {
+        document.removeEventListener(`medicalSpa:${eventName}`, callback);
+    }
+
+    /**
+     * Public API methods
+     */
+    getComponent(name) {
+        return this.components.get(name);
+    }
+
+    getModule(name) {
+        return this.modules.get(name);
+    }
+
+    getConfig() {
+        return { ...this.config };
+    }
+
+    getVersion() {
+        return this.version;
+    }
+
+    isDebug() {
+        return this.debug;
+    }
+
+    destroy() {
+        // Clean up event listeners and references
+        this.components.clear();
+        this.modules.clear();
+        console.log('🏥 Medical Spa App destroyed');
     }
 }
 
-/**
- * Initialize the application when the script loads
- */
+// Initialize the application
 const medicalSpaApp = new MedicalSpaApp();
 
+// Make app available globally
+window.MedicalSpaApp = medicalSpaApp;
+
 // Export for module usage
-export default MedicalSpaApp;
-
-// Auto-initialize for direct script usage
-if (typeof module === 'undefined') {
-    medicalSpaApp.init();
-}
-
-// Make available globally for debugging
-if (typeof window !== 'undefined') {
-    window.MedicalSpaApp = medicalSpaApp;
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = MedicalSpaApp;
 }

@@ -61,6 +61,60 @@ function preetidreams_enqueue_scripts() {
         PREETIDREAMS_VERSION
     );
 
+    // Enqueue medical spa theme CSS
+    wp_enqueue_style(
+        'preetidreams-medical-spa',
+        get_template_directory_uri() . '/assets/css/medical-spa-theme.css',
+        ['preetidreams-style'],
+        PREETIDREAMS_VERSION
+    );
+
+    // Enqueue core JavaScript
+    wp_enqueue_script(
+        'preetidreams-app-core',
+        get_template_directory_uri() . '/assets/js/core/app.js',
+        [],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Enqueue mobile menu component
+    wp_enqueue_script(
+        'preetidreams-mobile-menu',
+        get_template_directory_uri() . '/assets/js/components/mobile-menu.js',
+        ['preetidreams-app-core'],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Enqueue treatment filter on relevant pages
+    if (is_post_type_archive('treatment') || is_page_template('page-treatments.php') || is_front_page()) {
+        wp_enqueue_script(
+            'preetidreams-treatment-filter',
+            get_template_directory_uri() . '/assets/js/components/treatment-filter.js',
+            ['preetidreams-app-core'],
+            PREETIDREAMS_VERSION,
+            true
+        );
+    }
+
+    // Localize script with theme data
+    wp_localize_script('preetidreams-app-core', 'medicalSpaTheme', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('preetidreams_nonce'),
+        'version' => PREETIDREAMS_VERSION,
+        'themeUrl' => get_template_directory_uri(),
+        'components' => [
+            'treatmentFilter' => is_post_type_archive('treatment') || is_page_template('page-treatments.php') || is_front_page(),
+            'mobileMenu' => true,
+        ],
+        'settings' => [
+            'phone' => get_theme_mod('preetidreams_phone', ''),
+            'email' => get_theme_mod('preetidreams_email', ''),
+            'address' => get_theme_mod('preetidreams_address', ''),
+        ]
+    ]);
+
     // Check if Vite build exists and enqueue compiled assets
     $vite_manifest = get_template_directory() . '/public/build/manifest.json';
 
@@ -72,7 +126,7 @@ function preetidreams_enqueue_scripts() {
             wp_enqueue_style(
                 'preetidreams-app',
                 get_template_directory_uri() . '/public/build/' . $manifest['resources/styles/app.scss']['file'],
-                ['preetidreams-style'],
+                ['preetidreams-medical-spa'],
                 PREETIDREAMS_VERSION
             );
         }
@@ -82,26 +136,11 @@ function preetidreams_enqueue_scripts() {
             wp_enqueue_script(
                 'preetidreams-app',
                 get_template_directory_uri() . '/public/build/' . $manifest['resources/scripts/app.ts']['file'],
-                [],
+                ['preetidreams-app-core'],
                 PREETIDREAMS_VERSION,
                 true
             );
-
-            // Localize script with theme data
-            wp_localize_script('preetidreams-app', 'preetidreamsData', [
-                'ajaxUrl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('preetidreams_nonce'),
-                'version' => PREETIDREAMS_VERSION,
-            ]);
         }
-    } else {
-        // Fallback: enqueue basic styles if build doesn't exist
-        wp_enqueue_style(
-            'preetidreams-basic',
-            get_template_directory_uri() . '/assets/css/style.css',
-            ['preetidreams-style'],
-            PREETIDREAMS_VERSION
-        );
     }
 }
 add_action('wp_enqueue_scripts', 'preetidreams_enqueue_scripts');

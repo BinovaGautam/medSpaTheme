@@ -13,11 +13,32 @@
 
         <?php if (have_posts()) : ?>
 
+            <!-- Treatment Filters -->
+            <div class="treatment-filters"></div>
+
             <!-- Treatments Grid -->
-            <div class="treatments-grid">
+            <div class="treatments-grid treatment-grid">
                 <?php while (have_posts()) : the_post(); ?>
 
-                    <article id="treatment-<?php the_ID(); ?>" <?php post_class('treatment-card'); ?>>
+                    <?php
+                    // Get treatment metadata for filtering
+                    $categories = get_the_terms(get_the_ID(), 'treatment_category');
+                    $primary_category = $categories && !is_wp_error($categories) ? $categories[0]->slug : '';
+                    $duration = get_post_meta(get_the_ID(), 'treatment_duration', true);
+                    $duration_minutes = get_post_meta(get_the_ID(), 'treatment_duration_minutes', true);
+                    $price_range = get_post_meta(get_the_ID(), 'treatment_price_range', true);
+                    $price = get_post_meta(get_the_ID(), 'treatment_price', true);
+                    $popularity = get_post_meta(get_the_ID(), 'treatment_popularity', true);
+                    ?>
+
+                    <article id="treatment-<?php the_ID(); ?>"
+                             <?php post_class('treatment-card'); ?>
+                             data-category="<?php echo esc_attr($primary_category); ?>"
+                             data-duration="<?php echo esc_attr($duration); ?>"
+                             data-duration-minutes="<?php echo esc_attr($duration_minutes ?: '30'); ?>"
+                             data-price-range="<?php echo esc_attr($price_range); ?>"
+                             data-price="<?php echo esc_attr($price ?: '0'); ?>"
+                             data-popularity="<?php echo esc_attr($popularity ?: '0'); ?>">
 
                         <!-- Treatment Image -->
                         <?php if (has_post_thumbnail()) : ?>
@@ -30,12 +51,8 @@
                                 </a>
 
                                 <!-- Treatment Category Badge -->
-                                <?php
-                                $categories = get_the_terms(get_the_ID(), 'treatment_category');
-                                if ($categories && !is_wp_error($categories)) :
-                                    $primary_category = $categories[0];
-                                ?>
-                                    <span class="treatment-category"><?php echo esc_html($primary_category->name); ?></span>
+                                <?php if ($categories && !is_wp_error($categories)) : ?>
+                                    <span class="treatment-category"><?php echo esc_html($categories[0]->name); ?></span>
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
@@ -51,13 +68,6 @@
 
                                 <!-- Treatment Meta -->
                                 <div class="treatment-meta">
-                                    <?php
-                                    // Custom fields for treatment details
-                                    $duration = get_post_meta(get_the_ID(), 'treatment_duration', true);
-                                    $price_range = get_post_meta(get_the_ID(), 'treatment_price_range', true);
-                                    $popularity = get_post_meta(get_the_ID(), 'treatment_popularity', true);
-                                    ?>
-
                                     <?php if ($duration) : ?>
                                         <span class="treatment-duration">
                                             <span class="icon">⏱️</span>
@@ -172,5 +182,22 @@
 
     </div>
 </main>
+
+<script>
+// Initialize Treatment Filter when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof TreatmentFilter !== 'undefined') {
+        const treatmentFilter = new TreatmentFilter('.treatment-filters');
+        treatmentFilter.init();
+
+        // Store reference globally for debugging
+        window.treatmentFilterInstance = treatmentFilter;
+
+        console.log('Treatment Filter initialized successfully');
+    } else {
+        console.warn('TreatmentFilter class not loaded');
+    }
+});
+</script>
 
 <?php get_footer(); ?>
