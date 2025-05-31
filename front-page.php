@@ -74,65 +74,111 @@
                 <p class="section-subtitle"><?php esc_html_e('Discover our most sought-after aesthetic treatments designed to enhance your natural beauty.', 'preetidreams'); ?></p>
             </header>
 
-            <div class="treatments-showcase">
+            <!-- Treatment Filters for Homepage -->
+            <div class="treatment-filters">
+                <!-- This container will be populated by JavaScript -->
+                <div class="filter-loading-placeholder" style="padding: 2rem; text-align: center; background: #f8f9fa; border-radius: 8px; margin-bottom: 2rem; border: 2px dashed #d4af37;">
+                    <p style="color: #2d5a27; font-weight: 600;">🔍 Treatment Filter Loading...</p>
+                    <p style="font-size: 0.9rem; color: #87a96b;">Enhancing your browsing experience...</p>
+                </div>
+            </div>
+
+            <div class="treatments-showcase treatment-grid">
                 <?php
-                // Get featured treatments
-                $featured_treatments = get_posts([
+                // Get all treatments for filtering (not just featured)
+                $all_treatments = get_posts([
                     'post_type' => 'treatment',
-                    'posts_per_page' => 6,
-                    'meta_key' => 'treatment_featured',
-                    'meta_value' => '1',
+                    'posts_per_page' => 12, // Show more treatments for filtering
                     'orderby' => 'menu_order',
                     'order' => 'ASC'
                 ]);
 
-                if ($featured_treatments) :
-                    foreach ($featured_treatments as $treatment) : setup_postdata($treatment); ?>
+                if ($all_treatments) :
+                    foreach ($all_treatments as $treatment) : setup_postdata($treatment);
+                        // Get treatment metadata for filtering
+                        $categories = get_the_terms($treatment->ID, 'treatment_category');
+                        $primary_category = $categories && !is_wp_error($categories) ? $categories[0]->slug : '';
+                        $duration = get_post_meta($treatment->ID, 'treatment_duration', true);
+                        $duration_minutes = get_post_meta($treatment->ID, 'treatment_duration_minutes', true);
+                        $price_range = get_post_meta($treatment->ID, 'treatment_price_range', true);
+                        $price = get_post_meta($treatment->ID, 'treatment_price', true);
+                        $popularity = get_post_meta($treatment->ID, 'treatment_popularity', true);
+                        $featured = get_post_meta($treatment->ID, 'treatment_featured', true);
+                    ?>
 
-                        <div class="treatment-showcase-item">
+                        <div class="treatment-showcase-item treatment-card"
+                             data-category="<?php echo esc_attr($primary_category); ?>"
+                             data-duration="<?php echo esc_attr($duration); ?>"
+                             data-duration-minutes="<?php echo esc_attr($duration_minutes ?: '30'); ?>"
+                             data-price-range="<?php echo esc_attr($price_range); ?>"
+                             data-price="<?php echo esc_attr($price ?: '0'); ?>"
+                             data-popularity="<?php echo esc_attr($popularity ?: ($featured ? '5' : '1')); ?>">
+
                             <?php if (has_post_thumbnail($treatment->ID)) : ?>
                                 <div class="treatment-image">
                                     <a href="<?php echo get_permalink($treatment->ID); ?>">
                                         <?php echo get_the_post_thumbnail($treatment->ID, 'treatment-card', ['alt' => get_the_title($treatment->ID)]); ?>
                                     </a>
+
+                                    <!-- Treatment Category Badge -->
+                                    <?php if ($categories && !is_wp_error($categories)) : ?>
+                                        <span class="treatment-category"><?php echo esc_html($categories[0]->name); ?></span>
+                                    <?php endif; ?>
+
+                                    <?php if ($featured) : ?>
+                                        <span class="treatment-badge popular">
+                                            <span class="icon">⭐</span>
+                                            <?php esc_html_e('Popular', 'preetidreams'); ?>
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
 
                             <div class="treatment-content">
-                                <h3 class="treatment-name">
-                                    <a href="<?php echo get_permalink($treatment->ID); ?>">
-                                        <?php echo get_the_title($treatment->ID); ?>
-                                    </a>
-                                </h3>
+                                <header class="treatment-header">
+                                    <h3 class="treatment-name treatment-title">
+                                        <a href="<?php echo get_permalink($treatment->ID); ?>">
+                                            <?php echo get_the_title($treatment->ID); ?>
+                                        </a>
+                                    </h3>
 
-                                <p class="treatment-description">
-                                    <?php echo wp_trim_words(get_the_excerpt($treatment->ID), 15); ?>
-                                </p>
+                                    <div class="treatment-meta">
+                                        <?php if ($duration) : ?>
+                                            <span class="meta-item treatment-duration">
+                                                <span class="icon">⏱️</span>
+                                                <?php echo esc_html($duration); ?>
+                                            </span>
+                                        <?php endif; ?>
 
-                                <div class="treatment-meta">
+                                        <?php if ($price_range) : ?>
+                                            <span class="meta-item treatment-price">
+                                                <span class="icon">💰</span>
+                                                <?php echo esc_html($price_range); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                </header>
+
+                                <div class="treatment-description">
                                     <?php
-                                    $duration = get_post_meta($treatment->ID, 'treatment_duration', true);
-                                    $price_range = get_post_meta($treatment->ID, 'treatment_price_range', true);
+                                    if (has_excerpt($treatment->ID)) {
+                                        echo get_the_excerpt($treatment->ID);
+                                    } else {
+                                        echo wp_trim_words(get_the_content(null, false, $treatment->ID), 20, '...');
+                                    }
                                     ?>
-
-                                    <?php if ($duration) : ?>
-                                        <span class="meta-item">
-                                            <span class="icon">⏱️</span>
-                                            <?php echo esc_html($duration); ?>
-                                        </span>
-                                    <?php endif; ?>
-
-                                    <?php if ($price_range) : ?>
-                                        <span class="meta-item">
-                                            <span class="icon">💰</span>
-                                            <?php echo esc_html($price_range); ?>
-                                        </span>
-                                    <?php endif; ?>
                                 </div>
 
-                                <a href="<?php echo get_permalink($treatment->ID); ?>" class="treatment-link">
-                                    <?php esc_html_e('Learn More', 'preetidreams'); ?>
-                                </a>
+                                <div class="treatment-actions">
+                                    <a href="<?php echo get_permalink($treatment->ID); ?>" class="btn btn-primary">
+                                        <?php esc_html_e('Learn More', 'preetidreams'); ?>
+                                    </a>
+
+                                    <a href="#consultation" class="btn btn-secondary consultation-link"
+                                       data-treatment="<?php echo esc_attr(get_the_title($treatment->ID)); ?>">
+                                        <?php esc_html_e('Book Consultation', 'preetidreams'); ?>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -352,5 +398,57 @@
     </section>
 
 </main>
+
+<script>
+// Initialize Treatment Filter on Homepage when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🏠 Homepage Ready - Initializing Treatment Filter...');
+
+    // Remove loading placeholder
+    const placeholder = document.querySelector('.filter-loading-placeholder');
+    if (placeholder) {
+        placeholder.remove();
+    }
+
+    if (typeof TreatmentFilter !== 'undefined') {
+        const treatmentFilter = new TreatmentFilter('.treatment-filters');
+        treatmentFilter.init();
+
+        // Store reference globally for debugging
+        window.homePageFilterInstance = treatmentFilter;
+
+        console.log('✅ Homepage Treatment Filter initialized successfully');
+
+        // Add success indicator for visual confirmation
+        const filterContainer = document.querySelector('.treatment-filters');
+        if (filterContainer && filterContainer.children.length > 0) {
+            console.log('🎯 Homepage filter interface rendered with', filterContainer.children.length, 'elements');
+        }
+
+        // Track homepage filter initialization
+        if (window.MedicalSpaApp) {
+            window.MedicalSpaApp.getModule('analytics')?.track('homepage_filter_initialized', {
+                treatments_count: document.querySelectorAll('.treatment-card').length,
+                page_location: 'homepage'
+            });
+        }
+    } else {
+        console.error('❌ TreatmentFilter class not loaded on homepage - Check if JavaScript files are properly enqueued');
+
+        // Show error message to user in debug mode
+        const filterContainer = document.querySelector('.treatment-filters');
+        if (filterContainer && window.location.hostname.includes('localhost')) {
+            filterContainer.innerHTML = '<div style="padding: 1rem; background: #f8d7da; color: #721c24; border-radius: 4px; border: 1px solid #f5c6cb;"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded on homepage. Check console for details.</div>';
+        }
+    }
+
+    // Debug information for homepage
+    console.log('📊 Homepage Medical Spa Theme Debug Info:');
+    console.log('- medicalSpaTheme config:', window.medicalSpaTheme);
+    console.log('- MedicalSpaApp available:', typeof window.MedicalSpaApp !== 'undefined');
+    console.log('- TreatmentFilter available:', typeof TreatmentFilter !== 'undefined');
+    console.log('- Treatment cards found:', document.querySelectorAll('.treatment-card').length);
+});
+</script>
 
 <?php get_footer(); ?>

@@ -1611,3 +1611,170 @@ a:focus {
 /* =============================================================================
    END TREATMENT FILTER COMPONENT STYLES
    ============================================================================= */
+
+/* =============================================================================
+   HOMEPAGE TREATMENT SHOWCASE STYLES
+   ============================================================================= */
+
+/* Featured Treatments Section */
+.featured-treatments {
+  padding: var(--space-4xl) 0;
+  background: var(--color-white);
+}
+
+.featured-treatments .section-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.featured-treatments .section-title {
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-md);
+}
+
+.featured-treatments .section-subtitle {
+  color: var(--color-charcoal);
+  max-width: 600px;
+  margin: 0 auto var(--space-xl);
+}
+
+/* Treatment Showcase Grid */
+.treatments-showcase {
+  display: grid;
+  gap: var(--space-xl);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-bottom: var(--space-3xl);
+}
+
+.treatment-showcase-item {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.treatment-showcase-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Make showcase items work with treatment filter */
+.treatment-showcase-item.treatment-card {
+  /* Inherit all treatment card styles */
+}
+
+.treatment-showcase-item .treatment-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.treatment-showcase-item .treatment-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.treatment-showcase-item:hover .treatment-image img {
+  transform: scale(1.05);
+}
+
+.treatment-showcase-item .treatment-content {
+  padding: var(--space-lg);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.treatment-showcase-item .treatment-header {
+  margin-bottom: var(--space-md);
+}
+
+.treatment-showcase-item .treatment-name {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary-forest);
+}
+
+.treatment-showcase-item .treatment-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.treatment-showcase-item .treatment-name a:hover {
+  color: var(--color-primary-gold);
+}
+
+.treatment-showcase-item .treatment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--color-primary-sage);
+}
+
+.treatment-showcase-item .meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.treatment-showcase-item .treatment-description {
+  margin-bottom: var(--space-lg);
+  flex-grow: 1;
+  color: var(--color-charcoal);
+  line-height: 1.6;
+}
+
+.treatment-showcase-item .treatment-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+/* Responsive adjustments for homepage showcase */
+@media (max-width: 767px) {
+  .treatments-showcase {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .treatment-showcase-item .treatment-actions {
+    flex-direction: column;
+  }
+
+  .treatment-showcase-item .treatment-meta {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .treatments-showcase {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .treatments-showcase {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Section CTA */
+.featured-treatments .section-cta {
+  text-align: center;
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-soft-gray);
+}
+
+/* =============================================================================
+   END HOMEPAGE TREATMENT SHOWCASE STYLES
+   ============================================================================= */
