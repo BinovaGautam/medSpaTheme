@@ -1,13 +1,13 @@
 <?php get_header(); ?>
 
-<main id="main" class="site-main">
+<main id="main" class="site-main homepage">
 
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section modern-hero">
         <div class="hero-background">
             <div class="container">
-                <div class="hero-content">
-                    <div class="hero-text">
+                <div class="hero-content hero-layout">
+                    <div class="hero-text-content">
                         <h1 class="hero-title">
                             <?php
                             $hero_title = get_theme_mod('hero_title', __('Transform Your Beauty with Advanced Medical Spa Treatments', 'preetidreams'));
@@ -23,15 +23,16 @@
                         </p>
 
                         <div class="hero-actions">
-                            <a href="#consultation" class="btn btn-primary btn-large">
+                            <a href="#consultation" class="btn btn-primary btn-large cta-primary">
+                                <span class="btn-icon">📞</span>
                                 <?php esc_html_e('Free Consultation', 'preetidreams'); ?>
                             </a>
 
                             <?php
                             $phone = preetidreams_get_phone();
                             if ($phone) : ?>
-                                <a href="tel:<?php echo esc_attr($phone); ?>" class="btn btn-outline btn-large">
-                                    <span class="icon">📞</span>
+                                <a href="tel:<?php echo esc_attr($phone); ?>" class="btn btn-secondary btn-large cta-secondary">
+                                    <span class="btn-icon">📱</span>
                                     <?php echo esc_html($phone); ?>
                                 </a>
                             <?php endif; ?>
@@ -51,25 +52,39 @@
                                 <span class="trust-icon">💯</span>
                                 <span class="trust-text"><?php esc_html_e('1000+ Happy Patients', 'preetidreams'); ?></span>
                             </div>
+                            <div class="trust-item">
+                                <span class="trust-icon">🔒</span>
+                                <span class="trust-text"><?php esc_html_e('HIPAA Compliant', 'preetidreams'); ?></span>
+                            </div>
                         </div>
                     </div>
 
-                    <?php
-                    $hero_image = get_theme_mod('hero_image');
-                    if ($hero_image) : ?>
-                        <div class="hero-image">
-                            <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Medical Spa Treatment', 'preetidreams'); ?>" loading="eager">
-                        </div>
-                    <?php endif; ?>
+                    <div class="hero-image-content">
+                        <?php
+                        $hero_image = get_theme_mod('hero_image');
+                        if ($hero_image) : ?>
+                            <div class="hero-image">
+                                <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Medical Spa Treatment', 'preetidreams'); ?>" loading="eager">
+                            </div>
+                        <?php else : ?>
+                            <!-- Placeholder hero image -->
+                            <div class="hero-image hero-placeholder">
+                                <div class="placeholder-content">
+                                    <div class="placeholder-icon">🏥</div>
+                                    <p><?php esc_html_e('Professional Medical Spa Environment', 'preetidreams'); ?></p>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Featured Treatments Section -->
-    <section class="featured-treatments">
+    <section class="featured-treatments modern-section">
         <div class="container">
-            <header class="section-header">
+            <header class="section-header text-center">
                 <h2 class="section-title"><?php esc_html_e('Popular Treatments', 'preetidreams'); ?></h2>
                 <p class="section-subtitle"><?php esc_html_e('Discover our most sought-after aesthetic treatments designed to enhance your natural beauty.', 'preetidreams'); ?></p>
             </header>
@@ -77,13 +92,16 @@
             <!-- Treatment Filters for Homepage -->
             <div class="treatment-filters">
                 <!-- This container will be populated by JavaScript -->
-                <div class="filter-loading-placeholder" style="padding: 2rem; text-align: center; background: #f8f9fa; border-radius: 8px; margin-bottom: 2rem; border: 2px dashed #d4af37;">
-                    <p style="color: #2d5a27; font-weight: 600;">🔍 Treatment Filter Loading...</p>
-                    <p style="font-size: 0.9rem; color: #87a96b;">Enhancing your browsing experience...</p>
+                <div class="filter-loading-placeholder" style="padding: 2rem; text-align: center; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; margin-bottom: 2rem; border: 2px dashed #d4af37;">
+                    <div class="loading-content">
+                        <div class="loading-spinner" style="display: inline-block; width: 24px; height: 24px; border: 3px solid #f3f3f3; border-top: 3px solid #d4af37; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+                        <p style="color: #2d5a27; font-weight: 600; margin-bottom: 0.5rem;">🔍 Treatment Filter Loading...</p>
+                        <p style="font-size: 0.9rem; color: #87a96b; margin: 0;">Enhancing your browsing experience...</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="treatments-showcase treatment-grid">
+            <div class="treatments-showcase treatment-grid modern-grid">
                 <?php
                 // Get all treatments for filtering (not just featured)
                 $all_treatments = get_posts([
@@ -106,7 +124,7 @@
                         $featured = get_post_meta($treatment->ID, 'treatment_featured', true);
                     ?>
 
-                        <div class="treatment-showcase-item treatment-card"
+                        <div class="treatment-showcase-item treatment-card modern-card"
                              data-category="<?php echo esc_attr($primary_category); ?>"
                              data-duration="<?php echo esc_attr($duration); ?>"
                              data-duration-minutes="<?php echo esc_attr($duration_minutes ?: '30'); ?>"
@@ -114,25 +132,32 @@
                              data-price="<?php echo esc_attr($price ?: '0'); ?>"
                              data-popularity="<?php echo esc_attr($popularity ?: ($featured ? '5' : '1')); ?>">
 
-                            <?php if (has_post_thumbnail($treatment->ID)) : ?>
-                                <div class="treatment-image">
+                            <div class="treatment-image">
+                                <?php if (has_post_thumbnail($treatment->ID)) : ?>
                                     <a href="<?php echo get_permalink($treatment->ID); ?>">
                                         <?php echo get_the_post_thumbnail($treatment->ID, 'treatment-card', ['alt' => get_the_title($treatment->ID)]); ?>
                                     </a>
+                                <?php else : ?>
+                                    <!-- Placeholder image -->
+                                    <a href="<?php echo get_permalink($treatment->ID); ?>" class="treatment-placeholder">
+                                        <div class="placeholder-bg">
+                                            <div class="placeholder-icon">💉</div>
+                                        </div>
+                                    </a>
+                                <?php endif; ?>
 
-                                    <!-- Treatment Category Badge -->
-                                    <?php if ($categories && !is_wp_error($categories)) : ?>
-                                        <span class="treatment-category"><?php echo esc_html($categories[0]->name); ?></span>
-                                    <?php endif; ?>
+                                <!-- Treatment Category Badge -->
+                                <?php if ($categories && !is_wp_error($categories)) : ?>
+                                    <span class="treatment-category"><?php echo esc_html($categories[0]->name); ?></span>
+                                <?php endif; ?>
 
-                                    <?php if ($featured) : ?>
-                                        <span class="treatment-badge popular">
-                                            <span class="icon">⭐</span>
-                                            <?php esc_html_e('Popular', 'preetidreams'); ?>
-                                        </span>
-                                    <?php endif; ?>
-                                </div>
-                            <?php endif; ?>
+                                <?php if ($featured) : ?>
+                                    <span class="treatment-badge popular">
+                                        <span class="icon">⭐</span>
+                                        <?php esc_html_e('Popular', 'preetidreams'); ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
 
                             <div class="treatment-content">
                                 <header class="treatment-header">
@@ -170,11 +195,11 @@
                                 </div>
 
                                 <div class="treatment-actions">
-                                    <a href="<?php echo get_permalink($treatment->ID); ?>" class="btn btn-primary">
+                                    <a href="<?php echo get_permalink($treatment->ID); ?>" class="btn btn-primary btn-treatment">
                                         <?php esc_html_e('Learn More', 'preetidreams'); ?>
                                     </a>
 
-                                    <a href="#consultation" class="btn btn-secondary consultation-link"
+                                    <a href="#consultation" class="btn btn-secondary consultation-link btn-treatment"
                                        data-treatment="<?php echo esc_attr(get_the_title($treatment->ID)); ?>">
                                         <?php esc_html_e('Book Consultation', 'preetidreams'); ?>
                                     </a>
@@ -185,15 +210,27 @@
                     <?php endforeach;
                     wp_reset_postdata();
                 else : ?>
-                    <!-- Fallback content if no treatments -->
-                    <div class="no-treatments-message">
-                        <p><?php esc_html_e('Featured treatments coming soon. Contact us to learn about our available services.', 'preetidreams'); ?></p>
+                    <!-- Enhanced fallback content for no treatments -->
+                    <div class="no-treatments-message modern-placeholder">
+                        <div class="placeholder-content">
+                            <div class="placeholder-icon">🏥</div>
+                            <h3><?php esc_html_e('Sample Treatments Available', 'preetidreams'); ?></h3>
+                            <p><?php esc_html_e('Our medical spa offers a comprehensive range of aesthetic treatments. Contact us to learn about our available services or activate sample treatment data to see our interactive showcase.', 'preetidreams'); ?></p>
+                            <div class="placeholder-actions">
+                                <a href="<?php echo admin_url('themes.php?page=preetidreams-setup'); ?>" class="btn btn-primary">
+                                    <?php esc_html_e('Activate Sample Data', 'preetidreams'); ?>
+                                </a>
+                                <a href="#consultation" class="btn btn-secondary">
+                                    <?php esc_html_e('Contact Us', 'preetidreams'); ?>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>
 
-            <div class="section-cta">
-                <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>" class="btn btn-primary">
+            <div class="section-cta text-center">
+                <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>" class="btn btn-outline btn-large">
                     <?php esc_html_e('View All Treatments', 'preetidreams'); ?>
                 </a>
             </div>
@@ -201,17 +238,17 @@
     </section>
 
     <!-- About Section -->
-    <section class="about-section">
+    <section class="about-section modern-section bg-soft">
         <div class="container">
             <div class="about-layout">
                 <div class="about-content">
-                    <h2 class="about-title"><?php esc_html_e('Why Choose Our Medical Spa?', 'preetidreams'); ?></h2>
+                    <h2 class="about-title section-title"><?php esc_html_e('Why Choose Our Medical Spa?', 'preetidreams'); ?></h2>
 
                     <div class="about-text">
-                        <p><?php esc_html_e('We combine advanced medical expertise with luxurious spa comfort to deliver exceptional aesthetic results. Our board-certified professionals use the latest technology and techniques to help you achieve your beauty goals safely and effectively.', 'preetidreams'); ?></p>
+                        <p class="lead-text"><?php esc_html_e('We combine advanced medical expertise with luxurious spa comfort to deliver exceptional aesthetic results. Our board-certified professionals use the latest technology and techniques to help you achieve your beauty goals safely and effectively.', 'preetidreams'); ?></p>
                     </div>
 
-                    <div class="features-grid">
+                    <div class="features-grid modern-features">
                         <div class="feature-item">
                             <div class="feature-icon">👨‍⚕️</div>
                             <h3><?php esc_html_e('Expert Professionals', 'preetidreams'); ?></h3>
@@ -238,7 +275,7 @@
                     </div>
 
                     <div class="about-cta">
-                        <a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>" class="btn btn-outline">
+                        <a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>" class="btn btn-outline btn-large">
                             <?php esc_html_e('Meet Our Team', 'preetidreams'); ?>
                         </a>
                     </div>
@@ -249,6 +286,14 @@
                     $about_image = get_theme_mod('about_image');
                     if ($about_image) : ?>
                         <img src="<?php echo esc_url($about_image); ?>" alt="<?php esc_attr_e('Medical Spa Interior', 'preetidreams'); ?>" loading="lazy">
+                    <?php else : ?>
+                        <!-- Placeholder about image -->
+                        <div class="about-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">🏥</div>
+                                <p><?php esc_html_e('Professional Medical Spa Interior', 'preetidreams'); ?></p>
+                            </div>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -256,14 +301,14 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials-section">
+    <section class="testimonials-section modern-section">
         <div class="container">
-            <header class="section-header">
+            <header class="section-header text-center">
                 <h2 class="section-title"><?php esc_html_e('What Our Patients Say', 'preetidreams'); ?></h2>
                 <p class="section-subtitle"><?php esc_html_e('Real stories from real patients who have transformed their confidence with our treatments.', 'preetidreams'); ?></p>
             </header>
 
-            <div class="testimonials-grid">
+            <div class="testimonials-grid modern-testimonials">
                 <?php
                 // Get featured testimonials
                 $testimonials = get_posts([
@@ -275,10 +320,14 @@
                 if ($testimonials) :
                     foreach ($testimonials as $testimonial) : setup_postdata($testimonial); ?>
 
-                        <div class="testimonial-card">
+                        <div class="testimonial-card modern-testimonial">
                             <?php if (has_post_thumbnail($testimonial->ID)) : ?>
                                 <div class="testimonial-photo">
                                     <?php echo get_the_post_thumbnail($testimonial->ID, 'thumbnail', ['alt' => get_the_title($testimonial->ID)]); ?>
+                                </div>
+                            <?php else : ?>
+                                <div class="testimonial-photo testimonial-placeholder">
+                                    <div class="placeholder-avatar">👤</div>
                                 </div>
                             <?php endif; ?>
 
@@ -304,11 +353,68 @@
 
                     <?php endforeach;
                     wp_reset_postdata();
-                endif; ?>
+                else : ?>
+                    <!-- Sample testimonials placeholder -->
+                    <div class="sample-testimonials">
+                        <div class="testimonial-card modern-testimonial">
+                            <div class="testimonial-photo testimonial-placeholder">
+                                <div class="placeholder-avatar">👤</div>
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-text">
+                                    "Amazing results from my Botox treatment! The staff is professional and the environment is so relaxing. I highly recommend this medical spa."
+                                </div>
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Sarah M.</h4>
+                                    <p class="treatment-received">Botox Treatment</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card modern-testimonial">
+                            <div class="testimonial-photo testimonial-placeholder">
+                                <div class="placeholder-avatar">👤</div>
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-text">
+                                    "The HydraFacial was incredible! My skin looks and feels years younger. The entire team made me feel comfortable throughout the process."
+                                </div>
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Jennifer L.</h4>
+                                    <p class="treatment-received">HydraFacial</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card modern-testimonial">
+                            <div class="testimonial-photo testimonial-placeholder">
+                                <div class="placeholder-avatar">👤</div>
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-text">
+                                    "Exceptional service and results! The laser treatment exceeded my expectations. I'll definitely be back for more treatments."
+                                </div>
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Michael K.</h4>
+                                    <p class="treatment-received">Laser Treatment</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
 
-            <div class="section-cta">
-                <a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>" class="btn btn-outline">
+            <div class="section-cta text-center">
+                <a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>" class="btn btn-outline btn-large">
                     <?php esc_html_e('Read More Reviews', 'preetidreams'); ?>
                 </a>
             </div>
@@ -316,12 +422,12 @@
     </section>
 
     <!-- Consultation CTA Section -->
-    <section id="consultation" class="consultation-section">
+    <section id="consultation" class="consultation-section modern-section bg-primary">
         <div class="container">
-            <div class="consultation-content">
+            <div class="consultation-content consultation-layout">
                 <div class="consultation-text">
-                    <h2><?php esc_html_e('Ready to Start Your Transformation?', 'preetidreams'); ?></h2>
-                    <p><?php esc_html_e('Book your complimentary consultation today and discover how our personalized treatments can help you achieve your aesthetic goals.', 'preetidreams'); ?></p>
+                    <h2 class="consultation-title"><?php esc_html_e('Ready to Start Your Transformation?', 'preetidreams'); ?></h2>
+                    <p class="consultation-subtitle"><?php esc_html_e('Book your complimentary consultation today and discover how our personalized treatments can help you achieve your aesthetic goals.', 'preetidreams'); ?></p>
 
                     <div class="consultation-benefits">
                         <div class="benefit-item">
@@ -340,28 +446,28 @@
                 </div>
 
                 <div class="consultation-form-wrapper">
-                    <form class="consultation-form" action="#" method="post">
-                        <h3><?php esc_html_e('Book Your Free Consultation', 'preetidreams'); ?></h3>
+                    <form class="consultation-form modern-form" action="#" method="post">
+                        <h3 class="form-title"><?php esc_html_e('Book Your Free Consultation', 'preetidreams'); ?></h3>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="consultation-name"><?php esc_html_e('Full Name', 'preetidreams'); ?></label>
-                                <input type="text" id="consultation-name" name="name" required>
+                                <input type="text" id="consultation-name" name="name" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="consultation-phone"><?php esc_html_e('Phone Number', 'preetidreams'); ?></label>
-                                <input type="tel" id="consultation-phone" name="phone" required>
+                                <input type="tel" id="consultation-phone" name="phone" class="form-control" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="consultation-email"><?php esc_html_e('Email Address', 'preetidreams'); ?></label>
-                            <input type="email" id="consultation-email" name="email" required>
+                            <input type="email" id="consultation-email" name="email" class="form-control" required>
                         </div>
 
                         <div class="form-group">
                             <label for="consultation-treatment"><?php esc_html_e('Treatment Interest', 'preetidreams'); ?></label>
-                            <select id="consultation-treatment" name="treatment">
+                            <select id="consultation-treatment" name="treatment" class="form-control">
                                 <option value=""><?php esc_html_e('Select a treatment (optional)', 'preetidreams'); ?></option>
                                 <option value="botox"><?php esc_html_e('Botox', 'preetidreams'); ?></option>
                                 <option value="fillers"><?php esc_html_e('Dermal Fillers', 'preetidreams'); ?></option>
@@ -373,7 +479,7 @@
 
                         <div class="form-group">
                             <label for="consultation-message"><?php esc_html_e('Message (Optional)', 'preetidreams'); ?></label>
-                            <textarea id="consultation-message" name="message" rows="3" placeholder="<?php esc_attr_e('Tell us about your aesthetic goals...', 'preetidreams'); ?>"></textarea>
+                            <textarea id="consultation-message" name="message" class="form-control" rows="3" placeholder="<?php esc_attr_e('Tell us about your aesthetic goals...', 'preetidreams'); ?>"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -384,7 +490,7 @@
                             </label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block">
+                        <button type="submit" class="btn btn-primary btn-block btn-large">
                             <?php esc_html_e('Schedule My Consultation', 'preetidreams'); ?>
                         </button>
 
@@ -399,6 +505,13 @@
 
 </main>
 
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
 <script>
 // Initialize Treatment Filter on Homepage when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
@@ -407,7 +520,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Remove loading placeholder
     const placeholder = document.querySelector('.filter-loading-placeholder');
     if (placeholder) {
-        placeholder.remove();
+        setTimeout(() => {
+            placeholder.remove();
+        }, 1000); // Show loading for 1 second for better UX
     }
 
     if (typeof TreatmentFilter !== 'undefined') {
