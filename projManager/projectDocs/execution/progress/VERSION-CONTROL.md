@@ -2,14 +2,59 @@
 
 **Project:** PreetiDreams Medical Spa Theme  
 **Repository:** `/medSpaTheme/`  
-**Current Version:** 2.1.0  
+**Current Version:** 2.1.2  
 **Last Updated:** 2024-12-19  
 
 ---
 
 ## 📋 **Version History**
 
-### **Version 2.1.0** - 2024-12-19 ✅ CURRENT
+### **Version 2.1.2** - 2024-12-19 ✅ CURRENT
+**Minor Update: Homepage Treatment Filter Integration**
+
+#### **🔧 Changes Made:**
+- **Enhanced Homepage Experience**
+  - Added treatment filter interface to `front-page.php`
+  - Converted featured treatments showcase to filterable grid
+  - Updated homepage to display 12 treatments instead of 6 featured ones
+  - Added proper data attributes for all homepage treatment cards
+
+- **JavaScript Integration**
+  - Added homepage-specific JavaScript initialization
+  - Enhanced debug logging for homepage filter component
+  - Added analytics tracking for homepage filter usage
+
+- **CSS Styling**
+  - Added comprehensive homepage treatment showcase styling
+  - Responsive grid system for homepage treatments
+  - Professional hover effects and transitions
+  - Mobile-optimized layout for homepage showcase
+
+#### **🎯 Deployment Status:**
+- ✅ Homepage treatment filter now visible and functional
+- ✅ All treatment cards properly configured for filtering
+- ✅ Responsive design working across all devices
+- ✅ Debug logging confirms proper initialization
+
+---
+
+### **Version 2.1.1** - 2024-12-19
+**Patch Update: Enhanced Debug & Visibility Features**
+
+#### **🔧 Changes Made:**
+- **Debug Enhancements**
+  - Added visual loading placeholder for treatment filter
+  - Enhanced JavaScript initialization with comprehensive debug logging
+  - Added error handling for development debugging
+  - Updated progress documentation with live status confirmation
+
+#### **🎯 Deployment Status:**
+- ✅ Debug features active and providing helpful feedback
+- ✅ All components confirmed working and deployed
+
+---
+
+### **Version 2.1.0** - 2024-12-19
 **Major Update: JavaScript Integration & Live Deployment**
 
 #### **🔧 Changes Made:**
@@ -132,39 +177,38 @@
 
 ## 📊 **File Change Tracking**
 
-### **Recently Modified Files (v2.1.0):**
+### **Recently Modified Files (v2.1.2):**
 
 | File | Last Modified | Lines | Status | Changes |
 |------|---------------|-------|---------|---------|
-| `functions.php` | 2024-12-19 | 395 | ✅ Live | Added JS enqueuing |
-| `archive-treatment.php` | 2024-12-19 | 190 | ✅ Live | Added filter interface |
-| `assets/js/core/app.js` | 2024-12-19 | 750+ | ✅ Live | WordPress integration |
-| `VERSION-CONTROL.md` | 2024-12-19 | New | ✅ Live | Version tracking |
+| `front-page.php` | 2024-12-19 | 405 | ✅ Live | Added treatment filter interface |
+| `assets/css/medical-spa-theme.css` | 2024-12-19 | 1,750+ | ✅ Live | Homepage showcase styling |
+| `VERSION-CONTROL.md` | 2024-12-19 | 280+ | ✅ Live | Version 2.1.2 tracking |
 
 ### **Complete File Inventory:**
 
 #### **WordPress Template Files:**
 - ✅ `header.php` - 112 lines (v1.1.0)
 - ✅ `footer.php` - 186 lines (v1.1.0)
-- ✅ `front-page.php` - 357 lines (v1.1.0)
-- ✅ `archive-treatment.php` - 190 lines (v2.1.0) **UPDATED**
+- ✅ `front-page.php` - 405 lines (v2.1.2) **UPDATED**
+- ✅ `archive-treatment.php` - 205 lines (v2.1.1) **UPDATED**
 - ✅ `single-treatment.php` - 294 lines (v1.1.0)
 - ✅ `archive-staff.php` - 195 lines (v1.1.0)
 - ✅ `index.php` - 167 lines (v1.1.0)
-- ✅ `functions.php` - 395 lines (v2.1.0) **UPDATED**
+- ✅ `functions.php` - 391 lines (v2.1.0) **UPDATED**
 - ✅ `style.css` - 344 lines (v1.0.0)
 
 #### **CSS Assets:**
-- ✅ `assets/css/medical-spa-theme.css` - 1,614 lines (v2.0.0)
+- ✅ `assets/css/medical-spa-theme.css` - 1,750+ lines (v2.1.2) **UPDATED**
 
 #### **JavaScript Assets:**
-- ✅ `assets/js/core/app.js` - 750+ lines (v2.1.0) **UPDATED**
+- ✅ `assets/js/core/app.js` - 714 lines (v2.1.0) **UPDATED**
 - ✅ `assets/js/components/mobile-menu.js` - 610+ lines (v2.0.0)
-- ✅ `assets/js/components/treatment-filter.js` - 750+ lines (v2.0.0)
+- ✅ `assets/js/components/treatment-filter.js` - 884 lines (v2.0.0)
 
 #### **Project Documentation:**
-- ✅ `VERSION-CONTROL.md` - New (v2.1.0) **NEW**
-- ✅ `PHASE-3-JAVASCRIPT-PROGRESS.md` - 184 lines (v2.0.0)
+- ✅ `VERSION-CONTROL.md` - 280+ lines (v2.1.2) **UPDATED**
+- ✅ `PHASE-3-JAVASCRIPT-PROGRESS.md` - 220+ lines (v2.1.1) **UPDATED**
 - ✅ Various requirements and decision documents
 
 ---
@@ -197,12 +241,13 @@
 
 ## 🚀 **Deployment Tracking**
 
-### **Current Live Status (v2.1.0):**
+### **Current Live Status (v2.1.2):**
 - ✅ **WordPress Templates:** All templates deployed and functional
-- ✅ **CSS Framework:** Medical spa styling system live
+- ✅ **CSS Framework:** Medical spa styling system live with homepage enhancements
 - ✅ **JavaScript Core:** Application framework loaded and running
 - ✅ **Component System:** All components properly initialized
-- ✅ **Treatment Filter:** Live and functional with search/filter capabilities
+- ✅ **Treatment Filter:** Live and functional on both homepage and treatment archive
+- ✅ **Homepage Integration:** Interactive treatment filtering on front page
 - ✅ **Mobile Menu:** Professional mobile navigation active
 - ✅ **Analytics:** Event tracking system operational
 
