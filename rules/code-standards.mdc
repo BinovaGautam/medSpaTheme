@@ -1,0 +1,661 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Code Standards & Best Practices - PreetiDreams Medical Spa Theme
+
+## 🎯 **Overview**
+This document establishes comprehensive coding standards for the PreetiDreams luxury medical spa WordPress theme development. These standards ensure maintainable, scalable, and professional code that minimizes technical debt while following industry best practices.
+
+---
+
+## 📋 **Core Principles**
+
+### **1. Industry Best Practices**
+- **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion
+- **DRY (Don't Repeat Yourself)**: Eliminate code duplication through proper abstraction
+- **KISS (Keep It Simple, Stupid)**: Prefer simple, readable solutions over complex ones
+- **YAGNI (You Aren't Gonna Need It)**: Don't implement functionality until it's actually needed
+- **Clean Code**: Self-documenting code with meaningful names and clear structure
+
+### **2. Medical Spa Specific Standards**
+- **HIPAA Consciousness**: Privacy-first design in all patient-related functionality
+- **Performance Excellence**: Medical spa users expect luxury experience (sub-2s load times)
+- **Accessibility First**: WCAG AAA compliance for inclusive medical service access
+- **Trust & Credibility**: Professional code quality that reflects luxury positioning
+- **Conversion Optimization**: Code structure supports business goal achievement
+
+---
+
+## 🛠️ **Technology Stack Standards**
+
+### **Package Management: YARN (Required)**
+```bash
+# ✅ CORRECT - Use Yarn for all package management
+yarn install
+yarn add package-name
+yarn add -D dev-package
+yarn build
+yarn dev
+
+# ❌ FORBIDDEN - Do not use npm
+# npm install  # NEVER USE
+# npm run      # NEVER USE
+```
+
+**Rationale**: Yarn provides better dependency resolution, faster installs, and more reliable lockfile handling for professional development.
+
+### **PHP Standards (PSR-12 + WordPress)**
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace PreetiDreams\Theme\Services;
+
+use PreetiDreams\Theme\Contracts\TreatmentServiceInterface;
+use Illuminate\Support\Collection;
+
+/**
+ * Treatment Management Service
+ *
+ * Handles all treatment-related operations for the medical spa theme
+ * with HIPAA-conscious data handling and performance optimization.
+ */
+final class TreatmentService implements TreatmentServiceInterface
+{
+    private const CACHE_TTL = 3600; // 1 hour
+
+    public function __construct(
+        private readonly CacheInterface $cache,
+        private readonly DatabaseInterface $database
+    ) {}
+
+    /**
+     * Retrieve treatments with caching and filtering
+     *
+     * @param array<string, mixed> $filters
+     * @return Collection<int, Treatment>
+     */
+    public function getTreatments(array $filters = []): Collection
+    {
+        $cacheKey = $this->generateCacheKey($filters);
+
+        return $this->cache->remember($cacheKey, self::CACHE_TTL, function () use ($filters) {
+            return $this->database->getTreatments($filters);
+        });
+    }
+
+    private function generateCacheKey(array $filters): string
+    {
+        return 'treatments_' . md5(serialize($filters));
+    }
+}
+```
+
+### **JavaScript/TypeScript Standards (ES2022+)**
+```typescript
+// ✅ CORRECT - Modern TypeScript with proper typing
+interface TreatmentBookingConfig {
+  readonly treatmentId: string;
+  readonly patientPrivacy: boolean;
+  readonly hipaaCompliance: boolean;
+}
+
+class TreatmentBookingWidget {
+  private readonly config: TreatmentBookingConfig;
+  private readonly apiClient: ApiClient;
+
+  constructor(config: TreatmentBookingConfig) {
+    this.config = Object.freeze(config);
+    this.apiClient = new ApiClient({ hipaaMode: config.hipaaCompliance });
+  }
+
+  public async submitBooking(formData: FormData): Promise<BookingResult> {
+    try {
+      this.validatePrivacyConsent(formData);
+      const response = await this.apiClient.post('/consultations', formData);
+      return this.handleBookingResponse(response);
+    } catch (error) {
+      this.logError('Booking submission failed', error);
+      throw new BookingError('Unable to process booking request');
+    }
+  }
+
+  private validatePrivacyConsent(formData: FormData): void {
+    if (!formData.get('privacy_consent')) {
+      throw new ValidationError('Privacy consent is required for medical consultations');
+    }
+  }
+}
+```
+
+### **CSS/SCSS Standards (BEM + Tailwind)**
+```scss
+// ✅ CORRECT - BEM methodology with Tailwind utilities
+.treatment-card {
+  @apply bg-white rounded-lg shadow-lg overflow-hidden;
+
+  &__header {
+    @apply relative h-48 bg-gradient-to-br from-sage-400 to-sage-600;
+
+    &--featured {
+      @apply h-64;
+    }
+  }
+
+  &__content {
+    @apply p-6;
+  }
+
+  &__title {
+    @apply text-xl font-semibold text-gray-900 mb-2;
+
+    // Medical spa luxury enhancement
+    font-family: theme('fontFamily.heading');
+    letter-spacing: theme('letterSpacing.wide');
+  }
+
+  &__price {
+    @apply text-2xl font-bold text-sage-600;
+
+    &--starting {
+      @apply text-sm font-normal text-gray-500;
+    }
+  }
+
+  // State management
+  &--loading {
+    @apply animate-pulse;
+  }
+
+  &--error {
+    @apply border-red-300 bg-red-50;
+  }
+}
+
+// Medical spa specific utilities
+.hipaa-secure {
+  @apply border-l-4 border-blue-500 bg-blue-50 p-4;
+}
+
+.consultation-cta {
+  @apply bg-gradient-to-r from-gold-500 to-gold-600 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300;
+}
+```
+
+---
+
+## 🏗️ **Directory Structure Standards**
+
+### **WordPress Theme Architecture (Sage + Medical Spa)**
+```
+preetidreams-theme/
+├── app/                          # PHP application logic
+│   ├── Fields/                   # ACF field configurations
+│   │   ├── TreatmentFields.php
+│   │   ├── ConsultationFields.php
+│   │   └── BeforeAfterFields.php
+│   ├── Services/                 # Business logic services
+│   │   ├── TreatmentService.php
+│   │   ├── ConsultationService.php
+│   │   └── HipaaComplianceService.php
+│   ├── Providers/                # Service providers
+│   │   ├── ThemeServiceProvider.php
+│   │   ├── CustomPostTypeProvider.php
+│   │   └── SecurityProvider.php
+│   ├── PostTypes/                # Custom post type definitions
+│   │   ├── Treatment.php
+│   │   ├── BeforeAfter.php
+│   │   └── Consultation.php
+│   ├── Taxonomies/               # Custom taxonomy definitions
+│   │   ├── TreatmentCategory.php
+│   │   └── TreatmentArea.php
+│   ├── View/                     # View composers and data
+│   │   ├── Composers/
+│   │   └── Components/
+│   └── Http/                     # Request handling
+│       ├── Controllers/
+│       └── Middleware/
+├── resources/                    # Frontend resources
+│   ├── views/                    # Blade templates
+│   │   ├── layouts/
+│   │   │   ├── app.blade.php
+│   │   │   └── consultation.blade.php
+│   │   ├── components/
+│   │   │   ├── treatment-card.blade.php
+│   │   │   ├── before-after-gallery.blade.php
+│   │   │   └── consultation-form.blade.php
+│   │   ├── partials/
+│   │   │   ├── header.blade.php
+│   │   │   ├── footer.blade.php
+│   │   │   └── navigation.blade.php
+│   │   └── pages/
+│   │       ├── treatments/
+│   │       ├── consultations/
+│   │       └── results/
+│   ├── styles/                   # SCSS/CSS files
+│   │   ├── app.scss              # Main stylesheet
+│   │   ├── components/           # Component styles
+│   │   │   ├── _treatment-card.scss
+│   │   │   ├── _before-after.scss
+│   │   │   └── _consultation-form.scss
+│   │   ├── layouts/              # Layout styles
+│   │   │   ├── _header.scss
+│   │   │   ├── _footer.scss
+│   │   │   └── _navigation.scss
+│   │   ├── utilities/            # Utility classes
+│   │   │   ├── _medical-spa.scss
+│   │   │   ├── _accessibility.scss
+│   │   │   └── _hipaa.scss
+│   │   └── vendor/               # Third-party styles
+│   ├── scripts/                  # JavaScript/TypeScript
+│   │   ├── app.ts                # Main application entry
+│   │   ├── components/           # Component scripts
+│   │   │   ├── TreatmentGrid.ts
+│   │   │   ├── BeforeAfterSlider.ts
+│   │   │   └── ConsultationForm.ts
+│   │   ├── services/             # API and business logic
+│   │   │   ├── ApiClient.ts
+│   │   │   ├── BookingService.ts
+│   │   │   └── AnalyticsService.ts
+│   │   ├── utils/                # Utility functions
+│   │   │   ├── validation.ts
+│   │   │   ├── accessibility.ts
+│   │   │   └── hipaa-helpers.ts
+│   │   └── types/                # TypeScript definitions
+│   │       ├── Treatment.ts
+│   │       ├── Consultation.ts
+│   │       └── ApiResponse.ts
+│   └── images/                   # Theme images
+│       ├── placeholders/
+│       ├── icons/
+│       └── backgrounds/
+├── public/                       # Compiled assets
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── vendor/                       # Composer dependencies
+├── node_modules/                 # Yarn dependencies
+├── tests/                        # Automated tests
+│   ├── Unit/
+│   ├── Feature/
+│   └── Integration/
+├── docs/                         # Documentation
+│   ├── development.md
+│   ├── deployment.md
+│   └── medical-compliance.md
+└── config/                       # Configuration files
+    ├── tailwind.config.js
+    ├── vite.config.js
+    └── jest.config.js
+```
+
+---
+
+## 🧪 **Testing Standards**
+
+### **PHP Testing (PHPUnit)**
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Unit\Services;
+
+use PHPUnit\Framework\TestCase;
+use PreetiDreams\Theme\Services\TreatmentService;
+use PreetiDreams\Theme\Models\Treatment;
+
+final class TreatmentServiceTest extends TestCase
+{
+    private TreatmentService $treatmentService;
+    private MockObject $cacheService;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->cacheService = $this->createMock(CacheInterface::class);
+        $this->treatmentService = new TreatmentService($this->cacheService);
+    }
+
+    /**
+     * @test
+     */
+    public function it_retrieves_treatments_with_caching(): void
+    {
+        // Arrange
+        $expectedTreatments = collect([
+            new Treatment(['id' => 1, 'name' => 'Facial Rejuvenation']),
+            new Treatment(['id' => 2, 'name' => 'Botox Treatment'])
+        ]);
+
+        $this->cacheService
+            ->expects($this->once())
+            ->method('remember')
+            ->willReturn($expectedTreatments);
+
+        // Act
+        $result = $this->treatmentService->getTreatments();
+
+        // Assert
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(2, $result);
+        $this->assertEquals('Facial Rejuvenation', $result->first()->name);
+    }
+}
+```
+
+### **JavaScript Testing (Jest + Testing Library)**
+```typescript
+// TreatmentBookingWidget.test.ts
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { TreatmentBookingWidget } from '../TreatmentBookingWidget';
+
+describe('TreatmentBookingWidget', () => {
+  const mockConfig = {
+    treatmentId: 'facial-rejuvenation',
+    patientPrivacy: true,
+    hipaaCompliance: true
+  };
+
+  test('should require privacy consent for medical consultations', async () => {
+    // Arrange
+    render(<TreatmentBookingWidget config={mockConfig} />);
+
+    const submitButton = screen.getByRole('button', { name: /book consultation/i });
+
+    // Act
+    fireEvent.click(submitButton);
+
+    // Assert
+    await waitFor(() => {
+      expect(screen.getByText(/privacy consent is required/i)).toBeInTheDocument();
+    });
+  });
+
+  test('should submit booking when privacy consent is provided', async () => {
+    // Arrange
+    const mockApiResponse = { success: true, bookingId: '12345' };
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(mockApiResponse)
+    } as Response);
+
+    render(<TreatmentBookingWidget config={mockConfig} />);
+
+    // Act
+    const privacyCheckbox = screen.getByLabelText(/i consent to privacy policy/i);
+    const submitButton = screen.getByRole('button', { name: /book consultation/i });
+
+    fireEvent.click(privacyCheckbox);
+    fireEvent.click(submitButton);
+
+    // Assert
+    await waitFor(() => {
+      expect(screen.getByText(/booking confirmed/i)).toBeInTheDocument();
+    });
+  });
+});
+```
+
+---
+
+## 📝 **Documentation Standards**
+
+### **Code Documentation (PHPDoc + JSDoc)**
+```php
+/**
+ * Process consultation booking with HIPAA compliance
+ *
+ * This method handles the complete consultation booking workflow including
+ * patient privacy validation, HIPAA compliance checks, and secure data handling.
+ *
+ * @param ConsultationRequest $request The consultation booking request
+ * @param array<string, mixed> $options Additional booking options
+ *
+ * @return ConsultationResult The booking confirmation result
+ *
+ * @throws ValidationException When required patient consent is missing
+ * @throws HipaaComplianceException When HIPAA requirements are not met
+ * @throws BookingException When booking process fails
+ *
+ * @since 1.0.0
+ * @see https://docs.preetidreams.com/consultations
+ *
+ * @example
+ * ```php
+ * $request = new ConsultationRequest([
+ *     'patient_name' => 'Jane Doe',
+ *     'treatment_interest' => 'facial-rejuvenation',
+ *     'privacy_consent' => true
+ * ]);
+ *
+ * $result = $service->processBooking($request);
+ * ```
+ */
+public function processBooking(ConsultationRequest $request, array $options = []): ConsultationResult
+{
+    // Implementation...
+}
+```
+
+### **Component Documentation**
+```typescript
+/**
+ * Treatment Booking Widget Component
+ *
+ * A HIPAA-compliant booking widget for medical spa consultations that handles
+ * patient privacy, consent management, and secure form submission.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <TreatmentBookingWidget
+ *   config={{
+ *     treatmentId: 'facial-rejuvenation',
+ *     patientPrivacy: true,
+ *     hipaaCompliance: true
+ *   }}
+ *   onBookingComplete={(result) => console.log('Booking confirmed:', result)}
+ * />
+ * ```
+ */
+interface TreatmentBookingWidgetProps {
+  /** Configuration for the booking widget */
+  config: TreatmentBookingConfig;
+  /** Callback fired when booking is successfully completed */
+  onBookingComplete?: (result: BookingResult) => void;
+  /** Additional CSS classes for styling */
+  className?: string;
+}
+```
+
+---
+
+## ⚡ **Performance Standards**
+
+### **Core Web Vitals Targets**
+- **LCP (Largest Contentful Paint)**: < 1.5s
+- **FID (First Input Delay)**: < 100ms
+- **CLS (Cumulative Layout Shift)**: < 0.1
+- **FCP (First Contentful Paint)**: < 1.0s
+- **TTI (Time to Interactive)**: < 2.0s
+
+### **Code Splitting & Lazy Loading**
+```typescript
+// ✅ CORRECT - Lazy load components for better performance
+const BeforeAfterGallery = lazy(() => import('./components/BeforeAfterGallery'));
+const ConsultationForm = lazy(() => import('./components/ConsultationForm'));
+
+// ✅ CORRECT - Code splitting by route
+const TreatmentPages = lazy(() => import('./pages/TreatmentPages'));
+```
+
+### **Image Optimization**
+```php
+// ✅ CORRECT - Responsive image handling
+function preetidreams_responsive_image(string $attachment_id, array $sizes = []): string
+{
+    $default_sizes = [
+        'mobile' => '(max-width: 768px) 100vw',
+        'tablet' => '(max-width: 1024px) 50vw',
+        'desktop' => '33vw'
+    ];
+
+    $sizes = array_merge($default_sizes, $sizes);
+
+    return wp_get_attachment_image($attachment_id, 'full', false, [
+        'loading' => 'lazy',
+        'sizes' => implode(', ', $sizes),
+        'class' => 'responsive-image'
+    ]);
+}
+```
+
+---
+
+## 🔒 **Security Standards**
+
+### **HIPAA Compliance Patterns**
+```php
+// ✅ CORRECT - HIPAA-conscious data handling
+class PatientDataHandler
+{
+    private const ENCRYPTION_METHOD = 'AES-256-GCM';
+
+    public function storePatientConsent(array $consentData): string
+    {
+        // Anonymize patient identifier
+        $anonymousId = $this->generateAnonymousId($consentData['patient_email']);
+
+        // Encrypt sensitive data
+        $encryptedData = $this->encryptSensitiveData($consentData);
+
+        // Store with audit trail
+        return $this->auditableStorage->store([
+            'anonymous_id' => $anonymousId,
+            'consent_data' => $encryptedData,
+            'consent_timestamp' => now(),
+            'consent_version' => self::CONSENT_VERSION,
+            'ip_hash' => hash('sha256', request()->ip())
+        ]);
+    }
+}
+```
+
+### **Input Validation & Sanitization**
+```php
+// ✅ CORRECT - Comprehensive input validation
+function validate_consultation_form(array $input): array
+{
+    $rules = [
+        'patient_name' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
+        'email' => 'required|email|max:255',
+        'phone' => 'required|phone|max:20',
+        'treatment_interest' => 'required|in:' . implode(',', get_valid_treatments()),
+        'privacy_consent' => 'required|accepted',
+        'age_confirmation' => 'required|accepted'
+    ];
+
+    $validator = new Validator($input, $rules);
+
+    if ($validator->fails()) {
+        throw new ValidationException($validator->errors());
+    }
+
+    return $validator->validated();
+}
+```
+
+---
+
+## 📊 **Quality Metrics & Gates**
+
+### **Code Quality Thresholds**
+- **Unit Test Coverage**: Minimum 80%
+- **Integration Test Coverage**: Minimum 70%
+- **Cyclomatic Complexity**: Maximum 10 per method
+- **Technical Debt Ratio**: Maximum 5%
+- **Duplication**: Maximum 3%
+
+### **Performance Budgets**
+- **JavaScript Bundle**: Maximum 250KB gzipped
+- **CSS Bundle**: Maximum 50KB gzipped
+- **Images**: WebP format, maximum 1MB per image
+- **Fonts**: WOFF2 format, maximum 100KB total
+
+### **Accessibility Requirements**
+- **WCAG AAA Compliance**: 100%
+- **Color Contrast**: Minimum 7:1 for normal text
+- **Keyboard Navigation**: 100% functionality
+- **Screen Reader**: Complete semantic markup
+
+---
+
+## 🚀 **Development Workflow**
+
+### **Git Standards**
+```bash
+# ✅ CORRECT - Conventional commit format
+git commit -m "feat(treatments): add HIPAA-compliant booking form"
+git commit -m "fix(gallery): resolve before-after image loading issue"
+git commit -m "docs(api): update consultation endpoint documentation"
+git commit -m "perf(images): implement WebP conversion for gallery"
+```
+
+### **Branch Naming**
+```bash
+# ✅ CORRECT - Descriptive branch names
+feature/treatment-management-system
+bugfix/consultation-form-validation
+hotfix/hipaa-compliance-patch
+docs/api-documentation-update
+```
+
+### **Code Review Checklist**
+- [ ] Follows all coding standards and design patterns
+- [ ] Includes comprehensive unit tests (80%+ coverage)
+- [ ] Medical spa compliance requirements met
+- [ ] Performance budgets respected
+- [ ] Accessibility requirements fulfilled
+- [ ] Security vulnerabilities addressed
+- [ ] Documentation updated
+- [ ] No technical debt introduced
+
+---
+
+## 📋 **Enforcement & Automation**
+
+### **Pre-commit Hooks**
+```json
+{
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test && yarn build"
+    }
+  },
+  "lint-staged": {
+    "*.php": ["./vendor/bin/pint", "git add"],
+    "*.{js,ts,tsx}": ["eslint --fix", "prettier --write", "git add"],
+    "*.{css,scss}": ["stylelint --fix", "prettier --write", "git add"]
+  }
+}
+```
+
+### **CI/CD Pipeline Requirements**
+1. **Linting**: PHP CS Fixer, ESLint, Stylelint
+2. **Testing**: PHPUnit, Jest, Accessibility tests
+3. **Security**: Security vulnerability scanning
+4. **Performance**: Lighthouse CI, bundle analysis
+5. **Medical Compliance**: HIPAA validation checks
+
+---
+
+**Status**: ✅ **Production Ready - Comprehensive Medical Spa Development Standards**
+**Enforcement**: Automated via pre-commit hooks and CI/CD pipeline
+**Review**: Quarterly updates to maintain industry best practices
+**Compliance**: HIPAA-conscious, WCAG AAA, Performance-first

@@ -1,20 +1,72 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
-# @index.mdc - StarterKit v2.0 AI Agent Entry Point
+# @index.mdc - StarterKit v2.0 AI Agent Entry Point + Code Standards
 
 ## 🎯 **System Location**
 - **Master Index**: `projManager/master-index.json` (complete system config)
 - **Documentation**: `projManager/README.md`, `USAGE-STRUCTURE.md`, `AI-AGENT-INSTRUCTIONS.md`
 
+## 📋 **CODE STANDARDS ENFORCEMENT** ⭐ **CRITICAL - READ FIRST**
+
+### **🔒 MANDATORY CODE STANDARDS**
+Before generating ANY code, AI agents MUST follow these standards:
+
+1. **📖 Primary Reference**: `rules/code-standards.mdc` - **READ COMPLETELY BEFORE CODING**
+2. **📦 Package Management**: `rules/package-management.mdc` - **YARN ONLY, NO NPM**
+3. **🏥 Medical Spa Compliance**: HIPAA-conscious, WCAG AAA, Performance-first
+4. **🧪 Quality Gates**: 80%+ test coverage, industry best practices, zero technical debt
+
+### **⚡ QUICK STANDARDS REFERENCE**
+```bash
+# ✅ CORRECT - Always use Yarn
+yarn install
+yarn add package-name
+yarn dev
+yarn build
+
+# ❌ FORBIDDEN - Never use NPM
+# npm install  # BLOCKED
+# npm run      # BLOCKED
+
+# ✅ CORRECT - Code patterns
+class MedicalSpaService implements ServiceInterface
+{
+    public function processBooking(ConsultationRequest $request): BookingResult
+    {
+        $this->validateHipaaCompliance($request);
+        // Implementation with proper error handling
+    }
+}
+```
+
+### **🏗️ DIRECTORY STRUCTURE STANDARD**
+```
+app/
+├── Fields/          # ACF configurations
+├── Services/        # Business logic (SOLID principles)
+├── PostTypes/       # Custom post types
+├── Providers/       # Service providers
+└── Http/           # Controllers & middleware
+
+resources/
+├── views/          # Blade templates
+├── styles/         # SCSS (BEM + Tailwind)
+├── scripts/        # TypeScript (ES2022+)
+└── images/         # Optimized assets
+```
+
+---
+
 ## 🤖 **AI Agent Workflow**
-1. **Start**: Read `master-index.json` for complete system understanding
-2. **Process**: Use iteration-based progression (REQ-/TASK-/ADR- numbering)
-3. **Route**: Apply content analysis for automatic file placement
-4. **Enforce**: Quality gates and validation rules
-5. **Track**: Cross-module relationships and progression
+1. **Standards First**: Read `rules/code-standards.mdc` before any code generation
+2. **Package Management**: Use only Yarn commands from `rules/package-management.mdc`
+3. **Process**: Use iteration-based progression (REQ-/TASK-/ADR- numbering)
+4. **Route**: Apply content analysis for automatic file placement
+5. **Enforce**: Quality gates and validation rules
+6. **Track**: Cross-module relationships and progression
 
 ## ⚡ **Quick Commands**
 ```
@@ -23,44 +75,72 @@ Requirement: "Process new requirement: [DESC] - Create REQ-[CATEGORY]-[NUMBER]"
 Task: "Create tasks for REQ-[ID] - Generate TASK-[REQ-ID]-[NUMBER]"
 Decision: "Start decision journey for [TOPIC] - Create ADR-[NUMBER]"
 Health: "Analyze project health - Generate iteration report"
+Code: "Generate code following rules/code-standards.mdc for [COMPONENT]"
 ```
 
 ## 📊 **Iteration System**
 ```
 iteration-0:    System initialization
 iteration-1-2:  Discovery and analysis
-iteration-3:    Processing and refinement  
+iteration-3:    Processing and refinement
 iteration-4:    Validation and approval
-iteration-5+:   Implementation cycles
+iteration-5+:   Implementation cycles (following code standards)
 ```
 
 ## 🏗️ **Modular Architecture**
 ```
 ├── requirements/     ← REQ lifecycle management
-├── tasks/           ← TASK progression tracking  
+├── tasks/           ← TASK progression tracking
 ├── decisions/       ← ADR journey enforcement
 ├── knowledge/       ← Pattern recognition
-├── execution/       ← Implementation artifacts
+├── execution/       ← Implementation artifacts (code standards compliant)
 ├── analytics/       ← Health monitoring
 ├── automation/      ← Workflow engines
+├── rules/          ← CODE STANDARDS & BEST PRACTICES ⭐ NEW
+│   ├── code-standards.mdc      ← PRIMARY CODE REFERENCE
+│   ├── package-management.mdc  ← YARN REQUIREMENTS
+│   └── index.mdc              ← THIS FILE
 └── core/           ← System configuration
 ```
 
-## 🚨 **Operating Rules**
+## 🚨 **Operating Rules - ENHANCED**
 1. **Never skip quality gates** - System enforces mandatory progression
 2. **Always use entity IDs** - REQ-/TASK-/ADR- for all references
 3. **Track iteration progression** - Cycle-based, not time-based
 4. **Maintain relationships** - Cross-module wiring is critical
 5. **Learn from patterns** - Capture and reuse successful approaches
+6. **🔒 FOLLOW CODE STANDARDS** - All code must comply with rules/code-standards.mdc
+7. **📦 USE YARN ONLY** - NPM is forbidden, follow rules/package-management.mdc
+8. **🏥 MEDICAL COMPLIANCE** - HIPAA-conscious, accessibility-first design
+9. **⚡ PERFORMANCE FIRST** - <2s load times, Core Web Vitals compliance
+10. **🧪 TEST COVERAGE** - Minimum 80% unit test coverage required
 
-## 🔧 **File Processing**
+## 🔧 **File Processing - ENHANCED**
 - **Routing**: 40% filename + 40% content + 20% metadata
 - **Confidence**: >90% auto-route, 70-90% suggest, <70% manual
 - **Linking**: Automatic REQ-/TASK-/ADR- relationship detection
 - **Validation**: Template-based completeness checks
+- **🔒 CODE VALIDATION**: Automatic standards compliance checking
+- **📦 PACKAGE VALIDATION**: Yarn-only enforcement via pre-commit hooks
+- **🏥 MEDICAL VALIDATION**: HIPAA and accessibility compliance checks
+
+## 📋 **CODE GENERATION CHECKLIST**
+Before generating any code, ensure:
+- [ ] Read `rules/code-standards.mdc` completely
+- [ ] Use Yarn for all package operations (never npm)
+- [ ] Follow SOLID principles and design patterns
+- [ ] Implement HIPAA-conscious data handling
+- [ ] Include comprehensive error handling
+- [ ] Add proper TypeScript/PHPDoc documentation
+- [ ] Ensure WCAG AAA accessibility compliance
+- [ ] Include unit tests (80%+ coverage)
+- [ ] Follow BEM + Tailwind CSS methodology
+- [ ] Optimize for Core Web Vitals targets
 
 ---
 
-**Central command center for StarterKit v2.0. All AI operations begin here.**
+**Central command center for StarterKit v2.0 with enforced code standards.**
 
-**Status**: ✅ Production Ready - Universal Project Management System
+**Status**: ✅ Production Ready - Universal Project Management + Code Standards System
+
+**⚠️ CRITICAL**: All AI agents MUST read and follow `rules/code-standards.mdc` before generating any code. Failure to follow standards will result in technical debt and project quality degradation.

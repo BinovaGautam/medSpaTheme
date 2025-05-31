@@ -1,0 +1,413 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Package Management Standards - Yarn Required
+
+## 🎯 **Overview**
+This document establishes package management standards for the PreetiDreams medical spa theme, mandating Yarn usage for superior dependency resolution and professional development workflow.
+
+---
+
+## 🚫 **NPM FORBIDDEN - Use Yarn Only**
+
+### **Why Yarn is Required**
+1. **Deterministic Dependencies**: Yarn's lockfile ensures identical installs across all environments
+2. **Faster Installation**: Parallel downloading and caching improvements
+3. **Better Security**: Built-in integrity checking and security auditing
+4. **Medical Spa Reliability**: Critical for patient-facing applications requiring consistency
+5. **Professional Development**: Industry standard for enterprise-grade projects
+
+### **Forbidden Commands**
+```bash
+# ❌ NEVER USE - These commands are FORBIDDEN
+npm install
+npm i
+npm run
+npm start
+npm build
+npm test
+npm publish
+npm update
+
+# These will be blocked by pre-commit hooks
+```
+
+### **Required Commands**
+```bash
+# ✅ CORRECT - Use Yarn for all operations
+yarn install          # Install dependencies
+yarn add package      # Add production dependency
+yarn add -D package   # Add development dependency
+yarn remove package   # Remove dependency
+yarn upgrade          # Update dependencies
+yarn build            # Build project
+yarn dev              # Development server
+yarn test             # Run tests
+yarn lint             # Run linting
+```
+
+---
+
+## 📦 **Dependency Management Standards**
+
+### **Production Dependencies**
+```bash
+# ✅ CORRECT - Add production dependencies
+yarn add @wordpress/blocks
+yarn add lodash
+yarn add axios
+
+# Medical spa specific packages
+yarn add @hipaa-compliance/forms
+yarn add @accessibility/wcag-validator
+yarn add @medical/appointment-booking
+```
+
+### **Development Dependencies**
+```bash
+# ✅ CORRECT - Add development dependencies
+yarn add -D @types/node
+yarn add -D typescript
+yarn add -D jest
+yarn add -D eslint
+yarn add -D prettier
+
+# Medical spa development tools
+yarn add -D @medical-spa/dev-tools
+yarn add -D @hipaa/testing-suite
+yarn add -D lighthouse-ci
+```
+
+### **Peer Dependencies**
+```bash
+# ✅ CORRECT - Handle peer dependencies properly
+yarn add react react-dom
+yarn add -D @types/react @types/react-dom
+
+# Check for peer dependency warnings
+yarn install --check-peer-deps
+```
+
+---
+
+## 🔒 **Security Standards**
+
+### **Security Auditing**
+```bash
+# ✅ REQUIRED - Regular security audits
+yarn audit                    # Check for vulnerabilities
+yarn audit --level moderate   # Check moderate+ vulnerabilities
+yarn audit --json            # Machine-readable output
+
+# Medical spa security requirements
+yarn audit --groups dependencies  # Production dependencies only
+```
+
+### **Vulnerability Resolution**
+```bash
+# ✅ CORRECT - Fix vulnerabilities
+yarn audit --fix              # Automatic fixes
+yarn upgrade package@version  # Manual version upgrade
+yarn add package@^latest      # Latest secure version
+
+# Document security fixes in git commits
+git commit -m "security: upgrade package to fix CVE-2024-xxxx"
+```
+
+---
+
+## 📋 **Lockfile Management**
+
+### **yarn.lock Requirements**
+- **Always commit yarn.lock**: Critical for reproducible builds
+- **Never edit manually**: Let Yarn manage the lockfile
+- **Update carefully**: Review changes before committing
+- **Medical compliance**: Ensure consistent deployments for patient-facing features
+
+```bash
+# ✅ CORRECT - Lockfile operations
+yarn install --frozen-lockfile  # CI/production builds
+yarn install --check-files     # Verify file integrity
+yarn upgrade-interactive       # Interactive upgrades
+
+# ❌ FORBIDDEN - Never do these
+rm yarn.lock                   # NEVER DELETE
+echo "some content" > yarn.lock # NEVER EDIT MANUALLY
+```
+
+---
+
+## 🏗️ **Workspace Management**
+
+### **Monorepo Support** (if applicable)
+```yaml
+# package.json - Workspace configuration
+{
+  "workspaces": [
+    "packages/theme-core",
+    "packages/medical-components",
+    "packages/hipaa-forms",
+    "packages/accessibility-utils"
+  ]
+}
+```
+
+```bash
+# ✅ CORRECT - Workspace commands
+yarn workspace theme-core add lodash
+yarn workspace medical-components build
+yarn workspaces run test
+yarn workspaces run lint
+
+# Build all workspaces
+yarn workspaces foreach run build
+```
+
+---
+
+## ⚡ **Performance Optimization**
+
+### **Installation Performance**
+```bash
+# ✅ CORRECT - Optimize installation speed
+yarn config set network-timeout 300000
+yarn config set registry https://registry.npmjs.org/
+yarn install --pure-lockfile      # Skip lockfile update
+yarn install --production         # Production only
+yarn install --offline            # Use cache only
+
+# Medical spa specific: fast development setup
+yarn install --focus              # Skip devDependencies in production
+```
+
+### **Caching Strategy**
+```bash
+# ✅ CORRECT - Manage Yarn cache
+yarn cache list                   # List cached packages
+yarn cache dir                    # Show cache directory
+yarn cache clean                  # Clean cache
+yarn cache clean package-name     # Clean specific package
+
+# CI optimization
+yarn config set cache-folder .yarn/cache
+yarn install --prefer-offline
+```
+
+---
+
+## 🧪 **Development Scripts**
+
+### **package.json Scripts**
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && yarn build:php",
+    "build:php": "composer install --no-dev --optimize-autoloader",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "yarn lint:js && yarn lint:php && yarn lint:css",
+    "lint:js": "eslint resources/scripts --ext .ts,.tsx,.js,.jsx",
+    "lint:php": "./vendor/bin/pint",
+    "lint:css": "stylelint resources/styles/**/*.scss",
+    "format": "yarn format:js && yarn format:php",
+    "format:js": "prettier --write resources/scripts",
+    "format:php": "./vendor/bin/pint --config pint.json",
+    "medical:test": "yarn test tests/medical-compliance",
+    "hipaa:validate": "yarn test tests/hipaa-compliance",
+    "accessibility:test": "yarn lighthouse:a11y && yarn axe:test",
+    "lighthouse:a11y": "lighthouse --only-categories=accessibility --output=json",
+    "axe:test": "jest tests/accessibility/axe.test.js"
+  }
+}
+```
+
+### **Script Execution**
+```bash
+# ✅ CORRECT - Run package scripts
+yarn dev                     # Development server
+yarn build                   # Production build
+yarn test                    # Run all tests
+yarn lint                    # Run all linting
+yarn medical:test           # Medical compliance tests
+yarn hipaa:validate         # HIPAA validation
+yarn accessibility:test     # Accessibility testing
+
+# ❌ FORBIDDEN - Don't use npm run
+# npm run dev    # NEVER USE
+# npm run build  # NEVER USE
+```
+
+---
+
+## 🔧 **Configuration Standards**
+
+### **.yarnrc.yml Configuration**
+```yaml
+# .yarnrc.yml - Required Yarn configuration
+nodeLinker: node-modules
+yarnPath: .yarn/releases/yarn-4.0.2.cjs
+
+# Performance settings
+compressionLevel: mixed
+enableGlobalCache: true
+enableTelemetry: false
+
+# Medical spa security settings
+enableStrictSsl: true
+enableNetwork: true
+httpTimeout: 60000
+networkTimeout: 60000
+
+# Package resolution
+preferInteractive: true
+progressBarStyle: patrick
+```
+
+### **Package Resolution**
+```json
+// package.json - Resolution overrides for security
+{
+  "resolutions": {
+    "hoisted/node_modules/vulnerable-package": "^safe-version",
+    "**/lodash": "^4.17.21",
+    "**/serialize-javascript": "^6.0.0"
+  }
+}
+```
+
+---
+
+## 📊 **Quality Gates**
+
+### **Pre-commit Validation**
+```bash
+#!/bin/bash
+# .husky/pre-commit - Validate package management
+
+# Ensure yarn.lock exists and is valid
+if [ ! -f "yarn.lock" ]; then
+  echo "❌ Error: yarn.lock is missing"
+  exit 1
+fi
+
+# Validate lockfile integrity
+yarn install --check-files
+if [ $? -ne 0 ]; then
+  echo "❌ Error: yarn.lock integrity check failed"
+  exit 1
+fi
+
+# Check for npm usage (forbidden)
+if grep -r "npm run\|npm install" --include="*.json" --include="*.js" --include="*.ts" .; then
+  echo "❌ Error: npm usage detected - use yarn only"
+  exit 1
+fi
+
+echo "✅ Package management validation passed"
+```
+
+### **CI/CD Validation**
+```yaml
+# GitHub Actions - Package management validation
+name: Package Management Validation
+on: [push, pull_request]
+
+jobs:
+  validate-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Yarn
+        run: corepack enable
+
+      - name: Validate yarn.lock
+        run: |
+          yarn install --immutable --immutable-cache
+          yarn audit --level moderate
+
+      - name: Check for npm usage
+        run: |
+          if grep -r "npm run\|npm install" --include="*.json" .; then
+            echo "❌ npm usage detected"
+            exit 1
+          fi
+```
+
+---
+
+## 🚨 **Error Handling**
+
+### **Common Issues & Solutions**
+```bash
+# Issue: Package not found
+# ✅ Solution:
+yarn cache clean
+yarn install
+
+# Issue: Integrity check failed
+# ✅ Solution:
+rm yarn.lock
+yarn install
+
+# Issue: Peer dependency warning
+# ✅ Solution:
+yarn add peer-dependency-name
+
+# Issue: Security vulnerability
+# ✅ Solution:
+yarn audit
+yarn audit --fix
+yarn upgrade vulnerable-package@latest
+```
+
+### **Emergency Procedures**
+```bash
+# Nuclear option: Complete reset
+rm -rf node_modules yarn.lock
+yarn cache clean
+yarn install
+
+# Verify medical spa requirements still met
+yarn medical:test
+yarn hipaa:validate
+yarn accessibility:test
+```
+
+---
+
+## 📋 **Compliance Checklist**
+
+### **Before Each Commit**
+- [ ] `yarn.lock` file is present and committed
+- [ ] No npm commands in package.json scripts
+- [ ] Security audit passes (`yarn audit`)
+- [ ] Medical compliance tests pass
+- [ ] All dependencies properly categorized (prod vs dev)
+- [ ] Peer dependencies resolved
+- [ ] Cache is clean and up-to-date
+
+### **Before Each Release**
+- [ ] Comprehensive security audit performed
+- [ ] All medical spa functionality tested
+- [ ] HIPAA compliance validated
+- [ ] Accessibility tests passing
+- [ ] Performance budgets met
+- [ ] Dependencies updated to latest secure versions
+- [ ] Documentation updated for new dependencies
+
+---
+
+**Status**: ✅ **Production Ready - Yarn-Only Package Management**
+**Enforcement**: Automated via pre-commit hooks and CI/CD pipeline
+**Security**: Regular auditing and vulnerability management
+**Medical Compliance**: Validated package integrity for patient-facing applications

@@ -1,0 +1,523 @@
+// PreetiDreams Medical Spa Theme - Main Stylesheet
+// Version: 1.0.0
+// HIPAA-conscious, WCAG AAA compliant, luxury medical spa design
+
+// ==================================================
+// TAILWIND CSS V4 IMPORTS
+// ==================================================
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+// ==================================================
+// MEDICAL SPA VARIABLES & FUNCTIONS
+// ==================================================
+@import 'variables';
+@import 'mixins';
+
+// ==================================================
+// BASE STYLES - Medical Spa Foundation
+// ==================================================
+html {
+  font-size: 16px; // WCAG AAA minimum
+  line-height: 1.6;
+  scroll-behavior: smooth;
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: theme('fontFamily.body');
+  font-size: theme('fontSize.base');
+  color: theme('colors.gray.900');
+  background-color: theme('colors.cream.50');
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // High contrast mode support
+  @media (prefers-contrast: high) {
+    color: black;
+    background-color: white;
+  }
+}
+
+// Medical spa heading hierarchy
+h1, h2, h3, h4, h5, h6 {
+  font-family: theme('fontFamily.heading');
+  font-weight: theme('fontWeight.semibold');
+  color: theme('colors.sage.800');
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px theme('colors.trust.primary'), 0 0 0 4px rgba(30, 64, 175, 0.1);
+  }
+}
+
+h1 { font-size: theme('fontSize.display'); }
+h2 { font-size: theme('fontSize.headline'); }
+h3 { font-size: theme('fontSize.subhead'); }
+h4 { font-size: theme('fontSize.2xl'); }
+h5 { font-size: theme('fontSize.xl'); }
+h6 { font-size: theme('fontSize.lg'); }
+
+// Medical spa links with trust indicators
+a {
+  color: theme('colors.sage.600');
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: theme('colors.sage.800');
+    text-decoration-thickness: 2px;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px theme('colors.trust.primary'), 0 0 0 4px rgba(30, 64, 175, 0.1);
+    border-radius: theme('borderRadius.sm');
+  }
+
+  // Medical consultation links
+  &.consultation-link {
+    background: theme('backgroundImage.gold-gradient');
+    color: theme('colors.white');
+    font-weight: theme('fontWeight.semibold');
+    padding: theme('spacing.2') theme('spacing.4');
+    border-radius: theme('borderRadius.luxury');
+    text-decoration: none;
+
+    &:hover {
+      box-shadow: theme('boxShadow.luxury');
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+  }
+}
+
+// Medical spa form elements
+input, textarea, select {
+  border: 1px solid theme('colors.cream.300');
+  border-radius: theme('borderRadius.luxury');
+  padding: theme('spacing.3') theme('spacing.4');
+  font-size: 1rem; // Accessibility minimum
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: theme('colors.trust.primary');
+    box-shadow: 0 0 0 1px theme('colors.trust.primary');
+  }
+
+  &:invalid {
+    border-color: theme('colors.medical.error');
+    box-shadow: 0 0 0 1px theme('colors.medical.error');
+  }
+
+  &::placeholder {
+    color: theme('colors.cream.600');
+  }
+}
+
+// Medical spa buttons
+button {
+  font-weight: theme('fontWeight.semibold');
+  border-radius: theme('borderRadius.luxury');
+  transition: all 0.2s ease-in-out;
+  min-height: 44px; // Touch target minimum
+  min-width: 44px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px theme('colors.trust.primary'), 0 0 0 4px rgba(30, 64, 175, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// HIPAA secure elements
+.hipaa-element {
+  position: relative;
+
+  &::before {
+    content: "🔒";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 12px;
+    background: theme('colors.trust.primary');
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+}
+
+// ==================================================
+// COMPONENT STYLES - Medical Spa Specific
+// ==================================================
+
+// Treatment card component
+.treatment-card {
+  background-color: theme('colors.white');
+  border-radius: theme('borderRadius.treatment');
+  box-shadow: theme('boxShadow.treatment-card');
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid theme('colors.cream.200');
+
+  &:hover {
+    box-shadow: theme('boxShadow.luxury');
+    transform: translateY(-4px);
+  }
+
+  &__image {
+    width: 100%;
+    height: 12rem; // 192px
+    object-fit: cover;
+    aspect-ratio: 16/9;
+  }
+
+  &__content {
+    padding: theme('spacing.6');
+  }
+
+  &__title {
+    font-size: theme('fontSize.xl');
+    font-family: theme('fontFamily.heading');
+    font-weight: theme('fontWeight.semibold');
+    color: theme('colors.sage.800');
+    margin-bottom: theme('spacing.2');
+  }
+
+  &__description {
+    color: theme('colors.gray.600');
+    margin-bottom: theme('spacing.4');
+    line-height: 1.6;
+  }
+
+  &__price {
+    font-size: theme('fontSize.2xl');
+    font-weight: theme('fontWeight.bold');
+    color: theme('colors.gold.600');
+    margin-bottom: theme('spacing.4');
+
+    &--starting {
+      font-size: theme('fontSize.sm');
+      font-weight: theme('fontWeight.normal');
+      color: theme('colors.gray.500');
+    }
+  }
+
+  &__cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  // Featured treatment styling
+  &--featured {
+    box-shadow: 0 0 0 2px theme('colors.gold.400'), theme('boxShadow.consultation');
+
+    .treatment-card__image {
+      height: 16rem; // 256px
+    }
+  }
+
+  // Loading state
+  &--loading {
+    animation: pulse 2s infinite;
+
+    .treatment-card__image,
+    .treatment-card__title,
+    .treatment-card__description {
+      background-color: theme('colors.cream.200');
+      border-radius: theme('borderRadius.md');
+    }
+  }
+}
+
+// Consultation form component
+.consultation-form {
+  background-color: theme('colors.white');
+  border-radius: theme('borderRadius.consultation');
+  box-shadow: theme('boxShadow.consultation');
+  padding: theme('spacing.8');
+  border: 1px solid theme('colors.cream.200');
+
+  &__header {
+    text-align: center;
+    margin-bottom: theme('spacing.8');
+  }
+
+  &__title {
+    font-size: theme('fontSize.headline');
+    font-family: theme('fontFamily.heading');
+    color: theme('colors.sage.800');
+    margin-bottom: theme('spacing.2');
+  }
+
+  &__subtitle {
+    color: theme('colors.gray.600');
+    line-height: 1.6;
+  }
+
+  &__field-group {
+    margin-bottom: theme('spacing.6');
+  }
+
+  &__label {
+    display: block;
+    font-size: theme('fontSize.sm');
+    font-weight: theme('fontWeight.semibold');
+    color: theme('colors.sage.700');
+    margin-bottom: theme('spacing.2');
+
+    &--required::after {
+      content: " *";
+      color: theme('colors.medical.error');
+    }
+  }
+
+  &__input {
+    width: 100%;
+  }
+
+  &__checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: theme('spacing.3');
+    padding: theme('spacing.4');
+    background-color: theme('colors.cream.50');
+    border-radius: theme('borderRadius.luxury');
+    border: 1px solid theme('colors.cream.200');
+  }
+
+  &__checkbox {
+    margin-top: theme('spacing.1');
+    flex-shrink: 0;
+  }
+
+  &__checkbox-label {
+    font-size: theme('fontSize.sm');
+    color: theme('colors.gray.700');
+    line-height: 1.6;
+  }
+
+  &__submit {
+    width: 100%;
+  }
+
+  &__privacy-notice {
+    margin-top: theme('spacing.6');
+    font-size: theme('fontSize.sm');
+  }
+
+  // Form validation states
+  &__field-error {
+    border-color: theme('colors.medical.error');
+    box-shadow: 0 0 0 1px theme('colors.medical.error');
+  }
+
+  &__error-message {
+    color: theme('colors.medical.error');
+    font-size: theme('fontSize.sm');
+    margin-top: theme('spacing.1');
+  }
+
+  &__success-message {
+    color: theme('colors.medical.success');
+    background-color: #f0fdf4; // green-50
+    border: 1px solid #bbf7d0; // green-200
+    border-radius: theme('borderRadius.luxury');
+    padding: theme('spacing.4');
+    margin-top: theme('spacing.4');
+  }
+}
+
+// ==================================================
+// UTILITY STYLES - Medical Spa Specific
+// ==================================================
+
+// HIPAA compliance utilities
+.hipaa-blur {
+  filter: blur(4px);
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    filter: blur(0);
+  }
+}
+
+.patient-consent-required {
+  position: relative;
+
+  &::before {
+    content: "Patient consent required";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(30, 64, 175, 0.95); // trust-primary with opacity
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: theme('fontSize.sm');
+    font-weight: theme('fontWeight.semibold');
+    z-index: 20;
+  }
+
+  &--consented::before {
+    display: none;
+  }
+}
+
+// Accessibility utilities
+.sr-only-focusable {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  &:focus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    background-color: white;
+    color: black;
+    padding: theme('spacing.4');
+    border: 2px solid theme('colors.trust.primary');
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+.skip-link {
+  @extend .sr-only-focusable;
+  background-color: theme('colors.trust.primary');
+  color: white;
+  padding: theme('spacing.4');
+  font-weight: theme('fontWeight.semibold');
+  text-decoration: none;
+}
+
+// Medical spa specific animations
+.medical-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.medical-slide-up {
+  animation: slideUp 1s ease-out forwards;
+}
+
+// Luxury spacing utilities
+.section-padding {
+  padding-top: theme('spacing.16');
+  padding-bottom: theme('spacing.16');
+
+  @media (min-width: 1024px) {
+    padding-top: theme('spacing.24');
+    padding-bottom: theme('spacing.24');
+  }
+}
+
+.content-padding {
+  padding-left: theme('spacing.6');
+  padding-right: theme('spacing.6');
+
+  @media (min-width: 1024px) {
+    padding-left: theme('spacing.8');
+    padding-right: theme('spacing.8');
+  }
+}
+
+// Medical spa responsive utilities
+.treatment-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: theme('spacing.8');
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.consultation-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: theme('spacing.12');
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// ==================================================
+// PRINT STYLES - Medical Spa Compliant
+// ==================================================
+@media print {
+  * {
+    color: black !important;
+    background: white !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .treatment-card,
+  .consultation-form {
+    border: 1px solid black !important;
+    page-break-inside: avoid;
+  }
+
+  // Hide sensitive medical information in print
+  .hipaa-secure,
+  .patient-privacy {
+    &::after {
+      content: "[Protected Medical Information]";
+      font-weight: bold;
+    }
+
+    * {
+      visibility: hidden;
+    }
+  }
+}
+
+// ==================================================
+// COMPONENT IMPORTS
+// ==================================================
+@import 'components/treatment-card';
+@import 'components/before-after';
+@import 'components/consultation-form';
+@import 'layouts/header';
+@import 'layouts/footer';
+@import 'layouts/navigation';
+@import 'utilities/medical-spa';
+@import 'utilities/accessibility';
+@import 'utilities/hipaa';
