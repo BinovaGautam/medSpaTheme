@@ -14,7 +14,13 @@
         <?php if (have_posts()) : ?>
 
             <!-- Treatment Filters -->
-            <div class="treatment-filters"></div>
+            <div class="treatment-filters">
+                <!-- This container will be populated by JavaScript -->
+                <div class="filter-loading-placeholder" style="padding: 2rem; text-align: center; background: #f8f9fa; border-radius: 8px; margin-bottom: 2rem; border: 2px dashed #d4af37;">
+                    <p style="color: #2d5a27; font-weight: 600;">🔍 Treatment Filter Loading...</p>
+                    <p style="font-size: 0.9rem; color: #87a96b;">If this message persists, JavaScript may not be loading properly.</p>
+                </div>
+            </div>
 
             <!-- Treatments Grid -->
             <div class="treatments-grid treatment-grid">
@@ -186,6 +192,14 @@
 <script>
 // Initialize Treatment Filter when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🏥 DOM Ready - Initializing Treatment Filter...');
+
+    // Remove loading placeholder
+    const placeholder = document.querySelector('.filter-loading-placeholder');
+    if (placeholder) {
+        placeholder.remove();
+    }
+
     if (typeof TreatmentFilter !== 'undefined') {
         const treatmentFilter = new TreatmentFilter('.treatment-filters');
         treatmentFilter.init();
@@ -193,10 +207,28 @@ document.addEventListener('DOMContentLoaded', function() {
         // Store reference globally for debugging
         window.treatmentFilterInstance = treatmentFilter;
 
-        console.log('Treatment Filter initialized successfully');
+        console.log('✅ Treatment Filter initialized successfully');
+
+        // Add success indicator for visual confirmation
+        const filterContainer = document.querySelector('.treatment-filters');
+        if (filterContainer && filterContainer.children.length > 0) {
+            console.log('🎯 Filter interface rendered with', filterContainer.children.length, 'elements');
+        }
     } else {
-        console.warn('TreatmentFilter class not loaded');
+        console.error('❌ TreatmentFilter class not loaded - Check if JavaScript files are properly enqueued');
+
+        // Show error message to user in debug mode
+        const filterContainer = document.querySelector('.treatment-filters');
+        if (filterContainer && window.location.hostname.includes('localhost')) {
+            filterContainer.innerHTML = '<div style="padding: 1rem; background: #f8d7da; color: #721c24; border-radius: 4px; border: 1px solid #f5c6cb;"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded. Check console for details.</div>';
+        }
     }
+
+    // Debug information
+    console.log('📊 Medical Spa Theme Debug Info:');
+    console.log('- medicalSpaTheme config:', window.medicalSpaTheme);
+    console.log('- MedicalSpaApp available:', typeof window.MedicalSpaApp !== 'undefined');
+    console.log('- TreatmentFilter available:', typeof TreatmentFilter !== 'undefined');
 });
 </script>
 
