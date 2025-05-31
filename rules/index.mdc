@@ -1,0 +1,66 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# @index.mdc - StarterKit v2.0 AI Agent Entry Point
+
+## 🎯 **System Location**
+- **Master Index**: `projManager/master-index.json` (complete system config)
+- **Documentation**: `projManager/README.md`, `USAGE-STRUCTURE.md`, `AI-AGENT-INSTRUCTIONS.md`
+
+## 🤖 **AI Agent Workflow**
+1. **Start**: Read `master-index.json` for complete system understanding
+2. **Process**: Use iteration-based progression (REQ-/TASK-/ADR- numbering)
+3. **Route**: Apply content analysis for automatic file placement
+4. **Enforce**: Quality gates and validation rules
+5. **Track**: Cross-module relationships and progression
+
+## ⚡ **Quick Commands**
+```
+Initialize: "Initialize StarterKit v2.0 for [PROJECT_TYPE]"
+Requirement: "Process new requirement: [DESC] - Create REQ-[CATEGORY]-[NUMBER]"
+Task: "Create tasks for REQ-[ID] - Generate TASK-[REQ-ID]-[NUMBER]"
+Decision: "Start decision journey for [TOPIC] - Create ADR-[NUMBER]"
+Health: "Analyze project health - Generate iteration report"
+```
+
+## 📊 **Iteration System**
+```
+iteration-0:    System initialization
+iteration-1-2:  Discovery and analysis
+iteration-3:    Processing and refinement  
+iteration-4:    Validation and approval
+iteration-5+:   Implementation cycles
+```
+
+## 🏗️ **Modular Architecture**
+```
+├── requirements/     ← REQ lifecycle management
+├── tasks/           ← TASK progression tracking  
+├── decisions/       ← ADR journey enforcement
+├── knowledge/       ← Pattern recognition
+├── execution/       ← Implementation artifacts
+├── analytics/       ← Health monitoring
+├── automation/      ← Workflow engines
+└── core/           ← System configuration
+```
+
+## 🚨 **Operating Rules**
+1. **Never skip quality gates** - System enforces mandatory progression
+2. **Always use entity IDs** - REQ-/TASK-/ADR- for all references
+3. **Track iteration progression** - Cycle-based, not time-based
+4. **Maintain relationships** - Cross-module wiring is critical
+5. **Learn from patterns** - Capture and reuse successful approaches
+
+## 🔧 **File Processing**
+- **Routing**: 40% filename + 40% content + 20% metadata
+- **Confidence**: >90% auto-route, 70-90% suggest, <70% manual
+- **Linking**: Automatic REQ-/TASK-/ADR- relationship detection
+- **Validation**: Template-based completeness checks
+
+---
+
+**Central command center for StarterKit v2.0. All AI operations begin here.**
+
+**Status**: ✅ Production Ready - Universal Project Management System

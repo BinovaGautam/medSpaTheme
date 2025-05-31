@@ -1,0 +1,587 @@
+{
+  "starterKitMetadata": {
+    "name": "StarterKit v2.0 - Universal Project Management System",
+    "version": "2.0.0",
+    "description": "Self-organizing, intelligent project management system that works as a plugin for any project type",
+    "created": "2025-01-28T00:00:00Z",
+    "lastUpdated": "2025-01-28T00:00:00Z",
+    "compatibility": ["software-development", "design-projects", "content-creation", "research", "business-projects"],
+    "license": "MIT",
+    "author": "StarterKit Development Team"
+  },
+
+  "documentation": {
+    "entryPoints": {
+      "README.md": {
+        "purpose": "Primary system overview and capabilities",
+        "audience": "AI agents and users",
+        "readOrder": 1,
+        "description": "Start here for system understanding"
+      },
+      "USAGE-STRUCTURE.md": {
+        "purpose": "Clear explanation of folder structure and usage patterns",
+        "audience": "AI agents and developers",
+        "readOrder": 2,
+        "description": "How to use StarterKit with development projects"
+      },
+      "SETUP-GUIDE.md": {
+        "purpose": "Complete system initialization procedures",
+        "audience": "AI agents",
+        "readOrder": 3,
+        "description": "Step-by-step setup and configuration"
+      },
+      "AI-AGENT-INSTRUCTIONS.md": {
+        "purpose": "AI agent operating procedures and automation rules",
+        "audience": "AI agents",
+        "readOrder": 4,
+        "description": "How AI agents should operate within this system"
+      },
+      "projectDocs/SYSTEM-OVERVIEW.md": {
+        "purpose": "Modular architecture and cross-module wiring details",
+        "audience": "AI agents and system architects",
+        "readOrder": 5,
+        "description": "Deep dive into modular system design"
+      },
+      "DOCUMENTATION-CONSISTENCY.md": {
+        "purpose": "Documentation validation and consistency maintenance",
+        "audience": "AI agents and maintainers",
+        "readOrder": 6,
+        "description": "Ensures all documentation remains aligned and non-contradictory"
+      },
+      "VERSIONING-SYSTEM.md": {
+        "purpose": "Iteration-based progression and entity numbering system",
+        "audience": "AI agents and system architects",
+        "readOrder": 7,
+        "description": "Complete versioning system optimized for AI agent workflows"
+      }
+    },
+    "templates": {
+      "requirement-template.md": {
+        "location": "templates/requirement-template.md",
+        "moduleLocation": "projectDocs/requirements/templates/requirement-template.md",
+        "purpose": "Standardized requirement documentation with AI validation",
+        "validates": ["stakeholder-specificity", "measurable-criteria", "business-value"]
+      },
+      "decision-template.md": {
+        "location": "templates/decision-template.md", 
+        "moduleLocation": "projectDocs/decisions/templates/decision-template.md",
+        "purpose": "Complete decision journey enforcement template",
+        "validates": ["mandatory-phases", "alternative-consideration", "systematic-evaluation"]
+      }
+    },
+    "consistency": {
+      "validateReferences": true,
+      "checkDirectoryStructure": true,
+      "ensureTemplateSync": true,
+      "validateFileCounts": true
+    }
+  },
+
+  "systemArchitecture": {
+    "corePhilosophy": "Self-organizing system that learns from project patterns and automates documentation, task management, and decision tracking",
+    "designPrinciples": [
+      "Zero-configuration startup for any project type",
+      "Intelligent file routing based on content analysis",
+      "Automatic relationship mapping between all entities",
+      "Decision journey tracking with mistake prevention",
+      "Autopilot mode with goal deviation protection",
+      "RDBMS-like data integrity and querying"
+    ],
+    "automationLevel": "full-autopilot-with-human-oversight"
+  },
+
+  "directoryStructure": {
+    "schema": {
+      "core/": {
+        "purpose": "System configuration and rules engine",
+        "autoRouting": false,
+        "files": ["config.json", "rules-engine.js", "system-health.json"],
+        "description": "Core system files that should never be auto-routed"
+      },
+      "requirements/": {
+        "purpose": "Requirement analysis lifecycle management",
+        "autoRouting": true,
+        "structure": {
+          "initial/": "First-pass requirement gathering",
+          "refined/": "Processed and structured requirements", 
+          "pivots/": "Requirement changes and evolution",
+          "mistakes/": "Failed requirements and lessons learned",
+          "templates/": "Requirement documentation templates"
+        },
+        "routingRules": {
+          "fileTypes": ["requirement-*.md", "*-requirements.json", "user-stories-*.md"],
+          "contentPatterns": ["requirement", "user story", "acceptance criteria", "business need"],
+          "autoTagging": ["priority", "stakeholder", "phase", "complexity"]
+        }
+      },
+      "tasks/": {
+        "purpose": "Task lifecycle and execution management",
+        "autoRouting": true,
+        "structure": {
+          "pending/": "Tasks created but not started",
+          "active/": "Currently executing tasks",
+          "blocked/": "Tasks waiting for dependencies",
+          "testing/": "Tasks under validation",
+          "completed/": "Successfully finished tasks",
+          "cancelled/": "Abandoned or unnecessary tasks",
+          "templates/": "Task creation templates"
+        },
+        "routingRules": {
+          "fileTypes": ["task-*.md", "*-task.json", "TASK-*.md"],
+          "statusDetection": "automatic-based-on-content-keywords",
+          "autoProgression": true
+        }
+      },
+      "decisions/": {
+        "purpose": "Decision journey and architectural choice tracking",
+        "autoRouting": true,
+        "structure": {
+          "architectural/": "System design and technical decisions",
+          "business/": "Product and strategy decisions",
+          "design/": "UX/UI and creative decisions",
+          "process/": "Workflow and methodology decisions",
+          "templates/": "Decision documentation templates",
+          "alternatives/": "Options considered but not chosen",
+          "reviews/": "Decision outcome analysis"
+        },
+        "routingRules": {
+          "fileTypes": ["decision-*.md", "ADR-*.md", "choice-*.json"],
+          "contentPatterns": ["decision", "choice", "alternative", "rationale", "trade-off"],
+          "requiresJourney": true
+        }
+      },
+      "knowledge/": {
+        "purpose": "Learning and pattern recognition system",
+        "autoRouting": true,
+        "structure": {
+          "patterns/": "Reusable solutions and approaches",
+          "lessons/": "What worked and what didn't",
+          "best-practices/": "Proven successful approaches",
+          "anti-patterns/": "Things to avoid",
+          "references/": "External knowledge and documentation",
+          "graph/": "Relationship mappings and connections"
+        },
+        "routingRules": {
+          "fileTypes": ["pattern-*.md", "lesson-*.md", "guide-*.md"],
+          "contentPatterns": ["pattern", "lesson learned", "best practice", "avoid", "reference"],
+          "autoLinking": true
+        }
+      },
+      "execution/": {
+        "purpose": "Implementation artifacts and deliverables",
+        "autoRouting": true,
+        "structure": {
+          "implementations/": "Actual code, designs, content created",
+          "prototypes/": "Experimental and proof-of-concept work",
+          "documentation/": "How-to guides and user documentation",
+          "testing/": "Test files, validation scripts, QA artifacts",
+          "deployments/": "Release and deployment related files"
+        },
+        "routingRules": {
+          "fileTypes": ["*.js", "*.css", "*.py", "*.md", "*.html", "*.json"],
+          "excludePatterns": ["test-*", "*-test.*", "*.test.*"],
+          "autoVersioning": true
+        }
+      },
+      "analytics/": {
+        "purpose": "Project intelligence and performance tracking",
+        "autoRouting": true,
+        "structure": {
+          "metrics/": "Project health and progress indicators",
+          "predictions/": "AI-generated project forecasts",
+          "reports/": "Generated analysis and insights",
+          "dashboards/": "Visual project status representations"
+        },
+        "routingRules": {
+          "fileTypes": ["metrics-*.json", "report-*.md", "dashboard-*.html"],
+          "autoGeneration": true,
+          "updateFrequency": "daily"
+        }
+      },
+      "automation/": {
+        "purpose": "System automation and workflow management",
+        "autoRouting": false,
+        "structure": {
+          "triggers/": "Event-based automation rules",
+          "workflows/": "Multi-step automated processes", 
+          "validators/": "Quality gates and validation rules",
+          "generators/": "Content and file generation scripts"
+        },
+        "routingRules": {
+          "fileTypes": ["trigger-*.json", "workflow-*.yml", "validator-*.js"],
+          "autoExecution": true
+        }
+      }
+    }
+  },
+
+  "routingEngine": {
+    "description": "Intelligent file routing system that automatically places files in correct directories",
+    "algorithm": "content-analysis-with-pattern-matching",
+    "confidence": {
+      "high": ">90% - Auto-route without confirmation",
+      "medium": "70-90% - Route with notification",
+      "low": "<70% - Request human confirmation"
+    },
+    "rules": {
+      "fileTypeAnalysis": {
+        "priority": 1,
+        "patterns": {
+          "requirements": ["requirement", "user-story", "acceptance-criteria", "business-need"],
+          "tasks": ["task", "todo", "action-item", "work-item"],
+          "decisions": ["decision", "adr", "choice", "trade-off", "alternative"],
+          "knowledge": ["pattern", "lesson", "guide", "reference", "best-practice"],
+          "execution": ["implementation", "code", "prototype", "deliverable"],
+          "analytics": ["metric", "report", "analysis", "dashboard"]
+        }
+      },
+      "contentAnalysis": {
+        "priority": 2,
+        "nlpPatterns": {
+          "requirements": ["shall", "should", "must", "requirement", "user needs"],
+          "decisions": ["decided", "chosen", "alternative", "because", "rationale"],
+          "tasks": ["implement", "create", "build", "fix", "develop"],
+          "knowledge": ["learned", "pattern", "approach", "methodology"]
+        }
+      },
+      "metadataAnalysis": {
+        "priority": 3,
+        "headerAnalysis": true,
+        "tagAnalysis": true,
+        "dateAnalysis": true
+      }
+    }
+  },
+
+  "requirementAnalysis": {
+    "lifecycle": {
+      "phases": [
+        {
+          "name": "discovery",
+          "description": "Initial requirement gathering and stakeholder interviews",
+          "templates": ["stakeholder-interview.md", "requirement-discovery.md"],
+          "outputs": ["initial-requirements.md", "stakeholder-map.json"],
+          "iterationTarget": "iteration-1-2"
+        },
+        {
+          "name": "analysis", 
+          "description": "Requirement processing, categorization, and prioritization",
+          "templates": ["requirement-analysis.md", "priority-matrix.md"],
+          "outputs": ["refined-requirements.md", "requirement-dependencies.json"],
+          "iterationTarget": "iteration-3"
+        },
+        {
+          "name": "validation",
+          "description": "Stakeholder review and requirement validation",
+          "templates": ["validation-checklist.md", "stakeholder-signoff.md"],
+          "outputs": ["validated-requirements.md", "requirement-baseline.json"],
+          "iterationTarget": "iteration-4"
+        },
+        {
+          "name": "tracking",
+          "description": "Ongoing requirement change management",
+          "templates": ["change-request.md", "impact-analysis.md"], 
+          "outputs": ["requirement-changes.log", "pivot-analysis.md"],
+          "iterationTarget": "continuous"
+        }
+      ]
+    },
+    "mistakeTracking": {
+      "categories": [
+        "ambiguous-requirements",
+        "missing-stakeholders", 
+        "scope-creep",
+        "unrealistic-constraints",
+        "incomplete-analysis",
+        "poor-communication",
+        "assumption-failures"
+      ],
+      "preventionSystem": {
+        "warningTriggers": [
+          "Requirements without clear acceptance criteria",
+          "Stakeholders not identified for requirements",
+          "Requirements without priority levels",
+          "Technical requirements without feasibility analysis"
+        ],
+        "validationRules": [
+          "Every requirement must have measurable success criteria",
+          "Every requirement must have identified stakeholder",
+          "Every requirement must have effort estimation",
+          "Every requirement must have dependency analysis"
+        ]
+      }
+    },
+    "templates": {
+      "functionalRequirement": {
+        "structure": ["id", "title", "description", "rationale", "acceptanceCriteria", "priority", "stakeholder", "dependencies"],
+        "validation": ["clarity-check", "testability-check", "feasibility-check"]
+      },
+      "nonFunctionalRequirement": {
+        "structure": ["id", "title", "description", "metrics", "constraints", "validation-method"],
+        "validation": ["measurability-check", "realism-check", "impact-analysis"]
+      },
+      "userStory": {
+        "structure": ["id", "role", "goal", "benefit", "acceptanceCriteria", "priority", "effort"],
+        "validation": ["role-clarity", "value-clarity", "testability"]
+      }
+    }
+  },
+
+  "decisionJourneySystem": {
+    "mandatoryPhases": [
+      {
+        "name": "problem-identification",
+        "description": "Clear articulation of the problem or choice to be made",
+        "required": ["problem-statement", "context", "constraints", "success-criteria"]
+      },
+      {
+        "name": "option-generation", 
+        "description": "Brainstorming and researching possible solutions",
+        "required": ["alternatives-list", "research-findings", "stakeholder-input"]
+      },
+      {
+        "name": "evaluation",
+        "description": "Systematic analysis of options against criteria",
+        "required": ["evaluation-matrix", "pros-cons-analysis", "risk-assessment"]
+      },
+      {
+        "name": "decision",
+        "description": "Final choice with clear rationale",
+        "required": ["chosen-option", "rationale", "assumptions", "success-metrics"]
+      },
+      {
+        "name": "implementation-planning",
+        "description": "How the decision will be executed",
+        "required": ["implementation-plan", "resource-requirements", "iteration-plan"]
+      },
+      {
+        "name": "monitoring",
+        "description": "Tracking decision outcomes and learning",
+        "required": ["success-metrics", "review-schedule", "adjustment-triggers"]
+      }
+    ],
+    "templates": {
+      "architecturalDecision": "ADR-template.md",
+      "businessDecision": "business-decision-template.md", 
+      "designDecision": "design-decision-template.md",
+      "processDecision": "process-decision-template.md"
+    },
+    "automatedTracking": {
+      "outcomeMonitoring": true,
+      "mistakeIdentification": true,
+      "patternRecognition": true,
+      "retrospectiveGeneration": true
+    }
+  },
+
+  "knowledgeGraph": {
+    "entities": [
+      "requirement", "task", "decision", "pattern", "lesson", "implementation", 
+      "stakeholder", "milestone", "deliverable", "risk", "assumption", "constraint"
+    ],
+    "relationships": [
+      "implements", "depends-on", "conflicts-with", "influences", "validates",
+      "blocks", "enables", "derives-from", "supersedes", "references"
+    ],
+    "autoLinking": {
+      "enabled": true,
+      "confidence-threshold": 0.7,
+      "algorithms": ["semantic-similarity", "keyword-matching", "temporal-proximity"]
+    },
+    "querying": {
+      "naturalLanguage": true,
+      "graphQL": true,
+      "sql-like": true
+    }
+  },
+
+  "automationRules": {
+    "taskProgression": {
+      "pending-to-active": {
+        "trigger": "task assigned AND dependencies resolved",
+        "actions": ["move-to-active", "notify-assignee", "update-dashboard"]
+      },
+      "active-to-testing": {
+        "trigger": "implementation completed AND definition-of-done met",
+        "actions": ["move-to-testing", "create-test-checklist", "notify-qa"]
+      },
+      "testing-to-completed": {
+        "trigger": "all tests passed AND stakeholder approval",
+        "actions": ["move-to-completed", "update-metrics", "trigger-dependent-tasks"]
+      }
+    },
+    "requirementEvolution": {
+      "change-detection": {
+        "trigger": "requirement modification detected",
+        "actions": ["create-change-record", "impact-analysis", "stakeholder-notification"]
+      },
+      "validation-enforcement": {
+        "trigger": "new requirement created",
+        "actions": ["template-validation", "completeness-check", "duplicate-detection"]
+      }
+    },
+    "decisionEnforcement": {
+      "journey-completion": {
+        "trigger": "decision attempted without complete journey",
+        "actions": ["block-decision", "provide-template", "request-missing-phases"]
+      },
+      "outcome-tracking": {
+        "trigger": "decision implementation deadline reached",
+        "actions": ["generate-outcome-review", "schedule-retrospective", "update-decision-effectiveness"]
+      }
+    },
+    "qualityGates": {
+      "documentation-completeness": {
+        "trigger": "task marked as complete",
+        "validation": ["documentation-exists", "acceptance-criteria-met", "code-quality-passed"]
+      },
+      "requirement-traceability": {
+        "trigger": "implementation completed",
+        "validation": ["linked-to-requirement", "acceptance-criteria-validated", "stakeholder-approved"]
+      }
+    }
+  },
+
+  "aiIntegration": {
+    "capabilities": [
+      "content-analysis-and-routing",
+      "pattern-recognition",
+      "requirement-quality-assessment", 
+      "decision-journey-guidance",
+      "project-health-analysis",
+      "predictive-analytics",
+      "automated-documentation-generation"
+    ],
+    "learningSystem": {
+      "projectPatterns": "Learns successful patterns from completed projects",
+      "mistakePrevention": "Identifies and prevents repeated mistakes",
+      "optimizationSuggestions": "Recommends process improvements",
+      "contentGeneration": "Auto-generates templates and documentation"
+    }
+  },
+
+  "initialization": {
+    "newProjectSetup": {
+      "steps": [
+        "Analyze project type and domain",
+        "Select appropriate templates and workflows",
+        "Create initial directory structure", 
+        "Configure automation rules",
+        "Generate starter documentation",
+        "Set up monitoring and analytics"
+      ],
+      "completionTarget": "iteration-0",
+      "customization": "automatic-based-on-project-analysis"
+    },
+    "migrationSupport": {
+      "existingProjects": true,
+      "dataImport": ["documents", "tasks", "requirements", "decisions"],
+      "relationshipDetection": "automatic-analysis-of-existing-content"
+    }
+  },
+
+  "systemHealth": {
+    "metrics": [
+      "documentation-coverage",
+      "requirement-traceability", 
+      "decision-journey-completeness",
+      "knowledge-graph-connectivity",
+      "automation-effectiveness",
+      "mistake-prevention-rate"
+    ],
+    "alerts": [
+      "Missing documentation for completed tasks",
+      "Requirements without linked implementations",
+      "Decisions without proper journey documentation", 
+      "Knowledge gaps in project understanding",
+      "Automation failures or inefficiencies"
+    ],
+    "reporting": {
+      "frequency": "daily",
+      "stakeholders": ["project-manager", "team-leads", "stakeholders"],
+      "format": ["dashboard", "email-summary", "slack-notifications"]
+    }
+  },
+
+  "extensibility": {
+    "plugins": {
+      "architecture": "modular-plugin-system",
+      "types": ["domain-specific-templates", "integration-connectors", "analytics-extensions", "automation-workflows"],
+      "marketplace": "planned-for-future-release"
+    },
+    "integrations": {
+      "projectManagement": ["jira", "asana", "trello", "notion"],
+      "development": ["github", "gitlab", "bitbucket", "jenkins"],
+      "communication": ["slack", "teams", "discord", "email"],
+      "analytics": ["google-analytics", "mixpanel", "amplitude"]
+    }
+  },
+
+  "currentInstance": {
+    "project": {
+      "name": "Uninitialized - Awaiting Project Setup",
+      "type": "template",
+      "status": "ready-for-initialization",
+      "created": "2025-01-28T00:00:00Z"
+    },
+    "directoryStatus": {
+      "created": false,
+      "templatesInstalled": false,
+      "automationEnabled": false,
+      "knowledgeGraphInitialized": false
+    },
+    "nextSteps": [
+      "Run system initialization",
+      "Define project parameters",
+      "Install appropriate templates", 
+      "Configure automation rules",
+      "Begin requirement gathering"
+    ]
+  },
+
+  "aiAgentUsageWorkflow": {
+    "initialization": {
+      "step1": {
+        "action": "Read master-index.json",
+        "purpose": "Understand complete system configuration",
+        "outcome": "System capabilities and rules loaded"
+      },
+      "step2": {
+        "action": "Read README.md",
+        "purpose": "Understand system overview and philosophy",
+        "outcome": "Core principles and capabilities understood"
+      },
+      "step3": {
+        "action": "Read USAGE-STRUCTURE.md", 
+        "purpose": "Understand folder structure and integration patterns",
+        "outcome": "Clear understanding of where files belong"
+      },
+      "step4": {
+        "action": "Read SETUP-GUIDE.md",
+        "purpose": "Execute system initialization procedures",
+        "outcome": "Directory structure created, templates installed"
+      },
+      "step5": {
+        "action": "Read AI-AGENT-INSTRUCTIONS.md",
+        "purpose": "Understand operating procedures and automation rules",
+        "outcome": "Ready for intelligent file processing"
+      },
+      "step6": {
+        "action": "Read projectDocs/modular-system-config.json",
+        "purpose": "Load modular system configuration",
+        "outcome": "Cross-module wiring and relationships configured"
+      },
+      "step7": {
+        "action": "Read projectDocs/SYSTEM-OVERVIEW.md",
+        "purpose": "Understand modular architecture details",
+        "outcome": "Deep system knowledge for complex operations"
+      }
+    },
+    "dailyOperations": {
+      "fileProcessing": "Use routing rules from this master-index.json + AI-AGENT-INSTRUCTIONS.md",
+      "qualityGates": "Apply validation rules from templates and module configurations",
+      "relationshipMapping": "Use cross-module wiring from projectDocs/modular-system-config.json",
+      "healthMonitoring": "Track metrics as defined in analytics module configuration"
+    }
+  }
+} 

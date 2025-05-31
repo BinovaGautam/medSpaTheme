@@ -1,0 +1,363 @@
+{
+  "projectMetadata": {
+    "name": "PreetiDreams - Luxury Medical Spa WordPress Theme",
+    "type": "WordPress Theme Development", 
+    "starterkitVersion": "v2.0.0",
+    "initializationDate": "2025-01-28",
+    "currentIteration": "iteration-0",
+    "projectHealth": "excellent",
+    "healthScore": 95,
+    "lastUpdated": "2025-01-28T12:00:00Z"
+  },
+
+  "systemArchitecture": {
+    "corePhilosophy": "Iteration-based WordPress theme development with HIPAA-conscious medical spa features",
+    "designPrinciples": [
+      "StarterKit v2.0 modular project management",
+      "REQ-/TASK-/ADR- entity tracking",
+      "Quality gate enforcement at each iteration",
+      "Cross-module relationship integrity",
+      "Medical spa compliance and luxury positioning"
+    ],
+    "technicalStack": {
+      "themeBase": "Sage WordPress Framework (decided in ADR-001)",
+      "cssFramework": "Tailwind CSS with luxury medical spa design system",
+      "buildPipeline": "Vite asset compilation",
+      "pluginManagement": "TGMPA automated dependency installation",
+      "contentManagement": "ACF Pro for meta fields and custom content"
+    }
+  },
+
+  "projectStructure": {
+    "baseDirectory": "projManager/",
+    "documentation": {
+      "entryPoint": "projManager/master-index.json",
+      "versionControl": "projManager/projectDocs/VERSION-CONTROL.md",
+      "systemOverview": "projManager/projectDocs/SYSTEM-OVERVIEW.md",
+      "projectInit": "projManager/project-initialization.md",
+      "aiInstructions": "projManager/AI-AGENT-INSTRUCTIONS.md",
+      "usageStructure": "projManager/USAGE-STRUCTURE.md"
+    },
+    "coreModules": {
+      "requirements": "projManager/projectDocs/requirements/",
+      "tasks": "projManager/projectDocs/tasks/", 
+      "decisions": "projManager/projectDocs/decisions/",
+      "knowledge": "projManager/projectDocs/knowledge/",
+      "execution": "projManager/projectDocs/execution/",
+      "analytics": "projManager/projectDocs/analytics/",
+      "automation": "projManager/projectDocs/automation/",
+      "core": "projManager/projectDocs/core/"
+    }
+  },
+
+  "currentProjectState": {
+    "iteration": "iteration-0",
+    "status": "system-initialized",
+    "completedDeliverables": [
+      "StarterKit v2.0 modular structure",
+      "Requirements discovery (REQ-DISCOVERY-001)",
+      "Architectural decision framework (ADR-001)",
+      "Task tracking system (TASK-ARCH-001-01)",
+      "Project health metrics baseline",
+      "Version control system"
+    ],
+    "activeEntities": {
+      "requirements": {
+        "REQ-DISCOVERY-001": {
+          "status": "complete",
+          "location": "projManager/projectDocs/requirements/initial/REQ-DISCOVERY-001.md",
+          "description": "Complete requirements discovery for luxury medical spa WordPress theme",
+          "blocks": ["All functional requirements"],
+          "iteration": "iteration-1"
+        },
+        "REQ-ARCH-001": {
+          "status": "discovered",
+          "description": "WordPress Theme Foundation",
+          "priority": "critical",
+          "iteration": "iteration-4",
+          "relatedDecision": "ADR-001",
+          "relatedTask": "TASK-ARCH-001-01"
+        },
+        "REQ-ARCH-002": {
+          "status": "discovered",
+          "description": "Plugin Ecosystem Management",
+          "priority": "high",
+          "iteration": "iteration-4",
+          "dependencies": ["REQ-ARCH-001"]
+        },
+        "REQ-FUNC-001": {
+          "status": "discovered",
+          "description": "Treatment Management System",
+          "priority": "critical",
+          "iteration": "iteration-5",
+          "dependencies": ["REQ-ARCH-002"]
+        },
+        "REQ-FUNC-002": {
+          "status": "discovered", 
+          "description": "Interactive Treatment Finder",
+          "priority": "high",
+          "iteration": "iteration-6",
+          "dependencies": ["REQ-FUNC-001"]
+        },
+        "REQ-FUNC-003": {
+          "status": "discovered",
+          "description": "Before/After Gallery System",
+          "priority": "critical",
+          "iteration": "iteration-6",
+          "dependencies": ["REQ-FUNC-001"]
+        },
+        "REQ-FUNC-004": {
+          "status": "discovered",
+          "description": "Virtual Consultation Booking",
+          "priority": "critical", 
+          "iteration": "iteration-6",
+          "dependencies": ["REQ-ARCH-002"]
+        },
+        "REQ-FUNC-005": {
+          "status": "discovered",
+          "description": "Premium Hero System",
+          "priority": "medium",
+          "iteration": "iteration-7",
+          "dependencies": ["REQ-ARCH-001"]
+        },
+        "REQ-UX-001": {
+          "status": "discovered",
+          "description": "Mobile-First Responsive Design",
+          "priority": "critical",
+          "iteration": "iteration-7",
+          "dependencies": ["REQ-ARCH-001"]
+        },
+        "REQ-UX-002": {
+          "status": "discovered",
+          "description": "WCAG AAA Accessibility",
+          "priority": "critical",
+          "iteration": "iteration-8",
+          "dependencies": ["REQ-ARCH-001"]
+        },
+        "REQ-PERF-001": {
+          "status": "discovered",
+          "description": "Performance Optimization",
+          "priority": "high",
+          "iteration": "iteration-8",
+          "dependencies": ["REQ-ARCH-001"]
+        }
+      },
+      "tasks": {
+        "TASK-ARCH-001-01": {
+          "status": "pending",
+          "location": "projManager/projectDocs/tasks/pending/TASK-ARCH-001-01.md",
+          "description": "Initialize Sage Theme Framework",
+          "relatedRequirement": "REQ-ARCH-001",
+          "relatedDecision": "ADR-001",
+          "priority": "critical",
+          "iteration": "iteration-4",
+          "estimatedEffort": "4-6 hours",
+          "blocks": ["TASK-ARCH-001-02", "All subsequent development tasks"]
+        }
+      },
+      "decisions": {
+        "ADR-001": {
+          "status": "in-progress",
+          "location": "projManager/projectDocs/decisions/architectural/ADR-001-theme-base-selection.md",
+          "description": "WordPress Theme Base Selection",
+          "chosenOption": "Sage Theme Framework",
+          "category": "architectural",
+          "iteration": "iteration-3",
+          "impacts": ["All development tasks"],
+          "enables": ["TASK-ARCH-001-01"],
+          "journeyCompleteness": 60
+        }
+      }
+    }
+  },
+
+  "iterationPlan": {
+    "iteration-0": {
+      "status": "complete",
+      "deliverables": "System initialization and tracking setup",
+      "duration": "2025-01-28"
+    },
+    "iteration-1": {
+      "status": "next",
+      "objectives": [
+        "Complete requirements analysis and stakeholder mapping",
+        "Refine and categorize all functional requirements", 
+        "Generate implementation task breakdown",
+        "Establish quality gates and validation criteria"
+      ],
+      "targetEntities": [
+        "Move REQ-ARCH-001 through REQ-PERF-001 to refined status",
+        "Create TASK-ARCH-002-01, TASK-FUNC-001-01",
+        "Progress ADR-001 to completion"
+      ]
+    },
+    "iteration-2": {
+      "status": "planned",
+      "objectives": [
+        "Process and validate all requirements",
+        "Create detailed task dependencies",
+        "Complete architectural decision journey"
+      ]
+    },
+    "iteration-3": {
+      "status": "planned", 
+      "objectives": [
+        "Validate requirements with stakeholders",
+        "Active development of WordPress theme foundation",
+        "Finalize design system decisions"
+      ]
+    }
+  },
+
+  "qualityGates": {
+    "requirements": {
+      "mustHave": ["REQ-ID", "business-value", "acceptance-criteria", "dependencies", "iteration-target"],
+      "validation": ["stakeholder-approval", "feasibility-assessment", "compliance-check"]
+    },
+    "tasks": {
+      "mustHave": ["TASK-ID", "related-requirement", "acceptance-criteria", "implementation-plan"],
+      "validation": ["requirement-traceability", "effort-estimation", "dependency-mapping"]
+    },
+    "decisions": {
+      "mustHave": ["problem-identification", "option-generation", "evaluation", "rationale"],
+      "validation": ["journey-completeness", "stakeholder-consultation", "implementation-plan"]
+    },
+    "implementations": {
+      "mustHave": ["documentation", "testing", "performance-validation", "accessibility-compliance"],
+      "validation": ["requirement-fulfillment", "quality-standards", "medical-spa-compliance"]
+    }
+  },
+
+  "crossModuleRelationships": {
+    "REQ-ARCH-001": {
+      "implements": "Modern WordPress theme foundation",
+      "blocks": ["All functional requirements"],
+      "enables": ["Modern development workflow"],
+      "relatedDecision": "ADR-001",
+      "relatedTasks": ["TASK-ARCH-001-01"]
+    },
+    "ADR-001": {
+      "resolves": "Theme base selection problem",
+      "impacts": ["All development tasks"],
+      "enables": ["TASK-ARCH-001-01"],
+      "relatedRequirements": ["REQ-ARCH-001", "REQ-PERF-001"]
+    },
+    "TASK-ARCH-001-01": {
+      "implements": "REQ-ARCH-001",
+      "basedOn": "ADR-001",
+      "blocks": ["All subsequent development tasks"],
+      "enables": ["Tailwind CSS integration", "ACF Pro setup"]
+    }
+  },
+
+  "medicalSpaSpecificConsiderations": {
+    "hipaaCompliance": {
+      "beforeAfterPhotos": "Privacy consent management required",
+      "patientData": "Secure handling of consultation forms",
+      "communications": "Encrypted data transmission"
+    },
+    "luxuryPositioning": {
+      "designAesthetic": "Sage green + gold accent color palette",
+      "typography": "Elegant serif headings + clean sans-serif body",
+      "userExperience": "Premium feel with sophisticated interactions"
+    },
+    "conversionOptimization": {
+      "bookingFunnels": "Multiple paths to consultation requests",
+      "trustBuilding": "Professional credibility elements",
+      "socialProof": "Before/after galleries and testimonials"
+    },
+    "performanceRequirements": {
+      "lighthouse": "90+ scores across all metrics",
+      "accessibility": "WCAG AAA compliance (11.5:1 contrast)",
+      "mobile": "Touch targets 44px minimum"
+    }
+  },
+
+  "automationRules": {
+    "fileRouting": {
+      "confidence": {
+        "high": ">90% auto-route without confirmation",
+        "medium": "70-90% route with notification", 
+        "low": "<70% request human confirmation"
+      },
+      "patterns": {
+        "requirements": ["requirement", "REQ-", "acceptance-criteria"],
+        "tasks": ["task", "TASK-", "implementation", "todo"],
+        "decisions": ["decision", "ADR-", "choice", "alternative"],
+        "knowledge": ["pattern", "lesson", "best-practice"]
+      }
+    },
+    "qualityEnforcement": {
+      "blockProgression": "Incomplete documentation blocks advancement",
+      "validateRelationships": "Cross-references must be maintained",
+      "enforceTemplates": "All entities must follow template structure"
+    }
+  },
+
+  "nextActions": {
+    "immediate": [
+      {
+        "priority": "critical",
+        "action": "Move to iteration-1: Begin requirements refinement",
+        "location": "projManager/projectDocs/requirements/refined/",
+        "dueDate": "2025-01-29"
+      },
+      {
+        "priority": "high", 
+        "action": "Complete ADR-001 decision journey",
+        "location": "projManager/projectDocs/decisions/architectural/ADR-001-theme-base-selection.md",
+        "dueDate": "2025-01-30"
+      },
+      {
+        "priority": "medium",
+        "action": "Generate tasks for REQ-ARCH-002 and REQ-FUNC-001",
+        "location": "projManager/projectDocs/tasks/pending/",
+        "dueDate": "2025-01-31"
+      }
+    ],
+    "upcoming": [
+      "Begin TASK-ARCH-001-01 implementation (Sage theme setup)",
+      "Create design system documentation",
+      "Set up TGMPA plugin ecosystem",
+      "Implement custom post types"
+    ]
+  },
+
+  "freshCodingAgentInstructions": {
+    "startup": [
+      "1. Read this master-index.json for complete project understanding",
+      "2. Review VERSION-CONTROL.md for current iteration status",
+      "3. Check active requirements in requirements/initial/",
+      "4. Review pending tasks in tasks/pending/",
+      "5. Understand architectural decisions in decisions/architectural/"
+    ],
+    "operatingPrinciples": [
+      "Use REQ-/TASK-/ADR- entity numbering system",
+      "Enforce quality gates at each progression step",
+      "Maintain cross-module relationship integrity",
+      "Follow iteration-based progression (not time-based)",
+      "Apply medical spa compliance requirements"
+    ],
+    "keyFiles": {
+      "projectStatus": "projManager/projectDocs/VERSION-CONTROL.md",
+      "currentRequirements": "projManager/projectDocs/requirements/initial/REQ-DISCOVERY-001.md",
+      "activeTask": "projManager/projectDocs/tasks/pending/TASK-ARCH-001-01.md",
+      "architecturalDecision": "projManager/projectDocs/decisions/architectural/ADR-001-theme-base-selection.md",
+      "healthMetrics": "projManager/projectDocs/analytics/metrics/project-health-iteration-0.json"
+    }
+  },
+
+  "systemHealth": {
+    "lastHealthCheck": "2025-01-28T12:00:00Z",
+    "overallScore": 95,
+    "criticalSystems": {
+      "directoryStructure": "complete",
+      "crossModuleWiring": "active", 
+      "qualityGates": "enforced",
+      "automationEngine": "operational",
+      "documentationCoverage": 95
+    },
+    "warningIndicators": [],
+    "nextHealthCheck": "iteration-1 completion"
+  }
+} 
