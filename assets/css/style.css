@@ -1,0 +1,231 @@
+/*
+ * PreetiDreams Medical Spa Theme - Fallback Styles
+ * Ensures basic styling is always available
+ */
+
+/* Medical Spa Color Palette */
+:root {
+    --primary-green: #4a5d4a;
+    --accent-gold: #e6c954;
+    --soft-cream: #f8f5f0;
+    --warm-white: #fefcf8;
+    --sage-green: #8ba386;
+    --deep-teal: #2c5757;
+    --text-dark: #333333;
+    --text-light: #666666;
+}
+
+/* Enhanced Medical Spa Styling */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--warm-white) 0%, var(--soft-cream) 100%);
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Enhancement */
+header {
+    background: linear-gradient(135deg, var(--warm-white) 0%, rgba(255,255,255,0.95) 100%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(74, 93, 74, 0.1);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.site-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--sage-green) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+/* Navigation Enhancement */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+}
+
+nav a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #b29237 100%);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+nav a:hover {
+    color: var(--accent-gold);
+    transform: translateY(-1px);
+}
+
+/* Article Enhancement */
+article {
+    background: var(--warm-white);
+    padding: 3rem;
+    margin-bottom: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(74, 93, 74, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Medical Spa Specific Styles */
+.treatment-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.treatment-card {
+    background: var(--warm-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(74, 93, 74, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(230, 201, 84, 0.1);
+}
+
+.treatment-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(74, 93, 74, 0.15);
+}
+
+/* Professional Button Styling */
+.button, button, input[type="submit"] {
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #b29237 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.button:hover, button:hover, input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(230, 201, 84, 0.4);
+    color: white;
+}
+
+/* Enhanced Form Styling */
+.consultation-form {
+    background: var(--warm-white);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(74, 93, 74, 0.1);
+    border: 1px solid rgba(230, 201, 84, 0.2);
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(74, 93, 74, 0.1);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.8);
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 4px rgba(230, 201, 84, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Accessibility Enhancements */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+*:focus {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .site-title {
+        font-size: 1.8rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    article {
+        padding: 1.5rem;
+    }
+
+    .treatment-showcase {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+    :root {
+        --primary-green: #000000;
+        --accent-gold: #666600;
+        --text-dark: #000000;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *, *::after, *::before {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

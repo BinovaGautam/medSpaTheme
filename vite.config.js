@@ -69,13 +69,7 @@ export default defineConfig({
     },
     cssCodeSplit: true,
     sourcemap: process.env.NODE_ENV === 'development',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: process.env.NODE_ENV === 'production',
-        drop_debugger: process.env.NODE_ENV === 'production',
-      },
-    },
+    minify: 'esbuild',
     chunkSizeWarningLimit: 250,
     assetsInlineLimit: 4096,
   },
