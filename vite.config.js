@@ -91,10 +91,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `
-          @import "resources/styles/variables";
-          @import "resources/styles/mixins";
-        `,
+        // Remove additionalData to avoid import conflicts
       },
     },
     devSourcemap: true,

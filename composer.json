@@ -1,63 +1,84 @@
 {
-  "name": "roots/sage",
+  "name": "preetidreams/medical-spa-theme",
   "type": "wordpress-theme",
   "license": "MIT",
-  "description": "WordPress starter theme with a modern development workflow",
-  "homepage": "https://roots.io/sage/",
+  "description": "Premium WordPress theme for luxury medical spas with HIPAA-conscious design, treatment management, and accessibility compliance",
+  "homepage": "https://preetidreams.com",
   "authors": [
     {
-      "name": "Ben Word",
-      "email": "ben@benword.com",
-      "homepage": "https://github.com/retlehs"
-    },
-    {
-      "name": "Scott Walkinshaw",
-      "email": "scott.walkinshaw@gmail.com",
-      "homepage": "https://github.com/swalkinshaw"
-    },
-    {
-      "name": "QWp6t",
-      "email": "hi@qwp6t.me",
-      "homepage": "https://github.com/qwp6t"
-    },
-    {
-      "name": "Brandon Nifong",
-      "email": "brandon@tendency.me",
-      "homepage": "https://github.com/log1x"
+      "name": "PreetiDreams Development Team",
+      "email": "dev@preetidreams.com",
+      "homepage": "https://preetidreams.com"
     }
   ],
   "keywords": [
-    "wordpress"
+    "wordpress",
+    "theme",
+    "medical-spa",
+    "luxury",
+    "aesthetic",
+    "wellness",
+    "hipaa-conscious",
+    "accessibility",
+    "sage",
+    "tailwindcss"
   ],
   "support": {
-    "issues": "https://github.com/roots/sage/issues",
-    "forum": "https://discourse.roots.io/"
+    "issues": "https://github.com/preetidreams/medical-spa-theme/issues",
+    "email": "support@preetidreams.com"
   },
   "autoload": {
     "psr-4": {
-      "App\\": "app/"
+      "App\\": "app/",
+      "PreetiDreams\\": "app/PreetiDreams/"
     }
   },
   "require": {
-    "php": ">=8.2",
-    "roots/acorn": "^5.0"
-  },
-  "require-dev": {
-    "laravel/pint": "^1.20"
+    "php": ">=8.0",
+    "roots/acorn": "^5.0",
+    "roots/sage": "^10.0"
   },
   "suggest": {
-    "log1x/sage-directives": "A collection of useful Blade directives for WordPress and Sage (^1.0)."
+    "roots/acorn": "Laravel components for WordPress development (requires PHP 8.2+)",
+    "roots/sage": "Modern WordPress starter theme (requires PHP 8.2+)",
+    "laravel/pint": "PHP code style fixer (requires PHP 8.1+)",
+    "phpunit/phpunit": "PHP testing framework (requires PHP 8.1+)",
+    "squizlabs/php_codesniffer": "PHP code standards checker",
+    "log1x/sage-directives": "A collection of useful Blade directives for WordPress and Sage",
+    "roots/soil": "Clean up WordPress markup, use relative URLs, and optimize theme functionality",
+    "wpackagist-plugin/advanced-custom-fields": "Advanced Custom Fields for treatment management"
+  },
+  "extra": {
+    "installer-disable": false
   },
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "roots/wordpress-core-installer": true,
+      "roots/wordpress-no-content": true,
+      "composer/installers": true
+    },
+    "platform-check": false
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "post-autoload-dump": [
-      "Roots\\Acorn\\ComposerScripts::postAutoloadDump"
+    "install-dev": [
+      "echo 'Installing development tools (requires PHP 8.1+)'",
+      "composer require --dev laravel/pint:^1.20 phpunit/phpunit:^10.0 squizlabs/php_codesniffer:^3.7 --no-update",
+      "composer update"
+    ],
+    "install-sage": [
+      "echo 'Installing Sage/Acorn for advanced features (requires PHP 8.2+)'",
+      "composer require roots/acorn:^5.0 roots/sage:^10.0 --no-update",
+      "composer update"
     ]
+  },
+  "require-dev": {
+    "laravel/pint": "^1.20",
+    "phpunit/phpunit": "^10.0",
+    "squizlabs/php_codesniffer": "^3.7"
   }
 }

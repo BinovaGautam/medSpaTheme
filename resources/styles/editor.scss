@@ -1,0 +1,127 @@
+// PreetiDreams Medical Spa Theme - Block Editor Styles
+// HIPAA-conscious, WCAG AAA compliant editor styling for content creators
+
+// ==================================================
+// EDITOR IMPORTS
+// ==================================================
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@import 'variables';
+@import 'mixins';
+
+// ==================================================
+// EDITOR BASE STYLES
+// ==================================================
+
+.editor-styles-wrapper {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  line-height: $line-height-relaxed;
+  color: $medical-gray;
+
+  // Medical spa editor enhancements
+  &.medical-spa-editor {
+    background-color: $cream-50;
+  }
+}
+
+// ==================================================
+// BLOCK EDITOR TYPOGRAPHY
+// ==================================================
+
+.editor-styles-wrapper {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: $font-heading;
+    font-weight: $font-weight-semibold;
+    color: $sage-800;
+    line-height: $line-height-tight;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h1 { font-size: $font-size-display; }
+  h2 { font-size: $font-size-headline; }
+  h3 { font-size: $font-size-subhead; }
+  h4 { font-size: $font-size-2xl; }
+  h5 { font-size: $font-size-xl; }
+  h6 { font-size: $font-size-lg; }
+
+  p {
+    margin-bottom: 1em;
+    color: $medical-gray;
+  }
+
+  // Medical spa accent text
+  .has-accent-font-family {
+    font-family: $font-accent;
+  }
+}
+
+// ==================================================
+// MEDICAL SPA BLOCK STYLES
+// ==================================================
+
+.editor-styles-wrapper {
+
+  // Treatment card block
+  .treatment-card {
+    @include treatment-card-base;
+    margin: $spacing-6 0;
+
+    .wp-block-image {
+      margin: 0 0 $spacing-4 0;
+
+      img {
+        border-radius: $border-radius-lg;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .wp-block-heading {
+      color: $sage-800;
+      margin-bottom: $spacing-2;
+    }
+
+    .wp-block-paragraph {
+      color: $medical-gray;
+      margin-bottom: $spacing-4;
+    }
+  }
+
+  // Consultation CTA block
+  .consultation-cta {
+    @include consultation-cta;
+    display: inline-block;
+
+    .wp-block-button__link {
+      background: none !important;
+      color: inherit !important;
+      padding: 0 !important;
+      text-decoration: none;
+    }
+  }
+
+  // HIPAA secure content block
+  .hipaa-secure {
+    @include hipaa-secure;
+    background-color: $hipaa-secure-bg;
+    border-left: 4px solid $hipaa-indicator-color;
+    padding: $spacing-4;
+    border-radius: $border-radius-luxury;
+    margin: $spacing-6 0;
+
+    &::before {
+      content: "🔒 HIPAA Secure Content";
+      display: block;
+      font-weight: $font-weight-semibold;
+      color: $hipaa-indicator-color;
+      margin-bottom: $spacing-2;
+      font-size: $font-size-sm;
+    }
+  }
+}
