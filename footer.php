@@ -90,7 +90,7 @@
                 <?php else : ?>
                     <!-- Fallback menu -->
                     <ul class="footer-menu">
-                        <li><a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>"><?php esc_html_e('All Treatments', 'preetidreams'); ?></a></li>
+                        <li><a href="<?php echo esc_url(home_url('/treatments/')); ?>"><?php esc_html_e('All Treatments', 'preetidreams'); ?></a></li>
                         <li><a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>"><?php esc_html_e('Our Specialists', 'preetidreams'); ?></a></li>
                         <li><a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>"><?php esc_html_e('Patient Reviews', 'preetidreams'); ?></a></li>
                         <li><a href="#consultation"><?php esc_html_e('Book Consultation', 'preetidreams'); ?></a></li>

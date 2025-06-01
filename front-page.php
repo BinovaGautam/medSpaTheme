@@ -218,7 +218,7 @@
             </div>
 
             <div class="section-cta text-center">
-                <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>" class="btn btn-outline btn-large">
+                <a href="<?php echo esc_url(home_url('/treatments/')); ?>" class="btn btn-outline btn-large">
                     <?php esc_html_e('View All Treatments', 'preetidreams'); ?>
                 </a>
             </div>

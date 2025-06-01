@@ -1036,7 +1036,7 @@ function preetidreams_custom_post_types() {
         'has_archive' => true,
         'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'],
         'menu_icon' => 'dashicons-heart',
-        'rewrite' => ['slug' => 'treatments'],
+        'rewrite' => ['slug' => 'treatment-archive'], // Changed from 'treatments' to avoid conflict
         'show_in_rest' => true,
         'menu_position' => 20,
     ]);
@@ -2663,9 +2663,29 @@ function preetidreams_create_essential_pages() {
 
                 error_log("Created page: {$page_data['post_title']} (ID: {$page_id})");
             }
+        } else {
+            // Update existing page template if needed
+            $current_template = get_post_meta($existing_page->ID, '_wp_page_template', true);
+            if ($current_template !== $page_data['page_template']) {
+                update_post_meta($existing_page->ID, '_wp_page_template', $page_data['page_template']);
+                error_log("Updated template for page: {$page_data['post_title']} (ID: {$existing_page->ID})");
+            }
         }
     }
 }
+
+/**
+ * Flush rewrite rules after custom post type changes
+ */
+function preetidreams_flush_rewrites_after_cpt_change() {
+    // Check if we need to flush rewrite rules due to CPT changes
+    if (!get_option('preetidreams_cpt_rewrites_flushed_v2')) {
+        flush_rewrite_rules();
+        update_option('preetidreams_cpt_rewrites_flushed_v2', true);
+        error_log('PreetiDreams: Flushed rewrite rules due to custom post type changes');
+    }
+}
+add_action('init', 'preetidreams_flush_rewrites_after_cpt_change', 99);
 
 /**
  * Run page creation on theme activation

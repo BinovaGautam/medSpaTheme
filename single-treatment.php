@@ -12,7 +12,7 @@
                     <nav class="breadcrumbs" aria-label="<?php esc_attr_e('Breadcrumbs', 'preetidreams'); ?>">
                         <ol>
                             <li><a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'preetidreams'); ?></a></li>
-                            <li><a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>"><?php esc_html_e('Treatments', 'preetidreams'); ?></a></li>
+                            <li><a href="<?php echo esc_url(home_url('/treatments/')); ?>"><?php esc_html_e('Treatments', 'preetidreams'); ?></a></li>
                             <li aria-current="page"><?php the_title(); ?></li>
                         </ol>
                     </nav>
@@ -279,7 +279,7 @@
                             <?php esc_html_e('Schedule Consultation', 'preetidreams'); ?>
                         </a>
 
-                        <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>" class="btn btn-outline">
+                        <a href="<?php echo esc_url(home_url('/treatments/')); ?>" class="btn btn-outline">
                             <?php esc_html_e('View All Treatments', 'preetidreams'); ?>
                         </a>
                     </div>

@@ -14,12 +14,24 @@ get_header(); ?>
                     <?php
                     // Check if we should include the HTML treatments page
                     $custom_treatments_content = get_field('use_custom_treatments_layout');
-                    if ($custom_treatments_content) {
+
+                    // Default to showing treatments.html if no custom field is set or if treatments.html exists
+                    $treatments_html_path = get_template_directory() . '/treatments.html';
+
+                    if ($custom_treatments_content || (!$custom_treatments_content && file_exists($treatments_html_path))) {
                         // Include the treatments.html content
-                        include get_template_directory() . '/treatments.html';
+                        include $treatments_html_path;
                     } else {
                         // Show regular page content
                         the_content();
+
+                        // If no content, show a helpful message
+                        if (empty(get_the_content())) {
+                            echo '<div class="treatments-placeholder">';
+                            echo '<h2>Treatments Coming Soon</h2>';
+                            echo '<p>Our comprehensive treatment list is being prepared. Please check back soon or contact us for more information about our available services.</p>';
+                            echo '</div>';
+                        }
                     }
                     ?>
                 </div>
