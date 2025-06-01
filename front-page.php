@@ -54,18 +54,28 @@
 
                 <!-- Right: Interactive Treatment Selection -->
                 <div class="hero-interactive-section">
-                    <div class="treatment-selection-interface">
-                        <div class="selection-progress">
-                            <div class="progress-indicator">
-                                <span class="step-number active" data-step="1">1</span>
-                                <span class="step-number" data-step="2">2</span>
-                                <span class="step-number" data-step="3">3</span>
-                                <span class="step-number" data-step="4">4</span>
+                    <div class="treatment-selection-interface premium-hero-quiz">
+                        <!-- Progress Indicator -->
+                        <div class="progress-indicator">
+                            <div class="progress-header">
+                                <h3 class="progress-title">Find Your Perfect Treatment</h3>
+                                <span class="step-counter">Step <span class="current-step">1</span> of 4</span>
                             </div>
+
+                            <!-- Step Numbers -->
+                            <div class="step-numbers">
+                                <div class="step-number active">1</div>
+                                <div class="step-number">2</div>
+                                <div class="step-number">3</div>
+                                <div class="step-number">4</div>
+                            </div>
+
+                            <!-- Progress Bar -->
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 25%"></div>
                             </div>
-                            <p class="step-description">Step <span class="current-step">1</span> of 4</p>
+
+                            <p class="step-description">Select the treatment category that interests you most</p>
                         </div>
 
                         <!-- Step 1: Treatment Categories -->
@@ -231,16 +241,18 @@
                                 <div class="quiz-summary" id="quiz-summary">
                                     <!-- Populated by JavaScript with user's selections -->
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-large">
-                                    <span class="btn-icon">📞</span>
-                                    Get My Personalized Consultation
-                                </button>
                                 <div class="step-navigation">
-                                    <button class="btn btn-outline step-back" type="button">
-                                        <span class="btn-icon">←</span>
-                                        Back
+                                    <button type="button" class="step-back" style="display: none;">
+                                        ← Back
+                                    </button>
+                                    <button type="button" class="step-continue" style="display: none;">
+                                        Continue →
                                     </button>
                                 </div>
+                                <button type="submit" class="submit-consultation" style="display: none;">
+                                    <span>📧</span>
+                                    Submit Consultation Request
+                                </button>
                                 <p class="form-privacy">
                                     ⚠️ We'll contact you within 24 hours with personalized pricing & availability
                                 </p>

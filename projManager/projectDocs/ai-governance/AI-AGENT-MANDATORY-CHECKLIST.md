@@ -15,8 +15,9 @@
 □ 1. Read projManager/AI-AGENT-INSTRUCTIONS.md
 □ 2. Check current git status (git status)
 □ 3. Understand task scope and deliverables
-□ 4. Identify proper documentation routing
-□ 5. Create task branch if needed (git checkout -b task/[ID]-[description])
+□ 4. Check master-index.json routing patterns for file placement
+□ 5. Identify proper documentation routing using routing decision matrix
+□ 6. Create task branch if needed (git checkout -b task/[ID]-[description])
 ```
 
 ### **📝 During Task Execution**
@@ -24,8 +25,9 @@
 □ 1. Make incremental commits for major steps
 □ 2. Use standardized commit message format
 □ 3. Never place documentation files at root level
-□ 4. Route all .md files to proper projManager subdirectories
-□ 5. Add proper frontmatter to all documentation
+□ 4. Route all .md files to proper projManager subdirectories per routing engine
+□ 5. Validate file placement against master-index.json patterns before saving
+□ 6. Add proper frontmatter to all documentation
 ```
 
 ### **✅ Upon Task Completion - MANDATORY**
@@ -42,15 +44,53 @@
 
 ## 🎯 **File Placement Protocol**
 
-### **Documentation Routing (MANDATORY):**
-| File Content Type | Route To | Examples |
-|-------------------|----------|----------|
-| **Completion Reports** | `execution/documentation/` | Template completion, phase reports |
-| **Implementation Status** | `execution/implementations/` | Setup status, fix reports |
-| **Decision Records** | `decisions/architectural/` | ADRs, technical choices |
-| **Requirements** | `requirements/refined/` | Feature specs, user stories |
-| **Task Updates** | `tasks/completed/` | Task completion reports |
-| **AI Protocols** | `ai-governance/` | Agent instructions, protocols |
+### **MANDATORY: Master-Index.json Routing Compliance**
+```
+🚨 BEFORE placing ANY file, validate against routing patterns:
+
+Content Analysis Questions:
+1. Does it contain implementation plans/specs? → execution/planning/
+2. Does it contain architectural decisions (ADR-)? → decisions/architectural/  
+3. Does it contain requirements (REQ-)? → requirements/refined/
+4. Does it contain task tracking (TASK-)? → tasks/pending|completed/
+5. Does it contain best practices/patterns? → knowledge/patterns/
+6. Does it contain metrics/analytics? → analytics/metrics/
+```
+
+### **Enhanced Documentation Routing (MANDATORY):**
+| File Content Type | Route To | Routing Pattern Match | Examples |
+|-------------------|----------|----------------------|----------|
+| **Implementation Plans** | `execution/planning/` | "implementation", "prototype" | PLAN-UX-*, technical specs |
+| **UX/UI Planning** | `execution/planning/` | "implementation", "planning" | Design systems, UX flows |
+| **Technical Specifications** | `execution/planning/` | "implementation", "prototype" | API specs, architecture plans |
+| **Completion Reports** | `execution/documentation/` | "implementation" | Template completion, phase reports |
+| **Implementation Status** | `execution/implementations/` | "implementation" | Setup status, fix reports |
+| **Decision Records** | `decisions/architectural/` | "decision", "ADR-", "choice" | ADRs, technical choices |
+| **Requirements** | `requirements/refined/` | "requirement", "REQ-", "acceptance-criteria" | Feature specs, user stories |
+| **Task Updates** | `tasks/completed/` | "task", "TASK-", "todo" | Task completion reports |
+| **Best Practices** | `knowledge/patterns/` | "pattern", "lesson", "best-practice" | Design patterns, lessons learned |
+| **Performance Metrics** | `analytics/metrics/` | "metric", "report", "dashboard" | Performance data, analytics |
+| **AI Protocols** | `ai-governance/` | N/A (Special category) | Agent instructions, protocols |
+
+### **File Placement Validation Script (Run Before Commit):**
+```bash
+# Validate routing compliance
+echo "🔍 Validating file placement against master-index.json patterns..."
+
+# Check for PLAN files in wrong locations
+if find projManager/projectDocs/decisions/ -name "PLAN-*" 2>/dev/null | grep -q .; then
+    echo "❌ PLAN files found in decisions/ - should be in execution/planning/"
+    exit 1
+fi
+
+# Check for implementation content in wrong locations  
+if find projManager/projectDocs/requirements/ -name "*implementation*" 2>/dev/null | grep -q .; then
+    echo "❌ Implementation files found in requirements/ - should be in execution/"
+    exit 1
+fi
+
+echo "✅ File placement validation passed"
+```
 
 ### **ROOT LEVEL RESTRICTIONS:**
 ```

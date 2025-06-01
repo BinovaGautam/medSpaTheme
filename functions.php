@@ -164,8 +164,8 @@ function preetidreams_enqueue_hero_assets() {
         );
 
         // Localize script for AJAX
-        wp_localize_script('preetidreams-premium-hero', 'ajax_object', [
-            'ajax_url' => admin_url('admin-ajax.php'),
+        wp_localize_script('preetidreams-premium-hero', 'premiumHeroAjax', [
+            'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('hero_consultation_nonce')
         ]);
 
@@ -2082,4 +2082,170 @@ function get_default_category_icon($category_slug) {
     ];
 
     return $default_icons[$category_slug] ?? '💫';
+}
+
+/**
+ * AJAX Handler: Get Enhanced Treatments by Category for Quiz
+ */
+function get_enhanced_treatments_by_category() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'hero_consultation_nonce')) {
+        wp_send_json_error('Security check failed');
+    }
+
+    $category = sanitize_text_field($_POST['category']);
+
+    if (empty($category)) {
+        wp_send_json_error('Category not specified');
+    }
+
+    // Get treatments for the category
+    $treatments = get_treatments_by_category($category);
+
+    if (empty($treatments)) {
+        wp_send_json_error('No treatments found for this category');
+    }
+
+    wp_send_json_success(['treatments' => $treatments]);
+}
+add_action('wp_ajax_get_enhanced_treatments_by_category', 'get_enhanced_treatments_by_category');
+add_action('wp_ajax_nopriv_get_enhanced_treatments_by_category', 'get_enhanced_treatments_by_category');
+
+/**
+ * AJAX Handler: Enhanced Consultation Request for 4-Step Quiz
+ */
+function handle_enhanced_consultation_request() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'hero_consultation_nonce')) {
+        wp_send_json_error('Security check failed');
+    }
+
+    // Sanitize form data - Enhanced for 4-step quiz
+    $data = [
+        // Basic contact information
+        'first_name' => sanitize_text_field($_POST['first_name']),
+        'last_name' => sanitize_text_field($_POST['last_name']),
+        'email' => sanitize_email($_POST['email']),
+        'phone' => sanitize_text_field($_POST['phone']),
+        'message' => sanitize_textarea_field($_POST['message'] ?? ''),
+
+        // Treatment selection (Steps 1-2)
+        'category' => sanitize_text_field($_POST['category']),
+        'treatment' => sanitize_text_field($_POST['treatment']),
+
+        // Demographics (Step 3)
+        'age_range' => sanitize_text_field($_POST['age_range'] ?? ''),
+        'gender' => sanitize_text_field($_POST['gender'] ?? ''),
+        'experience_level' => sanitize_text_field($_POST['experience_level'] ?? ''),
+        'treatment_timing' => sanitize_text_field($_POST['treatment_timing'] ?? ''),
+
+        // Contact preferences (Step 4)
+        'contact_preference' => sanitize_text_field($_POST['contact_preference'] ?? 'email'),
+        'marketing_consent' => sanitize_text_field($_POST['marketing_consent'] ?? ''),
+
+        // Quiz metadata
+        'source' => 'enhanced_hero_quiz',
+        'completion_time' => intval($_POST['quiz_completion_time'] ?? 0),
+        'quiz_completed' => true
+    ];
+
+    // Validate required fields
+    if (empty($data['first_name']) || empty($data['last_name']) || empty($data['email']) || empty($data['phone'])) {
+        wp_send_json_error(['message' => 'Please fill in all required fields']);
+    }
+
+    // Validate email
+    if (!is_email($data['email'])) {
+        wp_send_json_error(['message' => 'Please enter a valid email address']);
+    }
+
+    // Calculate lead quality score
+    $lead_score = calculate_enhanced_lead_score($data);
+    $lead_temperature = get_lead_temperature($lead_score);
+
+    // Store enhanced consultation request
+    $consultation_id = wp_insert_post([
+        'post_type' => 'consultation_request',
+        'post_status' => 'private',
+        'post_title' => 'Enhanced Quiz Lead: ' . $data['first_name'] . ' ' . $data['last_name'] . ' - ' . $data['treatment'],
+        'post_content' => $data['message'],
+        'meta_input' => [
+            // Basic contact information
+            '_contact_first_name' => $data['first_name'],
+            '_contact_last_name' => $data['last_name'],
+            '_contact_email' => $data['email'],
+            '_contact_phone' => $data['phone'],
+            '_contact_preference' => $data['contact_preference'],
+            '_marketing_consent' => $data['marketing_consent'],
+
+            // Treatment selection
+            '_selected_category' => $data['category'],
+            '_selected_treatment' => $data['treatment'],
+
+            // Demographics
+            '_selected_age_range' => $data['age_range'],
+            '_selected_gender' => $data['gender'],
+            '_experience_level' => $data['experience_level'],
+            '_treatment_timing' => $data['treatment_timing'],
+
+            // Lead scoring and analytics
+            '_lead_quality_score' => $lead_score,
+            '_lead_temperature' => $lead_temperature,
+            '_completion_time' => $data['completion_time'],
+
+            // Tracking data
+            '_source' => $data['source'],
+            '_submission_date' => current_time('mysql'),
+            '_quiz_completed' => true
+        ]
+    ]);
+
+    if ($consultation_id) {
+        wp_send_json_success([
+            'message' => 'Thank you! We\'ll contact you within 24 hours to schedule your consultation.',
+            'lead_id' => $consultation_id,
+            'lead_score' => $lead_score,
+            'lead_temperature' => $lead_temperature
+        ]);
+    } else {
+        wp_send_json_error(['message' => 'Failed to submit consultation request. Please try again.']);
+    }
+}
+add_action('wp_ajax_handle_enhanced_consultation_request', 'handle_enhanced_consultation_request');
+add_action('wp_ajax_nopriv_handle_enhanced_consultation_request', 'handle_enhanced_consultation_request');
+
+/**
+ * Helper function to get treatments by category
+ */
+function get_treatments_by_category($category) {
+    $args = [
+        'post_type' => 'hero_treatment',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'tax_query' => [
+            [
+                'taxonomy' => 'hero_treatment_category',
+                'field' => 'slug',
+                'terms' => $category
+            ]
+        ]
+    ];
+
+    $treatments = get_posts($args);
+    $formatted_treatments = [];
+
+    foreach ($treatments as $treatment) {
+        $formatted_treatments[] = [
+            'id' => $treatment->ID,
+            'title' => $treatment->post_title,
+            'slug' => $treatment->post_name,
+            'excerpt' => wp_trim_words($treatment->post_content, 20),
+            'duration' => get_post_meta($treatment->ID, '_treatment_duration', true),
+            'price_range' => get_post_meta($treatment->ID, '_treatment_price', true),
+            'pricing_tier' => determine_pricing_tier(get_post_meta($treatment->ID, '_treatment_price', true)),
+            'is_featured' => get_post_meta($treatment->ID, '_is_featured', true) == '1'
+        ];
+    }
+
+    return $formatted_treatments;
 }
