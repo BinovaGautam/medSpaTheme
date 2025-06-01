@@ -2594,6 +2594,8 @@ a:focus {
   align-items: center;
   min-height: auto;
   padding: 0;
+  /* Add top padding to content so it starts after transparent header */
+  padding-top: 120px;
 }
 
 /* LEFT CONTENT SECTION - CLEAN PROFESSIONAL STYLE */
@@ -2976,6 +2978,8 @@ a:focus {
     grid-template-columns: 1fr;
     gap: 3rem;
     text-align: center;
+    /* Add mobile top padding for content positioning */
+    padding-top: 100px;
   }
 
   .hero-interactive-section {
