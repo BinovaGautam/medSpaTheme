@@ -49,11 +49,11 @@
                     <div class="hero-content-section">
                         <div class="hero-text-content">
                             <h1 class="hero-title">
-                                HARDCODED TEST TITLE - Transform Your Beauty with Advanced Medical Spa Treatments
+                                <?php echo get_theme_mod('hero_title', 'Transform Your Beauty with Advanced Medical Spa Treatments'); ?>
                             </h1>
 
                             <p class="hero-subtitle">
-                                HARDCODED TEST SUBTITLE - Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.
+                                <?php echo get_theme_mod('hero_subtitle', 'Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.'); ?>
                             </p>
 
                             <!-- Trust Indicators -->
