@@ -60,28 +60,38 @@
                                 <span class="step-number active" data-step="1">1</span>
                                 <span class="step-number" data-step="2">2</span>
                                 <span class="step-number" data-step="3">3</span>
+                                <span class="step-number" data-step="4">4</span>
                             </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%"></div>
+                            </div>
+                            <p class="step-description">Step <span class="current-step">1</span> of 4</p>
                         </div>
 
                         <!-- Step 1: Treatment Categories -->
                         <div class="selection-step active" data-step="1">
                             <h3 class="step-title">Which treatment are you interested in?</h3>
+                            <p class="step-subtitle">Select a category to explore personalized options</p>
                             <div class="treatment-categories">
                                 <button class="category-btn" data-category="facial" tabindex="0">
                                     <span class="category-icon">✨</span>
                                     <span class="category-name">Facial Treatments</span>
+                                    <span class="category-description">Rejuvenating skin care</span>
                                 </button>
                                 <button class="category-btn" data-category="injectable" tabindex="0">
                                     <span class="category-icon">💉</span>
                                     <span class="category-name">Injectables</span>
+                                    <span class="category-description">Botox & dermal fillers</span>
                                 </button>
                                 <button class="category-btn" data-category="laser" tabindex="0">
                                     <span class="category-icon">💎</span>
                                     <span class="category-name">Laser Treatments</span>
+                                    <span class="category-description">Advanced laser technology</span>
                                 </button>
                                 <button class="category-btn" data-category="body" tabindex="0">
                                     <span class="category-icon">🌟</span>
                                     <span class="category-name">Body Contouring</span>
+                                    <span class="category-description">Sculpting & toning</span>
                                 </button>
                             </div>
                         </div>
@@ -89,38 +99,174 @@
                         <!-- Step 2: Specific Treatments -->
                         <div class="selection-step" data-step="2">
                             <h3 class="step-title">Select your specific treatment:</h3>
+                            <p class="step-subtitle">Choose the treatment that best matches your goals</p>
                             <div class="specific-treatments">
                                 <!-- Dynamically populated via JavaScript -->
+                                <div class="treatments-loading">
+                                    <div class="loading-spinner"></div>
+                                    <p>Loading treatments...</p>
+                                </div>
                             </div>
-                            <button class="btn btn-outline step-back" type="button">
-                                <span class="btn-icon">←</span>
-                                Back
-                            </button>
-                        </div>
-
-                        <!-- Step 3: Lead Collection Form -->
-                        <div class="selection-step" data-step="3">
-                            <h3 class="step-title">Get your free consultation info:</h3>
-                            <form class="consultation-form" id="hero-consultation-form">
-                                <div class="form-group">
-                                    <input type="text" name="full_name" placeholder="Your Full Name *" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="email" placeholder="Email Address *" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="tel" name="phone" placeholder="Phone Number *" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-large">
-                                    <span class="btn-icon">📞</span>
-                                    Get Free Consultation Info
-                                </button>
+                            <div class="step-navigation">
                                 <button class="btn btn-outline step-back" type="button">
                                     <span class="btn-icon">←</span>
                                     Back
                                 </button>
-                                <p class="form-privacy">We'll contact you within 24 hours with pricing and availability.</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Demographics & Personalization (NEW) -->
+                        <div class="selection-step" data-step="3">
+                            <h3 class="step-title">Help us personalize your consultation:</h3>
+                            <p class="step-subtitle">This helps us recommend the best treatments and pricing for your goals</p>
+                            <div class="demographics-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="age-range">Age Range (optional)</label>
+                                        <select name="age_range" id="age-range">
+                                            <option value="">Prefer not to say</option>
+                                            <option value="18-24">18-24</option>
+                                            <option value="25-34">25-34</option>
+                                            <option value="35-44">35-44</option>
+                                            <option value="45-54">45-54</option>
+                                            <option value="55-64">55-64</option>
+                                            <option value="65+">65+</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Gender (optional)</label>
+                                        <div class="radio-group">
+                                            <label class="radio-option">
+                                                <input type="radio" name="gender" value="" checked>
+                                                <span class="radio-label">Prefer not to say</span>
+                                            </label>
+                                            <label class="radio-option">
+                                                <input type="radio" name="gender" value="female">
+                                                <span class="radio-label">Female</span>
+                                            </label>
+                                            <label class="radio-option">
+                                                <input type="radio" name="gender" value="male">
+                                                <span class="radio-label">Male</span>
+                                            </label>
+                                            <label class="radio-option">
+                                                <input type="radio" name="gender" value="non-binary">
+                                                <span class="radio-label">Non-binary</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="experience-level">Previous Experience</label>
+                                        <select name="experience_level" id="experience-level">
+                                            <option value="first-time">First time</option>
+                                            <option value="some-experience" selected>Some experience</option>
+                                            <option value="very-experienced">Very experienced</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="treatment-timing">When are you looking to proceed?</label>
+                                        <select name="treatment_timing" id="treatment-timing">
+                                            <option value="immediately">Immediately</option>
+                                            <option value="1-3-months" selected>Within 1-3 months</option>
+                                            <option value="3-6-months">Within 3-6 months</option>
+                                            <option value="just-browsing">Just browsing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="privacy-notice">
+                                    <p>
+                                        <small>
+                                            Your information is encrypted and used only for personalized recommendations.
+                                            View our <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="step-navigation">
+                                <button class="btn btn-outline step-back" type="button">
+                                    <span class="btn-icon">←</span>
+                                    Back
+                                </button>
+                                <button class="btn btn-primary step-continue" type="button">
+                                    Continue
+                                    <span class="btn-icon">→</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Contact Information & Preferences (Enhanced) -->
+                        <div class="selection-step" data-step="4">
+                            <h3 class="step-title">Get your personalized consultation info:</h3>
+                            <p class="step-subtitle">We'll contact you within 24 hours with personalized pricing & availability</p>
+                            <form class="consultation-form" id="hero-consultation-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" name="full_name" placeholder="Your Full Name *" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" name="email" placeholder="Email Address *" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="tel" name="phone" placeholder="Phone Number *" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact-preference">Preferred Contact Method</label>
+                                        <select name="contact_preference" id="contact-preference">
+                                            <option value="call">Phone Call</option>
+                                            <option value="text">Text Message</option>
+                                            <option value="email" selected>Email</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="marketing_consent" value="yes">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-label">I consent to receive personalized treatment information and special offers</span>
+                                    </label>
+                                </div>
+                                <div class="quiz-summary" id="quiz-summary">
+                                    <!-- Populated by JavaScript with user's selections -->
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-large">
+                                    <span class="btn-icon">📞</span>
+                                    Get My Personalized Consultation
+                                </button>
+                                <div class="step-navigation">
+                                    <button class="btn btn-outline step-back" type="button">
+                                        <span class="btn-icon">←</span>
+                                        Back
+                                    </button>
+                                </div>
+                                <p class="form-privacy">
+                                    ⚠️ We'll contact you within 24 hours with personalized pricing & availability
+                                </p>
                             </form>
+                        </div>
+
+                        <!-- Success Message -->
+                        <div class="selection-step quiz-success" data-step="success" style="display: none;">
+                            <div class="success-content">
+                                <div class="success-icon">✅</div>
+                                <h3 class="success-title">Thank You!</h3>
+                                <p class="success-message">
+                                    We've received your personalized treatment quiz.
+                                    You'll receive a confirmation email shortly, and we'll contact you within 24 hours
+                                    with customized recommendations based on your preferences.
+                                </p>
+                                <div class="success-actions">
+                                    <a href="tel:<?php echo esc_attr(preetidreams_get_phone()); ?>" class="btn btn-primary">
+                                        <span class="btn-icon">📞</span>
+                                        Call Us Now
+                                    </a>
+                                    <button class="btn btn-outline" onclick="location.reload()">
+                                        Take Quiz Again
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
