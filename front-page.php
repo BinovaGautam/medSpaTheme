@@ -4,172 +4,130 @@
 
     <!-- Premium Hero Section -->
     <section class="hero-section premium-hero" id="hero">
-        <!-- Dynamic Background System -->
-        <div class="hero-background-system">
-            <?php
-            $hero_image = get_theme_mod('hero_background_image', get_template_directory_uri() . '/assets/images/hero-medical-spa.jpg');
-            $image_exists = false;
+        <!-- Hero Content -->
+        <div class="container">
+            <div class="hero-layout">
+                <!-- Left: Content Section -->
+                <div class="hero-content-section">
+                    <div class="hero-text-content">
+                        <h1 class="hero-title">
+                            <?php echo get_theme_mod('hero_title', 'Transform Your Beauty with Advanced Medical Spa Treatments'); ?>
+                        </h1>
 
-            // Check if custom image exists via URL or if default file exists
-            if (get_theme_mod('hero_background_image')) {
-                $image_exists = true; // Custom image from customizer
-            } else {
-                // Check if default image file exists
-                $default_image_path = get_template_directory() . '/assets/images/hero-medical-spa.jpg';
-                $image_exists = file_exists($default_image_path);
-            }
-            ?>
+                        <p class="hero-subtitle">
+                            <?php echo get_theme_mod('hero_subtitle', 'Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.'); ?>
+                        </p>
 
-            <div class="hero-background hero-background-image <?php echo $image_exists ? 'active' : ''; ?>" data-background="image">
-                <?php if ($image_exists) : ?>
-                    <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Luxury Medical Spa Environment', 'preetidreams'); ?>" loading="eager">
-                <?php endif; ?>
-            </div>
-
-            <div class="hero-background hero-background-video" data-background="video">
-                <?php $hero_video = get_theme_mod('hero_background_video'); ?>
-                <?php if ($hero_video) : ?>
-                    <video autoplay muted loop playsinline>
-                        <source src="<?php echo esc_url($hero_video); ?>" type="video/mp4">
-                    </video>
-                <?php endif; ?>
-            </div>
-
-            <div class="hero-background hero-background-gradient <?php echo !$image_exists ? 'active' : ''; ?>" data-background="gradient">
-                <!-- CSS gradient backgrounds -->
-            </div>
-
-            <!-- Background Overlay for Better Text Readability -->
-            <div class="hero-overlay"></div>
-
-            <!-- Hero Content -->
-            <div class="container">
-                <div class="hero-layout">
-                    <!-- Left: Content Section -->
-                    <div class="hero-content-section">
-                        <div class="hero-text-content">
-                            <h1 class="hero-title">
-                                <?php echo get_theme_mod('hero_title', 'Transform Your Beauty with Advanced Medical Spa Treatments'); ?>
-                            </h1>
-
-                            <p class="hero-subtitle">
-                                <?php echo get_theme_mod('hero_subtitle', 'Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.'); ?>
-                            </p>
-
-                            <!-- Trust Indicators -->
-                            <div class="trust-indicators">
-                                <div class="trust-item">
-                                    <span class="trust-icon">✅</span>
-                                    <span class="trust-text">Board Certified</span>
-                                </div>
-                                <div class="trust-item">
-                                    <span class="trust-icon">🏆</span>
-                                    <span class="trust-text">Award Winning</span>
-                                </div>
-                                <div class="trust-item">
-                                    <span class="trust-icon">💯</span>
-                                    <span class="trust-text">2000+ Happy Patients</span>
-                                </div>
-                                <div class="trust-item">
-                                    <span class="trust-icon">🔒</span>
-                                    <span class="trust-text">HIPAA Compliant</span>
-                                </div>
+                        <!-- Trust Indicators -->
+                        <div class="trust-indicators">
+                            <div class="trust-item">
+                                <span class="trust-icon">✅</span>
+                                <span class="trust-text">Board Certified</span>
                             </div>
-
-                            <!-- Hero Actions -->
-                            <div class="hero-actions">
-                                <a href="#consultation" class="btn btn-primary btn-lg cta-primary">
-                                    <span class="btn-icon">📅</span>
-                                    <span class="btn-text">Book Free Consultation</span>
-                                </a>
-                                <a href="tel:+1234567890" class="btn btn-secondary btn-lg cta-secondary">
-                                    <span class="btn-icon">📞</span>
-                                    <span class="btn-text">Call Now</span>
-                                </a>
+                            <div class="trust-item">
+                                <span class="trust-icon">🏆</span>
+                                <span class="trust-text">Award Winning</span>
+                            </div>
+                            <div class="trust-item">
+                                <span class="trust-icon">💯</span>
+                                <span class="trust-text">2000+ Happy Patients</span>
+                            </div>
+                            <div class="trust-item">
+                                <span class="trust-icon">🔒</span>
+                                <span class="trust-text">HIPAA Compliant</span>
                             </div>
                         </div>
+
+                        <!-- Hero Actions -->
+                        <div class="hero-actions">
+                            <a href="#consultation" class="btn btn-primary btn-lg cta-primary">
+                                <span class="btn-icon">📅</span>
+                                <span class="btn-text">Book Free Consultation</span>
+                            </a>
+                            <a href="tel:+1234567890" class="btn btn-secondary btn-lg cta-secondary">
+                                <span class="btn-icon">📞</span>
+                                <span class="btn-text">Call Now</span>
+                            </a>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Right: Interactive Treatment Selection -->
-                    <div class="hero-interactive-section">
-                        <div class="treatment-selection-interface">
-                            <div class="selection-progress">
-                                <div class="progress-indicator">
-                                    <span class="step-number active" data-step="1">1</span>
-                                    <span class="step-number" data-step="2">2</span>
-                                    <span class="step-number" data-step="3">3</span>
-                                </div>
+                <!-- Right: Interactive Treatment Selection -->
+                <div class="hero-interactive-section">
+                    <div class="treatment-selection-interface">
+                        <div class="selection-progress">
+                            <div class="progress-indicator">
+                                <span class="step-number active" data-step="1">1</span>
+                                <span class="step-number" data-step="2">2</span>
+                                <span class="step-number" data-step="3">3</span>
                             </div>
+                        </div>
 
-                            <!-- Step 1: Treatment Categories -->
-                            <div class="selection-step active" data-step="1">
-                                <h3 class="step-title">Which treatment are you interested in?</h3>
-                                <div class="treatment-categories">
-                                    <button class="category-btn" data-category="facial" tabindex="0">
-                                        <span class="category-icon">✨</span>
-                                        <span class="category-name">Facial Treatments</span>
-                                    </button>
-                                    <button class="category-btn" data-category="injectable" tabindex="0">
-                                        <span class="category-icon">💉</span>
-                                        <span class="category-name">Injectables</span>
-                                    </button>
-                                    <button class="category-btn" data-category="laser" tabindex="0">
-                                        <span class="category-icon">💎</span>
-                                        <span class="category-name">Laser Treatments</span>
-                                    </button>
-                                    <button class="category-btn" data-category="body" tabindex="0">
-                                        <span class="category-icon">🌟</span>
-                                        <span class="category-name">Body Contouring</span>
-                                    </button>
-                                </div>
+                        <!-- Step 1: Treatment Categories -->
+                        <div class="selection-step active" data-step="1">
+                            <h3 class="step-title">Which treatment are you interested in?</h3>
+                            <div class="treatment-categories">
+                                <button class="category-btn" data-category="facial" tabindex="0">
+                                    <span class="category-icon">✨</span>
+                                    <span class="category-name">Facial Treatments</span>
+                                </button>
+                                <button class="category-btn" data-category="injectable" tabindex="0">
+                                    <span class="category-icon">💉</span>
+                                    <span class="category-name">Injectables</span>
+                                </button>
+                                <button class="category-btn" data-category="laser" tabindex="0">
+                                    <span class="category-icon">💎</span>
+                                    <span class="category-name">Laser Treatments</span>
+                                </button>
+                                <button class="category-btn" data-category="body" tabindex="0">
+                                    <span class="category-icon">🌟</span>
+                                    <span class="category-name">Body Contouring</span>
+                                </button>
                             </div>
+                        </div>
 
-                            <!-- Step 2: Specific Treatments -->
-                            <div class="selection-step" data-step="2">
-                                <h3 class="step-title">Select your specific treatment:</h3>
-                                <div class="specific-treatments">
-                                    <!-- Dynamically populated via JavaScript -->
+                        <!-- Step 2: Specific Treatments -->
+                        <div class="selection-step" data-step="2">
+                            <h3 class="step-title">Select your specific treatment:</h3>
+                            <div class="specific-treatments">
+                                <!-- Dynamically populated via JavaScript -->
+                            </div>
+                            <button class="btn btn-outline step-back" type="button">
+                                <span class="btn-icon">←</span>
+                                Back
+                            </button>
+                        </div>
+
+                        <!-- Step 3: Consultation Form -->
+                        <div class="selection-step" data-step="3">
+                            <h3 class="step-title">Book your consultation:</h3>
+                            <form class="consultation-form" id="hero-consultation-form">
+                                <div class="form-group">
+                                    <input type="text" name="full_name" placeholder="Your Full Name" required>
                                 </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" placeholder="Email Address" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="message" placeholder="Tell us about your goals (optional)" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-large">
+                                    <span class="btn-icon">📅</span>
+                                    Schedule Free Consultation
+                                </button>
                                 <button class="btn btn-outline step-back" type="button">
                                     <span class="btn-icon">←</span>
                                     Back
                                 </button>
-                            </div>
-
-                            <!-- Step 3: Consultation Form -->
-                            <div class="selection-step" data-step="3">
-                                <h3 class="step-title">Book your consultation:</h3>
-                                <form class="consultation-form" id="hero-consultation-form">
-                                    <div class="form-group">
-                                        <input type="text" name="full_name" placeholder="Your Full Name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" name="email" placeholder="Email Address" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="tel" name="phone" placeholder="Phone Number" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea name="message" placeholder="Tell us about your goals (optional)" rows="3"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-large">
-                                        <span class="btn-icon">📅</span>
-                                        Schedule Free Consultation
-                                    </button>
-                                    <button class="btn btn-outline step-back" type="button">
-                                        <span class="btn-icon">←</span>
-                                        Back
-                                    </button>
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Seamless Header Integration -->
-        <div class="hero-header-connector"></div>
     </section>
 
     <!-- Featured Treatments Section -->
