@@ -14,98 +14,163 @@
 <?php wp_body_open(); ?>
 
 <!-- Skip Link for Accessibility -->
-<a class="skip-link sr-only" href="#main"><?php esc_html_e('Skip to main content', 'preetidreams'); ?></a>
+<a class="skip-link sr-only sr-only-focusable" href="#main"><?php esc_html_e('Skip to main content', 'preetidreams'); ?></a>
 
-<!-- Header -->
-<header class="site-header" role="banner">
+<!-- Professional Header -->
+<header class="site-header professional-header" role="banner">
     <div class="container">
-        <div class="header-content">
+        <div class="header-inner">
 
-            <!-- Site Branding -->
+            <!-- Logo Section -->
             <div class="site-branding">
                 <?php if (has_custom_logo()) : ?>
-                    <div class="site-logo">
+                    <div class="custom-logo">
                         <?php the_custom_logo(); ?>
                     </div>
+                <?php else : ?>
+                    <div class="logo-fallback">
+                        <div class="logo-medical-cross">✚</div>
+                        <div class="logo-text">
+                            <h1 class="site-title">
+                                <a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
+                                    <?php bloginfo('name'); ?>
+                                </a>
+                            </h1>
+                        </div>
+                    </div>
                 <?php endif; ?>
-
-                <div class="site-identity">
-                    <h1 class="site-title">
-                        <a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
-                            <?php bloginfo('name'); ?>
-                        </a>
-                    </h1>
-
-                    <?php
-                    $description = get_bloginfo('description', 'display');
-                    if ($description || is_customize_preview()) : ?>
-                        <p class="site-description"><?php echo $description; ?></p>
-                    <?php endif; ?>
-                </div>
             </div>
 
-            <!-- Medical Spa Contact Info -->
-            <div class="header-contact">
+            <!-- Main Navigation -->
+            <nav class="main-navigation" role="navigation" aria-label="<?php esc_attr_e('Primary navigation', 'preetidreams'); ?>">
+                <?php if (has_nav_menu('primary')) : ?>
+                    <?php
+                    wp_nav_menu([
+                        'theme_location' => 'primary',
+                        'menu_id'        => 'primary-menu',
+                        'menu_class'     => 'nav-menu',
+                        'container'      => false,
+                        'depth'          => 1,
+                        'fallback_cb'    => false,
+                    ]);
+                    ?>
+                <?php else : ?>
+                    <!-- Clean fallback menu -->
+                    <ul class="nav-menu">
+                        <li class="menu-item <?php echo is_home() || is_front_page() ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(home_url('/')); ?>">Home</a>
+                        </li>
+                        <li class="menu-item <?php echo is_post_type_archive('treatment') || is_singular('treatment') ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>">Treatments</a>
+                        </li>
+                        <li class="menu-item <?php echo is_post_type_archive('staff') || is_singular('staff') ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>">Our Team</a>
+                        </li>
+                        <li class="menu-item <?php echo is_post_type_archive('testimonial') || is_singular('testimonial') ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>">Testimonials</a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                <?php endif; ?>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <!-- Phone Number (Desktop Only) -->
                 <?php
                 $phone = preetidreams_get_phone();
-                $address = preetidreams_get_address();
-                $hours = preetidreams_get_hours();
-                ?>
-
-                <?php if ($phone) : ?>
-                    <div class="contact-item">
+                if ($phone) : ?>
+                    <div class="header-phone desktop-only">
                         <a href="tel:<?php echo esc_attr($phone); ?>" class="phone-link">
-                            <span class="icon">📞</span>
-                            <span class="text"><?php echo esc_html($phone); ?></span>
+                            <?php echo esc_html($phone); ?>
                         </a>
                     </div>
                 <?php endif; ?>
 
-                <?php if ($hours) : ?>
-                    <div class="contact-item">
-                        <span class="icon">🕒</span>
-                        <span class="text"><?php echo esc_html($hours); ?></span>
-                    </div>
-                <?php endif; ?>
-
+                <!-- Book Consultation Button -->
                 <div class="header-cta">
-                    <a href="#consultation" class="consultation-btn">
-                        <?php esc_html_e('Book Consultation', 'preetidreams'); ?>
+                    <a href="#consultation" class="btn-consultation">
+                        <span class="btn-icon">📋</span>
+                        <span class="btn-text">Book Consultation</span>
                     </a>
                 </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle"
+                        type="button"
+                        aria-controls="mobile-menu"
+                        aria-expanded="false"
+                        aria-label="<?php esc_attr_e('Toggle mobile menu', 'preetidreams'); ?>">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
+
         </div>
-
-        <!-- Main Navigation -->
-        <nav class="main-navigation" role="navigation" aria-label="<?php esc_attr_e('Primary menu', 'preetidreams'); ?>">
-            <?php if (has_nav_menu('primary')) : ?>
-                <?php
-                wp_nav_menu([
-                    'theme_location' => 'primary',
-                    'menu_id'        => 'primary-menu',
-                    'menu_class'     => 'primary-menu',
-                    'container'      => false,
-                    'depth'          => 2,
-                ]);
-                ?>
-            <?php else : ?>
-                <!-- Fallback menu for setup -->
-                <ul class="primary-menu">
-                    <li><a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'preetidreams'); ?></a></li>
-                    <li><a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>"><?php esc_html_e('Treatments', 'preetidreams'); ?></a></li>
-                    <li><a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>"><?php esc_html_e('Our Team', 'preetidreams'); ?></a></li>
-                    <li><a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>"><?php esc_html_e('Testimonials', 'preetidreams'); ?></a></li>
-                    <li><a href="#contact"><?php esc_html_e('Contact', 'preetidreams'); ?></a></li>
-                </ul>
-            <?php endif; ?>
-
-            <!-- Mobile Menu Toggle -->
-            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                <span class="sr-only"><?php esc_html_e('Menu', 'preetidreams'); ?></span>
-                <span class="menu-icon"></span>
-            </button>
-        </nav>
     </div>
 </header>
 
-<!-- Main Content Area -->
+<!-- Mobile Menu -->
+<div class="mobile-menu-overlay" aria-hidden="true"></div>
+<nav class="mobile-menu" id="mobile-menu" aria-hidden="true" role="navigation">
+    <div class="mobile-menu-header">
+        <div class="mobile-logo">
+            <div class="logo-medical-cross">✚</div>
+            <span class="mobile-site-name"><?php bloginfo('name'); ?></span>
+        </div>
+        <button class="mobile-menu-close" aria-label="<?php esc_attr_e('Close menu', 'preetidreams'); ?>">
+            ✕
+        </button>
+    </div>
+
+    <div class="mobile-menu-content">
+        <ul class="mobile-nav-list">
+            <li class="<?php echo is_home() || is_front_page() ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(home_url('/')); ?>">
+                    <span class="nav-icon">🏠</span>
+                    Home
+                </a>
+            </li>
+            <li class="<?php echo is_post_type_archive('treatment') || is_singular('treatment') ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>">
+                    <span class="nav-icon">💉</span>
+                    Treatments
+                </a>
+            </li>
+            <li class="<?php echo is_post_type_archive('staff') || is_singular('staff') ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>">
+                    <span class="nav-icon">👥</span>
+                    Our Team
+                </a>
+            </li>
+            <li class="<?php echo is_post_type_archive('testimonial') || is_singular('testimonial') ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>">
+                    <span class="nav-icon">💬</span>
+                    Testimonials
+                </a>
+            </li>
+            <li>
+                <a href="#contact">
+                    <span class="nav-icon">📞</span>
+                    Contact
+                </a>
+            </li>
+        </ul>
+
+        <div class="mobile-menu-actions">
+            <?php if ($phone) : ?>
+                <a href="tel:<?php echo esc_attr($phone); ?>" class="mobile-phone-btn">
+                    📞 Call <?php echo esc_html($phone); ?>
+                </a>
+            <?php endif; ?>
+            <a href="#consultation" class="mobile-consultation-btn">
+                📋 Book Free Consultation
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->

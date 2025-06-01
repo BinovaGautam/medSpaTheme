@@ -112,10 +112,111 @@ class MedicalSpaApp {
         // Wait for all components to load
         await Promise.all(componentPromises);
 
+        // Initialize mobile menu after components are loaded
+        this.initializeMobileMenu();
+
         this.markPerformance('components-load-end');
         this.measurePerformance('components-loading', 'components-load-start', 'components-load-end');
 
         console.log(`📦 Components loaded in ${this.getMetric('components-loading')}ms`);
+    }
+
+    /**
+     * Initialize mobile menu functionality
+     */
+    initializeMobileMenu() {
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileClose = document.querySelector('.mobile-menu-close');
+
+        if (!mobileToggle || !mobileMenu || !mobileOverlay) {
+            console.warn('Mobile menu elements not found');
+            return;
+        }
+
+        let isOpen = false;
+
+        // Toggle function
+        const toggleMenu = () => {
+            isOpen = !isOpen;
+
+            if (isOpen) {
+                // Open menu
+                mobileMenu.classList.add('open');
+                mobileOverlay.classList.add('open');
+                document.body.classList.add('mobile-menu-open');
+                mobileToggle.setAttribute('aria-expanded', 'true');
+                mobileMenu.setAttribute('aria-hidden', 'false');
+                mobileOverlay.setAttribute('aria-hidden', 'false');
+
+                // Focus first menu item
+                const firstMenuItem = mobileMenu.querySelector('a');
+                if (firstMenuItem) {
+                    setTimeout(() => firstMenuItem.focus(), 100);
+                }
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('open');
+                mobileOverlay.classList.remove('open');
+                document.body.classList.remove('mobile-menu-open');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                mobileMenu.setAttribute('aria-hidden', 'true');
+                mobileOverlay.setAttribute('aria-hidden', 'true');
+
+                // Return focus to toggle button
+                mobileToggle.focus();
+            }
+        };
+
+        // Event listeners
+        mobileToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleMenu();
+        });
+
+        if (mobileClose) {
+            mobileClose.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (isOpen) toggleMenu();
+            });
+        }
+
+        // Close on overlay click
+        mobileOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileOverlay && isOpen) {
+                toggleMenu();
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isOpen) {
+                toggleMenu();
+            }
+        });
+
+        // Close on menu item click (for single page apps)
+        const menuItems = mobileMenu.querySelectorAll('a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Close menu after a short delay to allow navigation
+                setTimeout(() => {
+                    if (isOpen) toggleMenu();
+                }, 150);
+            });
+        });
+
+        console.log('📱 Mobile menu initialized successfully');
+
+        // Store mobile menu instance
+        this.components.set('mobile-menu', {
+            name: 'mobile-menu',
+            loaded: true,
+            initialized: true,
+            toggle: toggleMenu,
+            isOpen: () => isOpen
+        });
     }
 
     /**
@@ -184,6 +285,9 @@ class MedicalSpaApp {
             }, 250);
         });
 
+        // Smart header scroll behavior
+        this.setupSmartHeader();
+
         // Scroll performance optimization
         let scrollTimeout;
         let isScrolling = false;
@@ -198,19 +302,119 @@ class MedicalSpaApp {
                 isScrolling = false;
                 this.dispatchEvent('scrollEnd');
             }, 150);
+
+            // Update header on scroll
+            this.updateHeaderOnScroll();
         }, { passive: true });
 
-        // Click tracking for analytics
-        document.addEventListener('click', (event) => {
-            this.handleGlobalClick(event);
+        // Global click handler
+        document.addEventListener('click', this.handleGlobalClick);
+
+        // Global keyboard handler
+        document.addEventListener('keydown', this.handleGlobalKeyboard);
+
+        console.log('🌐 Global event listeners set up');
+    }
+
+    /**
+     * Set up smart header scroll behavior
+     */
+    setupSmartHeader() {
+        this.header = {
+            element: document.querySelector('.professional-header'),
+            lastScrollY: 0,
+            isHidden: false,
+            isScrolled: false,
+            ticking: false
+        };
+
+        if (!this.header.element) {
+            console.warn('Header element not found');
+            return;
+        }
+
+        // Ensure body has the layout-stable class for smooth transitions
+        document.body.classList.add('layout-stable');
+
+        // Add resize handler to update header behavior on orientation change
+        let resizeHeaderTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeHeaderTimeout);
+            resizeHeaderTimeout = setTimeout(() => {
+                // Reset header state on resize to prevent layout issues
+                if (this.header.isHidden) {
+                    this.header.element.classList.remove('hidden');
+                    this.header.element.classList.add('visible');
+                    this.header.isHidden = false;
+                }
+            }, 100);
         });
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (event) => {
-            this.handleGlobalKeyboard(event);
-        });
+        console.log('🎯 Smart header initialized with responsive support');
+    }
 
-        console.log('🎯 Global event listeners attached');
+    /**
+     * Update header state based on scroll position
+     */
+    updateHeaderOnScroll() {
+        if (!this.header.element || this.header.ticking) return;
+
+        this.header.ticking = true;
+
+        requestAnimationFrame(() => {
+            const currentScrollY = window.pageYOffset;
+            const scrollingDown = currentScrollY > this.header.lastScrollY;
+            const scrollingUp = currentScrollY < this.header.lastScrollY;
+            const scrollThreshold = 50;
+            const hideThreshold = 120;
+
+            // Header separation and body class management
+            if (currentScrollY > scrollThreshold) {
+                if (!this.header.isScrolled) {
+                    this.header.element.classList.add('scrolled');
+                    document.body.classList.add('header-scrolled');
+                    this.header.isScrolled = true;
+                }
+            } else {
+                if (this.header.isScrolled) {
+                    this.header.element.classList.remove('scrolled');
+                    document.body.classList.remove('header-scrolled');
+                    this.header.isScrolled = false;
+                }
+            }
+
+            // Hide/show header based on scroll direction
+            if (currentScrollY > hideThreshold) {
+                if (scrollingDown && !this.header.isHidden && (currentScrollY - this.header.lastScrollY) > 5) {
+                    // Hide header when scrolling down with momentum
+                    this.header.element.classList.add('hidden');
+                    this.header.element.classList.remove('visible');
+                    this.header.isHidden = true;
+
+                    // Dispatch event for other components
+                    this.dispatchEvent('headerHidden');
+                } else if (scrollingUp && this.header.isHidden && (this.header.lastScrollY - currentScrollY) > 3) {
+                    // Show header when scrolling up with momentum
+                    this.header.element.classList.remove('hidden');
+                    this.header.element.classList.add('visible');
+                    this.header.isHidden = false;
+
+                    // Dispatch event for other components
+                    this.dispatchEvent('headerVisible');
+                }
+            } else if (currentScrollY <= hideThreshold && this.header.isHidden) {
+                // Always show header when near top
+                this.header.element.classList.remove('hidden');
+                this.header.element.classList.add('visible');
+                this.header.isHidden = false;
+
+                this.dispatchEvent('headerVisible');
+            }
+
+            // Update last scroll position
+            this.header.lastScrollY = Math.max(0, currentScrollY);
+            this.header.ticking = false;
+        });
     }
 
     /**
