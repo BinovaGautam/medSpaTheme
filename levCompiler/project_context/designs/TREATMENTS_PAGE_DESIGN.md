@@ -18,10 +18,22 @@
 │ Discover our comprehensive range    │
 │ of medical spa treatments designed  │
 │ to enhance your natural beauty      │
+│                                     │
+│ 🆕 📊 45+ Treatments Available      │
+│ 🆕 ⭐ 4.9/5 Average Rating         │
 └─────────────────────────────────────┘
 ```
 
-### **2. MOBILE TREATMENT FILTERS**
+### **🆕 2. MOBILE SEARCH & FILTER BAR**
+```
+┌─────────────────────────────────────┐
+│ 🔍 [Search treatments...]          │
+│                                     │
+│ [🔧 Filters (3)] [💰 Price] [⏱️ Time] │
+└─────────────────────────────────────┘
+```
+
+### **3. MOBILE TREATMENT FILTERS**
 ```
 ┌─────────────────────────────────────┐
 │        Filter Treatments            │
@@ -29,6 +41,7 @@
 │ ┌─── CATEGORIES ─────────┐          │
 │ │ [All] [Facial] [Body]  │          │
 │ │ [Anti-Aging] [Hair]    │          │
+│ │ 🆕 [Popular] [New]     │          │
 │ └────────────────────────┘          │
 │                                     │
 │ ┌─── PRICE RANGE ────────┐          │
@@ -36,21 +49,40 @@
 │ │ ○ $200 - $500          │          │
 │ │ ○ $500 - $1000         │          │
 │ │ ○ $1000+               │          │
+│ │ 🆕 💳 Payment plans available │    │
 │ └────────────────────────┘          │
 │                                     │
-│     [Apply Filters]                 │
+│ 🆕 ┌─── DURATION ────────┐          │
+│ │ ○ Quick (< 30 min)     │          │
+│ │ ○ Standard (30-60 min) │          │
+│ │ ○ Extended (1-2 hours) │          │
+│ │ ○ Multi-session        │          │
+│ └────────────────────────┘          │
+│                                     │
+│ 🆕 ┌─── RESULTS TIMELINE ┐          │
+│ │ ○ Immediate            │          │
+│ │ ○ 1-2 weeks            │          │
+│ │ ○ 1 month              │          │
+│ │ ○ 3+ months            │          │
+│ └────────────────────────┘          │
+│                                     │
+│     [Apply Filters] [Clear All]     │
 └─────────────────────────────────────┘
 ```
 
 ### **3. MOBILE TREATMENT GRID**
 ```
 ┌─────────────────────────────────────┐
+│ 🆕 Showing 12 of 45 treatments      │
+│ Sort by: [Most Popular ▼]          │
 │                                     │
 │ ┌─── BOTOX INJECTIONS ────┐         │
 │ │ [Treatment Image]        │         │
+│ │ 🆕 💎 Premium Treatment │         │
 │ │                         │         │
 │ │ Botox Injections        │         │
 │ │ ⭐⭐⭐⭐⭐ (127 reviews)      │         │
+│ │ 🆕 "Most Popular"       │         │
 │ │                         │         │
 │ │ Smooth fine lines and   │         │
 │ │ wrinkles for a more     │         │
@@ -58,15 +90,19 @@
 │ │                         │         │
 │ │ Starting at $299        │         │
 │ │ ⏱️ 30-45 min | 🔄 2 weeks │         │
+│ │ 🆕 💳 0% financing available │     │
 │ │                         │         │
 │ │ [Learn More] [Book Now] │         │
+│ │ 🆕 [💬 Ask Questions]   │         │
 │ └─────────────────────────┘         │
 │                                     │
 │ ┌─── LASER HAIR REMOVAL ──┐         │
 │ │ [Treatment Image]        │         │
+│ │ 🆕 ⚡ Advanced Technology │        │
 │ │                         │         │
 │ │ Laser Hair Removal      │         │
 │ │ ⭐⭐⭐⭐⭐ (89 reviews)       │         │
+│ │ 🆕 "FDA Approved"       │         │
 │ │                         │         │
 │ │ Permanent hair reduction│         │
 │ │ using advanced laser    │         │
@@ -74,15 +110,19 @@
 │ │                         │         │
 │ │ Starting at $199        │         │
 │ │ ⏱️ 15-60 min | 🔄 6-8 sessions │   │
+│ │ 🆕 📅 Package deals save 25% │   │
 │ │                         │         │
 │ │ [Learn More] [Book Now] │         │
+│ │ 🆕 [Compare Similar]    │         │
 │ └─────────────────────────┘         │
 │                                     │
 │ ┌─── CHEMICAL PEELS ──────┐         │
 │ │ [Treatment Image]        │         │
+│ │ 🆕 🌟 Beginner Friendly │         │
 │ │                         │         │
 │ │ Chemical Peels          │         │
 │ │ ⭐⭐⭐⭐⭐ (156 reviews)      │         │
+│ │ 🆕 "Great for first-timers" │     │
 │ │                         │         │
 │ │ Rejuvenate skin texture │         │
 │ │ and reduce signs of     │         │
@@ -90,11 +130,14 @@
 │ │                         │         │
 │ │ Starting at $150        │         │
 │ │ ⏱️ 30-45 min | 🔄 Immediate │       │
+│ │ 🆕 ✅ No downtime required │     │
 │ │                         │         │
 │ │ [Learn More] [Book Now] │         │
+│ │ 🆕 [Before & After]     │         │
 │ └─────────────────────────┘         │
 │                                     │
-│        [Load More]                  │
+│        [Load More (9 remaining)]    │
+│ 🆕 [🔄 Refresh Results]            │
 └─────────────────────────────────────┘
 ```
 
@@ -114,7 +157,9 @@
 │           Discover our comprehensive range of medical spa treatments               │
 │                designed to enhance your natural beauty                             │
 │                                                                                     │
-│  Home > Treatments                                                                 │
+│  Home > Treatments                    🆕 📊 45+ Treatments | ⭐ 4.9/5 Rating      │
+│                                                                                     │
+│  🆕 🔍 [Search all treatments...] [Advanced Search]                               │
 └─────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -123,39 +168,69 @@
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                                                                                     │
 │ ┌─── FILTERS ─────────┐    ┌──────────── TREATMENT GRID ─────────────────┐        │
+│ │                     │    │ Showing 12 of 45 treatments                 │        │
+│ │ Treatment Categories│    │ Sort by: [Most Popular ▼] [💾 Save Search] │        │
+│ │ ☑️ All Treatments   │    │                                              │        │
+│ │ ☐ Facial Treatments │    │ ┌─── BOTOX ───┐ ┌─── LASER ───┐ ┌── PEELS ──┐ │        │
+│ │ ☐ Body Contouring   │    │ │[Image]      │ │[Image]      │ │[Image]    │ │        │
+│ │ ☐ Anti-Aging        │    │ │💎 Premium   │ │⚡ Advanced  │ │🌟 Beginner│ │        │
+│ │ ☐ Hair Removal      │    │ │             │ │             │ │           │ │        │
+│ │ ☐ Skin Resurfacing  │    │ │Botox        │ │Laser Hair   │ │Chemical   │ │        │
+│ │ 🆕 ☐ New Treatments │    │ │Injections   │ │Removal      │ │Peels      │ │        │
+│ │ 🆕 ☐ Most Popular   │    │ │⭐⭐⭐⭐⭐ (127) │ │⭐⭐⭐⭐⭐ (89)  │ │⭐⭐⭐⭐⭐ (156)│ │        │
+│ │                     │    │ │             │ │             │ │           │ │        │
+│ │ Price Range         │    │ │From $299    │ │From $199    │ │From $150  │ │        │
+│ │ ○ Under $200        │    │ │⏱️ 30-45 min │ │⏱️ 15-60 min │ │⏱️ 30-45min│ │        │
+│ │ ○ $200 - $500       │    │ │🔄 2 weeks   │ │🔄 6-8 sessions│ │🔄 Immediate│ │        │
+│ │ ○ $500 - $1000      │    │ │💳 Financing │ │📅 Packages  │ │✅ No downtime│ │       │
+│ │ ○ $1000+            │    │ │             │ │             │ │           │ │        │
+│ │ 🆕 💳 Payment Plans │    │ │[Learn More] │ │[Learn More] │ │[Learn More]│ │        │
+│ │                     │    │ │[Book Now]   │ │[Book Now]   │ │[Book Now] │ │        │
+│ │ Treatment Duration  │    │ │💬 Questions │ │🔄 Compare   │ │📸 B&A     │ │        │
+│ │ ○ Under 30 min      │    │ └─────────────┘ └─────────────┘ └───────────┘ │        │
+│ │ ○ 30-60 min         │    │                                              │        │
+│ │ ○ 1-2 hours         │    │ ┌─── DERMAL ──┐ ┌─── MICRO ───┐ ┌── BOTOX ──┐ │        │
+│ │ ○ 2+ hours          │    │ │[Image]      │ │[Image]      │ │[Image]    │ │        │
+│ │ 🆕 ○ Multi-session  │    │ │🏆 Top Rated │ │💡 Innovative│ │🎯 Specialized│ │       │
+│ │                     │    │ │             │ │             │ │           │ │        │
+│ │ 🆕 Results Timeline │    │ │Dermal       │ │Microneedling│ │Botox for  │ │        │
+│ │ ○ Immediate         │    │ │Fillers      │ │             │ │Hyperhidrosis│ │       │
+│ │ ○ 1-2 weeks         │    │ │⭐⭐⭐⭐⭐ (94)  │ │⭐⭐⭐⭐⭐ (67)  │ │⭐⭐⭐⭐⭐ (43) │ │        │
+│ │ ○ 1 month           │    │ │             │ │             │ │           │ │        │
+│ │ ○ 3+ months         │    │ │From $499    │ │From $299    │ │From $450  │ │        │
+│ │                     │    │ │⏱️ 45-60 min │ │⏱️ 60-90 min │ │⏱️ 45-60min│ │        │
+│ │ Popular Treatments  │    │ │🔄 6-12 months│ │🔄 4-6 sessions│ │🔄 6 months│ │        │
+│ │ • Botox Injections  │    │ │💎 Premium   │ │🌟 Results   │ │🎯 Targeted│ │        │
+│ │ • Laser Hair Removal│    │ │             │ │             │ │           │ │        │
+│ │ • Chemical Peels    │    │ │[Learn More] │ │[Learn More] │ │[Learn More]│ │        │
+│ │ • Dermal Fillers    │    │ │[Book Now]   │ │[Book Now]   │ │[Book Now] │ │        │
+│ │ • Microneedling     │    │ │💬 Expert Tips│ │📊 Science   │ │🔬 Medical │ │        │
+│ │ 🆕 • View All →     │    │ └─────────────┘ └─────────────┘ └───────────┘ │        │
 │ │                     │    │                                              │        │
-│ │ Treatment Categories│    │ ┌─── BOTOX ───┐ ┌─── LASER ───┐ ┌── PEELS ──┐ │        │
-│ │ ☑️ All Treatments   │    │ │[Image]      │ │[Image]      │ │[Image]    │ │        │
-│ │ ☐ Facial Treatments │    │ │             │ │             │ │           │ │        │
-│ │ ☐ Body Contouring   │    │ │Botox        │ │Laser Hair   │ │Chemical   │ │        │
-│ │ ☐ Anti-Aging        │    │ │Injections   │ │Removal      │ │Peels      │ │        │
-│ │ ☐ Hair Removal      │    │ │⭐⭐⭐⭐⭐ (127) │ │⭐⭐⭐⭐⭐ (89)  │ │⭐⭐⭐⭐⭐ (156)│ │        │
-│ │ ☐ Skin Resurfacing  │    │ │             │ │             │ │           │ │        │
-│ │                     │    │ │From $299    │ │From $199    │ │From $150  │ │        │
-│ │ Price Range         │    │ │⏱️ 30-45 min │ │⏱️ 15-60 min │ │⏱️ 30-45min│ │        │
-│ │ ○ Under $200        │    │ │🔄 2 weeks   │ │🔄 6-8 sessions│ │🔄 Immediate│ │        │
-│ │ ○ $200 - $500       │    │ │             │ │             │ │           │ │        │
-│ │ ○ $500 - $1000      │    │ │[Learn More] │ │[Learn More] │ │[Learn More]│ │        │
-│ │ ○ $1000+            │    │ │[Book Now]   │ │[Book Now]   │ │[Book Now] │ │        │
-│ │                     │    │ └─────────────┘ └─────────────┘ └───────────┘ │        │
-│ │ Treatment Duration  │    │                                              │        │
-│ │ ○ Under 30 min      │    │ ┌─── DERMAL ──┐ ┌─── MICRO ───┐ ┌── BOTOX ──┐ │        │
-│ │ ○ 30-60 min         │    │ │[Image]      │ │[Image]      │ │[Image]    │ │        │
-│ │ ○ 1-2 hours         │    │ │             │ │             │ │           │ │        │
-│ │ ○ 2+ hours          │    │ │Dermal       │ │Microneedling│ │Botox for  │ │        │
-│ │                     │    │ │Fillers      │ │             │ │Hyperhidrosis│ │       │
-│ │ Popular Treatments  │    │ │⭐⭐⭐⭐⭐ (94)  │ │⭐⭐⭐⭐⭐ (67)  │ │⭐⭐⭐⭐⭐ (43) │ │        │
-│ │ • Botox Injections  │    │ │             │ │             │ │           │ │        │
-│ │ • Laser Hair Removal│    │ │From $499    │ │From $299    │ │From $450  │ │        │
-│ │ • Chemical Peels    │    │ │⏱️ 45-60 min │ │⏱️ 60-90 min │ │⏱️ 45-60min│ │        │
-│ │ • Dermal Fillers    │    │ │🔄 6-12 months│ │🔄 4-6 sessions│ │🔄 6 months│ │        │
-│ │ • Microneedling     │    │ │             │ │             │ │           │ │        │
-│ │                     │    │ │[Learn More] │ │[Learn More] │ │[Learn More]│ │        │
-│ │ [Clear All Filters] │    │ │[Book Now]   │ │[Book Now]   │ │[Book Now] │ │        │
-│ └─────────────────────┘    │ └─────────────┘ └─────────────┘ └───────────┘ │        │
-│                            │                                              │        │
-│                            │               [Load More Treatments]         │        │
+│ │ [Clear All Filters] │    │               [Load More Treatments]         │        │
+│ │ 🆕 [Save My Filters]│    │               🆕 [Schedule Multiple]          │        │
+│ └─────────────────────┘    │               🆕 [Treatment Packages]        │        │
 │                            └──────────────────────────────────────────────┘        │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### **🆕 3. DESKTOP SMART RECOMMENDATIONS**
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                          Smart Treatment Recommendations                           │
+│                    Based on your interests and popular combinations                │
+│                                                                                     │
+│ ┌──── PACKAGE DEALS ─────┐ ┌──── TRENDING NOW ──────┐ ┌─── FOR BEGINNERS ────┐     │
+│ │ 💎 Popular Combos      │ │ 🔥 This Month's Favs   │ │ 🌟 Start Your Journey │     │
+│ │                        │ │                        │ │                      │     │
+│ │ ✨ Botox + Fillers     │ │ 🧴 HydraFacials       │ │ 💆 Chemical Peels    │     │
+│ │ Save 15% on both       │ │ 3x more popular        │ │ Gentle introduction  │     │
+│ │                        │ │                        │ │                      │     │
+│ │ 🔬 Laser Package       │ │ 💉 Lip Fillers        │ │ 🧴 Facials           │     │
+│ │ 6 sessions, save 25%   │ │ 2x bookings vs last yr │ │ No downtime needed   │     │
+│ │                        │ │                        │ │                      │     │
+│ │ [View All Packages]    │ │ [See Trending]         │ │ [Beginner Guide]     │     │
+│ └────────────────────────┘ └────────────────────────┘ └──────────────────────┘     │
 └─────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -163,6 +238,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                          Compare Popular Treatments                                │
+│                              🆕 Side-by-side Analysis                              │
 │                                                                                     │
 │ ┌────── BOTOX ──────┐ ┌──── FILLERS ─────┐ ┌──── LASER ──────┐ ┌─── PEELS ────┐   │
 │ │ [Image]           │ │ [Image]          │ │ [Image]         │ │ [Image]      │   │
@@ -172,15 +248,19 @@
 │ │ ✅ Quick Results   │ │ ✅ Volume Restore │ │ ✅ Permanent     │ │ ✅ Skin Glow  │   │
 │ │ ✅ Minimal Downtime│ │ ✅ Long-lasting  │ │ ✅ All Skin Types│ │ ✅ Quick      │   │
 │ │ ✅ FDA Approved   │ │ ✅ Natural Look  │ │ ✅ Precise       │ │ ✅ Affordable │   │
+│ │ 🆕 ✅ Pain-free   │ │ 🆕 ✅ Reversible │ │ 🆕 ✅ Time-saving│ │ 🆕 ✅ Versatile│   │
 │ │                   │ │                  │ │                 │ │              │   │
 │ │ From $299         │ │ From $499        │ │ From $199       │ │ From $150    │   │
 │ │ ⏱️ 30-45 minutes   │ │ ⏱️ 45-60 minutes  │ │ ⏱️ 15-60 minutes │ │ ⏱️ 30-45 min  │   │
 │ │ 🔄 Results 2 weeks │ │ 🔄 6-12 months   │ │ 🔄 6-8 sessions  │ │ 🔄 Immediate  │   │
+│ │ 🆕 💳 0% financing │ │ 🆕 💎 Premium    │ │ 🆕 📅 Packages   │ │ 🆕 🌟 Popular │   │
 │ │                   │ │                  │ │                 │ │              │   │
 │ │ [Select]          │ │ [Select]         │ │ [Select]        │ │ [Select]     │   │
+│ │ 🆕 [💬 Chat]      │ │ 🆕 [📸 Gallery]  │ │ 🆕 [🧮 Calculator]│ │ 🆕 [📋 FAQ]  │   │
 │ └───────────────────┘ └──────────────────┘ └─────────────────┘ └──────────────┘   │
 │                                                                                     │
-│                        [Compare Selected] [Book Consultation]                      │
+│                [Compare Selected] [Book Consultation] [Ask Expert]                 │
+│                           🆕 [Download Comparison PDF]                             │
 └─────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -193,64 +273,21 @@
 - **Price Range**: Multiple ranges with clear pricing
 - **Duration**: Treatment time preferences
 - **Popular Tags**: Most requested treatments
+- **🆕 Results Timeline**: When to expect results
+- **🆕 Payment Options**: Financing and package deals
 - **Clear All**: Easy filter reset
+- **🆕 Save Filters**: Personalized filter presets
 
 ### **TREATMENT CARDS**
 - **High-quality Images**: Professional treatment photos
 - **Star Ratings**: Real patient reviews (⭐⭐⭐⭐⭐)
-- **Key Information**: Price, duration, results timeline
-- **Quick Actions**: Learn More + Book Now buttons
-- **Trust Indicators**: Review counts, before/after previews
+- **🆕 Treatment Tags**: Premium, Advanced, Beginner-friendly
+- **🆕 Quick Actions**: Chat, Compare, Before & After
+- **🆕 Financing Options**: Payment plans and packages
 
-### **COMPARISON TOOL**
-- **Side-by-side**: Compare up to 4 treatments
-- **Feature Highlights**: Key benefits clearly listed
-- **Pricing**: Transparent starting prices
-- **Timeline**: Expected results timeframe
-- **CTA**: Direct booking from comparison
-
-### **MOBILE OPTIMIZATIONS**
-- **Stack Layout**: Single column for easy scrolling
-- **Touch-friendly**: Large tap targets (44px+)
-- **Collapsible Filters**: Expandable filter sections
-- **Infinite Scroll**: Load more on demand
-- **Quick Call**: Direct phone links
-
-### **ACCESSIBILITY FEATURES**
-- **Alt Text**: All images have descriptive alt text
-- **Keyboard Navigation**: Full keyboard support
-- **Screen Reader**: Semantic markup
-- **High Contrast**: WCAG AAA compliant colors
-- **Focus Indicators**: Clear focus states
-
-### **CONVERSION ELEMENTS**
-- **Urgency**: "Book now for 15% off first treatment"
-- **Social Proof**: Review counts and ratings
-- **Trust Badges**: Board certified, HIPAA compliant
-- **Clear Pricing**: Transparent starting prices
-- **Easy Booking**: Multiple CTA opportunities
-
----
-
-## **📊 SEARCH & DISCOVERY**
-
-### **SEARCH BAR**
-```
-┌─────────────────────────────────────┐
-│ 🔍 Search treatments...             │
-│ Recent: Botox, Laser, Chemical Peels│
-└─────────────────────────────────────┘
-```
-
-### **POPULAR SEARCHES**
-- "Botox for wrinkles"
-- "Laser hair removal legs"
-- "Anti-aging treatments"
-- "Chemical peel benefits"
-- "Dermal filler lips"
-
-### **TREATMENT RECOMMENDATIONS**
-- **Based on Age**: Treatments popular for user's age group
-- **Based on Concerns**: Matching skin/body concerns
-- **Trending**: Most booked treatments this month
-- **New**: Latest treatment additions 
+### **🆕 SMART FEATURES**
+- **Search Autocomplete**: Intelligent treatment suggestions
+- **Related Treatments**: Cross-recommendations
+- **Package Deals**: Bundled treatment savings
+- **Trending Indicators**: Popular treatments this month
+- **Treatment Calculator**: Cost and timeline estimator
