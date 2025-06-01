@@ -1,24 +1,31 @@
 /**
- * Premium Hero Quiz System - Scoped and Conflict-Free
- * Handles 4-step treatment selection quiz
+ * Elegant Quiz System - Single Step Display with Auto-Advance
+ * Implements the redesigned treatment selection quiz
  *
- * @version 2.1.1
+ * @version 3.0.0
  */
 
-class PremiumHeroQuizSystem {
+class ElegantQuizSystem {
     constructor() {
         this.currentStep = 1;
-        this.totalSteps = 4;
-        this.selectedCategory = null;
-        this.selectedTreatment = null;
-        this.formData = {};
-        this.startTime = Date.now();
+        this.totalSteps = 5;
+        this.selections = {
+            category: null,
+            area: null,
+            experience: null,
+            age: null,
+            contact: {}
+        };
+        this.stepHistory = [];
+        this.autoAdvanceTimer = null;
+        this.autoAdvanceDelay = 800; // 800ms as specified
+        this.currentFormField = 'name';
 
         this.init();
     }
 
     init() {
-        console.log('🎯 Initializing Premium Hero Quiz System...');
+        console.log('🎯 Initializing Elegant Quiz System v3.0...');
 
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
@@ -29,569 +36,487 @@ class PremiumHeroQuizSystem {
     }
 
     setup() {
-        console.log('⚙️ Setting up quiz system...');
+        console.log('⚙️ Setting up elegant quiz system...');
+
+        // Verify quiz container exists
+        this.quizContainer = document.querySelector('.elegant-quiz');
+        if (!this.quizContainer) {
+            console.error('❌ Elegant quiz container not found');
+            return;
+        }
+
         this.bindEvents();
-        this.updateProgressIndicator();
-        this.showCurrentStep();
-        this.updateNavigationButtons();
-        console.log('✅ Quiz system ready!');
+        this.showStep(1);
+        this.updateStepDisplay();
+
+        console.log('✅ Elegant quiz system ready!');
     }
 
     bindEvents() {
-        // Category selection
+        // Pill selection (category, areas, experience, age)
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.premium-hero-quiz .category-btn')) {
+            const pill = e.target.closest('.quiz-pill');
+            if (pill && this.quizContainer.contains(pill)) {
                 e.preventDefault();
-                this.selectCategory(e.target.closest('.category-btn'));
+                this.selectPill(pill);
             }
         });
 
-        // Treatment selection
+        // Back navigation
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.premium-hero-quiz .treatment-btn')) {
+            const backBtn = e.target.closest('.quiz-back-btn');
+            if (backBtn && this.quizContainer.contains(backBtn)) {
                 e.preventDefault();
-                this.selectTreatment(e.target.closest('.treatment-btn'));
+                this.goBack();
             }
         });
 
-        // Navigation buttons
+        // Continue button (for demographics step)
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.premium-hero-quiz .step-back')) {
-                e.preventDefault();
-                this.goToPreviousStep();
-            }
-            if (e.target.closest('.premium-hero-quiz .step-continue')) {
+            const continueBtn = e.target.closest('.quiz-continue-btn');
+            if (continueBtn && this.quizContainer.contains(continueBtn)) {
                 e.preventDefault();
                 this.goToNextStep();
             }
         });
 
-        // Form submission
-        const consultationForm = document.querySelector('.premium-hero-quiz .consultation-form-quiz');
-        if (consultationForm) {
-            consultationForm.addEventListener('submit', (e) => this.handleFormSubmission(e));
-        }
-
-        // Demographics form validation
-        document.addEventListener('change', (e) => {
-            if (e.target.closest('.premium-hero-quiz .demographics-form')) {
-                this.validateDemographicsStep();
+        // Form field interactions
+        document.addEventListener('input', (e) => {
+            const input = e.target.closest('.quiz-form-field input');
+            if (input && this.quizContainer.contains(input)) {
+                this.handleFormInput(e);
             }
         });
+
+        // Form submission
+        const form = document.querySelector('.quiz-contact-form');
+        if (form) {
+            form.addEventListener('submit', (e) => this.handleFormSubmission(e));
+        }
 
         console.log('🔗 Events bound successfully');
     }
 
-    async selectCategory(button) {
-        if (!button) return;
+    selectPill(pill) {
+        const step = this.currentStep;
 
-        console.log('📁 Selecting category:', button);
+        // Clear any existing auto-advance timer
+        this.clearAutoAdvance();
 
-        // Remove previous selections
-        document.querySelectorAll('.premium-hero-quiz .category-btn').forEach(btn => {
-            btn.classList.remove('selected');
+        // Add selection animation
+        pill.classList.add('selecting');
+
+        // Clear previous selections in current step
+        const currentStepEl = document.querySelector(`.quiz-step[data-step="${step}"]`);
+        currentStepEl.querySelectorAll('.quiz-pill').forEach(p => {
+            p.classList.remove('selected');
         });
 
         // Mark as selected
-        button.classList.add('selected');
+        pill.classList.add('selected');
 
-        // Store selection
-        this.selectedCategory = button.dataset.category;
-        this.formData.category = this.selectedCategory;
+        // Store selection based on current step
+        this.storeSelection(step, pill);
 
-        console.log('✅ Category selected:', this.selectedCategory);
-
-        // Load treatments for this category
-        await this.loadTreatmentsForCategory(this.selectedCategory);
-
-        // Auto-advance to step 2 after short delay
-        setTimeout(() => {
+        // Schedule auto-advance
+        this.scheduleAutoAdvance(() => {
             this.goToNextStep();
-        }, 800);
+        });
+
+        // Remove animation class after animation completes
+        setTimeout(() => {
+            pill.classList.remove('selecting');
+        }, 300);
     }
 
-    async loadTreatmentsForCategory(category) {
-        console.log('🔄 Loading treatments for category:', category);
+    storeSelection(step, pill) {
+        switch(step) {
+            case 1: // Category
+                this.selections.category = pill.dataset.category;
+                console.log('📁 Category selected:', this.selections.category);
+                this.loadTreatmentAreas(this.selections.category);
+                break;
 
-        const treatmentsContainer = document.querySelector('.premium-hero-quiz .specific-treatments');
-        const loadingContainer = document.querySelector('.premium-hero-quiz .treatments-loading');
+            case 2: // Treatment area
+                this.selections.area = pill.dataset.area;
+                console.log('🎯 Area selected:', this.selections.area);
+                break;
 
-        if (!treatmentsContainer) {
-            console.error('❌ Treatments container not found');
+            case 3: // Experience
+                this.selections.experience = pill.dataset.experience;
+                console.log('📈 Experience selected:', this.selections.experience);
+                break;
+
+            case 4: // Age
+                this.selections.age = pill.dataset.age;
+                console.log('👤 Age selected:', this.selections.age);
+                break;
+        }
+    }
+
+    loadTreatmentAreas(category) {
+        const areasGrid = document.getElementById('treatment-areas-grid');
+        if (!areasGrid) return;
+
+        // Treatment areas mapping
+        const treatmentAreas = {
+            'botox': [
+                { area: 'forehead', icon: '👤', text: 'Forehead' },
+                { area: 'crows-feet', icon: '👁️', text: 'Crow\'s Feet' },
+                { area: 'frown-lines', icon: '😐', text: 'Frown Lines' },
+                { area: 'bunny-lines', icon: '👃', text: 'Bunny Lines' },
+                { area: 'neck-bands', icon: '🦒', text: 'Neck Bands' },
+                { area: 'jaw-clenching', icon: '😬', text: 'Jaw Clenching' }
+            ],
+            'dermal-fillers': [
+                { area: 'lips', icon: '💋', text: 'Lips' },
+                { area: 'cheeks', icon: '😊', text: 'Cheeks' },
+                { area: 'nasolabial', icon: '😌', text: 'Smile Lines' },
+                { area: 'chin', icon: '🤔', text: 'Chin' },
+                { area: 'under-eye', icon: '👁️', text: 'Under Eyes' },
+                { area: 'temples', icon: '🧠', text: 'Temples' }
+            ],
+            'laser-hair-removal': [
+                { area: 'face', icon: '😊', text: 'Face' },
+                { area: 'underarms', icon: '💪', text: 'Underarms' },
+                { area: 'legs', icon: '🦵', text: 'Legs' },
+                { area: 'bikini', icon: '👙', text: 'Bikini' },
+                { area: 'back', icon: '🔙', text: 'Back' },
+                { area: 'chest', icon: '👕', text: 'Chest' }
+            ],
+            'coolsculpting': [
+                { area: 'abdomen', icon: '🤰', text: 'Abdomen' },
+                { area: 'love-handles', icon: '🤗', text: 'Love Handles' },
+                { area: 'thighs', icon: '🦵', text: 'Thighs' },
+                { area: 'arms', icon: '💪', text: 'Arms' },
+                { area: 'double-chin', icon: '🤔', text: 'Double Chin' },
+                { area: 'back-fat', icon: '🔙', text: 'Back Fat' }
+            ],
+            'clear-brilliant': [
+                { area: 'full-face', icon: '😊', text: 'Full Face' },
+                { area: 'spot-treatment', icon: '🎯', text: 'Spot Treatment' },
+                { area: 'neck', icon: '🦒', text: 'Neck' },
+                { area: 'décolletage', icon: '👗', text: 'Décolletage' }
+            ],
+            'ipl-photofacials': [
+                { area: 'full-face', icon: '😊', text: 'Full Face' },
+                { area: 'sun-damage', icon: '☀️', text: 'Sun Damage' },
+                { area: 'rosacea', icon: '🌹', text: 'Rosacea' },
+                { area: 'age-spots', icon: '🟤', text: 'Age Spots' }
+            ],
+            'skin-rejuvenation': [
+                { area: 'anti-aging', icon: '⏰', text: 'Anti-Aging' },
+                { area: 'acne-scars', icon: '🔴', text: 'Acne Scars' },
+                { area: 'texture', icon: '✨', text: 'Skin Texture' },
+                { area: 'pores', icon: '🕳️', text: 'Large Pores' }
+            ],
+            'tattoo-removal': [
+                { area: 'small', icon: '🔸', text: 'Small Tattoo' },
+                { area: 'medium', icon: '🔷', text: 'Medium Tattoo' },
+                { area: 'large', icon: '🔵', text: 'Large Tattoo' },
+                { area: 'cover-up', icon: '🎨', text: 'Cover-up Prep' }
+            ],
+            'thermage': [
+                { area: 'face-lift', icon: '⬆️', text: 'Face Tightening' },
+                { area: 'eye-lift', icon: '👁️', text: 'Eye Tightening' },
+                { area: 'body-contouring', icon: '🏃', text: 'Body Contouring' }
+            ],
+            'hydrafacial': [
+                { area: 'signature', icon: '✨', text: 'Signature HydraFacial' },
+                { area: 'deluxe', icon: '💎', text: 'Deluxe HydraFacial' },
+                { area: 'platinum', icon: '🏆', text: 'Platinum HydraFacial' }
+            ],
+            'potenza-rf': [
+                { area: 'face', icon: '😊', text: 'Face Treatment' },
+                { area: 'neck', icon: '🦒', text: 'Neck Treatment' },
+                { area: 'body', icon: '🏃', text: 'Body Treatment' },
+                { area: 'acne-scars', icon: '🔴', text: 'Acne Scars' }
+            ]
+        };
+
+        const areas = treatmentAreas[category] || [];
+
+        areasGrid.innerHTML = areas.map(area => `
+            <button class="quiz-pill" data-area="${area.area}" tabindex="0">
+                <span class="quiz-icon">${area.icon}</span>
+                <span class="quiz-pill-text">${area.text}</span>
+            </button>
+        `).join('');
+    }
+
+    scheduleAutoAdvance(callback) {
+        this.autoAdvanceTimer = setTimeout(() => {
+            callback();
+        }, this.autoAdvanceDelay);
+    }
+
+    clearAutoAdvance() {
+        if (this.autoAdvanceTimer) {
+            clearTimeout(this.autoAdvanceTimer);
+            this.autoAdvanceTimer = null;
+        }
+    }
+
+    goToNextStep() {
+        this.clearAutoAdvance();
+
+        const nextStep = this.currentStep + 1;
+
+        if (nextStep <= this.totalSteps) {
+            this.stepHistory.push(this.currentStep);
+            this.currentStep = nextStep;
+            this.showStep(this.currentStep);
+            this.updateStepDisplay();
+        }
+    }
+
+    goBack() {
+        this.clearAutoAdvance();
+
+        if (this.stepHistory.length > 0) {
+            this.currentStep = this.stepHistory.pop();
+            this.showStep(this.currentStep);
+            this.updateStepDisplay();
+        }
+    }
+
+    showStep(stepNumber) {
+        // Hide all steps
+        document.querySelectorAll('.quiz-step').forEach(step => {
+            step.classList.remove('active');
+            step.classList.add('exiting');
+        });
+
+        // Show current step after brief delay for smooth transition
+        setTimeout(() => {
+            document.querySelectorAll('.quiz-step').forEach(step => {
+                step.classList.remove('exiting');
+            });
+
+            const currentStepEl = document.querySelector(`.quiz-step[data-step="${stepNumber}"]`);
+            if (currentStepEl) {
+                currentStepEl.classList.add('active');
+
+                // Focus management for accessibility
+                const firstInteractiveElement = currentStepEl.querySelector('button, input');
+                if (firstInteractiveElement) {
+                    firstInteractiveElement.focus();
+                }
+            }
+        }, 200);
+    }
+
+    updateStepDisplay() {
+        // Update question text based on step and previous selections
+        const questionEl = document.querySelector(`.quiz-step[data-step="${this.currentStep}"] .quiz-question`);
+        if (questionEl && this.currentStep === 5) {
+            this.updateContactStepQuestion();
+        }
+    }
+
+    updateContactStepQuestion() {
+        const questionEl = document.querySelector('.quiz-step[data-step="5"] .quiz-question');
+
+        if (this.currentFormField === 'name') {
+            questionEl.textContent = 'What is your full name?';
+        } else if (this.currentFormField === 'email') {
+            questionEl.textContent = 'What is your email address?';
+        } else if (this.currentFormField === 'phone') {
+            questionEl.textContent = 'What is your phone number?';
+        }
+    }
+
+    handleFormInput(e) {
+        const input = e.target;
+        const field = input.closest('.quiz-form-field');
+        const fieldType = field.dataset.field;
+
+        // Store contact information
+        this.selections.contact[fieldType] = input.value;
+
+        // Progressive disclosure logic
+        if (fieldType === 'name' && input.value.trim().length >= 2) {
+            this.revealNextFormField('email');
+        } else if (fieldType === 'email' && this.isValidEmail(input.value)) {
+            this.revealNextFormField('phone');
+        } else if (fieldType === 'phone' && input.value.trim().length >= 10) {
+            this.revealFormActions();
+        }
+
+        // Update question text
+        if (fieldType === 'name' && input.value.trim().length >= 2 && this.currentFormField === 'name') {
+            this.currentFormField = 'email';
+            this.updateContactStepQuestion();
+        } else if (fieldType === 'email' && this.isValidEmail(input.value) && this.currentFormField === 'email') {
+            this.currentFormField = 'phone';
+            this.updateContactStepQuestion();
+        }
+    }
+
+    revealNextFormField(fieldType) {
+        const field = document.querySelector(`.quiz-form-field[data-field="${fieldType}"]`);
+        if (field && field.classList.contains('quiz-form-field-hidden')) {
+            field.classList.remove('quiz-form-field-hidden');
+
+            // Focus the newly revealed field
+            setTimeout(() => {
+                const input = field.querySelector('input');
+                if (input) input.focus();
+            }, 300);
+        }
+    }
+
+    revealFormActions() {
+        const actions = document.querySelector('.quiz-form-actions');
+        if (actions && actions.classList.contains('quiz-form-actions-hidden')) {
+            actions.classList.remove('quiz-form-actions-hidden');
+        }
+    }
+
+    isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    async handleFormSubmission(e) {
+        e.preventDefault();
+
+        // Validate all required fields
+        if (!this.validateContactForm()) {
             return;
         }
 
-        // Show loading state
-        if (loadingContainer) {
-            loadingContainer.style.display = 'block';
-        }
-        treatmentsContainer.innerHTML = '<div class="loading">Loading treatments...</div>';
+        console.log('📧 Submitting quiz data:', this.selections);
 
         try {
+            this.showSubmissionLoader();
+
             const response = await fetch(premiumHeroAjax.ajaxurl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: new URLSearchParams({
-                    action: 'get_enhanced_treatments_by_category',
-                    category: category,
+                    action: 'submit_elegant_quiz',
+                    selections: JSON.stringify(this.selections),
                     nonce: premiumHeroAjax.nonce
                 })
             });
 
             const data = await response.json();
-            console.log('📦 Treatment data received:', data);
 
-            if (data.success && data.data.treatments) {
-                this.renderTreatments(data.data.treatments);
+            if (data.success) {
+                this.showSuccessMessage();
             } else {
-                console.error('❌ Failed to load treatments:', data);
-                treatmentsContainer.innerHTML = `
-                    <div class="error-message" style="text-align: center; color: #dc3545; padding: 2rem;">
-                        <p><strong>Error loading treatments.</strong></p>
-                        <p>Please try again or contact support.</p>
-                        <button type="button" class="btn btn-secondary" onclick="location.reload()">Reload Page</button>
-                    </div>
-                `;
+                throw new Error(data.data || 'Submission failed');
             }
+
         } catch (error) {
-            console.error('❌ Error loading treatments:', error);
-            treatmentsContainer.innerHTML = `
-                <div class="error-message" style="text-align: center; color: #dc3545; padding: 2rem;">
-                    <p><strong>Connection error.</strong></p>
-                    <p>Please check your internet connection and try again.</p>
-                    <button type="button" class="btn btn-secondary" onclick="location.reload()">Reload Page</button>
-                </div>
-            `;
+            console.error('❌ Form submission error:', error);
+            this.showErrorMessage('There was an error submitting your quiz. Please try again.');
         } finally {
-            if (loadingContainer) {
-                loadingContainer.style.display = 'none';
-            }
-        }
-    }
-
-    renderTreatments(treatments) {
-        const container = document.querySelector('.premium-hero-quiz .specific-treatments');
-        if (!container) return;
-
-        console.log('🎨 Rendering treatments:', treatments);
-
-        if (!treatments || treatments.length === 0) {
-            container.innerHTML = `
-                <div class="no-treatments" style="text-align: center; padding: 2rem;">
-                    <p>No treatments available for this category.</p>
-                    <button type="button" class="btn btn-secondary" onclick="location.reload()">Try Again</button>
-                </div>
-            `;
-            return;
-        }
-
-        const treatmentButtons = treatments.map(treatment => `
-            <button type="button" class="treatment-btn"
-                    data-treatment="${treatment.slug}"
-                    data-pricing="${treatment.pricing_tier || 'standard'}">
-                <div class="treatment-icon">💉</div>
-                <div class="treatment-content">
-                    <div class="treatment-name">${treatment.title}</div>
-                    <div class="treatment-details">
-                        ${treatment.duration ? `<span>${treatment.duration} mins</span>` : ''}
-                        ${treatment.price_range ? `<span>$${treatment.price_range}</span>` : ''}
-                    </div>
-                </div>
-                ${treatment.is_featured ? '<div class="featured-badge">Popular</div>' : ''}
-            </button>
-        `).join('');
-
-        container.innerHTML = `
-            <div class="treatments-grid">
-                ${treatmentButtons}
-            </div>
-        `;
-
-        console.log('✅ Treatments rendered successfully');
-    }
-
-    selectTreatment(button) {
-        if (!button) return;
-
-        console.log('💉 Selecting treatment:', button);
-
-        // Remove previous selections
-        document.querySelectorAll('.premium-hero-quiz .treatment-btn').forEach(btn => {
-            btn.classList.remove('selected');
-        });
-
-        // Mark as selected
-        button.classList.add('selected');
-
-        // Store selection
-        this.selectedTreatment = button.dataset.treatment;
-        this.formData.treatment = this.selectedTreatment;
-        this.formData.treatmentPricingTier = button.dataset.pricing || 'standard';
-
-        console.log('✅ Treatment selected:', this.selectedTreatment);
-
-        // Auto-advance to step 3 after short delay
-        setTimeout(() => {
-            this.goToNextStep();
-        }, 800);
-    }
-
-    goToNextStep() {
-        if (this.currentStep < this.totalSteps) {
-            this.currentStep++;
-            console.log('➡️ Moving to step:', this.currentStep);
-            this.updateUI();
-            this.showCurrentStep();
-            this.updateNavigationButtons();
-
-            // Update summary if we're on step 4
-            if (this.currentStep === 4) {
-                this.updateQuizSummary();
-            }
-        }
-    }
-
-    goToPreviousStep() {
-        if (this.currentStep > 1) {
-            this.currentStep--;
-            console.log('⬅️ Moving back to step:', this.currentStep);
-            this.updateUI();
-            this.showCurrentStep();
-            this.updateNavigationButtons();
-        }
-    }
-
-    updateUI() {
-        this.updateProgressIndicator();
-    }
-
-    updateProgressIndicator() {
-        console.log('📊 Updating progress indicator for step:', this.currentStep);
-
-        // Update step counter
-        const currentStepSpan = document.querySelector('.premium-hero-quiz .current-step');
-        if (currentStepSpan) {
-            currentStepSpan.textContent = this.currentStep;
-        }
-
-        // Update step numbers
-        const stepNumbers = document.querySelectorAll('.premium-hero-quiz .step-number');
-        stepNumbers.forEach((step, index) => {
-            step.classList.remove('active', 'completed');
-            if (index + 1 === this.currentStep) {
-                step.classList.add('active');
-            } else if (index + 1 < this.currentStep) {
-                step.classList.add('completed');
-            }
-        });
-
-        // Update progress bar
-        const progressFill = document.querySelector('.premium-hero-quiz .progress-fill');
-        if (progressFill) {
-            const progressPercentage = (this.currentStep / this.totalSteps) * 100;
-            progressFill.style.width = progressPercentage + '%';
-            console.log('📈 Progress bar updated to:', progressPercentage + '%');
-        } else {
-            console.warn('⚠️ Progress fill element not found');
-        }
-
-        // Update step descriptions
-        const descriptions = {
-            1: 'Select the treatment category that interests you most',
-            2: 'Choose your specific treatment',
-            3: 'Tell us about yourself',
-            4: 'Complete your consultation request'
-        };
-
-        const stepDesc = document.querySelector('.premium-hero-quiz .step-description');
-        if (stepDesc) {
-            stepDesc.textContent = descriptions[this.currentStep] || '';
-        }
-    }
-
-    showCurrentStep() {
-        console.log('👁️ Showing step:', this.currentStep);
-
-        // Hide all steps
-        const steps = document.querySelectorAll('.premium-hero-quiz .selection-step');
-        steps.forEach(step => {
-            step.classList.remove('active');
-        });
-
-        // Show current step
-        const currentStepElement = document.querySelector(`.premium-hero-quiz .selection-step[data-step="${this.currentStep}"]`);
-        if (currentStepElement) {
-            currentStepElement.classList.add('active');
-            console.log('✅ Step shown:', this.currentStep);
-        } else {
-            console.error('❌ Step element not found for step:', this.currentStep);
-        }
-    }
-
-    updateNavigationButtons() {
-        const navigation = document.querySelector('.premium-hero-quiz .step-navigation');
-        const backButton = document.querySelector('.premium-hero-quiz .step-back');
-        const continueButton = document.querySelector('.premium-hero-quiz .step-continue');
-        const submitButton = document.querySelector('.premium-hero-quiz .submit-consultation');
-
-        console.log('🔲 Updating navigation buttons for step:', this.currentStep);
-
-        if (!navigation) {
-            console.warn('⚠️ Navigation container not found');
-            return;
-        }
-
-        // Show navigation for steps 3 and 4
-        if (this.currentStep >= 3) {
-            navigation.classList.add('show');
-            navigation.style.display = 'flex';
-
-            // Show/hide back button
-            if (backButton) {
-                backButton.style.display = this.currentStep > 1 ? 'block' : 'none';
-            }
-
-            // Show/hide continue button and submit button
-            if (this.currentStep === 4) {
-                // Step 4: Show submit button, hide continue
-                if (continueButton) continueButton.style.display = 'none';
-                if (submitButton) submitButton.style.display = 'block';
-            } else {
-                // Step 3: Show continue button, hide submit
-                if (continueButton) continueButton.style.display = 'block';
-                if (submitButton) submitButton.style.display = 'none';
-            }
-        } else {
-            // Steps 1 and 2: Hide navigation (auto-advance)
-            navigation.classList.remove('show');
-            navigation.style.display = 'none';
-        }
-
-        console.log('✅ Navigation buttons updated');
-    }
-
-    validateDemographicsStep() {
-        const demographicsForm = document.querySelector('.premium-hero-quiz .demographics-form');
-        if (!demographicsForm) return false;
-
-        const ageRange = demographicsForm.querySelector('select[name="age_range"]')?.value;
-        const gender = demographicsForm.querySelector('input[name="gender"]:checked')?.value;
-        const experience = demographicsForm.querySelector('select[name="experience_level"]')?.value;
-        const timing = demographicsForm.querySelector('select[name="treatment_timing"]')?.value;
-
-        const isValid = ageRange && gender && experience && timing;
-
-        // Enable/disable continue button
-        const continueButton = document.querySelector('.premium-hero-quiz .step-continue');
-        if (continueButton) {
-            continueButton.disabled = !isValid;
-            continueButton.style.opacity = isValid ? '1' : '0.5';
-        }
-
-        return isValid;
-    }
-
-    updateQuizSummary() {
-        const summaryContainer = document.querySelector('.premium-hero-quiz .quiz-summary-content');
-        if (!summaryContainer) return;
-
-        console.log('📋 Updating quiz summary');
-
-        const demographicsForm = document.querySelector('.premium-hero-quiz .demographics-form');
-        const ageRange = demographicsForm?.querySelector('select[name="age_range"]')?.selectedOptions[0]?.text || 'Not specified';
-        const gender = demographicsForm?.querySelector('input[name="gender"]:checked')?.nextElementSibling?.textContent || 'Not specified';
-        const experience = demographicsForm?.querySelector('select[name="experience_level"]')?.selectedOptions[0]?.text || 'Not specified';
-        const timing = demographicsForm?.querySelector('select[name="treatment_timing"]')?.selectedOptions[0]?.text || 'Not specified';
-
-        summaryContainer.innerHTML = `
-            <div class="summary-item">
-                <strong>Category:</strong>
-                <span>${this.selectedCategory || 'Not selected'}</span>
-            </div>
-            <div class="summary-item">
-                <strong>Treatment:</strong>
-                <span>${this.selectedTreatment || 'Not selected'}</span>
-            </div>
-            <div class="summary-item">
-                <strong>Age Range:</strong>
-                <span>${ageRange}</span>
-            </div>
-            <div class="summary-item">
-                <strong>Gender:</strong>
-                <span>${gender}</span>
-            </div>
-            <div class="summary-item">
-                <strong>Experience:</strong>
-                <span>${experience}</span>
-            </div>
-            <div class="summary-item">
-                <strong>Timeline:</strong>
-                <span>${timing}</span>
-            </div>
-        `;
-    }
-
-    collectFormData() {
-        const form = document.querySelector('.premium-hero-quiz .consultation-form-quiz');
-        if (!form) return {};
-
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-
-        // Add quiz selections
-        data.category = this.selectedCategory;
-        data.treatment = this.selectedTreatment;
-
-        return data;
-    }
-
-    async handleFormSubmission(e) {
-        e.preventDefault();
-        console.log('📤 Handling form submission');
-
-        const formData = this.collectFormData();
-        console.log('📋 Form data collected:', formData);
-
-        // Validate required fields
-        const requiredFields = ['first_name', 'last_name', 'email', 'phone'];
-        const missingFields = requiredFields.filter(field => !formData[field]);
-
-        if (missingFields.length > 0) {
-            this.showErrorMessage(`Please fill in all required fields: ${missingFields.join(', ')}`);
-            return;
-        }
-
-        this.showSubmissionLoader();
-
-        try {
-            const response = await fetch(premiumHeroAjax.ajaxurl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams({
-                    action: 'handle_enhanced_consultation_request',
-                    ...formData,
-                    nonce: premiumHeroAjax.nonce
-                })
-            });
-
-            const result = await response.json();
-            console.log('📨 Submission result:', result);
-
             this.hideSubmissionLoader();
-
-            if (result.success) {
-                this.showSuccessMessage(result.data);
-            } else {
-                this.showErrorMessage(result.data.message || 'Submission failed. Please try again.');
-            }
-        } catch (error) {
-            console.error('❌ Submission error:', error);
-            this.hideSubmissionLoader();
-            this.showErrorMessage('Network error. Please check your connection and try again.');
         }
     }
 
-    prepareSubmissionData(formData) {
-        // Add quiz data to form submission
-        return {
-            ...formData,
-            category: this.selectedCategory,
-            treatment: this.selectedTreatment,
-            quiz_completed: true,
-            quiz_start_time: this.startTime,
-            quiz_completion_time: Date.now()
-        };
+    validateContactForm() {
+        const { contact } = this.selections;
+
+        if (!contact.full_name || contact.full_name.trim().length < 2) {
+            this.showErrorMessage('Please enter your full name');
+            return false;
+        }
+
+        if (!contact.email || !this.isValidEmail(contact.email)) {
+            this.showErrorMessage('Please enter a valid email address');
+            return false;
+        }
+
+        if (!contact.phone || contact.phone.trim().length < 10) {
+            this.showErrorMessage('Please enter a valid phone number');
+            return false;
+        }
+
+        return true;
     }
 
     showSubmissionLoader() {
-        const submitButton = document.querySelector('.premium-hero-quiz .submit-consultation');
-        if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+        const submitBtn = document.querySelector('.quiz-submit-btn');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <div class="loading-spinner"></div>
+                Submitting...
+            `;
         }
     }
 
     hideSubmissionLoader() {
-        const submitButton = document.querySelector('.premium-hero-quiz .submit-consultation');
-        if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.innerHTML = '<span>📧</span> Submit Consultation Request';
+        const submitBtn = document.querySelector('.quiz-submit-btn');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+                Get My Personalized Plan
+                <span class="quiz-submit-icon">📧</span>
+            `;
         }
     }
 
-    showSuccessMessage(data) {
-        const quizContainer = document.querySelector('.premium-hero-quiz');
-        if (!quizContainer) return;
-
-        quizContainer.innerHTML = `
-            <div class="success-message">
-                <div class="success-icon">✅</div>
-                <h3 class="success-title">Request Submitted Successfully!</h3>
-                <p>Thank you for your interest! We'll contact you within 24 hours to schedule your consultation.</p>
-                <div class="success-actions">
-                    <button type="button" class="btn btn-primary" onclick="location.reload()">
-                        Start New Quiz
-                    </button>
-                    <a href="/treatments" class="btn btn-secondary">
-                        Browse Treatments
-                    </a>
-                </div>
-            </div>
-        `;
-
-        this.trackEvent('quiz_completed', {
-            category: this.selectedCategory,
-            treatment: this.selectedTreatment,
-            completion_time: Date.now() - this.startTime
+    showSuccessMessage() {
+        // Hide current step
+        document.querySelectorAll('.quiz-step').forEach(step => {
+            step.classList.remove('active');
         });
+
+        // Show success step
+        const successStep = document.querySelector('.quiz-success');
+        if (successStep) {
+            successStep.classList.add('active');
+        }
     }
 
     showErrorMessage(message) {
-        const errorContainer = document.querySelector('.premium-hero-quiz .submission-error');
-        if (errorContainer) {
-            errorContainer.style.display = 'block';
-            errorContainer.innerHTML = `
-                <div class="error-content">
-                    <div class="error-icon">❌</div>
-                    <p><strong>Submission Error:</strong></p>
-                    <p>${message}</p>
-                    <button type="button" class="btn btn-secondary" onclick="this.closest('.submission-error').style.display='none'">
-                        Try Again
-                    </button>
-                </div>
+        // Create or update error message
+        let errorDiv = document.querySelector('.quiz-error-message');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'quiz-error-message';
+            errorDiv.style.cssText = `
+                background: #fef2f2;
+                border: 1px solid #fca5a5;
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                color: #dc2626;
+                text-align: center;
             `;
-        } else {
-            // Fallback: show alert
-            alert('Error: ' + message);
-        }
-    }
 
-    trackEvent(event, data = {}) {
-        // Google Analytics tracking
-        if (typeof gtag !== 'undefined') {
-            gtag('event', event, {
-                event_category: 'Quiz',
-                event_label: data.category || '',
-                custom_map: data
-            });
+            const form = document.querySelector('.quiz-contact-form');
+            if (form) {
+                form.insertBefore(errorDiv, form.firstChild);
+            }
         }
 
-        console.log('📊 Event tracked:', event, data);
+        errorDiv.textContent = message;
+
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            if (errorDiv.parentNode) {
+                errorDiv.parentNode.removeChild(errorDiv);
+            }
+        }, 5000);
     }
 }
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOM ready, initializing Premium Hero Quiz System...');
-    window.premiumHeroQuiz = new PremiumHeroQuizSystem();
+// Initialize the elegant quiz system when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Only initialize if the elegant quiz container exists
+    if (document.querySelector('.elegant-quiz')) {
+        window.elegantQuiz = new ElegantQuizSystem();
+    }
 });
 
-// Fallback initialization if DOM is already loaded
-if (document.readyState !== 'loading') {
-    console.log('🚀 DOM already loaded, initializing Premium Hero Quiz System...');
-    window.premiumHeroQuiz = new PremiumHeroQuizSystem();
+// Export for testing/debugging
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = ElegantQuizSystem;
 }

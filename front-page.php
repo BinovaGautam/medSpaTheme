@@ -54,222 +54,201 @@
 
                 <!-- Right: Interactive Treatment Selection -->
                 <div class="hero-interactive-section">
-                    <div class="treatment-selection-interface premium-hero-quiz">
-                        <!-- Progress Indicator -->
-                        <div class="progress-indicator">
-                            <div class="progress-header">
-                                <h3 class="progress-title">Find Your Perfect Treatment</h3>
-                                <span class="step-counter">Step <span class="current-step">1</span> of 4</span>
-                            </div>
+                    <div class="treatment-selection-interface premium-hero-quiz elegant-quiz">
 
-                            <!-- Step Numbers -->
-                            <div class="step-numbers">
-                                <div class="step-number active">1</div>
-                                <div class="step-number">2</div>
-                                <div class="step-number">3</div>
-                                <div class="step-number">4</div>
-                            </div>
-
-                            <!-- Progress Bar -->
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 25%"></div>
-                            </div>
-
-                            <p class="step-description">Select the treatment category that interests you most</p>
+                        <!-- Quiz Header (No Progress Indicators) -->
+                        <div class="quiz-header">
+                            <h3 class="quiz-main-title">Find Your Perfect Treatment</h3>
+                            <p class="quiz-subtitle">Answer a few questions to get personalized recommendations</p>
                         </div>
 
                         <!-- Step 1: Treatment Categories -->
-                        <div class="selection-step active" data-step="1">
-                            <h3 class="step-title">Which treatment are you interested in?</h3>
-                            <p class="step-subtitle">Select a category to explore personalized options</p>
-                            <div class="treatment-categories">
-                                <button class="category-btn" data-category="facial" tabindex="0">
-                                    <span class="category-icon">✨</span>
-                                    <span class="category-name">Facial Treatments</span>
-                                    <span class="category-description">Rejuvenating skin care</span>
+                        <div class="quiz-step active" data-step="1">
+                            <h3 class="quiz-question">What are you interested in?</h3>
+                            <div class="quiz-grid">
+                                <button class="quiz-pill" data-category="botox" tabindex="0">
+                                    <span class="quiz-icon">💉</span>
+                                    <span class="quiz-pill-text">Botox & Xeomin</span>
                                 </button>
-                                <button class="category-btn" data-category="injectable" tabindex="0">
-                                    <span class="category-icon">💉</span>
-                                    <span class="category-name">Injectables</span>
-                                    <span class="category-description">Botox & dermal fillers</span>
+                                <button class="quiz-pill" data-category="dermal-fillers" tabindex="0">
+                                    <span class="quiz-icon">💋</span>
+                                    <span class="quiz-pill-text">Dermal Fillers</span>
                                 </button>
-                                <button class="category-btn" data-category="laser" tabindex="0">
-                                    <span class="category-icon">💎</span>
-                                    <span class="category-name">Laser Treatments</span>
-                                    <span class="category-description">Advanced laser technology</span>
+                                <button class="quiz-pill" data-category="laser-hair-removal" tabindex="0">
+                                    <span class="quiz-icon">💎</span>
+                                    <span class="quiz-pill-text">Laser Hair Removal</span>
                                 </button>
-                                <button class="category-btn" data-category="body" tabindex="0">
-                                    <span class="category-icon">🌟</span>
-                                    <span class="category-name">Body Contouring</span>
-                                    <span class="category-description">Sculpting & toning</span>
+                                <button class="quiz-pill" data-category="coolsculpting" tabindex="0">
+                                    <span class="quiz-icon">❄️</span>
+                                    <span class="quiz-pill-text">CoolSculpting</span>
+                                </button>
+                                <button class="quiz-pill" data-category="clear-brilliant" tabindex="0">
+                                    <span class="quiz-icon">💎</span>
+                                    <span class="quiz-pill-text">Clear & Brilliant</span>
+                                </button>
+                                <button class="quiz-pill" data-category="ipl-photofacials" tabindex="0">
+                                    <span class="quiz-icon">✨</span>
+                                    <span class="quiz-pill-text">IPL Photofacials</span>
+                                </button>
+                                <button class="quiz-pill" data-category="skin-rejuvenation" tabindex="0">
+                                    <span class="quiz-icon">🌟</span>
+                                    <span class="quiz-pill-text">Skin Rejuvenation</span>
+                                </button>
+                                <button class="quiz-pill" data-category="tattoo-removal" tabindex="0">
+                                    <span class="quiz-icon">🎨</span>
+                                    <span class="quiz-pill-text">Tattoo Removal</span>
+                                </button>
+                                <button class="quiz-pill" data-category="thermage" tabindex="0">
+                                    <span class="quiz-icon">⚡</span>
+                                    <span class="quiz-pill-text">Thermage</span>
+                                </button>
+                                <button class="quiz-pill" data-category="hydrafacial" tabindex="0">
+                                    <span class="quiz-icon">💧</span>
+                                    <span class="quiz-pill-text">HydraFacial</span>
+                                </button>
+                                <button class="quiz-pill quiz-pill-wide" data-category="potenza-rf" tabindex="0">
+                                    <span class="quiz-icon">🔬</span>
+                                    <span class="quiz-pill-text">Potenza RF Microneedling</span>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Step 2: Specific Treatments -->
-                        <div class="selection-step" data-step="2">
-                            <h3 class="step-title">Select your specific treatment:</h3>
-                            <p class="step-subtitle">Choose the treatment that best matches your goals</p>
-                            <div class="specific-treatments">
+                        <!-- Step 2: Specific Treatment Areas -->
+                        <div class="quiz-step" data-step="2">
+                            <div class="quiz-navigation">
+                                <button class="quiz-back-btn" type="button">
+                                    <span class="quiz-back-icon">←</span>
+                                    Back
+                                </button>
+                            </div>
+                            <h3 class="quiz-question">Where do you want treatment?</h3>
+                            <div class="quiz-grid" id="treatment-areas-grid">
                                 <!-- Dynamically populated via JavaScript -->
-                                <div class="treatments-loading">
-                                    <div class="loading-spinner"></div>
-                                    <p>Loading treatments...</p>
-                                </div>
                             </div>
-                            <div class="step-navigation">
-                                <button class="btn btn-outline step-back" type="button">
-                                    <span class="btn-icon">←</span>
+                        </div>
+
+                        <!-- Step 3: Experience Level -->
+                        <div class="quiz-step" data-step="3">
+                            <div class="quiz-navigation">
+                                <button class="quiz-back-btn" type="button">
+                                    <span class="quiz-back-icon">←</span>
                                     Back
+                                </button>
+                            </div>
+                            <h3 class="quiz-question">How many times have you had this treatment?</h3>
+                            <div class="quiz-grid">
+                                <button class="quiz-pill" data-experience="0" tabindex="0">
+                                    <span class="quiz-pill-text">0</span>
+                                </button>
+                                <button class="quiz-pill" data-experience="1-2" tabindex="0">
+                                    <span class="quiz-pill-text">1-2</span>
+                                </button>
+                                <button class="quiz-pill" data-experience="3-4" tabindex="0">
+                                    <span class="quiz-pill-text">3-4</span>
+                                </button>
+                                <button class="quiz-pill" data-experience="5-6" tabindex="0">
+                                    <span class="quiz-pill-text">5-6</span>
+                                </button>
+                                <button class="quiz-pill" data-experience="7-8" tabindex="0">
+                                    <span class="quiz-pill-text">7-8</span>
+                                </button>
+                                <button class="quiz-pill" data-experience="9+" tabindex="0">
+                                    <span class="quiz-pill-text">9+</span>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Step 3: Demographics & Personalization (NEW) -->
-                        <div class="selection-step" data-step="3">
-                            <h3 class="step-title">Help us personalize your consultation:</h3>
-                            <p class="step-subtitle">This helps us recommend the best treatments and pricing for your goals</p>
-                            <div class="demographics-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="age-range">Age Range (optional)</label>
-                                        <select name="age_range" id="age-range">
-                                            <option value="">Prefer not to say</option>
-                                            <option value="18-24">18-24</option>
-                                            <option value="25-34">25-34</option>
-                                            <option value="35-44">35-44</option>
-                                            <option value="45-54">45-54</option>
-                                            <option value="55-64">55-64</option>
-                                            <option value="65+">65+</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Gender (optional)</label>
-                                        <div class="radio-group">
-                                            <label class="radio-option">
-                                                <input type="radio" name="gender" value="" checked>
-                                                <span class="radio-label">Prefer not to say</span>
-                                            </label>
-                                            <label class="radio-option">
-                                                <input type="radio" name="gender" value="female">
-                                                <span class="radio-label">Female</span>
-                                            </label>
-                                            <label class="radio-option">
-                                                <input type="radio" name="gender" value="male">
-                                                <span class="radio-label">Male</span>
-                                            </label>
-                                            <label class="radio-option">
-                                                <input type="radio" name="gender" value="non-binary">
-                                                <span class="radio-label">Non-binary</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="experience-level">Previous Experience</label>
-                                        <select name="experience_level" id="experience-level">
-                                            <option value="first-time">First time</option>
-                                            <option value="some-experience" selected>Some experience</option>
-                                            <option value="very-experienced">Very experienced</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="treatment-timing">When are you looking to proceed?</label>
-                                        <select name="treatment_timing" id="treatment-timing">
-                                            <option value="immediately">Immediately</option>
-                                            <option value="1-3-months" selected>Within 1-3 months</option>
-                                            <option value="3-6-months">Within 3-6 months</option>
-                                            <option value="just-browsing">Just browsing</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="privacy-notice">
-                                    <p>
-                                        <small>
-                                            Your information is encrypted and used only for personalized recommendations.
-                                            View our <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
-                                        </small>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="step-navigation">
-                                <button class="btn btn-outline step-back" type="button">
-                                    <span class="btn-icon">←</span>
+                        <!-- Step 4: Demographics -->
+                        <div class="quiz-step" data-step="4">
+                            <div class="quiz-navigation">
+                                <button class="quiz-back-btn" type="button">
+                                    <span class="quiz-back-icon">←</span>
                                     Back
                                 </button>
-                                <button class="btn btn-primary step-continue" type="button">
-                                    Continue
-                                    <span class="btn-icon">→</span>
+                            </div>
+                            <h3 class="quiz-question">What age group are you in?</h3>
+                            <div class="quiz-grid">
+                                <button class="quiz-pill" data-age="under-18" tabindex="0">
+                                    <span class="quiz-pill-text">< 18</span>
+                                </button>
+                                <button class="quiz-pill" data-age="18-24" tabindex="0">
+                                    <span class="quiz-pill-text">18-24</span>
+                                </button>
+                                <button class="quiz-pill" data-age="25-34" tabindex="0">
+                                    <span class="quiz-pill-text">25-34</span>
+                                </button>
+                                <button class="quiz-pill" data-age="35-44" tabindex="0">
+                                    <span class="quiz-pill-text">35-44</span>
+                                </button>
+                                <button class="quiz-pill" data-age="45-54" tabindex="0">
+                                    <span class="quiz-pill-text">45-54</span>
+                                </button>
+                                <button class="quiz-pill" data-age="55-64" tabindex="0">
+                                    <span class="quiz-pill-text">55-64</span>
+                                </button>
+                                <button class="quiz-pill" data-age="65+" tabindex="0">
+                                    <span class="quiz-pill-text">65+</span>
+                                </button>
+                            </div>
+                            <div class="quiz-step-actions">
+                                <button class="quiz-continue-btn" type="button">
+                                    Next
+                                    <span class="quiz-continue-icon">→</span>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Step 4: Contact Information & Preferences (Enhanced) -->
-                        <div class="selection-step" data-step="4">
-                            <h3 class="step-title">Get your personalized consultation info:</h3>
-                            <p class="step-subtitle">We'll contact you within 24 hours with personalized pricing & availability</p>
-                            <form class="consultation-form" id="hero-consultation-form">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="text" name="full_name" placeholder="Your Full Name *" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" name="email" placeholder="Email Address *" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <input type="tel" name="phone" placeholder="Phone Number *" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="contact-preference">Preferred Contact Method</label>
-                                        <select name="contact_preference" id="contact-preference">
-                                            <option value="call">Phone Call</option>
-                                            <option value="text">Text Message</option>
-                                            <option value="email" selected>Email</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="marketing_consent" value="yes">
-                                        <span class="checkmark"></span>
-                                        <span class="checkbox-label">I consent to receive personalized treatment information and special offers</span>
-                                    </label>
-                                </div>
-                                <div class="quiz-summary" id="quiz-summary">
-                                    <!-- Populated by JavaScript with user's selections -->
-                                </div>
-                                <div class="step-navigation">
-                                    <button type="button" class="step-back" style="display: none;">
-                                        ← Back
-                                    </button>
-                                    <button type="button" class="step-continue" style="display: none;">
-                                        Continue →
-                                    </button>
-                                </div>
-                                <button type="submit" class="submit-consultation" style="display: none;">
-                                    <span>📧</span>
-                                    Submit Consultation Request
+                        <!-- Step 5: Contact Information -->
+                        <div class="quiz-step" data-step="5">
+                            <div class="quiz-navigation">
+                                <button class="quiz-back-btn" type="button">
+                                    <span class="quiz-back-icon">←</span>
+                                    Back
                                 </button>
-                                <p class="form-privacy">
-                                    ⚠️ We'll contact you within 24 hours with personalized pricing & availability
-                                </p>
+                            </div>
+                            <h3 class="quiz-question">What is your full name?</h3>
+                            <form class="quiz-contact-form" id="elegant-quiz-form">
+                                <div class="quiz-form-field" data-field="name">
+                                    <input type="text"
+                                           id="quiz-name"
+                                           name="full_name"
+                                           placeholder="Enter your full name"
+                                           required>
+                                </div>
+                                <div class="quiz-form-field quiz-form-field-hidden" data-field="email">
+                                    <input type="email"
+                                           id="quiz-email"
+                                           name="email"
+                                           placeholder="Enter your email address"
+                                           required>
+                                </div>
+                                <div class="quiz-form-field quiz-form-field-hidden" data-field="phone">
+                                    <input type="tel"
+                                           id="quiz-phone"
+                                           name="phone"
+                                           placeholder="Enter your phone number"
+                                           required>
+                                </div>
+                                <div class="quiz-form-actions quiz-form-actions-hidden">
+                                    <button type="submit" class="quiz-submit-btn">
+                                        Get My Personalized Plan
+                                        <span class="quiz-submit-icon">📧</span>
+                                    </button>
+                                </div>
                             </form>
                         </div>
 
                         <!-- Success Message -->
-                        <div class="selection-step quiz-success" data-step="success" style="display: none;">
-                            <div class="success-content">
-                                <div class="success-icon">✅</div>
-                                <h3 class="success-title">Thank You!</h3>
-                                <p class="success-message">
+                        <div class="quiz-step quiz-success" data-step="success">
+                            <div class="quiz-success-content">
+                                <div class="quiz-success-icon">✅</div>
+                                <h3 class="quiz-success-title">Thank You!</h3>
+                                <p class="quiz-success-message">
                                     We've received your personalized treatment quiz.
                                     You'll receive a confirmation email shortly, and we'll contact you within 24 hours
                                     with customized recommendations based on your preferences.
                                 </p>
-                                <div class="success-actions">
+                                <div class="quiz-success-actions">
                                     <a href="tel:<?php echo esc_attr(preetidreams_get_phone()); ?>" class="btn btn-primary">
                                         <span class="btn-icon">📞</span>
                                         Call Us Now
