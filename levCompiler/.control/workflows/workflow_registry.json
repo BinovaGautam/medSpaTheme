@@ -1,8 +1,8 @@
 {
   "workflowRegistry": {
     "version": "1.0.0",
-    "totalWorkflows": 5,
-    "activeWorkflows": 5,
+    "totalWorkflows": 6,
+    "activeWorkflows": 6,
     "systemArchitecture": "hierarchical-workflow-orchestration"
   },
 
@@ -55,7 +55,7 @@
       },
 
       "visualDevelopmentWorkflow": {
-        "workflowId": "VISUAL-DEV-WF-001", 
+        "workflowId": "VISUAL-DEV-WF-001",
         "name": "visual-development-workflow",
         "type": "specialized-visual-development",
         "description": "Visual design to functional code workflow",
@@ -64,6 +64,24 @@
         "triggerPatterns": ["visual", "ui", "design", "mockup", "wireframe"],
         "parentWorkflow": "base-input-output-workflow",
         "location": "levCompiler/.control/workflows/visual_development_workflow.json"
+      },
+
+      "uiUxCreationWorkflow": {
+        "workflowId": "UI-UX-CREATION-WF-001",
+        "name": "ui-ux-creation-workflow",
+        "type": "specialized-design-development",
+        "description": "Complete workflow for creating, managing, and implementing premium medical spa UI/UX designs using UI-UX Design Agent",
+        "priority": 2,
+        "status": "active",
+        "triggerPatterns": ["ui design", "ux design", "create designs", "design system", "wireframes", "user interface", "user experience"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/ui_ux_creation_workflow.json",
+        "primaryAgent": "UI-UX-DESIGN-001",
+        "fileManagement": {
+          "outputLocation": "levCompiler/project_context/designs/",
+          "indexRegistration": "levCompiler/project_context/designs/index.json",
+          "archiveLocation": "levCompiler/project_context/archive/designs/"
+        }
       }
     }
   },
@@ -72,7 +90,7 @@
     "routingStrategy": "intelligent-pattern-matching",
     "defaultRouter": "human-interaction-agent",
     "confidenceThreshold": 0.80,
-    
+
     "routingRules": {
       "projectAnalysis": {
         "inputPatterns": ["analyze", "analyze project", "existing project", "integration", "understand project", "project context", "legacy project", "import project"],
@@ -81,7 +99,7 @@
         "confidence": 0.90,
         "estimatedDuration": "120-200 minutes"
       },
-      
+
       "projectSetup": {
         "inputPatterns": ["setup", "initialize", "create project", "new project", "bootstrap", "scaffold"],
         "contextRequired": ["project-requirements", "team-preferences", "deployment-target"],
@@ -89,7 +107,7 @@
         "confidence": 0.90,
         "estimatedDuration": "60-120 minutes"
       },
-      
+
       "codeGeneration": {
         "inputPatterns": ["create", "build", "implement", "generate", "write code", "develop"],
         "contextRequired": ["requirements", "specifications", "technology-preferences"],
@@ -97,15 +115,25 @@
         "confidence": 0.85,
         "estimatedDuration": "30-60 minutes"
       },
-      
+
       "visualDevelopment": {
         "inputPatterns": ["visual", "ui", "design", "mockup", "wireframe", "frontend", "interface"],
         "contextRequired": ["visual-input", "design-requirements", "target-platform"],
-        "targetWorkflow": "visual-development-workflow", 
+        "targetWorkflow": "visual-development-workflow",
         "confidence": 0.85,
         "estimatedDuration": "45-90 minutes"
       },
-      
+
+      "uiUxCreation": {
+        "inputPatterns": ["ui design", "ux design", "create designs", "design system", "wireframes", "user interface", "user experience", "premium designs"],
+        "contextRequired": ["design-requirements", "brand-guidelines", "target-audience"],
+        "targetWorkflow": "ui-ux-creation-workflow",
+        "confidence": 0.90,
+        "estimatedDuration": "300-480 minutes",
+        "requiredAgent": "UI-UX-DESIGN-001",
+        "fileOrganization": "project-context-designs-folder"
+      },
+
       "codeReview": {
         "inputPatterns": ["review", "check", "analyze", "validate", "audit", "inspect"],
         "contextRequired": ["source-code", "review-criteria"],
@@ -114,13 +142,13 @@
         "estimatedDuration": "15-30 minutes",
         "status": "planned"
       },
-      
+
       "codeOptimization": {
         "inputPatterns": ["cleanup", "optimize", "refactor", "improve", "performance"],
         "contextRequired": ["target-code", "optimization-goals"],
         "targetWorkflow": "code-optimization-workflow",
         "confidence": 0.80,
-        "estimatedDuration": "20-40 minutes", 
+        "estimatedDuration": "20-40 minutes",
         "status": "planned"
       }
     }
@@ -133,19 +161,19 @@
         "useCase": "Complex workflows requiring previous outputs",
         "example": "Visual analysis → Code generation → Review → Deployment"
       },
-      
+
       "parallel": {
         "description": "Execute multiple workflows simultaneously",
         "useCase": "Independent workflows that can run concurrently",
         "example": "Multiple feature implementations in parallel"
       },
-      
+
       "conditional": {
         "description": "Execute different workflows based on runtime conditions",
         "useCase": "Branching logic based on input analysis or intermediate results",
         "example": "Route to optimization workflow only if performance issues detected"
       },
-      
+
       "iterative": {
         "description": "Repeat workflows until success criteria are met",
         "useCase": "Quality improvement cycles or progressive refinement",
@@ -159,7 +187,7 @@
         "statePreservation": "Maintain workflow state across transitions",
         "errorContextMaintenance": "Preserve error context for debugging and learning"
       },
-      
+
       "qualityAssurance": {
         "outputValidation": "Validate outputs before handoff to next workflow",
         "confidenceVerification": "Ensure confidence levels meet thresholds",
@@ -182,7 +210,7 @@
         "maxAgentsPerWorkflow": 3,
         "resourcePooling": "dynamic-allocation"
       },
-      
+
       "prioritization": {
         "priorityQueuing": "priority-based-scheduling",
         "resourcePreemption": "high-priority-can-preempt-low-priority",
@@ -198,13 +226,13 @@
         "threshold": 1.0,
         "applicability": "all-workflows"
       },
-      
+
       "securityValidation": {
         "description": "Security checks must be performed at key points",
         "threshold": 0.95,
         "applicability": "code-generating-workflows"
       },
-      
+
       "outputApproval": {
         "description": "Final outputs must pass gatekeeping approval",
         "threshold": 0.90,
@@ -235,7 +263,7 @@
         "highQueueDepth": "Alert when queue depth exceeds threshold",
         "lowSuccessRate": "Alert when success rate drops below threshold"
       },
-      
+
       "qualityAlerts": {
         "qualityGateFailures": "Alert on quality gate failures",
         "highEscalationRate": "Alert when human escalation rate increases",
@@ -318,4 +346,4 @@
       "supportContacts": "Contact information for technical support"
     }
   }
-} 
+}

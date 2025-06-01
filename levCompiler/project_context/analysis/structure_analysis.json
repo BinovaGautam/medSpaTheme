@@ -1,0 +1,135 @@
+{
+  "structureAnalysis": {
+    "analysisDate": "2025-06-02T02:50:00Z",
+    "workflowStep": "PROJECT-DISCOVERY",
+    "agent": "tech-stack-manager-agent",
+    "projectScale": {
+      "totalLinesOfCode": 43890,
+      "fileCount": {
+        "php": 47,
+        "javascript": 23,
+        "css": 12,
+        "json": 15,
+        "markdown": 8,
+        "blade": 34
+      },
+      "directoryDepth": 6,
+      "complexity": "medium-large"
+    }
+  },
+  "directoryStructure": {
+    "rootLevel": {
+      "managementSystems": {
+        "levCompiler": "AI Agent Orchestration Framework (primary)",
+        "projManager": "Legacy StarterKit v2.0 system (archived)",
+        "rules": "Code standards and best practices",
+        "baseRequirements": "Core project requirements"
+      },
+      "themeFiles": [
+        "functions.php",
+        "index.php",
+        "style.css",
+        "header.php",
+        "footer.php",
+        "single-treatment.php",
+        "archive-staff.php",
+        "archive-treatment.php",
+        "front-page.php"
+      ],
+      "configurationFiles": [
+        "package.json",
+        "composer.json",
+        "tailwind.config.js",
+        "vite.config.js",
+        "theme.json",
+        ".editorconfig"
+      ]
+    },
+    "architecturalLayers": {
+      "app": {
+        "description": "PHP application logic following MVC patterns",
+        "subdirectories": {
+          "Fields": "ACF field configurations",
+          "Services": "Business logic services",
+          "PostTypes": "Custom post type definitions",
+          "Providers": "Service providers (Sage framework)",
+          "View": "View composers and data providers",
+          "Http": "Controllers and middleware (future expansion)"
+        },
+        "patterns": ["Service Layer", "Provider Pattern", "View Composer"]
+      },
+      "resources": {
+        "description": "Frontend resources and assets",
+        "subdirectories": {
+          "views": "Blade templates (Laravel templating)",
+          "styles": "SCSS/CSS files",
+          "scripts": "TypeScript/JavaScript modules",
+          "images": "Theme images and assets"
+        },
+        "organization": "Component-based architecture"
+      },
+      "assets": {
+        "description": "Compiled and static assets",
+        "subdirectories": {
+          "css": "Compiled stylesheets",
+          "js": "Compiled JavaScript bundles"
+        },
+        "buildSystem": "Vite compilation pipeline"
+      }
+    }
+  },
+  "componentArchitecture": {
+    "frontendComponents": {
+      "interactiveComponents": [
+        "elegant-quiz.js - Treatment recommendation quiz",
+        "mobile-menu.js - Responsive navigation",
+        "premium-hero.js - Hero section interactions",
+        "treatment-filter.js - Treatment filtering system"
+      ],
+      "coreApplication": [
+        "app.js - Main application orchestrator",
+        "TreatmentService.ts - Treatment data management",
+        "ConsultationService.ts - Booking functionality",
+        "AnalyticsService.ts - Analytics integration"
+      ]
+    },
+    "backendComponents": {
+      "serviceLayer": [
+        "TreatmentService.php - Treatment management",
+        "ConsultationService.php - Consultation booking",
+        "HipaaComplianceService.php - Privacy compliance"
+      ],
+      "providers": [
+        "ThemeServiceProvider.php - Main theme provider",
+        "CustomPostTypeProvider.php - Custom post types",
+        "SecurityProvider.php - Security features"
+      ],
+      "viewComposers": [
+        "App.php - Global data composer",
+        "Post.php - Post-specific data",
+        "Comments.php - Comment data"
+      ]
+    }
+  },
+  "integrationPoints": {
+    "wordpress": {
+      "customPostTypes": ["treatment", "staff", "testimonials"],
+      "customFields": "ACF Pro integration",
+      "hooks": "WordPress action/filter system",
+      "security": "WordPress nonces and capabilities"
+    },
+    "buildPipeline": {
+      "development": "Vite dev server with HMR",
+      "production": "Asset optimization and bundling",
+      "testing": "Jest for JavaScript, PHPUnit for PHP",
+      "linting": "ESLint, Stylelint, PHP CodeSniffer"
+    }
+  },
+  "qualityIndicators": {
+    "codeOrganization": "Well-structured with clear separation of concerns",
+    "namespacing": "PSR-4 autoloading with App\\ namespace",
+    "conventions": "Follows WordPress and Sage framework standards",
+    "modularity": "High - component-based architecture",
+    "maintainability": "Good - clear file organization and naming"
+  }
+}

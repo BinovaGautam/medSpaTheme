@@ -1,0 +1,337 @@
+{
+  "uiUxCreationWorkflow": {
+    "workflowId": "UI-UX-CREATION-WF-001",
+    "name": "ui-ux-creation-workflow",
+    "version": "1.0.0",
+    "description": "Complete workflow for creating, managing, and implementing premium medical spa UI/UX designs",
+    "type": "specialized-design-development",
+    "priority": 2,
+    "status": "active"
+  },
+
+  "objectives": {
+    "primary": "Create premium, accessible, and conversion-optimized UI/UX designs using the UI-UX Design Agent",
+    "secondary": "Ensure proper file organization within project_context structure and agent-driven creation",
+    "tertiary": "Maintain design system consistency and implement proper approval workflows"
+  },
+
+  "workflowStages": {
+    "stage1RequirementsGathering": {
+      "description": "Collect design requirements and project context",
+      "agents": ["human-interaction-agent"],
+      "duration": "30-60 minutes",
+      "deliverables": [
+        "design-requirements-document",
+        "target-audience-analysis",
+        "brand-guidelines-confirmation",
+        "technical-constraints-review"
+      ],
+      "qualityGates": {
+        "requirementsCompleteness": 0.95,
+        "stakeholderApproval": 1.0
+      }
+    },
+
+    "stage2DesignConceptCreation": {
+      "description": "Use UI-UX Design Agent to create initial design concepts",
+      "agents": ["ui-ux-design-agent"],
+      "duration": "120-180 minutes",
+      "agentConfiguration": {
+        "agentId": "UI-UX-DESIGN-001",
+        "humanSupervisionRequired": true,
+        "confidenceThreshold": 0.92
+      },
+      "deliverables": [
+        "wireframes-and-layouts",
+        "visual-design-concepts",
+        "responsive-breakpoint-designs",
+        "accessibility-compliance-checklist"
+      ],
+      "outputLocation": "levCompiler/project_context/designs/",
+      "indexRegistration": "levCompiler/project_context/designs/index.json",
+      "qualityGates": {
+        "accessibilityCompliance": 1.0,
+        "brandConsistency": 0.95,
+        "responsiveDesignQuality": 0.95
+      }
+    },
+
+    "stage3DesignSystemIntegration": {
+      "description": "Integrate designs with existing design system and component library",
+      "agents": ["ui-ux-design-agent", "tech-stack-manager-agent"],
+      "duration": "90-120 minutes",
+      "deliverables": [
+        "component-mapping-document",
+        "design-system-updates",
+        "tailwind-css-configuration",
+        "sage-wordpress-integration-plan"
+      ],
+      "fileManagement": {
+        "designFiles": "levCompiler/project_context/designs/",
+        "systemUpdates": "levCompiler/project_context/patterns/",
+        "indexUpdates": "levCompiler/project_context/designs/index.json"
+      },
+      "qualityGates": {
+        "technicalFeasibility": 0.90,
+        "designSystemConsistency": 0.95
+      }
+    },
+
+    "stage4StakeholderReview": {
+      "description": "Present designs to stakeholders for review and approval",
+      "agents": ["human-interaction-agent"],
+      "duration": "60-120 minutes",
+      "deliverables": [
+        "design-presentation-package",
+        "stakeholder-feedback-compilation",
+        "approved-design-specifications",
+        "revision-requirements-if-any"
+      ],
+      "qualityGates": {
+        "stakeholderApproval": 1.0,
+        "designDirectionConfirmation": 1.0
+      }
+    },
+
+    "stage5ImplementationPlanning": {
+      "description": "Create detailed implementation plan and developer handoff materials",
+      "agents": ["ui-ux-design-agent", "code-generation-agent"],
+      "duration": "60-90 minutes",
+      "deliverables": [
+        "implementation-roadmap",
+        "developer-handoff-documentation",
+        "asset-preparation-list",
+        "testing-requirements-specification"
+      ],
+      "fileOrganization": {
+        "finalDesigns": "levCompiler/project_context/designs/",
+        "implementationPlans": "levCompiler/project_context/plans/",
+        "assetRequirements": "levCompiler/project_context/tasks/"
+      },
+      "qualityGates": {
+        "implementationReadiness": 0.90,
+        "documentationCompleteness": 0.95
+      }
+    }
+  },
+
+  "fileManagementProtocol": {
+    "designFileLocation": "levCompiler/project_context/designs/",
+    "indexRegistration": "levCompiler/project_context/designs/index.json",
+    "namingConvention": "UPPERCASE_SNAKE_CASE_DESIGN.md",
+    "versionControl": {
+      "enableVersioning": true,
+      "backupLocation": "levCompiler/project_context/archive/designs/",
+      "versionFormat": "v1.0.0"
+    },
+    "fileOperations": {
+      "create": {
+        "location": "levCompiler/project_context/designs/",
+        "updateIndex": true,
+        "agentRequired": "ui-ux-design-agent"
+      },
+      "read": {
+        "source": "levCompiler/project_context/designs/",
+        "indexReference": "levCompiler/project_context/designs/index.json"
+      },
+      "edit": {
+        "location": "levCompiler/project_context/designs/",
+        "updateIndex": true,
+        "agentRequired": "ui-ux-design-agent",
+        "approvalRequired": true
+      },
+      "delete": {
+        "moveToArchive": "levCompiler/project_context/archive/designs/",
+        "updateIndex": true,
+        "humanApprovalRequired": true
+      }
+    }
+  },
+
+  "agentCoordination": {
+    "primaryAgent": {
+      "agentId": "UI-UX-DESIGN-001",
+      "role": "design-creation-and-management",
+      "responsibilities": [
+        "create-premium-ui-ux-designs",
+        "ensure-accessibility-compliance",
+        "maintain-brand-consistency",
+        "provide-responsive-layouts"
+      ]
+    },
+    "supportingAgents": {
+      "humanInteractionAgent": {
+        "role": "stakeholder-communication-and-approval",
+        "responsibilities": [
+          "gather-requirements",
+          "facilitate-stakeholder-reviews",
+          "obtain-approvals",
+          "manage-feedback-cycles"
+        ]
+      },
+      "techStackManagerAgent": {
+        "role": "technical-integration-validation",
+        "responsibilities": [
+          "validate-technical-feasibility",
+          "ensure-framework-compatibility",
+          "provide-implementation-guidance"
+        ]
+      },
+      "codeGenerationAgent": {
+        "role": "implementation-planning",
+        "responsibilities": [
+          "create-implementation-roadmaps",
+          "generate-developer-documentation",
+          "prepare-code-scaffolding"
+        ]
+      }
+    }
+  },
+
+  "qualityAssurance": {
+    "designQualityGates": {
+      "accessibilityCompliance": {
+        "description": "WCAG AAA compliance verification",
+        "threshold": 1.0,
+        "validation": "automated-and-manual-accessibility-testing"
+      },
+      "brandConsistency": {
+        "description": "Luxury medical spa brand alignment",
+        "threshold": 0.95,
+        "validation": "brand-guideline-compliance-audit"
+      },
+      "responsiveDesign": {
+        "description": "Mobile-first responsive design quality",
+        "threshold": 0.95,
+        "validation": "cross-device-compatibility-testing"
+      },
+      "conversionOptimization": {
+        "description": "Consultation booking conversion pathway optimization",
+        "threshold": 0.90,
+        "validation": "user-journey-analysis-and-cta-effectiveness"
+      }
+    },
+    "processQualityGates": {
+      "agentUtilization": {
+        "description": "Proper use of UI-UX Design Agent for all design tasks",
+        "threshold": 1.0,
+        "validation": "agent-workflow-compliance-verification"
+      },
+      "fileOrganization": {
+        "description": "Proper file placement in project_context structure",
+        "threshold": 1.0,
+        "validation": "file-location-and-index-registration-check"
+      },
+      "stakeholderApproval": {
+        "description": "All designs approved by relevant stakeholders",
+        "threshold": 1.0,
+        "validation": "documented-stakeholder-sign-off"
+      }
+    }
+  },
+
+  "errorHandling": {
+    "agentFailures": {
+      "uiUxAgentUnavailable": {
+        "action": "escalate-to-human-interaction-agent",
+        "fallback": "manual-design-creation-with-agent-review"
+      },
+      "designQualityFailure": {
+        "action": "revision-cycle-with-ui-ux-agent",
+        "maxRetries": 3
+      }
+    },
+    "processFailures": {
+      "stakeholderRejection": {
+        "action": "requirements-gathering-restart",
+        "involvesAgents": ["human-interaction-agent", "ui-ux-design-agent"]
+      },
+      "technicalFeasibilityIssues": {
+        "action": "tech-stack-manager-consultation",
+        "revisionRequired": true
+      }
+    },
+    "fileOrganizationViolations": {
+      "wrongLocation": {
+        "action": "move-to-correct-location-and-update-index",
+        "preventionMeasure": "enforce-fundamentals-compliance"
+      },
+      "indexNotUpdated": {
+        "action": "update-index-automatically",
+        "alertRequired": true
+      }
+    }
+  },
+
+  "outputSpecifications": {
+    "designDeliverables": {
+      "pageLayouts": {
+        "format": "markdown-with-ascii-wireframes",
+        "location": "levCompiler/project_context/designs/",
+        "naming": "[PAGE_NAME]_DESIGN.md"
+      },
+      "designSystem": {
+        "format": "comprehensive-markdown-documentation",
+        "location": "levCompiler/project_context/designs/",
+        "naming": "DESIGN_SYSTEM_OVERVIEW.md"
+      },
+      "componentLibrary": {
+        "format": "component-specifications-and-patterns",
+        "integration": "tailwind-css-and-sage-wordpress"
+      }
+    },
+    "indexRegistration": {
+      "file": "levCompiler/project_context/designs/index.json",
+      "updateTriggers": [
+        "design-file-creation",
+        "design-file-modification",
+        "design-file-deletion",
+        "design-status-change"
+      ]
+    }
+  },
+
+  "performanceMetrics": {
+    "workflowEfficiency": {
+      "averageCompletionTime": "300-480 minutes",
+      "agentUtilizationRate": "> 0.90",
+      "stakeholderSatisfactionRate": "> 0.95"
+    },
+    "designQuality": {
+      "accessibilityComplianceRate": "100%",
+      "brandConsistencyScore": "> 0.95",
+      "responsiveDesignScore": "> 0.95"
+    },
+    "processCompliance": {
+      "properFileOrganizationRate": "100%",
+      "agentWorkflowComplianceRate": "100%",
+      "indexRegistrationAccuracy": "100%"
+    }
+  },
+
+  "continuousImprovement": {
+    "feedbackLoops": {
+      "stakeholderFeedback": "post-workflow-satisfaction-survey",
+      "agentPerformance": "agent-effectiveness-analysis",
+      "processEfficiency": "workflow-optimization-recommendations"
+    },
+    "learningMechanisms": {
+      "designPatternOptimization": "successful-pattern-library-building",
+      "agentCoordinationImprovement": "inter-agent-communication-optimization",
+      "qualityGateRefinement": "quality-threshold-adjustment-based-on-outcomes"
+    }
+  },
+
+  "compliance": {
+    "fundamentalsAdherence": {
+      "fileOrganization": "strict-project-context-structure-compliance",
+      "agentUtilization": "mandatory-agent-workflow-usage",
+      "qualityStandards": "non-negotiable-accessibility-and-brand-compliance"
+    },
+    "auditTrail": {
+      "agentActions": "complete-log-of-all-agent-interactions",
+      "fileOperations": "detailed-record-of-all-file-manipulations",
+      "qualityChecks": "documentation-of-all-quality-gate-results"
+    }
+  }
+}

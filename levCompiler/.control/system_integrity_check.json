@@ -1,0 +1,172 @@
+{
+  "systemIntegrityCheck": {
+    "version": "1.0.0",
+    "purpose": "Verify RDBMS-like interconnections and referential integrity",
+    "lastCheck": null,
+    "status": "active"
+  },
+
+  "coreReferences": {
+    "entryPoint": {
+      "file": "levCompiler/index.json",
+      "criticalSections": [
+        "CRITICAL_FUNDAMENTALS",
+        "PRE_TASK_VALIDATION",
+        "systemNavigation",
+        "interactionPatterns",
+        "decisionMatrix"
+      ]
+    },
+    "fundamentals": {
+      "file": "levCompiler/.control/constants/fundamentals.json",
+      "referencedBy": [
+        "levCompiler/index.json",
+        "all workflow files",
+        "all agent files"
+      ],
+      "criticality": "NEVER_VIOLATE"
+    }
+  },
+
+  "registryIntegrity": {
+    "agentRegistry": {
+      "file": "levCompiler/.control/agents/agent_registry.json",
+      "expectedAgents": 12,
+      "referencedBy": [
+        "levCompiler/index.json",
+        "levCompiler/.control/workflows/workflow_registry.json"
+      ],
+      "verification": "agent-count-and-cross-references"
+    },
+    "workflowRegistry": {
+      "file": "levCompiler/.control/workflows/workflow_registry.json",
+      "expectedWorkflows": 6,
+      "referencedBy": [
+        "levCompiler/index.json",
+        "levCompiler/.control/agents/agent_registry.json"
+      ],
+      "verification": "workflow-count-and-cross-references"
+    },
+    "designsIndex": {
+      "file": "levCompiler/project_context/designs/index.json",
+      "referencedBy": [
+        "levCompiler/index.json",
+        "levCompiler/.control/workflows/ui_ux_creation_workflow.json"
+      ],
+      "verification": "design-file-inventory-matches"
+    }
+  },
+
+  "fileOrganizationIntegrity": {
+    "mandatoryStructure": {
+      "agents": "levCompiler/.control/agents/",
+      "workflows": "levCompiler/.control/workflows/",
+      "constants": "levCompiler/.control/constants/",
+      "projectContext": "levCompiler/project_context/",
+      "designs": "levCompiler/project_context/designs/",
+      "analysis": "levCompiler/project_context/analysis/",
+      "patterns": "levCompiler/project_context/patterns/",
+      "plans": "levCompiler/project_context/plans/",
+      "tasks": "levCompiler/project_context/tasks/",
+      "logs": "levCompiler/project_context/logs/",
+      "archive": "levCompiler/project_context/archive/"
+    },
+    "indexFiles": {
+      "mainIndex": "levCompiler/index.json",
+      "projectContextIndex": "levCompiler/project_context/index.json",
+      "designsIndex": "levCompiler/project_context/designs/index.json",
+      "agentRegistry": "levCompiler/.control/agents/agent_registry.json",
+      "workflowRegistry": "levCompiler/.control/workflows/workflow_registry.json"
+    }
+  },
+
+  "preTaskValidationChecks": {
+    "step1FundamentalsRead": {
+      "file": "levCompiler/.control/constants/fundamentals.json",
+      "validation": "must-be-read-before-any-task",
+      "criticality": "CRITICAL"
+    },
+    "step2AgentAvailabilityCheck": {
+      "file": "levCompiler/.control/agents/agent_registry.json",
+      "validation": "required-agent-must-exist-for-task",
+      "criticality": "CRITICAL"
+    },
+    "step3WorkflowAvailabilityCheck": {
+      "file": "levCompiler/.control/workflows/workflow_registry.json",
+      "validation": "required-workflow-must-exist-for-task",
+      "criticality": "CRITICAL"
+    },
+    "step4MissingComponentCreation": {
+      "agentCreation": "use agent-creation-agent",
+      "workflowCreation": "use workflow-creation-agent",
+      "humanApproval": "required-for-new-component-creation"
+    },
+    "step5TaskExecution": {
+      "validation": "only-proceed-after-all-checks-pass",
+      "fileLocation": "must-use-project-context-structure",
+      "indexUpdate": "must-update-appropriate-indexes"
+    }
+  },
+
+  "violationDetection": {
+    "fileOrganizationViolations": [
+      "files-outside-project-context-structure",
+      "missing-index-registrations",
+      "orphaned-files-in-wrong-locations"
+    ],
+    "agentWorkflowViolations": [
+      "tasks-performed-without-appropriate-agent",
+      "workflows-bypassed-for-complex-tasks",
+      "missing-quality-gate-validations"
+    ],
+    "referentialIntegrityViolations": [
+      "broken-cross-references-between-files",
+      "missing-required-indexes",
+      "inconsistent-counts-across-registries"
+    ]
+  },
+
+  "automaticCorrections": {
+    "fileLocationCorrection": {
+      "action": "move-to-correct-project-context-location",
+      "updateIndex": "automatically-update-appropriate-index",
+      "notification": "alert-about-correction-made"
+    },
+    "indexSynchronization": {
+      "action": "update-all-affected-indexes",
+      "verification": "cross-check-referential-integrity",
+      "backup": "create-backup-before-changes"
+    },
+    "agentWorkflowEnforcement": {
+      "action": "route-to-appropriate-agent-workflow",
+      "validation": "ensure-fundamentals-compliance",
+      "escalation": "human-interaction-if-uncertain"
+    }
+  },
+
+  "systemHealthMetrics": {
+    "referentialIntegrityScore": "percentage-of-valid-cross-references",
+    "fileOrganizationScore": "percentage-of-correctly-placed-files",
+    "agentWorkflowComplianceScore": "percentage-of-tasks-using-proper-agents",
+    "indexAccuracyScore": "percentage-of-accurate-index-registrations",
+    "overallSystemIntegrity": "composite-score-of-all-metrics"
+  },
+
+  "maintenanceSchedule": {
+    "dailyChecks": [
+      "verify-file-organization-compliance",
+      "check-index-accuracy",
+      "validate-cross-references"
+    ],
+    "weeklyChecks": [
+      "comprehensive-referential-integrity-audit",
+      "agent-workflow-compliance-review",
+      "system-health-metrics-calculation"
+    ],
+    "monthlyChecks": [
+      "full-system-integrity-validation",
+      "performance-optimization-opportunities",
+      "architecture-improvement-recommendations"
+    ]
+  }
+}

@@ -21,7 +21,8 @@
       "capability-definition",
       "role-and-responsibility-mapping",
       "quality-gate-design",
-      "integration-planning"
+      "integration-planning",
+      "agent-registry-management"
     ],
     "secondary": [
       "configuration-template-creation",
@@ -171,6 +172,7 @@
       "userAcceptanceTesting": "Human validation of design and functionality"
     },
     "phase5DeploymentPreparation": {
+      "agentRegistryRegistration": "Register new agent in the central agent registry with proper metadata",
       "documentationCreation": "Create comprehensive documentation",
       "deploymentPlanning": "Plan deployment strategy and rollout",
       "monitoringSetup": "Set up monitoring and alerting",
@@ -240,7 +242,7 @@
     },
     "specificationReview": {
       "description": "Human reviews and approves agent specification",
-      "stage": "phase2SpecificationDesign", 
+      "stage": "phase2SpecificationDesign",
       "required": true
     },
     "architectureApproval": {
@@ -253,6 +255,11 @@
       "stage": "phase4ValidationAndTesting",
       "required": true
     },
+    "registryRegistrationApproval": {
+      "description": "Human approves agent registry registration and system integration",
+      "stage": "phase5DeploymentPreparation",
+      "required": true
+    },
     "deploymentAuthorization": {
       "description": "Human authorizes agent deployment and activation",
       "stage": "phase5DeploymentPreparation",
@@ -263,6 +270,7 @@
   "outputStructure": {
     "agentSpecification": {
       "agentConfiguration": "Complete agent configuration file",
+      "registryEntry": "Agent registry entry with metadata and relationships",
       "integrationDocumentation": "Integration guide and instructions",
       "usageExamples": "Usage examples and best practices",
       "troubleshootingGuide": "Common issues and solutions",
@@ -318,5 +326,29 @@
     "qualityGateEvolution": "Evolve quality standards based on outcomes",
     "humanPreferenceAdaptation": "Adapt to human supervisor preferences",
     "systemEvolutionTracking": "Track and adapt to overall system evolution"
+  },
+
+  "agentRegistryManagement": {
+    "registrationProcess": {
+      "agentIdGeneration": "Generate unique agent identifier following naming conventions",
+      "metadataCompilation": "Compile agent metadata for registry entry",
+      "registryValidation": "Validate registry structure and compatibility",
+      "conflictDetection": "Detect potential conflicts with existing agents",
+      "registryUpdate": "Update central agent registry with new agent information"
+    },
+    "registryValidation": {
+      "uniquenessCheck": "Ensure agent ID and specialization uniqueness",
+      "dependencyValidation": "Validate integration dependencies",
+      "workflowIntegration": "Update workflow definitions to include new agent",
+      "escalationChainUpdate": "Update escalation chains for new agent capabilities",
+      "qualityStandardsAlignment": "Ensure new agent aligns with system quality standards"
+    },
+    "systemConfigurationUpdate": {
+      "agentCountUpdate": "Update total and active agent counts",
+      "confidenceThresholdRegistration": "Register agent-specific confidence thresholds",
+      "humanSupervisionConfiguration": "Configure human supervision requirements",
+      "timeoutConfigurationUpdate": "Add agent-specific timeout configurations",
+      "monitoringSetupRegistration": "Register agent for system monitoring"
+    }
   }
-} 
+}

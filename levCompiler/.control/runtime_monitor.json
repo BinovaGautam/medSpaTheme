@@ -1,0 +1,211 @@
+{
+  "runtimeMonitor": {
+    "id": "RUNTIME-MONITOR-001",
+    "version": "1.0.0",
+    "purpose": "Enforce transparency and visibility for all system operations",
+    "status": "active",
+    "criticality": "MANDATORY"
+  },
+
+  "preTaskValidation": {
+    "step1_fundamentalsCheck": {
+      "action": "READ fundamentals.json",
+      "printStatus": "📋 READING FUNDAMENTALS: levCompiler/.control/constants/fundamentals.json",
+      "validation": "CRITICAL_TRANSPARENCY_REQUIREMENTS loaded",
+      "haltOnFailure": true
+    },
+    "step2_agentValidation": {
+      "action": "CHECK agent availability",
+      "printFormat": "🔍 CHECKING AGENT: [task-type] requires [agent-id]",
+      "registry": "levCompiler/.control/agents/agent_registry.json",
+      "onMissing": {
+        "printMessage": "❓ AGENT [agent-id] NOT FOUND. Create using agent-creation-agent? (yes/no)",
+        "awaitHumanResponse": true,
+        "onYes": "ROUTE to agent-creation-agent",
+        "onNo": "HALT operation - cannot proceed without required agent"
+      }
+    },
+    "step3_workflowValidation": {
+      "action": "CHECK workflow availability",
+      "printFormat": "🔍 CHECKING WORKFLOW: [task-type] requires [workflow-name]",
+      "registry": "levCompiler/.control/workflows/workflow_registry.json",
+      "onMissing": {
+        "printMessage": "❓ WORKFLOW [workflow-name] NOT FOUND. Create using workflow-creation-agent? (yes/no)",
+        "awaitHumanResponse": true,
+        "onYes": "ROUTE to workflow-creation-agent",
+        "onNo": "HALT operation - cannot proceed without required workflow"
+      }
+    }
+  },
+
+  "runtimeStatusPrinting": {
+    "workflowExecution": {
+      "workflowStart": {
+        "format": "🚀 STARTING WORKFLOW: {workflow-name} with AGENT: {agent-id}",
+        "timing": "before any workflow action",
+        "mandatory": true
+      },
+      "stageTransition": {
+        "format": "➡️  STAGE TRANSITION: {from-stage} → {to-stage}",
+        "timing": "on each stage change",
+        "mandatory": true
+      },
+      "agentHandoff": {
+        "format": "🔄 AGENT HANDOFF: {from-agent} → {to-agent}",
+        "timing": "when agent changes",
+        "mandatory": true
+      },
+      "currentStatus": {
+        "format": "📊 PROGRESS: {stage} ({current-step}/{total-steps}) | STATUS: {status} | ETA: {estimate}",
+        "timing": "every major operation",
+        "mandatory": true
+      }
+    },
+    "agentActivity": {
+      "agentStart": {
+        "format": "🤖 AGENT: {agent-id} | ROLE: {agent-role} | TASK: {current-task}",
+        "timing": "when agent begins work",
+        "mandatory": true
+      },
+      "agentProgress": {
+        "format": "⚙️  AGENT WORKING: {agent-id} | ACTION: {current-action} | PROGRESS: {percentage}%",
+        "timing": "during long operations",
+        "mandatory": true
+      },
+      "agentComplete": {
+        "format": "✅ AGENT COMPLETE: {agent-id} | TASK: {task-name} | RESULT: {success/failure}",
+        "timing": "when agent finishes",
+        "mandatory": true
+      }
+    },
+    "fileOperations": {
+      "fileCreate": {
+        "format": "📁 FILE CREATE: {filename} → {location}",
+        "timing": "before file creation",
+        "mandatory": true
+      },
+      "fileEdit": {
+        "format": "📝 FILE EDIT: {filename} | CHANGES: {description}",
+        "timing": "before file modification",
+        "mandatory": true
+      },
+      "fileDelete": {
+        "format": "🗑️  FILE DELETE: {filename} → archive/{location}",
+        "timing": "before file deletion",
+        "mandatory": true
+      },
+      "indexUpdate": {
+        "format": "📊 INDEX UPDATE: {index-file} | OPERATION: {add/remove/modify}",
+        "timing": "before index changes",
+        "mandatory": true
+      }
+    },
+    "qualityGates": {
+      "gateCheck": {
+        "format": "🛡️  QUALITY GATE: {gate-name} | CHECKING: {criteria}",
+        "timing": "before quality validation",
+        "mandatory": true
+      },
+      "gateResult": {
+        "format": "✅ GATE PASSED: {gate-name} | SCORE: {score} OR ❌ GATE FAILED: {gate-name} | REASON: {failure-reason}",
+        "timing": "after quality validation",
+        "mandatory": true
+      }
+    }
+  },
+
+  "humanInteractionProtocol": {
+    "missingAgentFlow": {
+      "detection": "Agent {agent-id} not found in registry",
+      "message": "❓ AGENT {agent-id} NOT FOUND. This agent is required for {task-description}. Would you like me to create it using the agent-creation-agent? (yes/no)",
+      "awaitResponse": true,
+      "onYes": {
+        "action": "ROUTE to agent-creation-agent",
+        "printStatus": "🏗️  CREATING AGENT: {agent-id} using agent-creation-agent"
+      },
+      "onNo": {
+        "action": "HALT operation",
+        "printStatus": "⏹️  OPERATION HALTED: Cannot proceed without required agent {agent-id}"
+      }
+    },
+    "missingWorkflowFlow": {
+      "detection": "Workflow {workflow-name} not found in registry",
+      "message": "❓ WORKFLOW {workflow-name} NOT FOUND. This workflow is required for {task-description}. Would you like me to create it using the workflow-creation-agent? (yes/no)",
+      "awaitResponse": true,
+      "onYes": {
+        "action": "ROUTE to workflow-creation-agent",
+        "printStatus": "🏗️  CREATING WORKFLOW: {workflow-name} using workflow-creation-agent"
+      },
+      "onNo": {
+        "action": "HALT operation",
+        "printStatus": "⏹️  OPERATION HALTED: Cannot proceed without required workflow {workflow-name}"
+      }
+    },
+    "qualityGateFailureFlow": {
+      "detection": "Quality gate {gate-name} failed with score {score}",
+      "message": "⚠️  QUALITY GATE FAILED: {gate-name} | SCORE: {score} | THRESHOLD: {threshold}. This requires human review. Should I: (1) Show details, (2) Attempt auto-fix, (3) Skip gate, (4) Halt?",
+      "awaitResponse": true,
+      "options": {
+        "1": "Show detailed failure analysis",
+        "2": "Attempt automatic fix if available",
+        "3": "Skip gate with human approval",
+        "4": "Halt operation for manual review"
+      }
+    }
+  },
+
+  "monitoringEnforcement": {
+    "mandatoryChecks": [
+      {
+        "check": "transparency-compliance",
+        "frequency": "every-operation",
+        "action": "verify all status prints are executed"
+      },
+      {
+        "check": "agent-workflow-validation",
+        "frequency": "pre-task",
+        "action": "verify required components exist"
+      },
+      {
+        "check": "human-interaction-compliance",
+        "frequency": "on-missing-components",
+        "action": "ensure human approval process followed"
+      },
+      {
+        "check": "file-organization-compliance",
+        "frequency": "file-operations",
+        "action": "verify project_context structure adherence"
+      }
+    ],
+    "violationHandling": {
+      "missingStatusPrint": {
+        "severity": "CRITICAL",
+        "action": "HALT operation and report violation"
+      },
+      "bypassedHumanInteraction": {
+        "severity": "CRITICAL",
+        "action": "HALT operation and escalate to human"
+      },
+      "fileOrganizationViolation": {
+        "severity": "CRITICAL",
+        "action": "Auto-correct and report"
+      }
+    }
+  },
+
+  "systemIntegration": {
+    "linkedFrom": [
+      "levCompiler/index.json (PRE_TASK_VALIDATION)",
+      "levCompiler/.control/constants/fundamentals.json",
+      "all workflow files",
+      "all agent files"
+    ],
+    "enforces": [
+      "CRITICAL_TRANSPARENCY_REQUIREMENTS",
+      "real-time workflow visibility",
+      "mandatory human interaction for missing components",
+      "complete audit trail of all operations"
+    ],
+    "reportsTo": "levCompiler/.control/system_integrity_check.json"
+  }
+}

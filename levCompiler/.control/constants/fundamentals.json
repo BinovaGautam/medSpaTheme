@@ -2,5 +2,110 @@
   "avoid": ["time", "real-time decisions", "implicit memory"],
   "prefer": ["versioned-state", "explicit inputs", "stateless coordination"],
   "capabilities": ["code-generation", "pattern-recognition", "logical-reasoning"],
-  "limitations": ["temporal-reasoning", "persistent-state", "real-time-context"]
+  "limitations": ["temporal-reasoning", "persistent-state", "real-time-context"],
+
+  "strictFileOrganization": {
+    "NEVER_VIOLATE": [
+      "ALL files must go to their designated project_context locations",
+      "NO standalone folders outside established structure",
+      "ALL agents must be used for their designated tasks",
+      "ALL files must be registered in appropriate index.json files"
+    ],
+    "mandatoryLocations": {
+      "designs": "levCompiler/project_context/designs/",
+      "analysis": "levCompiler/project_context/analysis/",
+      "patterns": "levCompiler/project_context/patterns/",
+      "plans": "levCompiler/project_context/plans/",
+      "tasks": "levCompiler/project_context/tasks/",
+      "logs": "levCompiler/project_context/logs/",
+      "archive": "levCompiler/project_context/archive/",
+      "agents": "levCompiler/.control/agents/",
+      "workflows": "levCompiler/.control/workflows/"
+    },
+    "indexRegistrationRequired": {
+      "designs": "levCompiler/project_context/designs/index.json",
+      "workflows": "levCompiler/.control/workflows/workflow_registry.json",
+      "agents": "levCompiler/.control/agents/agent_registry.json"
+    },
+    "agentUsageEnforcement": {
+      "ui-ux-designs": "MUST use UI-UX-DESIGN-001 agent",
+      "code-generation": "MUST use CODE-GEN-001 agent",
+      "workflows": "MUST use WORKFLOW-CREATE-001 agent",
+      "analysis": "MUST use appropriate analysis agents"
+    },
+    "violations": {
+      "wrongLocation": "CRITICAL ERROR - move to correct location immediately",
+      "missingIndex": "CRITICAL ERROR - register in appropriate index",
+      "bypassingAgent": "CRITICAL ERROR - use designated agent",
+      "standaloneFolder": "CRITICAL ERROR - integrate into project_context"
+    }
+  },
+
+  "CRITICAL_TRANSPARENCY_REQUIREMENTS": {
+    "NEVER_VIOLATE": [
+      "ALWAYS print current workflow status before any action",
+      "ALWAYS print current agent working on task",
+      "ALWAYS ask human approval if agent/workflow missing",
+      "NEVER proceed without explicit workflow/agent confirmation"
+    ],
+    "workflowVisibility": {
+      "printCurrentWorkflow": "MANDATORY before any task execution",
+      "printCurrentAgent": "MANDATORY with agent ID and role",
+      "printTaskProgress": "MANDATORY at each stage",
+      "printQualityGateStatus": "MANDATORY for each gate",
+      "printFileOperations": "MANDATORY for create/edit/delete operations"
+    },
+    "missingComponentHandling": {
+      "checkAgentExists": "CRITICAL - verify in agent_registry.json",
+      "checkWorkflowExists": "CRITICAL - verify in workflow_registry.json",
+      "humanApprovalRequired": "ASK human: 'Agent/Workflow X missing. Create it? (yes/no)'",
+      "useCreationAgents": "Use agent-creation-agent or workflow-creation-agent",
+      "haltUntilResolved": "NEVER proceed without resolved dependencies"
+    },
+    "statusReporting": {
+      "workflowFormat": "🔄 WORKFLOW: [workflow-name] | STAGE: [current-stage] | AGENT: [agent-id]",
+      "agentFormat": "🤖 AGENT: [agent-id] | ROLE: [agent-role] | TASK: [current-task]",
+      "progressFormat": "📊 PROGRESS: [stage] ([X]/[Y]) | STATUS: [status] | ETA: [estimate]",
+      "fileOpFormat": "📁 FILE OP: [operation] | FILE: [filename] | LOCATION: [path]"
+    }
+  },
+
+  "complianceChecks": {
+    "beforeFileCreation": [
+      "verify-location-is-within-project-context",
+      "confirm-agent-usage-requirement",
+      "identify-index-registration-need",
+      "print-workflow-and-agent-status"
+    ],
+    "afterFileCreation": [
+      "validate-file-location-correctness",
+      "confirm-index-registration-completed",
+      "verify-agent-workflow-compliance",
+      "print-completion-status"
+    ],
+    "periodicAudits": [
+      "scan-for-orphaned-files-outside-structure",
+      "verify-all-indexes-are-up-to-date",
+      "validate-agent-usage-compliance",
+      "verify-transparency-compliance"
+    ]
+  },
+
+  "realTimeMonitoring": {
+    "mandatoryPrintStatements": {
+      "workflowStart": "🚀 STARTING WORKFLOW: [workflow-name] with AGENT: [agent-id]",
+      "stageTransition": "➡️  STAGE TRANSITION: [from-stage] → [to-stage]",
+      "agentHandoff": "🔄 AGENT HANDOFF: [from-agent] → [to-agent]",
+      "qualityGate": "🛡️  QUALITY GATE: [gate-name] | STATUS: [pass/fail]",
+      "fileOperation": "📁 FILE: [operation] | [filename] → [location]",
+      "workflowComplete": "✅ WORKFLOW COMPLETE: [workflow-name] | DURATION: [time]",
+      "error": "❌ ERROR: [description] | WORKFLOW: [name] | AGENT: [id]"
+    },
+    "humanInteractionPoints": {
+      "missingAgent": "❓ AGENT [agent-id] NOT FOUND. Create using agent-creation-agent? (yes/no)",
+      "missingWorkflow": "❓ WORKFLOW [workflow-name] NOT FOUND. Create using workflow-creation-agent? (yes/no)",
+      "qualityGateFailure": "⚠️  QUALITY GATE FAILED: [gate-name]. Human review required.",
+      "uncertainDecision": "🤔 UNCERTAIN: [description]. Human guidance needed."
+    }
+  }
 }

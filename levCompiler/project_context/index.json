@@ -2,5 +2,10 @@
   "avoid": ["time", "real-time decisions", "implicit memory"],
   "prefer": ["versioned-state", "explicit inputs", "stateless coordination"],
   "capabilities": ["code-generation", "pattern-recognition", "logical-reasoning"],
-  "limitations": ["temporal-reasoning", "persistent-state", "real-time-context"]
+  "limitations": ["temporal-reasoning", "persistent-state", "real-time-context"],
+  "projectContext": {
+    "version": "1.0.0",
+    "structure": "levCompiler-ai-orchestration-framework",
+    "lastUpdated": "2024-01-15"
+  }
 }

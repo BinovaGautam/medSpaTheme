@@ -7,6 +7,71 @@
     "status": "active"
   },
 
+  "CRITICAL_FUNDAMENTALS": {
+    "WARNING": "🚨 NEVER SKIP - READ BEFORE ANY ACTION 🚨",
+    "file": ".control/constants/fundamentals.json",
+    "priority": "MANDATORY",
+    "enforcement": "CRITICAL",
+    "description": "Core system rules that must NEVER be violated",
+    "keyRules": {
+      "fileOrganization": "ALL files must go to designated project_context locations",
+      "agentUsage": "MUST check agent availability before ANY task",
+      "workflowCompliance": "MUST use appropriate workflows for all operations",
+      "indexRegistration": "ALL files MUST be registered in appropriate indexes"
+    }
+  },
+
+  "PRE_TASK_VALIDATION": {
+    "MANDATORY_CHECKS": [
+      {
+        "step": 1,
+        "action": "READ fundamentals.json",
+        "purpose": "Understand inviolable system rules",
+        "criticality": "CRITICAL"
+      },
+      {
+        "step": 2,
+        "action": "Check agent registry for required agent",
+        "file": ".control/agents/agent_registry.json",
+        "purpose": "Verify agent availability for task",
+        "criticality": "CRITICAL"
+      },
+      {
+        "step": 3,
+        "action": "Check workflow registry for required workflow",
+        "file": ".control/workflows/workflow_registry.json",
+        "purpose": "Verify workflow availability for task",
+        "criticality": "CRITICAL"
+      },
+      {
+        "step": 4,
+        "action": "If missing agent/workflow, ask human for creation approval",
+        "purpose": "Use agent-creation-agent or workflow-creation-agent",
+        "criticality": "CRITICAL"
+      },
+      {
+        "step": 5,
+        "action": "Only proceed with task after all validations pass",
+        "purpose": "Ensure system integrity",
+        "criticality": "CRITICAL"
+      }
+    ],
+    "RUNTIME_TRANSPARENCY": {
+      "monitor": ".control/runtime_monitor.json",
+      "enforcement": "MANDATORY",
+      "printFormats": {
+        "workflowStart": "🚀 STARTING WORKFLOW: {workflow-name} with AGENT: {agent-id}",
+        "agentActivity": "🤖 AGENT: {agent-id} | ROLE: {agent-role} | TASK: {current-task}",
+        "progress": "📊 PROGRESS: {stage} ({current-step}/{total-steps}) | STATUS: {status}",
+        "fileOperation": "📁 FILE OP: {operation} | FILE: {filename} | LOCATION: {path}"
+      },
+      "humanInteractionRequired": {
+        "missingAgent": "❓ AGENT {agent-id} NOT FOUND. Create using agent-creation-agent? (yes/no)",
+        "missingWorkflow": "❓ WORKFLOW {workflow-name} NOT FOUND. Create using workflow-creation-agent? (yes/no)"
+      }
+    }
+  },
+
   "quickStart": {
     "primaryInterfacePoints": [
       {
@@ -21,7 +86,7 @@
         "confidence_based": true
       },
       {
-        "name": "Quality Gate System", 
+        "name": "Quality Gate System",
         "role": "Validates all outputs and decisions",
         "mandatory": true
       }
@@ -55,40 +120,91 @@
       "priority": "read_first",
       "contains": [
         "10 specialized agents and capabilities",
-        "5 workflow types for different scenarios", 
+        "6 workflow types for different scenarios",
         "Quality gate system and escalation paths",
         "Project context management"
       ]
     },
+    "fundamentalsCompliance": {
+      "file": ".control/constants/fundamentals.json",
+      "priority": "CRITICAL_READ_FIRST",
+      "purpose": "Inviolable system rules and constraints",
+      "enforcement": "MANDATORY",
+      "linkedFrom": ["index.json", "all workflows", "all agents"]
+    },
     "agentSpecifications": {
-      "directory": "/agents/",
+      "directory": "/.control/agents/",
+      "registry": ".control/agents/agent_registry.json",
+      "totalAgents": 12,
       "structure": {
-        "production": "9 core production agents",
+        "production": "10 core production agents",
         "meta": "2 human-supervised meta agents",
         "readme": "Agent interaction guide"
       },
-      "useCase": "Understanding agent capabilities"
+      "useCase": "Understanding agent capabilities",
+      "linkedFrom": ["workflow_registry.json", "fundamentals.json"]
     },
     "workflowSystems": {
-      "directory": "/workflows/",
+      "directory": "/.control/workflows/",
+      "registry": ".control/workflows/workflow_registry.json",
+      "totalWorkflows": 6,
       "structure": {
         "project_analysis": "Existing project integration",
-        "project_setup": "New project creation", 
+        "project_setup": "New project creation",
         "code_generation": "Code development workflows",
         "visual_development": "Design-to-code workflows",
+        "ui_ux_creation": "UI/UX design workflows",
         "base_io": "Core orchestration pattern"
       },
-      "useCase": "Understanding available workflows"
+      "useCase": "Understanding available workflows",
+      "linkedFrom": ["agent_registry.json", "fundamentals.json"]
     },
     "controlSystems": {
       "directory": "/.control/",
       "structure": {
         "routing": "Intelligent routing engine",
         "gates": "Quality gate management",
-        "orchestration": "Workflow orchestration", 
-        "interfaces": "CLI and other interfaces"
+        "orchestration": "Workflow orchestration",
+        "interfaces": "CLI and other interfaces",
+        "constants": "System fundamentals and constraints"
       },
       "useCase": "Understanding system internals"
+    },
+    "projectContext": {
+      "directory": "/project_context/",
+      "index": "project_context/index.json",
+      "structure": {
+        "designs": {
+          "location": "project_context/designs/",
+          "index": "project_context/designs/index.json",
+          "purpose": "UI/UX designs and specifications"
+        },
+        "analysis": {
+          "location": "project_context/analysis/",
+          "purpose": "Project analysis results"
+        },
+        "patterns": {
+          "location": "project_context/patterns/",
+          "purpose": "Design and code patterns"
+        },
+        "plans": {
+          "location": "project_context/plans/",
+          "purpose": "Implementation plans"
+        },
+        "tasks": {
+          "location": "project_context/tasks/",
+          "purpose": "Task specifications"
+        },
+        "logs": {
+          "location": "project_context/logs/",
+          "purpose": "Execution logs"
+        },
+        "archive": {
+          "location": "project_context/archive/",
+          "purpose": "Historical data and backups"
+        }
+      },
+      "useCase": "Project-specific data storage with proper indexing"
     }
   },
 
@@ -103,7 +219,7 @@
       "confidenceThreshold": 0.90
     },
     "pattern2_code_generation": {
-      "name": "Code Generation Request", 
+      "name": "Code Generation Request",
       "trigger": "User requests code implementation",
       "workflow": "code-generation-workflow",
       "agentSequence": ["CodeGeneration", "CodeReviewing", "DryRunTesting", "Gatekeeping"],
@@ -114,7 +230,7 @@
     "pattern3_project_setup": {
       "name": "Project Setup",
       "trigger": "User wants new project",
-      "workflow": "project-setup-workflow", 
+      "workflow": "project-setup-workflow",
       "agentSequence": ["TechStackManager", "CodeGeneration", "VersionTracking"],
       "output": "Complete project structure with best practices",
       "confidenceThreshold": 0.90
@@ -123,9 +239,21 @@
       "name": "Visual Development",
       "trigger": "User provides design/mockup",
       "workflow": "visual-development-workflow",
-      "agentSequence": ["VisualAnnotation", "CodeGeneration", "CodeReviewing"], 
+      "agentSequence": ["VisualAnnotation", "CodeGeneration", "CodeReviewing"],
       "output": "Functional code from visual design",
       "confidenceThreshold": 0.80
+    },
+    "pattern5_ui_ux_creation": {
+      "name": "UI/UX Design Creation",
+      "trigger": "User requests UI/UX designs, wireframes, or design system",
+      "workflow": "ui-ux-creation-workflow",
+      "requiredAgent": "UI-UX-DESIGN-001",
+      "agentSequence": ["UI-UX-Design", "HumanInteraction", "TechStackManager", "CodeGeneration"],
+      "qualityGates": ["AccessibilityCompliance", "BrandConsistency", "ResponsiveDesign"],
+      "output": "Premium UI/UX designs in project_context/designs/ with index registration",
+      "fileLocation": "project_context/designs/",
+      "indexUpdate": "project_context/designs/index.json",
+      "confidenceThreshold": 0.92
     }
   },
 
@@ -140,7 +268,7 @@
       {
         "inputType": "Code generation request",
         "confidenceThreshold": 0.85,
-        "routeTo": "code-generation-workflow", 
+        "routeTo": "code-generation-workflow",
         "escalation": "CodeReviewing"
       },
       {
@@ -156,7 +284,15 @@
         "escalation": "HumanInteraction"
       },
       {
-        "inputType": "Complex/unclear request", 
+        "inputType": "UI/UX design creation request",
+        "confidenceThreshold": 0.92,
+        "routeTo": "ui-ux-creation-workflow",
+        "requiredAgent": "UI-UX-DESIGN-001",
+        "preTaskValidation": "MANDATORY",
+        "escalation": "HumanInteraction"
+      },
+      {
+        "inputType": "Complex/unclear request",
         "confidenceThreshold": 0.70,
         "routeTo": "HumanInteraction",
         "escalation": "Human review"
@@ -174,7 +310,7 @@
         "escalationPoint": "Auto-fix"
       },
       {
-        "gateType": "Standards", 
+        "gateType": "Standards",
         "minimumThreshold": 0.90,
         "escalationPoint": "CodeReviewing agent"
       },
@@ -269,7 +405,7 @@
         "purpose": "Show system status"
       },
       {
-        "command": "levCompiler monitor workflows", 
+        "command": "levCompiler monitor workflows",
         "options": ["--workflow-id <id>"],
         "purpose": "Monitor active workflows"
       },
@@ -289,7 +425,7 @@
     },
     "analysis": {
       "tech_stack_analysis.json": "Current technology stack analysis",
-      "code_quality_metrics.json": "Quality metrics and measurements", 
+      "code_quality_metrics.json": "Quality metrics and measurements",
       "architecture_analysis.json": "System architecture documentation"
     },
     "patterns": {
@@ -317,7 +453,7 @@
         "importance": "critical"
       },
       {
-        "item": "System Status", 
+        "item": "System Status",
         "action": "Verify all agents are available",
         "importance": "critical"
       },
@@ -328,7 +464,7 @@
       },
       {
         "item": "User Preferences",
-        "action": "Review team conventions and preferences", 
+        "action": "Review team conventions and preferences",
         "importance": "medium"
       }
     ],
@@ -345,7 +481,7 @@
       },
       {
         "rule": "Escalate when uncertain",
-        "reason": "Use human interaction for ambiguous cases", 
+        "reason": "Use human interaction for ambiguous cases",
         "enforcement": "recommended"
       },
       {
@@ -364,7 +500,7 @@
         "description": "Explain what you can/cannot do"
       },
       {
-        "principle": "Proactive escalation", 
+        "principle": "Proactive escalation",
         "description": "Route to human interaction before failing"
       },
       {
@@ -408,7 +544,7 @@
         },
         {
           "step": 3,
-          "action": "Request human review for subjective issues", 
+          "action": "Request human review for subjective issues",
           "condition": "if manual review needed"
         },
         {
@@ -466,7 +602,7 @@
         "metric": "percentage of correct workflow selections"
       },
       "qualityGatePassRate": {
-        "target": "> 90%", 
+        "target": "> 90%",
         "metric": "first-time quality gate passage"
       },
       "firstTimeResolution": {
@@ -505,7 +641,7 @@
       "completed": false
     },
     {
-      "task": "Check system status and agent availability", 
+      "task": "Check system status and agent availability",
       "priority": "critical",
       "completed": false
     },
@@ -516,7 +652,7 @@
     },
     {
       "task": "Understand user's primary intent",
-      "priority": "high", 
+      "priority": "high",
       "completed": false
     },
     {
@@ -535,7 +671,7 @@
       "completed": false
     },
     {
-      "task": "Document all decisions and actions", 
+      "task": "Document all decisions and actions",
       "priority": "mandatory",
       "completed": false
     },
@@ -557,7 +693,7 @@
       "purpose": "Complete system understanding"
     },
     "agentSpecifications": {
-      "file": "/agents/README.md", 
+      "file": "/agents/README.md",
       "purpose": "Individual agent capabilities"
     },
     "workflowDetails": {
@@ -588,4 +724,4 @@
     "systemLoad": null,
     "note": "Use 'levCompiler monitor status' for real-time information"
   }
-} 
+}
