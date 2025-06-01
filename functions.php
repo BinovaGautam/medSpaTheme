@@ -2599,3 +2599,156 @@ function medspa_theme_enqueue_assets() {
     // Component scripts are enqueued conditionally within components
 }
 add_action('wp_enqueue_scripts', 'medspa_theme_enqueue_assets');
+
+/**
+ * Create essential pages for PreetiDreams Medical Spa
+ * These pages will be used for navigation instead of post type archives
+ */
+function preetidreams_create_essential_pages() {
+    // Define pages to create
+    $pages = [
+        [
+            'post_title' => 'Treatments',
+            'post_name' => 'treatments',
+            'post_content' => '<p>Discover our comprehensive range of premium medical spa treatments designed to enhance your natural beauty and wellness.</p>',
+            'page_template' => 'page-treatments.php',
+            'meta_description' => 'Explore PreetiDreams Medical Spa\'s comprehensive range of premium treatments including facial rejuvenation, body contouring, laser treatments, and wellness services.'
+        ],
+        [
+            'post_title' => 'About Us',
+            'post_name' => 'about',
+            'post_content' => '<p>Learn about our medical spa story, our team of experts, and our commitment to providing the highest quality aesthetic treatments.</p>',
+            'page_template' => 'page-about.php',
+            'meta_description' => 'Learn about PreetiDreams Medical Spa - our story, team of medical experts, and commitment to premium aesthetic treatments and patient care.'
+        ],
+        [
+            'post_title' => 'Testimonials',
+            'post_name' => 'testimonials',
+            'post_content' => '<p>Read what our clients say about their experiences at PreetiDreams Medical Spa.</p>',
+            'page_template' => 'page-testimonials.php',
+            'meta_description' => 'Read testimonials and reviews from satisfied PreetiDreams Medical Spa clients about their aesthetic treatment experiences and results.'
+        ],
+        [
+            'post_title' => 'Contact',
+            'post_name' => 'contact',
+            'post_content' => '<p>Contact PreetiDreams Medical Spa to schedule your consultation or learn more about our treatments.</p>',
+            'page_template' => 'page-contact.php',
+            'meta_description' => 'Contact PreetiDreams Medical Spa to schedule your consultation, learn about treatments, or get directions to our location.'
+        ]
+    ];
+
+    foreach ($pages as $page_data) {
+        // Check if page already exists
+        $existing_page = get_page_by_path($page_data['post_name']);
+
+        if (!$existing_page) {
+            // Create the page
+            $page_id = wp_insert_post([
+                'post_title' => $page_data['post_title'],
+                'post_name' => $page_data['post_name'],
+                'post_content' => $page_data['post_content'],
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_author' => 1,
+                'comment_status' => 'closed',
+                'ping_status' => 'closed'
+            ]);
+
+            if ($page_id && !is_wp_error($page_id)) {
+                // Set page template
+                update_post_meta($page_id, '_wp_page_template', $page_data['page_template']);
+
+                // Set SEO meta description
+                update_post_meta($page_id, '_yoast_wpseo_metadesc', $page_data['meta_description']);
+
+                error_log("Created page: {$page_data['post_title']} (ID: {$page_id})");
+            }
+        }
+    }
+}
+
+/**
+ * Run page creation on theme activation
+ */
+function preetidreams_theme_setup_pages() {
+    // Create essential pages
+    preetidreams_create_essential_pages();
+
+    // Flush rewrite rules to ensure pretty permalinks work
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'preetidreams_theme_setup_pages');
+
+/**
+ * Also run once on init to ensure pages exist
+ */
+function preetidreams_ensure_pages_exist() {
+    // Only run in admin and only once per day
+    if (is_admin() && !wp_next_scheduled('preetidreams_page_check')) {
+        wp_schedule_single_event(time(), 'preetidreams_page_check');
+    }
+}
+add_action('init', 'preetidreams_ensure_pages_exist');
+
+/**
+ * Scheduled check for essential pages
+ */
+function preetidreams_scheduled_page_check() {
+    preetidreams_create_essential_pages();
+}
+add_action('preetidreams_page_check', 'preetidreams_scheduled_page_check');
+
+/**
+ * Helper function to get page URL by slug
+ * Used for reliable navigation links
+ */
+function preetidreams_get_page_url($slug) {
+    $page = get_page_by_path($slug);
+    if ($page) {
+        return get_permalink($page->ID);
+    }
+    return home_url('/' . $slug . '/');
+}
+
+/**
+ * Custom navigation menu walker for better accessibility
+ */
+class PreetiDreams_Walker_Nav_Menu extends Walker_Nav_Menu {
+    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $classes = empty($item->classes) ? array() : (array) $item->classes;
+        $classes[] = 'menu-item-' . $item->ID;
+
+        $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args));
+        $class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
+
+        $id = apply_filters('nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args);
+        $id = $id ? ' id="' . esc_attr($id) . '"' : '';
+
+        $output .= '<li' . $id . $class_names .'>';
+
+        $atts = array();
+        $atts['title']  = ! empty($item->attr_title) ? $item->attr_title : '';
+        $atts['target'] = ! empty($item->target)     ? $item->target     : '';
+        $atts['rel']    = ! empty($item->xfn)        ? $item->xfn        : '';
+        $atts['href']   = ! empty($item->url)        ? $item->url        : '';
+        $atts['aria-current'] = $item->current ? 'page' : '';
+
+        $atts = apply_filters('nav_menu_link_attributes', $atts, $item, $args);
+
+        $attributes = '';
+        foreach ($atts as $attr => $value) {
+            if (! empty($value)) {
+                $value = ('href' === $attr) ? esc_url($value) : esc_attr($value);
+                $attributes .= ' ' . $attr . '="' . $value . '"';
+            }
+        }
+
+        $item_output = $args->before ?? '';
+        $item_output .= '<a' . $attributes .'>';
+        $item_output .= ($args->link_before ?? '') . apply_filters('the_title', $item->title, $item->ID) . ($args->link_after ?? '');
+        $item_output .= '</a>';
+        $item_output .= $args->after ?? '';
+
+        $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
+    }
+}

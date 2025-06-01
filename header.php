@@ -55,22 +55,22 @@
                     ]);
                     ?>
                 <?php else : ?>
-                    <!-- Clean fallback menu -->
+                    <!-- Clean fallback menu with proper page links -->
                     <ul class="nav-menu">
                         <li class="menu-item <?php echo is_home() || is_front_page() ? 'current-menu-item' : ''; ?>">
                             <a href="<?php echo esc_url(home_url('/')); ?>">Home</a>
                         </li>
-                        <li class="menu-item <?php echo is_post_type_archive('treatment') || is_singular('treatment') ? 'current-menu-item' : ''; ?>">
-                            <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>">Treatments</a>
+                        <li class="menu-item <?php echo is_page('treatments') ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(home_url('/treatments/')); ?>">Treatments</a>
                         </li>
-                        <li class="menu-item <?php echo is_post_type_archive('staff') || is_singular('staff') ? 'current-menu-item' : ''; ?>">
-                            <a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>">Our Team</a>
+                        <li class="menu-item <?php echo is_page('about') ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(home_url('/about/')); ?>">About Us</a>
                         </li>
-                        <li class="menu-item <?php echo is_post_type_archive('testimonial') || is_singular('testimonial') ? 'current-menu-item' : ''; ?>">
-                            <a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>">Testimonials</a>
+                        <li class="menu-item <?php echo is_page('testimonials') ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(home_url('/testimonials/')); ?>">Testimonials</a>
                         </li>
-                        <li class="menu-item">
-                            <a href="#contact">Contact</a>
+                        <li class="menu-item <?php echo is_page('contact') ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo esc_url(home_url('/contact/')); ?>">Contact</a>
                         </li>
                     </ul>
                 <?php endif; ?>
@@ -91,7 +91,7 @@
 
                 <!-- Book Consultation Button -->
                 <div class="header-cta">
-                    <a href="#consultation" class="btn-consultation">
+                    <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn-consultation">
                         <span class="btn-icon">📋</span>
                         <span class="btn-text">Book Consultation</span>
                     </a>
@@ -134,26 +134,26 @@
                     Home
                 </a>
             </li>
-            <li class="<?php echo is_post_type_archive('treatment') || is_singular('treatment') ? 'current' : ''; ?>">
-                <a href="<?php echo esc_url(get_post_type_archive_link('treatment')); ?>">
+            <li class="<?php echo is_page('treatments') ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(home_url('/treatments/')); ?>">
                     <span class="nav-icon">💉</span>
                     Treatments
                 </a>
             </li>
-            <li class="<?php echo is_post_type_archive('staff') || is_singular('staff') ? 'current' : ''; ?>">
-                <a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>">
+            <li class="<?php echo is_page('about') ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(home_url('/about/')); ?>">
                     <span class="nav-icon">👥</span>
-                    Our Team
+                    About Us
                 </a>
             </li>
-            <li class="<?php echo is_post_type_archive('testimonial') || is_singular('testimonial') ? 'current' : ''; ?>">
-                <a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>">
+            <li class="<?php echo is_page('testimonials') ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(home_url('/testimonials/')); ?>">
                     <span class="nav-icon">💬</span>
                     Testimonials
                 </a>
             </li>
-            <li>
-                <a href="#contact">
+            <li class="<?php echo is_page('contact') ? 'current' : ''; ?>">
+                <a href="<?php echo esc_url(home_url('/contact/')); ?>">
                     <span class="nav-icon">📞</span>
                     Contact
                 </a>
@@ -166,7 +166,7 @@
                     📞 Call <?php echo esc_html($phone); ?>
                 </a>
             <?php endif; ?>
-            <a href="#consultation" class="mobile-consultation-btn">
+            <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="mobile-consultation-btn">
                 📋 Book Free Consultation
             </a>
         </div>
