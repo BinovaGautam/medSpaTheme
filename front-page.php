@@ -49,30 +49,30 @@
                     <div class="hero-content-section">
                         <div class="hero-text-content">
                             <h1 class="hero-title" data-aos="fade-up">
-                                <?php echo esc_html(get_theme_mod('hero_title', __('Transform Your Beauty with Advanced Medical Spa Treatments', 'preetidreams'))); ?>
+                                HARDCODED TEST TITLE - Transform Your Beauty with Advanced Medical Spa Treatments
                             </h1>
 
                             <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
-                                <?php echo esc_html(get_theme_mod('hero_subtitle', __('Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.', 'preetidreams'))); ?>
+                                HARDCODED TEST SUBTITLE - Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.
                             </p>
 
                             <!-- Trust Indicators -->
                             <div class="trust-indicators" data-aos="fade-up" data-aos-delay="400">
                                 <div class="trust-item">
                                     <span class="trust-icon">✅</span>
-                                    <span class="trust-text"><?php esc_html_e('Board Certified', 'preetidreams'); ?></span>
+                                    <span class="trust-text">Board Certified</span>
                                 </div>
                                 <div class="trust-item">
                                     <span class="trust-icon">🏆</span>
-                                    <span class="trust-text"><?php esc_html_e('Award Winning', 'preetidreams'); ?></span>
+                                    <span class="trust-text">Award Winning</span>
                                 </div>
                                 <div class="trust-item">
                                     <span class="trust-icon">💯</span>
-                                    <span class="trust-text"><?php esc_html_e('2000+ Happy Patients', 'preetidreams'); ?></span>
+                                    <span class="trust-text">2000+ Happy Patients</span>
                                 </div>
                                 <div class="trust-item">
                                     <span class="trust-icon">🔒</span>
-                                    <span class="trust-text"><?php esc_html_e('HIPAA Compliant', 'preetidreams'); ?></span>
+                                    <span class="trust-text">HIPAA Compliant</span>
                                 </div>
                             </div>
 
@@ -80,16 +80,12 @@
                             <div class="hero-actions" data-aos="fade-up" data-aos-delay="600">
                                 <a href="#consultation" class="btn btn-primary btn-large cta-primary">
                                     <span class="btn-icon">📞</span>
-                                    <?php esc_html_e('Free Consultation', 'preetidreams'); ?>
+                                    Free Consultation
                                 </a>
-                                <?php
-                                $phone = preetidreams_get_phone();
-                                if ($phone) : ?>
-                                    <a href="tel:<?php echo esc_attr($phone); ?>" class="btn btn-secondary btn-large cta-secondary">
-                                        <span class="btn-icon">📱</span>
-                                        <?php echo esc_html($phone); ?>
-                                    </a>
-                                <?php endif; ?>
+                                <a href="tel:(555) 123-4567" class="btn btn-secondary btn-large cta-secondary">
+                                    <span class="btn-icon">📱</span>
+                                    (555) 123-4567
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -107,62 +103,62 @@
 
                             <!-- Step 1: Treatment Categories -->
                             <div class="selection-step active" data-step="1">
-                                <h3 class="step-title"><?php esc_html_e('Which treatment are you interested in?', 'preetidreams'); ?></h3>
+                                <h3 class="step-title">Which treatment are you interested in?</h3>
                                 <div class="treatment-categories">
                                     <button class="category-btn" data-category="facial" tabindex="0">
                                         <span class="category-icon">✨</span>
-                                        <span class="category-name"><?php esc_html_e('Facial Treatments', 'preetidreams'); ?></span>
+                                        <span class="category-name">Facial Treatments</span>
                                     </button>
                                     <button class="category-btn" data-category="injectable" tabindex="0">
                                         <span class="category-icon">💉</span>
-                                        <span class="category-name"><?php esc_html_e('Injectables', 'preetidreams'); ?></span>
+                                        <span class="category-name">Injectables</span>
                                     </button>
                                     <button class="category-btn" data-category="laser" tabindex="0">
                                         <span class="category-icon">💎</span>
-                                        <span class="category-name"><?php esc_html_e('Laser Treatments', 'preetidreams'); ?></span>
+                                        <span class="category-name">Laser Treatments</span>
                                     </button>
                                     <button class="category-btn" data-category="body" tabindex="0">
                                         <span class="category-icon">🌟</span>
-                                        <span class="category-name"><?php esc_html_e('Body Contouring', 'preetidreams'); ?></span>
+                                        <span class="category-name">Body Contouring</span>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Step 2: Specific Treatments -->
                             <div class="selection-step" data-step="2">
-                                <h3 class="step-title"><?php esc_html_e('Select your specific treatment:', 'preetidreams'); ?></h3>
+                                <h3 class="step-title">Select your specific treatment:</h3>
                                 <div class="specific-treatments">
                                     <!-- Dynamically populated via JavaScript -->
                                 </div>
                                 <button class="btn btn-outline step-back" type="button">
                                     <span class="btn-icon">←</span>
-                                    <?php esc_html_e('Back', 'preetidreams'); ?>
+                                    Back
                                 </button>
                             </div>
 
                             <!-- Step 3: Consultation Form -->
                             <div class="selection-step" data-step="3">
-                                <h3 class="step-title"><?php esc_html_e('Book your consultation:', 'preetidreams'); ?></h3>
+                                <h3 class="step-title">Book your consultation:</h3>
                                 <form class="consultation-form" id="hero-consultation-form">
                                     <div class="form-group">
-                                        <input type="text" name="full_name" placeholder="<?php esc_attr_e('Your Full Name', 'preetidreams'); ?>" required>
+                                        <input type="text" name="full_name" placeholder="Your Full Name" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'preetidreams'); ?>" required>
+                                        <input type="email" name="email" placeholder="Email Address" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'preetidreams'); ?>" required>
+                                        <input type="tel" name="phone" placeholder="Phone Number" required>
                                     </div>
                                     <div class="form-group">
-                                        <textarea name="message" placeholder="<?php esc_attr_e('Tell us about your goals (optional)', 'preetidreams'); ?>" rows="3"></textarea>
+                                        <textarea name="message" placeholder="Tell us about your goals (optional)" rows="3"></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-large">
                                         <span class="btn-icon">📅</span>
-                                        <?php esc_html_e('Schedule Free Consultation', 'preetidreams'); ?>
+                                        Schedule Free Consultation
                                     </button>
                                     <button class="btn btn-outline step-back" type="button">
                                         <span class="btn-icon">←</span>
-                                        <?php esc_html_e('Back', 'preetidreams'); ?>
+                                        Back
                                     </button>
                                 </form>
                             </div>
