@@ -1,0 +1,321 @@
+{
+  "workflowRegistry": {
+    "version": "1.0.0",
+    "totalWorkflows": 5,
+    "activeWorkflows": 5,
+    "systemArchitecture": "hierarchical-workflow-orchestration"
+  },
+
+  "workflowHierarchy": {
+    "baseWorkflow": {
+      "workflowId": "BASE-IO-001",
+      "name": "base-input-output-workflow",
+      "type": "foundational-orchestrator",
+      "description": "Core orchestration workflow that routes all inputs to specialized workflows",
+      "priority": 1,
+      "status": "active",
+      "location": "levCompiler/.control/workflows/base_input_output_workflow.json"
+    },
+
+    "specializedWorkflows": {
+      "projectAnalysisWorkflow": {
+        "workflowId": "PROJECT-ANALYSIS-WF-001",
+        "name": "project-analysis-workflow",
+        "type": "project-discovery-and-integration",
+        "description": "Comprehensive analysis of existing projects for levCompiler integration",
+        "priority": 1,
+        "status": "active",
+        "triggerPatterns": ["analyze", "analyze project", "existing project", "integration", "understand project", "project context"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/project_analysis_workflow.json"
+      },
+
+      "projectSetupWorkflow": {
+        "workflowId": "PROJECT-SETUP-WF-001",
+        "name": "project-setup-workflow",
+        "type": "foundational-setup",
+        "description": "Complete project setup from requirements to configured environment",
+        "priority": 1,
+        "status": "active",
+        "triggerPatterns": ["setup", "initialize", "create project", "new project", "bootstrap"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/project_setup_workflow.json"
+      },
+
+      "codeGenerationWorkflow": {
+        "workflowId": "CODE-GEN-WF-001",
+        "name": "code-generation-workflow",
+        "type": "specialized-development",
+        "description": "Complete code generation from requirements to delivery",
+        "priority": 2,
+        "status": "active",
+        "triggerPatterns": ["create", "build", "implement", "generate", "write code"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/code_generation_workflow.json"
+      },
+
+      "visualDevelopmentWorkflow": {
+        "workflowId": "VISUAL-DEV-WF-001", 
+        "name": "visual-development-workflow",
+        "type": "specialized-visual-development",
+        "description": "Visual design to functional code workflow",
+        "priority": 2,
+        "status": "active",
+        "triggerPatterns": ["visual", "ui", "design", "mockup", "wireframe"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/visual_development_workflow.json"
+      }
+    }
+  },
+
+  "workflowRouting": {
+    "routingStrategy": "intelligent-pattern-matching",
+    "defaultRouter": "human-interaction-agent",
+    "confidenceThreshold": 0.80,
+    
+    "routingRules": {
+      "projectAnalysis": {
+        "inputPatterns": ["analyze", "analyze project", "existing project", "integration", "understand project", "project context", "legacy project", "import project"],
+        "contextRequired": ["project-path", "analysis-scope", "integration-goals"],
+        "targetWorkflow": "project-analysis-workflow",
+        "confidence": 0.90,
+        "estimatedDuration": "120-200 minutes"
+      },
+      
+      "projectSetup": {
+        "inputPatterns": ["setup", "initialize", "create project", "new project", "bootstrap", "scaffold"],
+        "contextRequired": ["project-requirements", "team-preferences", "deployment-target"],
+        "targetWorkflow": "project-setup-workflow",
+        "confidence": 0.90,
+        "estimatedDuration": "60-120 minutes"
+      },
+      
+      "codeGeneration": {
+        "inputPatterns": ["create", "build", "implement", "generate", "write code", "develop"],
+        "contextRequired": ["requirements", "specifications", "technology-preferences"],
+        "targetWorkflow": "code-generation-workflow",
+        "confidence": 0.85,
+        "estimatedDuration": "30-60 minutes"
+      },
+      
+      "visualDevelopment": {
+        "inputPatterns": ["visual", "ui", "design", "mockup", "wireframe", "frontend", "interface"],
+        "contextRequired": ["visual-input", "design-requirements", "target-platform"],
+        "targetWorkflow": "visual-development-workflow", 
+        "confidence": 0.85,
+        "estimatedDuration": "45-90 minutes"
+      },
+      
+      "codeReview": {
+        "inputPatterns": ["review", "check", "analyze", "validate", "audit", "inspect"],
+        "contextRequired": ["source-code", "review-criteria"],
+        "targetWorkflow": "code-review-standalone-workflow",
+        "confidence": 0.90,
+        "estimatedDuration": "15-30 minutes",
+        "status": "planned"
+      },
+      
+      "codeOptimization": {
+        "inputPatterns": ["cleanup", "optimize", "refactor", "improve", "performance"],
+        "contextRequired": ["target-code", "optimization-goals"],
+        "targetWorkflow": "code-optimization-workflow",
+        "confidence": 0.80,
+        "estimatedDuration": "20-40 minutes", 
+        "status": "planned"
+      }
+    }
+  },
+
+  "workflowCoordination": {
+    "orchestrationModes": {
+      "sequential": {
+        "description": "Execute workflows in sequence with full handoffs",
+        "useCase": "Complex workflows requiring previous outputs",
+        "example": "Visual analysis → Code generation → Review → Deployment"
+      },
+      
+      "parallel": {
+        "description": "Execute multiple workflows simultaneously",
+        "useCase": "Independent workflows that can run concurrently",
+        "example": "Multiple feature implementations in parallel"
+      },
+      
+      "conditional": {
+        "description": "Execute different workflows based on runtime conditions",
+        "useCase": "Branching logic based on input analysis or intermediate results",
+        "example": "Route to optimization workflow only if performance issues detected"
+      },
+      
+      "iterative": {
+        "description": "Repeat workflows until success criteria are met",
+        "useCase": "Quality improvement cycles or progressive refinement",
+        "example": "Generate → Review → Refine → Review cycle until approved"
+      }
+    },
+
+    "handoffProtocols": {
+      "contextPreservation": {
+        "fullContextTransfer": "Complete context including metadata and history",
+        "statePreservation": "Maintain workflow state across transitions",
+        "errorContextMaintenance": "Preserve error context for debugging and learning"
+      },
+      
+      "qualityAssurance": {
+        "outputValidation": "Validate outputs before handoff to next workflow",
+        "confidenceVerification": "Ensure confidence levels meet thresholds",
+        "completenessChecking": "Verify all required outputs are present"
+      }
+    }
+  },
+
+  "workflowExecution": {
+    "executionEngine": {
+      "type": "agent-orchestrated",
+      "coordinator": "human-interaction-agent",
+      "failureHandling": "graceful-degradation-with-escalation",
+      "performanceOptimization": "dynamic-resource-allocation"
+    },
+
+    "resourceManagement": {
+      "concurrencyLimits": {
+        "maxConcurrentWorkflows": 5,
+        "maxAgentsPerWorkflow": 3,
+        "resourcePooling": "dynamic-allocation"
+      },
+      
+      "prioritization": {
+        "priorityQueuing": "priority-based-scheduling",
+        "resourcePreemption": "high-priority-can-preempt-low-priority",
+        "loadBalancing": "intelligent-agent-distribution"
+      }
+    }
+  },
+
+  "qualityAndCompliance": {
+    "universalQualityGates": {
+      "inputValidation": {
+        "description": "All inputs must be validated before processing",
+        "threshold": 1.0,
+        "applicability": "all-workflows"
+      },
+      
+      "securityValidation": {
+        "description": "Security checks must be performed at key points",
+        "threshold": 0.95,
+        "applicability": "code-generating-workflows"
+      },
+      
+      "outputApproval": {
+        "description": "Final outputs must pass gatekeeping approval",
+        "threshold": 0.90,
+        "applicability": "all-delivery-workflows"
+      }
+    },
+
+    "complianceRequirements": {
+      "auditTrail": "Complete audit trail of all workflow steps and decisions",
+      "versionControl": "All outputs must be version controlled",
+      "documentation": "Comprehensive documentation of all processes and outputs",
+      "humanOversight": "Human supervision points clearly defined and enforced"
+    }
+  },
+
+  "monitoringAndObservability": {
+    "realTimeMetrics": {
+      "activeWorkflows": "Number of currently executing workflows",
+      "queueDepth": "Number of workflows waiting to execute",
+      "averageExecutionTime": "Average workflow completion time",
+      "successRate": "Percentage of workflows completing successfully",
+      "agentUtilization": "Utilization percentage of each agent type"
+    },
+
+    "alerting": {
+      "performanceAlerts": {
+        "slowWorkflows": "Alert when workflows exceed expected duration",
+        "highQueueDepth": "Alert when queue depth exceeds threshold",
+        "lowSuccessRate": "Alert when success rate drops below threshold"
+      },
+      
+      "qualityAlerts": {
+        "qualityGateFailures": "Alert on quality gate failures",
+        "highEscalationRate": "Alert when human escalation rate increases",
+        "repeatedFailures": "Alert on patterns of repeated failures"
+      }
+    },
+
+    "dashboards": {
+      "executiveDashboard": "High-level metrics for management visibility",
+      "operationalDashboard": "Detailed operational metrics for monitoring",
+      "agentPerformanceDashboard": "Individual agent performance metrics",
+      "workflowEfficiencyDashboard": "Workflow-specific efficiency metrics"
+    }
+  },
+
+  "evolutionAndLearning": {
+    "adaptiveOptimization": {
+      "routingOptimization": "Continuously improve routing accuracy based on outcomes",
+      "performanceTuning": "Optimize workflow performance based on execution data",
+      "qualityImprovement": "Enhance quality gates based on feedback and results"
+    },
+
+    "learningMechanisms": {
+      "patternRecognition": "Learn successful patterns for different input types",
+      "failureAnalysis": "Analyze failures to prevent recurrence",
+      "performanceProfiling": "Profile workflow performance for optimization",
+      "userPreferenceLearning": "Adapt to user preferences and feedback"
+    },
+
+    "continuousImprovement": {
+      "weeklyReviews": "Weekly analysis of workflow performance and outcomes",
+      "monthlyOptimization": "Monthly optimization cycles for workflow improvements",
+      "quarterlyEvolution": "Quarterly evolution planning and implementation",
+      "annualArchitectureReview": "Annual architecture review and major updates"
+    }
+  },
+
+  "integrationPoints": {
+    "externalSystems": {
+      "versionControlSystems": "Git integration for code and artifact management",
+      "cicdPipelines": "Integration with CI/CD systems for deployment",
+      "projectManagementTools": "Integration with project management and tracking",
+      "communicationPlatforms": "Integration with team communication tools"
+    },
+
+    "dataExchange": {
+      "inputFormats": ["json", "yaml", "text", "images", "files"],
+      "outputFormats": ["json", "yaml", "text", "code-files", "documentation"],
+      "apiEndpoints": "RESTful API endpoints for external integration",
+      "webhooks": "Webhook support for event-driven integration"
+    }
+  },
+
+  "deployment": {
+    "deploymentStrategy": {
+      "rolloutApproach": "phased-rollout-with-canary-testing",
+      "rollbackCapability": "complete-rollback-support",
+      "environmentSupport": ["development", "staging", "production"]
+    },
+
+    "configuration": {
+      "environmentSpecific": "Environment-specific configuration management",
+      "featureFlags": "Feature flag support for gradual feature enablement",
+      "configurationValidation": "Configuration validation and consistency checking"
+    }
+  },
+
+  "maintenanceAndSupport": {
+    "operationalProcedures": {
+      "startupSequence": "Proper workflow system startup and initialization",
+      "shutdownProcedure": "Graceful shutdown with active workflow completion",
+      "healthChecks": "Comprehensive health checking and system validation",
+      "backupAndRecovery": "Backup and recovery procedures for workflow state"
+    },
+
+    "troubleshooting": {
+      "commonIssues": "Documentation of common issues and solutions",
+      "diagnosticTools": "Tools for diagnosing workflow and agent issues",
+      "escalationProcedures": "Clear escalation paths for complex issues",
+      "supportContacts": "Contact information for technical support"
+    }
+  }
+} 

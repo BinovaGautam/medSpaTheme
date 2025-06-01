@@ -1,0 +1,388 @@
+{
+  "projectSetupWorkflow": {
+    "workflowId": "PROJECT-SETUP-WF-001",
+    "version": "1.0.0",
+    "description": "Complete project setup workflow from requirements analysis to fully configured development environment",
+    "workflowType": "foundational-setup",
+    "priority": 1,
+    "status": "active",
+    "parentWorkflow": "base-input-output-workflow"
+  },
+
+  "workflowSteps": {
+    "step1RequirementGathering": {
+      "stepId": "REQUIREMENT-GATHERING",
+      "description": "Gather comprehensive project requirements and constraints",
+      "agent": "human-interaction-agent",
+      "duration": "5-10 minutes",
+      "inputs": ["project-description", "functional-requirements", "team-preferences", "deployment-constraints"],
+      "gatheringAspects": {
+        "projectScope": [
+          "application-type (web, mobile, desktop, api)",
+          "target-audience",
+          "expected-scale",
+          "performance-requirements",
+          "security-requirements"
+        ],
+        "technicalRequirements": [
+          "platform-targets",
+          "integration-requirements",
+          "database-needs",
+          "third-party-services",
+          "compliance-requirements"
+        ],
+        "teamContext": [
+          "team-size",
+          "experience-levels",
+          "preferred-technologies",
+          "development-timeline",
+          "maintenance-considerations"
+        ],
+        "environmentalConstraints": [
+          "deployment-environment",
+          "infrastructure-limitations",
+          "budget-constraints",
+          "existing-system-integration",
+          "legacy-compatibility"
+        ]
+      },
+      "qualityGates": [
+        "requirements-completeness",
+        "technical-feasibility",
+        "constraint-clarity"
+      ],
+      "outputs": ["structured-requirements", "constraint-matrix", "project-context"],
+      "nextStep": "TECH-STACK-ANALYSIS"
+    },
+
+    "step2TechStackAnalysis": {
+      "stepId": "TECH-STACK-ANALYSIS",
+      "description": "Analyze requirements and recommend optimal tech stack",
+      "agent": "tech-stack-manager-agent",
+      "duration": "10-15 minutes",
+      "inputs": ["structured-requirements", "constraint-matrix", "project-context"],
+      "analysisPhases": {
+        "requirementMapping": {
+          "description": "Map requirements to technical capabilities",
+          "actions": [
+            "identify-core-technical-needs",
+            "assess-scalability-requirements",
+            "evaluate-performance-needs",
+            "determine-security-requirements",
+            "analyze-integration-complexity"
+          ]
+        },
+        "techStackEvaluation": {
+          "description": "Evaluate different tech stack options",
+          "criteria": [
+            "requirement-fulfillment",
+            "team-expertise-alignment",
+            "learning-curve",
+            "ecosystem-maturity",
+            "long-term-viability",
+            "cost-effectiveness"
+          ]
+        },
+        "compatibilityAnalysis": {
+          "description": "Ensure tech stack components work well together",
+          "validations": [
+            "framework-compatibility",
+            "tooling-integration",
+            "deployment-compatibility",
+            "testing-framework-support",
+            "ci-cd-integration"
+          ]
+        }
+      },
+      "qualityGates": [
+        "tech-stack-compatibility",
+        "requirement-coverage",
+        "risk-acceptability"
+      ],
+      "outputs": ["recommended-tech-stack", "architecture-blueprint", "risk-assessment", "implementation-roadmap"],
+      "nextStep": "TECH-STACK-APPROVAL"
+    },
+
+    "step3TechStackApproval": {
+      "stepId": "TECH-STACK-APPROVAL",
+      "description": "Review and approve the recommended tech stack",
+      "agent": "human-interaction-agent",
+      "duration": "5-10 minutes",
+      "inputs": ["recommended-tech-stack", "architecture-blueprint", "risk-assessment"],
+      "approvalProcess": {
+        "stakeholderReview": [
+          "technical-team-review",
+          "project-manager-approval",
+          "architecture-committee-review",
+          "security-team-validation"
+        ],
+        "riskEvaluation": [
+          "technical-risk-assessment",
+          "timeline-impact-analysis",
+          "cost-benefit-analysis",
+          "maintenance-complexity-review"
+        ],
+        "alternatives": {
+          "approved": "proceed-to-project-structure",
+          "modifications-required": "return-to-tech-stack-analysis",
+          "rejected": "restart-tech-stack-analysis",
+          "custom-selection": "manual-tech-stack-configuration"
+        }
+      },
+      "outputs": ["approved-tech-stack", "implementation-guidelines", "approved-architecture"],
+      "nextStep": "PROJECT-STRUCTURE-CREATION"
+    },
+
+    "step4ProjectStructureCreation": {
+      "stepId": "PROJECT-STRUCTURE-CREATION",
+      "description": "Create standardized project directory structure and files",
+      "agent": "tech-stack-manager-agent",
+      "duration": "15-25 minutes",
+      "inputs": ["approved-tech-stack", "implementation-guidelines", "project-context"],
+      "creationPhases": {
+        "directoryStructureGeneration": {
+          "description": "Create framework-specific directory structure",
+          "actions": [
+            "create-root-directory-structure",
+            "generate-source-code-directories",
+            "setup-test-directories",
+            "create-configuration-directories",
+            "establish-documentation-structure"
+          ]
+        },
+        "configurationFileSetup": {
+          "description": "Generate and configure essential project files",
+          "configTypes": [
+            "package-manager-configs (package.json, requirements.txt, etc.)",
+            "build-tool-configs (webpack, vite, rollup, etc.)",
+            "linting-and-formatting-configs (eslint, prettier, etc.)",
+            "testing-framework-configs (jest, pytest, etc.)",
+            "deployment-configs (dockerfile, docker-compose, etc.)"
+          ]
+        },
+        "boilerplateCodeGeneration": {
+          "description": "Generate initial boilerplate code",
+          "includes": [
+            "entry-point-files",
+            "basic-component-templates",
+            "configuration-modules",
+            "example-test-files",
+            "documentation-templates"
+          ]
+        },
+        "developmentEnvironmentSetup": {
+          "description": "Configure development environment",
+          "setup": [
+            "git-repository-initialization",
+            "gitignore-configuration",
+            "pre-commit-hooks-setup",
+            "editor-configuration-files",
+            "development-server-configuration"
+          ]
+        }
+      },
+      "qualityGates": [
+        "structure-completeness",
+        "configuration-validity",
+        "framework-compliance"
+      ],
+      "outputs": ["project-structure", "configuration-files", "boilerplate-code", "environment-setup"],
+      "nextStep": "DEPENDENCY-INSTALLATION"
+    },
+
+    "step5DependencyInstallation": {
+      "stepId": "DEPENDENCY-INSTALLATION",
+      "description": "Install and configure project dependencies",
+      "agent": "tech-stack-manager-agent", 
+      "duration": "10-20 minutes",
+      "inputs": ["project-structure", "approved-tech-stack", "configuration-files"],
+      "installationPhases": {
+        "coreFrameworkInstallation": {
+          "description": "Install primary framework and core dependencies",
+          "includes": ["framework-packages", "runtime-dependencies", "peer-dependencies"]
+        },
+        "developmentToolsInstallation": {
+          "description": "Install development and build tools",
+          "includes": ["build-tools", "linting-tools", "formatting-tools", "testing-frameworks", "development-servers"]
+        },
+        "qualityAssuranceToolsSetup": {
+          "description": "Install and configure QA tools",
+          "includes": ["static-analysis-tools", "security-scanners", "performance-monitoring", "code-coverage-tools"]
+        },
+        "productionDependencyOptimization": {
+          "description": "Optimize production dependencies",
+          "actions": ["bundle-size-analysis", "dependency-tree-optimization", "security-vulnerability-scanning"]
+        }
+      },
+      "validations": [
+        "dependency-compatibility-check",
+        "version-conflict-resolution",
+        "security-vulnerability-scan",
+        "license-compliance-verification"
+      ],
+      "outputs": ["installed-dependencies", "dependency-lockfiles", "build-configuration"],
+      "nextStep": "BEST-PRACTICES-IMPLEMENTATION"
+    },
+
+    "step6BestPracticesImplementation": {
+      "stepId": "BEST-PRACTICES-IMPLEMENTATION",
+      "description": "Implement framework-specific best practices and standards",
+      "agent": "tech-stack-manager-agent",
+      "duration": "15-30 minutes",
+      "inputs": ["project-structure", "installed-dependencies", "approved-tech-stack"],
+      "implementationAreas": {
+        "codingStandardsSetup": {
+          "description": "Configure coding standards and style guides",
+          "configurations": [
+            "linting-rules-configuration",
+            "formatting-standards-setup",
+            "naming-convention-enforcement",
+            "code-complexity-limits",
+            "import-order-rules"
+          ]
+        },
+        "securityBaseline": {
+          "description": "Implement security best practices",
+          "implementations": [
+            "input-validation-setup",
+            "authentication-framework-integration",
+            "secure-headers-configuration",
+            "secret-management-setup",
+            "security-scanning-automation"
+          ]
+        },
+        "performanceOptimization": {
+          "description": "Configure performance optimization settings",
+          "optimizations": [
+            "build-optimization-configuration",
+            "asset-optimization-setup",
+            "caching-strategy-implementation",
+            "lazy-loading-configuration",
+            "performance-monitoring-setup"
+          ]
+        },
+        "testingStrategy": {
+          "description": "Implement comprehensive testing strategy",
+          "strategy": [
+            "unit-testing-framework-setup",
+            "integration-testing-configuration",
+            "e2e-testing-setup",
+            "test-coverage-configuration",
+            "ci-testing-automation"
+          ]
+        }
+      },
+      "qualityGates": [
+        "standards-compliance",
+        "security-baseline-met",
+        "performance-optimized",
+        "testing-framework-ready"
+      ],
+      "outputs": ["standards-configuration", "security-setup", "performance-config", "testing-infrastructure"],
+      "nextStep": "PROJECT-VALIDATION"
+    },
+
+    "step7ProjectValidation": {
+      "stepId": "PROJECT-VALIDATION",
+      "description": "Validate the complete project setup",
+      "agent": "dry-run-testing-agent",
+      "duration": "10-15 minutes",
+      "inputs": ["complete-project-setup", "configuration-files", "testing-infrastructure"],
+      "validationTypes": {
+        "buildSystemValidation": {
+          "description": "Ensure build system works correctly",
+          "tests": ["development-build", "production-build", "test-execution", "linting-execution"]
+        },
+        "configurationValidation": {
+          "description": "Validate all configuration files",
+          "validations": ["syntax-validation", "schema-compliance", "dependency-resolution", "environment-loading"]
+        },
+        "frameworkIntegration": {
+          "description": "Test framework components integration",
+          "tests": ["framework-startup", "routing-functionality", "state-management", "api-integration"]
+        },
+        "qualityToolsValidation": {
+          "description": "Ensure quality tools are working",
+          "validations": ["linting-execution", "formatting-check", "test-execution", "security-scan"]
+        }
+      },
+      "qualityGates": [
+        "build-system-functional",
+        "all-configurations-valid",
+        "quality-tools-operational",
+        "framework-integration-successful"
+      ],
+      "outputs": ["validation-report", "setup-verification", "known-issues"],
+      "nextStep": "FINAL-SETUP-APPROVAL"
+    },
+
+    "step8FinalSetupApproval": {
+      "stepId": "FINAL-SETUP-APPROVAL",
+      "description": "Final approval and documentation of project setup",
+      "agent": "gatekeeping-agent",
+      "duration": "5-10 minutes",
+      "inputs": ["validation-report", "complete-project-setup", "documentation"],
+      "approvalCriteria": {
+        "functionalCompleteness": "All essential project components are in place and functional",
+        "standardsCompliance": "Project follows established standards and best practices",
+        "documentationQuality": "Comprehensive documentation is available",
+        "securityBaseline": "Security measures are properly implemented",
+        "developmentReadiness": "Development environment is ready for productive work"
+      },
+      "approvalActions": [
+        "final-quality-verification",
+        "documentation-completeness-check",
+        "setup-certification",
+        "handover-preparation",
+        "success-metrics-recording"
+      ],
+      "outputs": ["setup-certification", "project-documentation", "development-guidelines"],
+      "nextStep": "WORKFLOW-COMPLETE"
+    }
+  },
+
+  "workflowMetrics": {
+    "successCriteria": {
+      "setupCompleteness": "All project components properly configured and functional",
+      "standardsCompliance": "Project follows industry and framework best practices",
+      "teamReadiness": "Team can immediately start productive development",
+      "documentationQuality": "Comprehensive setup and development documentation available"
+    },
+
+    "performanceTargets": {
+      "totalDuration": "60-120 minutes for complete setup",
+      "automationLevel": "> 90% automated setup process",
+      "firstTimeSuccessRate": "> 85%",
+      "standardsComplianceScore": "> 95%"
+    },
+
+    "qualityIndicators": {
+      "configurationAccuracy": "Accuracy of generated configurations",
+      "bestPracticesImplementation": "Percentage of best practices implemented",
+      "securityBaselineScore": "Security implementation completeness",
+      "documentationCompleteness": "Documentation coverage and quality"
+    }
+  },
+
+  "integrationPoints": {
+    "subsequentWorkflows": {
+      "codeGenerationWorkflow": "Enhanced with tech stack context and best practices",
+      "visualDevelopmentWorkflow": "Framework-aware UI component generation",
+      "versionManagementWorkflow": "Configured with project-specific settings"
+    },
+
+    "agentEnhancement": {
+      "codeGenerationAgent": "Receives tech stack configuration and best practices",
+      "versionTrackingAgent": "Configured with project repository settings",
+      "garbageCleanupAgent": "Aware of project-specific optimization opportunities"
+    }
+  },
+
+  "learningCapabilities": {
+    "techStackOptimization": "Learn optimal tech stack combinations for different project types",
+    "setupEfficiency": "Improve setup process efficiency based on project outcomes",
+    "bestPracticesEvolution": "Stay updated with evolving industry best practices",
+    "configurationOptimization": "Optimize default configurations based on project success patterns",
+    "teamPreferenceAdaptation": "Adapt to team and organizational preferences"
+  }
+} 

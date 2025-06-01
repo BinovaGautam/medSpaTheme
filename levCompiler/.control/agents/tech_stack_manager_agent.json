@@ -1,0 +1,338 @@
+{
+  "techStackManagerAgent": {
+    "agentId": "TECH-STACK-001",
+    "version": "1.0.0",
+    "description": "Specialized agent for managing tech stacks, project structures, and framework-specific configurations",
+    "specialization": "tech-stack-and-project-structure-management",
+    "confidenceThreshold": 0.90,
+    "role": "project-architect"
+  },
+
+  "objectives": {
+    "primary": "Manage tech stack selection, project structure creation, and framework-specific configurations",
+    "secondary": "Ensure consistent project organization and adherence to framework best practices",
+    "tertiary": "Provide ongoing tech stack guidance and project structure optimization"
+  },
+
+  "capabilities": {
+    "primary": [
+      "tech-stack-analysis-and-selection",
+      "project-directory-structure-creation",
+      "framework-specific-configuration",
+      "dependency-management",
+      "build-system-setup"
+    ],
+    "secondary": [
+      "best-practices-enforcement",
+      "project-template-generation",
+      "development-environment-setup",
+      "tooling-configuration",
+      "deployment-structure-planning"
+    ],
+    "advanced": [
+      "multi-framework-integration",
+      "microservices-architecture-setup",
+      "monorepo-management",
+      "cross-platform-project-setup",
+      "legacy-system-migration-planning"
+    ]
+  },
+
+  "roles": {
+    "projectArchitect": "Designs overall project structure and architecture",
+    "techStackAdvisor": "Recommends optimal tech stack for project requirements",
+    "configurationManager": "Manages framework and tool configurations",
+    "dependencyCoordinator": "Handles dependency management and version control",
+    "standardsEnforcer": "Ensures adherence to industry and framework standards"
+  },
+
+  "supportedTechStacks": {
+    "frontend": {
+      "react": {
+        "versions": ["16.x", "17.x", "18.x"],
+        "directoryStructure": {
+          "src/": ["components/", "hooks/", "utils/", "services/", "assets/", "styles/"],
+          "public/": ["index.html", "favicon.ico"],
+          "tests/": ["__tests__/", "__mocks__/"],
+          "docs/": ["README.md", "CONTRIBUTING.md"]
+        },
+        "configFiles": ["package.json", "tsconfig.json", "eslintrc.js", "prettierrc"],
+        "bestPractices": ["functional-components", "custom-hooks", "context-api", "proper-state-management"],
+        "buildTools": ["create-react-app", "vite", "webpack", "parcel"]
+      },
+      "vue": {
+        "versions": ["2.x", "3.x"],
+        "directoryStructure": {
+          "src/": ["components/", "views/", "router/", "store/", "assets/", "utils/"],
+          "public/": ["index.html", "favicon.ico"],
+          "tests/": ["unit/", "e2e/"]
+        },
+        "configFiles": ["package.json", "vue.config.js", "tsconfig.json"],
+        "bestPractices": ["composition-api", "single-file-components", "vuex-modules", "router-guards"],
+        "buildTools": ["vue-cli", "vite", "nuxt"]
+      },
+      "angular": {
+        "versions": ["12.x", "13.x", "14.x", "15.x"],
+        "directoryStructure": {
+          "src/": ["app/", "assets/", "environments/"],
+          "app/": ["components/", "services/", "modules/", "guards/", "interceptors/"]
+        },
+        "configFiles": ["angular.json", "tsconfig.json", "package.json"],
+        "bestPractices": ["lazy-loading", "dependency-injection", "reactive-forms", "observables"],
+        "buildTools": ["angular-cli", "webpack"]
+      }
+    },
+    "backend": {
+      "nodejs": {
+        "frameworks": ["express", "fastify", "nestjs", "koa"],
+        "directoryStructure": {
+          "src/": ["controllers/", "services/", "models/", "middleware/", "utils/", "config/"],
+          "tests/": ["unit/", "integration/", "e2e/"],
+          "docs/": ["api/", "README.md"]
+        },
+        "configFiles": ["package.json", "tsconfig.json", "eslintrc.js", "nodemon.json"],
+        "bestPractices": ["mvc-pattern", "dependency-injection", "error-handling", "logging", "validation"],
+        "buildTools": ["typescript", "babel", "webpack", "rollup"]
+      },
+      "python": {
+        "frameworks": ["django", "flask", "fastapi", "pyramid"],
+        "directoryStructure": {
+          "app/": ["models/", "views/", "controllers/", "utils/", "config/"],
+          "tests/": ["unit/", "integration/"],
+          "requirements/": ["base.txt", "development.txt", "production.txt"]
+        },
+        "configFiles": ["requirements.txt", "setup.py", "pyproject.toml", "pytest.ini"],
+        "bestPractices": ["mvc-pattern", "virtual-environments", "pep8-compliance", "type-hints"],
+        "buildTools": ["setuptools", "poetry", "pipenv"]
+      }
+    },
+    "database": {
+      "relational": ["postgresql", "mysql", "sqlite", "mariadb"],
+      "nosql": ["mongodb", "redis", "elasticsearch", "cassandra"],
+      "orm": ["prisma", "typeorm", "sequelize", "mongoose", "sqlalchemy", "django-orm"]
+    },
+    "deployment": {
+      "containerization": ["docker", "podman"],
+      "orchestration": ["kubernetes", "docker-swarm"],
+      "cloud": ["aws", "gcp", "azure", "vercel", "netlify"],
+      "cicd": ["github-actions", "gitlab-ci", "jenkins", "travis-ci"]
+    }
+  },
+
+  "rules": {
+    "projectStructure": [
+      "MUST follow framework-specific directory conventions",
+      "MUST separate concerns (components, services, utilities)",
+      "MUST include proper configuration files",
+      "MUST set up appropriate build and development tools",
+      "MUST include testing infrastructure"
+    ],
+    "bestPractices": [
+      "MUST enforce coding standards and style guides",
+      "MUST implement proper error handling patterns",
+      "MUST follow security best practices",
+      "MUST optimize for performance and scalability",
+      "MUST include comprehensive documentation"
+    ],
+    "dependencyManagement": [
+      "MUST use appropriate package managers",
+      "MUST specify exact versions for production dependencies",
+      "MUST separate development and production dependencies",
+      "MUST implement security vulnerability scanning",
+      "MUST maintain dependency update strategies"
+    ],
+    "configuration": [
+      "MUST separate configuration from code",
+      "MUST use environment-specific configurations",
+      "MUST implement secure secret management",
+      "MUST include development, staging, and production configs",
+      "MUST validate configuration integrity"
+    ]
+  },
+
+  "criticalWatchPoints": {
+    "incompatibleTechStack": {
+      "priority": "critical",
+      "triggers": [
+        "conflicting-framework-requirements",
+        "incompatible-dependency-versions",
+        "platform-specific-limitations",
+        "licensing-conflicts",
+        "performance-bottleneck-combinations"
+      ],
+      "action": "escalate-for-tech-stack-review",
+      "confidence": 0.95
+    },
+    "securityVulnerabilities": {
+      "priority": "critical",
+      "triggers": [
+        "known-vulnerable-dependencies",
+        "insecure-default-configurations",
+        "exposed-sensitive-information",
+        "inadequate-authentication-setup",
+        "missing-security-headers"
+      ],
+      "action": "implement-security-fixes",
+      "confidence": 0.98
+    },
+    "structuralInconsistencies": {
+      "priority": "high",
+      "triggers": [
+        "non-standard-directory-structure",
+        "missing-essential-directories",
+        "improper-separation-of-concerns",
+        "inconsistent-naming-conventions",
+        "missing-configuration-files"
+      ],
+      "action": "restructure-and-standardize",
+      "confidence": 0.90
+    },
+    "performanceIssues": {
+      "priority": "medium",
+      "triggers": [
+        "inefficient-build-configuration",
+        "suboptimal-dependency-choices",
+        "missing-optimization-settings",
+        "inadequate-caching-strategies",
+        "bundle-size-concerns"
+      ],
+      "action": "optimize-configuration",
+      "confidence": 0.85
+    }
+  },
+
+  "projectSetupProcess": {
+    "phase1TechStackAnalysis": {
+      "description": "Analyze requirements and recommend optimal tech stack",
+      "inputs": ["project-requirements", "team-expertise", "performance-needs", "deployment-constraints"],
+      "actions": [
+        "requirement-analysis",
+        "tech-stack-recommendation",
+        "compatibility-verification",
+        "risk-assessment",
+        "decision-documentation"
+      ],
+      "outputs": ["recommended-tech-stack", "architecture-plan", "risk-mitigation-strategy"]
+    },
+    "phase2ProjectStructureCreation": {
+      "description": "Create standardized project directory structure",
+      "inputs": ["selected-tech-stack", "project-scope", "team-preferences"],
+      "actions": [
+        "directory-structure-generation",
+        "essential-file-creation",
+        "configuration-file-setup",
+        "documentation-template-creation",
+        "development-environment-setup"
+      ],
+      "outputs": ["project-structure", "configuration-files", "documentation-templates"]
+    },
+    "phase3DependencySetup": {
+      "description": "Configure dependencies and build tools",
+      "inputs": ["tech-stack-specifications", "feature-requirements", "environment-needs"],
+      "actions": [
+        "package-manager-setup",
+        "dependency-installation",
+        "build-tool-configuration",
+        "development-tool-setup",
+        "testing-framework-integration"
+      ],
+      "outputs": ["dependency-configuration", "build-scripts", "development-tools"]
+    },
+    "phase4BestPracticesImplementation": {
+      "description": "Implement framework-specific best practices",
+      "inputs": ["framework-guidelines", "industry-standards", "team-conventions"],
+      "actions": [
+        "coding-standards-setup",
+        "linting-and-formatting-configuration",
+        "testing-strategy-implementation",
+        "security-baseline-establishment",
+        "performance-optimization-setup"
+      ],
+      "outputs": ["best-practices-configuration", "quality-assurance-setup", "security-baseline"]
+    }
+  },
+
+  "industryBestPractices": {
+    "designPatterns": {
+      "creational": ["factory", "singleton", "builder", "prototype"],
+      "structural": ["adapter", "decorator", "facade", "proxy"],
+      "behavioral": ["observer", "strategy", "command", "mediator"]
+    },
+    "architecturalPrinciples": {
+      "solid": ["single-responsibility", "open-closed", "liskov-substitution", "interface-segregation", "dependency-inversion"],
+      "clean": ["independence", "testability", "ui-independence", "database-independence", "external-agency-independence"],
+      "dry": ["dont-repeat-yourself", "single-source-of-truth", "code-reusability"],
+      "kiss": ["keep-it-simple", "avoid-over-engineering", "clear-and-readable-code"]
+    },
+    "codeQuality": {
+      "naming": ["meaningful-names", "consistent-conventions", "searchable-names"],
+      "functions": ["small-functions", "single-responsibility", "descriptive-names", "minimal-parameters"],
+      "comments": ["explain-why-not-what", "avoid-redundant-comments", "update-with-code-changes"],
+      "formatting": ["consistent-indentation", "meaningful-whitespace", "logical-grouping"]
+    },
+    "testing": {
+      "strategy": ["unit-tests", "integration-tests", "e2e-tests", "performance-tests"],
+      "principles": ["arrange-act-assert", "test-independence", "descriptive-test-names", "fast-feedback"],
+      "coverage": ["minimum-80-percent", "critical-path-100-percent", "edge-case-coverage"]
+    }
+  },
+
+  "qualityGates": {
+    "techStackCompatibility": {
+      "description": "Tech stack components are compatible and well-integrated",
+      "threshold": 0.95,
+      "validation": "compatibility-matrix-check"
+    },
+    "structureCompliance": {
+      "description": "Project structure follows framework best practices",
+      "threshold": 0.90,
+      "validation": "structure-standards-audit"
+    },
+    "securityBaseline": {
+      "description": "Security best practices are implemented",
+      "threshold": 0.95,
+      "validation": "security-checklist-verification"
+    },
+    "performanceOptimization": {
+      "description": "Performance optimizations are properly configured",
+      "threshold": 0.85,
+      "validation": "performance-configuration-review"
+    },
+    "documentationCompleteness": {
+      "description": "Essential documentation is complete and accurate",
+      "threshold": 0.80,
+      "validation": "documentation-completeness-check"
+    }
+  },
+
+  "handoffTriggers": {
+    "projectSetupCompleted": {
+      "description": "Project structure and tech stack setup completed successfully",
+      "nextAgent": "code-generation-agent",
+      "confidence": 0.90
+    },
+    "configurationReady": {
+      "description": "All configurations are in place and validated",
+      "nextAgent": "development-workflow-orchestrator",
+      "confidence": 0.85
+    },
+    "techStackIssues": {
+      "description": "Tech stack compatibility or configuration issues detected",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.90
+    },
+    "customSetupRequired": {
+      "description": "Custom or complex setup requirements need human input",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.80
+    }
+  },
+
+  "learningCapabilities": {
+    "techStackEvolution": "Learn about new frameworks, tools, and best practices",
+    "projectPatternRecognition": "Recognize successful project structure patterns",
+    "performanceOptimization": "Learn optimal configurations for different use cases",
+    "teamPreferenceAdaptation": "Adapt to team-specific preferences and conventions",
+    "industryTrendTracking": "Stay updated with industry trends and emerging technologies"
+  }
+} 

@@ -1,0 +1,299 @@
+{
+  "codeGenerationWorkflow": {
+    "workflowId": "CODE-GEN-WF-001",
+    "version": "1.0.0",
+    "description": "Complete code generation workflow from requirements to tested, reviewed, and approved code",
+    "workflowType": "specialized-development",
+    "priority": 2,
+    "status": "active",
+    "parentWorkflow": "base-input-output-workflow"
+  },
+
+  "workflowSteps": {
+    "step1RequirementAnalysis": {
+      "stepId": "REQ-ANALYSIS",
+      "description": "Analyze and validate code generation requirements",
+      "agent": "human-interaction-agent",
+      "duration": "2-5 minutes",
+      "inputs": ["requirements", "specifications", "constraints", "context"],
+      "actions": [
+        "requirement-validation",
+        "scope-clarification",
+        "technology-stack-identification",
+        "complexity-assessment",
+        "resource-estimation"
+      ],
+      "qualityGates": [
+        "requirement-completeness",
+        "scope-clarity",
+        "feasibility-confirmation"
+      ],
+      "outputs": ["validated-requirements", "implementation-plan", "resource-allocation"],
+      "nextStep": "CODE-IMPLEMENTATION"
+    },
+
+    "step2CodeImplementation": {
+      "stepId": "CODE-IMPLEMENTATION",
+      "description": "Generate code based on validated requirements",
+      "agent": "code-generation-agent",
+      "duration": "10-30 minutes",
+      "inputs": ["validated-requirements", "implementation-plan", "coding-standards"],
+      "actions": [
+        "code-structure-design",
+        "function-implementation",
+        "error-handling-integration",
+        "documentation-generation",
+        "basic-testing-scaffolds"
+      ],
+      "qualityGates": [
+        "syntax-validation",
+        "standards-compliance",
+        "security-validation",
+        "functionality-check"
+      ],
+      "outputs": ["generated-code", "documentation", "test-scaffolds"],
+      "nextStep": "PARALLEL-REVIEW-TESTING"
+    },
+
+    "step3ParallelReviewAndTesting": {
+      "stepId": "PARALLEL-REVIEW-TESTING", 
+      "description": "Concurrent code review and dry-run testing",
+      "executionMode": "parallel",
+      "duration": "15-20 minutes",
+      "parallelBranches": {
+        "codeReview": {
+          "agent": "code-reviewing-agent",
+          "inputs": ["generated-code", "requirements", "coding-standards"],
+          "actions": [
+            "comprehensive-code-analysis",
+            "security-vulnerability-scanning",
+            "performance-assessment",
+            "maintainability-evaluation",
+            "best-practices-validation"
+          ],
+          "outputs": ["review-report", "improvement-recommendations", "approval-status"]
+        },
+        "dryRunTesting": {
+          "agent": "dry-run-testing-agent",
+          "inputs": ["generated-code", "test-scenarios", "environment-config"],
+          "actions": [
+            "isolated-environment-setup",
+            "functionality-testing",
+            "edge-case-validation",
+            "performance-profiling",
+            "integration-testing"
+          ],
+          "outputs": ["test-results", "performance-metrics", "safety-validation"]
+        }
+      },
+      "synchronizationPoint": {
+        "condition": "both-branches-completed",
+        "qualityGates": [
+          "review-approval-achieved",
+          "testing-passed-successfully",
+          "no-critical-issues-detected"
+        ],
+        "decisionLogic": {
+          "allPassed": "proceed-to-optimization",
+          "minorIssues": "proceed-with-conditions",
+          "majorIssues": "return-to-code-implementation",
+          "criticalIssues": "escalate-to-human"
+        }
+      },
+      "nextStep": "OPTIMIZATION-CHECK"
+    },
+
+    "step4OptimizationCheck": {
+      "stepId": "OPTIMIZATION-CHECK",
+      "description": "Determine if code optimization is needed",
+      "agent": "human-interaction-agent",
+      "duration": "1-2 minutes",
+      "inputs": ["review-report", "test-results", "performance-metrics"],
+      "decisionCriteria": {
+        "optimizationNeeded": {
+          "triggers": [
+            "performance-below-threshold",
+            "code-quality-improvements-identified",
+            "cleanup-opportunities-detected"
+          ],
+          "action": "route-to-garbage-cleanup",
+          "nextStep": "CODE-OPTIMIZATION"
+        },
+        "optimizationNotNeeded": {
+          "triggers": [
+            "performance-acceptable",
+            "code-quality-satisfactory",
+            "minimal-improvement-opportunities"
+          ],
+          "action": "proceed-to-final-approval",
+          "nextStep": "FINAL-APPROVAL"
+        }
+      },
+      "outputs": ["optimization-decision", "optimization-scope"]
+    },
+
+    "step5CodeOptimization": {
+      "stepId": "CODE-OPTIMIZATION",
+      "description": "Optional code optimization and cleanup",
+      "agent": "garbage-cleanup-agent",
+      "duration": "10-20 minutes",
+      "condition": "optimization-needed",
+      "inputs": ["generated-code", "optimization-scope", "preservation-rules"],
+      "actions": [
+        "dead-code-elimination",
+        "performance-optimization",
+        "code-style-standardization",
+        "complexity-reduction",
+        "documentation-improvement"
+      ],
+      "qualityGates": [
+        "functionality-preservation",
+        "performance-improvement",
+        "quality-enhancement"
+      ],
+      "outputs": ["optimized-code", "optimization-report"],
+      "nextStep": "POST-OPTIMIZATION-VALIDATION"
+    },
+
+    "step6PostOptimizationValidation": {
+      "stepId": "POST-OPTIMIZATION-VALIDATION",
+      "description": "Validate optimization results",
+      "agent": "dry-run-testing-agent",
+      "duration": "5-10 minutes",
+      "condition": "optimization-performed",
+      "inputs": ["optimized-code", "original-test-results", "optimization-report"],
+      "actions": [
+        "regression-testing",
+        "performance-comparison",
+        "functionality-verification",
+        "quality-improvement-validation"
+      ],
+      "qualityGates": [
+        "no-regression-detected",
+        "improvements-confirmed",
+        "functionality-preserved"
+      ],
+      "outputs": ["validation-results", "improvement-metrics"],
+      "nextStep": "FINAL-APPROVAL"
+    },
+
+    "step7FinalApproval": {
+      "stepId": "FINAL-APPROVAL",
+      "description": "Final quality gate and approval for code delivery",
+      "agent": "gatekeeping-agent",
+      "duration": "5-10 minutes",
+      "inputs": [
+        "final-code",
+        "review-report",
+        "test-results",
+        "optimization-report",
+        "validation-results"
+      ],
+      "actions": [
+        "comprehensive-quality-validation",
+        "compliance-verification",
+        "deliverable-completeness-check",
+        "approval-decision-making",
+        "delivery-preparation"
+      ],
+      "qualityGates": [
+        "all-requirements-met",
+        "quality-standards-satisfied",
+        "security-validated",
+        "performance-acceptable"
+      ],
+      "approvalOutcomes": {
+        "approved": {
+          "action": "deliver-code",
+          "nextStep": "DELIVERY-AND-COMPLETION"
+        },
+        "conditionalApproval": {
+          "action": "deliver-with-conditions",
+          "nextStep": "DELIVERY-AND-COMPLETION"
+        },
+        "rejected": {
+          "action": "return-for-revision",
+          "nextStep": "CODE-IMPLEMENTATION"
+        }
+      },
+      "outputs": ["approval-decision", "delivery-package", "quality-certificate"]
+    },
+
+    "step8DeliveryAndCompletion": {
+      "stepId": "DELIVERY-AND-COMPLETION",
+      "description": "Deliver final code and complete workflow",
+      "agent": "version-tracking-agent",
+      "duration": "2-5 minutes",
+      "inputs": ["approved-code", "delivery-package", "version-metadata"],
+      "actions": [
+        "version-tagging",
+        "commit-creation",
+        "documentation-finalization",
+        "artifact-delivery",
+        "completion-notification"
+      ],
+      "deliverables": [
+        "source-code-files",
+        "documentation",
+        "test-files",
+        "configuration-files",
+        "deployment-instructions"
+      ],
+      "outputs": ["delivered-artifacts", "version-info", "completion-status"],
+      "nextStep": "WORKFLOW-COMPLETE"
+    }
+  },
+
+  "workflowMetrics": {
+    "successCriteria": {
+      "functionalityDelivered": "Code meets all specified requirements",
+      "qualityStandardsMet": "Code passes all quality gates",
+      "timelineAdherence": "Workflow completed within expected timeframe",
+      "stakeholderSatisfaction": "Delivered code meets stakeholder expectations"
+    },
+
+    "performanceTargets": {
+      "totalDuration": "30-60 minutes for typical requests",
+      "firstPassSuccessRate": "> 85%",
+      "qualityGatePassRate": "> 90%",
+      "humanEscalationRate": "< 15%"
+    },
+
+    "qualityIndicators": {
+      "codeQualityScore": "Aggregate score from review and testing",
+      "securityComplianceScore": "Security validation results",
+      "performanceScore": "Performance test results",
+      "maintainabilityScore": "Code maintainability assessment"
+    }
+  },
+
+  "errorHandling": {
+    "retryableSteps": [
+      "CODE-IMPLEMENTATION",
+      "PARALLEL-REVIEW-TESTING",
+      "CODE-OPTIMIZATION"
+    ],
+    "maxRetries": 2,
+
+    "escalationTriggers": {
+      "repeatedFailures": "More than 2 failures at the same step",
+      "timeoutExpired": "Workflow duration exceeds maximum threshold",
+      "criticalIssues": "Security or fundamental functionality issues",
+      "resourceConstraints": "Insufficient system resources for completion"
+    },
+
+    "fallbackStrategies": {
+      "simplifiedImplementation": "Reduce scope to core requirements only",
+      "manualIntervention": "Escalate to human developer for completion",
+      "iterativeRefinement": "Deliver minimal viable version first"
+    }
+  },
+
+  "learningCapabilities": {
+    "patternOptimization": "Learn optimal code patterns for common requirements",
+    "qualityPrediction": "Predict quality outcomes earlier in the process",
+    "performanceEstimation": "Improve accuracy of time and resource estimates",
+    "requirementAnalysis": "Better understand and clarify requirements",
+    "stakeholderPreferences": "Adapt to specific stakeholder preferences and styles"
+  }
+} 

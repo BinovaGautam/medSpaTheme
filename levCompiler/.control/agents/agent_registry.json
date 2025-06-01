@@ -1,0 +1,317 @@
+{
+  "agentRegistry": {
+    "version": "1.0.0",
+    "lastUpdated": "2024-01-01",
+    "totalAgents": 10,
+    "activeAgents": 10,
+    "systemArchitecture": "intelligent-routing-with-human-supervision"
+  },
+
+  "coreAgents": {
+    "humanInteractionAgent": {
+      "agentId": "HUMAN-INTERACT-001",
+      "status": "active",
+      "role": "system-gateway",
+      "priority": 1,
+      "description": "Primary input router and human interface",
+      "specialization": "input-analysis-and-routing",
+      "confidenceThreshold": 0.95,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/human_interaction_agent.json"
+    },
+
+    "codeGenerationAgent": {
+      "agentId": "CODE-GEN-001", 
+      "status": "active",
+      "role": "code-creator",
+      "priority": 2,
+      "description": "Specialized code generation and implementation",
+      "specialization": "code-implementation",
+      "confidenceThreshold": 0.80,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/code_generation_agent.json"
+    },
+
+    "codeReviewingAgent": {
+      "agentId": "CODE-REVIEW-001",
+      "status": "active", 
+      "role": "quality-guardian",
+      "priority": 2,
+      "description": "Comprehensive code review and quality assessment",
+      "specialization": "code-analysis-and-review",
+      "confidenceThreshold": 0.90,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/code_reviewing_agent.json"
+    },
+
+    "dryRunTestingAgent": {
+      "agentId": "DRY-RUN-001",
+      "status": "active",
+      "role": "safety-validator", 
+      "priority": 2,
+      "description": "Safe simulation and testing without system impact",
+      "specialization": "safe-testing-and-simulation",
+      "confidenceThreshold": 0.85,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/dry_run_testing_agent.json"
+    },
+
+    "gatekeepingAgent": {
+      "agentId": "GATE-KEEP-001",
+      "status": "active",
+      "role": "final-approver",
+      "priority": 3,
+      "description": "Final quality checkpoint and approval gateway",
+      "specialization": "quality-gating-and-approval", 
+      "confidenceThreshold": 0.95,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/gatekeeping_agent.json"
+    },
+
+    "garbageCleanupAgent": {
+      "agentId": "GARBAGE-CLEAN-001",
+      "status": "active",
+      "role": "code-optimizer",
+      "priority": 2,
+      "description": "Code optimization and technical debt reduction",
+      "specialization": "code-optimization-and-cleanup",
+      "confidenceThreshold": 0.85,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/garbage_cleanup_agent.json"
+    },
+
+    "visualAnnotationAgent": {
+      "agentId": "VISUAL-ANNOT-001", 
+      "status": "active",
+      "role": "visual-interpreter",
+      "priority": 2,
+      "description": "Visual content analysis and functional mapping",
+      "specialization": "visual-analysis-and-annotation",
+      "confidenceThreshold": 0.85,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/visual_annotation_agent.json"
+    },
+
+    "versionTrackingAgent": {
+      "agentId": "VERSION-TRACK-001",
+      "status": "active",
+      "role": "version-controller", 
+      "priority": 2,
+      "description": "Version control and git commit management",
+      "specialization": "version-control-management",
+      "confidenceThreshold": 0.90,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/version_tracking_agent.json"
+    },
+
+    "techStackManagerAgent": {
+      "agentId": "TECH-STACK-001",
+      "status": "active",
+      "role": "project-architect",
+      "priority": 1,
+      "description": "Tech stack management and project structure setup",
+      "specialization": "tech-stack-and-project-structure-management",
+      "confidenceThreshold": 0.90,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/tech_stack_manager_agent.json"
+    }
+  },
+
+  "metaAgents": {
+    "agentCreationAgent": {
+      "agentId": "AGENT-CREATE-001",
+      "status": "active",
+      "role": "agent-architect",
+      "priority": 4,
+      "description": "Creates new agents with human supervision",
+      "specialization": "agent-design-and-creation",
+      "confidenceThreshold": 0.95,
+      "humanSupervisionRequired": true,
+      "location": "levCompiler/.control/agents/agent_creation_agent.json"
+    },
+
+    "workflowCreationAgent": {
+      "agentId": "WORKFLOW-CREATE-001",
+      "status": "active", 
+      "role": "workflow-architect",
+      "priority": 4,
+      "description": "Creates workflows with human supervision",
+      "specialization": "workflow-design-and-orchestration",
+      "confidenceThreshold": 0.95,
+      "humanSupervisionRequired": true,
+      "location": "levCompiler/.control/agents/workflow_creation_agent.json"
+    }
+  },
+
+  "agentRelationships": {
+    "primaryWorkflows": {
+      "codeGenerationWorkflow": {
+        "description": "Standard code generation and review workflow",
+        "sequence": [
+          "human-interaction-agent",
+          "code-generation-agent", 
+          "code-reviewing-agent",
+          "dry-run-testing-agent",
+          "gatekeeping-agent"
+        ],
+        "parallelOpportunities": ["code-reviewing-agent", "dry-run-testing-agent"],
+        "qualityGates": ["code-review-approval", "testing-completion", "final-approval"]
+      },
+
+      "codeOptimizationWorkflow": {
+        "description": "Code cleanup and optimization workflow",
+        "sequence": [
+          "human-interaction-agent",
+          "garbage-cleanup-agent",
+          "code-reviewing-agent", 
+          "dry-run-testing-agent",
+          "gatekeeping-agent"
+        ],
+        "qualityGates": ["functionality-preservation", "quality-improvement", "final-approval"]
+      },
+
+      "visualDevelopmentWorkflow": {
+        "description": "Visual-to-code development workflow",
+        "sequence": [
+          "human-interaction-agent",
+          "visual-annotation-agent",
+          "code-generation-agent",
+          "code-reviewing-agent",
+          "gatekeeping-agent"
+        ],
+        "qualityGates": ["visual-analysis-completion", "code-implementation", "final-approval"]
+      },
+
+      "versionManagementWorkflow": {
+        "description": "Version control and release workflow", 
+        "sequence": [
+          "human-interaction-agent",
+          "version-tracking-agent",
+          "gatekeeping-agent"
+        ],
+        "qualityGates": ["version-validation", "commit-approval"]
+      }
+    },
+
+    "escalationChains": {
+      "lowConfidenceEscalation": {
+        "trigger": "confidence < threshold",
+        "target": "human-interaction-agent",
+        "action": "request-human-guidance"
+      },
+      "criticalErrorEscalation": {
+        "trigger": "critical-error-detected",
+        "target": "human-interaction-agent",
+        "action": "immediate-human-intervention"
+      },
+      "qualityGateFailure": {
+        "trigger": "quality-gate-failure",
+        "target": "human-interaction-agent", 
+        "action": "review-and-guidance"
+      },
+      "systemIntegrityRisk": {
+        "trigger": "system-integrity-threat",
+        "target": "human-interaction-agent",
+        "action": "emergency-halt-and-review"
+      }
+    }
+  },
+
+  "systemConfiguration": {
+    "defaultConfidenceThresholds": {
+      "routing": 0.85,
+      "implementation": 0.80,
+      "review": 0.90,
+      "testing": 0.85,
+      "approval": 0.95
+    },
+
+    "qualityStandards": {
+      "codeQuality": 0.90,
+      "securityCompliance": 0.95,
+      "performanceAcceptance": 0.85,
+      "documentationCompleteness": 0.80,
+      "testCoverage": 0.85
+    },
+
+    "operationalLimits": {
+      "maxConcurrentTasks": 10,
+      "maxRetryAttempts": 3,
+      "timeoutThresholds": {
+        "codeGeneration": "30 minutes",
+        "codeReview": "15 minutes", 
+        "testing": "45 minutes",
+        "approval": "10 minutes"
+      }
+    },
+
+    "humanSupervisionTriggers": {
+      "mandatorySupervision": [
+        "agent-creation",
+        "workflow-creation",
+        "critical-system-changes",
+        "security-violations"
+      ],
+      "recommendedSupervision": [
+        "low-confidence-decisions",
+        "complex-integration-tasks",
+        "novel-problem-scenarios"
+      ]
+    }
+  },
+
+  "monitoringAndHealth": {
+    "healthCheckEndpoints": {
+      "agentStatus": "/api/agents/health",
+      "workflowStatus": "/api/workflows/health", 
+      "systemMetrics": "/api/system/metrics",
+      "qualityMetrics": "/api/quality/metrics"
+    },
+
+    "alertingThresholds": {
+      "agentFailureRate": 0.05,
+      "averageResponseTime": "5 minutes",
+      "queueBacklog": 50,
+      "qualityGateFailureRate": 0.10
+    },
+
+    "performanceMetrics": {
+      "throughput": "tasks per hour",
+      "latency": "average task completion time",
+      "errorRate": "percentage of failed tasks",
+      "qualityScore": "average quality gate scores"
+    }
+  },
+
+  "evolutionTracking": {
+    "learningMetrics": {
+      "agentAccuracyImprovement": "improvement in agent decision accuracy over time",
+      "workflowOptimization": "reduction in workflow completion time",
+      "qualityTrendImprovement": "improvement in code quality metrics",
+      "humanInterventionReduction": "reduction in required human interventions"
+    },
+
+    "adaptationCapabilities": {
+      "patternRecognition": "agents learn from successful patterns",
+      "errorAvoidance": "system learns to avoid repeated mistakes", 
+      "processOptimization": "workflows optimize based on performance data",
+      "qualityEvolution": "quality standards adapt based on outcomes"
+    }
+  },
+
+  "maintenanceAndSupport": {
+    "updateProcedures": {
+      "agentUpdates": "procedure for updating individual agents",
+      "systemUpdates": "procedure for system-wide updates",
+      "rollbackProcedures": "emergency rollback procedures",
+      "backupAndRecovery": "data backup and system recovery procedures"
+    },
+
+    "troubleshootingGuides": {
+      "commonIssues": "frequently encountered issues and solutions",
+      "performanceIssues": "performance-related troubleshooting",
+      "integrationProblems": "agent integration troubleshooting",
+      "escalationProcedures": "when and how to escalate issues"
+    }
+  }
+} 

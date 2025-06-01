@@ -1,0 +1,237 @@
+{
+  "workflowAdaptations": {
+    "metadata": {
+      "sourceDocument": "TASK-ARCH-001-01.md + immediateActions from master-index.json",
+      "migrationDate": "2025-06-02T02:15:00Z",
+      "status": "migrated",
+      "totalTasks": 1,
+      "totalImmediateActions": 3
+    },
+    "sageFrameworkInitialization": {
+      "taskId": "TASK-ARCH-001-01",
+      "title": "Initialize Sage Theme Framework",
+      "relatedRequirement": "REQ-ARCH-001",
+      "relatedDecision": "ADR-001",
+      "priority": "Critical",
+      "status": "Pending",
+      "iterationTarget": "iteration-4",
+      "levCompilerWorkflow": "project-setup-workflow",
+      "agentSequence": ["TechStackManager", "CodeGeneration", "VersionTracking"],
+      "customization": "WordPress Sage framework setup with medical spa adaptations",
+      "objectives": {
+        "primaryGoal": "Establish working Sage theme foundation with modern development tooling",
+        "successCriteria": [
+          "Sage theme installed and functional",
+          "Build pipeline configured with Vite",
+          "Basic theme structure established",
+          "Development environment ready for customization"
+        ]
+      },
+      "workflowSteps": {
+        "step1": {
+          "title": "Sage Installation",
+          "agent": "TechStackManager",
+          "duration": "30-45 minutes",
+          "tasks": [
+            "Install Sage theme framework via Composer",
+            "Configure basic theme information and metadata",
+            "Set up directory structure according to Sage conventions",
+            "Verify WordPress integration and activation"
+          ],
+          "qualityGates": [
+            "Composer installation successful",
+            "Theme structure valid",
+            "WordPress activation works"
+          ]
+        },
+        "step2": {
+          "title": "Build Pipeline Setup",
+          "agent": "CodeGeneration",
+          "duration": "45-60 minutes",
+          "tasks": [
+            "Configure Vite build system",
+            "Set up asset compilation for CSS and JavaScript",
+            "Establish development and production build processes",
+            "Test hot reloading and asset watching"
+          ],
+          "qualityGates": [
+            "Vite configuration valid",
+            "Asset compilation successful",
+            "Hot reloading functional"
+          ]
+        },
+        "step3": {
+          "title": "Basic Configuration",
+          "agent": "CodeGeneration",
+          "duration": "30-45 minutes",
+          "tasks": [
+            "Configure theme support features",
+            "Set up basic template hierarchy",
+            "Implement initial blade templates",
+            "Establish component architecture foundation"
+          ],
+          "qualityGates": [
+            "Template hierarchy established",
+            "Blade templates functional",
+            "Component architecture defined"
+          ]
+        },
+        "step4": {
+          "title": "Development Environment",
+          "agent": "VersionTracking",
+          "duration": "30 minutes",
+          "tasks": [
+            "Configure development server settings",
+            "Set up debugging and error handling",
+            "Establish code formatting and linting",
+            "Create basic documentation structure"
+          ],
+          "qualityGates": [
+            "Development server running",
+            "Linting configured",
+            "Documentation created"
+          ]
+        }
+      },
+      "acceptanceCriteria": [
+        "Sage theme successfully installed via Composer",
+        "Theme activates without errors in WordPress admin",
+        "Vite build process compiles assets successfully",
+        "Development server runs without issues",
+        "Basic templates render correctly",
+        "Asset hot reloading functions properly",
+        "Theme passes basic WordPress standards validation",
+        "Development documentation is created"
+      ],
+      "dependencies": {
+        "blockedBy": ["ADR-001 decision completion"],
+        "blocks": ["TASK-ARCH-001-02 (Tailwind CSS Integration)"],
+        "requires": [
+          "Node.js environment (v16+)",
+          "Composer package manager",
+          "WordPress development environment",
+          "Basic PHP and JavaScript knowledge"
+        ]
+      },
+      "riskAssessment": {
+        "highRiskIssues": [
+          "Node.js version compatibility problems",
+          "Composer dependency conflicts",
+          "WordPress hosting environment limitations"
+        ],
+        "mitigationStrategies": [
+          "Document exact version requirements",
+          "Test on multiple environment configurations",
+          "Create fallback installation procedures",
+          "Maintain compatibility with standard hosting"
+        ]
+      },
+      "successMetrics": {
+        "technical": {
+          "installationSuccessRate": "100%",
+          "buildTime": "<30 seconds",
+          "activationErrors": "0",
+          "assetCompilationSuccess": "100%"
+        },
+        "quality": {
+          "criticalErrors": "0",
+          "wordPressCompliance": "100%",
+          "documentationCompleteness": "100%"
+        }
+      },
+      "estimatedEffort": "4-6 hours",
+      "medicalSpaConsiderations": [
+        "Ensure HIPAA-conscious development practices",
+        "Consider luxury brand requirements in setup",
+        "Plan for high-performance image handling",
+        "Account for mobile-first development needs"
+      ]
+    },
+    "immediateActions": {
+      "priority": {
+        "high": {
+          "source": "critical priority from StarterKit immediateActions",
+          "action": "Move to iteration-1: Begin requirements refinement",
+          "levCompilerWorkflow": "code-generation-workflow",
+          "description": "Move all discovered requirements to refined status",
+          "agents": ["CodeGeneration", "CodeReviewing"],
+          "targetLocation": "project_context/analysis/requirements_analysis.json",
+          "status": "completed-during-migration"
+        },
+        "medium": {
+          "source": "high priority from StarterKit immediateActions",
+          "action": "Complete ADR-001 decision journey",
+          "levCompilerWorkflow": "project-analysis-workflow",
+          "description": "Finalize WordPress theme base selection (Sage chosen)",
+          "agents": ["HumanInteraction"],
+          "targetLocation": "project_context/patterns/architecture_decisions.json",
+          "status": "completed-during-migration"
+        },
+        "low": {
+          "source": "medium priority from StarterKit immediateActions",
+          "action": "Generate additional tasks for REQ-ARCH-002 and REQ-FUNC-001",
+          "levCompilerWorkflow": "code-generation-workflow",
+          "description": "Create implementation tasks for plugin ecosystem and treatment management",
+          "agents": ["CodeGeneration", "DryRunTesting"],
+          "targetLocation": "project_context/integration/",
+          "status": "pending"
+        }
+      }
+    },
+    "levCompilerIntegration": {
+      "workflowMappings": {
+        "project-setup-workflow": {
+          "originalTask": "TASK-ARCH-001-01",
+          "agents": ["TechStackManager", "CodeGeneration", "VersionTracking"],
+          "customizations": [
+            "WordPress/Sage framework specific configurations",
+            "Medical spa development requirements",
+            "HIPAA-conscious development practices",
+            "Luxury brand positioning considerations"
+          ]
+        },
+        "code-generation-workflow": {
+          "originalActions": "immediateActions.critical + immediateActions.medium",
+          "agents": ["CodeGeneration", "CodeReviewing", "DryRunTesting", "Gatekeeping"],
+          "customizations": [
+            "WordPress/PHP patterns with Sage framework",
+            "Medical spa luxury design patterns",
+            "HIPAA compliance + accessibility standards",
+            "Treatment management system components"
+          ]
+        }
+      },
+      "qualityGateAdaptations": {
+        "security": {
+          "threshold": 0.95,
+          "customCriteria": ["HIPAA-conscious data handling"],
+          "starterKitSource": "qualityGates.implementations.validation"
+        },
+        "accessibility": {
+          "threshold": 0.95,
+          "customCriteria": ["WCAG AAA compliance", "11.5:1 contrast ratio"],
+          "starterKitSource": "REQ-UX-002 requirements"
+        },
+        "performance": {
+          "threshold": 0.90,
+          "customCriteria": ["Lighthouse 90+ scores"],
+          "starterKitSource": "REQ-PERF-001 requirements"
+        }
+      }
+    },
+    "nextSteps": {
+      "iteration1Focus": [
+        "Execute TASK-ARCH-001-01 via project-setup-workflow",
+        "Generate REQ-ARCH-002 and REQ-FUNC-001 implementation tasks",
+        "Begin Tailwind CSS integration (TASK-ARCH-001-02)",
+        "Start treatment management system planning"
+      ],
+      "workflowSequence": [
+        "project-setup-workflow (Sage framework setup)",
+        "code-generation-workflow (component development)",
+        "visual-development-workflow (medical spa design implementation)",
+        "code-generation-workflow (feature completion)"
+      ]
+    }
+  }
+}

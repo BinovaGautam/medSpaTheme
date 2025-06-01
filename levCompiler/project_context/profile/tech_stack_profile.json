@@ -1,0 +1,78 @@
+{
+  "framework": {
+    "primary": "Sage WordPress Framework",
+    "version": "latest",
+    "description": "Modern WordPress theme development framework",
+    "architecture": "MVC pattern with Blade templating",
+    "rationale": "Modern development practices + Blade templating (ADR-001 decision)"
+  },
+  "styling": {
+    "framework": "Tailwind CSS",
+    "approach": "Utility-first CSS framework",
+    "customization": "Luxury medical spa design system",
+    "components": "Custom component library for medical spa features"
+  },
+  "build": {
+    "system": "Vite",
+    "description": "Fast build tool and development server",
+    "features": [
+      "Hot module replacement",
+      "Asset optimization",
+      "Modern JavaScript bundling",
+      "CSS preprocessing"
+    ]
+  },
+  "dependencies": {
+    "manager": "TGMPA",
+    "description": "Automated dependency installation",
+    "pluginManagement": "Required plugin automation"
+  },
+  "cms": {
+    "platform": "WordPress",
+    "fieldManagement": "ACF Pro",
+    "description": "Advanced Custom Fields for meta fields and custom content",
+    "customPostTypes": [
+      "Treatments",
+      "Providers",
+      "Testimonials",
+      "Before/After Galleries"
+    ]
+  },
+  "development": {
+    "languages": {
+      "primary": "PHP",
+      "frontend": ["JavaScript", "CSS", "HTML"],
+      "templating": "Blade (Laravel templating engine)"
+    },
+    "patterns": [
+      "Component-based architecture",
+      "Separation of concerns",
+      "Modern WordPress development practices"
+    ]
+  },
+  "compliance": {
+    "accessibility": {
+      "standard": "WCAG AAA",
+      "tools": ["axe-core", "WAVE", "Lighthouse accessibility audit"],
+      "requirements": "11.5:1 contrast ratio minimum"
+    },
+    "performance": {
+      "targets": "Lighthouse 90+ scores",
+      "optimization": [
+        "Image optimization",
+        "CSS/JS minification",
+        "Lazy loading",
+        "CDN integration"
+      ]
+    },
+    "security": {
+      "standards": ["WordPress security best practices", "HIPAA-conscious data handling"],
+      "measures": [
+        "Secure data transmission",
+        "Input sanitization",
+        "Authentication/authorization",
+        "Regular security updates"
+      ]
+    }
+  }
+}

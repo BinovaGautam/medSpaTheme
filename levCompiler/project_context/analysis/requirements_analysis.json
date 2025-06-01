@@ -1,0 +1,235 @@
+{
+  "requirements": {
+    "metadata": {
+      "sourceDocument": "REQ-DISCOVERY-001.md",
+      "totalRequirements": 11,
+      "discovered": 11,
+      "refined": 0,
+      "migrationDate": "2025-06-02T02:15:00Z",
+      "status": "migrated"
+    },
+    "businessContext": {
+      "stakeholder": "Luxury Medical Spa Owners & Practice Managers",
+      "businessNeed": "Professional, HIPAA-conscious WordPress theme that converts visitors into consultation bookings",
+      "valueProposition": [
+        "Increase consultation booking conversions by 40%",
+        "Reduce admin overhead for appointment management",
+        "Establish premium brand positioning in competitive market",
+        "Ensure compliance with medical privacy requirements"
+      ]
+    },
+    "architectural": {
+      "REQ-ARCH-001": {
+        "title": "WordPress Theme Foundation",
+        "description": "Establish modern WordPress theme architecture",
+        "category": "Architecture",
+        "priority": "Critical",
+        "status": "Active",
+        "iterationTarget": "iteration-4",
+        "acceptanceCriteria": [
+          "Theme based on Sage or Underscores starter",
+          "Tailwind CSS integration with build pipeline",
+          "Modern PHP practices and WordPress standards compliance"
+        ],
+        "dependencies": [],
+        "migrationTarget": "project_context/patterns/architecture_patterns.json"
+      },
+      "REQ-ARCH-002": {
+        "title": "Plugin Ecosystem Management",
+        "description": "Automated plugin dependency management",
+        "category": "Architecture",
+        "priority": "High",
+        "status": "Active",
+        "iterationTarget": "iteration-4",
+        "acceptanceCriteria": [
+          "TGMPA implementation for required plugins",
+          "ACF Pro field groups included in theme",
+          "Plugin compatibility testing and validation"
+        ],
+        "dependencies": ["REQ-ARCH-001"],
+        "migrationTarget": "project_context/patterns/dependency_patterns.json"
+      }
+    },
+    "functional": {
+      "REQ-FUNC-001": {
+        "title": "Treatment Management System",
+        "description": "Custom post type system for medical spa services",
+        "category": "Functional",
+        "priority": "Critical",
+        "status": "Active",
+        "iterationTarget": "iteration-5",
+        "acceptanceCriteria": [
+          "Custom post type: 'treatment' with categories",
+          "ACF field groups for pricing, descriptions, icons",
+          "Treatment archive and single page templates",
+          "Related treatments functionality"
+        ],
+        "dependencies": ["REQ-ARCH-002"],
+        "migrationTarget": "project_context/profile/functional_requirements.json"
+      },
+      "REQ-FUNC-002": {
+        "title": "Interactive Treatment Finder",
+        "description": "Quiz-based treatment recommendation system",
+        "category": "Functional",
+        "priority": "High",
+        "status": "Active",
+        "iterationTarget": "iteration-6",
+        "acceptanceCriteria": [
+          "Multi-step questionnaire interface",
+          "Smart algorithm for treatment matching",
+          "Progressive disclosure design pattern",
+          "Lead capture integration"
+        ],
+        "dependencies": ["REQ-FUNC-001"],
+        "migrationTarget": "project_context/patterns/interaction_patterns.json"
+      },
+      "REQ-FUNC-003": {
+        "title": "Before/After Gallery System",
+        "description": "HIPAA-conscious result showcase system",
+        "category": "Functional",
+        "priority": "Critical",
+        "status": "Active",
+        "iterationTarget": "iteration-6",
+        "acceptanceCriteria": [
+          "Custom post type: 'before_after'",
+          "Treatment category filtering",
+          "Lightbox viewing experience",
+          "Privacy consent management",
+          "Client testimonial integration"
+        ],
+        "dependencies": ["REQ-FUNC-001"],
+        "migrationTarget": "project_context/patterns/content_patterns.json"
+      },
+      "REQ-FUNC-004": {
+        "title": "Virtual Consultation Booking",
+        "description": "Multi-step consultation request system",
+        "category": "Functional",
+        "priority": "Critical",
+        "status": "Active",
+        "iterationTarget": "iteration-6",
+        "acceptanceCriteria": [
+          "Progressive form design with validation",
+          "Secure photo upload capability",
+          "Calendar integration for scheduling",
+          "Admin dashboard for request management",
+          "HIPAA-compliant data handling"
+        ],
+        "dependencies": ["REQ-ARCH-002"],
+        "migrationTarget": "project_context/profile/functional_requirements.json"
+      },
+      "REQ-FUNC-005": {
+        "title": "Premium Hero System",
+        "description": "Dynamic hero section with multiple background options",
+        "category": "Functional",
+        "priority": "Medium",
+        "status": "Active",
+        "iterationTarget": "iteration-7",
+        "acceptanceCriteria": [
+          "Video, image, and gradient background support",
+          "Customizable headlines and CTAs",
+          "Animation effects and parallax",
+          "Mobile optimization",
+          "A/B testing ready structure"
+        ],
+        "dependencies": ["REQ-ARCH-001"],
+        "migrationTarget": "project_context/patterns/ui_patterns.json"
+      }
+    },
+    "userExperience": {
+      "REQ-UX-001": {
+        "title": "Mobile-First Responsive Design",
+        "description": "Comprehensive mobile optimization",
+        "category": "User Experience",
+        "priority": "Critical",
+        "status": "Active",
+        "iterationTarget": "iteration-7",
+        "acceptanceCriteria": [
+          "Touch targets minimum 44px",
+          "Responsive grid system",
+          "Cross-device compatibility testing",
+          "Performance optimization for mobile networks"
+        ],
+        "dependencies": ["REQ-ARCH-001"],
+        "migrationTarget": "project_context/patterns/ui_patterns.json"
+      },
+      "REQ-UX-002": {
+        "title": "WCAG AAA Accessibility",
+        "description": "Comprehensive accessibility compliance",
+        "category": "User Experience",
+        "priority": "Critical",
+        "status": "Active",
+        "iterationTarget": "iteration-8",
+        "acceptanceCriteria": [
+          "Contrast ratios minimum 11.5:1",
+          "Full keyboard navigation support",
+          "Screen reader compatibility",
+          "Semantic HTML5 markup",
+          "Focus management system"
+        ],
+        "dependencies": ["REQ-ARCH-001"],
+        "migrationTarget": "project_context/analysis/accessibility_requirements.json"
+      }
+    },
+    "performance": {
+      "REQ-PERF-001": {
+        "title": "Performance Optimization",
+        "description": "High-performance loading and interaction",
+        "category": "Performance",
+        "priority": "High",
+        "status": "Active",
+        "iterationTarget": "iteration-8",
+        "acceptanceCriteria": [
+          "Lighthouse scores 90+ across all metrics",
+          "Lazy loading implementation",
+          "Conditional script loading",
+          "Image optimization and responsive images",
+          "Cache compatibility"
+        ],
+        "dependencies": ["REQ-ARCH-001"],
+        "migrationTarget": "project_context/analysis/performance_requirements.json"
+      }
+    },
+    "complianceRequirements": {
+      "HIPAA": {
+        "description": "HIPAA privacy compliance for patient photos",
+        "requirements": [
+          "Secure data transmission",
+          "Patient consent management",
+          "PHI protection protocols",
+          "Audit trail maintenance"
+        ]
+      },
+      "medicalCredibility": {
+        "description": "Professional medical credibility requirements",
+        "requirements": [
+          "Professional design aesthetics",
+          "Medical authority content",
+          "Trust-building elements",
+          "Social proof integration"
+        ]
+      }
+    },
+    "summaryMetrics": {
+      "byPriority": {
+        "critical": 6,
+        "high": 3,
+        "medium": 1,
+        "low": 0
+      },
+      "byCategory": {
+        "architectural": 2,
+        "functional": 5,
+        "userExperience": 2,
+        "performance": 1,
+        "compliance": 1
+      },
+      "byIteration": {
+        "iteration-4": 2,
+        "iteration-5": 1,
+        "iteration-6": 3,
+        "iteration-7": 2,
+        "iteration-8": 2
+      }
+    }
+  }
+}

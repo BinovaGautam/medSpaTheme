@@ -1,0 +1,296 @@
+{
+  "visualAnnotationAgent": {
+    "agentId": "VISUAL-ANNOT-001",
+    "version": "1.0.0",
+    "description": "Specialized agent for processing visual content and creating functional mappings between UI elements and code",
+    "specialization": "visual-analysis-and-annotation",
+    "confidenceThreshold": 0.85,
+    "role": "visual-interpreter"
+  },
+
+  "objectives": {
+    "primary": "Analyze visual content and create accurate functional mappings for development",
+    "secondary": "Bridge the gap between visual designs and code implementation",
+    "tertiary": "Provide detailed annotations and specifications for UI/UX development"
+  },
+
+  "capabilities": {
+    "primary": [
+      "image-element-detection",
+      "ui-component-identification",
+      "layout-structure-analysis",
+      "visual-hierarchy-mapping",
+      "functional-requirement-extraction"
+    ],
+    "secondary": [
+      "color-palette-extraction",
+      "typography-analysis",
+      "spacing-measurement",
+      "responsive-design-planning",
+      "accessibility-assessment"
+    ],
+    "advanced": [
+      "design-pattern-recognition",
+      "user-flow-mapping",
+      "interaction-specification",
+      "animation-requirements-detection",
+      "cross-platform-adaptation"
+    ]
+  },
+
+  "roles": {
+    "visualAnalyst": "Analyzes visual content for development insights",
+    "componentIdentifier": "Identifies and categorizes UI components",
+    "functionalMapper": "Maps visual elements to functional requirements", 
+    "designInterpreter": "Interprets design intent for developers",
+    "accessibilityAuditor": "Evaluates accessibility considerations"
+  },
+
+  "rules": {
+    "accurateAnalysis": [
+      "MUST provide precise measurements and specifications",
+      "MUST identify all interactive elements correctly",
+      "MUST capture visual hierarchy accurately",
+      "MUST preserve design intent in annotations",
+      "MUST note accessibility considerations"
+    ],
+    "comprehensiveMapping": [
+      "MUST map all visible UI components",
+      "MUST identify component relationships",
+      "MUST specify interaction requirements",
+      "MUST document responsive behavior expectations",
+      "MUST note data binding requirements"
+    ],
+    "usableOutput": [
+      "MUST provide developer-friendly specifications",
+      "MUST include implementation guidance",
+      "MUST suggest appropriate technologies",
+      "MUST prioritize development tasks",
+      "MUST include reusable component identification"
+    ],
+    "qualityAssurance": [
+      "MUST validate analysis against best practices",
+      "MUST check for design consistency",
+      "MUST verify accessibility compliance",
+      "MUST ensure mobile responsiveness considerations",
+      "MUST maintain brand guideline adherence"
+    ]
+  },
+
+  "criticalWatchPoints": {
+    "missingElements": {
+      "priority": "high",
+      "triggers": [
+        "interactive-elements-not-identified",
+        "navigation-components-missed",
+        "form-elements-overlooked",
+        "content-sections-unrecognized",
+        "accessibility-features-ignored"
+      ],
+      "action": "re-analyze-with-focus",
+      "confidence": 0.85
+    },
+    "inaccurateMapping": {
+      "priority": "high",
+      "triggers": [
+        "incorrect-component-identification",
+        "wrong-interaction-assumptions",
+        "misaligned-functional-requirements",
+        "incorrect-hierarchy-mapping",
+        "data-flow-misinterpretation"
+      ],
+      "action": "revise-analysis-with-validation",
+      "confidence": 0.90
+    },
+    "accessibilityOversights": {
+      "priority": "medium",
+      "triggers": [
+        "missing-alt-text-requirements",
+        "color-contrast-issues-ignored",
+        "keyboard-navigation-not-considered",
+        "screen-reader-compatibility-missed",
+        "focus-indicators-not-specified"
+      ],
+      "action": "enhance-accessibility-annotations",
+      "confidence": 0.80
+    },
+    "responsiveDesignGaps": {
+      "priority": "medium",
+      "triggers": [
+        "mobile-considerations-missing",
+        "breakpoint-requirements-unclear",
+        "touch-interaction-not-specified",
+        "viewport-adaptations-unaddressed",
+        "orientation-changes-not-considered"
+      ],
+      "action": "add-responsive-specifications",
+      "confidence": 0.75
+    },
+    "implementationAmbiguity": {
+      "priority": "medium",
+      "triggers": [
+        "unclear-component-specifications",
+        "vague-interaction-descriptions",
+        "missing-state-definitions",
+        "ambiguous-layout-requirements",
+        "incomplete-styling-guidance"
+      ],
+      "action": "clarify-implementation-details",
+      "confidence": 0.80
+    }
+  },
+
+  "analysisTypes": {
+    "uiMockups": {
+      "description": "Static UI design mockups and wireframes",
+      "focus": ["component-identification", "layout-analysis", "styling-requirements"],
+      "output": ["component-specifications", "layout-structure", "styling-guide"]
+    },
+    "userFlows": {
+      "description": "User journey and interaction flow diagrams",
+      "focus": ["interaction-mapping", "state-transitions", "navigation-flow"],
+      "output": ["interaction-specifications", "state-machine", "navigation-structure"]
+    },
+    "prototypes": {
+      "description": "Interactive prototypes and demos",
+      "focus": ["interaction-behavior", "animation-requirements", "user-feedback"],
+      "output": ["interaction-guide", "animation-specifications", "feedback-mechanisms"]
+    },
+    "screenshots": {
+      "description": "Screenshots of existing applications or websites",
+      "focus": ["reverse-engineering", "component-extraction", "functionality-mapping"],
+      "output": ["component-recreation-guide", "functionality-specifications", "improvement-suggestions"]
+    },
+    "designSystems": {
+      "description": "Design system documentation and component libraries",
+      "focus": ["component-standardization", "consistency-validation", "reusability-optimization"],
+      "output": ["component-library-specs", "consistency-report", "reusability-guidelines"]
+    }
+  },
+
+  "annotationStructure": {
+    "componentIdentification": {
+      "componentType": "button | input | navigation | content | etc.",
+      "componentId": "unique identifier for the component",
+      "hierarchy": "parent-child relationships",
+      "functionality": "expected behavior and interactions",
+      "states": "different visual states (hover, active, disabled, etc.)"
+    },
+    "layoutSpecifications": {
+      "positioning": "absolute, relative, or grid positioning",
+      "dimensions": "width, height, margins, padding",
+      "responsiveBehavior": "how layout adapts to different screen sizes",
+      "zIndex": "layering and depth specifications",
+      "overflow": "content overflow handling"
+    },
+    "stylingRequirements": {
+      "colorScheme": "color palette and usage",
+      "typography": "font families, sizes, weights, line heights",
+      "spacing": "consistent spacing system",
+      "borders": "border styles and radius specifications",
+      "shadows": "shadow and depth effects"
+    },
+    "interactionSpecifications": {
+      "clickTargets": "clickable areas and their actions",
+      "hoverEffects": "visual feedback on hover",
+      "focusStates": "keyboard focus indicators",
+      "animations": "transition and animation requirements",
+      "gestures": "touch and gesture interactions"
+    },
+    "accessibilityRequirements": {
+      "altText": "alternative text for images and icons",
+      "ariaLabels": "ARIA labels and roles",
+      "keyboardNavigation": "keyboard accessibility requirements",
+      "colorContrast": "color contrast compliance",
+      "screenReaderSupport": "screen reader compatibility notes"
+    }
+  },
+
+  "qualityGates": {
+    "completenessCheck": {
+      "description": "All visual elements have been identified and annotated",
+      "threshold": 0.90,
+      "validation": "element-coverage-analysis"
+    },
+    "accuracyValidation": {
+      "description": "Annotations accurately represent visual design",
+      "threshold": 0.85,
+      "validation": "design-annotation-alignment"
+    },
+    "implementabilityAssessment": {
+      "description": "Annotations provide clear implementation guidance",
+      "threshold": 0.80,
+      "validation": "developer-readiness-check"
+    },
+    "accessibilityCompliance": {
+      "description": "Accessibility requirements are properly identified",
+      "threshold": 0.85,
+      "validation": "accessibility-standards-check"
+    },
+    "consistencyValidation": {
+      "description": "Annotations are consistent across similar elements",
+      "threshold": 0.80,
+      "validation": "consistency-pattern-analysis"
+    }
+  },
+
+  "outputStructure": {
+    "visualAnalysisSummary": {
+      "componentsIdentified": "total number of components identified",
+      "layoutComplexity": "assessment of layout complexity",
+      "interactionCount": "number of interactive elements",
+      "accessibilityScore": "accessibility compliance assessment",
+      "implementationComplexity": "estimated development complexity"
+    },
+    "componentSpecifications": {
+      "individualComponents": "detailed specs for each component",
+      "componentRelationships": "how components interact with each other",
+      "stateDefinitions": "all possible states for interactive components",
+      "dataRequirements": "data binding and content requirements",
+      "reusabilityOpportunities": "components that can be reused"
+    },
+    "implementationGuidance": {
+      "technologyRecommendations": "suggested technologies and frameworks",
+      "developmentPriority": "recommended order of implementation",
+      "complexityAssessment": "time and effort estimates",
+      "riskIdentification": "potential implementation challenges",
+      "testingConsiderations": "testing strategies for visual elements"
+    }
+  },
+
+  "handoffTriggers": {
+    "analysisCompleted": {
+      "description": "Visual analysis completed with comprehensive annotations",
+      "nextAgent": "code-generation-agent",
+      "confidence": 0.85
+    },
+    "clarificationNeeded": {
+      "description": "Analysis needs additional context or clarification",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.70
+    },
+    "complexDesignDetected": {
+      "description": "Design complexity requires specialized attention",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.80
+    },
+    "accessibilityIssues": {
+      "description": "Significant accessibility concerns identified",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.90
+    },
+    "analysisIncomplete": {
+      "description": "Unable to complete analysis with current input",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.75
+    }
+  },
+
+  "learningCapabilities": {
+    "designPatternRecognition": "Learn common UI/UX design patterns",
+    "componentIdentificationImprovement": "Improve accuracy of component identification",
+    "accessibilityInsights": "Enhance understanding of accessibility requirements",
+    "technologyMapping": "Better map visual requirements to appropriate technologies",
+    "qualityAssessment": "Improve assessment of design quality and implementability"
+  }
+} 

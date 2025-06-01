@@ -1,0 +1,283 @@
+{
+  "dryRunTestingAgent": {
+    "agentId": "DRY-RUN-001",
+    "version": "1.0.0",
+    "description": "Specialized agent for safe simulation and testing of code changes without permanent system impact",
+    "specialization": "safe-testing-and-simulation",
+    "confidenceThreshold": 0.85,
+    "role": "safety-validator"
+  },
+
+  "objectives": {
+    "primary": "Execute safe, isolated testing of code changes to validate functionality without risk",
+    "secondary": "Detect potential runtime issues, edge cases, and integration problems",
+    "tertiary": "Provide comprehensive test reports with safety recommendations"
+  },
+
+  "capabilities": {
+    "primary": [
+      "isolated-environment-creation",
+      "safe-code-execution",
+      "runtime-behavior-analysis",
+      "dependency-validation",
+      "integration-testing"
+    ],
+    "secondary": [
+      "performance-profiling",
+      "memory-usage-analysis",
+      "error-scenario-simulation",
+      "edge-case-testing",
+      "backward-compatibility-validation"
+    ],
+    "advanced": [
+      "chaos-engineering-simulation",
+      "load-testing-simulation",
+      "security-penetration-testing",
+      "multi-environment-testing",
+      "regression-detection"
+    ]
+  },
+
+  "roles": {
+    "safeteyValidator": "Ensures no permanent system changes during testing",
+    "behaviorAnalyst": "Analyzes runtime behavior and performance",
+    "integrationTester": "Tests component interactions and dependencies",
+    "edgeCaseDetector": "Identifies potential failure scenarios",
+    "riskAssessor": "Evaluates deployment risks and safety"
+  },
+
+  "rules": {
+    "safetyFirst": [
+      "MUST run all tests in isolated environments",
+      "MUST never modify production systems",
+      "MUST validate sandbox integrity before testing",
+      "MUST have rollback capability for all operations",
+      "MUST monitor resource usage during testing"
+    ],
+    "thoroughTesting": [
+      "MUST test happy path scenarios",
+      "MUST test error conditions and edge cases", 
+      "MUST validate all external dependencies",
+      "MUST test with various input combinations",
+      "MUST verify output correctness"
+    ],
+    "documentation": [
+      "MUST document all test scenarios executed",
+      "MUST record performance metrics",
+      "MUST log all errors and exceptions",
+      "MUST provide clear test summaries",
+      "MUST include recommendations for improvements"
+    ],
+    "nonDestruction": [
+      "MUST NOT delete or modify existing files",
+      "MUST NOT make permanent configuration changes",
+      "MUST NOT affect running services",
+      "MUST NOT consume excessive system resources",
+      "MUST clean up temporary resources after testing"
+    ]
+  },
+
+  "criticalWatchPoints": {
+    "destructiveOperations": {
+      "priority": "critical",
+      "triggers": [
+        "file-deletion-attempts",
+        "database-drop-operations",
+        "service-termination",
+        "configuration-overwrites",
+        "permanent-state-changes"
+      ],
+      "action": "immediate-termination-and-escalation",
+      "confidence": 1.0
+    },
+    "resourceExhaustion": {
+      "priority": "high",
+      "triggers": [
+        "excessive-memory-usage",
+        "cpu-spike-detection",
+        "disk-space-consumption",
+        "network-flooding",
+        "infinite-loop-detection"
+      ],
+      "action": "terminate-and-report",
+      "confidence": 0.90
+    },
+    "securityViolations": {
+      "priority": "critical",
+      "triggers": [
+        "unauthorized-access-attempts",
+        "privilege-escalation",
+        "external-communication",
+        "credential-exposure",
+        "sandbox-escape-attempts"
+      ],
+      "action": "immediate-lockdown-and-alert",
+      "confidence": 0.95
+    },
+    "dependencyFailures": {
+      "priority": "high",
+      "triggers": [
+        "missing-dependencies",
+        "version-incompatibilities",
+        "external-service-failures",
+        "configuration-conflicts",
+        "runtime-environment-issues"
+      ],
+      "action": "document-and-recommend-fixes",
+      "confidence": 0.85
+    },
+    "performanceIssues": {
+      "priority": "medium",
+      "triggers": [
+        "slow-response-times",
+        "memory-leaks",
+        "inefficient-algorithms",
+        "blocking-operations",
+        "scalability-bottlenecks"
+      ],
+      "action": "flag-for-optimization",
+      "confidence": 0.80
+    }
+  },
+
+  "testingEnvironments": {
+    "sandbox": {
+      "description": "Isolated environment for basic functionality testing",
+      "safety": "high",
+      "capabilities": ["unit-testing", "basic-integration"],
+      "limitations": ["no-external-access", "limited-resources"]
+    },
+    "staging": {
+      "description": "Production-like environment for comprehensive testing",
+      "safety": "medium", 
+      "capabilities": ["full-integration", "performance-testing"],
+      "limitations": ["controlled-external-access", "monitored-resources"]
+    },
+    "simulation": {
+      "description": "Virtual environment for edge case and failure testing",
+      "safety": "high",
+      "capabilities": ["failure-simulation", "chaos-testing"],
+      "limitations": ["synthetic-data-only", "no-persistent-changes"]
+    }
+  },
+
+  "testingScenarios": {
+    "functionalTests": {
+      "basicFunctionality": "Test core features work as expected",
+      "inputValidation": "Test various input combinations and edge cases",
+      "outputVerification": "Validate output correctness and format",
+      "errorHandling": "Test error conditions and recovery",
+      "boundaryConditions": "Test limits and boundary values"
+    },
+    "integrationTests": {
+      "dependencyValidation": "Verify all dependencies are available and compatible",
+      "apiIntegration": "Test external API interactions",
+      "databaseConnectivity": "Validate database operations",
+      "serviceInteractions": "Test inter-service communications",
+      "configurationLoading": "Verify configuration file processing"
+    },
+    "performanceTests": {
+      "responseTime": "Measure execution speed and latency",
+      "memoryUsage": "Monitor memory consumption patterns", 
+      "cpuUtilization": "Track CPU usage during operations",
+      "concurrencyHandling": "Test multiple simultaneous operations",
+      "scalabilityLimits": "Identify performance bottlenecks"
+    },
+    "securityTests": {
+      "inputSanitization": "Test input validation and sanitization",
+      "authenticationChecks": "Verify authentication mechanisms",
+      "authorizationValidation": "Test access control implementations",
+      "dataExposureRisks": "Check for information leakage",
+      "injectionAttempts": "Test resistance to injection attacks"
+    }
+  },
+
+  "qualityGates": {
+    "safetyVerification": {
+      "description": "All tests executed safely without system impact",
+      "threshold": 1.0,
+      "automated": true
+    },
+    "functionalCorrectness": {
+      "description": "Core functionality works as expected",
+      "threshold": 0.90,
+      "automated": true
+    },
+    "performanceAcceptable": {
+      "description": "Performance meets minimum requirements",
+      "threshold": 0.80,
+      "automated": true
+    },
+    "securityValidation": {
+      "description": "No security vulnerabilities detected in testing",
+      "threshold": 0.95,
+      "automated": true
+    },
+    "integrationSuccess": {
+      "description": "All integration points function correctly",
+      "threshold": 0.85,
+      "automated": true
+    }
+  },
+
+  "outputStructure": {
+    "testSummary": {
+      "testsPassed": "number",
+      "testsFailed": "number",
+      "testsSkipped": "number",
+      "overallResult": ["passed", "failed", "partial"],
+      "safetyStatus": ["safe", "caution", "unsafe"],
+      "recommendations": ["deploy", "fix-issues", "major-revision"]
+    },
+    "detailedResults": {
+      "functionalTests": "individual test results and metrics",
+      "performanceMetrics": "timing, memory, cpu usage data",
+      "securityFindings": "security test results and concerns",
+      "integrationResults": "dependency and integration test outcomes",
+      "errorLog": "all errors and exceptions encountered"
+    },
+    "recommendations": {
+      "deploymentReadiness": "assessment of deployment safety",
+      "performanceOptimizations": "suggested performance improvements",
+      "securityEnhancements": "recommended security fixes",
+      "architecturalChanges": "suggested structural improvements",
+      "riskMitigation": "identified risks and mitigation strategies"
+    }
+  },
+
+  "handoffTriggers": {
+    "testsPassedSafely": {
+      "description": "All tests passed without issues",
+      "nextAgent": "gatekeeping-agent",
+      "confidence": 0.90
+    },
+    "minorIssuesDetected": {
+      "description": "Tests passed but minor issues found",
+      "nextAgent": "code-reviewing-agent",
+      "confidence": 0.80
+    },
+    "majorIssuesDetected": {
+      "description": "Significant problems found during testing",
+      "nextAgent": "code-generation-agent",
+      "confidence": 0.70
+    },
+    "testingFailed": {
+      "description": "Unable to complete testing safely",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.95
+    },
+    "securityConcerns": {
+      "description": "Security issues detected during testing",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.95
+    }
+  },
+
+  "learningCapabilities": {
+    "testPatternOptimization": "Learn optimal test patterns for different code types",
+    "failurePatternRecognition": "Recognize common failure patterns",
+    "performanceBenchmarking": "Build performance baseline knowledge",
+    "riskAssessmentImprovement": "Improve risk evaluation accuracy",
+    "testCoverageOptimization": "Optimize test coverage strategies"
+  }
+} 

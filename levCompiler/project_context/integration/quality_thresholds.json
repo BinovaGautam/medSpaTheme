@@ -1,0 +1,267 @@
+{
+  "qualityThresholds": {
+    "metadata": {
+      "sourceDocument": "master-index.json qualityGates + REQ-UX-002 + REQ-PERF-001",
+      "migrationDate": "2025-06-02T02:15:00Z",
+      "status": "migrated",
+      "framework": "levCompiler AI Agent Orchestration Framework"
+    },
+    "requirements": {
+      "mandatory": [
+        "REQ-ID present and valid",
+        "business-value clearly articulated",
+        "acceptance-criteria defined and measurable",
+        "dependencies mapped and validated",
+        "iteration-target assigned",
+        "HIPAA compliance considerations documented"
+      ],
+      "validationCriteria": [
+        "stakeholder-approval obtained",
+        "feasibility-assessment completed",
+        "compliance-check passed (HIPAA + accessibility)",
+        "medical-spa-specific requirements addressed"
+      ],
+      "levCompilerIntegration": {
+        "confidenceThreshold": 0.90,
+        "routingTo": "project-analysis-workflow",
+        "agents": ["TechStackManager", "HumanInteraction"]
+      }
+    },
+    "tasks": {
+      "mandatory": [
+        "TASK-ID present and valid",
+        "related-requirement clearly linked",
+        "acceptance-criteria defined and testable",
+        "implementation-plan detailed",
+        "medical-spa-considerations addressed",
+        "HIPAA-conscious development practices included"
+      ],
+      "validationCriteria": [
+        "requirement-traceability maintained",
+        "effort-estimation realistic",
+        "dependency-mapping complete",
+        "WordPress-standards compliance verified"
+      ],
+      "levCompilerIntegration": {
+        "confidenceThreshold": 0.85,
+        "routingTo": "code-generation-workflow",
+        "agents": ["CodeGeneration", "CodeReviewing", "DryRunTesting", "Gatekeeping"]
+      }
+    },
+    "decisions": {
+      "mandatory": [
+        "problem-identification clear and complete",
+        "option-generation comprehensive",
+        "evaluation-criteria defined with weights",
+        "rationale documented with medical-spa context",
+        "implementation-plan detailed"
+      ],
+      "validationCriteria": [
+        "journey-completeness verified",
+        "stakeholder-consultation documented",
+        "implementation-plan realistic",
+        "medical-spa-specific constraints considered"
+      ],
+      "levCompilerIntegration": {
+        "confidenceThreshold": 0.90,
+        "routingTo": "project-analysis-workflow",
+        "agents": ["HumanInteraction", "TechStackManager"]
+      }
+    },
+    "implementations": {
+      "mandatory": [
+        "documentation complete and up-to-date",
+        "testing comprehensive (unit + integration)",
+        "performance-validation completed",
+        "accessibility-compliance verified (WCAG AAA)",
+        "WordPress-standards compliance verified",
+        "HIPAA-conscious data handling implemented"
+      ],
+      "validationCriteria": [
+        "requirement-fulfillment verified",
+        "quality-standards met",
+        "medical-spa-compliance validated",
+        "luxury-brand-positioning maintained"
+      ],
+      "levCompilerIntegration": {
+        "confidenceThreshold": 0.95,
+        "routingTo": "code-generation-workflow",
+        "agents": ["CodeGeneration", "CodeReviewing", "DryRunTesting", "Gatekeeping"]
+      }
+    },
+    "levCompilerGates": {
+      "security": {
+        "minimumThreshold": 0.95,
+        "escalationPoint": "Security team review",
+        "customCriteria": [
+          "HIPAA-conscious data handling verified",
+          "Patient privacy protection implemented",
+          "Secure data transmission protocols",
+          "Input sanitization and validation",
+          "Authentication and authorization proper"
+        ],
+        "medicalSpaSpecific": [
+          "Before/after photo privacy protection",
+          "Patient consent management",
+          "PHI (Protected Health Information) handling",
+          "Audit trail maintenance"
+        ]
+      },
+      "syntax": {
+        "minimumThreshold": 1.0,
+        "escalationPoint": "Auto-fix attempted, then CodeReviewing agent",
+        "customCriteria": [
+          "PHP syntax valid for WordPress environment",
+          "Blade template syntax correct",
+          "JavaScript ES6+ compliance",
+          "CSS/SCSS valid syntax",
+          "WordPress coding standards adherence"
+        ]
+      },
+      "standards": {
+        "minimumThreshold": 0.90,
+        "escalationPoint": "CodeReviewing agent review",
+        "customCriteria": [
+          "WordPress coding standards compliance",
+          "PSR-12 PHP standards adherence",
+          "Sage framework conventions followed",
+          "Component architecture best practices",
+          "Medical spa development best practices"
+        ]
+      },
+      "bestPractices": {
+        "minimumThreshold": 0.85,
+        "escalationPoint": "Senior review and architectural guidance",
+        "customCriteria": [
+          "SOLID principles application",
+          "DRY principle adherence",
+          "Performance optimization implementation",
+          "SEO best practices",
+          "Luxury brand positioning maintenance"
+        ]
+      },
+      "accessibility": {
+        "minimumThreshold": 0.95,
+        "escalationPoint": "Accessibility specialist review",
+        "customCriteria": [
+          "WCAG AAA compliance (11.5:1 contrast minimum)",
+          "Keyboard navigation full support",
+          "Screen reader compatibility",
+          "Semantic HTML5 markup",
+          "Focus management system",
+          "Touch targets minimum 44px"
+        ],
+        "testingTools": [
+          "axe-core automated testing",
+          "WAVE accessibility evaluation",
+          "Lighthouse accessibility audit",
+          "Manual keyboard navigation testing",
+          "Screen reader testing (NVDA/JAWS)"
+        ]
+      },
+      "performance": {
+        "minimumThreshold": 0.90,
+        "escalationPoint": "Performance optimization specialist",
+        "customCriteria": [
+          "Lighthouse performance score 90+",
+          "Lighthouse accessibility score 90+",
+          "Lighthouse best practices score 90+",
+          "Lighthouse SEO score 90+",
+          "Core Web Vitals compliance",
+          "Mobile performance optimization"
+        ],
+        "optimizationRequirements": [
+          "Image optimization and lazy loading",
+          "CSS/JS minification and compression",
+          "Conditional script loading",
+          "Cache compatibility (WordPress caching plugins)",
+          "CDN compatibility and optimization"
+        ]
+      }
+    },
+    "medicalSpaCompliance": {
+      "HIPAA": {
+        "threshold": 0.95,
+        "requirements": [
+          "Patient data privacy protection",
+          "Secure transmission protocols",
+          "Consent management systems",
+          "Audit trail implementation",
+          "Data retention policy compliance"
+        ],
+        "validationMethods": [
+          "Security audit review",
+          "Privacy impact assessment",
+          "Compliance checklist verification",
+          "Legal review when required"
+        ]
+      },
+      "luxuryBranding": {
+        "threshold": 0.85,
+        "requirements": [
+          "Sage green + gold color palette adherence",
+          "Elegant serif + clean sans-serif typography",
+          "Professional medical credibility",
+          "Trust-building elements integration",
+          "Conversion optimization features"
+        ],
+        "validationMethods": [
+          "Brand guidelines compliance check",
+          "User experience review",
+          "Conversion funnel analysis",
+          "Trust signal audit"
+        ]
+      },
+      "medicalCredibility": {
+        "threshold": 0.90,
+        "requirements": [
+          "Professional design aesthetics",
+          "Medical authority content structure",
+          "Provider credential display",
+          "Treatment information accuracy",
+          "Before/after result presentation"
+        ],
+        "validationMethods": [
+          "Medical professional review",
+          "Content accuracy verification",
+          "Credibility signal audit",
+          "Professional presentation assessment"
+        ]
+      }
+    },
+    "automationRules": {
+      "qualityEnforcement": {
+        "blockProgression": "Incomplete quality gate validation blocks workflow advancement",
+        "validateRelationships": "Cross-references between requirements, tasks, and decisions must be maintained",
+        "enforceTemplates": "All entities must follow levCompiler template structure and medical spa guidelines"
+      },
+      "escalationPaths": {
+        "securityIssues": "Immediate escalation to security team",
+        "HIPAAViolations": "Immediate escalation to compliance officer",
+        "accessibilityFailures": "Route to accessibility specialist",
+        "performanceIssues": "Route to performance optimization specialist",
+        "brandingViolations": "Route to brand compliance review"
+      },
+      "continuousMonitoring": {
+        "healthScoreTracking": "Monitor project health score continuously",
+        "complianceAuditing": "Regular HIPAA and accessibility compliance audits",
+        "performanceMonitoring": "Continuous performance metric tracking",
+        "brandAlignmentChecking": "Regular luxury brand positioning validation"
+      }
+    },
+    "reportingMetrics": {
+      "qualityDashboard": {
+        "gatePassRates": "Percentage of first-time quality gate passage",
+        "complianceScores": "HIPAA + accessibility + performance compliance scores",
+        "brandAlignment": "Luxury medical spa brand positioning metrics",
+        "developmentVelocity": "Task completion rates with quality maintenance"
+      },
+      "alertThresholds": {
+        "criticalFailure": "Any gate below 0.70 threshold",
+        "complianceRisk": "HIPAA or accessibility score below 0.90",
+        "performanceDegradation": "Lighthouse scores below 85",
+        "brandDrift": "Luxury positioning metrics below 0.80"
+      }
+    }
+  }
+}

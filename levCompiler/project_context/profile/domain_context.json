@@ -1,0 +1,87 @@
+{
+ "domain": {
+    "industry": "Medical Spa & Aesthetic Services",
+    "businessType": "Luxury Healthcare",
+    "targetMarket": "Premium medical spa clients"
+  },
+  "compliance": {
+    "healthcare": {
+      "hipaa": {
+        "enabled": true,
+        "description": "Privacy-conscious handling of before/after photos and patient data",
+        "requirements": [
+          "Secure data transmission",
+          "Patient consent management",
+          "PHI protection protocols",
+          "Audit trail maintenance"
+        ]
+      }
+    }
+  },
+  "branding": {
+    "luxuryPositioning": {
+      "colorPalette": {
+        "primary": "Sage green",
+        "accent": "Gold",
+        "description": "Elegant and calming luxury aesthetic"
+      },
+      "typography": {
+        "serif": "Elegant serif for headlines",
+        "sansSerif": "Clean sans-serif for body text",
+        "approach": "Luxury + readability balance"
+      },
+      "designPrinciples": [
+        "Sophisticated luxury appeal",
+        "Medical professionalism",
+        "Calming and trustworthy",
+        "Conversion-focused"
+      ]
+    }
+  },
+  "performance": {
+    "targets": {
+      "lighthouse": {
+        "performance": 90,
+        "accessibility": 90,
+        "bestPractices": 90,
+        "seo": 90,
+        "description": "Lighthouse 90+ scores across all metrics"
+      },
+      "accessibility": {
+        "standard": "WCAG AAA",
+        "contrastRatio": "11.5:1",
+        "description": "Maximum accessibility compliance"
+      }
+    }
+  },
+  "business": {
+    "conversionStrategies": [
+      "Multiple booking funnels",
+      "Professional credibility building",
+      "Social proof integration",
+      "Before/after testimonials",
+      "Trust signal optimization"
+    ],
+    "primaryGoals": [
+      "Increase consultation bookings",
+      "Build medical authority",
+      "Showcase treatment results",
+      "Establish luxury positioning"
+    ]
+  },
+  "content": {
+    "treatmentCategories": [
+      "Facial Rejuvenation",
+      "Body Contouring",
+      "Skin Treatments",
+      "Aesthetic Procedures"
+    ],
+    "contentTypes": [
+      "Before/After Galleries",
+      "Treatment Information",
+      "Provider Profiles",
+      "Patient Testimonials",
+      "Educational Content"
+    ]
+  }
+}

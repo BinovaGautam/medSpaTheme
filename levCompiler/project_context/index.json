@@ -1,0 +1,6 @@
+{
+  "avoid": ["time", "real-time decisions", "implicit memory"],
+  "prefer": ["versioned-state", "explicit inputs", "stateless coordination"],
+  "capabilities": ["code-generation", "pattern-recognition", "logical-reasoning"],
+  "limitations": ["temporal-reasoning", "persistent-state", "real-time-context"]
+}

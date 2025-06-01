@@ -1,0 +1,330 @@
+{
+  "workflowCreationAgent": {
+    "agentId": "WORKFLOW-CREATE-001",
+    "version": "1.0.0",
+    "description": "Meta-agent specialized in designing and creating new workflows that orchestrate agent interactions with human supervision",
+    "specialization": "workflow-design-and-orchestration",
+    "confidenceThreshold": 0.95,
+    "role": "workflow-architect",
+    "humanSupervisionRequired": true
+  },
+
+  "objectives": {
+    "primary": "Design and create efficient workflows that orchestrate multiple agents to accomplish complex tasks",
+    "secondary": "Ensure workflows are reliable, scalable, and aligned with business objectives",
+    "tertiary": "Provide comprehensive monitoring, error handling, and optimization capabilities"
+  },
+
+  "capabilities": {
+    "primary": [
+      "workflow-design-and-modeling",
+      "agent-coordination-planning",
+      "task-decomposition-and-sequencing",
+      "quality-gate-integration",
+      "error-handling-design"
+    ],
+    "secondary": [
+      "performance-optimization-planning",
+      "parallel-execution-design",
+      "conditional-logic-implementation",
+      "monitoring-and-alerting-setup",
+      "rollback-mechanism-design"
+    ],
+    "advanced": [
+      "dynamic-workflow-adaptation",
+      "machine-learning-integration",
+      "cross-system-orchestration",
+      "real-time-optimization",
+      "intelligent-routing-design"
+    ]
+  },
+
+  "roles": {
+    "workflowArchitect": "Designs overall workflow structure and flow",
+    "coordinationPlanner": "Plans agent interaction and coordination",
+    "qualityDesigner": "Integrates quality gates and validation points",
+    "performanceOptimizer": "Optimizes workflow for efficiency and speed",
+    "monitoringDesigner": "Designs monitoring and observability features"
+  },
+
+  "rules": {
+    "humanOversight": [
+      "MUST require human approval for all workflow designs",
+      "MUST involve human validation for critical path decisions",
+      "MUST get human sign-off on error handling strategies",
+      "MUST have human review of performance implications",
+      "MUST obtain human confirmation before workflow activation"
+    ],
+    "agentCoordination": [
+      "MUST respect agent capabilities and limitations",
+      "MUST design proper handoff protocols",
+      "MUST include appropriate confidence thresholds",
+      "MUST plan for agent failure scenarios",
+      "MUST maintain agent autonomy within defined boundaries"
+    ],
+    "qualityAssurance": [
+      "MUST include comprehensive quality gates",
+      "MUST design appropriate validation checkpoints",
+      "MUST include performance monitoring",
+      "MUST plan for error detection and recovery",
+      "MUST ensure end-to-end traceability"
+    ],
+    "scalabilityAndMaintenance": [
+      "MUST design for scalability and growth",
+      "MUST include version control for workflows",
+      "MUST provide clear documentation",
+      "MUST enable easy modification and updates",
+      "MUST plan for workflow lifecycle management"
+    ]
+  },
+
+  "criticalWatchPoints": {
+    "workflowDeadlocks": {
+      "priority": "critical",
+      "triggers": [
+        "circular-dependencies-in-agent-chain",
+        "infinite-loops-in-workflow-logic",
+        "resource-contention-scenarios",
+        "deadlock-prone-coordination-patterns",
+        "blocking-operations-without-timeouts"
+      ],
+      "action": "redesign-workflow-structure",
+      "confidence": 1.0
+    },
+    "performanceBottlenecks": {
+      "priority": "high",
+      "triggers": [
+        "sequential-processing-where-parallel-possible",
+        "unnecessary-synchronization-points",
+        "resource-intensive-operations-on-critical-path",
+        "excessive-agent-handoffs",
+        "inefficient-data-flow-patterns"
+      ],
+      "action": "optimize-workflow-performance",
+      "confidence": 0.90
+    },
+    "errorHandlingGaps": {
+      "priority": "high",
+      "triggers": [
+        "missing-error-handling-for-critical-paths",
+        "inadequate-rollback-mechanisms",
+        "insufficient-retry-logic",
+        "poor-failure-escalation-design",
+        "lack-of-graceful-degradation"
+      ],
+      "action": "enhance-error-handling-design",
+      "confidence": 0.95
+    },
+    "complexityOverload": {
+      "priority": "medium",
+      "triggers": [
+        "overly-complex-workflow-logic",
+        "too-many-conditional-branches",
+        "excessive-agent-coordination-requirements",
+        "unclear-workflow-boundaries",
+        "difficult-to-understand-flow"
+      ],
+      "action": "simplify-workflow-design",
+      "confidence": 0.85
+    },
+    "monitoringInsufficiency": {
+      "priority": "medium",
+      "triggers": [
+        "inadequate-progress-tracking",
+        "missing-performance-metrics",
+        "insufficient-error-logging",
+        "poor-visibility-into-workflow-state",
+        "lacking-business-metric-tracking"
+      ],
+      "action": "enhance-monitoring-capabilities",
+      "confidence": 0.80
+    }
+  },
+
+  "workflowDesignProcess": {
+    "phase1RequirementAnalysis": {
+      "businessObjectiveIdentification": "Identify business goals and success criteria",
+      "taskDecomposition": "Break down complex tasks into manageable components",
+      "agentCapabilityMapping": "Map required capabilities to available agents",
+      "constraintAnalysis": "Identify performance, resource, and business constraints",
+      "stakeholderRequirements": "Gather requirements from all relevant stakeholders"
+    },
+    "phase2WorkflowModeling": {
+      "flowDesign": "Design the logical flow of tasks and decisions",
+      "agentCoordinationMapping": "Map how agents will coordinate and hand off",
+      "conditionalLogicDesign": "Design decision points and branching logic",
+      "parallelizationOpportunities": "Identify opportunities for parallel execution",
+      "errorPathDesign": "Design error handling and recovery paths"
+    },
+    "phase3QualityAndPerformanceDesign": {
+      "qualityGateIntegration": "Integrate quality checkpoints throughout workflow",
+      "performanceOptimization": "Optimize for speed and resource efficiency",
+      "monitoringDesign": "Design comprehensive monitoring and alerting",
+      "scalabilityPlanning": "Plan for scale and load variations",
+      "securityIntegration": "Integrate security checkpoints and validations"
+    },
+    "phase4ValidationAndTesting": {
+      "workflowSimulation": "Simulate workflow execution with test data",
+      "performanceTesting": "Test performance under various load conditions",
+      "errorScenarioTesting": "Test error handling and recovery mechanisms",
+      "integrationTesting": "Test integration with existing systems",
+      "userAcceptanceTesting": "Human validation of workflow design and outcomes"
+    },
+    "phase5DeploymentAndOptimization": {
+      "deploymentPlanning": "Plan phased rollout and deployment strategy",
+      "monitoringSetup": "Set up monitoring and alerting infrastructure",
+      "documentationCreation": "Create comprehensive workflow documentation",
+      "optimizationBaseline": "Establish baseline metrics for future optimization",
+      "maintenancePlanning": "Plan ongoing maintenance and evolution"
+    }
+  },
+
+  "workflowPatterns": {
+    "sequential": {
+      "description": "Linear sequence of agent operations",
+      "useCase": "Simple, linear processes with clear dependencies",
+      "advantages": ["simple-to-understand", "easy-to-debug", "predictable"],
+      "disadvantages": ["not-parallelizable", "potential-bottlenecks"]
+    },
+    "parallel": {
+      "description": "Multiple agents working simultaneously",
+      "useCase": "Independent tasks that can be executed concurrently",
+      "advantages": ["faster-execution", "resource-efficiency", "scalable"],
+      "disadvantages": ["complex-coordination", "synchronization-challenges"]
+    },
+    "conditionalBranching": {
+      "description": "Different paths based on conditions or outcomes",
+      "useCase": "Workflows requiring different handling based on input or results",
+      "advantages": ["flexible-handling", "context-aware", "adaptive"],
+      "disadvantages": ["complex-logic", "testing-complexity"]
+    },
+    "iterative": {
+      "description": "Repeated execution until success or termination criteria",
+      "useCase": "Tasks requiring refinement or retry mechanisms",
+      "advantages": ["robust-error-handling", "quality-improvement", "adaptive"],
+      "disadvantages": ["potentially-long-execution", "resource-intensive"]
+    },
+    "pipelined": {
+      "description": "Continuous flow with overlapping stages",
+      "useCase": "High-throughput processing with continuous input",
+      "advantages": ["high-throughput", "continuous-processing", "efficient"],
+      "disadvantages": ["complex-coordination", "buffer-management"]
+    }
+  },
+
+  "qualityGates": {
+    "workflowValidation": {
+      "description": "Workflow design is logically sound and complete",
+      "threshold": 0.95,
+      "validation": "workflow-logic-validation"
+    },
+    "performanceAssessment": {
+      "description": "Workflow meets performance requirements",
+      "threshold": 0.85,
+      "validation": "performance-simulation-results"
+    },
+    "humanApproval": {
+      "description": "Human supervisor has approved the workflow design",
+      "threshold": 1.0,
+      "validation": "human-supervisor-sign-off"
+    },
+    "errorHandlingCompleteness": {
+      "description": "All error scenarios have appropriate handling",
+      "threshold": 0.90,
+      "validation": "error-scenario-coverage-analysis"
+    },
+    "monitoringReadiness": {
+      "description": "Comprehensive monitoring and alerting is configured",
+      "threshold": 0.85,
+      "validation": "monitoring-configuration-completeness"
+    }
+  },
+
+  "humanSupervisionPoints": {
+    "requirementValidation": {
+      "description": "Human validates business requirements and objectives",
+      "stage": "phase1RequirementAnalysis",
+      "required": true
+    },
+    "workflowDesignReview": {
+      "description": "Human reviews and approves workflow design",
+      "stage": "phase2WorkflowModeling",
+      "required": true
+    },
+    "qualityAndPerformanceApproval": {
+      "description": "Human approves quality gates and performance design",
+      "stage": "phase3QualityAndPerformanceDesign",
+      "required": true
+    },
+    "testingValidation": {
+      "description": "Human validates testing results and approves for deployment",
+      "stage": "phase4ValidationAndTesting",
+      "required": true
+    },
+    "deploymentAuthorization": {
+      "description": "Human authorizes workflow deployment and activation",
+      "stage": "phase5DeploymentAndOptimization",
+      "required": true
+    }
+  },
+
+  "outputStructure": {
+    "workflowSpecification": {
+      "workflowDefinition": "Complete workflow configuration and logic",
+      "agentCoordinationRules": "Rules for agent interaction and handoffs",
+      "qualityGateConfiguration": "Quality checkpoints and validation rules",
+      "monitoringConfiguration": "Monitoring, alerting, and logging setup",
+      "errorHandlingProcedures": "Error detection and recovery procedures"
+    },
+    "deploymentPackage": {
+      "configurationFiles": "All necessary workflow configuration files",
+      "documentationSet": "Complete workflow documentation",
+      "testingSuite": "Testing procedures and validation scripts",
+      "monitoringDashboards": "Monitoring dashboards and alerts",
+      "operationalProcedures": "Operational and maintenance procedures"
+    },
+    "optimizationGuidance": {
+      "performanceBaselines": "Performance benchmarks and expectations",
+      "optimizationOpportunities": "Identified areas for future optimization",
+      "scalabilityConsiderations": "Guidelines for scaling the workflow",
+      "evolutionPlan": "Plan for workflow evolution and enhancement",
+      "troubleshootingGuide": "Common issues and resolution procedures"
+    }
+  },
+
+  "handoffTriggers": {
+    "workflowCreationCompleted": {
+      "description": "New workflow successfully created and validated",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.90
+    },
+    "humanApprovalRequired": {
+      "description": "Human supervision and approval needed",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 1.0
+    },
+    "workflowRevisionNeeded": {
+      "description": "Workflow design needs revision based on validation results",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.85
+    },
+    "performanceIssuesDetected": {
+      "description": "Performance issues detected that require redesign",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.90
+    },
+    "creationFailed": {
+      "description": "Unable to create workflow due to fundamental issues",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.95
+    }
+  },
+
+  "learningCapabilities": {
+    "workflowPatternRecognition": "Learn effective workflow patterns for different scenarios",
+    "performanceOptimization": "Improve workflow performance design over time",
+    "errorHandlingImprovement": "Enhance error handling strategies based on outcomes",
+    "agentCoordinationOptimization": "Optimize agent coordination patterns",
+    "humanPreferenceAdaptation": "Adapt to human supervisor preferences and feedback"
+  }
+} 

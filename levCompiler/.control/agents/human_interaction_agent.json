@@ -1,0 +1,157 @@
+{
+  "humanInteractionAgent": {
+    "agentId": "HUMAN-INTERACT-001",
+    "version": "1.0.0",
+    "description": "Primary input router and human interface agent that analyzes human input and routes to appropriate specialized agents",
+    "specialization": "input-analysis-and-routing",
+    "confidenceThreshold": 0.95,
+    "role": "system-gateway"
+  },
+
+  "capabilities": {
+    "primary": [
+      "input-classification",
+      "intent-detection", 
+      "context-extraction",
+      "agent-routing",
+      "human-communication",
+      "escalation-management"
+    ],
+    "secondary": [
+      "multi-modal-input-processing",
+      "conversation-memory",
+      "progress-reporting",
+      "conflict-resolution",
+      "quality-assurance"
+    ],
+    "advanced": [
+      "workflow-orchestration",
+      "dynamic-agent-selection",
+      "context-preservation",
+      "feedback-integration",
+      "learning-adaptation"
+    ]
+  },
+
+  "inputTypes": {
+    "text": ["natural-language-requests", "code-snippets", "error-messages", "requirements"],
+    "images": ["screenshots", "mockups", "diagrams", "visual-requirements"],
+    "files": ["code-files", "documentation", "specifications", "data-files"],
+    "structured": ["json-configs", "yaml-files", "project-structures"]
+  },
+
+  "routingLogic": {
+    "codeGeneration": {
+      "triggers": ["create", "build", "implement", "generate", "write code"],
+      "targetAgent": "code-generation-agent",
+      "confidence": 0.85,
+      "contextRequired": ["requirements", "technology-stack", "constraints"]
+    },
+    "codeReview": {
+      "triggers": ["review", "check", "analyze", "validate", "audit"],
+      "targetAgent": "code-reviewing-agent", 
+      "confidence": 0.90,
+      "contextRequired": ["source-code", "review-criteria", "standards"]
+    },
+    "dryRunTesting": {
+      "triggers": ["test", "dry-run", "simulate", "verify", "check"],
+      "targetAgent": "dry-run-testing-agent",
+      "confidence": 0.85,
+      "contextRequired": ["test-target", "test-scenarios", "expected-outcomes"]
+    },
+    "gatekeeping": {
+      "triggers": ["approve", "gate", "quality-check", "validate-output"],
+      "targetAgent": "gatekeeping-agent",
+      "confidence": 0.95,
+      "contextRequired": ["deliverable", "quality-criteria", "approval-rules"]
+    },
+    "garbageCleanup": {
+      "triggers": ["cleanup", "optimize", "refactor", "remove-unused"],
+      "targetAgent": "garbage-cleanup-agent",
+      "confidence": 0.80,
+      "contextRequired": ["target-code", "cleanup-rules", "preservation-rules"]
+    },
+    "visualAnnotation": {
+      "triggers": ["annotate", "mark", "visual", "ui-analysis"],
+      "targetAgent": "visual-annotation-agent", 
+      "confidence": 0.85,
+      "contextRequired": ["image-input", "annotation-requirements", "functional-mapping"]
+    },
+    "versionTracking": {
+      "triggers": ["version", "commit", "track", "history"],
+      "targetAgent": "version-tracking-agent",
+      "confidence": 0.90,
+      "contextRequired": ["repository-path", "version-info", "tracking-scope"]
+    },
+    "agentCreation": {
+      "triggers": ["create-agent", "new-agent", "agent-setup"],
+      "targetAgent": "agent-creation-agent",
+      "confidence": 0.95,
+      "contextRequired": ["agent-specification", "capabilities", "constraints"],
+      "humanSupervision": true
+    },
+    "workflowCreation": {
+      "triggers": ["create-workflow", "new-workflow", "workflow-setup"],
+      "targetAgent": "workflow-creation-agent", 
+      "confidence": 0.95,
+      "contextRequired": ["workflow-requirements", "agent-chain", "quality-gates"],
+      "humanSupervision": true
+    }
+  },
+
+  "qualityGates": {
+    "inputValidation": {
+      "completeness": 0.85,
+      "clarity": 0.80,
+      "actionability": 0.85
+    },
+    "routingAccuracy": {
+      "intentConfidence": 0.85,
+      "agentMatch": 0.90,
+      "contextSufficiency": 0.80
+    },
+    "humanCommunication": {
+      "responseClarity": 0.85,
+      "progressUpdates": 0.80,
+      "escalationTimeliness": 0.95
+    }
+  },
+
+  "escalationRules": {
+    "lowConfidence": {
+      "threshold": 0.70,
+      "action": "request-clarification",
+      "humanInvolvement": "optional"
+    },
+    "ambiguousInput": {
+      "threshold": 0.60,
+      "action": "ask-clarifying-questions",
+      "humanInvolvement": "recommended" 
+    },
+    "multipleAgentOptions": {
+      "threshold": 0.85,
+      "action": "present-options-to-human",
+      "humanInvolvement": "required"
+    },
+    "criticalOperations": {
+      "triggers": ["delete", "destroy", "remove-all"],
+      "action": "mandatory-human-approval",
+      "humanInvolvement": "required"
+    }
+  },
+
+  "communicationProtocols": {
+    "humanFeedback": {
+      "acknowledgment": "immediate",
+      "progressUpdates": "milestone-based", 
+      "clarificationRequests": "immediate",
+      "completionNotification": "immediate"
+    },
+    "agentCoordination": {
+      "handoffProtocol": "context-complete-transfer",
+      "statusUpdates": "real-time",
+      "errorReporting": "immediate",
+      "qualityFeedback": "post-completion"
+    }
+  }
+} 

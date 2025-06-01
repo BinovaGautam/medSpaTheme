@@ -1,0 +1,184 @@
+{
+  "architecturalDecisions": {
+    "metadata": {
+      "sourceDocument": "ADR-001-theme-base-selection.md",
+      "totalDecisions": 1,
+      "migrationDate": "2025-06-02T02:15:00Z",
+      "status": "migrated"
+    },
+    "ADR-001": {
+      "title": "WordPress Theme Base Selection",
+      "category": "Architectural",
+      "status": "Decided",
+      "created": "2025-01-28",
+      "decisionTarget": "iteration-3",
+      "problem": {
+        "description": "Need to choose between Sage, Underscores, or custom theme base for PreetiDreams luxury medical spa theme development",
+        "context": "Developing a premium WordPress theme requires a solid foundation that supports modern development practices, performance optimization, and maintainable code structure",
+        "constraints": [
+          "Must support Tailwind CSS integration",
+          "Requires modern PHP practices and asset compilation",
+          "Need for easy customization and extensibility",
+          "Performance optimization capabilities",
+          "WordPress standards compliance"
+        ],
+        "successCriteria": [
+          "Reduced development time by 30%",
+          "Built-in performance optimization features",
+          "Modern development tooling support",
+          "Easy maintenance and updates",
+          "Strong community support and documentation"
+        ]
+      },
+      "options": {
+        "optionA": {
+          "name": "Sage Theme Framework",
+          "description": "Laravel-inspired WordPress theme framework with modern tooling and Blade templating",
+          "pros": [
+            "Modern development workflow with Blade templating",
+            "Built-in asset compilation (Vite/Laravel Mix)",
+            "Strong separation of concerns",
+            "Excellent Tailwind CSS integration",
+            "Active community and regular updates",
+            "Performance optimization features"
+          ],
+          "cons": [
+            "Steeper learning curve for traditional WordPress developers",
+            "More complex setup process",
+            "Requires Node.js build process",
+            "Additional dependencies"
+          ],
+          "score": 8.35
+        },
+        "optionB": {
+          "name": "Underscores (_s) Starter Theme",
+          "description": "Official WordPress starter theme with minimal, semantic HTML5 ready structure",
+          "pros": [
+            "Official WordPress foundation",
+            "Lightweight and minimal codebase",
+            "Easy to understand and customize",
+            "Traditional WordPress development approach",
+            "Wide community familiarity",
+            "No build process dependency"
+          ],
+          "cons": [
+            "Requires manual setup for modern tooling",
+            "No built-in asset compilation",
+            "Basic structure needs significant enhancement",
+            "Limited modern development features",
+            "Manual Tailwind CSS integration required"
+          ],
+          "score": 6.05
+        },
+        "optionC": {
+          "name": "Custom Theme from Scratch",
+          "description": "Build completely custom theme foundation tailored specifically for medical spa requirements",
+          "pros": [
+            "Complete control over architecture",
+            "No unnecessary code or dependencies",
+            "Optimized specifically for medical spa needs",
+            "Custom performance optimizations",
+            "Unique competitive advantage"
+          ],
+          "cons": [
+            "Significantly longer development time",
+            "Need to implement all modern features manually",
+            "Higher maintenance burden",
+            "Risk of reinventing the wheel",
+            "No community support"
+          ],
+          "score": 6.20
+        }
+      },
+      "evaluation": {
+        "criteria": {
+          "developmentSpeed": { "weight": "25%", "description": "Time to implement and deploy" },
+          "modernTooling": { "weight": "20%", "description": "Support for modern development practices" },
+          "performance": { "weight": "20%", "description": "Built-in performance optimization features" },
+          "maintainability": { "weight": "15%", "description": "Ease of long-term maintenance" },
+          "tailwindIntegration": { "weight": "10%", "description": "CSS framework integration quality" },
+          "learningCurve": { "weight": "10%", "description": "Team adoption difficulty" }
+        },
+        "methodology": "Weighted scoring matrix with medical spa specific requirements"
+      },
+      "decision": {
+        "chosenOption": "Sage Theme Framework",
+        "rationale": [
+          "Development Efficiency: Sage provides the fastest path to modern WordPress theme development with built-in tooling",
+          "Performance: Excellent performance optimization features and asset compilation",
+          "Modern Standards: Blade templating and modern PHP practices align with luxury brand requirements",
+          "Tailwind Integration: Seamless CSS framework integration for design system implementation",
+          "Future-Proof: Active development and strong community ensure long-term viability"
+        ],
+        "assumptions": [
+          "Development team has Node.js environment available",
+          "Willing to invest in learning Blade templating syntax",
+          "Hosting environment supports modern PHP versions",
+          "Build process can be integrated into deployment workflow"
+        ]
+      },
+      "implementation": {
+        "phase1": {
+          "title": "Setup",
+          "iteration": "iteration-4",
+          "tasks": [
+            "Install Sage theme framework",
+            "Configure build pipeline with Vite",
+            "Set up Tailwind CSS integration",
+            "Establish basic theme structure"
+          ]
+        },
+        "phase2": {
+          "title": "Customization",
+          "iteration": "iteration-5",
+          "tasks": [
+            "Implement medical spa specific templates",
+            "Configure ACF Pro integration",
+            "Set up custom post types within Sage structure",
+            "Establish component architecture"
+          ]
+        },
+        "phase3": {
+          "title": "Optimization",
+          "iteration": "iteration-8",
+          "tasks": [
+            "Performance tuning and optimization",
+            "Accessibility implementation",
+            "Testing and validation"
+          ]
+        }
+      },
+      "monitoring": {
+        "reviewSchedule": "iteration-5 (post-implementation review)",
+        "successIndicators": [
+          "Successful Tailwind CSS integration",
+          "Working build pipeline",
+          "Team adaptation to Blade templating",
+          "Performance benchmarks met"
+        ],
+        "adjustmentTriggers": [
+          "Build pipeline issues that can't be resolved within 1 iteration",
+          "Team productivity decrease due to learning curve",
+          "Performance issues that can't be optimized",
+          "Hosting compatibility problems"
+        ]
+      },
+      "successMetrics": {
+        "technical": {
+          "themeSetupCompletion": "within 2 days",
+          "lighthousePerformance": "90+",
+          "buildTime": "under 10 seconds",
+          "wordPressStandards": "zero violations"
+        },
+        "business": {
+          "developmentTimeReduction": "30%",
+          "codeMaintainabilityImprovement": "measurable",
+          "teamProductivityIncrease": "positive"
+        }
+      },
+      "relatedRequirements": ["REQ-ARCH-001", "REQ-PERF-001"],
+      "relatedTasks": ["TASK-ARCH-001-01"],
+      "migrationTarget": "levCompiler workflow: project-setup-workflow"
+    }
+  }
+}

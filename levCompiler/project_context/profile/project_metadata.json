@@ -1,0 +1,39 @@
+{
+  "project": {
+    "name": "PreetiDreams - Luxury Medical Spa WordPress Theme",
+    "version": "2.0.0",
+    "description": "Luxury Medical Spa WordPress Theme with levCompiler AI Agent Orchestration Framework",
+    "type": "WordPress Theme Development",
+    "license": "MIT",
+    "createdDate": "2025-01-28T00:00:00Z",
+    "lastModified": "2025-06-02T02:32:00Z",
+    "currentPhase": "iteration-1",
+    "healthScore": 95,
+    "status": "active-development",
+    "primaryObjective": "Develop premium WordPress theme for luxury medical spas with HIPAA-conscious features"
+  },
+  "migration": {
+    "sourceSystem": "StarterKit v2.0",
+    "targetSystem": "levCompiler AI Agent Orchestration Framework",
+    "migrationDate": "2025-06-02T02:32:00Z",
+    "migrationStatus": "completed",
+    "correctLocation": "levCompiler/project_context/",
+    "dataPreservation": {
+      "requirements": "11 entities migrated",
+      "tasks": "1 entity migrated",
+      "decisions": "1 entity migrated",
+      "healthMetrics": "preserved"
+    }
+  },
+  "team": {
+    "author": "StarterKit Development Team",
+    "maintainer": "levCompiler Framework",
+    "contributors": ["AI Agent Orchestration System"]
+  },
+  "repository": {
+    "path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme",
+    "structure": "WordPress theme with modular project management",
+    "managementSystem": "levCompiler AI Agent Orchestration Framework",
+    "projectContextPath": "levCompiler/project_context/"
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "codeGenerationAgent": {
+    "agentId": "CODE-GEN-001",
+    "version": "1.0.0", 
+    "description": "Specialized agent for generating high-quality, maintainable code based on requirements and specifications",
+    "specialization": "code-implementation",
+    "confidenceThreshold": 0.80,
+    "role": "code-creator"
+  },
+
+  "objectives": {
+    "primary": "Generate functional, maintainable, and well-documented code that meets specified requirements",
+    "secondary": "Ensure code follows best practices, standards, and architectural guidelines",
+    "tertiary": "Provide comprehensive documentation and testing scaffolds"
+  },
+
+  "capabilities": {
+    "primary": [
+      "code-implementation", 
+      "function-creation",
+      "class-design",
+      "api-development",
+      "database-schema-implementation"
+    ],
+    "secondary": [
+      "documentation-generation",
+      "unit-test-scaffolding", 
+      "error-handling-implementation",
+      "logging-integration",
+      "configuration-management"
+    ],
+    "advanced": [
+      "design-pattern-implementation",
+      "performance-optimization",
+      "security-implementation",
+      "scalability-considerations",
+      "cross-platform-compatibility"
+    ]
+  },
+
+  "roles": {
+    "codeCreator": "Implements functional code from specifications",
+    "architectureImplementer": "Translates architectural decisions into code",
+    "standardsEnforcer": "Ensures code follows established conventions",
+    "documentationProvider": "Creates comprehensive code documentation",
+    "testScaffolder": "Provides basic testing framework setup",
+    "patternImplementer": "Implements appropriate design patterns",
+    "bestPracticesEnforcer": "Ensures industry best practices are followed"
+  },
+
+  "rules": {
+    "codeQuality": [
+      "MUST follow language-specific best practices",
+      "MUST include proper error handling",
+      "MUST add meaningful comments and documentation", 
+      "MUST follow consistent naming conventions",
+      "MUST implement proper logging where appropriate"
+    ],
+    "security": [
+      "MUST sanitize all inputs",
+      "MUST avoid hardcoded secrets or credentials",
+      "MUST implement proper authentication/authorization",
+      "MUST follow secure coding practices",
+      "MUST validate all external data"
+    ],
+    "performance": [
+      "SHOULD optimize for readability over premature optimization",
+      "MUST avoid obvious performance anti-patterns", 
+      "SHOULD consider memory efficiency",
+      "MUST implement proper resource cleanup",
+      "SHOULD use appropriate data structures"
+    ],
+    "maintainability": [
+      "MUST write self-documenting code",
+      "MUST follow SOLID principles where applicable",
+      "MUST avoid code duplication (DRY principle)",
+      "MUST use meaningful variable and function names",
+      "MUST keep functions focused and small"
+    ]
+  },
+
+  "criticalWatchPoints": {
+    "securityVulnerabilities": {
+      "priority": "critical",
+      "triggers": ["sql-injection", "xss-vulnerability", "auth-bypass", "hardcoded-secrets"],
+      "action": "immediate-escalation",
+      "confidence": 0.95
+    },
+    "performanceBottlenecks": {
+      "priority": "high", 
+      "triggers": ["infinite-loops", "memory-leaks", "inefficient-algorithms", "blocking-operations"],
+      "action": "flag-for-review",
+      "confidence": 0.85
+    },
+    "functionalErrors": {
+      "priority": "high",
+      "triggers": ["logic-errors", "edge-case-failures", "incorrect-implementations"],
+      "action": "self-review-and-fix",
+      "confidence": 0.80
+    },
+    "standardsViolations": {
+      "priority": "medium",
+      "triggers": ["naming-violations", "structure-violations", "documentation-missing"],
+      "action": "auto-correct-if-possible",
+      "confidence": 0.75
+    },
+    "dependencyIssues": {
+      "priority": "high",
+      "triggers": ["missing-dependencies", "version-conflicts", "deprecated-packages"],
+      "action": "research-and-recommend",
+      "confidence": 0.85
+    }
+  },
+
+  "inputTypes": {
+    "requirements": ["functional-specs", "user-stories", "acceptance-criteria"],
+    "technical": ["architecture-diagrams", "api-specs", "database-schemas"],
+    "constraints": ["technology-stack", "performance-requirements", "security-requirements"],
+    "context": ["existing-codebase", "coding-standards", "project-conventions"]
+  },
+
+  "outputTypes": {
+    "primaryCode": ["source-files", "configuration-files", "build-scripts"],
+    "documentation": ["inline-comments", "readme-files", "api-documentation"],
+    "testing": ["unit-test-templates", "integration-test-scaffolds"],
+    "deployment": ["dockerfile", "deployment-configs", "environment-configs"]
+  },
+
+  "industryBestPractices": {
+    "designPatterns": {
+      "applicationByContext": {
+        "simpleApplications": ["factory", "observer", "strategy"],
+        "complexApplications": ["factory", "builder", "observer", "strategy", "command", "decorator"],
+        "enterpriseApplications": ["factory", "builder", "singleton", "observer", "strategy", "command", "decorator", "adapter", "facade", "proxy"]
+      },
+      "patternImplementation": {
+        "factory": {
+          "when": "Creating objects without specifying exact classes",
+          "benefit": "Loose coupling, easy to extend",
+          "implementation": "Create factory classes/functions for object creation"
+        },
+        "builder": {
+          "when": "Complex object construction with multiple parameters",
+          "benefit": "Step-by-step construction, readable code",
+          "implementation": "Builder pattern for complex configurations"
+        },
+        "observer": {
+          "when": "One-to-many dependency between objects",
+          "benefit": "Loose coupling, event-driven architecture",
+          "implementation": "Event emitters, state management patterns"
+        },
+        "strategy": {
+          "when": "Multiple ways to perform a task",
+          "benefit": "Easy to switch algorithms, testable",
+          "implementation": "Strategy interfaces with concrete implementations"
+        }
+      }
+    },
+    "solidPrinciples": {
+      "singleResponsibility": {
+        "rule": "Each class/function should have only one reason to change",
+        "implementation": [
+          "Separate data access from business logic",
+          "Keep UI logic separate from business logic",
+          "Create focused, single-purpose functions",
+          "Avoid god classes/functions"
+        ]
+      },
+      "openClosed": {
+        "rule": "Open for extension, closed for modification",
+        "implementation": [
+          "Use interfaces and abstract classes",
+          "Implement plugin architectures",
+          "Use configuration over hard-coding",
+          "Prefer composition over inheritance"
+        ]
+      },
+      "liskovSubstitution": {
+        "rule": "Subtypes must be substitutable for their base types",
+        "implementation": [
+          "Ensure derived classes honor base class contracts",
+          "Avoid strengthening preconditions",
+          "Avoid weakening postconditions",
+          "Maintain behavioral consistency"
+        ]
+      },
+      "interfaceSegregation": {
+        "rule": "Clients shouldn't depend on interfaces they don't use",
+        "implementation": [
+          "Create focused, role-based interfaces",
+          "Avoid fat interfaces",
+          "Use composition to combine behaviors",
+          "Keep interfaces minimal and cohesive"
+        ]
+      },
+      "dependencyInversion": {
+        "rule": "Depend on abstractions, not concretions",
+        "implementation": [
+          "Use dependency injection",
+          "Program to interfaces",
+          "Invert control flow",
+          "Use IoC containers where appropriate"
+        ]
+      }
+    },
+    "dryPrinciple": {
+      "implementation": [
+        "Extract common functionality into reusable functions/classes",
+        "Use configuration files for environment-specific values",
+        "Create utility libraries for repeated operations",
+        "Implement shared components and services",
+        "Use constants for magic numbers and strings"
+      ]
+    },
+    "cleanCodePrinciples": {
+      "naming": [
+        "Use intention-revealing names",
+        "Avoid mental mapping",
+        "Use searchable names",
+        "Avoid encodings and prefixes",
+        "Use consistent naming conventions"
+      ],
+      "functions": [
+        "Keep functions small (max 20-30 lines)",
+        "Do one thing well",
+        "Use descriptive names",
+        "Limit function parameters (max 3-4)",
+        "Avoid flag arguments"
+      ],
+      "comments": [
+        "Explain why, not what",
+        "Avoid redundant comments",
+        "Update comments with code changes",
+        "Use code to express intent when possible",
+        "Document complex algorithms and business rules"
+      ],
+      "errorHandling": [
+        "Use exceptions for exceptional cases",
+        "Provide meaningful error messages",
+        "Handle errors at appropriate levels",
+        "Fail fast and fail clearly",
+        "Log errors appropriately"
+      ]
+    }
+  },
+
+  "techStackSpecificImplementation": {
+    "react": {
+      "bestPractices": [
+        "Use functional components with hooks",
+        "Implement proper state management (useState, useReducer, Context)",
+        "Memoize expensive computations with useMemo/useCallback",
+        "Follow React component composition patterns",
+        "Implement proper error boundaries"
+      ],
+      "designPatterns": [
+        "Higher-Order Components (HOCs)",
+        "Render Props pattern",
+        "Compound Components pattern",
+        "Provider pattern for state management",
+        "Custom hooks for reusable logic"
+      ],
+      "codeStructure": {
+        "componentStructure": [
+          "Import statements (React, hooks, utilities, components)",
+          "Type definitions (if TypeScript)",
+          "Main component function",
+          "Styled components or CSS modules",
+          "Export statement"
+        ],
+        "hookPatterns": [
+          "Custom hooks for business logic",
+          "useEffect for side effects",
+          "useState for local state",
+          "useContext for shared state",
+          "useReducer for complex state logic"
+        ]
+      }
+    },
+    "nodejs": {
+      "bestPractices": [
+        "Use async/await for asynchronous operations",
+        "Implement proper error handling middleware",
+        "Use environment variables for configuration",
+        "Implement request validation and sanitization",
+        "Follow RESTful API design principles"
+      ],
+      "designPatterns": [
+        "MVC (Model-View-Controller) pattern",
+        "Repository pattern for data access",
+        "Service layer pattern",
+        "Middleware pattern",
+        "Factory pattern for creating services"
+      ],
+      "codeStructure": {
+        "apiStructure": [
+          "Routes (endpoint definitions)",
+          "Controllers (request handling)",
+          "Services (business logic)",
+          "Models (data structures)",
+          "Middleware (cross-cutting concerns)",
+          "Utils (helper functions)"
+        ]
+      }
+    },
+    "python": {
+      "bestPractices": [
+        "Follow PEP 8 style guidelines",
+        "Use type hints for better code documentation",
+        "Implement proper exception handling",
+        "Use list comprehensions and generators appropriately",
+        "Follow the Zen of Python principles"
+      ],
+      "designPatterns": [
+        "Factory pattern for object creation",
+        "Singleton pattern for shared resources",
+        "Observer pattern for event handling",
+        "Strategy pattern for algorithm selection",
+        "Decorator pattern for extending functionality"
+      ]
+    }
+  },
+
+  "qualityGates": {
+    "syntaxValidation": {
+      "description": "Code must be syntactically correct and compile/parse successfully",
+      "threshold": 1.0,
+      "automated": true
+    },
+    "standardsCompliance": {
+      "description": "Code must follow established coding standards and conventions",
+      "threshold": 0.90,
+      "automated": true
+    },
+    "functionalityCheck": {
+      "description": "Generated code must fulfill specified requirements",
+      "threshold": 0.85,
+      "automated": false
+    },
+    "securityValidation": {
+      "description": "Code must pass basic security vulnerability scans",
+      "threshold": 0.95,
+      "automated": true
+    },
+    "documentationCompleteness": {
+      "description": "Code must have adequate documentation and comments",
+      "threshold": 0.80,
+      "automated": true
+    },
+    "designPatternCompliance": {
+      "description": "Code must properly implement appropriate design patterns",
+      "threshold": 0.85,
+      "automated": false
+    },
+    "bestPracticesAdherence": {
+      "description": "Code must follow industry best practices",
+      "threshold": 0.88,
+      "automated": true
+    }
+  },
+
+  "handoffTriggers": {
+    "implementationComplete": {
+      "description": "Code generation finished successfully",
+      "nextAgent": "code-reviewing-agent",
+      "confidence": 0.85
+    },
+    "reviewRequired": {
+      "description": "Code needs human or specialized review",
+      "nextAgent": "critical-reviewer",
+      "confidence": 0.70
+    },
+    "testingNeeded": {
+      "description": "Code requires comprehensive testing",
+      "nextAgent": "dry-run-testing-agent", 
+      "confidence": 0.80
+    },
+    "implementationFailed": {
+      "description": "Unable to generate satisfactory code",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.60
+    }
+  },
+
+  "learningCapabilities": {
+    "patternRecognition": "Learn from successful implementations",
+    "errorAvoidance": "Remember and avoid past mistakes",
+    "styleAdaptation": "Adapt to project-specific coding styles",
+    "performanceOptimization": "Learn optimal patterns for performance",
+    "securityHardening": "Improve security implementation over time"
+  }
+} 

@@ -1,0 +1,575 @@
+{
+  "projectAnalysisWorkflow": {
+    "workflowId": "PROJECT-ANALYSIS-WF-001",
+    "version": "1.0.0",
+    "description": "Comprehensive analysis of existing projects to establish context, patterns, and integration points for levCompiler",
+    "workflowType": "project-discovery-and-integration",
+    "priority": 1,
+    "status": "active",
+    "parentWorkflow": "base-input-output-workflow"
+  },
+
+  "workflowSteps": {
+    "step1ProjectDiscovery": {
+      "stepId": "PROJECT-DISCOVERY",
+      "description": "Initial discovery and mapping of project structure and components",
+      "agent": "tech-stack-manager-agent",
+      "duration": "15-30 minutes",
+      "inputs": ["project-root-path", "analysis-scope", "access-credentials"],
+      "discoveryAspects": {
+        "directoryStructureMapping": {
+          "description": "Map complete directory structure and file organization",
+          "actions": [
+            "scan-directory-tree",
+            "identify-source-directories",
+            "map-test-directories",
+            "locate-configuration-files",
+            "identify-documentation-structure",
+            "detect-build-artifacts",
+            "map-deployment-configs"
+          ]
+        },
+        "fileTypeAnalysis": {
+          "description": "Analyze file types and their distribution",
+          "metrics": [
+            "file-type-counts",
+            "code-to-documentation-ratio",
+            "test-coverage-distribution",
+            "configuration-file-types",
+            "asset-file-distribution"
+          ]
+        },
+        "projectSizeMetrics": {
+          "description": "Establish project scale and complexity metrics",
+          "measurements": [
+            "total-lines-of-code",
+            "number-of-components-files",
+            "dependency-count",
+            "directory-depth",
+            "file-count-per-directory"
+          ]
+        }
+      },
+      "qualityGates": [
+        "directory-structure-mapped",
+        "file-inventory-complete",
+        "access-permissions-verified"
+      ],
+      "outputs": ["project-structure-map", "file-inventory", "size-metrics"],
+      "nextStep": "TECH-STACK-IDENTIFICATION"
+    },
+
+    "step2TechStackIdentification": {
+      "stepId": "TECH-STACK-IDENTIFICATION",
+      "description": "Identify and analyze the complete technology stack",
+      "agent": "tech-stack-manager-agent",
+      "duration": "20-35 minutes",
+      "inputs": ["project-structure-map", "file-inventory", "configuration-files"],
+      "identificationPhases": {
+        "frameworkDetection": {
+          "description": "Detect primary and secondary frameworks",
+          "detectionMethods": [
+            "package-json-analysis",
+            "requirements-txt-analysis",
+            "build-file-inspection",
+            "import-statement-analysis",
+            "configuration-file-parsing",
+            "dependency-tree-analysis"
+          ]
+        },
+        "languageAndVersionAnalysis": {
+          "description": "Identify programming languages and versions",
+          "analysis": [
+            "primary-language-identification",
+            "language-version-detection",
+            "multi-language-project-mapping",
+            "language-specific-patterns",
+            "compiler-runtime-requirements"
+          ]
+        },
+        "infrastructureMapping": {
+          "description": "Map infrastructure and deployment technologies",
+          "components": [
+            "database-technologies",
+            "caching-systems",
+            "web-servers",
+            "container-technologies",
+            "cloud-services",
+            "ci-cd-tools",
+            "monitoring-tools"
+          ]
+        },
+        "developmentToolAnalysis": {
+          "description": "Analyze development and build tools",
+          "tools": [
+            "build-systems",
+            "task-runners",
+            "linting-tools",
+            "formatting-tools",
+            "testing-frameworks",
+            "bundling-tools",
+            "development-servers"
+          ]
+        }
+      },
+      "qualityGates": [
+        "primary-tech-stack-identified",
+        "version-compatibility-verified",
+        "dependency-conflicts-analyzed"
+      ],
+      "outputs": ["tech-stack-inventory", "version-matrix", "compatibility-report"],
+      "nextStep": "ARCHITECTURE-ANALYSIS"
+    },
+
+    "step3ArchitectureAnalysis": {
+      "stepId": "ARCHITECTURE-ANALYSIS",
+      "description": "Analyze project architecture patterns and design decisions",
+      "agent": "code-reviewing-agent",
+      "duration": "25-40 minutes",
+      "inputs": ["tech-stack-inventory", "project-structure-map", "source-code-files"],
+      "architecturalAnalysis": {
+        "designPatternDetection": {
+          "description": "Identify implemented design patterns",
+          "patterns": [
+            "mvc-mvp-mvvm-patterns",
+            "repository-pattern",
+            "factory-pattern",
+            "observer-pattern",
+            "singleton-pattern",
+            "dependency-injection-patterns",
+            "strategy-pattern",
+            "adapter-pattern"
+          ]
+        },
+        "layeringAnalysis": {
+          "description": "Analyze application layering and separation of concerns",
+          "layers": [
+            "presentation-layer-structure",
+            "business-logic-organization",
+            "data-access-layer-design",
+            "service-layer-patterns",
+            "infrastructure-layer-setup"
+          ]
+        },
+        "componentArchitecture": {
+          "description": "Analyze component structure and relationships",
+          "analysis": [
+            "component-hierarchy-mapping",
+            "inter-component-dependencies",
+            "shared-component-identification",
+            "reusable-utility-mapping",
+            "cross-cutting-concern-analysis"
+          ]
+        },
+        "dataFlowAnalysis": {
+          "description": "Understand data flow and state management",
+          "aspects": [
+            "state-management-patterns",
+            "data-persistence-strategies",
+            "api-integration-patterns",
+            "event-handling-mechanisms",
+            "data-validation-approaches"
+          ]
+        }
+      },
+      "qualityGates": [
+        "architecture-patterns-identified",
+        "component-relationships-mapped",
+        "data-flow-understood"
+      ],
+      "outputs": ["architecture-documentation", "component-map", "pattern-inventory"],
+      "nextStep": "CODE-QUALITY-ASSESSMENT"
+    },
+
+    "step4CodeQualityAssessment": {
+      "stepId": "CODE-QUALITY-ASSESSMENT",
+      "description": "Assess code quality, patterns, and technical debt",
+      "agent": "code-reviewing-agent",
+      "duration": "20-35 minutes",
+      "inputs": ["source-code-files", "architecture-documentation", "tech-stack-inventory"],
+      "qualityAssessmentAreas": {
+        "codingStandardsAnalysis": {
+          "description": "Analyze adherence to coding standards and conventions",
+          "assessments": [
+            "naming-convention-consistency",
+            "code-formatting-standards",
+            "comment-and-documentation-quality",
+            "file-organization-patterns",
+            "import-export-conventions"
+          ]
+        },
+        "codeQualityMetrics": {
+          "description": "Calculate code quality metrics",
+          "metrics": [
+            "cyclomatic-complexity",
+            "code-duplication-analysis",
+            "function-method-length-analysis",
+            "class-size-analysis",
+            "dependency-coupling-metrics",
+            "test-coverage-analysis"
+          ]
+        },
+        "technicalDebtAssessment": {
+          "description": "Identify technical debt and improvement opportunities",
+          "debt": [
+            "deprecated-dependencies",
+            "security-vulnerabilities",
+            "performance-bottlenecks",
+            "code-smell-detection",
+            "outdated-patterns",
+            "missing-error-handling"
+          ]
+        },
+        "bestPracticesCompliance": {
+          "description": "Evaluate compliance with industry best practices",
+          "practices": [
+            "solid-principles-adherence",
+            "dry-principle-compliance",
+            "security-best-practices",
+            "performance-optimization",
+            "accessibility-standards",
+            "testing-best-practices"
+          ]
+        }
+      },
+      "qualityGates": [
+        "quality-metrics-calculated",
+        "technical-debt-identified",
+        "improvement-opportunities-documented"
+      ],
+      "outputs": ["quality-report", "technical-debt-inventory", "improvement-recommendations"],
+      "nextStep": "TESTING-INFRASTRUCTURE-ANALYSIS"
+    },
+
+    "step5TestingInfrastructureAnalysis": {
+      "stepId": "TESTING-INFRASTRUCTURE-ANALYSIS",
+      "description": "Analyze existing testing infrastructure and coverage",
+      "agent": "dry-run-testing-agent",
+      "duration": "15-25 minutes",
+      "inputs": ["project-structure-map", "tech-stack-inventory", "test-files"],
+      "testingAnalysis": {
+        "testFrameworkIdentification": {
+          "description": "Identify testing frameworks and tools",
+          "frameworks": [
+            "unit-testing-frameworks",
+            "integration-testing-tools",
+            "e2e-testing-frameworks",
+            "performance-testing-tools",
+            "mocking-libraries",
+            "test-runners"
+          ]
+        },
+        "testCoverageAnalysis": {
+          "description": "Analyze test coverage and quality",
+          "coverage": [
+            "line-coverage-percentage",
+            "branch-coverage-analysis",
+            "function-coverage-metrics",
+            "test-case-quality-assessment",
+            "test-maintainability-score"
+          ]
+        },
+        "testingPatternsAnalysis": {
+          "description": "Analyze testing patterns and strategies",
+          "patterns": [
+            "test-organization-structure",
+            "testing-strategy-consistency",
+            "mock-stub-usage-patterns",
+            "assertion-patterns",
+            "test-data-management",
+            "test-environment-setup"
+          ]
+        }
+      },
+      "qualityGates": [
+        "testing-infrastructure-mapped",
+        "coverage-gaps-identified",
+        "testing-patterns-documented"
+      ],
+      "outputs": ["testing-infrastructure-report", "coverage-analysis", "testing-recommendations"],
+      "nextStep": "DEPENDENCY-ANALYSIS"
+    },
+
+    "step6DependencyAnalysis": {
+      "stepId": "DEPENDENCY-ANALYSIS",
+      "description": "Comprehensive analysis of project dependencies and integrations",
+      "agent": "tech-stack-manager-agent",
+      "duration": "15-25 minutes",
+      "inputs": ["tech-stack-inventory", "package-files", "configuration-files"],
+      "dependencyAnalysis": {
+        "dependencyMapping": {
+          "description": "Map all project dependencies",
+          "mapping": [
+            "direct-dependencies-inventory",
+            "transitive-dependencies-analysis",
+            "dev-vs-production-dependencies",
+            "dependency-version-analysis",
+            "dependency-tree-visualization"
+          ]
+        },
+        "securityVulnerabilityScanning": {
+          "description": "Scan dependencies for security vulnerabilities",
+          "scanning": [
+            "known-vulnerability-detection",
+            "outdated-package-identification",
+            "security-advisory-checking",
+            "license-compliance-analysis",
+            "dependency-risk-assessment"
+          ]
+        },
+        "dependencyOptimizationOpportunities": {
+          "description": "Identify optimization opportunities",
+          "opportunities": [
+            "duplicate-dependency-detection",
+            "unused-dependency-identification",
+            "bundle-size-optimization",
+            "version-consolidation-opportunities",
+            "alternative-lighter-packages"
+          ]
+        }
+      },
+      "qualityGates": [
+        "all-dependencies-cataloged",
+        "security-vulnerabilities-assessed",
+        "optimization-opportunities-identified"
+      ],
+      "outputs": ["dependency-inventory", "security-vulnerability-report", "optimization-recommendations"],
+      "nextStep": "PROJECT-CONTEXT-GENERATION"
+    },
+
+    "step7ProjectContextGeneration": {
+      "stepId": "PROJECT-CONTEXT-GENERATION",
+      "description": "Generate comprehensive project context and references",
+      "agent": "tech-stack-manager-agent",
+      "duration": "20-30 minutes",
+      "inputs": ["all-analysis-outputs", "project-metadata", "team-preferences"],
+      "contextGenerationPhases": {
+        "projectMetadataCreation": {
+          "description": "Create comprehensive project metadata",
+          "metadata": [
+            "project-profile-creation",
+            "tech-stack-profile-generation",
+            "architecture-summary-creation",
+            "quality-baseline-establishment",
+            "team-convention-documentation"
+          ]
+        },
+        "agentConfigurationCustomization": {
+          "description": "Customize agent configurations for the project",
+          "customizations": [
+            "project-specific-coding-standards",
+            "framework-specific-best-practices",
+            "quality-threshold-adjustments",
+            "security-requirement-specifications",
+            "performance-target-definitions"
+          ]
+        },
+        "workflowAdaptation": {
+          "description": "Adapt workflows to project characteristics",
+          "adaptations": [
+            "project-specific-workflow-customization",
+            "quality-gate-adjustment",
+            "testing-strategy-alignment",
+            "deployment-process-integration",
+            "review-process-customization"
+          ]
+        },
+        "contextReferenceCreation": {
+          "description": "Create references in project_context directory",
+          "references": [
+            "tech-stack-reference-files",
+            "architecture-pattern-references",
+            "coding-convention-references",
+            "quality-standard-references",
+            "dependency-management-references"
+          ]
+        }
+      },
+      "qualityGates": [
+        "project-metadata-complete",
+        "agent-configurations-customized",
+        "context-references-created"
+      ],
+      "outputs": ["project-context-files", "customized-agent-configs", "adapted-workflows"],
+      "nextStep": "INTEGRATION-RECOMMENDATIONS"
+    },
+
+    "step8IntegrationRecommendations": {
+      "stepId": "INTEGRATION-RECOMMENDATIONS",
+      "description": "Generate recommendations for levCompiler integration",
+      "agent": "human-interaction-agent",
+      "duration": "10-15 minutes",
+      "inputs": ["project-context-files", "analysis-reports", "improvement-recommendations"],
+      "recommendationCategories": {
+        "immediateIntegrationSteps": {
+          "description": "Steps for immediate levCompiler integration",
+          "steps": [
+            "agent-configuration-deployment",
+            "workflow-integration-setup",
+            "quality-gate-implementation",
+            "testing-integration-setup",
+            "version-control-integration"
+          ]
+        },
+        "improvementOpportunities": {
+          "description": "Project improvement opportunities with levCompiler",
+          "opportunities": [
+            "code-quality-enhancement-plan",
+            "testing-coverage-improvement",
+            "technical-debt-reduction-strategy",
+            "security-hardening-recommendations",
+            "performance-optimization-plan"
+          ]
+        },
+        "riskMitigationStrategies": {
+          "description": "Risk mitigation for integration process",
+          "strategies": [
+            "gradual-integration-approach",
+            "rollback-procedures",
+            "team-training-requirements",
+            "change-management-plan",
+            "monitoring-and-validation-setup"
+          ]
+        },
+        "longTermRoadmap": {
+          "description": "Long-term roadmap for leveraging levCompiler",
+          "roadmap": [
+            "phase1-basic-integration",
+            "phase2-quality-improvement",
+            "phase3-advanced-automation",
+            "phase4-full-optimization",
+            "ongoing-evolution-strategy"
+          ]
+        }
+      },
+      "qualityGates": [
+        "integration-plan-complete",
+        "risk-mitigation-documented",
+        "roadmap-validated"
+      ],
+      "outputs": ["integration-plan", "risk-mitigation-strategy", "long-term-roadmap"],
+      "nextStep": "FINAL-ANALYSIS-APPROVAL"
+    },
+
+    "step9FinalAnalysisApproval": {
+      "stepId": "FINAL-ANALYSIS-APPROVAL",
+      "description": "Final approval and documentation of project analysis",
+      "agent": "gatekeeping-agent",
+      "duration": "5-10 minutes",
+      "inputs": ["complete-analysis-package", "integration-recommendations", "project-context"],
+      "approvalCriteria": {
+        "analysisCompleteness": "All aspects of the project have been thoroughly analyzed",
+        "contextAccuracy": "Project context accurately represents the existing project",
+        "integrationViability": "Integration plan is realistic and achievable",
+        "riskAssessment": "Risks have been properly identified and mitigation strategies provided",
+        "documentationQuality": "Analysis documentation is comprehensive and actionable"
+      },
+      "finalDeliverables": {
+        "projectContextDatabase": "Complete project context stored in project_context directory",
+        "customizedAgentConfigs": "Agent configurations tailored to the specific project",
+        "integrationGuide": "Step-by-step integration guide for the development team",
+        "improvementRoadmap": "Prioritized roadmap for project improvements",
+        "monitoringDashboard": "Setup for monitoring integration success"
+      },
+      "outputs": ["analysis-certification", "integration-package", "monitoring-setup"],
+      "nextStep": "WORKFLOW-COMPLETE"
+    }
+  },
+
+  "projectContextStructure": {
+    "directoryOrganization": {
+      "projectProfile": {
+        "location": "project_context/profile/",
+        "files": [
+          "project_metadata.json",
+          "tech_stack_profile.json",
+          "architecture_summary.json",
+          "team_conventions.json"
+        ]
+      },
+      "codebaseAnalysis": {
+        "location": "project_context/analysis/",
+        "files": [
+          "structure_analysis.json",
+          "quality_metrics.json",
+          "dependency_analysis.json",
+          "security_assessment.json"
+        ]
+      },
+      "patterns": {
+        "location": "project_context/patterns/",
+        "files": [
+          "design_patterns.json",
+          "coding_conventions.json",
+          "architecture_patterns.json",
+          "naming_conventions.json"
+        ]
+      },
+      "integrationConfig": {
+        "location": "project_context/integration/",
+        "files": [
+          "agent_customizations.json",
+          "workflow_adaptations.json",
+          "quality_thresholds.json",
+          "integration_settings.json"
+        ]
+      },
+      "improvementPlans": {
+        "location": "project_context/improvements/",
+        "files": [
+          "technical_debt_plan.json",
+          "quality_improvement_plan.json",
+          "security_hardening_plan.json",
+          "performance_optimization_plan.json"
+        ]
+      }
+    }
+  },
+
+  "workflowMetrics": {
+    "successCriteria": {
+      "projectUnderstanding": "Complete understanding of project structure, tech stack, and patterns",
+      "contextAccuracy": "Accurate project context references created",
+      "integrationReadiness": "levCompiler ready for seamless integration",
+      "improvementPlan": "Clear roadmap for project improvements with levCompiler"
+    },
+
+    "performanceTargets": {
+      "totalDuration": "120-200 minutes for complete analysis",
+      "accuracyLevel": "> 95% accuracy in tech stack and pattern identification",
+      "contextCompleteness": "> 90% coverage of project characteristics",
+      "integrationSuccessRate": "> 90% successful integrations"
+    },
+
+    "qualityIndicators": {
+      "analysisDepth": "Depth and comprehensiveness of project analysis",
+      "contextRelevance": "Relevance and accuracy of generated context",
+      "integrationSmoothness": "Smoothness of subsequent levCompiler integration",
+      "improvementImpact": "Impact of recommended improvements on project quality"
+    }
+  },
+
+  "integrationPoints": {
+    "subsequentWorkflows": {
+      "codeGenerationWorkflow": "Enhanced with project-specific context and patterns",
+      "codeReviewWorkflow": "Configured with project-specific quality standards",
+      "visualDevelopmentWorkflow": "Aware of existing UI patterns and conventions",
+      "projectSetupWorkflow": "Informed by existing project structure for extensions"
+    },
+
+    "agentEnhancement": {
+      "allAgents": "Receive project-specific context and customizations",
+      "codeGenerationAgent": "Aware of existing patterns and conventions",
+      "codeReviewingAgent": "Configured with project-specific quality standards",
+      "techStackManager": "Understands existing tech stack and constraints"
+    }
+  },
+
+  "learningCapabilities": {
+    "patternRecognition": "Learn common project patterns for faster future analysis",
+    "integrationOptimization": "Improve integration recommendations based on success rates",
+    "contextAccuracy": "Enhance context generation accuracy based on feedback",
+    "analysisEfficiency": "Optimize analysis process for different project types",
+    "improvementTracking": "Track improvement plan success for better future recommendations"
+  }
+} 

@@ -1,0 +1,304 @@
+{
+  "baseInputOutputWorkflow": {
+    "workflowId": "BASE-IO-001",
+    "version": "1.0.0",
+    "description": "Fundamental input-output workflow that orchestrates agent interactions based on input analysis and routing",
+    "workflowType": "base-orchestration",
+    "priority": 1,
+    "status": "active"
+  },
+
+  "architecture": {
+    "pattern": "input-analysis-routing-processing-output",
+    "entryPoint": "human-interaction-agent",
+    "orchestrationType": "intelligent-routing",
+    "parallelizationSupport": true,
+    "errorHandling": "comprehensive-with-escalation"
+  },
+
+  "phases": {
+    "phase1InputReception": {
+      "description": "Receive and validate input from various sources",
+      "duration": "immediate",
+      "agents": ["human-interaction-agent"],
+      "inputTypes": [
+        "human-natural-language",
+        "human-structured-requests", 
+        "agent-generated-requests",
+        "system-triggered-events",
+        "file-uploads",
+        "visual-content"
+      ],
+      "validationRules": [
+        "input-completeness-check",
+        "input-format-validation",
+        "security-sanitization",
+        "context-extraction"
+      ],
+      "outputs": ["validated-input", "extracted-context", "routing-recommendation"]
+    },
+
+    "phase2InputAnalysisAndRouting": {
+      "description": "Analyze input intent and determine optimal agent routing",
+      "duration": "1-3 minutes",
+      "agents": ["human-interaction-agent"],
+      "analysisTypes": [
+        "intent-classification",
+        "complexity-assessment",
+        "capability-requirement-mapping",
+        "context-dependency-analysis",
+        "priority-determination"
+      ],
+      "routingLogic": {
+        "codeGeneration": {
+          "triggers": ["create", "build", "implement", "generate", "write code"],
+          "targetWorkflow": "code-generation-workflow",
+          "confidence": 0.85
+        },
+        "codeReview": {
+          "triggers": ["review", "check", "analyze", "validate", "audit"],
+          "targetWorkflow": "code-review-workflow", 
+          "confidence": 0.90
+        },
+        "codeOptimization": {
+          "triggers": ["cleanup", "optimize", "refactor", "improve"],
+          "targetWorkflow": "code-optimization-workflow",
+          "confidence": 0.80
+        },
+        "visualDevelopment": {
+          "triggers": ["visual", "ui", "design", "mockup", "wireframe"],
+          "targetWorkflow": "visual-development-workflow",
+          "confidence": 0.85
+        },
+        "versionManagement": {
+          "triggers": ["version", "commit", "release", "tag"],
+          "targetWorkflow": "version-management-workflow",
+          "confidence": 0.90
+        },
+        "systemManagement": {
+          "triggers": ["create-agent", "create-workflow", "system-config"],
+          "targetWorkflow": "system-management-workflow",
+          "confidence": 0.95
+        }
+      },
+      "outputs": ["routing-decision", "agent-chain", "execution-plan"]
+    },
+
+    "phase3AgentOrchestration": {
+      "description": "Orchestrate specialized agents based on routing decision",
+      "duration": "variable-based-on-task",
+      "orchestrationModes": {
+        "sequential": {
+          "description": "Execute agents in sequence with handoffs",
+          "useCase": "dependent-tasks-requiring-previous-output",
+          "maxDuration": "60 minutes"
+        },
+        "parallel": {
+          "description": "Execute multiple agents simultaneously", 
+          "useCase": "independent-tasks-that-can-run-concurrently",
+          "maxDuration": "45 minutes"
+        },
+        "conditional": {
+          "description": "Execute different agent paths based on conditions",
+          "useCase": "branching-logic-based-on-intermediate-results",
+          "maxDuration": "90 minutes"
+        },
+        "iterative": {
+          "description": "Repeat agent execution until success criteria met",
+          "useCase": "quality-improvement-and-refinement-loops",
+          "maxIterations": 3
+        }
+      },
+      "qualityGates": [
+        "agent-confidence-validation",
+        "output-quality-verification", 
+        "handoff-completeness-check",
+        "error-detection-and-handling"
+      ],
+      "outputs": ["agent-execution-results", "quality-assessments", "intermediate-artifacts"]
+    },
+
+    "phase4QualityValidationAndApproval": {
+      "description": "Final quality validation and approval before output delivery",
+      "duration": "5-15 minutes",
+      "agents": ["gatekeeping-agent"],
+      "validationTypes": [
+        "deliverable-completeness",
+        "quality-standards-compliance",
+        "security-validation",
+        "performance-acceptance",
+        "business-requirement-fulfillment"
+      ],
+      "approvalLevels": {
+        "automatic": {
+          "conditions": ["all-quality-gates-passed", "high-confidence", "no-critical-issues"],
+          "action": "immediate-approval"
+        },
+        "conditional": {
+          "conditions": ["minor-issues-detected", "medium-confidence", "acceptable-risk"],
+          "action": "approval-with-conditions"
+        },
+        "manual": {
+          "conditions": ["significant-issues", "low-confidence", "high-risk"],
+          "action": "human-escalation"
+        }
+      },
+      "outputs": ["approval-decision", "quality-report", "risk-assessment"]
+    },
+
+    "phase5OutputDeliveryAndCompletion": {
+      "description": "Deliver final output and complete workflow cycle",
+      "duration": "immediate",
+      "deliveryModes": {
+        "direct": "Direct delivery to requesting entity",
+        "staged": "Staged delivery with human review",
+        "versioned": "Version-controlled delivery with tracking"
+      },
+      "completionActions": [
+        "artifact-delivery",
+        "status-notification",
+        "documentation-update",
+        "metrics-recording",
+        "learning-data-capture"
+      ],
+      "outputs": ["final-deliverable", "completion-status", "metrics-data", "learning-insights"]
+    }
+  },
+
+  "agentCoordination": {
+    "handoffProtocols": {
+      "contextPreservation": {
+        "description": "Maintain complete context across agent transitions",
+        "requirements": ["full-context-transfer", "metadata-preservation", "state-continuity"]
+      },
+      "qualityAssurance": {
+        "description": "Validate quality at each handoff point",
+        "requirements": ["output-validation", "confidence-verification", "error-checking"]
+      },
+      "performanceOptimization": {
+        "description": "Optimize handoffs for speed and efficiency",
+        "requirements": ["minimal-latency", "resource-efficiency", "parallel-preparation"]
+      }
+    },
+
+    "escalationHandling": {
+      "lowConfidence": {
+        "threshold": 0.70,
+        "action": "route-to-human-interaction-agent",
+        "escalationType": "guidance-request"
+      },
+      "qualityGateFailure": {
+        "threshold": "any-critical-failure",
+        "action": "immediate-human-escalation",
+        "escalationType": "quality-intervention"
+      },
+      "agentFailure": {
+        "threshold": "agent-unavailable-or-errored",
+        "action": "fallback-routing-or-human-escalation", 
+        "escalationType": "technical-intervention"
+      },
+      "timeoutExpired": {
+        "threshold": "max-duration-exceeded",
+        "action": "workflow-termination-with-status",
+        "escalationType": "performance-intervention"
+      }
+    }
+  },
+
+  "errorHandling": {
+    "errorCategories": {
+      "input": {
+        "invalidFormat": "Input format is invalid or unprocessable",
+        "insufficientContext": "Input lacks necessary context for processing",
+        "securityViolation": "Input contains security threats or violations"
+      },
+      "processing": {
+        "agentFailure": "Agent failed to complete assigned task",
+        "qualityGateFailure": "Output failed quality validation",
+        "resourceExhaustion": "System resources exhausted during processing"
+      },
+      "output": {
+        "deliveryFailure": "Failed to deliver output to intended recipient",
+        "formatError": "Output format is invalid or corrupted",
+        "approvalRejection": "Final approval was rejected by gatekeeping"
+      }
+    },
+
+    "recoveryStrategies": {
+      "retry": {
+        "applicableErrors": ["temporary-failures", "resource-contention"],
+        "maxAttempts": 3,
+        "backoffStrategy": "exponential"
+      },
+      "fallback": {
+        "applicableErrors": ["agent-unavailable", "capability-insufficient"],
+        "fallbackMethods": ["alternative-agent", "simplified-approach", "human-intervention"]
+      },
+      "gracefulDegradation": {
+        "applicableErrors": ["performance-issues", "partial-failures"],
+        "degradationOptions": ["reduced-functionality", "extended-timeline", "manual-completion"]
+      }
+    }
+  },
+
+  "performanceMetrics": {
+    "throughputMetrics": {
+      "workflowsPerHour": "Number of completed workflows per hour",
+      "averageCompletionTime": "Average time from input to final output",
+      "agentUtilization": "Percentage utilization of each agent type"
+    },
+
+    "qualityMetrics": {
+      "firstPassSuccessRate": "Percentage of workflows completed without rework",
+      "qualityGatePassRate": "Percentage of outputs passing quality gates",
+      "humanEscalationRate": "Percentage of workflows requiring human intervention"
+    },
+
+    "efficiencyMetrics": {
+      "parallelizationEffectiveness": "Efficiency gains from parallel execution",
+      "handoffLatency": "Time spent in agent transitions",
+      "resourceUtilization": "System resource usage efficiency"
+    }
+  },
+
+  "learningAndAdaptation": {
+    "patternRecognition": {
+      "inputPatterns": "Learn common input patterns and optimal routing",
+      "successPatterns": "Identify patterns that lead to successful outcomes",
+      "failurePatterns": "Recognize patterns that lead to failures or delays"
+    },
+
+    "optimizationTargets": {
+      "routingAccuracy": "Improve accuracy of initial routing decisions",
+      "agentSelection": "Optimize agent selection for specific task types",
+      "qualityPrediction": "Better predict quality outcomes earlier in process"
+    },
+
+    "adaptationMechanisms": {
+      "dynamicRouting": "Adjust routing logic based on historical performance",
+      "thresholdTuning": "Optimize confidence and quality thresholds",
+      "workflowEvolution": "Evolve workflow structure based on usage patterns"
+    }
+  },
+
+  "monitoringAndObservability": {
+    "realTimeTracking": {
+      "workflowStatus": "Current status of all active workflows",
+      "agentActivity": "Real-time agent activity and workload",
+      "queueStatus": "Input queue depth and processing rates"
+    },
+
+    "alertingRules": {
+      "performanceAlerts": {
+        "slowWorkflows": "Alert when workflows exceed expected duration",
+        "highErrorRate": "Alert when error rate exceeds threshold",
+        "agentOverload": "Alert when agents are consistently overloaded"
+      },
+      "qualityAlerts": {
+        "qualityDegradation": "Alert when quality metrics decline",
+        "highEscalationRate": "Alert when human escalation rate increases",
+        "approvalFailures": "Alert when approval rejection rate increases"
+      }
+    }
+  }
+} 
