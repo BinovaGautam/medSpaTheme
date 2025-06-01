@@ -2585,3 +2585,17 @@ function track_elegant_quiz_completion($data) {
         calculate_elegant_quiz_lead_score($data)
     ));
 }
+
+function medspa_theme_enqueue_assets() {
+    // Main theme styles
+    wp_enqueue_style('medspa-theme-style', get_template_directory_uri() . '/assets/css/medical-spa-theme.css', array(), '1.0.0');
+
+    // Component styles
+    wp_enqueue_style('elegant-quiz-component', get_template_directory_uri() . '/assets/css/components/elegant-quiz.css', array('medspa-theme-style'), '1.0.0');
+
+    // Main theme scripts
+    wp_enqueue_script('medspa-theme-scripts', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true);
+
+    // Component scripts are enqueued conditionally within components
+}
+add_action('wp_enqueue_scripts', 'medspa_theme_enqueue_assets');
