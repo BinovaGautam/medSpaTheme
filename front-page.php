@@ -48,16 +48,16 @@
                     <!-- Left: Content Section -->
                     <div class="hero-content-section">
                         <div class="hero-text-content">
-                            <h1 class="hero-title" data-aos="fade-up">
+                            <h1 class="hero-title">
                                 HARDCODED TEST TITLE - Transform Your Beauty with Advanced Medical Spa Treatments
                             </h1>
 
-                            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                            <p class="hero-subtitle">
                                 HARDCODED TEST SUBTITLE - Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.
                             </p>
 
                             <!-- Trust Indicators -->
-                            <div class="trust-indicators" data-aos="fade-up" data-aos-delay="400">
+                            <div class="trust-indicators">
                                 <div class="trust-item">
                                     <span class="trust-icon">✅</span>
                                     <span class="trust-text">Board Certified</span>
@@ -76,15 +76,15 @@
                                 </div>
                             </div>
 
-                            <!-- Primary CTAs -->
-                            <div class="hero-actions" data-aos="fade-up" data-aos-delay="600">
-                                <a href="#consultation" class="btn btn-primary btn-large cta-primary">
-                                    <span class="btn-icon">📞</span>
-                                    Free Consultation
+                            <!-- Hero Actions -->
+                            <div class="hero-actions">
+                                <a href="#consultation" class="btn btn-primary btn-lg cta-primary">
+                                    <span class="btn-icon">📅</span>
+                                    <span class="btn-text">Book Free Consultation</span>
                                 </a>
-                                <a href="tel:(555) 123-4567" class="btn btn-secondary btn-large cta-secondary">
-                                    <span class="btn-icon">📱</span>
-                                    (555) 123-4567
+                                <a href="tel:+1234567890" class="btn btn-secondary btn-lg cta-secondary">
+                                    <span class="btn-icon">📞</span>
+                                    <span class="btn-text">Call Now</span>
                                 </a>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
 
                     <!-- Right: Interactive Treatment Selection -->
                     <div class="hero-interactive-section">
-                        <div class="treatment-selection-interface" data-aos="fade-left">
+                        <div class="treatment-selection-interface">
                             <div class="selection-progress">
                                 <div class="progress-indicator">
                                     <span class="step-number active" data-step="1">1</span>
