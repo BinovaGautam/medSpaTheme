@@ -126,6 +126,10 @@ TASK-FUNC-001-01   📋 Generated   | Implement Treatment Custom Post Type (AI-G
 TASK-FUNC-003-01   📋 Generated   | Implement Before/After Gallery System (AI-Generated) ⭐ NEW
 TASK-FUNC-004-01   📋 Generated   | Implement Multi-Step Consultation Form (AI-Generated)
 TASK-UX-002-01     📋 Generated   | Implement WCAG AAA Accessibility Framework (AI-Generated) ⭐ NEW
+TASK-FIX-001-01    🚨 Critical    | Fix Mobile Menu Navigation Functionality (URGENT) ⭐ NEW
+TASK-FIX-002-01    🚨 Critical    | Fix Navigation Underline Alignment (URGENT) ⭐ NEW  
+TASK-FIX-003-01    🚨 Critical    | Restore Git Commit Automation (URGENT) ⭐ NEW
+TASK-AI-001-01     🚨 Critical    | Implement AI Agent Prevention Protocols (URGENT) ⭐ NEW
 ```
 
 ### **Decisions (ADR-)**
@@ -203,6 +207,30 @@ AI-LEARN-001       ✅ Active      | AI Learning & Optimization Framework (25% d
 - **🤖 RISK-AI-001** (Eliminated): AI performance calibration
   - *Status*: Risk eliminated - 100% success rate maintained across 6 decisions
   - *Performance*: Perfect accuracy with enhanced confidence calibration
+- **🤖 RISK-AI-002** (Mitigated): AI agent system conflicts ⭐ NEW
+  - *Issue*: AI agents overriding established project systems
+  - *Impact*: Version control system conflicts, documentation inconsistency
+  - *Mitigation*: Mandatory AI agent protocols established
+  - *Status*: ✅ Mitigated with comprehensive prevention framework
+
+### **Active Issues**
+- **ISSUE-UX-001** (HIGH): Mobile sidebar navigation not functional ⭐ CRITICAL
+  - *Description*: Mobile menu toggle not opening sidebar menu
+  - *Impact*: Mobile users cannot access navigation
+  - *Assigned to*: Current AI agent (immediate fix required)
+  - *Status*: 🔄 In Progress - JavaScript initialization needed
+
+- **ISSUE-UX-002** (MEDIUM): Navigation underline alignment mismatch ⭐ CRITICAL  
+  - *Description*: Menu underlines not aligning with background highlights
+  - *Impact*: Visual inconsistency in navigation design
+  - *Assigned to*: Current AI agent (immediate fix required)
+  - *Status*: 🔄 In Progress - CSS positioning corrections needed
+
+- **ISSUE-DEV-001** (HIGH): Git commit automation not functioning ⭐ CRITICAL
+  - *Description*: Automatic git commits not working as previously established
+  - *Impact*: Version control workflow disruption
+  - *Assigned to*: Current AI agent (immediate fix required)
+  - *Status*: 🔄 In Progress - Follow established git protocols
 
 ### **Quality Gates**
 - ✅ **Gate 1**: Requirements have proper REQ-ID and traceability
