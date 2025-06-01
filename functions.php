@@ -2249,3 +2249,339 @@ function get_treatments_by_category($category) {
 
     return $formatted_treatments;
 }
+/**
+ * Handle Elegant Quiz Form Submission (TASK-UX-QUIZ-003-01 Phase 4)
+ */
+add_action('wp_ajax_submit_elegant_quiz', 'handle_elegant_quiz_submission');
+add_action('wp_ajax_nopriv_submit_elegant_quiz', 'handle_elegant_quiz_submission');
+
+function handle_elegant_quiz_submission() {
+    // Verify nonce for security
+    if (!wp_verify_nonce($_POST['nonce'], 'elegant_quiz_nonce')) {
+        wp_die(json_encode([
+            'success' => false,
+            'data' => 'Security check failed. Please refresh the page and try again.'
+        ]));
+    }
+
+    // Validate and sanitize input data
+    $selections_raw = sanitize_text_field($_POST['selections']);
+    $selections = json_decode(stripslashes($selections_raw), true);
+
+    // Validate required data structure
+    if (!$selections || !is_array($selections)) {
+        wp_send_json_error('Invalid quiz data received.');
+        return;
+    }
+
+    // Validate required fields
+    $required_fields = ['category', 'area', 'experience', 'age', 'contact'];
+    foreach ($required_fields as $field) {
+        if (!isset($selections[$field])) {
+            wp_send_json_error("Missing required field: {$field}");
+            return;
+        }
+    }
+
+    // Validate contact information
+    $contact = $selections['contact'];
+    if (empty($contact['full_name']) || empty($contact['email']) || empty($contact['phone'])) {
+        wp_send_json_error('Please provide complete contact information.');
+        return;
+    }
+
+    // Validate email format
+    if (!is_email($contact['email'])) {
+        wp_send_json_error('Please provide a valid email address.');
+        return;
+    }
+
+    // Sanitize all input data
+    $clean_data = [
+        'category' => sanitize_text_field($selections['category']),
+        'area' => sanitize_text_field($selections['area']),
+        'experience' => sanitize_text_field($selections['experience']),
+        'age' => sanitize_text_field($selections['age']),
+        'contact' => [
+            'full_name' => sanitize_text_field($contact['full_name']),
+            'email' => sanitize_email($contact['email']),
+            'phone' => sanitize_text_field($contact['phone'])
+        ],
+        'submission_time' => current_time('mysql'),
+        'user_ip' => sanitize_text_field($_SERVER['REMOTE_ADDR']),
+        'user_agent' => sanitize_text_field($_SERVER['HTTP_USER_AGENT'])
+    ];
+
+    try {
+        // Save quiz submission to database
+        $post_id = save_elegant_quiz_submission($clean_data);
+
+        if (!$post_id) {
+            throw new Exception('Failed to save quiz submission to database');
+        }
+
+        // Send email notifications
+        send_elegant_quiz_admin_notification($post_id, $clean_data);
+        send_elegant_quiz_user_confirmation($clean_data);
+
+        // Track conversion event
+        track_elegant_quiz_completion($clean_data);
+
+        // Return success response
+        wp_send_json_success([
+            'message' => 'Quiz submitted successfully! You will receive a confirmation email shortly.',
+            'submission_id' => $post_id,
+            'redirect_url' => null
+        ]);
+
+    } catch (Exception $e) {
+        error_log('Elegant Quiz Submission Error: ' . $e->getMessage());
+        wp_send_json_error('There was an error processing your submission. Please try again or contact us directly.');
+    }
+}
+
+/**
+ * Save elegant quiz submission to database
+ */
+function save_elegant_quiz_submission($data) {
+    // Create consultation request post
+    $post_data = [
+        'post_type' => 'consultation_request',
+        'post_title' => sprintf('Elegant Quiz: %s - %s', $data['contact']['full_name'], $data['category']),
+        'post_content' => generate_elegant_quiz_summary($data),
+        'post_status' => 'publish',
+        'meta_input' => [
+            // Contact Information
+            'consultation_name' => $data['contact']['full_name'],
+            'consultation_email' => $data['contact']['email'],
+            'consultation_phone' => $data['contact']['phone'],
+
+            // Quiz Selections
+            'quiz_category' => $data['category'],
+            'quiz_area' => $data['area'],
+            'quiz_experience' => $data['experience'],
+            'quiz_age' => $data['age'],
+
+            // System Data
+            'submission_type' => 'elegant_quiz',
+            'submission_time' => $data['submission_time'],
+            'user_ip' => $data['user_ip'],
+            'user_agent' => $data['user_agent'],
+            'lead_score' => calculate_elegant_quiz_lead_score($data),
+            'follow_up_priority' => determine_follow_up_priority($data)
+        ]
+    ];
+
+    $post_id = wp_insert_post($post_data);
+
+    if (is_wp_error($post_id)) {
+        throw new Exception('Failed to create consultation request: ' . $post_id->get_error_message());
+    }
+
+    return $post_id;
+}
+
+/**
+ * Generate readable quiz summary
+ */
+function generate_elegant_quiz_summary($data) {
+    $category_labels = [
+        'botox' => 'Botox & Xeomin',
+        'dermal-fillers' => 'Dermal Fillers',
+        'laser-hair-removal' => 'Laser Hair Removal',
+        'coolsculpting' => 'CoolSculpting',
+        'clear-brilliant' => 'Clear & Brilliant',
+        'ipl-photofacials' => 'IPL Photofacials',
+        'skin-rejuvenation' => 'Skin Rejuvenation',
+        'tattoo-removal' => 'Tattoo Removal',
+        'thermage' => 'Thermage',
+        'hydrafacial' => 'HydraFacial',
+        'potenza-rf' => 'Potenza RF Microneedling'
+    ];
+
+    $category_label = $category_labels[$data['category']] ?? ucfirst(str_replace('-', ' ', $data['category']));
+
+    $summary = sprintf(
+        "ELEGANT QUIZ SUBMISSION\n\n" .
+        "Contact Information:\n" .
+        "Name: %s\n" .
+        "Email: %s\n" .
+        "Phone: %s\n\n" .
+        "Treatment Interest:\n" .
+        "Category: %s\n" .
+        "Specific Area: %s\n" .
+        "Previous Experience: %s times\n" .
+        "Age Group: %s\n\n" .
+        "Submission Time: %s",
+        $data['contact']['full_name'],
+        $data['contact']['email'],
+        $data['contact']['phone'],
+        $category_label,
+        ucfirst(str_replace('-', ' ', $data['area'])),
+        $data['experience'],
+        $data['age'],
+        $data['submission_time']
+    );
+
+    return $summary;
+}
+
+/**
+ * Calculate lead score for elegant quiz
+ */
+function calculate_elegant_quiz_lead_score($data) {
+    $score = 50; // Base score
+
+    // Experience level scoring
+    switch ($data['experience']) {
+        case '0':
+            $score += 20; // New patients are high value
+            break;
+        case '1-2':
+            $score += 15;
+            break;
+        case '3-4':
+            $score += 10;
+            break;
+        default:
+            $score += 5; // Repeat customers
+            break;
+    }
+
+    // Age group scoring (peak demographics)
+    $peak_ages = ['25-34', '35-44', '45-54'];
+    if (in_array($data['age'], $peak_ages)) {
+        $score += 15;
+    }
+
+    // High-value treatment categories
+    $premium_treatments = ['botox', 'dermal-fillers', 'coolsculpting', 'thermage'];
+    if (in_array($data['category'], $premium_treatments)) {
+        $score += 10;
+    }
+
+    return min(100, $score); // Cap at 100
+}
+
+/**
+ * Determine follow-up priority
+ */
+function determine_follow_up_priority($data) {
+    $score = calculate_elegant_quiz_lead_score($data);
+
+    if ($score >= 80) return 'high';
+    if ($score >= 60) return 'medium';
+    return 'normal';
+}
+
+/**
+ * Send admin notification email for elegant quiz
+ */
+function send_elegant_quiz_admin_notification($post_id, $data) {
+    $admin_email = get_option('admin_email');
+    $site_name = get_bloginfo('name');
+    $category_label = ucfirst(str_replace('-', ' ', $data['category']));
+    $lead_score = get_post_meta($post_id, 'lead_score', true);
+    $priority = get_post_meta($post_id, 'follow_up_priority', true);
+
+    $subject = sprintf('[%s] New Elegant Quiz Submission - %s (%s Priority)',
+        $site_name,
+        $category_label,
+        ucfirst($priority)
+    );
+
+    $message = sprintf(
+        "New elegant quiz submission received!\n\n" .
+        "CONTACT INFORMATION:\n" .
+        "Name: %s\n" .
+        "Email: %s\n" .
+        "Phone: %s\n\n" .
+        "TREATMENT DETAILS:\n" .
+        "Category: %s\n" .
+        "Specific Area: %s\n" .
+        "Previous Experience: %s\n" .
+        "Age Group: %s\n\n" .
+        "LEAD SCORING:\n" .
+        "Lead Score: %d/100\n" .
+        "Priority: %s\n\n" .
+        "View full details: %s\n\n" .
+        "Please follow up within 24 hours for best conversion rates.",
+        $data['contact']['full_name'],
+        $data['contact']['email'],
+        $data['contact']['phone'],
+        $category_label,
+        ucfirst(str_replace('-', ' ', $data['area'])),
+        $data['experience'],
+        $data['age'],
+        $lead_score,
+        ucfirst($priority),
+        admin_url('post.php?post=' . $post_id . '&action=edit')
+    );
+
+    $headers = [
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: ' . $site_name . ' <noreply@' . $_SERVER['HTTP_HOST'] . '>',
+        'Reply-To: ' . $data['contact']['email']
+    ];
+
+    wp_mail($admin_email, $subject, $message, $headers);
+}
+
+/**
+ * Send user confirmation email for elegant quiz
+ */
+function send_elegant_quiz_user_confirmation($data) {
+    $site_name = get_bloginfo('name');
+    $category_label = ucfirst(str_replace('-', ' ', $data['category']));
+
+    $subject = sprintf('Thank you for your interest in %s - %s', $category_label, $site_name);
+
+    $message = sprintf(
+        "Dear %s,\n\n" .
+        "Thank you for completing our treatment recommendation quiz! We're excited to help you achieve your aesthetic goals.\n\n" .
+        "QUIZ SUMMARY:\n" .
+        "Treatment Interest: %s\n" .
+        "Specific Area: %s\n" .
+        "Experience Level: %s previous treatments\n\n" .
+        "WHAT'S NEXT:\n" .
+        "• A member of our team will contact you within 24 hours\n" .
+        "• We'll discuss your goals and answer any questions\n" .
+        "• We'll schedule your complimentary consultation\n" .
+        "• You'll receive personalized treatment recommendations\n\n" .
+        "If you have any immediate questions, please don't hesitate to contact us:\n" .
+        "Phone: %s\n" .
+        "Email: %s\n\n" .
+        "We look forward to helping you look and feel your best!\n\n" .
+        "Best regards,\n" .
+        "The %s Team",
+        $data['contact']['full_name'],
+        $category_label,
+        ucfirst(str_replace('-', ' ', $data['area'])),
+        $data['experience'],
+        preetidreams_get_phone() ?: 'Available on our website',
+        preetidreams_get_email() ?: 'Available on our website',
+        $site_name
+    );
+
+    $headers = [
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: ' . $site_name . ' <noreply@' . $_SERVER['HTTP_HOST'] . '>'
+    ];
+
+    wp_mail($data['contact']['email'], $subject, $message, $headers);
+}
+
+/**
+ * Track elegant quiz completion for analytics
+ */
+function track_elegant_quiz_completion($data) {
+    // Could integrate with Google Analytics, Facebook Pixel, etc.
+    // For now, just log the conversion
+    error_log(sprintf(
+        'Elegant Quiz Conversion: %s (%s) - %s treatment, Lead Score: %d',
+        $data['contact']['full_name'],
+        $data['contact']['email'],
+        $data['category'],
+        calculate_elegant_quiz_lead_score($data)
+    ));
+}
