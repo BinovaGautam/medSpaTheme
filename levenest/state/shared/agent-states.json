@@ -1,0 +1,298 @@
+{
+  "agentStateManager": {
+    "version": "1.0.0",
+    "description": "Real-time agent status and availability tracking",
+    "lastAgentUpdate": 1,
+    "totalAgents": 8,
+    "availableAgents": 8,
+    "busyAgents": 0,
+    "updateSequence": 1
+  },
+
+  "agentInstances": {
+    "requirement-analyzer": {
+      "agentId": "REQ-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 3,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.95,
+        "averageConfidenceScore": 0.85,
+        "completedTasks": 0,
+        "escalationRate": 0.05
+      },
+      "capabilities": {
+        "primary": ["requirement-discovery", "stakeholder-analysis", "acceptance-criteria-generation"],
+        "secondary": ["dependency-mapping", "compliance-validation"],
+        "limitations": ["temporal-reasoning", "real-time-context"],
+        "confidenceThreshold": 0.85
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    },
+
+    "architecture-designer": {
+      "agentId": "ARCH-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 2,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.92,
+        "averageConfidenceScore": 0.90,
+        "completedTasks": 0,
+        "escalationRate": 0.08
+      },
+      "capabilities": {
+        "primary": ["system-architecture-design", "technology-selection", "scalability-planning"],
+        "secondary": ["security-assessment", "performance-optimization"],
+        "limitations": ["numeric-precision", "real-time-context"],
+        "confidenceThreshold": 0.90
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    },
+
+    "code-generator": {
+      "agentId": "CODE-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 5,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.88,
+        "averageConfidenceScore": 0.80,
+        "completedTasks": 0,
+        "escalationRate": 0.12
+      },
+      "capabilities": {
+        "primary": ["code-implementation", "api-development", "database-design"],
+        "secondary": ["testing-implementation", "documentation-generation"],
+        "limitations": ["concurrency-handling", "numeric-precision"],
+        "confidenceThreshold": 0.80
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    },
+
+    "critical-reviewer": {
+      "agentId": "REVIEW-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 4,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.96,
+        "averageConfidenceScore": 0.95,
+        "completedTasks": 0,
+        "escalationRate": 0.04
+      },
+      "capabilities": {
+        "primary": ["code-review", "architecture-validation", "security-analysis"],
+        "secondary": ["performance-assessment", "technical-debt-detection"],
+        "limitations": ["temporal-reasoning", "state-management"],
+        "confidenceThreshold": 0.95
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    },
+
+    "garbage-cleaner": {
+      "agentId": "CLEAN-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 3,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.90,
+        "averageConfidenceScore": 0.85,
+        "completedTasks": 0,
+        "escalationRate": 0.10
+      },
+      "capabilities": {
+        "primary": ["code-optimization", "dead-code-removal", "dependency-cleanup"],
+        "secondary": ["performance-tuning", "refactoring"],
+        "limitations": ["state-management", "concurrency-handling"],
+        "confidenceThreshold": 0.85
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    },
+
+    "testing-specialist": {
+      "agentId": "TEST-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 3,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.93,
+        "averageConfidenceScore": 0.90,
+        "completedTasks": 0,
+        "escalationRate": 0.07
+      },
+      "capabilities": {
+        "primary": ["test-strategy-design", "automated-test-generation", "integration-testing"],
+        "secondary": ["performance-testing", "security-testing"],
+        "limitations": ["temporal-reasoning", "real-time-context"],
+        "confidenceThreshold": 0.90
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    },
+
+    "deployment-orchestrator": {
+      "agentId": "DEPLOY-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 2,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.97,
+        "averageConfidenceScore": 0.95,
+        "completedTasks": 0,
+        "escalationRate": 0.03
+      },
+      "capabilities": {
+        "primary": ["deployment-automation", "environment-management", "rollback-procedures"],
+        "secondary": ["monitoring-setup", "scaling-configuration"],
+        "limitations": ["temporal-reasoning", "complex-state-management"],
+        "confidenceThreshold": 0.95
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    },
+
+    "project-coordinator": {
+      "agentId": "COORD-AGENT-001",
+      "status": "available",
+      "currentCapacity": 0,
+      "maxCapacity": 10,
+      "assignedWorkflows": [],
+      "lastActivity": 1,
+      "performanceMetrics": {
+        "successRate": 0.98,
+        "averageConfidenceScore": 0.95,
+        "completedTasks": 0,
+        "escalationRate": 0.02
+      },
+      "capabilities": {
+        "primary": ["workflow-orchestration", "agent-coordination", "conflict-resolution"],
+        "secondary": ["progress-tracking", "escalation-management"],
+        "limitations": ["temporal-reasoning", "complex-domain-knowledge"],
+        "confidenceThreshold": 0.95
+      },
+      "healthStatus": {
+        "operational": true,
+        "lastHealthCheck": 1,
+        "responseTime": "normal",
+        "errorCount": 0
+      }
+    }
+  },
+
+  "capacityManagement": {
+    "totalSystemCapacity": 32,
+    "currentUtilization": 0,
+    "utilizationPercentage": "0%",
+    "queuedTasks": 0,
+    "capacityByType": {
+      "requirement-analysis": "0/3",
+      "architecture-design": "0/2",
+      "code-generation": "0/5",
+      "code-review": "0/4",
+      "optimization": "0/3",
+      "testing": "0/3",
+      "deployment": "0/2",
+      "coordination": "0/10"
+    }
+  },
+
+  "agentOperations": {
+    "assignAgent": {
+      "operation": "assign-agent-to-workflow",
+      "requiredFields": ["agentId", "workflowId", "taskType"],
+      "validation": ["agent-available", "capacity-available", "capability-match"]
+    },
+    "releaseAgent": {
+      "operation": "release-agent-from-workflow",
+      "requiredFields": ["agentId", "workflowId"],
+      "validation": ["agent-assigned", "workflow-exists"]
+    },
+    "updateAgentStatus": {
+      "operation": "update-agent-availability-status",
+      "requiredFields": ["agentId", "newStatus"],
+      "validation": ["agent-exists", "valid-status"]
+    },
+    "healthCheck": {
+      "operation": "verify-agent-operational-status",
+      "requiredFields": ["agentId"],
+      "validation": ["agent-exists"]
+    }
+  },
+
+  "healthMonitoring": {
+    "monitoring-frequency": "every-workflow-transition",
+    "health-indicators": {
+      "response-time": "Normal < 5s, Slow 5-15s, Critical > 15s",
+      "error-rate": "Good < 5%, Warning 5-15%, Critical > 15%",
+      "capacity-utilization": "Optimal 60-80%, High > 80%, Overloaded > 95%"
+    },
+    "automatic-actions": {
+      "agent-unresponsive": "Mark as unavailable, reassign workflows",
+      "high-error-rate": "Reduce confidence threshold, increase monitoring",
+      "capacity-exceeded": "Queue new requests, alert for scaling"
+    }
+  },
+
+  "performanceTracking": {
+    "metrics-collection": {
+      "success-rate": "Percentage of successful task completions",
+      "confidence-accuracy": "Correlation between confidence scores and success",
+      "escalation-frequency": "How often human intervention is required",
+      "task-completion-sequence": "Sequence numbers for task progression"
+    },
+    "optimization-targets": {
+      "improve-success-rates": "Target 95%+ success rate for all agents",
+      "calibrate-confidence": "Improve confidence score accuracy",
+      "reduce-escalations": "Minimize human intervention needs",
+      "balance-capacity": "Optimize capacity utilization across agents"
+    }
+  }
+}

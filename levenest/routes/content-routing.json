@@ -1,0 +1,282 @@
+{
+  "contentRoutingEngine": {
+    "version": "1.0.0",
+    "description": "Content-based classification and routing for human requests and system events",
+    "routingConfidence": 0.85,
+    "lastRoutingUpdate": 1
+  },
+
+  "classificationRules": {
+    "project-setup": {
+      "patterns": {
+        "primary": ["new project", "create project", "start project", "initialize", "setup"],
+        "secondary": ["website", "application", "system", "platform", "build"],
+        "context": ["WordPress", "e-commerce", "CMS", "web app", "mobile app"],
+        "excludePatterns": ["optimize", "fix", "bug", "issue", "problem"]
+      },
+      "routing": {
+        "targetAgent": "project-coordinator",
+        "workflow": "project-initialization",
+        "priority": "high",
+        "confirmationLevel": "critical"
+      },
+      "confidence": {
+        "high": 0.95,
+        "medium": 0.80,
+        "low": 0.60
+      }
+    },
+
+    "requirement-analysis": {
+      "patterns": {
+        "primary": ["requirement", "need", "feature", "functionality", "business rule"],
+        "secondary": ["user story", "acceptance criteria", "use case", "specification"],
+        "context": ["customer", "user", "business", "compliance", "regulation"],
+        "excludePatterns": ["implement", "code", "build", "deploy"]
+      },
+      "routing": {
+        "targetAgent": "requirement-analyzer",
+        "workflow": "requirement-discovery",
+        "priority": "high",
+        "confirmationLevel": "critical"
+      },
+      "confidence": {
+        "high": 0.90,
+        "medium": 0.75,
+        "low": 0.55
+      }
+    },
+
+    "architecture-decision": {
+      "patterns": {
+        "primary": ["architecture", "design", "technology", "framework", "database"],
+        "secondary": ["structure", "pattern", "approach", "solution", "stack"],
+        "context": ["scalability", "performance", "security", "integration", "API"],
+        "excludePatterns": ["implement", "code", "specific function"]
+      },
+      "routing": {
+        "targetAgent": "architecture-designer",
+        "workflow": "architecture-planning",
+        "priority": "high",
+        "confirmationLevel": "critical"
+      },
+      "confidence": {
+        "high": 0.92,
+        "medium": 0.78,
+        "low": 0.58
+      }
+    },
+
+    "code-implementation": {
+      "patterns": {
+        "primary": ["implement", "build", "code", "develop", "create function"],
+        "secondary": ["programming", "coding", "development", "function", "method"],
+        "context": ["PHP", "JavaScript", "CSS", "HTML", "API", "component"],
+        "excludePatterns": ["review", "test", "optimize", "fix bug"]
+      },
+      "routing": {
+        "targetAgent": "code-generator",
+        "workflow": "implementation",
+        "priority": "medium",
+        "confirmationLevel": "important"
+      },
+      "confidence": {
+        "high": 0.85,
+        "medium": 0.70,
+        "low": 0.50
+      }
+    },
+
+    "review-request": {
+      "patterns": {
+        "primary": ["review", "check", "validate", "quality", "audit"],
+        "secondary": ["examine", "assess", "verify", "inspect", "evaluate"],
+        "context": ["code", "quality", "standards", "security", "performance"],
+        "excludePatterns": ["implement", "create", "build"]
+      },
+      "routing": {
+        "targetAgent": "critical-reviewer",
+        "workflow": "quality-review",
+        "priority": "medium",
+        "confirmationLevel": "moderate"
+      },
+      "confidence": {
+        "high": 0.88,
+        "medium": 0.73,
+        "low": 0.52
+      }
+    },
+
+    "optimization-request": {
+      "patterns": {
+        "primary": ["optimize", "improve", "performance", "cleanup", "refactor"],
+        "secondary": ["faster", "better", "efficient", "speed up", "clean up"],
+        "context": ["slow", "loading", "performance", "memory", "database"],
+        "excludePatterns": ["new feature", "create", "build from scratch"]
+      },
+      "routing": {
+        "targetAgent": "garbage-cleaner",
+        "workflow": "tech-garbage-collection",
+        "priority": "low",
+        "confirmationLevel": "moderate"
+      },
+      "confidence": {
+        "high": 0.87,
+        "medium": 0.72,
+        "low": 0.48
+      }
+    },
+
+    "testing-request": {
+      "patterns": {
+        "primary": ["test", "testing", "validate", "verify", "check functionality"],
+        "secondary": ["QA", "quality assurance", "unit test", "integration test"],
+        "context": ["functionality", "behavior", "regression", "automation"],
+        "excludePatterns": ["implement", "create", "design"]
+      },
+      "routing": {
+        "targetAgent": "testing-specialist",
+        "workflow": "comprehensive-testing",
+        "priority": "medium",
+        "confirmationLevel": "moderate"
+      },
+      "confidence": {
+        "high": 0.90,
+        "medium": 0.75,
+        "low": 0.55
+      }
+    },
+
+    "deployment-request": {
+      "patterns": {
+        "primary": ["deploy", "deployment", "release", "publish", "go live"],
+        "secondary": ["production", "staging", "environment", "server", "hosting"],
+        "context": ["live", "production", "server", "environment", "hosting"],
+        "excludePatterns": ["develop", "code", "design", "test"]
+      },
+      "routing": {
+        "targetAgent": "deployment-orchestrator",
+        "workflow": "deployment-pipeline",
+        "priority": "high",
+        "confirmationLevel": "critical"
+      },
+      "confidence": {
+        "high": 0.95,
+        "medium": 0.82,
+        "low": 0.65
+      }
+    },
+
+    "supervision-query": {
+      "patterns": {
+        "primary": ["status", "progress", "how is", "what's happening", "report"],
+        "secondary": ["update", "dashboard", "overview", "summary", "current state"],
+        "context": ["project", "workflow", "agent", "system", "health"],
+        "excludePatterns": ["implement", "create", "fix", "optimize"]
+      },
+      "routing": {
+        "targetAgent": "project-coordinator",
+        "workflow": "status-reporting",
+        "priority": "low",
+        "confirmationLevel": "low"
+      },
+      "confidence": {
+        "high": 0.80,
+        "medium": 0.65,
+        "low": 0.45
+      }
+    }
+  },
+
+  "routingAlgorithm": {
+    "step1-preprocessing": {
+      "normalize-text": "Convert to lowercase, remove special characters",
+      "extract-keywords": "Identify key terms and phrases",
+      "context-enrichment": "Add project and agent context"
+    },
+    "step2-pattern-matching": {
+      "primary-match": "Check against primary patterns (weight: 0.5)",
+      "secondary-match": "Check against secondary patterns (weight: 0.3)",
+      "context-match": "Check against context patterns (weight: 0.2)",
+      "exclude-check": "Verify no exclude patterns match"
+    },
+    "step3-confidence-calculation": {
+      "pattern-score": "Sum of weighted pattern matches",
+      "context-boost": "Increase confidence with relevant context",
+      "exclude-penalty": "Reduce confidence for exclude pattern matches",
+      "final-confidence": "Normalized confidence score 0-1"
+    },
+    "step4-routing-decision": {
+      "high-confidence": "> 0.70 - Route directly to agent",
+      "medium-confidence": "0.50-0.70 - Route with confirmation",
+      "low-confidence": "< 0.50 - Request clarification"
+    }
+  },
+
+  "fallbackStrategies": {
+    "ambiguous-input": {
+      "condition": "Multiple high-confidence matches",
+      "action": "Present clarification options to human",
+      "template": "I see multiple possible interpretations. Did you mean:\n1. {option1}\n2. {option2}\n3. {option3}"
+    },
+    "low-confidence": {
+      "condition": "No matches above confidence threshold",
+      "action": "Request more specific information",
+      "template": "I need more details to help you effectively. Could you specify:\n- What do you want to accomplish?\n- What part of the project is this about?\n- What type of action are you requesting?"
+    },
+    "unknown-patterns": {
+      "condition": "Completely unrecognized input patterns",
+      "action": "Escalate to human support with context",
+      "template": "I don't recognize this request type. Escalating to human review with full context."
+    },
+    "conflicting-patterns": {
+      "condition": "Exclude patterns match primary patterns",
+      "action": "Request clarification about intent",
+      "template": "Your request contains conflicting signals. Please clarify your primary intent."
+    }
+  },
+
+  "contextualFactors": {
+    "project-state": {
+      "new-project": "Boost project-setup and requirement patterns",
+      "development-phase": "Boost implementation and testing patterns",
+      "review-phase": "Boost review and optimization patterns",
+      "deployment-phase": "Boost deployment and monitoring patterns"
+    },
+    "recent-activity": {
+      "recent-implementation": "Reduce implementation pattern confidence",
+      "recent-optimization": "Reduce optimization pattern confidence",
+      "recent-deployment": "Boost monitoring and status patterns"
+    },
+    "agent-availability": {
+      "target-agent-busy": "Suggest alternative or queue",
+      "all-agents-available": "Route to optimal agent",
+      "system-overloaded": "Queue request with wait estimate"
+    }
+  },
+
+  "learningMechanisms": {
+    "successful-routing": {
+      "tracking": "Requests that led to successful workflow completion",
+      "analysis": "Extract successful pattern → agent → workflow combinations",
+      "application": "Strengthen successful routing patterns"
+    },
+    "failed-routing": {
+      "tracking": "Requests that required human correction or clarification",
+      "analysis": "Identify pattern recognition weaknesses",
+      "application": "Improve pattern matching and add new patterns"
+    },
+    "pattern-evolution": {
+      "new-pattern-detection": "Identify emerging patterns in human requests",
+      "pattern-refinement": "Improve existing patterns based on feedback",
+      "confidence-calibration": "Adjust confidence thresholds based on accuracy"
+    }
+  },
+
+  "routingMetrics": {
+    "accuracy": "Percentage of correct initial routing decisions",
+    "clarificationRate": "Percentage of requests requiring clarification",
+    "humanCorrectionRate": "Percentage requiring human correction",
+    "confidence-vs-success": "Correlation between confidence scores and success"
+  }
+}
