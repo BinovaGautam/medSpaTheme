@@ -2936,3 +2936,18 @@ function preetidreams_maybe_force_rewrite_flush() {
     }
 }
 add_action('init', 'preetidreams_maybe_force_rewrite_flush', 99);
+
+/**
+ * Enqueue Google Fonts for treatments page
+ */
+function preetidreams_enqueue_treatments_fonts() {
+    if (is_page_template('page-treatments.php') || is_page('treatments')) {
+        wp_enqueue_style(
+            'preetidreams-google-fonts',
+            'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap',
+            array(),
+            null
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'preetidreams_enqueue_treatments_fonts');

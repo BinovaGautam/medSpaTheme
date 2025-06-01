@@ -12,15 +12,15 @@ get_header(); ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                 <div class="entry-content">
                     <?php
-                    // Check if we should include the HTML treatments page
+                    // Check if we should include the custom treatments layout
                     $custom_treatments_content = get_field('use_custom_treatments_layout');
 
-                    // Default to showing treatments.html if no custom field is set or if treatments.html exists
-                    $treatments_html_path = get_template_directory() . '/treatments.html';
+                    // Check if the WordPress-compatible treatments content file exists
+                    $treatments_content_path = get_template_directory() . '/treatments-content.php';
 
-                    if ($custom_treatments_content || (!$custom_treatments_content && file_exists($treatments_html_path))) {
-                        // Include the treatments.html content
-                        include $treatments_html_path;
+                    if ($custom_treatments_content || (!$custom_treatments_content && file_exists($treatments_content_path))) {
+                        // Include the WordPress-compatible treatments content
+                        include $treatments_content_path;
                     } else {
                         // Show regular page content
                         the_content();
