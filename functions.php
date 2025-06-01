@@ -170,51 +170,55 @@ function preetidreams_enqueue_hero_assets() {
         ]);
 
         // Header scroll behavior for seamless hero integration
-        wp_add_inline_script('premium-hero-js', '
+        wp_add_inline_script('preetidreams-premium-hero', '
             document.addEventListener("DOMContentLoaded", function() {
                 const header = document.querySelector(".professional-header");
-                const heroSection = document.querySelector(".premium-hero");
 
-                if (header && heroSection) {
+                if (header) {
                     let lastScrollTop = 0;
+                    let scrollTimeout;
 
                     function handleScroll() {
                         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                        const heroHeight = heroSection.offsetHeight;
                         const headerHeight = header.offsetHeight;
 
-                        // Add scrolled class when past the hero section
+                        // Add scrolled class when scrolled past 50px for transparent-to-opaque effect
                         if (scrollTop > 50) {
                             header.classList.add("scrolled");
                         } else {
                             header.classList.remove("scrolled");
                         }
 
-                        // Hide/show header on scroll direction
-                        if (scrollTop > lastScrollTop && scrollTop > headerHeight) {
-                            // Scrolling down
+                        // Hide/show header based on scroll direction (only when scrolled significantly)
+                        if (scrollTop > lastScrollTop && scrollTop > headerHeight * 2) {
+                            // Scrolling down - hide header
                             header.classList.add("hidden");
                             header.classList.remove("visible");
-                        } else {
-                            // Scrolling up
+                        } else if (scrollTop < lastScrollTop || scrollTop <= headerHeight) {
+                            // Scrolling up or near top - show header
                             header.classList.remove("hidden");
                             header.classList.add("visible");
                         }
 
-                        lastScrollTop = scrollTop;
+                        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
                     }
 
                     // Throttled scroll handler for better performance
-                    let scrollTimeout;
-                    window.addEventListener("scroll", function() {
+                    function throttledScrollHandler() {
                         if (scrollTimeout) {
                             clearTimeout(scrollTimeout);
                         }
                         scrollTimeout = setTimeout(handleScroll, 10);
-                    });
+                    }
 
-                    // Initial call
+                    // Add scroll event listener
+                    window.addEventListener("scroll", throttledScrollHandler, { passive: true });
+
+                    // Initial call to set proper state
                     handleScroll();
+
+                    // Ensure header is visible when page loads
+                    header.classList.add("visible");
                 }
             });
         ');
