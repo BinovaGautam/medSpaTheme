@@ -21,6 +21,7 @@ class PremiumHeroSystem {
   init() {
     this.bindEvents();
     this.initAOS();
+    this.initializeBackgrounds();
     this.startBackgroundRotation();
     this.trackAnalytics('hero_loaded');
     this.initializeAccessibility();
@@ -609,6 +610,26 @@ class PremiumHeroSystem {
 
       document.body.appendChild(controlsDiv);
     }
+  }
+
+  initializeBackgrounds() {
+    // Ensure at least one background is always active
+    const activeBackground = document.querySelector('.hero-background.active');
+    if (!activeBackground) {
+      // Fallback to gradient if no background is active
+      const gradientBg = document.querySelector('.hero-background-gradient');
+      if (gradientBg) {
+        gradientBg.classList.add('active');
+      }
+    }
+
+    // Log background status for debugging
+    const backgrounds = document.querySelectorAll('.hero-background');
+    backgrounds.forEach((bg, index) => {
+      const isActive = bg.classList.contains('active');
+      const type = bg.dataset.background;
+      console.log(`Background ${index}: ${type} - ${isActive ? 'Active' : 'Inactive'}`);
+    });
   }
 }
 

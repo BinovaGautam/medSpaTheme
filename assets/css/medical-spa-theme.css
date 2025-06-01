@@ -4140,12 +4140,79 @@ a:focus {
 /* Gradient Background */
 .hero-background-gradient {
   background: linear-gradient(135deg, var(--color-primary-teal) 0%, var(--color-primary-blue) 100%);
+  position: relative;
+}
+
+/* CSS Pattern Overlay for Professional Medical Spa Look */
+.hero-background-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px, 40px 40px;
+  background-position: 0 0, 30px 30px;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+/* CSS Medical Cross Pattern for Brand Identity */
+.hero-background-gradient::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.03) 42%, rgba(255, 255, 255, 0.03) 58%, transparent 60%),
+    linear-gradient(-45deg, transparent 40%, rgba(255, 255, 255, 0.03) 42%, rgba(255, 255, 255, 0.03) 58%, transparent 60%);
+  background-size: 120px 120px;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+/* Image Background Fallback */
+.hero-background-image:not(:has(img)) {
+  background: linear-gradient(135deg, var(--color-primary-navy) 0%, var(--color-primary-teal) 100%);
+  position: relative;
+}
+
+.hero-background-image:not(:has(img))::before {
+  content: '🏥';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8rem;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+/* Hero Overlay for Text Readability */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(52, 73, 94, 0.4) 0%,
+    rgba(22, 160, 133, 0.3) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Hero Content Layer */
 .premium-hero .hero-layout {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;

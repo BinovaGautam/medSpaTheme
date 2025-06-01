@@ -6,11 +6,24 @@
     <section class="hero-section premium-hero" id="hero">
         <!-- Dynamic Background System -->
         <div class="hero-background-system">
-            <div class="hero-background hero-background-image active" data-background="image">
-                <?php
-                $hero_image = get_theme_mod('hero_background_image', get_template_directory_uri() . '/assets/images/hero-medical-spa.jpg');
-                ?>
-                <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Luxury Medical Spa Environment', 'preetidreams'); ?>" loading="eager">
+            <?php
+            $hero_image = get_theme_mod('hero_background_image', get_template_directory_uri() . '/assets/images/hero-medical-spa.jpg');
+            $image_exists = false;
+
+            // Check if custom image exists via URL or if default file exists
+            if (get_theme_mod('hero_background_image')) {
+                $image_exists = true; // Custom image from customizer
+            } else {
+                // Check if default image file exists
+                $default_image_path = get_template_directory() . '/assets/images/hero-medical-spa.jpg';
+                $image_exists = file_exists($default_image_path);
+            }
+            ?>
+
+            <div class="hero-background hero-background-image <?php echo $image_exists ? 'active' : ''; ?>" data-background="image">
+                <?php if ($image_exists) : ?>
+                    <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Luxury Medical Spa Environment', 'preetidreams'); ?>" loading="eager">
+                <?php endif; ?>
             </div>
 
             <div class="hero-background hero-background-video" data-background="video">
@@ -22,9 +35,12 @@
                 <?php endif; ?>
             </div>
 
-            <div class="hero-background hero-background-gradient" data-background="gradient">
+            <div class="hero-background hero-background-gradient <?php echo !$image_exists ? 'active' : ''; ?>" data-background="gradient">
                 <!-- CSS gradient backgrounds -->
             </div>
+
+            <!-- Background Overlay for Better Text Readability -->
+            <div class="hero-overlay"></div>
 
             <!-- Hero Content -->
             <div class="container">
