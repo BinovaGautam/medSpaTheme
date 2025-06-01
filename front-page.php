@@ -2,83 +2,162 @@
 
 <main id="main" class="site-main homepage">
 
-    <!-- Hero Section -->
-    <section class="hero-section modern-hero">
-        <div class="hero-background">
+    <!-- Premium Hero Section -->
+    <section class="hero-section premium-hero" id="hero">
+        <!-- Dynamic Background System -->
+        <div class="hero-background-system">
+            <div class="hero-background hero-background-image active" data-background="image">
+                <?php
+                $hero_image = get_theme_mod('hero_background_image', get_template_directory_uri() . '/assets/images/hero-medical-spa.jpg');
+                ?>
+                <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Luxury Medical Spa Environment', 'preetidreams'); ?>" loading="eager">
+            </div>
+
+            <div class="hero-background hero-background-video" data-background="video">
+                <?php $hero_video = get_theme_mod('hero_background_video'); ?>
+                <?php if ($hero_video) : ?>
+                    <video autoplay muted loop playsinline>
+                        <source src="<?php echo esc_url($hero_video); ?>" type="video/mp4">
+                    </video>
+                <?php endif; ?>
+            </div>
+
+            <div class="hero-background hero-background-gradient" data-background="gradient">
+                <!-- CSS gradient backgrounds -->
+            </div>
+
+            <!-- Hero Content -->
             <div class="container">
-                <div class="hero-content hero-layout">
-                    <div class="hero-text-content">
-                        <h1 class="hero-title">
-                            <?php
-                            $hero_title = get_theme_mod('hero_title', __('Transform Your Beauty with Advanced Medical Spa Treatments', 'preetidreams'));
-                            echo esc_html($hero_title);
-                            ?>
-                        </h1>
+                <div class="hero-layout">
+                    <!-- Left: Content Section -->
+                    <div class="hero-content-section">
+                        <div class="hero-text-content">
+                            <h1 class="hero-title" data-aos="fade-up">
+                                <?php echo esc_html(get_theme_mod('hero_title', __('Transform Your Beauty with Advanced Medical Spa Treatments', 'preetidreams'))); ?>
+                            </h1>
 
-                        <p class="hero-subtitle">
-                            <?php
-                            $hero_subtitle = get_theme_mod('hero_subtitle', __('Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.', 'preetidreams'));
-                            echo esc_html($hero_subtitle);
-                            ?>
-                        </p>
+                            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                                <?php echo esc_html(get_theme_mod('hero_subtitle', __('Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.', 'preetidreams'))); ?>
+                            </p>
 
-                        <div class="hero-actions">
-                            <a href="#consultation" class="btn btn-primary btn-large cta-primary">
-                                <span class="btn-icon">📞</span>
-                                <?php esc_html_e('Free Consultation', 'preetidreams'); ?>
-                            </a>
+                            <!-- Trust Indicators -->
+                            <div class="trust-indicators" data-aos="fade-up" data-aos-delay="400">
+                                <div class="trust-item">
+                                    <span class="trust-icon">✅</span>
+                                    <span class="trust-text"><?php esc_html_e('Board Certified', 'preetidreams'); ?></span>
+                                </div>
+                                <div class="trust-item">
+                                    <span class="trust-icon">🏆</span>
+                                    <span class="trust-text"><?php esc_html_e('Award Winning', 'preetidreams'); ?></span>
+                                </div>
+                                <div class="trust-item">
+                                    <span class="trust-icon">💯</span>
+                                    <span class="trust-text"><?php esc_html_e('2000+ Happy Patients', 'preetidreams'); ?></span>
+                                </div>
+                                <div class="trust-item">
+                                    <span class="trust-icon">🔒</span>
+                                    <span class="trust-text"><?php esc_html_e('HIPAA Compliant', 'preetidreams'); ?></span>
+                                </div>
+                            </div>
 
-                            <?php
-                            $phone = preetidreams_get_phone();
-                            if ($phone) : ?>
-                                <a href="tel:<?php echo esc_attr($phone); ?>" class="btn btn-secondary btn-large cta-secondary">
-                                    <span class="btn-icon">📱</span>
-                                    <?php echo esc_html($phone); ?>
+                            <!-- Primary CTAs -->
+                            <div class="hero-actions" data-aos="fade-up" data-aos-delay="600">
+                                <a href="#consultation" class="btn btn-primary btn-large cta-primary">
+                                    <span class="btn-icon">📞</span>
+                                    <?php esc_html_e('Free Consultation', 'preetidreams'); ?>
                                 </a>
-                            <?php endif; ?>
-                        </div>
-
-                        <!-- Trust Indicators -->
-                        <div class="trust-indicators">
-                            <div class="trust-item">
-                                <span class="trust-icon">✅</span>
-                                <span class="trust-text"><?php esc_html_e('Board Certified', 'preetidreams'); ?></span>
-                            </div>
-                            <div class="trust-item">
-                                <span class="trust-icon">🏆</span>
-                                <span class="trust-text"><?php esc_html_e('Award Winning', 'preetidreams'); ?></span>
-                            </div>
-                            <div class="trust-item">
-                                <span class="trust-icon">💯</span>
-                                <span class="trust-text"><?php esc_html_e('1000+ Happy Patients', 'preetidreams'); ?></span>
-                            </div>
-                            <div class="trust-item">
-                                <span class="trust-icon">🔒</span>
-                                <span class="trust-text"><?php esc_html_e('HIPAA Compliant', 'preetidreams'); ?></span>
+                                <?php
+                                $phone = preetidreams_get_phone();
+                                if ($phone) : ?>
+                                    <a href="tel:<?php echo esc_attr($phone); ?>" class="btn btn-secondary btn-large cta-secondary">
+                                        <span class="btn-icon">📱</span>
+                                        <?php echo esc_html($phone); ?>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
 
-                    <div class="hero-image-content">
-                        <?php
-                        $hero_image = get_theme_mod('hero_image');
-                        if ($hero_image) : ?>
-                            <div class="hero-image">
-                                <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('Medical Spa Treatment', 'preetidreams'); ?>" loading="eager">
-                            </div>
-                        <?php else : ?>
-                            <!-- Placeholder hero image -->
-                            <div class="hero-image hero-placeholder">
-                                <div class="placeholder-content">
-                                    <div class="placeholder-icon">🏥</div>
-                                    <p><?php esc_html_e('Professional Medical Spa Environment', 'preetidreams'); ?></p>
+                    <!-- Right: Interactive Treatment Selection -->
+                    <div class="hero-interactive-section">
+                        <div class="treatment-selection-interface" data-aos="fade-left">
+                            <div class="selection-progress">
+                                <div class="progress-indicator">
+                                    <span class="step-number active" data-step="1">1</span>
+                                    <span class="step-number" data-step="2">2</span>
+                                    <span class="step-number" data-step="3">3</span>
                                 </div>
                             </div>
-                        <?php endif; ?>
+
+                            <!-- Step 1: Treatment Categories -->
+                            <div class="selection-step active" data-step="1">
+                                <h3 class="step-title"><?php esc_html_e('Which treatment are you interested in?', 'preetidreams'); ?></h3>
+                                <div class="treatment-categories">
+                                    <button class="category-btn" data-category="facial" tabindex="0">
+                                        <span class="category-icon">✨</span>
+                                        <span class="category-name"><?php esc_html_e('Facial Treatments', 'preetidreams'); ?></span>
+                                    </button>
+                                    <button class="category-btn" data-category="injectable" tabindex="0">
+                                        <span class="category-icon">💉</span>
+                                        <span class="category-name"><?php esc_html_e('Injectables', 'preetidreams'); ?></span>
+                                    </button>
+                                    <button class="category-btn" data-category="laser" tabindex="0">
+                                        <span class="category-icon">💎</span>
+                                        <span class="category-name"><?php esc_html_e('Laser Treatments', 'preetidreams'); ?></span>
+                                    </button>
+                                    <button class="category-btn" data-category="body" tabindex="0">
+                                        <span class="category-icon">🌟</span>
+                                        <span class="category-name"><?php esc_html_e('Body Contouring', 'preetidreams'); ?></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Specific Treatments -->
+                            <div class="selection-step" data-step="2">
+                                <h3 class="step-title"><?php esc_html_e('Select your specific treatment:', 'preetidreams'); ?></h3>
+                                <div class="specific-treatments">
+                                    <!-- Dynamically populated via JavaScript -->
+                                </div>
+                                <button class="btn btn-outline step-back" type="button">
+                                    <span class="btn-icon">←</span>
+                                    <?php esc_html_e('Back', 'preetidreams'); ?>
+                                </button>
+                            </div>
+
+                            <!-- Step 3: Consultation Form -->
+                            <div class="selection-step" data-step="3">
+                                <h3 class="step-title"><?php esc_html_e('Book your consultation:', 'preetidreams'); ?></h3>
+                                <form class="consultation-form" id="hero-consultation-form">
+                                    <div class="form-group">
+                                        <input type="text" name="full_name" placeholder="<?php esc_attr_e('Your Full Name', 'preetidreams'); ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" name="email" placeholder="<?php esc_attr_e('Email Address', 'preetidreams'); ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="tel" name="phone" placeholder="<?php esc_attr_e('Phone Number', 'preetidreams'); ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="message" placeholder="<?php esc_attr_e('Tell us about your goals (optional)', 'preetidreams'); ?>" rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-large">
+                                        <span class="btn-icon">📅</span>
+                                        <?php esc_html_e('Schedule Free Consultation', 'preetidreams'); ?>
+                                    </button>
+                                    <button class="btn btn-outline step-back" type="button">
+                                        <span class="btn-icon">←</span>
+                                        <?php esc_html_e('Back', 'preetidreams'); ?>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Seamless Header Integration -->
+        <div class="hero-header-connector"></div>
     </section>
 
     <!-- Featured Treatments Section -->
