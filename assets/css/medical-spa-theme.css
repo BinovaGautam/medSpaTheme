@@ -133,6 +133,32 @@ Author: PreetiDreams Development Team
 }
 
 /* =============================================================================
+   UNIVERSAL TOP SPACING REMOVAL - FORCE START AT TOP
+   ============================================================================= */
+
+/* Force absolutely no top spacing from any source */
+html,
+body,
+#page,
+#main,
+.site,
+.site-main,
+.homepage,
+.hero-section,
+.premium-hero {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Ensure first element starts at absolute top */
+body > *:first-child,
+#page > *:first-child,
+#main > *:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* =============================================================================
    ENHANCED BASE STYLES
    ============================================================================= */
 
@@ -144,11 +170,26 @@ Author: PreetiDreams Development Team
   padding: 0;
 }
 
-html {
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
   scroll-behavior: smooth;
   text-size-adjust: 100%;
 }
 
+/* Ensure WordPress admin bar doesn't push content down */
+body.admin-bar .professional-header {
+  top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+  body.admin-bar .professional-header {
+    top: 46px;
+  }
+}
+
+/* Override any WordPress default margins */
 body {
   font-family: var(--font-secondary);
   font-size: var(--text-base);
@@ -159,7 +200,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* No padding-top needed - header is transparent initially */
+  /* Absolutely no top spacing */
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* Helper for preventing layout shift during transitions */
@@ -168,10 +211,22 @@ body {
   position: relative;
 }
 
-/* Main content wrapper to ensure proper spacing */
+/* Main content wrapper - ensure absolutely no top spacing */
 #main {
   position: relative;
   z-index: 1;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.site-main {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.homepage {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Enhanced Typography */
@@ -2568,9 +2623,9 @@ a:focus {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
   padding: 0;
   overflow: hidden;
-  /* Hero extends to top of page */
-  margin-top: 0;
-  padding-top: 0;
+  /* Hero extends to top of page - absolutely no spacing */
+  margin: 0;
+  top: 0;
 }
 
 /* Hero Content Container - Positioned below transparent header */
