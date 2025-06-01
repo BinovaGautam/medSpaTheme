@@ -98,30 +98,28 @@
                             </button>
                         </div>
 
-                        <!-- Step 3: Consultation Form -->
+                        <!-- Step 3: Lead Collection Form -->
                         <div class="selection-step" data-step="3">
-                            <h3 class="step-title">Book your consultation:</h3>
+                            <h3 class="step-title">Get your free consultation info:</h3>
                             <form class="consultation-form" id="hero-consultation-form">
                                 <div class="form-group">
-                                    <input type="text" name="full_name" placeholder="Your Full Name" required>
+                                    <input type="text" name="full_name" placeholder="Your Full Name *" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" placeholder="Email Address" required>
+                                    <input type="email" name="email" placeholder="Email Address *" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" name="phone" placeholder="Phone Number" required>
-                                </div>
-                                <div class="form-group">
-                                    <textarea name="message" placeholder="Tell us about your goals (optional)" rows="3"></textarea>
+                                    <input type="tel" name="phone" placeholder="Phone Number *" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-large">
-                                    <span class="btn-icon">📅</span>
-                                    Schedule Free Consultation
+                                    <span class="btn-icon">📞</span>
+                                    Get Free Consultation Info
                                 </button>
                                 <button class="btn btn-outline step-back" type="button">
                                     <span class="btn-icon">←</span>
                                     Back
                                 </button>
+                                <p class="form-privacy">We'll contact you within 24 hours with pricing and availability.</p>
                             </form>
                         </div>
                     </div>

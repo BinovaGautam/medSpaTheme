@@ -1121,3 +1121,360 @@ function preetidreams_get_hours() {
 function preetidreams_get_social_link($platform) {
     return get_theme_mod("preetidreams_social_{$platform}", '');
 }
+
+/**
+ * ============================================================================
+ * ADMIN-MANAGED TREATMENT SYSTEM
+ * ============================================================================
+ */
+
+/**
+ * Register Hero Treatments Custom Post Type
+ */
+function register_hero_treatments_post_type() {
+    $labels = [
+        'name' => 'Hero Treatments',
+        'singular_name' => 'Hero Treatment',
+        'menu_name' => 'Hero Treatments',
+        'add_new' => 'Add Treatment',
+        'add_new_item' => 'Add New Treatment',
+        'new_item' => 'New Treatment',
+        'edit_item' => 'Edit Treatment',
+        'view_item' => 'View Treatment',
+        'all_items' => 'All Treatments',
+        'search_items' => 'Search Treatments',
+        'not_found' => 'No treatments found.',
+        'not_found_in_trash' => 'No treatments found in Trash.'
+    ];
+
+    $args = [
+        'labels' => $labels,
+        'description' => 'Treatments for the hero section selection interface',
+        'public' => false,
+        'publicly_queryable' => false,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'query_var' => false,
+        'rewrite' => false,
+        'capability_type' => 'post',
+        'has_archive' => false,
+        'hierarchical' => false,
+        'menu_position' => 26,
+        'menu_icon' => 'dashicons-heart',
+        'supports' => ['title', 'editor'],
+        'show_in_admin_bar' => true,
+        'show_in_nav_menus' => false,
+        'can_export' => true,
+        'exclude_from_search' => true
+    ];
+
+    register_post_type('hero_treatment', $args);
+}
+add_action('init', 'register_hero_treatments_post_type');
+
+/**
+ * Register Hero Treatment Categories Taxonomy
+ */
+function register_hero_treatment_categories() {
+    $labels = [
+        'name' => 'Treatment Categories',
+        'singular_name' => 'Treatment Category',
+        'menu_name' => 'Categories',
+        'all_items' => 'All Categories',
+        'edit_item' => 'Edit Category',
+        'view_item' => 'View Category',
+        'update_item' => 'Update Category',
+        'add_new_item' => 'Add New Category',
+        'new_item_name' => 'New Category Name',
+        'search_items' => 'Search Categories',
+        'popular_items' => 'Popular Categories',
+        'not_found' => 'No categories found.'
+    ];
+
+    $args = [
+        'labels' => $labels,
+        'description' => 'Categories for hero treatment selection',
+        'public' => false,
+        'publicly_queryable' => false,
+        'hierarchical' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'show_in_nav_menus' => false,
+        'query_var' => false,
+        'rewrite' => false,
+    ];
+
+    register_taxonomy('hero_treatment_category', ['hero_treatment'], $args);
+}
+add_action('init', 'register_hero_treatment_categories');
+
+/**
+ * Add Hero Treatment Meta Boxes
+ */
+function add_hero_treatment_meta_boxes() {
+    add_meta_box(
+        'hero_treatment_details',
+        'Treatment Details',
+        'hero_treatment_details_callback',
+        'hero_treatment',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'add_hero_treatment_meta_boxes');
+
+/**
+ * Hero Treatment Details Meta Box Callback
+ */
+function hero_treatment_details_callback($post) {
+    wp_nonce_field('hero_treatment_meta_box', 'hero_treatment_meta_box_nonce');
+
+    $pricing = get_post_meta($post->ID, '_hero_treatment_pricing', true);
+    $icon = get_post_meta($post->ID, '_hero_treatment_icon', true);
+    $order = get_post_meta($post->ID, '_hero_treatment_order', true);
+    $featured = get_post_meta($post->ID, '_hero_treatment_featured', true);
+
+    echo '<table class="form-table">';
+
+    // Pricing
+    echo '<tr>';
+    echo '<th><label for="hero_treatment_pricing">Pricing Display</label></th>';
+    echo '<td><input type="text" id="hero_treatment_pricing" name="hero_treatment_pricing" value="' . esc_attr($pricing) . '" placeholder="e.g., Starting at $150" style="width: 100%;" /></td>';
+    echo '</tr>';
+
+    // Icon
+    echo '<tr>';
+    echo '<th><label for="hero_treatment_icon">Icon (Emoji)</label></th>';
+    echo '<td>';
+    echo '<input type="text" id="hero_treatment_icon" name="hero_treatment_icon" value="' . esc_attr($icon) . '" placeholder="e.g., ✨ 💉 💎" style="width: 100px;" />';
+    echo '<p class="description">Use emoji or icon character (e.g., ✨ 💉 💎 🌟)</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Display Order
+    echo '<tr>';
+    echo '<th><label for="hero_treatment_order">Display Order</label></th>';
+    echo '<td><input type="number" id="hero_treatment_order" name="hero_treatment_order" value="' . esc_attr($order) . '" placeholder="1" style="width: 100px;" /></td>';
+    echo '</tr>';
+
+    // Featured
+    echo '<tr>';
+    echo '<th><label for="hero_treatment_featured">Featured Treatment</label></th>';
+    echo '<td><label><input type="checkbox" id="hero_treatment_featured" name="hero_treatment_featured" value="1" ' . checked($featured, '1', false) . ' /> Show this treatment first in its category</label></td>';
+    echo '</tr>';
+
+    echo '</table>';
+}
+
+/**
+ * Save Hero Treatment Meta Data
+ */
+function save_hero_treatment_meta_data($post_id) {
+    if (!isset($_POST['hero_treatment_meta_box_nonce'])) {
+        return;
+    }
+
+    if (!wp_verify_nonce($_POST['hero_treatment_meta_box_nonce'], 'hero_treatment_meta_box')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    $fields = ['hero_treatment_pricing', 'hero_treatment_icon', 'hero_treatment_order', 'hero_treatment_featured'];
+
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post', 'save_hero_treatment_meta_data');
+
+/**
+ * AJAX Endpoint: Get Hero Treatments for Frontend
+ */
+function get_hero_treatments_ajax() {
+    $treatments_data = [];
+
+    // Get all treatment categories
+    $categories = get_terms([
+        'taxonomy' => 'hero_treatment_category',
+        'hide_empty' => false,
+        'orderby' => 'meta_value_num',
+        'meta_key' => '_category_order',
+        'order' => 'ASC'
+    ]);
+
+    foreach ($categories as $category) {
+        $category_slug = $category->slug;
+        $treatments_data[$category_slug] = [];
+
+        // Get treatments in this category
+        $treatments = get_posts([
+            'post_type' => 'hero_treatment',
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+            'orderby' => 'meta_value_num',
+            'meta_key' => '_hero_treatment_order',
+            'order' => 'ASC',
+            'tax_query' => [
+                [
+                    'taxonomy' => 'hero_treatment_category',
+                    'field' => 'term_id',
+                    'terms' => $category->term_id
+                ]
+            ]
+        ]);
+
+        foreach ($treatments as $treatment) {
+            $pricing = get_post_meta($treatment->ID, '_hero_treatment_pricing', true);
+            $icon = get_post_meta($treatment->ID, '_hero_treatment_icon', true);
+
+            $treatments_data[$category_slug][] = [
+                'slug' => $treatment->post_name,
+                'name' => $treatment->post_title,
+                'price' => $pricing ?: 'Contact for pricing',
+                'icon' => $icon ?: '✨'
+            ];
+        }
+    }
+
+    wp_send_json_success($treatments_data);
+}
+add_action('wp_ajax_get_hero_treatments', 'get_hero_treatments_ajax');
+add_action('wp_ajax_nopriv_get_hero_treatments', 'get_hero_treatments_ajax');
+
+/**
+ * Add Custom Columns to Hero Treatments Admin
+ */
+function hero_treatment_admin_columns($columns) {
+    $new_columns = [];
+    $new_columns['cb'] = $columns['cb'];
+    $new_columns['title'] = 'Treatment Name';
+    $new_columns['category'] = 'Category';
+    $new_columns['pricing'] = 'Pricing';
+    $new_columns['icon'] = 'Icon';
+    $new_columns['order'] = 'Order';
+    $new_columns['featured'] = 'Featured';
+    $new_columns['date'] = 'Date';
+
+    return $new_columns;
+}
+add_filter('manage_hero_treatment_posts_columns', 'hero_treatment_admin_columns');
+
+/**
+ * Fill Custom Columns with Data
+ */
+function hero_treatment_admin_column_content($column, $post_id) {
+    switch ($column) {
+        case 'category':
+            $terms = get_the_terms($post_id, 'hero_treatment_category');
+            if ($terms && !is_wp_error($terms)) {
+                echo esc_html($terms[0]->name);
+            } else {
+                echo '<span style="color: #999;">No category</span>';
+            }
+            break;
+
+        case 'pricing':
+            $pricing = get_post_meta($post_id, '_hero_treatment_pricing', true);
+            echo esc_html($pricing ?: 'Not set');
+            break;
+
+        case 'icon':
+            $icon = get_post_meta($post_id, '_hero_treatment_icon', true);
+            echo '<span style="font-size: 20px;">' . esc_html($icon ?: '✨') . '</span>';
+            break;
+
+        case 'order':
+            $order = get_post_meta($post_id, '_hero_treatment_order', true);
+            echo esc_html($order ?: '0');
+            break;
+
+        case 'featured':
+            $featured = get_post_meta($post_id, '_hero_treatment_featured', true);
+            echo $featured ? '<span style="color: #d63638;">★ Featured</span>' : '';
+            break;
+    }
+}
+add_action('manage_hero_treatment_posts_custom_column', 'hero_treatment_admin_column_content', 10, 2);
+
+/**
+ * Create Default Treatment Categories and Treatments
+ */
+function create_default_hero_treatments() {
+    if (get_option('hero_treatments_created')) {
+        return;
+    }
+
+    // Create categories
+    $categories = [
+        'facial' => ['name' => 'Facial Treatments', 'icon' => '✨', 'order' => 1],
+        'injectable' => ['name' => 'Injectables', 'icon' => '💉', 'order' => 2],
+        'laser' => ['name' => 'Laser Treatments', 'icon' => '💎', 'order' => 3],
+        'body' => ['name' => 'Body Contouring', 'icon' => '🌟', 'order' => 4]
+    ];
+
+    foreach ($categories as $slug => $data) {
+        $term = wp_insert_term($data['name'], 'hero_treatment_category', ['slug' => $slug]);
+        if (!is_wp_error($term)) {
+            update_term_meta($term['term_id'], '_category_order', $data['order']);
+            update_term_meta($term['term_id'], '_category_icon', $data['icon']);
+        }
+    }
+
+    // Create sample treatments
+    $treatments = [
+        // Facial Treatments
+        ['title' => 'HydraFacial MD', 'category' => 'facial', 'pricing' => 'Starting at $150', 'icon' => '✨', 'order' => 1],
+        ['title' => 'Chemical Peel', 'category' => 'facial', 'pricing' => 'Starting at $100', 'icon' => '🌟', 'order' => 2],
+        ['title' => 'Microneedling', 'category' => 'facial', 'pricing' => 'Starting at $200', 'icon' => '💫', 'order' => 3],
+        ['title' => 'Dermaplaning', 'category' => 'facial', 'pricing' => 'Starting at $80', 'icon' => '✨', 'order' => 4],
+
+        // Injectables
+        ['title' => 'Botox Cosmetic', 'category' => 'injectable', 'pricing' => 'Starting at $12/unit', 'icon' => '💉', 'order' => 1],
+        ['title' => 'Dermal Fillers', 'category' => 'injectable', 'pricing' => 'Starting at $600', 'icon' => '💎', 'order' => 2],
+        ['title' => 'Lip Enhancement', 'category' => 'injectable', 'pricing' => 'Starting at $500', 'icon' => '💋', 'order' => 3],
+        ['title' => 'Sculptra', 'category' => 'injectable', 'pricing' => 'Starting at $800', 'icon' => '✨', 'order' => 4],
+
+        // Laser Treatments
+        ['title' => 'Laser Hair Removal', 'category' => 'laser', 'pricing' => 'Starting at $100', 'icon' => '💎', 'order' => 1],
+        ['title' => 'Fractional Laser', 'category' => 'laser', 'pricing' => 'Starting at $300', 'icon' => '✨', 'order' => 2],
+        ['title' => 'IPL Photofacial', 'category' => 'laser', 'pricing' => 'Starting at $250', 'icon' => '🌟', 'order' => 3],
+        ['title' => 'CO2 Laser Resurfacing', 'category' => 'laser', 'pricing' => 'Starting at $500', 'icon' => '💫', 'order' => 4],
+
+        // Body Contouring
+        ['title' => 'CoolSculpting', 'category' => 'body', 'pricing' => 'Starting at $750', 'icon' => '🌟', 'order' => 1],
+        ['title' => 'RF Body Contouring', 'category' => 'body', 'pricing' => 'Starting at $400', 'icon' => '⚡', 'order' => 2],
+        ['title' => 'Lymphatic Drainage', 'category' => 'body', 'pricing' => 'Starting at $150', 'icon' => '🌊', 'order' => 3],
+        ['title' => 'Non-Invasive Body Sculpting', 'category' => 'body', 'pricing' => 'Starting at $300', 'icon' => '💪', 'order' => 4]
+    ];
+
+    foreach ($treatments as $treatment_data) {
+        $post_id = wp_insert_post([
+            'post_title' => $treatment_data['title'],
+            'post_type' => 'hero_treatment',
+            'post_status' => 'publish',
+            'post_content' => 'Treatment description can be added here.'
+        ]);
+
+        if ($post_id && !is_wp_error($post_id)) {
+            // Set category
+            wp_set_object_terms($post_id, $treatment_data['category'], 'hero_treatment_category');
+
+            // Set meta data
+            update_post_meta($post_id, '_hero_treatment_pricing', $treatment_data['pricing']);
+            update_post_meta($post_id, '_hero_treatment_icon', $treatment_data['icon']);
+            update_post_meta($post_id, '_hero_treatment_order', $treatment_data['order']);
+        }
+    }
+
+    update_option('hero_treatments_created', true);
+}
+add_action('init', 'create_default_hero_treatments');
