@@ -1,8 +1,73 @@
 {
-  "avoid": ["time", "real-time decisions", "implicit memory"],
-  "prefer": ["versioned-state", "explicit inputs", "stateless coordination"],
+  "avoid": ["time", "real-time decisions", "implicit memory", "direct-date-time-usage", "temporal-specific-values"],
+  "prefer": ["versioned-state", "explicit inputs", "stateless coordination", "version-tracking-integration", "temporal-placeholders"],
   "capabilities": ["code-generation", "pattern-recognition", "logical-reasoning"],
-  "limitations": ["temporal-reasoning", "persistent-state", "real-time-context"],
+  "limitations": ["temporal-reasoning", "persistent-state", "real-time-context", "date-time-generation", "timestamp-creation"],
+
+  "INVIOLABLE_SYSTEM_RULES": {
+    "NEVER_VIOLATE_THESE_FUNDAMENTALS": [
+      "ALWAYS read and follow fundamentals.json before ANY action",
+      "NEVER proceed without checking fundamentals compliance",
+      "ALWAYS verify agent and workflow existence before proceeding",
+      "NEVER bypass the VERSION-TRACK-001 agent for completions",
+      "NEVER use specific dates, times, or timestamps in agent outputs"
+    ],
+    "fundamentalsEnforcement": {
+      "mandatoryCheck": "CRITICAL - read fundamentals.json at start of EVERY workflow",
+      "complianceValidation": "CRITICAL - verify fundamentals compliance before any action",
+      "violationHandling": "CRITICAL ERROR - halt all operations until fundamentals are followed",
+      "neverSkip": "Fundamentals checking is NEVER optional, NEVER skippable"
+    },
+    "systemIntegrityThreshold": "ZERO TOLERANCE for fundamentals violations"
+  },
+
+  "MANDATORY_VERSION_TRACKING": {
+    "NEVER_VIOLATE": [
+      "VERSION-TRACK-001 MUST be involved when ANY workflow completes",
+      "VERSION-TRACK-001 MUST be involved when ANY agent task completes",
+      "VERSION-TRACK-001 MUST be involved when ANY significant system change occurs",
+      "NO completion is considered final without version tracking"
+    ],
+    "versionTrackingTriggers": {
+      "workflowCompletion": "MANDATORY - invoke VERSION-TRACK-001 for commit and versioning",
+      "agentTaskCompletion": "MANDATORY - invoke VERSION-TRACK-001 for change tracking",
+      "fileCreation": "MANDATORY - invoke VERSION-TRACK-001 for version control",
+      "fileModification": "MANDATORY - invoke VERSION-TRACK-001 for change tracking",
+      "systemConfiguration": "MANDATORY - invoke VERSION-TRACK-001 for configuration versioning"
+    },
+    "versionTrackingProtocol": {
+      "completionFormat": "✅ COMPLETION → 🔄 VERSION-TRACK-001 | CHANGE: [description]",
+      "handoffRequired": "CRITICAL - handoff to VERSION-TRACK-001 before marking complete",
+      "noBypass": "NO workflow/agent/task is complete without version tracking"
+    }
+  },
+
+  "TEMPORAL_LIMITATIONS": {
+    "NEVER_VIOLATE": [
+      "NO agent shall generate specific dates (e.g., 2025-01-15)",
+      "NO agent shall generate specific times (e.g., 14:30:00)",
+      "NO agent shall generate timestamps (e.g., 2025-01-15T14:30:00Z)",
+      "USE placeholders for all temporal values"
+    ],
+    "temporalPlaceholders": {
+      "dateFormat": "{CURRENT_DATE}",
+      "timeFormat": "{CURRENT_TIME}",
+      "timestampFormat": "{CURRENT_TIMESTAMP}",
+      "relativeDateFormat": "{DATE_RELATIVE: +7_days}",
+      "durationFormat": "{DURATION: 2_weeks}"
+    },
+    "temporalEnforcement": {
+      "detection": "Scan all outputs for specific date/time values",
+      "replacement": "Replace specific values with appropriate placeholders",
+      "validation": "CRITICAL ERROR if specific temporal values found in outputs"
+    },
+    "allowedTemporalReferences": [
+      "relative-time-descriptions (e.g., 'next week', 'in 2 weeks')",
+      "duration-descriptions (e.g., '2-week sprints', '30 minutes')",
+      "sequence-descriptions (e.g., 'after completion', 'before deployment')",
+      "placeholder-values (e.g., '{CURRENT_DATE}', '{SPRINT_START_DATE}')"
+    ]
+  },
 
   "strictFileOrganization": {
     "NEVER_VIOLATE": [
@@ -25,19 +90,23 @@
     "indexRegistrationRequired": {
       "designs": "levCompiler/project_context/designs/index.json",
       "workflows": "levCompiler/.control/workflows/workflow_registry.json",
-      "agents": "levCompiler/.control/agents/agent_registry.json"
+      "agents": "levCompiler/.control/agents/agent_registry.json",
+      "tasks": "levCompiler/project_context/tasks/index.json"
     },
     "agentUsageEnforcement": {
       "ui-ux-designs": "MUST use UI-UX-DESIGN-001 agent",
       "code-generation": "MUST use CODE-GEN-001 agent",
       "workflows": "MUST use WORKFLOW-CREATE-001 agent",
+      "task-management": "MUST use TASK-PLANNER-001 agent",
+      "version-tracking": "MUST use VERSION-TRACK-001 agent",
       "analysis": "MUST use appropriate analysis agents"
     },
     "violations": {
       "wrongLocation": "CRITICAL ERROR - move to correct location immediately",
       "missingIndex": "CRITICAL ERROR - register in appropriate index",
       "bypassingAgent": "CRITICAL ERROR - use designated agent",
-      "standaloneFolder": "CRITICAL ERROR - integrate into project_context"
+      "standaloneFolder": "CRITICAL ERROR - integrate into project_context",
+      "missingVersionTracking": "CRITICAL ERROR - invoke VERSION-TRACK-001"
     }
   },
 
@@ -46,14 +115,16 @@
       "ALWAYS print current workflow status before any action",
       "ALWAYS print current agent working on task",
       "ALWAYS ask human approval if agent/workflow missing",
-      "NEVER proceed without explicit workflow/agent confirmation"
+      "NEVER proceed without explicit workflow/agent confirmation",
+      "ALWAYS read fundamentals.json before any workflow execution"
     ],
     "workflowVisibility": {
       "printCurrentWorkflow": "MANDATORY before any task execution",
       "printCurrentAgent": "MANDATORY with agent ID and role",
       "printTaskProgress": "MANDATORY at each stage",
       "printQualityGateStatus": "MANDATORY for each gate",
-      "printFileOperations": "MANDATORY for create/edit/delete operations"
+      "printFileOperations": "MANDATORY for create/edit/delete operations",
+      "printVersionTracking": "MANDATORY when invoking VERSION-TRACK-001"
     },
     "missingComponentHandling": {
       "checkAgentExists": "CRITICAL - verify in agent_registry.json",
@@ -66,46 +137,87 @@
       "workflowFormat": "🔄 WORKFLOW: [workflow-name] | STAGE: [current-stage] | AGENT: [agent-id]",
       "agentFormat": "🤖 AGENT: [agent-id] | ROLE: [agent-role] | TASK: [current-task]",
       "progressFormat": "📊 PROGRESS: [stage] ([X]/[Y]) | STATUS: [status] | ETA: [estimate]",
-      "fileOpFormat": "📁 FILE OP: [operation] | FILE: [filename] | LOCATION: [path]"
+      "fileOpFormat": "📁 FILE OP: [operation] | FILE: [filename] | LOCATION: [path]",
+      "versionTrackFormat": "🔄 VERSION-TRACK-001 | OPERATION: [operation] | CHANGE: [description]"
     }
   },
 
   "complianceChecks": {
+    "beforeAnyAction": [
+      "read-fundamentals-json-completely",
+      "verify-fundamentals-compliance",
+      "check-agent-and-workflow-existence",
+      "validate-no-temporal-values-in-outputs"
+    ],
     "beforeFileCreation": [
       "verify-location-is-within-project-context",
       "confirm-agent-usage-requirement",
       "identify-index-registration-need",
-      "print-workflow-and-agent-status"
+      "print-workflow-and-agent-status",
+      "prepare-version-tracking-handoff"
     ],
     "afterFileCreation": [
       "validate-file-location-correctness",
       "confirm-index-registration-completed",
       "verify-agent-workflow-compliance",
+      "invoke-version-track-001-for-changes",
       "print-completion-status"
+    ],
+    "afterTaskCompletion": [
+      "invoke-version-track-001-mandatory",
+      "verify-all-quality-gates-passed",
+      "confirm-proper-documentation",
+      "validate-fundamentals-compliance"
     ],
     "periodicAudits": [
       "scan-for-orphaned-files-outside-structure",
       "verify-all-indexes-are-up-to-date",
       "validate-agent-usage-compliance",
-      "verify-transparency-compliance"
+      "verify-transparency-compliance",
+      "audit-version-tracking-compliance",
+      "scan-for-temporal-value-violations"
     ]
   },
 
   "realTimeMonitoring": {
     "mandatoryPrintStatements": {
+      "fundamentalsCheck": "📋 FUNDAMENTALS: Read and validated | COMPLIANCE: [status]",
       "workflowStart": "🚀 STARTING WORKFLOW: [workflow-name] with AGENT: [agent-id]",
       "stageTransition": "➡️  STAGE TRANSITION: [from-stage] → [to-stage]",
       "agentHandoff": "🔄 AGENT HANDOFF: [from-agent] → [to-agent]",
       "qualityGate": "🛡️  QUALITY GATE: [gate-name] | STATUS: [pass/fail]",
       "fileOperation": "📁 FILE: [operation] | [filename] → [location]",
-      "workflowComplete": "✅ WORKFLOW COMPLETE: [workflow-name] | DURATION: [time]",
+      "versionTracking": "🔄 VERSION-TRACK-001: [operation] | CHANGE: [description]",
+      "workflowComplete": "✅ WORKFLOW COMPLETE: [workflow-name] → VERSION-TRACK-001",
       "error": "❌ ERROR: [description] | WORKFLOW: [name] | AGENT: [id]"
     },
     "humanInteractionPoints": {
       "missingAgent": "❓ AGENT [agent-id] NOT FOUND. Create using agent-creation-agent? (yes/no)",
       "missingWorkflow": "❓ WORKFLOW [workflow-name] NOT FOUND. Create using workflow-creation-agent? (yes/no)",
       "qualityGateFailure": "⚠️  QUALITY GATE FAILED: [gate-name]. Human review required.",
-      "uncertainDecision": "🤔 UNCERTAIN: [description]. Human guidance needed."
+      "uncertainDecision": "🤔 UNCERTAIN: [description]. Human guidance needed.",
+      "fundamentalsViolation": "🚨 FUNDAMENTALS VIOLATION: [violation]. System halt required."
+    }
+  },
+
+  "emergencyProtocols": {
+    "fundamentalsViolation": {
+      "immediateAction": "HALT all operations immediately",
+      "escalation": "Alert human supervisor about fundamentals violation",
+      "resolution": "Must fix violation before proceeding with any operations",
+      "prevention": "Implement additional safeguards to prevent recurrence"
+    },
+    "versionTrackingBypass": {
+      "immediateAction": "HALT completion process immediately",
+      "escalation": "Alert human about version tracking bypass attempt",
+      "resolution": "Must involve VERSION-TRACK-001 before completion",
+      "prevention": "Strengthen version tracking enforcement mechanisms"
+    },
+    "temporalValueDetection": {
+      "immediateAction": "Replace specific temporal values with placeholders",
+      "escalation": "Alert about temporal limitation violation",
+      "resolution": "Validate all outputs for temporal value compliance",
+      "prevention": "Implement temporal value scanning in all outputs"
     }
   }
 }

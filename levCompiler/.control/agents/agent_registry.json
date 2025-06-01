@@ -1,9 +1,9 @@
 {
   "agentRegistry": {
     "version": "1.0.0",
-    "lastUpdated": "2025-01-02",
-    "totalAgents": 12,
-    "activeAgents": 12,
+    "lastUpdated": "{CURRENT_DATE}",
+    "totalAgents": 13,
+    "activeAgents": 13,
     "systemArchitecture": "intelligent-routing-with-human-supervision"
   },
 
@@ -126,6 +126,18 @@
       "confidenceThreshold": 0.92,
       "humanSupervisionRequired": true,
       "location": "levCompiler/.control/agents/ui_ux_design_agent.json"
+    },
+
+    "taskPlannerAgent": {
+      "agentId": "TASK-PLANNER-001",
+      "status": "active",
+      "role": "scrum-master-and-project-coordinator",
+      "priority": 1,
+      "description": "Specialized scrum master agent providing comprehensive project management with task creation, epic management, sprint planning, bug tracking, and decision tree capabilities",
+      "specialization": "project-management-and-scrum-master-operations",
+      "confidenceThreshold": 0.90,
+      "humanSupervisionRequired": true,
+      "location": "levCompiler/.control/agents/task_planner_agent.json"
     }
   },
 

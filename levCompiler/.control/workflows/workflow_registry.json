@@ -1,8 +1,8 @@
 {
   "workflowRegistry": {
     "version": "1.0.0",
-    "totalWorkflows": 6,
-    "activeWorkflows": 6,
+    "totalWorkflows": 7,
+    "activeWorkflows": 7,
     "systemArchitecture": "hierarchical-workflow-orchestration"
   },
 
@@ -81,6 +81,24 @@
           "outputLocation": "levCompiler/project_context/designs/",
           "indexRegistration": "levCompiler/project_context/designs/index.json",
           "archiveLocation": "levCompiler/project_context/archive/designs/"
+        }
+      },
+
+      "taskManagementWorkflow": {
+        "workflowId": "TASK-MANAGEMENT-WF-001",
+        "name": "task-management-workflow",
+        "type": "specialized-project-management",
+        "description": "Comprehensive workflow for project management, task planning, sprint execution, and stakeholder coordination using TASK-PLANNER-001",
+        "priority": 1,
+        "status": "active",
+        "triggerPatterns": ["create tasks", "plan sprint", "manage project", "track bugs", "generate reports", "project planning", "scrum master", "epic management", "task breakdown", "progress tracking"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/task_management_workflow.json",
+        "primaryAgent": "TASK-PLANNER-001",
+        "fileManagement": {
+          "outputLocation": "levCompiler/project_context/tasks/",
+          "indexRegistration": "levCompiler/project_context/tasks/index.json",
+          "archiveLocation": "levCompiler/project_context/archive/tasks/"
         }
       }
     }

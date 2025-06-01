@@ -1,0 +1,166 @@
+{
+  "taskTemplate": {
+    "templateVersion": "1.0.0",
+    "templateType": "task-creation-template",
+    "description": "Standard template for creating project tasks with comprehensive tracking information"
+  },
+
+  "taskIdentification": {
+    "taskId": "{AUTO_GENERATED}",
+    "taskTitle": "{REQUIRED_USER_INPUT}",
+    "taskType": "{ENUM: development|design|testing|documentation|deployment|maintenance|bug_fix}",
+    "parentEpic": "{OPTIONAL_EPIC_REFERENCE}",
+    "parentStory": "{OPTIONAL_STORY_REFERENCE}",
+    "createdDate": "{AUTO_GENERATED_TIMESTAMP}",
+    "createdBy": "{AUTO_ASSIGNED_AGENT_OR_USER}"
+  },
+
+  "taskDescription": {
+    "summary": "{REQUIRED_BRIEF_DESCRIPTION}",
+    "detailedDescription": "{REQUIRED_COMPREHENSIVE_DESCRIPTION}",
+    "businessValue": "{REQUIRED_VALUE_PROPOSITION}",
+    "userStory": "{FORMAT: As a [user], I want [goal] so that [benefit]}",
+    "acceptanceCriteria": [
+      "{REQUIRED_CRITERION_1}",
+      "{REQUIRED_CRITERION_2}",
+      "{ADDITIONAL_CRITERIA_AS_NEEDED}"
+    ]
+  },
+
+  "taskPlanning": {
+    "storyPoints": "{REQUIRED_EFFORT_ESTIMATE_1_TO_13}",
+    "priority": "{ENUM: critical|high|medium|low}",
+    "complexity": "{ENUM: simple|moderate|complex|very_complex}",
+    "riskLevel": "{ENUM: low|medium|high|critical}",
+    "estimatedHours": "{OPTIONAL_TIME_ESTIMATE}",
+    "dependencies": [
+      {
+        "dependencyType": "{ENUM: blocks|depends_on|related_to}",
+        "dependentTaskId": "{TASK_REFERENCE}",
+        "description": "{DEPENDENCY_DESCRIPTION}"
+      }
+    ]
+  },
+
+  "taskAssignment": {
+    "assignedTo": "{REQUIRED_TEAM_MEMBER_OR_AGENT}",
+    "assignedDate": "{AUTO_GENERATED_WHEN_ASSIGNED}",
+    "reviewedBy": "{OPTIONAL_REVIEWER_ASSIGNMENT}",
+    "stakeholder": "{OPTIONAL_STAKEHOLDER_REFERENCE}",
+    "teamRole": "{ENUM: developer|designer|tester|analyst|reviewer}"
+  },
+
+  "taskExecution": {
+    "status": "{ENUM: backlog|todo|in_progress|in_review|testing|done|blocked}",
+    "sprintAssignment": "{OPTIONAL_SPRINT_REFERENCE}",
+    "startDate": "{AUTO_SET_WHEN_STARTED}",
+    "targetCompletionDate": "{CALCULATED_OR_MANUAL}",
+    "actualCompletionDate": "{AUTO_SET_WHEN_COMPLETED}",
+    "timeSpent": "{TRACKED_ACTUAL_HOURS}",
+    "progressPercentage": "{0_TO_100_PERCENT}"
+  },
+
+  "qualityAssurance": {
+    "definitionOfDone": [
+      "acceptance-criteria-validated",
+      "code-review-completed",
+      "testing-passed",
+      "documentation-updated",
+      "accessibility-validated"
+    ],
+    "testingRequirements": [
+      "{TESTING_REQUIREMENT_1}",
+      "{TESTING_REQUIREMENT_2}"
+    ],
+    "reviewChecklist": [
+      "functionality-works-as-expected",
+      "code-quality-standards-met",
+      "accessibility-guidelines-followed",
+      "performance-requirements-satisfied",
+      "responsive-design-validated"
+    ]
+  },
+
+  "medicalSpaSpecific": {
+    "accessibilityRequirements": [
+      "wcag-aaa-compliance",
+      "screen-reader-compatibility",
+      "keyboard-navigation-support",
+      "color-contrast-11-5-to-1"
+    ],
+    "brandCompliance": [
+      "luxury-medical-spa-positioning",
+      "sage-green-navy-color-scheme",
+      "professional-trust-signals",
+      "premium-user-experience"
+    ],
+    "complianceRequirements": [
+      "hipaa-privacy-considerations",
+      "medical-industry-standards",
+      "patient-data-protection",
+      "professional-medical-presentation"
+    ]
+  },
+
+  "tracking": {
+    "blockers": [
+      {
+        "blockerType": "{ENUM: technical|resource|dependency|external}",
+        "description": "{BLOCKER_DESCRIPTION}",
+        "identifiedDate": "{TIMESTAMP}",
+        "resolvedDate": "{OPTIONAL_RESOLUTION_TIMESTAMP}",
+        "impact": "{ENUM: low|medium|high|critical}"
+      }
+    ],
+    "comments": [
+      {
+        "commentId": "{AUTO_GENERATED}",
+        "author": "{COMMENTER_IDENTITY}",
+        "timestamp": "{COMMENT_TIMESTAMP}",
+        "commentType": "{ENUM: update|question|blocker|resolution}",
+        "content": "{COMMENT_TEXT}"
+      }
+    ],
+    "attachments": [
+      {
+        "attachmentType": "{ENUM: image|document|code|design}",
+        "fileName": "{FILE_NAME}",
+        "filePath": "{FILE_LOCATION}",
+        "description": "{ATTACHMENT_DESCRIPTION}"
+      }
+    ]
+  },
+
+  "integrationPoints": {
+    "relatedDesigns": [
+      "{UI_UX_DESIGN_REFERENCE}"
+    ],
+    "relatedCode": [
+      "{CODE_FILE_REFERENCE}"
+    ],
+    "relatedTests": [
+      "{TEST_FILE_REFERENCE}"
+    ],
+    "relatedDocumentation": [
+      "{DOCUMENTATION_REFERENCE}"
+    ]
+  },
+
+  "metrics": {
+    "velocityContribution": "{STORY_POINTS_COMPLETED}",
+    "qualityScore": "{CALCULATED_QUALITY_RATING}",
+    "customerImpact": "{ENUM: none|low|medium|high|critical}",
+    "technicalDebtImpact": "{ENUM: reduces|neutral|increases}",
+    "reworkRequired": "{BOOLEAN_REWORK_NEEDED}"
+  },
+
+  "workflow": {
+    "workflowStage": "{CURRENT_WORKFLOW_STAGE}",
+    "nextActions": [
+      "{NEXT_ACTION_REQUIRED}"
+    ],
+    "approvalRequired": "{BOOLEAN_NEEDS_APPROVAL}",
+    "escalationRequired": "{BOOLEAN_NEEDS_ESCALATION}",
+    "stakeholderNotification": "{BOOLEAN_NOTIFY_STAKEHOLDERS}"
+  }
+}

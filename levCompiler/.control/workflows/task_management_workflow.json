@@ -1,0 +1,464 @@
+{
+  "taskManagementWorkflow": {
+    "workflowId": "TASK-MANAGEMENT-WF-001",
+    "version": "1.0.0",
+    "name": "task-management-workflow",
+    "type": "specialized-project-management",
+    "description": "Comprehensive workflow for project management, task planning, sprint execution, and stakeholder coordination using TASK-PLANNER-001",
+    "priority": 1,
+    "status": "active",
+    "primaryAgent": "TASK-PLANNER-001",
+    "humanSupervisionRequired": true
+  },
+
+  "objectives": {
+    "primary": "Orchestrate comprehensive project management from epic creation to task completion",
+    "secondary": "Integrate task management with development workflows and quality assurance",
+    "tertiary": "Provide real-time project visibility and stakeholder communication"
+  },
+
+  "triggerPatterns": [
+    "create tasks",
+    "plan sprint",
+    "manage project",
+    "track bugs",
+    "generate reports",
+    "project planning",
+    "scrum master",
+    "epic management",
+    "task breakdown",
+    "progress tracking"
+  ],
+
+  "workflowStages": {
+    "stage1ProjectInitialization": {
+      "name": "project-initialization-and-setup",
+      "description": "Initialize project structure and establish management framework",
+      "primaryAgent": "TASK-PLANNER-001",
+      "supportingAgents": ["HUMAN-INTERACT-001"],
+      "estimatedDuration": "30-45 minutes",
+      "activities": [
+        "project-scope-definition",
+        "stakeholder-identification",
+        "team-capacity-assessment",
+        "project-timeline-establishment",
+        "communication-plan-creation"
+      ],
+      "inputs": [
+        "project-requirements",
+        "stakeholder-information",
+        "team-composition",
+        "delivery-timeline",
+        "success-criteria"
+      ],
+      "outputs": [
+        "project-charter",
+        "team-structure",
+        "communication-plan",
+        "initial-backlog",
+        "project-timeline"
+      ],
+      "qualityGates": [
+        "stakeholder-approval",
+        "scope-clarity",
+        "timeline-feasibility"
+      ]
+    },
+
+    "stage2EpicAndStoryCreation": {
+      "name": "epic-and-story-breakdown",
+      "description": "Create epics and break them down into manageable user stories",
+      "primaryAgent": "TASK-PLANNER-001",
+      "supportingAgents": ["UI-UX-DESIGN-001", "HUMAN-INTERACT-001"],
+      "estimatedDuration": "60-90 minutes",
+      "activities": [
+        "epic-identification-and-creation",
+        "story-decomposition",
+        "acceptance-criteria-definition",
+        "story-point-estimation",
+        "dependency-identification"
+      ],
+      "inputs": [
+        "project-requirements",
+        "ui-ux-designs",
+        "technical-specifications",
+        "business-priorities",
+        "user-personas"
+      ],
+      "outputs": [
+        "epic-backlog",
+        "user-story-catalog",
+        "acceptance-criteria",
+        "story-point-estimates",
+        "dependency-map"
+      ],
+      "qualityGates": [
+        "story-completeness",
+        "acceptance-criteria-clarity",
+        "estimation-accuracy"
+      ]
+    },
+
+    "stage3SprintPlanning": {
+      "name": "sprint-planning-and-commitment",
+      "description": "Plan sprints with capacity-based story selection and goal setting",
+      "primaryAgent": "TASK-PLANNER-001",
+      "supportingAgents": ["CODE-GEN-001", "UI-UX-DESIGN-001"],
+      "estimatedDuration": "45-60 minutes",
+      "activities": [
+        "sprint-goal-definition",
+        "capacity-planning",
+        "story-selection",
+        "task-breakdown",
+        "sprint-commitment"
+      ],
+      "inputs": [
+        "epic-backlog",
+        "team-capacity",
+        "velocity-history",
+        "business-priorities",
+        "technical-constraints"
+      ],
+      "outputs": [
+        "sprint-plan",
+        "sprint-backlog",
+        "task-assignments",
+        "sprint-goals",
+        "capacity-allocation"
+      ],
+      "qualityGates": [
+        "capacity-validation",
+        "goal-clarity",
+        "team-commitment"
+      ]
+    },
+
+    "stage4TaskExecution": {
+      "name": "task-execution-and-monitoring",
+      "description": "Execute sprint tasks with continuous monitoring and impediment resolution",
+      "primaryAgent": "TASK-PLANNER-001",
+      "supportingAgents": ["CODE-GEN-001", "CODE-REVIEW-001", "DRY-RUN-001"],
+      "estimatedDuration": "7-14 days per sprint",
+      "activities": [
+        "daily-standup-facilitation",
+        "progress-tracking",
+        "impediment-identification",
+        "quality-monitoring",
+        "stakeholder-communication"
+      ],
+      "inputs": [
+        "sprint-backlog",
+        "daily-progress-updates",
+        "impediment-reports",
+        "code-review-feedback",
+        "testing-results"
+      ],
+      "outputs": [
+        "completed-tasks",
+        "progress-reports",
+        "impediment-log",
+        "quality-metrics",
+        "burndown-charts"
+      ],
+      "qualityGates": [
+        "daily-progress-validation",
+        "quality-standards-met",
+        "impediment-resolution"
+      ]
+    },
+
+    "stage5QualityAssurance": {
+      "name": "quality-assurance-and-testing",
+      "description": "Comprehensive quality assurance with testing and review integration",
+      "primaryAgent": "TASK-PLANNER-001",
+      "supportingAgents": ["CODE-REVIEW-001", "DRY-RUN-001", "GATE-KEEP-001"],
+      "estimatedDuration": "2-3 days per sprint",
+      "activities": [
+        "code-review-coordination",
+        "testing-orchestration",
+        "quality-metrics-analysis",
+        "bug-triage-and-assignment",
+        "definition-of-done-validation"
+      ],
+      "inputs": [
+        "completed-code",
+        "testing-requirements",
+        "quality-standards",
+        "bug-reports",
+        "review-feedback"
+      ],
+      "outputs": [
+        "quality-validated-code",
+        "test-results",
+        "bug-tracking-reports",
+        "quality-metrics",
+        "improvement-recommendations"
+      ],
+      "qualityGates": [
+        "code-review-approval",
+        "testing-completion",
+        "quality-threshold-met"
+      ]
+    },
+
+    "stage6SprintReviewAndRetrospective": {
+      "name": "sprint-review-and-retrospective",
+      "description": "Sprint review with stakeholder demo and team retrospective",
+      "primaryAgent": "TASK-PLANNER-001",
+      "supportingAgents": ["HUMAN-INTERACT-001"],
+      "estimatedDuration": "2-4 hours",
+      "activities": [
+        "sprint-demo-preparation",
+        "stakeholder-review-facilitation",
+        "retrospective-facilitation",
+        "improvement-action-planning",
+        "next-sprint-preparation"
+      ],
+      "inputs": [
+        "completed-features",
+        "sprint-metrics",
+        "stakeholder-feedback",
+        "team-feedback",
+        "impediment-analysis"
+      ],
+      "outputs": [
+        "demo-results",
+        "stakeholder-feedback",
+        "retrospective-insights",
+        "improvement-actions",
+        "velocity-updates"
+      ],
+      "qualityGates": [
+        "stakeholder-satisfaction",
+        "team-improvement-commitment",
+        "metrics-accuracy"
+      ]
+    },
+
+    "stage7ReportingAndMetrics": {
+      "name": "reporting-and-metrics-generation",
+      "description": "Generate comprehensive reports and metrics for stakeholders",
+      "primaryAgent": "TASK-PLANNER-001",
+      "supportingAgents": ["HUMAN-INTERACT-001"],
+      "estimatedDuration": "15-30 minutes",
+      "activities": [
+        "progress-report-generation",
+        "metrics-dashboard-creation",
+        "stakeholder-communication",
+        "risk-assessment-updates",
+        "timeline-adjustments"
+      ],
+      "inputs": [
+        "sprint-data",
+        "quality-metrics",
+        "team-feedback",
+        "stakeholder-requirements",
+        "project-timeline"
+      ],
+      "outputs": [
+        "progress-reports",
+        "metrics-dashboards",
+        "risk-assessments",
+        "timeline-updates",
+        "stakeholder-communications"
+      ],
+      "qualityGates": [
+        "report-accuracy",
+        "metrics-validation",
+        "stakeholder-communication-sent"
+      ]
+    }
+  },
+
+  "coordinationPatterns": {
+    "sequential": {
+      "description": "Linear progression through project phases",
+      "stages": [
+        "project-initialization",
+        "epic-and-story-creation",
+        "sprint-planning",
+        "task-execution",
+        "quality-assurance",
+        "sprint-review-and-retrospective",
+        "reporting-and-metrics"
+      ]
+    },
+    "iterative": {
+      "description": "Repeated sprint cycles for continuous delivery",
+      "stages": [
+        "sprint-planning",
+        "task-execution",
+        "quality-assurance",
+        "sprint-review-and-retrospective"
+      ],
+      "repetition": "2-4 week cycles"
+    },
+    "parallel": {
+      "description": "Concurrent activities within sprint execution",
+      "parallelActivities": [
+        "code-development-and-review",
+        "testing-and-quality-assurance",
+        "documentation-and-communication"
+      ]
+    }
+  },
+
+  "integrationPoints": {
+    "designWorkflow": {
+      "description": "Integration with UI/UX design workflow",
+      "trigger": "design-implementation-tasks",
+      "handoff": "design-specifications-to-development-tasks",
+      "agents": ["UI-UX-DESIGN-001", "CODE-GEN-001"]
+    },
+    "codeGenerationWorkflow": {
+      "description": "Integration with code generation workflow",
+      "trigger": "development-task-execution",
+      "handoff": "task-specifications-to-code-implementation",
+      "agents": ["CODE-GEN-001", "CODE-REVIEW-001"]
+    },
+    "qualityAssuranceWorkflow": {
+      "description": "Integration with quality assurance processes",
+      "trigger": "code-completion-and-testing",
+      "handoff": "completed-code-to-quality-validation",
+      "agents": ["CODE-REVIEW-001", "DRY-RUN-001", "GATE-KEEP-001"]
+    },
+    "versionControlWorkflow": {
+      "description": "Integration with version control management",
+      "trigger": "task-completion-and-release",
+      "handoff": "completed-features-to-version-management",
+      "agents": ["VERSION-TRACK-001"]
+    }
+  },
+
+  "errorHandling": {
+    "sprintScopeCreep": {
+      "detection": "scope-increase-beyond-capacity",
+      "response": "halt-additions-and-replan-with-stakeholders",
+      "escalation": "project-sponsor-involvement",
+      "recovery": "scope-negotiation-and-timeline-adjustment"
+    },
+    "qualityGateFailure": {
+      "detection": "quality-standards-not-met",
+      "response": "additional-review-and-rework-cycle",
+      "escalation": "technical-lead-involvement",
+      "recovery": "enhanced-quality-processes"
+    },
+    "teamCapacityIssues": {
+      "detection": "velocity-decline-or-resource-constraints",
+      "response": "capacity-replanning-and-scope-adjustment",
+      "escalation": "resource-manager-involvement",
+      "recovery": "team-augmentation-or-timeline-extension"
+    },
+    "stakeholderMisalignment": {
+      "detection": "conflicting-priorities-or-requirements",
+      "response": "stakeholder-alignment-session",
+      "escalation": "executive-sponsor-involvement",
+      "recovery": "requirements-clarification-and-prioritization"
+    }
+  },
+
+  "qualityGates": {
+    "projectInitialization": [
+      "stakeholder-sign-off-obtained",
+      "project-scope-clearly-defined",
+      "team-capacity-validated",
+      "success-criteria-established"
+    ],
+    "epicAndStoryCreation": [
+      "all-epics-have-clear-business-value",
+      "stories-have-complete-acceptance-criteria",
+      "story-points-estimated-by-team",
+      "dependencies-identified-and-planned"
+    ],
+    "sprintPlanning": [
+      "sprint-goals-are-measurable",
+      "team-capacity-not-exceeded",
+      "critical-dependencies-resolved",
+      "definition-of-done-understood"
+    ],
+    "taskExecution": [
+      "daily-progress-tracking-active",
+      "impediments-identified-and-addressed",
+      "quality-standards-maintained",
+      "stakeholder-communication-current"
+    ],
+    "qualityAssurance": [
+      "code-reviews-completed-successfully",
+      "all-tests-passing",
+      "accessibility-standards-met",
+      "performance-requirements-satisfied"
+    ],
+    "sprintReview": [
+      "demo-successfully-completed",
+      "stakeholder-feedback-collected",
+      "retrospective-actions-identified",
+      "next-sprint-prepared"
+    ]
+  },
+
+  "monitoringAndMetrics": {
+    "realTimeMetrics": [
+      "sprint-burndown-progress",
+      "task-completion-velocity",
+      "quality-gate-pass-rate",
+      "impediment-resolution-time",
+      "stakeholder-satisfaction-score"
+    ],
+    "historicalMetrics": [
+      "team-velocity-trends",
+      "quality-improvement-trends",
+      "predictability-metrics",
+      "technical-debt-accumulation",
+      "customer-satisfaction-evolution"
+    ],
+    "alertingThresholds": {
+      "sprintBurndownRisk": "variance > 20% from planned",
+      "qualityGateFailures": "failure rate > 10%",
+      "velocityDecline": "decline > 15% over 2 sprints",
+      "impedimentAccumulation": "unresolved impediments > 5",
+      "stakeholderSatisfaction": "satisfaction < 8/10"
+    }
+  },
+
+  "fileOrganization": {
+    "outputLocation": "levCompiler/project_context/tasks/",
+    "indexRegistration": "levCompiler/project_context/tasks/index.json",
+    "sprintPlans": "levCompiler/project_context/tasks/sprints/",
+    "reports": "levCompiler/project_context/tasks/reports/",
+    "metrics": "levCompiler/project_context/tasks/metrics/",
+    "templates": "levCompiler/project_context/tasks/templates/",
+    "archives": "levCompiler/project_context/archive/tasks/"
+  },
+
+  "humanInteractionPoints": {
+    "mandatoryApproval": [
+      "project-charter-approval",
+      "sprint-goal-confirmation",
+      "scope-change-decisions",
+      "quality-gate-exceptions",
+      "resource-allocation-changes"
+    ],
+    "recommendedConsultation": [
+      "complex-story-estimation",
+      "technical-architecture-decisions",
+      "stakeholder-conflict-resolution",
+      "timeline-adjustment-requests",
+      "team-performance-concerns"
+    ],
+    "escalationTriggers": [
+      "repeated-sprint-failures",
+      "persistent-quality-issues",
+      "stakeholder-dissatisfaction",
+      "team-capacity-crisis",
+      "technical-debt-critical-level"
+    ]
+  },
+
+  "adaptationMechanisms": {
+    "velocityCalibration": "Continuously adjust velocity predictions based on actual performance",
+    "qualityThresholdAdjustment": "Adapt quality thresholds based on defect patterns",
+    "processOptimization": "Refine processes based on retrospective feedback",
+    "stakeholderCommunicationTuning": "Adjust communication frequency and format based on feedback",
+    "teamProductivityOptimization": "Optimize team productivity based on capacity and performance data"
+  }
+}
