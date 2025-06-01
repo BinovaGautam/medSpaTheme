@@ -4657,3 +4657,75 @@ a:focus {
     text-shadow: none;
   }
 }
+
+/* LEFT CONTENT SECTION DEBUG - TEMPORARY STYLES */
+.hero-content-section {
+  padding-right: 2rem;
+  /* DEBUG: Add temporary background to see if section exists */
+  background: rgba(255, 0, 0, 0.3) !important;
+  border: 2px solid #ff0000 !important;
+}
+
+.premium-hero .hero-title {
+  font-size: var(--text-4xl);
+  font-family: var(--font-primary);
+  color: #ffffff !important; /* Force white color */
+  margin-bottom: var(--space-lg);
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important; /* Stronger shadow */
+  /* DEBUG: Add temporary background to see if title exists */
+  background: rgba(0, 255, 0, 0.3) !important;
+  padding: 1rem !important;
+  border: 2px solid #00ff00 !important;
+}
+
+.premium-hero .hero-subtitle {
+  font-size: var(--text-lg);
+  color: #ffffff !important; /* Force white color */
+  margin-bottom: var(--space-2xl);
+  line-height: 1.6;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important; /* Stronger shadow */
+  /* DEBUG: Add temporary background to see if subtitle exists */
+  background: rgba(0, 0, 255, 0.3) !important;
+  padding: 1rem !important;
+  border: 2px solid #0000ff !important;
+}
+
+/* INTERACTIVE SECTION DEBUG */
+.hero-interactive-section {
+  padding-left: 2rem;
+  /* DEBUG: Add temporary background to see if interactive section exists */
+  background: rgba(255, 255, 0, 0.3) !important;
+  border: 2px solid #ffff00 !important;
+}
+
+.treatment-selection-interface {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 3px solid #ff00ff !important; /* DEBUG: Bright pink border */
+  position: relative;
+}
+
+/* CONTAINER DEBUG */
+.premium-hero .container {
+  /* DEBUG: Add temporary background to see if container exists */
+  background: rgba(255, 0, 255, 0.2) !important;
+  border: 3px solid #ff00ff !important;
+}
+
+.premium-hero .hero-layout {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 2rem 0;
+  /* DEBUG: Add temporary background to see if layout exists */
+  background: rgba(0, 255, 255, 0.2) !important;
+  border: 3px solid #00ffff !important;
+}
