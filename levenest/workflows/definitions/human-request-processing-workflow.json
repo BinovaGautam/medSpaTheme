@@ -1,0 +1,305 @@
+{
+  "workflowDefinition": {
+    "id": "WORKFLOW-HRP-001",
+    "name": "human-request-processing",
+    "version": "1.0.0",
+    "description": "Processing and routing human requests with confirmation and learning",
+    "status": "ready"
+  },
+
+  "exampleScenarios": {
+    "scenario1-project-setup": {
+      "humanInput": "I need to create a new e-commerce website with WordPress",
+      "processingFlow": {
+        "classification": {
+          "category": "project-setup",
+          "confidence": 0.95,
+          "targetAgent": "project-coordinator",
+          "workflow": "project-initialization"
+        },
+        "confirmation": {
+          "level": "critical",
+          "template": "🔥 CRITICAL REQUEST DETECTED\n\n**My Understanding:**\nNew e-commerce WordPress project initialization\n\n**Proposed Workflow:**\nproject-initialization → requirement-discovery → architecture-planning\n\n**Agents Involved:**\nproject-coordinator, requirement-analyzer, architecture-designer\n\n**Estimated Impact:**\nHigh - Full project lifecycle initiation\n\n**Resource Requirements:**\nAll agent capacity, multiple workflow coordination\n\n✅ Confirm to proceed\n❌ Cancel\n✏️ Modify request"
+        },
+        "routing": {
+          "primaryAgent": "project-coordinator",
+          "workflowChain": ["project-initialization", "requirement-discovery", "architecture-planning"],
+          "resourceAllocation": "high-priority-queue"
+        }
+      }
+    },
+
+    "scenario2-optimization": {
+      "humanInput": "The site is loading slowly, can you optimize it?",
+      "processingFlow": {
+        "classification": {
+          "category": "optimization-request",
+          "confidence": 0.87,
+          "targetAgent": "garbage-cleaner",
+          "workflow": "tech-garbage-collection"
+        },
+        "confirmation": {
+          "level": "moderate",
+          "template": "🤖 **Processing:** Performance optimization request for slow loading site\n**Action:** Tech garbage collection workflow to optimize performance\n\n⏸️ Stop if needed (5s timeout)"
+        },
+        "routing": {
+          "primaryAgent": "garbage-cleaner",
+          "workflowChain": ["performance-analysis", "tech-garbage-collection"],
+          "resourceAllocation": "standard-queue"
+        }
+      }
+    },
+
+    "scenario3-ambiguous": {
+      "humanInput": "Something is wrong with the thing",
+      "processingFlow": {
+        "classification": {
+          "category": "unknown",
+          "confidence": 0.30,
+          "targetAgent": "project-coordinator",
+          "workflow": "clarification-request"
+        },
+        "clarification": {
+          "template": "🤔 **Need More Information**\n\nI need clarification to help you effectively. Could you please specify:\n\n1. What specific component/feature has issues?\n2. What type of problem are you experiencing?\n3. What would you like me to do about it?\n\n**Examples:**\n- 'The login page is not working' → review-request\n- 'The site is slow' → optimization-request\n- 'I need a new feature' → requirement-analysis",
+          "followUpRequired": true
+        }
+      }
+    }
+  },
+
+  "stages": [
+    {
+      "id": "STAGE-001",
+      "name": "input-reception",
+      "agent": "human-request-processor",
+      "sequence": 1,
+      "input": {
+        "required": ["human-message"],
+        "optional": ["project-context", "user-history"]
+      },
+      "output": {
+        "primary": ["parsed-request", "initial-classification"],
+        "metadata": ["confidence-score", "ambiguity-level", "context-enrichment"]
+      },
+      "qualityGates": {
+        "inputValidation": {
+          "type": "automated",
+          "threshold": "valid-text-input",
+          "fallback": "request-input-correction"
+        },
+        "contextAvailability": {
+          "type": "automated",
+          "threshold": "project-context-accessible",
+          "fallback": "proceed-with-limited-context"
+        }
+      },
+      "successTriggers": ["input-parsed", "context-loaded"],
+      "failureTriggers": ["invalid-input", "context-unavailable"],
+      "nextStages": ["STAGE-002"]
+    },
+
+    {
+      "id": "STAGE-002",
+      "name": "classification-and-enrichment",
+      "agent": "classification-engine",
+      "sequence": 2,
+      "input": {
+        "required": ["parsed-request"],
+        "optional": ["project-context", "recent-history"]
+      },
+      "output": {
+        "primary": ["classification-result", "target-agent", "workflow-recommendation"],
+        "metadata": ["confidence-score", "alternative-classifications", "context-factors"]
+      },
+      "qualityGates": {
+        "classificationConfidence": {
+          "type": "confidence-threshold",
+          "threshold": "> 0.70",
+          "fallback": "request-clarification"
+        },
+        "agentAvailability": {
+          "type": "resource-check",
+          "threshold": "target-agent-available",
+          "fallback": "queue-request"
+        }
+      },
+      "successTriggers": ["high-confidence-classification", "agent-available"],
+      "failureTriggers": ["low-confidence", "ambiguous-request", "agent-unavailable"],
+      "nextStages": {
+        "on-success": ["STAGE-003"],
+        "on-clarification-needed": ["STAGE-005"],
+        "on-queue": ["STAGE-006"]
+      }
+    },
+
+    {
+      "id": "STAGE-003",
+      "name": "confirmation-protocol",
+      "agent": "confirmation-manager",
+      "sequence": 3,
+      "input": {
+        "required": ["classification-result", "workflow-recommendation"],
+        "optional": ["impact-assessment", "resource-requirements"]
+      },
+      "output": {
+        "primary": ["confirmation-response", "human-approval"],
+        "metadata": ["confirmation-level", "timeout-behavior", "modification-requests"]
+      },
+      "qualityGates": {
+        "humanApproval": {
+          "type": "human-confirmation",
+          "threshold": "explicit-approval-received",
+          "fallback": "timeout-behavior-or-cancel"
+        },
+        "requestModification": {
+          "type": "modification-handling",
+          "threshold": "modifications-processed",
+          "fallback": "restart-classification"
+        }
+      },
+      "successTriggers": ["approval-received", "timeout-proceed"],
+      "failureTriggers": ["explicit-cancellation", "critical-timeout"],
+      "nextStages": {
+        "on-approval": ["STAGE-004"],
+        "on-modification": ["STAGE-002"],
+        "on-cancellation": ["WORKFLOW-CANCELLED"]
+      }
+    },
+
+    {
+      "id": "STAGE-004",
+      "name": "workflow-routing",
+      "agent": "routing-orchestrator",
+      "sequence": 4,
+      "input": {
+        "required": ["approved-request", "target-agent", "workflow-type"],
+        "optional": ["priority-level", "resource-constraints"]
+      },
+      "output": {
+        "primary": ["workflow-instance", "tracking-id", "execution-status"],
+        "metadata": ["resource-allocation", "estimated-completion", "monitoring-setup"]
+      },
+      "qualityGates": {
+        "workflowInitiation": {
+          "type": "workflow-validation",
+          "threshold": "workflow-successfully-started",
+          "fallback": "retry-or-escalate"
+        },
+        "resourceAllocation": {
+          "type": "resource-validation",
+          "threshold": "resources-allocated",
+          "fallback": "queue-with-notification"
+        }
+      },
+      "successTriggers": ["workflow-started", "monitoring-active"],
+      "failureTriggers": ["workflow-failure", "resource-unavailable"],
+      "nextStages": ["STAGE-007"]
+    },
+
+    {
+      "id": "STAGE-005",
+      "name": "clarification-request",
+      "agent": "clarification-manager",
+      "sequence": "alternate-3",
+      "condition": "low-confidence OR ambiguous-request",
+      "input": {
+        "required": ["unclear-request", "classification-attempts"],
+        "optional": ["project-context", "examples"]
+      },
+      "output": {
+        "primary": ["clarification-message", "clarification-template"],
+        "metadata": ["clarification-type", "examples-provided", "expected-response"]
+      },
+      "qualityGates": {
+        "clarificationClarity": {
+          "type": "template-validation",
+          "threshold": "clear-clarification-provided",
+          "fallback": "escalate-to-human-support"
+        }
+      },
+      "successTriggers": ["clarification-sent"],
+      "failureTriggers": ["clarification-failed"],
+      "nextStages": ["AWAIT-HUMAN-RESPONSE"]
+    },
+
+    {
+      "id": "STAGE-006",
+      "name": "request-queuing",
+      "agent": "queue-manager",
+      "sequence": "alternate-4",
+      "condition": "agent-unavailable OR resource-constraints",
+      "input": {
+        "required": ["validated-request", "target-agent"],
+        "optional": ["priority-level", "estimated-wait"]
+      },
+      "output": {
+        "primary": ["queue-position", "wait-estimate", "notification-schedule"],
+        "metadata": ["queue-status", "alternative-options", "cancellation-options"]
+      },
+      "successTriggers": ["queued-successfully"],
+      "nextStages": ["AWAIT-RESOURCE-AVAILABILITY"]
+    },
+
+    {
+      "id": "STAGE-007",
+      "name": "learning-and-feedback",
+      "agent": "learning-engine",
+      "sequence": 5,
+      "input": {
+        "required": ["workflow-result", "human-interaction-data"],
+        "optional": ["performance-metrics", "human-feedback"]
+      },
+      "output": {
+        "primary": ["learning-updates", "pattern-recognition"],
+        "metadata": ["classification-improvements", "confidence-adjustments", "workflow-optimizations"]
+      },
+      "qualityGates": {
+        "learningValidation": {
+          "type": "learning-verification",
+          "threshold": "valid-learning-data",
+          "fallback": "log-for-manual-review"
+        }
+      },
+      "successTriggers": ["learning-complete"],
+      "nextStages": ["WORKFLOW-COMPLETE"]
+    }
+  ],
+
+  "learningMechanisms": {
+    "successful-patterns": {
+      "tracking": "Human requests that lead to successful workflows",
+      "analysis": "Extract patterns from successful request→workflow combinations",
+      "application": "Improve classification accuracy for similar future requests"
+    },
+    "failed-classifications": {
+      "tracking": "Requests that required clarification or human correction",
+      "analysis": "Identify weaknesses in classification patterns",
+      "application": "Enhance pattern matching and context understanding"
+    },
+    "confirmation-optimization": {
+      "tracking": "Requests where confirmation level could be reduced",
+      "analysis": "Identify patterns for trusted automation",
+      "application": "Reduce confirmation requirements for well-understood patterns"
+    },
+    "workflow-effectiveness": {
+      "tracking": "Success rates of workflows initiated from human requests",
+      "analysis": "Correlate request types with workflow success",
+      "application": "Optimize workflow selection for different request types"
+    }
+  },
+
+  "automationProgression": {
+    "current-phase": "phase1-setup",
+    "progression-triggers": {
+      "phase1-to-phase2": "classification-accuracy > 85% AND human-satisfaction > 90%",
+      "phase2-to-phase3": "automation-rate > 60% AND escalation-rate < 20%",
+      "phase3-to-phase4": "human-trust-score > 95% AND critical-error-rate < 1%"
+    },
+    "adaptation-rules": {
+      "increase-automation": "Successful patterns reduce confirmation requirements",
+      "maintain-safety": "Critical requests always require human approval",
+      "learn-context": "Project-specific patterns improve classification",
+      "optimize-routing": "Successful workflows become preferred routes"
+    }
+  }
+}

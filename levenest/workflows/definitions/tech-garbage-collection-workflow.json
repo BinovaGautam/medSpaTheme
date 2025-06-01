@@ -1,0 +1,239 @@
+{
+  "workflowDefinition": {
+    "id": "WORKFLOW-TGC-001",
+    "name": "tech-garbage-collection",
+    "version": "1.0.0",
+    "description": "Automated technical debt reduction workflow following AI capability framework",
+    "status": "ready"
+  },
+
+  "stages": [
+    {
+      "id": "STAGE-001",
+      "name": "code-generation",
+      "agent": "code-generator",
+      "sequence": 1,
+      "input": {
+        "required": ["TASK-entity", "architecture-specs", "coding-standards"],
+        "optional": ["existing-code-base", "performance-requirements"]
+      },
+      "output": {
+        "primary": ["source-code", "unit-tests", "documentation"],
+        "metadata": ["complexity-metrics", "coverage-stats", "confidence-score"]
+      },
+      "qualityGates": {
+        "syntaxValidation": {
+          "type": "automated",
+          "threshold": "zero-errors",
+          "fallback": "retry-with-simplified-requirements"
+        },
+        "standardCompliance": {
+          "type": "automated",
+          "threshold": "100%-compliance",
+          "fallback": "apply-standard-corrections"
+        },
+        "testCoverage": {
+          "type": "automated",
+          "threshold": "> 80%",
+          "fallback": "generate-additional-tests"
+        }
+      },
+      "successTriggers": ["implementation-complete", "all-quality-gates-passed"],
+      "failureTriggers": ["max-retries-exceeded", "confidence-below-threshold"],
+      "nextStages": ["STAGE-002"],
+      "fallbackActions": ["human-review-escalation", "simplified-implementation"]
+    },
+
+    {
+      "id": "STAGE-002",
+      "name": "critical-review",
+      "agent": "critical-reviewer",
+      "sequence": 2,
+      "input": {
+        "required": ["source-code", "documentation", "test-results"],
+        "optional": ["performance-benchmarks", "security-requirements"]
+      },
+      "output": {
+        "primary": ["review-report", "quality-score", "improvement-suggestions"],
+        "metadata": ["technical-debt-assessment", "security-analysis", "confidence-score"]
+      },
+      "qualityGates": {
+        "securityClearance": {
+          "type": "automated",
+          "threshold": "no-critical-vulnerabilities",
+          "fallback": "security-fix-recommendations"
+        },
+        "performanceBenchmarks": {
+          "type": "external-validation",
+          "threshold": "meets-baseline-requirements",
+          "fallback": "performance-optimization-suggestions"
+        },
+        "maintainabilityScore": {
+          "type": "automated",
+          "threshold": "> 7.0/10",
+          "fallback": "maintainability-improvements"
+        }
+      },
+      "successTriggers": ["review-approved", "quality-score-acceptable"],
+      "failureTriggers": ["review-failed", "critical-issues-found"],
+      "nextStages": {
+        "on-success": ["STAGE-004"],
+        "on-failure": ["STAGE-003"]
+      },
+      "fallbackActions": ["detailed-analysis-request", "human-reviewer-escalation"]
+    },
+
+    {
+      "id": "STAGE-003",
+      "name": "garbage-cleanup",
+      "agent": "garbage-cleaner",
+      "sequence": 3,
+      "condition": "review-failed OR technical-debt-detected",
+      "input": {
+        "required": ["review-report", "improvement-suggestions", "source-code"],
+        "optional": ["performance-metrics", "complexity-analysis"]
+      },
+      "output": {
+        "primary": ["optimized-code", "cleanup-report", "performance-improvements"],
+        "metadata": ["debt-reduction-metrics", "optimization-summary", "confidence-score"]
+      },
+      "qualityGates": {
+        "functionalityPreserved": {
+          "type": "automated-testing",
+          "threshold": "all-tests-pass",
+          "fallback": "revert-to-previous-version"
+        },
+        "performanceImproved": {
+          "type": "benchmark-comparison",
+          "threshold": "no-regression",
+          "fallback": "performance-focused-optimization"
+        },
+        "maintainabilityEnhanced": {
+          "type": "metric-comparison",
+          "threshold": "score-improvement",
+          "fallback": "selective-cleanup"
+        }
+      },
+      "successTriggers": ["cleanup-complete", "performance-optimized"],
+      "failureTriggers": ["functionality-broken", "performance-degraded"],
+      "nextStages": ["STAGE-002"],
+      "maxIterations": 3,
+      "fallbackActions": ["minimal-cleanup", "manual-review-escalation"]
+    },
+
+    {
+      "id": "STAGE-004",
+      "name": "final-validation",
+      "agent": "testing-specialist",
+      "sequence": 4,
+      "input": {
+        "required": ["finalized-code", "test-suites", "review-approval"],
+        "optional": ["performance-benchmarks", "security-clearance"]
+      },
+      "output": {
+        "primary": ["validation-report", "final-approval", "deployment-readiness"],
+        "metadata": ["comprehensive-test-results", "quality-certification", "confidence-score"]
+      },
+      "qualityGates": {
+        "comprehensiveTestCoverage": {
+          "type": "automated",
+          "threshold": "> 90%",
+          "fallback": "additional-test-generation"
+        },
+        "integrationTesting": {
+          "type": "automated",
+          "threshold": "all-integration-tests-pass",
+          "fallback": "integration-issue-analysis"
+        },
+        "performanceValidation": {
+          "type": "benchmark-testing",
+          "threshold": "meets-performance-requirements",
+          "fallback": "performance-tuning-recommendations"
+        }
+      },
+      "successTriggers": ["validation-complete", "deployment-ready"],
+      "failureTriggers": ["validation-failed", "critical-issues-discovered"],
+      "nextStages": ["WORKFLOW-COMPLETE"],
+      "fallbackActions": ["partial-deployment", "staged-rollout", "human-validation"]
+    }
+  ],
+
+  "coordinationRules": {
+    "stateManagement": {
+      "type": "external-state-store",
+      "location": "levenest/state/shared/workflow-states.json",
+      "updateTriggers": ["stage-completion", "quality-gate-result", "agent-handoff"]
+    },
+    "retryLogic": {
+      "maxRetries": 3,
+      "retryConditions": ["transient-failure", "recoverable-error", "low-confidence"],
+      "backoffStrategy": "exponential-sequence",
+      "escalationThreshold": "3-consecutive-failures"
+    },
+    "conflictResolution": {
+      "agentUnavailable": "wait-for-availability",
+      "resourceContention": "priority-based-queue",
+      "qualityGateFailure": "escalate-to-human-review"
+    },
+    "progressTracking": {
+      "method": "stage-completion-percentage",
+      "checkpoints": ["stage-entry", "quality-gate-completion", "stage-exit"],
+      "rollbackPoints": ["stage-boundaries", "critical-quality-gates"]
+    }
+  },
+
+  "escalationProtocols": {
+    "automaticEscalation": {
+      "triggers": [
+        "confidence-score < 0.70",
+        "quality-gate-failure > 2-consecutive",
+        "agent-failure > 1-occurrence",
+        "workflow-stuck > 3-retry-cycles"
+      ],
+      "escalationPath": ["team-lead", "senior-developer", "architecture-review"],
+      "contextPackage": ["workflow-state", "failure-history", "agent-outputs", "quality-metrics"]
+    },
+    "humanInterventionPoints": {
+      "criticalDecisions": "Architecture changes requiring approval",
+      "securityConcerns": "Security-related modifications",
+      "performanceImpact": "Changes affecting system performance",
+      "businessLogic": "Core business logic modifications"
+    }
+  },
+
+  "learningMechanisms": {
+    "performanceFeedback": {
+      "metrics": ["success-rate", "quality-scores", "escalation-frequency"],
+      "adaptations": ["threshold-adjustments", "workflow-optimizations", "agent-specialization"]
+    },
+    "patternRecognition": {
+      "successPatterns": "Identify configurations leading to successful outcomes",
+      "failurePatterns": "Catalog failure modes and prevention strategies",
+      "optimizationOpportunities": "Detect workflow efficiency improvements"
+    },
+    "knowledgeCapture": {
+      "bestPractices": "Extract successful approaches for reuse",
+      "lessonsLearned": "Document failure analysis and solutions",
+      "processImprovements": "Continuous workflow refinement"
+    }
+  },
+
+  "monitoringAndMetrics": {
+    "workflowMetrics": {
+      "successRate": "percentage-of-successful-completions",
+      "qualityScore": "average-output-quality-rating",
+      "escalationRate": "percentage-requiring-human-intervention",
+      "iterationEfficiency": "average-iterations-to-completion"
+    },
+    "agentPerformance": {
+      "individualSuccessRates": "per-agent-success-tracking",
+      "confidenceAccuracy": "correlation-confidence-vs-success",
+      "handoffEfficiency": "success-rate-of-agent-transitions"
+    },
+    "systemHealth": {
+      "overallWorkflowHealth": "aggregate-system-performance",
+      "resourceUtilization": "agent-capacity-utilization",
+      "bottleneckIdentification": "stage-performance-analysis"
+    }
+  }
+}
