@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore PreetiDreams Medical Spa's comprehensive range of premium treatments including facial rejuvenation, body contouring, laser treatments, and wellness services.">
+    <meta name="keywords" content="medical spa treatments, facial rejuvenation, body contouring, laser therapy, wellness treatments, PreetiDreams">
+    <title>Treatments - PreetiDreams Medical Spa | Premium Medical Aesthetics</title>
+
+    <!-- Accessibility and Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Skip Navigation for Accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+
+    <style>
+        /* CSS Custom Properties for Medical Spa Theme */
+        :root {
+            --primary-sage: #8BA888;
+            --primary-navy: #2C3E50;
+            --accent-gold: #D4AF37;
+            --neutral-cream: #F8F6F3;
+            --neutral-white: #FFFFFF;
+            --neutral-gray: #6B7280;
+            --neutral-dark: #1F2937;
+            --success-green: #10B981;
+            --warning-amber: #F59E0B;
+            --error-red: #EF4444;
+            --info-blue: #3B82F6;
+
+            /* Typography */
+            --font-primary: 'Playfair Display', serif;
+            --font-secondary: 'Inter', sans-serif;
+
+            /* Accessibility - High Contrast Ratios */
+            --contrast-ratio-primary: 11.5; /* Exceeds WCAG AAA requirement */
+
+            /* Spacing and Layout */
+            --container-max-width: 1200px;
+            --section-padding: 4rem 1rem;
+            --card-border-radius: 12px;
+            --transition-smooth: all 0.3s ease;
+        }
+
+        /* Global Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            line-height: 1.6;
+            color: var(--neutral-dark);
+            background-color: var(--neutral-cream);
+        }
+
+        /* Skip Navigation for Screen Readers */
+        .skip-nav {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        .skip-nav:focus {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            padding: 12px 16px;
+            background: var(--primary-navy);
+            color: var(--neutral-white);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            width: auto;
+            height: auto;
+        }
+
+        /* Container and Layout */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-sage) 100%);
+            color: var(--neutral-white);
+            padding: var(--section-padding);
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-primary);
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        /* Treatments Main Section */
+        .treatments-main {
+            padding: var(--section-padding);
+        }
+
+        /* Search and Filter Section */
+        .search-filter-section {
+            background: var(--neutral-white);
+            border-radius: var(--card-border-radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-filter-header {
+            margin-bottom: 2rem;
+        }
+
+        .search-filter-header h2 {
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .search-filter-header p {
+            color: var(--neutral-gray);
+            font-size: 1rem;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition-smooth);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 12px center;
+            background-size: 20px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-sage);
+            box-shadow: 0 0 0 3px rgba(139, 168, 136, 0.1);
+        }
+
+        .search-results-count {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--neutral-gray);
+        }
+
+        /* Filter Section */
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: var(--neutral-white);
+            transition: var(--transition-smooth);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-sage);
+            box-shadow: 0 0 0 3px rgba(139, 168, 136, 0.1);
+        }
+
+        /* Filter Actions */
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px; /* Accessibility touch target */
+        }
+
+        .btn-primary {
+            background-color: var(--primary-sage);
+            color: var(--neutral-white);
+            border: 2px solid var(--primary-sage);
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--primary-navy);
+            border-color: var(--primary-navy);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--neutral-gray);
+            border: 2px solid #E5E7EB;
+        }
+
+        .btn-secondary:hover, .btn-secondary:focus {
+            background-color: #F9FAFB;
+            border-color: var(--neutral-gray);
+        }
+
+        /* Treatment Comparison Section */
+        .comparison-bar {
+            background: var(--primary-navy);
+            color: var(--neutral-white);
+            padding: 1rem;
+            border-radius: var(--card-border-radius);
+            margin-bottom: 2rem;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comparison-bar.active {
+            display: flex;
+        }
+
+        .comparison-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .comparison-count {
+            background: var(--accent-gold);
+            color: var(--primary-navy);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Treatments Grid */
+        .treatments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Treatment Card */
+        .treatment-card {
+            background: var(--neutral-white);
+            border-radius: var(--card-border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .treatment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .treatment-card:focus-within {
+            ring: 3px solid var(--primary-sage);
+            ring-opacity: 0.3;
+        }
+
+        .treatment-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(45deg, var(--neutral-cream), #E5E7EB);
+        }
+
+        .treatment-content {
+            padding: 1.5rem;
+        }
+
+        .treatment-category {
+            color: var(--primary-sage);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .treatment-title {
+            font-family: var(--font-primary);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .treatment-description {
+            color: var(--neutral-gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .treatment-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            padding: 0.75rem;
+            background: var(--neutral-cream);
+            border-radius: 6px;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--neutral-gray);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--primary-navy);
+            font-size: 0.9rem;
+        }
+
+        .treatment-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-main {
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+        }
+
+        .price-financing {
+            font-size: 0.8rem;
+            color: var(--primary-sage);
+            background: rgba(139, 168, 136, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .treatment-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-treatment {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            text-align: center;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-book {
+            background-color: var(--primary-sage);
+            color: var(--neutral-white);
+            border: none;
+        }
+
+        .btn-book:hover, .btn-book:focus {
+            background-color: var(--primary-navy);
+        }
+
+        .btn-learn {
+            background-color: transparent;
+            color: var(--primary-navy);
+            border: 2px solid var(--primary-navy);
+        }
+
+        .btn-learn:hover, .btn-learn:focus {
+            background-color: var(--primary-navy);
+            color: var(--neutral-white);
+        }
+
+        .btn-compare {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--neutral-white);
+            border: 2px solid var(--primary-sage);
+            color: var(--primary-sage);
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-compare:hover, .btn-compare:focus {
+            background: var(--primary-sage);
+            color: var(--neutral-white);
+        }
+
+        .btn-compare.active {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--primary-navy);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .treatments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-actions {
+                flex-direction: column;
+            }
+
+            .treatment-actions {
+                flex-direction: column;
+            }
+
+            .comparison-bar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid var(--primary-sage);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Focus Management for Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-sage: #2D5A2D;
+                --primary-navy: #1A1A1A;
+                --neutral-gray: #000000;
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1>Our Treatments</h1>
+            <p class="subtitle">Discover our comprehensive range of premium medical spa treatments designed to enhance your natural beauty and wellness</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="treatments-main">
+        <div class="container">
+            <!-- Search and Filter Section -->
+            <section class="search-filter-section" aria-labelledby="search-filter-heading">
+                <div class="search-filter-header">
+                    <h2 id="search-filter-heading">Find Your Perfect Treatment</h2>
+                    <p>Use our advanced search and filtering options to discover treatments tailored to your needs</p>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <label for="treatment-search" class="sr-only">Search treatments</label>
+                    <input
+                        type="search"
+                        id="treatment-search"
+                        class="search-input"
+                        placeholder="Search treatments, concerns, or body areas..."
+                        autocomplete="off"
+                        role="searchbox"
+                        aria-describedby="search-results-count"
+                    >
+                    <div id="search-results-count" class="search-results-count" aria-live="polite">
+                        Showing all treatments
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="category-filter" class="filter-label">Treatment Category</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="facial">Facial Treatments</option>
+                            <option value="body">Body Treatments</option>
+                            <option value="laser">Laser Treatments</option>
+                            <option value="injectables">Injectables</option>
+                            <option value="wellness">Wellness & Recovery</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="price-filter" class="filter-label">Price Range</label>
+                        <select id="price-filter" class="filter-select">
+                            <option value="">All Prices</option>
+                            <option value="0-200">Under $200</option>
+                            <option value="200-500">$200 - $500</option>
+                            <option value="500-1000">$500 - $1,000</option>
+                            <option value="1000+">$1,000+</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="duration-filter" class="filter-label">Treatment Duration</label>
+                        <select id="duration-filter" class="filter-select">
+                            <option value="">Any Duration</option>
+                            <option value="0-30">Under 30 minutes</option>
+                            <option value="30-60">30-60 minutes</option>
+                            <option value="60-90">1-1.5 hours</option>
+                            <option value="90+">Over 1.5 hours</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="concern-filter" class="filter-label">Primary Concern</label>
+                        <select id="concern-filter" class="filter-select">
+                            <option value="">All Concerns</option>
+                            <option value="aging">Anti-Aging</option>
+                            <option value="acne">Acne & Scarring</option>
+                            <option value="pigmentation">Pigmentation</option>
+                            <option value="texture">Skin Texture</option>
+                            <option value="body-contouring">Body Contouring</option>
+                            <option value="hair-removal">Hair Removal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Filter Actions -->
+                <div class="filter-actions">
+                    <button type="button" class="btn btn-primary" id="apply-filters">
+                        Apply Filters
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="reset-filters">
+                        Reset All
+                    </button>
+                </div>
+            </section>
+
+            <!-- Treatment Comparison Bar -->
+            <div class="comparison-bar" id="comparison-bar" aria-live="polite">
+                <div class="comparison-info">
+                    <span class="comparison-count" id="comparison-count">0</span>
+                    <span>treatments selected for comparison</span>
+                </div>
+                <button type="button" class="btn btn-primary" id="compare-treatments" disabled>
+                    Compare Selected
+                </button>
+            </div>
+
+            <!-- Treatments Grid -->
+            <section aria-labelledby="treatments-heading">
+                <h2 id="treatments-heading" class="sr-only">Available Treatments</h2>
+                <div class="treatments-grid" id="treatments-grid">
+                    <!-- Treatment cards will be populated here -->
+
+                    <!-- Sample Treatment Card 1 -->
+                    <article class="treatment-card" data-category="facial" data-price="350" data-duration="60" data-concern="aging">
+                        <button type="button" class="btn-compare" aria-label="Add HydraFacial to comparison" data-treatment="hydrafacial">
+                            +
+                        </button>
+                        <img src="/api/placeholder/350/200" alt="HydraFacial treatment room with advanced equipment" class="treatment-image" loading="lazy">
+                        <div class="treatment-content">
+                            <div class="treatment-category">Facial Treatment</div>
+                            <h3 class="treatment-title">HydraFacial MD</h3>
+                            <p class="treatment-description">
+                                The ultimate 3-in-1 treatment that cleanses, extracts, and hydrates your skin with patented Vortex-Fusion technology for immediate results.
+                            </p>
+                            <div class="treatment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Duration</span>
+                                    <span class="detail-value">60 minutes</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Downtime</span>
+                                    <span class="detail-value">None</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Results</span>
+                                    <span class="detail-value">Immediate</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Sessions</span>
+                                    <span class="detail-value">1-6 recommended</span>
+                                </div>
+                            </div>
+                            <div class="treatment-price">
+                                <span class="price-main">$350</span>
+                                <span class="price-financing">or $29/month</span>
+                            </div>
+                            <div class="treatment-actions">
+                                <button type="button" class="btn-treatment btn-book">Book Consultation</button>
+                                <a href="/treatments/hydrafacial" class="btn-treatment btn-learn">Learn More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Sample Treatment Card 2 -->
+                    <article class="treatment-card" data-category="laser" data-price="450" data-duration="45" data-concern="pigmentation">
+                        <button type="button" class="btn-compare" aria-label="Add IPL Photofacial to comparison" data-treatment="ipl">
+                            +
+                        </button>
+                        <img src="/api/placeholder/350/200" alt="IPL Photofacial laser treatment setup" class="treatment-image" loading="lazy">
+                        <div class="treatment-content">
+                            <div class="treatment-category">Laser Treatment</div>
+                            <h3 class="treatment-title">IPL Photofacial</h3>
+                            <p class="treatment-description">
+                                Advanced light therapy that targets pigmentation, sun damage, and vascular lesions for clearer, more even-toned skin.
+                            </p>
+                            <div class="treatment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Duration</span>
+                                    <span class="detail-value">45 minutes</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Downtime</span>
+                                    <span class="detail-value">Minimal</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Results</span>
+                                    <span class="detail-value">2-4 weeks</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Sessions</span>
+                                    <span class="detail-value">3-5 recommended</span>
+                                </div>
+                            </div>
+                            <div class="treatment-price">
+                                <span class="price-main">$450</span>
+                                <span class="price-financing">or $38/month</span>
+                            </div>
+                            <div class="treatment-actions">
+                                <button type="button" class="btn-treatment btn-book">Book Consultation</button>
+                                <a href="/treatments/ipl-photofacial" class="btn-treatment btn-learn">Learn More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Sample Treatment Card 3 -->
+                    <article class="treatment-card" data-category="injectables" data-price="550" data-duration="30" data-concern="aging">
+                        <button type="button" class="btn-compare" aria-label="Add Botox to comparison" data-treatment="botox">
+                            +
+                        </button>
+                        <img src="/api/placeholder/350/200" alt="Botox injection treatment consultation" class="treatment-image" loading="lazy">
+                        <div class="treatment-content">
+                            <div class="treatment-category">Injectables</div>
+                            <h3 class="treatment-title">Botox® Cosmetic</h3>
+                            <p class="treatment-description">
+                                FDA-approved neurotoxin treatment that smooths dynamic wrinkles and prevents future lines from forming.
+                            </p>
+                            <div class="treatment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Duration</span>
+                                    <span class="detail-value">30 minutes</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Downtime</span>
+                                    <span class="detail-value">None</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Results</span>
+                                    <span class="detail-value">3-5 days</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Duration</span>
+                                    <span class="detail-value">3-4 months</span>
+                                </div>
+                            </div>
+                            <div class="treatment-price">
+                                <span class="price-main">$550</span>
+                                <span class="price-financing">or $46/month</span>
+                            </div>
+                            <div class="treatment-actions">
+                                <button type="button" class="btn-treatment btn-book">Book Consultation</button>
+                                <a href="/treatments/botox" class="btn-treatment btn-learn">Learn More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Sample Treatment Card 4 -->
+                    <article class="treatment-card" data-category="body" data-price="800" data-duration="90" data-concern="body-contouring">
+                        <button type="button" class="btn-compare" aria-label="Add CoolSculpting to comparison" data-treatment="coolsculpting">
+                            +
+                        </button>
+                        <img src="/api/placeholder/350/200" alt="CoolSculpting body contouring treatment" class="treatment-image" loading="lazy">
+                        <div class="treatment-content">
+                            <div class="treatment-category">Body Treatment</div>
+                            <h3 class="treatment-title">CoolSculpting®</h3>
+                            <p class="treatment-description">
+                                Non-invasive fat reduction that freezes and eliminates stubborn fat cells for permanent body contouring results.
+                            </p>
+                            <div class="treatment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Duration</span>
+                                    <span class="detail-value">90 minutes</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Downtime</span>
+                                    <span class="detail-value">Minimal</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Results</span>
+                                    <span class="detail-value">8-12 weeks</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Sessions</span>
+                                    <span class="detail-value">1-3 recommended</span>
+                                </div>
+                            </div>
+                            <div class="treatment-price">
+                                <span class="price-main">$800</span>
+                                <span class="price-financing">or $67/month</span>
+                            </div>
+                            <div class="treatment-actions">
+                                <button type="button" class="btn-treatment btn-book">Book Consultation</button>
+                                <a href="/treatments/coolsculpting" class="btn-treatment btn-learn">Learn More</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- JavaScript for Interactive Functionality -->
+    <script>
+        // Treatment data and functionality
+        class TreatmentManager {
+            constructor() {
+                this.selectedTreatments = new Set();
+                this.allTreatments = document.querySelectorAll('.treatment-card');
+                this.init();
+            }
+
+            init() {
+                this.setupSearchFunctionality();
+                this.setupFilterFunctionality();
+                this.setupComparisonFunctionality();
+                this.setupBookingFunctionality();
+            }
+
+            setupSearchFunctionality() {
+                const searchInput = document.getElementById('treatment-search');
+                const resultsCount = document.getElementById('search-results-count');
+
+                searchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase().trim();
+                    this.filterTreatments();
+
+                    // Update results count
+                    const visibleTreatments = document.querySelectorAll('.treatment-card:not([style*="display: none"])');
+                    resultsCount.textContent = `Showing ${visibleTreatments.length} treatments`;
+                });
+
+                // Add autocomplete functionality
+                searchInput.addEventListener('focus', () => {
+                    // Implement autocomplete dropdown here
+                    console.log('Autocomplete functionality would be implemented here');
+                });
+            }
+
+            setupFilterFunctionality() {
+                const filterSelects = document.querySelectorAll('.filter-select');
+                const applyBtn = document.getElementById('apply-filters');
+                const resetBtn = document.getElementById('reset-filters');
+
+                filterSelects.forEach(select => {
+                    select.addEventListener('change', () => {
+                        this.filterTreatments();
+                    });
+                });
+
+                applyBtn.addEventListener('click', () => {
+                    this.filterTreatments();
+                });
+
+                resetBtn.addEventListener('click', () => {
+                    filterSelects.forEach(select => select.value = '');
+                    document.getElementById('treatment-search').value = '';
+                    this.filterTreatments();
+                });
+            }
+
+            filterTreatments() {
+                const searchTerm = document.getElementById('treatment-search').value.toLowerCase();
+                const categoryFilter = document.getElementById('category-filter').value;
+                const priceFilter = document.getElementById('price-filter').value;
+                const durationFilter = document.getElementById('duration-filter').value;
+                const concernFilter = document.getElementById('concern-filter').value;
+
+                this.allTreatments.forEach(card => {
+                    let visible = true;
+
+                    // Search filter
+                    if (searchTerm) {
+                        const title = card.querySelector('.treatment-title').textContent.toLowerCase();
+                        const description = card.querySelector('.treatment-description').textContent.toLowerCase();
+                        const category = card.querySelector('.treatment-category').textContent.toLowerCase();
+
+                        if (!title.includes(searchTerm) && !description.includes(searchTerm) && !category.includes(searchTerm)) {
+                            visible = false;
+                        }
+                    }
+
+                    // Category filter
+                    if (categoryFilter && card.dataset.category !== categoryFilter) {
+                        visible = false;
+                    }
+
+                    // Price filter
+                    if (priceFilter) {
+                        const price = parseInt(card.dataset.price);
+                        const [min, max] = priceFilter.split('-').map(p => p === '' ? Infinity : parseInt(p.replace('+', '')));
+
+                        if (max === undefined) {
+                            if (price < min) visible = false;
+                        } else {
+                            if (price < min || price > max) visible = false;
+                        }
+                    }
+
+                    // Duration filter
+                    if (durationFilter) {
+                        const duration = parseInt(card.dataset.duration);
+                        const [min, max] = durationFilter.split('-').map(d => d === '' ? Infinity : parseInt(d.replace('+', '')));
+
+                        if (max === undefined) {
+                            if (duration < min) visible = false;
+                        } else {
+                            if (duration < min || duration > max) visible = false;
+                        }
+                    }
+
+                    // Concern filter
+                    if (concernFilter && card.dataset.concern !== concernFilter) {
+                        visible = false;
+                    }
+
+                    card.style.display = visible ? 'block' : 'none';
+                });
+
+                // Update results count
+                const visibleTreatments = document.querySelectorAll('.treatment-card:not([style*="display: none"])');
+                const resultsCount = document.getElementById('search-results-count');
+                resultsCount.textContent = `Showing ${visibleTreatments.length} treatments`;
+            }
+
+            setupComparisonFunctionality() {
+                const compareButtons = document.querySelectorAll('.btn-compare');
+                const comparisonBar = document.getElementById('comparison-bar');
+                const comparisonCount = document.getElementById('comparison-count');
+                const compareBtn = document.getElementById('compare-treatments');
+
+                compareButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        const treatmentId = btn.dataset.treatment;
+
+                        if (this.selectedTreatments.has(treatmentId)) {
+                            this.selectedTreatments.delete(treatmentId);
+                            btn.classList.remove('active');
+                            btn.textContent = '+';
+                        } else if (this.selectedTreatments.size < 3) {
+                            this.selectedTreatments.add(treatmentId);
+                            btn.classList.add('active');
+                            btn.textContent = '✓';
+                        } else {
+                            alert('You can compare up to 3 treatments at a time.');
+                        }
+
+                        this.updateComparisonBar();
+                    });
+                });
+
+                compareBtn.addEventListener('click', () => {
+                    if (this.selectedTreatments.size >= 2) {
+                        // Redirect to comparison page
+                        const treatmentIds = Array.from(this.selectedTreatments).join(',');
+                        window.location.href = `/treatments/compare?treatments=${treatmentIds}`;
+                    }
+                });
+            }
+
+            updateComparisonBar() {
+                const comparisonBar = document.getElementById('comparison-bar');
+                const comparisonCount = document.getElementById('comparison-count');
+                const compareBtn = document.getElementById('compare-treatments');
+
+                comparisonCount.textContent = this.selectedTreatments.size;
+
+                if (this.selectedTreatments.size > 0) {
+                    comparisonBar.classList.add('active');
+                    compareBtn.disabled = this.selectedTreatments.size < 2;
+                } else {
+                    comparisonBar.classList.remove('active');
+                }
+            }
+
+            setupBookingFunctionality() {
+                const bookButtons = document.querySelectorAll('.btn-book');
+
+                bookButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const treatmentCard = e.target.closest('.treatment-card');
+                        const treatmentTitle = treatmentCard.querySelector('.treatment-title').textContent;
+
+                        // Add booking integration here
+                        console.log(`Booking consultation for: ${treatmentTitle}`);
+
+                        // For now, show alert - replace with actual booking modal/redirect
+                        alert(`Booking consultation for ${treatmentTitle}. This would open the booking system.`);
+                    });
+                });
+            }
+        }
+
+        // Initialize treatment manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new TreatmentManager();
+        });
+
+        // Accessibility enhancements
+        document.addEventListener('keydown', (e) => {
+            // Handle keyboard navigation for treatment cards
+            if (e.target.classList.contains('treatment-card')) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const learnMoreBtn = e.target.querySelector('.btn-learn');
+                    if (learnMoreBtn) {
+                        learnMoreBtn.click();
+                    }
+                }
+            }
+        });
+
+        // Add focus management for comparison buttons
+        document.querySelectorAll('.btn-compare').forEach(btn => {
+            btn.addEventListener('focus', (e) => {
+                e.target.closest('.treatment-card').style.outline = '3px solid var(--primary-sage)';
+            });
+
+            btn.addEventListener('blur', (e) => {
+                e.target.closest('.treatment-card').style.outline = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
