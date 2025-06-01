@@ -41,7 +41,7 @@
   "roles": {
     "commitManager": "Manages git commits with proper messaging and metadata",
     "branchCoordinator": "Coordinates branching strategies and merging",
-    "releaseManager": "Manages version releases and tagging", 
+    "releaseManager": "Manages version releases and tagging",
     "changeHistorian": "Maintains comprehensive change documentation",
     "versionAnalyst": "Analyzes version patterns and dependencies"
   },
@@ -169,7 +169,7 @@
   "trackingScopes": {
     "codeChanges": {
       "sourceFiles": "All source code modifications",
-      "configurations": "Configuration file changes", 
+      "configurations": "Configuration file changes",
       "dependencies": "Package and dependency updates",
       "buildScripts": "Build and deployment script changes",
       "tests": "Test file modifications and additions"
@@ -198,6 +198,40 @@
   },
 
   "automatedOperations": {
+    "gitCommands": {
+      "addChanges": "git add .",
+      "commitWithMessage": "git commit -m '{COMMIT_MESSAGE}'",
+      "createBranch": "git checkout -b {BRANCH_NAME}",
+      "switchBranch": "git checkout {BRANCH_NAME}",
+      "mergeBranch": "git merge {BRANCH_NAME}",
+      "pushChanges": "git push origin {BRANCH_NAME}",
+      "tagVersion": "git tag -a {VERSION_TAG} -m '{TAG_MESSAGE}'",
+      "pushTags": "git push origin --tags",
+      "statusCheck": "git status --porcelain",
+      "branchList": "git branch -a",
+      "commitHistory": "git log --oneline -10"
+    },
+    "commitExecution": {
+      "preCommitChecks": [
+        "verify-working-directory-clean-or-staged",
+        "validate-commit-message-format",
+        "check-for-temporal-violations",
+        "ensure-fundamentals-compliance"
+      ],
+      "commitProcess": [
+        "stage-all-changes",
+        "generate-semantic-commit-message",
+        "execute-git-commit",
+        "create-version-tag-if-needed",
+        "push-to-remote-if-configured"
+      ],
+      "postCommitActions": [
+        "update-changelog",
+        "notify-stakeholders",
+        "trigger-ci-cd-if-configured",
+        "cleanup-temporary-files"
+      ]
+    },
     "commitGeneration": {
       "messageFormatting": "Generate standardized commit messages",
       "metadataInclusion": "Include relevant metadata automatically",
@@ -218,6 +252,106 @@
       "changelogGeneration": "Generate changelog entries",
       "releaseNotePreperation": "Prepare release notes and documentation",
       "dependencyUpdates": "Track and update dependency versions"
+    }
+  },
+
+  "terminalCommandExecution": {
+    "gitOperations": {
+      "commitWorkflow": {
+        "description": "Execute complete git commit workflow with validation",
+        "commands": [
+          {
+            "step": "status-check",
+            "command": "git status --porcelain",
+            "purpose": "Check repository status before committing"
+          },
+          {
+            "step": "add-changes",
+            "command": "git add .",
+            "purpose": "Stage all modified files for commit"
+          },
+          {
+            "step": "commit-changes",
+            "command": "git commit -m '{SEMANTIC_COMMIT_MESSAGE}'",
+            "purpose": "Create commit with standardized message"
+          },
+          {
+            "step": "tag-version",
+            "command": "git tag -a v{VERSION} -m '{TAG_MESSAGE}'",
+            "purpose": "Tag commit with semantic version",
+            "conditional": "if version bump required"
+          },
+          {
+            "step": "push-to-remote",
+            "command": "git push origin {CURRENT_BRANCH}",
+            "purpose": "Push commits to remote repository",
+            "conditional": "if remote configured"
+          },
+          {
+            "step": "push-tags",
+            "command": "git push origin --tags",
+            "purpose": "Push version tags to remote",
+            "conditional": "if tags created"
+          }
+        ]
+      },
+      "branchOperations": {
+        "createFeatureBranch": {
+          "command": "git checkout -b feature/{FEATURE_NAME}",
+          "purpose": "Create new feature branch"
+        },
+        "switchToBranch": {
+          "command": "git checkout {BRANCH_NAME}",
+          "purpose": "Switch to specified branch"
+        },
+        "mergeFeature": {
+          "command": "git merge feature/{FEATURE_NAME} --no-ff",
+          "purpose": "Merge feature branch with merge commit"
+        },
+        "deleteFeatureBranch": {
+          "command": "git branch -d feature/{FEATURE_NAME}",
+          "purpose": "Clean up merged feature branch"
+        }
+      },
+      "versionOperations": {
+        "createVersionTag": {
+          "command": "git tag -a v{MAJOR}.{MINOR}.{PATCH} -m '{VERSION_MESSAGE}'",
+          "purpose": "Create semantic version tag"
+        },
+        "createReleaseTag": {
+          "command": "git tag -a release-{VERSION} -m 'Release {VERSION}: {RELEASE_NOTES}'",
+          "purpose": "Create release tag with notes"
+        },
+        "listTags": {
+          "command": "git tag -l",
+          "purpose": "List all existing tags"
+        },
+        "getLatestTag": {
+          "command": "git describe --tags --abbrev=0",
+          "purpose": "Get the latest version tag"
+        }
+      }
+    },
+    "executionSafeguards": {
+      "preExecutionChecks": [
+        "verify-git-repository-exists",
+        "check-working-directory-is-clean-or-staged",
+        "validate-branch-permissions",
+        "ensure-no-merge-conflicts",
+        "verify-fundamentals-compliance"
+      ],
+      "errorHandling": {
+        "gitCommandFailure": "Log error and escalate to human interaction",
+        "mergeConflicts": "Stop execution and request human resolution",
+        "permissionDenied": "Escalate to human for repository access",
+        "networkIssues": "Retry with exponential backoff, then escalate"
+      },
+      "rollbackProcedures": {
+        "commitRollback": "git reset --soft HEAD~1",
+        "tagRollback": "git tag -d {TAG_NAME}",
+        "branchRollback": "git checkout {PREVIOUS_BRANCH}",
+        "pushRollback": "Manual intervention required for pushed changes"
+      }
     }
   },
 
@@ -307,5 +441,111 @@
     "versioningAccuracy": "Improve accuracy of semantic version recommendations",
     "conflictPrevention": "Learn to predict and prevent merge conflicts",
     "releaseManagementOptimization": "Optimize release preparation and management processes"
+  },
+
+  "executionWorkflow": {
+    "versionTrackingExecution": {
+      "workflowSteps": [
+        {
+          "step": 1,
+          "name": "pre-commit-validation",
+          "actions": [
+            "check-git-repository-status",
+            "validate-fundamentals-compliance",
+            "scan-for-temporal-violations",
+            "verify-file-organization-compliance"
+          ]
+        },
+        {
+          "step": 2,
+          "name": "change-analysis",
+          "actions": [
+            "analyze-file-changes",
+            "categorize-change-types",
+            "determine-semantic-version-impact",
+            "generate-standardized-commit-message"
+          ]
+        },
+        {
+          "step": 3,
+          "name": "git-commit-execution",
+          "actions": [
+            "execute-git-add-command",
+            "execute-git-commit-with-message",
+            "create-version-tag-if-required",
+            "push-changes-if-configured"
+          ]
+        },
+        {
+          "step": 4,
+          "name": "post-commit-actions",
+          "actions": [
+            "update-project-version-tracking",
+            "notify-dependent-agents",
+            "update-changelog-if-required",
+            "report-completion-status"
+          ]
+        }
+      ]
+    },
+    "terminalCommandInterface": {
+      "commandExecutionMethod": "run_terminal_cmd",
+      "workingDirectory": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme",
+      "commandValidation": "validate-before-execution",
+      "errorHandling": "escalate-on-failure",
+      "successConfirmation": "verify-git-status-after-execution"
+    },
+    "integrationProtocol": {
+      "triggerConditions": [
+        "workflow-completion-handoff",
+        "agent-task-completion-handoff",
+        "file-creation-or-modification",
+        "system-configuration-changes"
+      ],
+      "executionRequirements": [
+        "fundamentals-compliance-verified",
+        "change-description-provided",
+        "semantic-version-impact-assessed",
+        "commit-message-format-validated"
+      ],
+      "completionHandoff": [
+        "return-to-calling-agent",
+        "notify-human-if-required",
+        "update-system-state",
+        "prepare-for-next-workflow-stage"
+      ]
+    }
+  },
+
+  "gitWorkflowImplementation": {
+    "commitMessageTemplate": "{TYPE}({SCOPE}): {DESCRIPTION}\n\n{DETAILED_DESCRIPTION}\n\n{METADATA}",
+    "commitMessageGeneration": {
+      "typeMapping": {
+        "task-planning": "feat",
+        "agent-creation": "feat",
+        "workflow-creation": "feat",
+        "design-updates": "feat",
+        "code-generation": "feat",
+        "bug-fixes": "fix",
+        "documentation": "docs",
+        "performance": "perf",
+        "testing": "test",
+        "configuration": "chore"
+      },
+      "scopeDetection": "auto-detect-from-file-paths-and-changes",
+      "metadataInclusion": [
+        "TASK-PLANNER-001: {TASK_DESCRIPTION}",
+        "Files changed: {FILE_COUNT}",
+        "Story points: {STORY_POINTS}",
+        "Quality gates: {QUALITY_GATE_STATUS}"
+      ]
+    },
+    "versionTagging": {
+      "majorVersion": "Breaking changes or new major features",
+      "minorVersion": "New features or significant enhancements",
+      "patchVersion": "Bug fixes or minor improvements",
+      "tagNamingConvention": "v{MAJOR}.{MINOR}.{PATCH}",
+      "tagMessageFormat": "Release v{VERSION}: {RELEASE_SUMMARY}"
+    }
   }
-} 
+}

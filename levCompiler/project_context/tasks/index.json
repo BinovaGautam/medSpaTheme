@@ -11,7 +11,7 @@
     "projectName": "PreetiDreams Medical Spa Website",
     "projectType": "medical-spa-website-development",
     "methodology": "agile-scrum",
-    "currentPhase": "initialization",
+    "currentPhase": "sprint-planning",
     "projectStatus": "active",
     "startDate": "{PROJECT_START_DATE}",
     "estimatedCompletionDate": "{PROJECT_END_DATE}",
@@ -20,38 +20,65 @@
   },
 
   "epics": {
-    "totalEpics": 0,
-    "activeEpics": 0,
+    "totalEpics": 3,
+    "activeEpics": 3,
     "completedEpics": 0,
-    "epicRegistry": {}
+    "epicRegistry": {
+      "EPIC-001": {
+        "title": "Treatments Showcase System",
+        "status": "planned",
+        "storyPoints": 21,
+        "priority": "critical"
+      },
+      "EPIC-002": {
+        "title": "About Us & Trust Building",
+        "status": "planned",
+        "storyPoints": 8,
+        "priority": "high"
+      },
+      "EPIC-003": {
+        "title": "Accessibility & Compliance Foundation",
+        "status": "planned",
+        "storyPoints": 5,
+        "priority": "critical"
+      }
+    }
   },
 
   "sprints": {
-    "totalSprints": 0,
-    "currentSprint": null,
+    "totalSprints": 1,
+    "currentSprint": "SPRINT-001",
     "completedSprints": 0,
     "sprintHistory": [],
     "sprintPlans": "levCompiler/project_context/tasks/sprints/",
-    "sprintReports": "levCompiler/project_context/tasks/reports/sprints/"
+    "sprintReports": "levCompiler/project_context/tasks/reports/sprints/",
+    "currentSprintDetails": {
+      "sprintId": "SPRINT-001",
+      "title": "Core Website Foundation - Treatments & About Pages",
+      "status": "planned",
+      "plannedStoryPoints": 34,
+      "startDate": "{SPRINT_START_DATE}",
+      "endDate": "{SPRINT_END_DATE}"
+    }
   },
 
   "tasks": {
-    "totalTasks": 0,
+    "totalTasks": 9,
     "activeTasks": 0,
     "completedTasks": 0,
     "blockedTasks": 0,
     "taskCategories": {
-      "development": 0,
-      "design": 0,
-      "testing": 0,
-      "documentation": 0,
+      "development": 5,
+      "design": 1,
+      "testing": 2,
+      "documentation": 1,
       "deployment": 0,
       "maintenance": 0
     },
     "taskPriorities": {
-      "critical": 0,
-      "high": 0,
-      "medium": 0,
+      "critical": 4,
+      "high": 3,
+      "medium": 2,
       "low": 0
     }
   },
