@@ -2655,13 +2655,14 @@ a:focus {
 }
 
 .site-title a {
-  color: var(--color-primary-forest);
+  color: var(--color-primary-navy);
   text-decoration: none;
   transition: color var(--transition-fast);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .site-title a:hover {
-  color: var(--color-primary-gold);
+  color: var(--color-primary-teal);
 }
 
 .site-tagline {
@@ -2686,27 +2687,24 @@ a:focus {
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
-  flex-wrap: nowrap;
-  white-space: nowrap;
 }
 
 .nav-menu .menu-item {
   position: relative;
-  flex-shrink: 0;
 }
 
 .nav-menu .menu-item a {
   color: var(--color-primary-navy);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.95rem;
-  padding: 0.75rem 0.875rem;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
   position: relative;
   transition: all var(--transition-fast);
   border-radius: 8px;
-  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .nav-menu .menu-item a::after {
@@ -2778,6 +2776,12 @@ a:focus {
   border: none;
   flex-shrink: 0;
   white-space: nowrap;
+}
+
+.btn-consultation:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+  color: var(--color-neutral-white);
 }
 
 /* Responsive Design with Smart CTA Behavior */
@@ -3520,12 +3524,12 @@ a:focus {
   transform: translateY(0);
 }
 
-/* Header with separation (when scrolled) */
+/* Header when scrolled - gets solid background */
 .professional-header.scrolled {
+  background: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid var(--color-neutral-medium);
   box-shadow: 0 2px 12px rgba(52, 73, 94, 0.08);
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.95);
 }
 
 /* Header hidden when scrolling down */
@@ -3605,6 +3609,7 @@ a:focus {
 .custom-logo img {
   max-height: 50px;
   width: auto;
+  filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.8));
 }
 
 /* Desktop Navigation */
@@ -4088,15 +4093,16 @@ a:focus {
    PREMIUM HERO SYSTEM
    ============================================================================= */
 
-/* Hero Section Foundation - Simplified */
+/* Hero Section Foundation - Seamless with Header */
 .premium-hero {
   position: relative;
   min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
   padding: var(--space-4xl) 0;
   overflow: hidden;
+  margin-top: 80px; /* Account for transparent header */
 }
 
 /* Dynamic Background System */

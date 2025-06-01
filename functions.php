@@ -168,6 +168,56 @@ function preetidreams_enqueue_hero_assets() {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('hero_consultation_nonce')
         ]);
+
+        // Header scroll behavior for seamless hero integration
+        wp_add_inline_script('premium-hero-js', '
+            document.addEventListener("DOMContentLoaded", function() {
+                const header = document.querySelector(".professional-header");
+                const heroSection = document.querySelector(".premium-hero");
+
+                if (header && heroSection) {
+                    let lastScrollTop = 0;
+
+                    function handleScroll() {
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        const heroHeight = heroSection.offsetHeight;
+                        const headerHeight = header.offsetHeight;
+
+                        // Add scrolled class when past the hero section
+                        if (scrollTop > 50) {
+                            header.classList.add("scrolled");
+                        } else {
+                            header.classList.remove("scrolled");
+                        }
+
+                        // Hide/show header on scroll direction
+                        if (scrollTop > lastScrollTop && scrollTop > headerHeight) {
+                            // Scrolling down
+                            header.classList.add("hidden");
+                            header.classList.remove("visible");
+                        } else {
+                            // Scrolling up
+                            header.classList.remove("hidden");
+                            header.classList.add("visible");
+                        }
+
+                        lastScrollTop = scrollTop;
+                    }
+
+                    // Throttled scroll handler for better performance
+                    let scrollTimeout;
+                    window.addEventListener("scroll", function() {
+                        if (scrollTimeout) {
+                            clearTimeout(scrollTimeout);
+                        }
+                        scrollTimeout = setTimeout(handleScroll, 10);
+                    });
+
+                    // Initial call
+                    handleScroll();
+                }
+            });
+        ');
     }
 }
 add_action('wp_enqueue_scripts', 'preetidreams_enqueue_hero_assets');
