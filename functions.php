@@ -1890,3 +1890,1210 @@ function preetidreams_custom_body_classes($classes) {
     return $classes;
 }
 add_filter('body_class', 'preetidreams_custom_body_classes');
+
+/**
+ * Enqueue Luxury Footer Assets
+ * Implements the complete luxury medical spa footer design
+ */
+function preetidreams_enqueue_luxury_footer_assets() {
+    // Luxury Footer CSS
+    wp_enqueue_style(
+        'luxury-footer-styles',
+        get_template_directory_uri() . '/assets/css/footer-luxury.css',
+        ['preetidreams-style'],
+        PREETIDREAMS_VERSION
+    );
+
+    // Footer Interactions JavaScript
+    wp_enqueue_script(
+        'footer-interactions',
+        get_template_directory_uri() . '/assets/js/footer-interactions.js',
+        [],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Localize script with footer data
+    wp_localize_script('footer-interactions', 'footerData', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('footer_interactions_nonce'),
+        'phone' => preetidreams_get_phone(),
+        'email' => preetidreams_get_email(),
+        'address' => preetidreams_get_address(),
+        'hours' => preetidreams_get_hours(),
+        'consultationLink' => get_permalink(get_page_by_path('contact')),
+        'directionsLink' => get_theme_mod('footer_directions_link', 'https://maps.google.com'),
+        'settings' => [
+            'enableAnimations' => !wp_is_mobile(),
+            'reducedMotion' => false, // Detected client-side
+            'mobileBreakpoint' => 768,
+            'scrollOffset' => 100,
+            'animationDuration' => 300
+        ],
+        'i18n' => [
+            'scrollingToTop' => __('Scrolling to top of page', 'preetidreams'),
+            'openingMaps' => __('Opening Maps...', 'preetidreams'),
+            'connecting' => __('Connecting...', 'preetidreams'),
+            'dialing' => __('Dialing...', 'preetidreams'),
+            'tapToCall' => __('Tap to call', 'preetidreams'),
+            'confidentialEmail' => __('Send confidential email', 'preetidreams'),
+            'getDirections' => __('Get directions to our clinic', 'preetidreams')
+        ]
+    ]);
+
+    // Add luxury design system CSS variables
+    $luxury_css = "
+        :root {
+            /* Luxury Footer Color Palette */
+            --footer-sage-green: #87A96B;
+            --footer-premium-gold: #D4AF37;
+            --footer-medical-navy: #1B365D;
+            --footer-cream-base: #FDFCFA;
+            --footer-sage-light: #A8C487;
+            --footer-sage-dark: #6B8552;
+            --footer-gold-light: #E8C962;
+            --footer-navy-light: #2B4A78;
+            --footer-cream-warm: #FBF9F4;
+            --footer-navy-deep: #152B4F;
+
+            /* Footer Typography */
+            --footer-font-display: 'Playfair Display', serif;
+            --footer-font-body: 'Inter', sans-serif;
+
+            /* Footer Spacing */
+            --footer-space-xs: 0.5rem;
+            --footer-space-sm: 0.75rem;
+            --footer-space-md: 1rem;
+            --footer-space-lg: 1.5rem;
+            --footer-space-xl: 2rem;
+            --footer-space-2xl: 3rem;
+            --footer-space-3xl: 4rem;
+
+            /* Footer Transitions */
+            --footer-transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --footer-transition-gentle: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+            /* Footer Shadows */
+            --footer-shadow-soft: 0 4px 20px rgba(27, 54, 93, 0.08);
+            --footer-shadow-luxury: 0 8px 25px rgba(212, 175, 55, 0.25);
+            --footer-shadow-elevated: 0 12px 35px rgba(212, 175, 55, 0.35);
+        }
+    ";
+    wp_add_inline_style('luxury-footer-styles', $luxury_css);
+}
+add_action('wp_enqueue_scripts', 'preetidreams_enqueue_luxury_footer_assets');
+
+/**
+ * Add Luxury Footer Customizer Settings
+ * Comprehensive WordPress Customizer integration for footer content management
+ */
+function preetidreams_luxury_footer_customizer($wp_customize) {
+
+    // Add Footer Panel
+    $wp_customize->add_panel('luxury_footer_panel', [
+        'title'       => __('Luxury Footer Settings', 'preetidreams'),
+        'description' => __('Customize your luxury medical spa footer design and content', 'preetidreams'),
+        'priority'    => 160,
+    ]);
+
+    // ========== Consultation Invitation Section ==========
+    $wp_customize->add_section('footer_consultation_section', [
+        'title'    => __('Consultation Invitation', 'preetidreams'),
+        'panel'    => 'luxury_footer_panel',
+        'priority' => 10,
+    ]);
+
+    // Consultation Headline
+    $wp_customize->add_setting('footer_consultation_headline', [
+        'default'           => 'Ready to Begin Your Aesthetic Journey?',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_consultation_headline', [
+        'label'   => __('Consultation Headline', 'preetidreams'),
+        'section' => 'footer_consultation_section',
+        'type'    => 'text',
+    ]);
+
+    // Consultation Subtext
+    $wp_customize->add_setting('footer_consultation_subtext', [
+        'default'           => 'Experience the artistry of medical aesthetics with Dr. Preeti Sharma in our luxury clinic',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_consultation_subtext', [
+        'label'   => __('Consultation Subtext', 'preetidreams'),
+        'section' => 'footer_consultation_section',
+        'type'    => 'textarea',
+    ]);
+
+    // Consultation Link
+    $wp_customize->add_setting('footer_consultation_link', [
+        'default'           => '/contact',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_consultation_link', [
+        'label'   => __('Consultation Booking Link', 'preetidreams'),
+        'section' => 'footer_consultation_section',
+        'type'    => 'url',
+    ]);
+
+    // ========== Medical Excellence Section ==========
+    $wp_customize->add_section('footer_credentials_section', [
+        'title'    => __('Medical Excellence & Credentials', 'preetidreams'),
+        'panel'    => 'luxury_footer_panel',
+        'priority' => 20,
+    ]);
+
+    // Board Certification
+    $wp_customize->add_setting('footer_board_certification', [
+        'default'           => 'Board-Certified Physician',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_board_certification', [
+        'label'   => __('Board Certification Title', 'preetidreams'),
+        'section' => 'footer_credentials_section',
+        'type'    => 'text',
+    ]);
+
+    // Certification Details
+    $wp_customize->add_setting('footer_certification_details', [
+        'default'           => 'American Board of Dermatology',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_certification_details', [
+        'label'   => __('Certification Details', 'preetidreams'),
+        'section' => 'footer_credentials_section',
+        'type'    => 'text',
+    ]);
+
+    // Experience Years
+    $wp_customize->add_setting('footer_experience_years', [
+        'default'           => '15+ Years of Excellence',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_experience_years', [
+        'label'   => __('Years of Experience', 'preetidreams'),
+        'section' => 'footer_credentials_section',
+        'type'    => 'text',
+    ]);
+
+    // Expertise Area
+    $wp_customize->add_setting('footer_expertise_area', [
+        'default'           => 'Aesthetic Medicine Expertise',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_expertise_area', [
+        'label'   => __('Expertise Area', 'preetidreams'),
+        'section' => 'footer_credentials_section',
+        'type'    => 'text',
+    ]);
+
+    // Recognition & Awards
+    $wp_customize->add_setting('footer_recognition', [
+        'default'           => 'Recognition & Awards',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_recognition', [
+        'label'   => __('Recognition Title', 'preetidreams'),
+        'section' => 'footer_credentials_section',
+        'type'    => 'text',
+    ]);
+
+    // Award Details
+    $wp_customize->add_setting('footer_award_details', [
+        'default'           => 'Top Medical Spa - Beverly Hills',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_award_details', [
+        'label'   => __('Award Details', 'preetidreams'),
+        'section' => 'footer_credentials_section',
+        'type'    => 'text',
+    ]);
+
+    // ========== Luxury Clinic Experience Section ==========
+    $wp_customize->add_section('footer_clinic_experience_section', [
+        'title'    => __('Luxury Clinic Experience', 'preetidreams'),
+        'panel'    => 'luxury_footer_panel',
+        'priority' => 30,
+    ]);
+
+    // Private Suites
+    $wp_customize->add_setting('footer_private_suites', [
+        'default'           => 'Private Consultation Suites',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_private_suites', [
+        'label'   => __('Private Suites Title', 'preetidreams'),
+        'section' => 'footer_clinic_experience_section',
+        'type'    => 'text',
+    ]);
+
+    // Suite Description
+    $wp_customize->add_setting('footer_suite_description', [
+        'default'           => 'Discrete, comfortable consultation rooms',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_suite_description', [
+        'label'   => __('Suite Description', 'preetidreams'),
+        'section' => 'footer_clinic_experience_section',
+        'type'    => 'text',
+    ]);
+
+    // Advanced Equipment
+    $wp_customize->add_setting('footer_equipment', [
+        'default'           => 'Advanced Medical Equipment',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_equipment', [
+        'label'   => __('Equipment Title', 'preetidreams'),
+        'section' => 'footer_clinic_experience_section',
+        'type'    => 'text',
+    ]);
+
+    // Equipment Description
+    $wp_customize->add_setting('footer_equipment_description', [
+        'default'           => 'State-of-the-art diagnostic and treatment tools',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_equipment_description', [
+        'label'   => __('Equipment Description', 'preetidreams'),
+        'section' => 'footer_clinic_experience_section',
+        'type'    => 'text',
+    ]);
+
+    // Personalized Planning
+    $wp_customize->add_setting('footer_personalized_planning', [
+        'default'           => 'Personalized Treatment Planning',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_personalized_planning', [
+        'label'   => __('Personalized Planning Title', 'preetidreams'),
+        'section' => 'footer_clinic_experience_section',
+        'type'    => 'text',
+    ]);
+
+    // Planning Description
+    $wp_customize->add_setting('footer_planning_description', [
+        'default'           => 'Custom aesthetic plans during your visit',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_planning_description', [
+        'label'   => __('Planning Description', 'preetidreams'),
+        'section' => 'footer_clinic_experience_section',
+        'type'    => 'text',
+    ]);
+
+    // ========== Connect Section ==========
+    $wp_customize->add_section('footer_connect_section', [
+        'title'    => __('Connect & Location', 'preetidreams'),
+        'panel'    => 'luxury_footer_panel',
+        'priority' => 40,
+    ]);
+
+    // Address Line 2
+    $wp_customize->add_setting('footer_address_line2', [
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_address_line2', [
+        'label'   => __('Address Line 2 (Optional)', 'preetidreams'),
+        'section' => 'footer_connect_section',
+        'type'    => 'text',
+    ]);
+
+    // Directions Link
+    $wp_customize->add_setting('footer_directions_link', [
+        'default'           => 'https://maps.google.com',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_directions_link', [
+        'label'   => __('Google Maps Directions Link', 'preetidreams'),
+        'section' => 'footer_connect_section',
+        'type'    => 'url',
+    ]);
+
+    // Educational Resources Link
+    $wp_customize->add_setting('footer_educational_resources_link', [
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('footer_educational_resources_link', [
+        'label'   => __('Educational Resources Link (Optional)', 'preetidreams'),
+        'section' => 'footer_connect_section',
+        'type'    => 'url',
+    ]);
+
+    // Location Showcase Section
+    $wp_customize->add_section('footer_luxury_location_showcase', array(
+        'title'    => __('Luxury Location Showcase', 'preetidreams'),
+        'priority' => 35,
+        'panel'    => 'footer_luxury_panel'
+    ));
+
+    // Location Showcase - Header Settings
+    $wp_customize->add_setting('footer_location_headline', array(
+        'default' => 'Experience Our Luxury Medical Spa',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    $wp_customize->add_control('footer_location_headline', array(
+        'label'   => __('Location Headline', 'preetidreams'),
+        'section' => 'footer_luxury_location_showcase',
+        'type'    => 'text'
+    ));
+
+    $wp_customize->add_setting('footer_location_description', array(
+        'default' => 'Discover our state-of-the-art facility designed for your comfort and privacy. Schedule your personalized consultation in our sophisticated Beverly Hills location.',
+        'sanitize_callback' => 'sanitize_textarea_field'
+    ));
+    $wp_customize->add_control('footer_location_description', array(
+        'label'   => __('Location Description', 'preetidreams'),
+        'section' => 'footer_luxury_location_showcase',
+        'type'    => 'textarea',
+        'description' => __('Consultation-focused description of your clinic location', 'preetidreams')
+    ));
+
+    // Google Maps Integration
+    $wp_customize->add_setting('footer_map_embed_url', array(
+        'default' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.2069!2d-118.3974881!3d34.0738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDA0JzI1LjciTiAxMTjCsDIzJzUxLjAiVw!5e0!3m2!1sen!2sus!4v1234567890',
+        'sanitize_callback' => 'esc_url_raw'
+    ));
+    $wp_customize->add_control('footer_map_embed_url', array(
+        'label'   => __('Google Maps Embed URL', 'preetidreams'),
+        'section' => 'footer_luxury_location_showcase',
+        'type'    => 'url',
+        'description' => __('Get embed URL from Google Maps > Share > Embed a map', 'preetidreams')
+    ));
+
+    $wp_customize->add_setting('footer_clinic_tagline', array(
+        'default' => 'Beverly Hills Medical Spa',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+    $wp_customize->add_control('footer_clinic_tagline', array(
+        'label'   => __('Clinic Map Tagline', 'preetidreams'),
+        'section' => 'footer_luxury_location_showcase',
+        'type'    => 'text',
+        'description' => __('Appears on the map overlay marker', 'preetidreams')
+    ));
+
+    // Location Features (4 premium features)
+    for ($i = 1; $i <= 4; $i++) {
+        $feature_defaults = array(
+            1 => array('title' => 'Prime Beverly Hills Address', 'desc' => 'Prestigious Rodeo Drive vicinity'),
+            2 => array('title' => 'Valet Parking Available', 'desc' => 'Complimentary for all appointments'),
+            3 => array('title' => 'Private Entrance', 'desc' => 'Discrete and confidential access'),
+            4 => array('title' => 'Luxury Amenities', 'desc' => 'Curated comfort experience')
+        );
+
+        $wp_customize->add_setting("footer_location_feature_{$i}", array(
+            'default' => $feature_defaults[$i]['title'],
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        $wp_customize->add_control("footer_location_feature_{$i}", array(
+            'label'   => sprintf(__('Location Feature %d Title', 'preetidreams'), $i),
+            'section' => 'footer_luxury_location_showcase',
+            'type'    => 'text'
+        ));
+
+        $wp_customize->add_setting("footer_location_feature_{$i}_desc", array(
+            'default' => $feature_defaults[$i]['desc'],
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        $wp_customize->add_control("footer_location_feature_{$i}_desc", array(
+            'label'   => sprintf(__('Location Feature %d Description', 'preetidreams'), $i),
+            'section' => 'footer_luxury_location_showcase',
+            'type'    => 'text'
+        ));
+    }
+
+    // Location CTA Links
+    $wp_customize->add_setting('footer_book_consultation_link', array(
+        'default' => '/contact/#consultation',
+        'sanitize_callback' => 'esc_url_raw'
+    ));
+    $wp_customize->add_control('footer_book_consultation_link', array(
+        'label'   => __('Schedule Consultation Link', 'preetidreams'),
+        'section' => 'footer_luxury_location_showcase',
+        'type'    => 'url',
+        'description' => __('Primary CTA for booking clinic visits', 'preetidreams')
+    ));
+
+    $wp_customize->add_setting('footer_virtual_tour_link', array(
+        'default' => '#virtual-tour',
+        'sanitize_callback' => 'esc_url_raw'
+    ));
+    $wp_customize->add_control('footer_virtual_tour_link', array(
+        'label'   => __('Virtual Tour Link', 'preetidreams'),
+        'section' => 'footer_luxury_location_showcase',
+        'type'    => 'url',
+        'description' => __('Link to virtual facility tour or video', 'preetidreams')
+    ));
+
+    // ============================================================================
+}
+add_action('customize_register', 'preetidreams_luxury_footer_customizer');
+
+/**
+ * Register Footer Navigation Menu
+ * Ensures footer navigation is available in WordPress menu management
+ */
+function preetidreams_register_footer_menus() {
+    register_nav_menus([
+        'footer' => __('Footer Menu', 'preetidreams'),
+        'footer-legal' => __('Footer Legal Menu', 'preetidreams'),
+    ]);
+}
+add_action('init', 'preetidreams_register_footer_menus');
+
+/**
+ * Footer Analytics Tracking
+ * Handle custom events from footer interactions
+ */
+function preetidreams_footer_analytics_handler() {
+    // Verify nonce for security
+    if (!wp_verify_nonce($_POST['nonce'], 'footer_interactions_nonce')) {
+        wp_die('Security check failed');
+    }
+
+    $event_type = sanitize_text_field($_POST['event_type']);
+    $event_data = wp_unslash($_POST['event_data']);
+
+    // Log the interaction for analytics
+    $analytics_data = [
+        'event_type' => $event_type,
+        'event_data' => $event_data,
+        'user_id' => get_current_user_id(),
+        'session_id' => session_id(),
+        'timestamp' => current_time('mysql'),
+        'ip_address' => $_SERVER['REMOTE_ADDR'],
+        'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+        'referrer' => wp_get_referer(),
+    ];
+
+    // Store in custom table or integrate with analytics service
+    do_action('preetidreams_footer_analytics_event', $analytics_data);
+
+    wp_send_json_success([
+        'message' => 'Analytics event recorded',
+        'event_id' => uniqid('footer_', true)
+    ]);
+}
+add_action('wp_ajax_footer_analytics', 'preetidreams_footer_analytics_handler');
+add_action('wp_ajax_nopriv_footer_analytics', 'preetidreams_footer_analytics_handler');
+
+/**
+ * Enhanced Social Links Helper
+ * Extended functionality for footer social media integration
+ */
+function preetidreams_get_social_links_array() {
+    $social_platforms = [
+        'facebook' => [
+            'label' => 'Facebook',
+            'icon' => '📘',
+            'color' => '#1877F2',
+            'url' => preetidreams_get_social_link('facebook')
+        ],
+        'instagram' => [
+            'label' => 'Instagram',
+            'icon' => '📷',
+            'color' => '#E4405F',
+            'url' => preetidreams_get_social_link('instagram')
+        ],
+        'linkedin' => [
+            'label' => 'LinkedIn',
+            'icon' => '💼',
+            'color' => '#0A66C2',
+            'url' => preetidreams_get_social_link('linkedin')
+        ],
+        'youtube' => [
+            'label' => 'YouTube',
+            'icon' => '📺',
+            'color' => '#FF0000',
+            'url' => preetidreams_get_social_link('youtube')
+        ],
+        'twitter' => [
+            'label' => 'Twitter',
+            'icon' => '🐦',
+            'color' => '#1DA1F2',
+            'url' => preetidreams_get_social_link('twitter')
+        ]
+    ];
+
+    // Filter out platforms without URLs
+    return array_filter($social_platforms, function($platform) {
+        return !empty($platform['url']);
+    });
+}
+
+/**
+ * Generate Footer Schema Markup
+ * SEO optimization with structured data for medical practice
+ */
+function preetidreams_footer_schema_markup() {
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'MedicalBusiness',
+        'name' => get_bloginfo('name'),
+        'description' => get_bloginfo('description'),
+        'url' => home_url(),
+        'telephone' => preetidreams_get_phone(),
+        'email' => preetidreams_get_email(),
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => preetidreams_get_address(),
+            'addressLocality' => get_theme_mod('practice_city', ''),
+            'addressRegion' => get_theme_mod('practice_state', ''),
+            'postalCode' => get_theme_mod('practice_zip', ''),
+            'addressCountry' => 'US'
+        ],
+        'geo' => [
+            '@type' => 'GeoCoordinates',
+            'latitude' => get_theme_mod('practice_latitude', ''),
+            'longitude' => get_theme_mod('practice_longitude', '')
+        ],
+        'openingHours' => preetidreams_get_hours(),
+        'priceRange' => '$$$$',
+        'hasOfferCatalog' => [
+            '@type' => 'OfferCatalog',
+            'name' => 'Medical Spa Services',
+            'itemListElement' => []
+        ],
+        'founder' => [
+            '@type' => 'Person',
+            'name' => get_theme_mod('doctor_name', 'Dr. Preeti Sharma'),
+            'jobTitle' => 'Board-Certified Physician',
+            'alumniOf' => get_theme_mod('doctor_education', ''),
+            'knowsAbout' => 'Aesthetic Medicine, Dermatology'
+        ],
+        'sameAs' => array_values(array_column(preetidreams_get_social_links_array(), 'url'))
+    ];
+
+    return '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_SLASHES) . '</script>';
+}
+
+/**
+ * Output Footer Schema in wp_head
+ */
+function preetidreams_output_footer_schema() {
+    echo preetidreams_footer_schema_markup();
+}
+add_action('wp_head', 'preetidreams_output_footer_schema');
+
+/**
+ * Add Meta Boxes for Treatment Post Type
+ */
+function preetidreams_add_treatment_meta_boxes() {
+    add_meta_box(
+        'treatment_medical_info',
+        'Medical Information & Safety',
+        'preetidreams_treatment_medical_info_callback',
+        'treatment',
+        'normal',
+        'high'
+    );
+
+    add_meta_box(
+        'treatment_details',
+        'Treatment Details',
+        'preetidreams_treatment_details_callback',
+        'treatment',
+        'normal',
+        'high'
+    );
+
+    add_meta_box(
+        'treatment_gallery',
+        'Before/After Gallery',
+        'preetidreams_treatment_gallery_callback',
+        'treatment',
+        'normal',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'preetidreams_add_treatment_meta_boxes');
+
+/**
+ * Medical Information Meta Box Callback
+ */
+function preetidreams_treatment_medical_info_callback($post) {
+    wp_nonce_field('treatment_medical_meta_box', 'treatment_medical_meta_box_nonce');
+
+    $medical_info = get_post_meta($post->ID, 'treatment_medical_info', true);
+    $contraindications = get_post_meta($post->ID, 'treatment_contraindications', true);
+    $side_effects = get_post_meta($post->ID, 'treatment_side_effects', true);
+
+    echo '<table class="form-table">';
+
+    // Medical Information
+    echo '<tr>';
+    echo '<th><label for="treatment_medical_info">Medical Details</label></th>';
+    echo '<td>';
+    wp_editor($medical_info, 'treatment_medical_info', [
+        'textarea_name' => 'treatment_medical_info',
+        'media_buttons' => false,
+        'textarea_rows' => 5,
+        'teeny' => true
+    ]);
+    echo '<p class="description">Detailed medical information about the treatment (e.g., how it works, medical benefits)</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Contraindications
+    echo '<tr>';
+    echo '<th><label for="treatment_contraindications">Contraindications</label></th>';
+    echo '<td>';
+    wp_editor($contraindications, 'treatment_contraindications', [
+        'textarea_name' => 'treatment_contraindications',
+        'media_buttons' => false,
+        'textarea_rows' => 4,
+        'teeny' => true
+    ]);
+    echo '<p class="description">Medical conditions or situations where this treatment is not recommended</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Side Effects
+    echo '<tr>';
+    echo '<th><label for="treatment_side_effects">Possible Side Effects</label></th>';
+    echo '<td>';
+    wp_editor($side_effects, 'treatment_side_effects', [
+        'textarea_name' => 'treatment_side_effects',
+        'media_buttons' => false,
+        'textarea_rows' => 4,
+        'teeny' => true
+    ]);
+    echo '<p class="description">Common side effects and what patients should expect</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    echo '</table>';
+}
+
+/**
+ * Treatment Details Meta Box Callback
+ */
+function preetidreams_treatment_details_callback($post) {
+    wp_nonce_field('treatment_details_meta_box', 'treatment_details_meta_box_nonce');
+
+    $benefits = get_post_meta($post->ID, 'treatment_benefits', true);
+    $process = get_post_meta($post->ID, 'treatment_process', true);
+
+    echo '<table class="form-table">';
+
+    // Benefits
+    echo '<tr>';
+    echo '<th><label for="treatment_benefits">Treatment Benefits</label></th>';
+    echo '<td>';
+    wp_editor($benefits, 'treatment_benefits', [
+        'textarea_name' => 'treatment_benefits',
+        'media_buttons' => false,
+        'textarea_rows' => 5,
+        'teeny' => true
+    ]);
+    echo '<p class="description">List the key benefits and advantages of this treatment</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Process
+    echo '<tr>';
+    echo '<th><label for="treatment_process">Treatment Process</label></th>';
+    echo '<td>';
+    wp_editor($process, 'treatment_process', [
+        'textarea_name' => 'treatment_process',
+        'media_buttons' => false,
+        'textarea_rows' => 5,
+        'teeny' => true
+    ]);
+    echo '<p class="description">Describe what patients can expect during the treatment process</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    echo '</table>';
+}
+
+/**
+ * Treatment Gallery Meta Box Callback
+ */
+function preetidreams_treatment_gallery_callback($post) {
+    wp_nonce_field('treatment_gallery_meta_box', 'treatment_gallery_meta_box_nonce');
+
+    $before_after_gallery = get_post_meta($post->ID, 'treatment_before_after', true);
+
+    echo '<table class="form-table">';
+
+    // Before/After Gallery
+    echo '<tr>';
+    echo '<th><label for="treatment_before_after">Before/After Gallery</label></th>';
+    echo '<td>';
+    wp_editor($before_after_gallery, 'treatment_before_after', [
+        'textarea_name' => 'treatment_before_after',
+        'media_buttons' => true,
+        'textarea_rows' => 8,
+        'teeny' => false
+    ]);
+    echo '<div class="description">';
+    echo '<p><strong>Important:</strong> Only use images with proper patient consent and HIPAA compliance.</p>';
+    echo '<p>You can insert images using the "Add Media" button above. Consider using gallery shortcodes for organized display.</p>';
+    echo '<p><strong>Privacy Requirements:</strong></p>';
+    echo '<ul>';
+    echo '<li>Patient consent forms must be on file for all photos</li>';
+    echo '<li>Photos should be anonymized (no identifying features visible)</li>';
+    echo '<li>Include disclaimers about individual results varying</li>';
+    echo '</ul>';
+    echo '</div>';
+    echo '</td>';
+    echo '</tr>';
+
+    echo '</table>';
+}
+
+/**
+ * Save Treatment Meta Data
+ */
+function preetidreams_save_treatment_meta_data($post_id) {
+    // Check nonces for each meta box
+    $medical_nonce = isset($_POST['treatment_medical_meta_box_nonce']) ? $_POST['treatment_medical_meta_box_nonce'] : '';
+    $details_nonce = isset($_POST['treatment_details_meta_box_nonce']) ? $_POST['treatment_details_meta_box_nonce'] : '';
+    $gallery_nonce = isset($_POST['treatment_gallery_meta_box_nonce']) ? $_POST['treatment_gallery_meta_box_nonce'] : '';
+
+    if (!$medical_nonce && !$details_nonce && !$gallery_nonce) {
+        return;
+    }
+
+    if ($medical_nonce && !wp_verify_nonce($medical_nonce, 'treatment_medical_meta_box')) {
+        return;
+    }
+
+    if ($details_nonce && !wp_verify_nonce($details_nonce, 'treatment_details_meta_box')) {
+        return;
+    }
+
+    if ($gallery_nonce && !wp_verify_nonce($gallery_nonce, 'treatment_gallery_meta_box')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Save medical information fields
+    $medical_fields = [
+        'treatment_medical_info',
+        'treatment_contraindications',
+        'treatment_side_effects'
+    ];
+
+    foreach ($medical_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
+        }
+    }
+
+    // Save treatment details fields
+    $detail_fields = [
+        'treatment_benefits',
+        'treatment_process'
+    ];
+
+    foreach ($detail_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
+        }
+    }
+
+    // Save gallery field
+    if (isset($_POST['treatment_before_after'])) {
+        update_post_meta($post_id, 'treatment_before_after', wp_kses_post($_POST['treatment_before_after']));
+    }
+}
+add_action('save_post', 'preetidreams_save_treatment_meta_data');
+
+/**
+ * Add Meta Boxes for Staff Post Type (TASK-003 Completion)
+ */
+function preetidreams_add_staff_meta_boxes() {
+    add_meta_box(
+        'staff_details',
+        'Staff Member Details',
+        'preetidreams_staff_details_callback',
+        'staff',
+        'normal',
+        'high'
+    );
+
+    add_meta_box(
+        'staff_credentials',
+        'Medical Credentials & Specialties',
+        'preetidreams_staff_credentials_callback',
+        'staff',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'preetidreams_add_staff_meta_boxes');
+
+/**
+ * Staff Details Meta Box Callback
+ */
+function preetidreams_staff_details_callback($post) {
+    wp_nonce_field('staff_details_meta_box', 'staff_details_meta_box_nonce');
+
+    $position = get_post_meta($post->ID, 'staff_position', true);
+    $experience = get_post_meta($post->ID, 'staff_experience', true);
+    $featured = get_post_meta($post->ID, 'staff_featured', true);
+    $order = get_post_meta($post->ID, 'staff_order', true);
+
+    echo '<table class="form-table">';
+
+    // Position/Title
+    echo '<tr>';
+    echo '<th><label for="staff_position">Position/Title</label></th>';
+    echo '<td>';
+    echo '<input type="text" id="staff_position" name="staff_position" value="' . esc_attr($position) . '" style="width: 100%;" placeholder="e.g., Lead Aesthetic Nurse, Physician Assistant" />';
+    echo '<p class="description">Staff member\'s job title or position</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Years of Experience
+    echo '<tr>';
+    echo '<th><label for="staff_experience">Years of Experience</label></th>';
+    echo '<td>';
+    echo '<input type="text" id="staff_experience" name="staff_experience" value="' . esc_attr($experience) . '" style="width: 100%;" placeholder="e.g., 8+ years in aesthetic nursing" />';
+    echo '<p class="description">Professional experience description</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Featured Staff
+    echo '<tr>';
+    echo '<th><label for="staff_featured">Featured on About Page</label></th>';
+    echo '<td>';
+    echo '<label><input type="checkbox" id="staff_featured" name="staff_featured" value="1" ' . checked($featured, '1', false) . ' /> Display this staff member on the About Us page</label>';
+    echo '<p class="description">Check to show this staff member in the team profiles section</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Display Order
+    echo '<tr>';
+    echo '<th><label for="staff_order">Display Order</label></th>';
+    echo '<td>';
+    echo '<input type="number" id="staff_order" name="staff_order" value="' . esc_attr($order) . '" style="width: 100px;" placeholder="1" />';
+    echo '<p class="description">Order in which to display staff members (lower numbers appear first)</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    echo '</table>';
+}
+
+/**
+ * Staff Credentials Meta Box Callback
+ */
+function preetidreams_staff_credentials_callback($post) {
+    wp_nonce_field('staff_credentials_meta_box', 'staff_credentials_meta_box_nonce');
+
+    $credentials = get_post_meta($post->ID, 'staff_credentials', true);
+    $specialties = get_post_meta($post->ID, 'staff_specialties', true);
+    $education = get_post_meta($post->ID, 'staff_education', true);
+    $certifications = get_post_meta($post->ID, 'staff_certifications', true);
+
+    echo '<table class="form-table">';
+
+    // Medical Credentials
+    echo '<tr>';
+    echo '<th><label for="staff_credentials">Medical Credentials</label></th>';
+    echo '<td>';
+    echo '<input type="text" id="staff_credentials" name="staff_credentials" value="' . esc_attr($credentials) . '" style="width: 100%;" placeholder="e.g., BSN, RN, PA-C, MD" />';
+    echo '<p class="description">Professional credentials and licenses (e.g., RN, BSN, PA-C, MD)</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Education
+    echo '<tr>';
+    echo '<th><label for="staff_education">Education Background</label></th>';
+    echo '<td>';
+    echo '<textarea id="staff_education" name="staff_education" rows="3" style="width: 100%;" placeholder="e.g., Bachelor of Science in Nursing - UCLA">' . esc_textarea($education) . '</textarea>';
+    echo '<p class="description">Educational background and alma mater</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Specialties
+    echo '<tr>';
+    echo '<th><label for="staff_specialties">Specialties & Expertise</label></th>';
+    echo '<td>';
+    echo '<textarea id="staff_specialties" name="staff_specialties" rows="3" style="width: 100%;" placeholder="e.g., Injectable treatments, Skincare consultation, Patient education">' . esc_textarea($specialties) . '</textarea>';
+    echo '<p class="description">Areas of specialty and expertise</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Certifications
+    echo '<tr>';
+    echo '<th><label for="staff_certifications">Professional Certifications</label></th>';
+    echo '<td>';
+    echo '<textarea id="staff_certifications" name="staff_certifications" rows="3" style="width: 100%;" placeholder="e.g., Certified Aesthetic Nurse Specialist, Advanced Injection Techniques">' . esc_textarea($certifications) . '</textarea>';
+    echo '<p class="description">Professional certifications and additional training</p>';
+    echo '</td>';
+    echo '</tr>';
+
+    echo '</table>';
+
+    // Preview Section
+    echo '<h3>Team Profile Preview</h3>';
+    echo '<div style="border: 1px solid #ddd; padding: 15px; background: #f9f9f9; border-radius: 5px;">';
+    echo '<p><strong>How this will appear on the About Us page:</strong></p>';
+
+    $preview_name = !empty($post->post_title) ? $post->post_title : 'Staff Member Name';
+    $preview_position = !empty($position) ? $position : 'Position Title';
+    $preview_credentials = !empty($credentials) ? $credentials : 'Professional Credentials';
+
+    echo '<div style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 1rem; background: white; margin: 10px 0;">';
+    echo '<div style="display: flex; align-items: center; gap: 15px;">';
+    echo '<div style="width: 60px; height: 60px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 24px;">👩‍⚕️</div>';
+    echo '<div>';
+    echo '<h4 style="margin: 0; color: #1B365D;">' . esc_html($preview_name) . '</h4>';
+    echo '<p style="margin: 5px 0; color: #87A96B; font-weight: 600;">' . esc_html($preview_position) . '</p>';
+    echo '<p style="margin: 0; color: #666; font-size: 0.9em;">' . esc_html($preview_credentials) . '</p>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+}
+
+/**
+ * Save Staff Meta Data
+ */
+function preetidreams_save_staff_meta_data($post_id) {
+    // Check nonces for each meta box
+    $details_nonce = isset($_POST['staff_details_meta_box_nonce']) ? $_POST['staff_details_meta_box_nonce'] : '';
+    $credentials_nonce = isset($_POST['staff_credentials_meta_box_nonce']) ? $_POST['staff_credentials_meta_box_nonce'] : '';
+
+    if (!$details_nonce && !$credentials_nonce) {
+        return;
+    }
+
+    if ($details_nonce && !wp_verify_nonce($details_nonce, 'staff_details_meta_box')) {
+        return;
+    }
+
+    if ($credentials_nonce && !wp_verify_nonce($credentials_nonce, 'staff_credentials_meta_box')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Save staff details fields
+    $detail_fields = [
+        'staff_position',
+        'staff_experience',
+        'staff_featured',
+        'staff_order'
+    ];
+
+    foreach ($detail_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+
+    // Save staff credentials fields
+    $credential_fields = [
+        'staff_credentials',
+        'staff_specialties',
+        'staff_education',
+        'staff_certifications'
+    ];
+
+    foreach ($credential_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_textarea_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post', 'preetidreams_save_staff_meta_data');
+
+/**
+ * Create Sample Staff Data for About Us Page (TASK-003)
+ */
+function preetidreams_create_sample_staff() {
+    // Check if we've already created sample staff data
+    if (get_option('preetidreams_sample_staff_created')) {
+        return;
+    }
+
+    // Sample staff data
+    $sample_staff = [
+        [
+            'title' => 'Dr. Preeti Sharma',
+            'content' => 'Board-certified physician and aesthetic medicine expert with over 15 years of experience in delivering natural, beautiful results through advanced medical treatments.',
+            'excerpt' => 'Board-certified physician specializing in aesthetic medicine with a passion for natural enhancement and patient care.',
+            'meta' => [
+                'staff_position' => 'Medical Director & Founder',
+                'staff_credentials' => 'MD, Board-Certified Dermatologist',
+                'staff_specialties' => 'Aesthetic Medicine, Advanced Injection Techniques, Laser Treatments, Medical Spa Management',
+                'staff_experience' => '15+ years in aesthetic medicine and dermatology',
+                'staff_education' => 'Medical Degree - Harvard Medical School, Dermatology Residency - Mayo Clinic, Aesthetic Medicine Fellowship - UCLA',
+                'staff_certifications' => 'American Board of Dermatology, American Board of Aesthetic Medicine, Advanced Injection Techniques Certification',
+                'staff_featured' => '1',
+                'staff_order' => '1'
+            ]
+        ],
+        [
+            'title' => 'Sarah Johnson, RN',
+            'content' => 'Lead aesthetic nurse with extensive experience in advanced injection techniques and comprehensive patient care in luxury medical spa environments.',
+            'excerpt' => 'Experienced aesthetic nurse specializing in injectable treatments and personalized patient care.',
+            'meta' => [
+                'staff_position' => 'Lead Aesthetic Nurse',
+                'staff_credentials' => 'BSN, RN, Certified Aesthetic Nurse Specialist',
+                'staff_specialties' => 'Injectable treatments, Skincare consultation, Patient education, Treatment planning',
+                'staff_experience' => '8+ years in aesthetic nursing and patient care',
+                'staff_education' => 'Bachelor of Science in Nursing - UCLA, Advanced Aesthetic Nursing Certification',
+                'staff_certifications' => 'Certified Aesthetic Nurse Specialist, Advanced Injection Techniques, Laser Safety Certification',
+                'staff_featured' => '1',
+                'staff_order' => '2'
+            ]
+        ],
+        [
+            'title' => 'Michael Chen, PA-C',
+            'content' => 'Physician assistant specializing in comprehensive aesthetic consultations and advanced treatment planning with a focus on achieving natural, beautiful results.',
+            'excerpt' => 'Experienced physician assistant focused on aesthetic consultations and personalized treatment planning.',
+            'meta' => [
+                'staff_position' => 'Physician Assistant',
+                'staff_credentials' => 'PA-C, Master of Physician Assistant Studies',
+                'staff_specialties' => 'Treatment planning, Laser procedures, Body contouring, Comprehensive consultations',
+                'staff_experience' => '6+ years in aesthetic medicine and patient consultations',
+                'staff_education' => 'Master of Physician Assistant Studies - USC, Bachelor of Science in Biology - UCLA',
+                'staff_certifications' => 'National Commission on Certification of Physician Assistants, Laser Treatment Certification, Body Contouring Specialist',
+                'staff_featured' => '1',
+                'staff_order' => '3'
+            ]
+        ]
+    ];
+
+    // Create the staff posts
+    foreach ($sample_staff as $staff_data) {
+        // Create the post
+        $post_id = wp_insert_post([
+            'post_title' => $staff_data['title'],
+            'post_content' => $staff_data['content'],
+            'post_excerpt' => $staff_data['excerpt'],
+            'post_status' => 'publish',
+            'post_type' => 'staff',
+            'post_author' => 1,
+            'menu_order' => intval($staff_data['meta']['staff_order'])
+        ]);
+
+        if ($post_id && !is_wp_error($post_id)) {
+            // Set custom meta fields
+            foreach ($staff_data['meta'] as $meta_key => $meta_value) {
+                update_post_meta($post_id, $meta_key, $meta_value);
+            }
+        }
+    }
+
+    // Mark that we've created sample staff data
+    update_option('preetidreams_sample_staff_created', true);
+}
+
+/**
+ * Add Staff Management to Theme Setup Page
+ */
+function preetidreams_setup_page_with_staff() {
+    if (isset($_POST['create_sample_data']) && check_admin_referer('preetidreams_setup')) {
+        delete_option('preetidreams_sample_data_created');
+        preetidreams_create_sample_treatments();
+        echo '<div class="notice notice-success"><p>Sample treatment data has been created successfully!</p></div>';
+    }
+
+    if (isset($_POST['create_sample_staff']) && check_admin_referer('preetidreams_setup')) {
+        delete_option('preetidreams_sample_staff_created');
+        preetidreams_create_sample_staff();
+        echo '<div class="notice notice-success"><p>Sample staff data has been created successfully!</p></div>';
+    }
+
+    ?>
+    <div class="wrap">
+        <h1>Medical Spa Theme Setup</h1>
+        <p>Use this page to set up your medical spa theme with sample data.</p>
+
+        <form method="post" action="">
+            <?php wp_nonce_field('preetidreams_setup'); ?>
+            <table class="form-table">
+                <tr>
+                    <th scope="row">Sample Treatments</th>
+                    <td>
+                        <button type="submit" name="create_sample_data" class="button button-primary">
+                            Create Sample Treatments
+                        </button>
+                        <p class="description">
+                            This will create 12 sample treatments with categories, areas, and metadata for demonstration purposes.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Sample Staff (TASK-003)</th>
+                    <td>
+                        <button type="submit" name="create_sample_staff" class="button button-primary">
+                            Create Sample Staff Members
+                        </button>
+                        <p class="description">
+                            This will create sample staff members (Dr. Preeti, Lead Nurse, Physician Assistant) for the About Us page.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <h2>About Us Page Features (TASK-003)</h2>
+        <div class="about-features-status">
+            <p><strong>✅ Completed Features:</strong></p>
+            <ul>
+                <li>✅ Medical spa story and mission statement section</li>
+                <li>✅ Dr. Preeti's credentials highlighting (Board-certified expertise, 15+ years experience)</li>
+                <li>✅ Team member profiles with medical certifications</li>
+                <li>✅ Facility tour virtual walkthrough</li>
+                <li>✅ Awards and recognition display</li>
+                <li>✅ Safety protocols and medical-grade standards</li>
+                <li>✅ WordPress admin interface for staff management</li>
+                <li>✅ WCAG AAA accessibility compliance</li>
+            </ul>
+        </div>
+    </div>
+    <?php
+}
+
+// Update the existing setup page function
+remove_action('admin_menu', 'preetidreams_admin_menu');
+function preetidreams_admin_menu_updated() {
+    add_theme_page(
+        'Medical Spa Theme Setup',
+        'Theme Setup',
+        'manage_options',
+        'preetidreams-setup',
+        'preetidreams_setup_page_with_staff'
+    );
+}
+add_action('admin_menu', 'preetidreams_admin_menu_updated');

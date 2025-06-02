@@ -122,6 +122,76 @@
             </div>
         </section>
 
+        <!-- Treatment Timeline Section -->
+        <section class="treatment-timeline" role="region" aria-label="<?php esc_attr_e('Treatment Journey Timeline', 'preetidreams'); ?>">
+            <div class="container">
+                <div class="timeline-header">
+                    <h2><?php esc_html_e('Your Treatment Journey', 'preetidreams'); ?></h2>
+                    <p><?php esc_html_e('From consultation to beautiful results, here\'s what to expect during your treatment experience.', 'preetidreams'); ?></p>
+                </div>
+
+                <div class="timeline-steps">
+                    <div class="timeline-step" data-step="1">
+                        <div class="step-marker">
+                            <span class="step-number">1</span>
+                            <span class="step-icon">🩺</span>
+                        </div>
+                        <div class="step-content">
+                            <h3><?php esc_html_e('Personalized Consultation', 'preetidreams'); ?></h3>
+                            <p><?php esc_html_e('Meet with Dr. Preeti to discuss your goals, assess your skin, and create a customized treatment plan tailored specifically for you.', 'preetidreams'); ?></p>
+                            <ul class="step-details">
+                                <li><?php esc_html_e('Comprehensive skin analysis', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Discussion of treatment options', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Personalized treatment plan', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Pre-treatment instructions', 'preetidreams'); ?></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" data-step="2">
+                        <div class="step-marker">
+                            <span class="step-number">2</span>
+                            <span class="step-icon">⚕️</span>
+                        </div>
+                        <div class="step-content">
+                            <h3><?php esc_html_e('Treatment Day', 'preetidreams'); ?></h3>
+                            <p><?php esc_html_e('Experience your treatment in our state-of-the-art facility with the highest standards of safety and comfort.', 'preetidreams'); ?></p>
+                            <ul class="step-details">
+                                <li><?php esc_html_e('Pre-treatment preparation', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Professional treatment application', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Comfort monitoring throughout', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Post-treatment care instructions', 'preetidreams'); ?></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" data-step="3">
+                        <div class="step-marker">
+                            <span class="step-number">3</span>
+                            <span class="step-icon">🌟</span>
+                        </div>
+                        <div class="step-content">
+                            <h3><?php esc_html_e('Recovery & Results', 'preetidreams'); ?></h3>
+                            <p><?php esc_html_e('Follow your personalized aftercare plan and watch as your beautiful results gradually emerge over the coming weeks.', 'preetidreams'); ?></p>
+                            <ul class="step-details">
+                                <li><?php esc_html_e('Detailed aftercare guidance', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('24/7 support for questions', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Follow-up appointments as needed', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Long-lasting beautiful results', 'preetidreams'); ?></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-cta">
+                    <p><?php esc_html_e('Ready to start your transformation journey?', 'preetidreams'); ?></p>
+                    <a href="#consultation" class="btn btn-primary consultation-cta" data-treatment="<?php echo esc_attr(get_the_title()); ?>">
+                        <?php esc_html_e('Begin Your Journey', 'preetidreams'); ?>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Treatment Content -->
         <section class="treatment-content">
             <div class="container">
@@ -157,13 +227,98 @@
                             <?php endif; ?>
 
                             <?php
-                            // Before & After Gallery
+                            // Enhanced Before & After Gallery with Privacy Compliance
                             $before_after_gallery = get_post_meta(get_the_ID(), 'treatment_before_after', true);
                             if ($before_after_gallery) : ?>
-                                <div class="before-after-gallery">
-                                    <h2><?php esc_html_e('Real Results', 'preetidreams'); ?></h2>
+                                <div class="before-after-gallery" role="region" aria-label="<?php esc_attr_e('Treatment Results Gallery', 'preetidreams'); ?>">
+                                    <div class="gallery-header">
+                                        <h2><?php esc_html_e('Real Patient Results', 'preetidreams'); ?></h2>
+                                        <p><?php esc_html_e('See the beautiful transformations achieved with our expert treatments.', 'preetidreams'); ?></p>
+                                    </div>
+
+                                    <!-- Privacy Consent Notice -->
+                                    <div class="privacy-notice" role="alert">
+                                        <div class="privacy-content">
+                                            <span class="privacy-icon">🔒</span>
+                                            <div class="privacy-text">
+                                                <h4><?php esc_html_e('Patient Privacy & Consent', 'preetidreams'); ?></h4>
+                                                <p><?php esc_html_e('All before/after photos are displayed with patient consent and in compliance with HIPAA privacy regulations. Individual results may vary.', 'preetidreams'); ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="gallery-grid">
                                         <?php echo wp_kses_post($before_after_gallery); ?>
+                                    </div>
+
+                                    <!-- Results Disclaimer -->
+                                    <div class="results-disclaimer">
+                                        <p><small><?php esc_html_e('*Individual results may vary. Photos are of actual patients who have provided consent for their images to be used. Results depend on individual skin type, treatment adherence, and other factors.', 'preetidreams'); ?></small></p>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php
+                            // Medical Information & Contraindications
+                            $contraindications = get_post_meta(get_the_ID(), 'treatment_contraindications', true);
+                            $side_effects = get_post_meta(get_the_ID(), 'treatment_side_effects', true);
+                            $medical_info = get_post_meta(get_the_ID(), 'treatment_medical_info', true);
+
+                            if ($contraindications || $side_effects || $medical_info) : ?>
+                                <div class="medical-information" role="region" aria-label="<?php esc_attr_e('Medical Information and Safety', 'preetidreams'); ?>">
+                                    <div class="medical-header">
+                                        <h2><?php esc_html_e('Important Medical Information', 'preetidreams'); ?></h2>
+                                        <p><?php esc_html_e('Please review this important safety and medical information before your treatment.', 'preetidreams'); ?></p>
+                                    </div>
+
+                                    <div class="medical-content">
+                                        <?php if ($medical_info) : ?>
+                                            <div class="medical-section">
+                                                <h3>
+                                                    <span class="medical-icon">ℹ️</span>
+                                                    <?php esc_html_e('Medical Details', 'preetidreams'); ?>
+                                                </h3>
+                                                <div class="medical-details">
+                                                    <?php echo wp_kses_post($medical_info); ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($contraindications) : ?>
+                                            <div class="medical-section contraindications">
+                                                <h3>
+                                                    <span class="warning-icon">⚠️</span>
+                                                    <?php esc_html_e('Contraindications', 'preetidreams'); ?>
+                                                </h3>
+                                                <div class="contraindications-list">
+                                                    <p><strong><?php esc_html_e('This treatment may not be suitable if you have:', 'preetidreams'); ?></strong></p>
+                                                    <?php echo wp_kses_post($contraindications); ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($side_effects) : ?>
+                                            <div class="medical-section side-effects">
+                                                <h3>
+                                                    <span class="side-effects-icon">⚕️</span>
+                                                    <?php esc_html_e('Possible Side Effects', 'preetidreams'); ?>
+                                                </h3>
+                                                <div class="side-effects-list">
+                                                    <p><?php esc_html_e('Common side effects may include:', 'preetidreams'); ?></p>
+                                                    <?php echo wp_kses_post($side_effects); ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <div class="medical-section consultation-advice">
+                                            <div class="consultation-notice">
+                                                <h4><?php esc_html_e('Professional Medical Consultation Required', 'preetidreams'); ?></h4>
+                                                <p><?php esc_html_e('A thorough consultation with Dr. Preeti is required before any treatment. During this consultation, we will review your medical history, assess your suitability for treatment, and discuss all potential risks and benefits.', 'preetidreams'); ?></p>
+                                                <a href="#consultation" class="btn btn-outline consultation-cta" data-treatment="<?php echo esc_attr(get_the_title()); ?>">
+                                                    <?php esc_html_e('Schedule Medical Consultation', 'preetidreams'); ?>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endif; ?>
