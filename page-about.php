@@ -1,7 +1,8 @@
 <?php
 /**
- * Template Name: About Us
- * Description: About Us page for PreetiDreams Medical Spa
+ * Template Name: About Us - Dr. Preeti Sharma
+ * Description: About Us page for Dr. Preeti Sharma's PreetiDreams Medical Spa
+ * Solo practitioner with 4 expert staff serving 400+ clients in Arizona
  */
 
 get_header(); ?>
@@ -9,36 +10,47 @@ get_header(); ?>
 <main id="main" class="site-main about-page">
     <?php while (have_posts()) : the_post(); ?>
 
-        <!-- About Hero Section -->
-        <section class="about-hero" role="banner">
+        <!-- Dr. Preeti Hero Section -->
+        <section class="dr-preeti-hero" role="banner">
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <h1 class="hero-title"><?php esc_html_e('Meet Dr. Preeti Sharma', 'preetidreams'); ?></h1>
-                        <p class="hero-subtitle"><?php esc_html_e('Board-Certified Physician & Aesthetic Medicine Expert', 'preetidreams'); ?></p>
+                        <h1 class="hero-title"><?php esc_html_e('Meet Dr. Preeti Sharma, MD', 'preetidreams'); ?></h1>
+                        <p class="hero-subtitle"><?php esc_html_e('Your Trusted Aesthetic Partner', 'preetidreams'); ?></p>
+                        <div class="hero-quote">
+                            <blockquote>
+                                <?php esc_html_e('"For over 15 years, I\'ve dedicated my practice to helping Arizona clients achieve their aesthetic goals through personalized, physician-led treatments."', 'preetidreams'); ?>
+                            </blockquote>
+                        </div>
                         <div class="credentials-highlights">
                             <div class="credential-item">
+                                <span class="credential-icon">✨</span>
+                                <span class="credential-text"><?php esc_html_e('400+ Happy Clients Served', 'preetidreams'); ?></span>
+                            </div>
+                            <div class="credential-item">
                                 <span class="credential-icon">🏥</span>
-                                <span class="credential-text"><?php esc_html_e('Board Certified Physician', 'preetidreams'); ?></span>
+                                <span class="credential-text"><?php esc_html_e('Board-Certified Physician', 'preetidreams'); ?></span>
                             </div>
                             <div class="credential-item">
-                                <span class="credential-icon">⭐</span>
-                                <span class="credential-text"><?php esc_html_e('15+ Years Experience', 'preetidreams'); ?></span>
+                                <span class="credential-icon">📍</span>
+                                <span class="credential-text"><?php esc_html_e('Serving Glendale, Peoria & Scottsdale Areas', 'preetidreams'); ?></span>
                             </div>
-                            <div class="credential-item">
-                                <span class="credential-icon">🎯</span>
-                                <span class="credential-text"><?php esc_html_e('2000+ Satisfied Patients', 'preetidreams'); ?></span>
-                            </div>
+                        </div>
+                        <div class="hero-cta">
+                            <a href="<?php echo esc_url(home_url('/contact')); ?>" class="btn btn-primary">
+                                <?php esc_html_e('Schedule Your Consultation', 'preetidreams'); ?>
+                            </a>
                         </div>
                     </div>
                     <div class="hero-image">
                         <?php if (has_post_thumbnail()) : ?>
-                            <?php the_post_thumbnail('hero-banner', ['alt' => __('Dr. Preeti Sharma', 'preetidreams')]); ?>
+                            <?php the_post_thumbnail('hero-banner', ['alt' => __('Dr. Preeti Sharma', 'preetidreams'), 'class' => 'hero-portrait']); ?>
                         <?php else : ?>
                             <div class="placeholder-image">
                                 <div class="placeholder-content">
                                     <span class="placeholder-icon">👩‍⚕️</span>
-                                    <p><?php esc_html_e('Dr. Preeti Sharma Photo', 'preetidreams'); ?></p>
+                                    <p><?php esc_html_e('Professional Dr. Preeti Portrait', 'preetidreams'); ?></p>
+                                    <small><?php esc_html_e('Medical coat, confident smile, Arizona medical spa setting', 'preetidreams'); ?></small>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -47,113 +59,48 @@ get_header(); ?>
             </div>
         </section>
 
-        <!-- Medical Excellence Section -->
-        <section class="medical-excellence" role="region" aria-label="<?php esc_attr_e('Medical Excellence and Credentials', 'preetidreams'); ?>">
+        <!-- Practice Story & Philosophy Section -->
+        <section class="practice-story" role="region" aria-label="<?php esc_attr_e('Practice Story and Philosophy', 'preetidreams'); ?>">
             <div class="container">
-                <div class="section-header">
-                    <h2><?php esc_html_e('Medical Excellence & Credentials', 'preetidreams'); ?></h2>
-                    <p><?php esc_html_e('Discover the expertise and qualifications that make Dr. Preeti Sharma a trusted leader in aesthetic medicine.', 'preetidreams'); ?></p>
-                </div>
-
-                <div class="excellence-grid">
-                    <div class="excellence-card">
-                        <div class="card-icon">🎓</div>
-                        <h3><?php esc_html_e('Board Certification', 'preetidreams'); ?></h3>
-                        <div class="card-content">
-                            <p><?php esc_html_e('American Board of Dermatology', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('American Board of Aesthetic Medicine', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('Certified in Advanced Injection Techniques', 'preetidreams'); ?></p>
-                        </div>
+                <div class="story-content">
+                    <div class="story-header">
+                        <h2><?php esc_html_e('My Practice Journey', 'preetidreams'); ?></h2>
                     </div>
+                    <div class="story-text">
+                        <p><?php esc_html_e('After years of medical training and experience, I founded PreetiDreams to provide Arizona clients with personalized aesthetic medicine care.', 'preetidreams'); ?></p>
 
-                    <div class="excellence-card">
-                        <div class="card-icon">🏆</div>
-                        <h3><?php esc_html_e('Awards & Recognition', 'preetidreams'); ?></h3>
-                        <div class="card-content">
-                            <p><?php esc_html_e('Top Medical Spa - Beverly Hills', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('Excellence in Aesthetic Medicine Award', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('Patient Choice Award - 5 Consecutive Years', 'preetidreams'); ?></p>
-                        </div>
-                    </div>
+                        <h3><?php esc_html_e('What sets my practice apart:', 'preetidreams'); ?></h3>
 
-                    <div class="excellence-card">
-                        <div class="card-icon">📚</div>
-                        <h3><?php esc_html_e('Education & Training', 'preetidreams'); ?></h3>
-                        <div class="card-content">
-                            <p><?php esc_html_e('Medical Degree - Harvard Medical School', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('Dermatology Residency - Mayo Clinic', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('Aesthetic Medicine Fellowship - UCLA', 'preetidreams'); ?></p>
-                        </div>
-                    </div>
+                        <div class="practice-differentiators">
+                            <div class="differentiator-item">
+                                <span class="differentiator-icon">👩‍⚕️</span>
+                                <div class="differentiator-content">
+                                    <h4><?php esc_html_e('Personal Physician Care', 'preetidreams'); ?></h4>
+                                    <p><?php esc_html_e('Every treatment personally administered or supervised by me', 'preetidreams'); ?></p>
+                                </div>
+                            </div>
 
-                    <div class="excellence-card">
-                        <div class="card-icon">🔬</div>
-                        <h3><?php esc_html_e('Research & Innovation', 'preetidreams'); ?></h3>
-                        <div class="card-content">
-                            <p><?php esc_html_e('Published Research in Aesthetic Medicine', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('Speaker at International Conferences', 'preetidreams'); ?></p>
-                            <p><?php esc_html_e('Pioneer in Advanced Treatment Techniques', 'preetidreams'); ?></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                            <div class="differentiator-item">
+                                <span class="differentiator-icon">🤝</span>
+                                <div class="differentiator-content">
+                                    <h4><?php esc_html_e('Intimate Practice Setting', 'preetidreams'); ?></h4>
+                                    <p><?php esc_html_e('Small practice means dedicated attention and personalized care', 'preetidreams'); ?></p>
+                                </div>
+                            </div>
 
-        <!-- Medical Philosophy Section -->
-        <section class="medical-philosophy" role="region" aria-label="<?php esc_attr_e('Medical Philosophy and Approach', 'preetidreams'); ?>">
-            <div class="container">
-                <div class="philosophy-content">
-                    <div class="philosophy-text">
-                        <h2><?php esc_html_e('Medical Artistry Philosophy', 'preetidreams'); ?></h2>
-                        <div class="philosophy-quote">
-                            <blockquote>
-                                <?php esc_html_e('"True beauty enhancement comes from understanding each patient\'s unique anatomy, aesthetic goals, and lifestyle. My approach combines medical precision with artistic vision to achieve natural, beautiful results that enhance your confidence."', 'preetidreams'); ?>
-                            </blockquote>
-                            <cite><?php esc_html_e('— Dr. Preeti Sharma, MD', 'preetidreams'); ?></cite>
-                        </div>
-                        <div class="philosophy-principles">
-                            <h3><?php esc_html_e('Core Treatment Principles', 'preetidreams'); ?></h3>
-                            <ul class="principles-list">
-                                <li>
-                                    <span class="principle-icon">🎯</span>
-                                    <div class="principle-content">
-                                        <strong><?php esc_html_e('Personalized Approach', 'preetidreams'); ?></strong>
-                                        <p><?php esc_html_e('Every treatment plan is customized to your unique facial structure and aesthetic goals', 'preetidreams'); ?></p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="principle-icon">⚕️</span>
-                                    <div class="principle-content">
-                                        <strong><?php esc_html_e('Medical Safety First', 'preetidreams'); ?></strong>
-                                        <p><?php esc_html_e('Comprehensive medical evaluation and safety protocols for every procedure', 'preetidreams'); ?></p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="principle-icon">✨</span>
-                                    <div class="principle-content">
-                                        <strong><?php esc_html_e('Natural Enhancement', 'preetidreams'); ?></strong>
-                                        <p><?php esc_html_e('Subtle improvements that enhance your natural beauty without overdoing it', 'preetidreams'); ?></p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="principle-icon">🤝</span>
-                                    <div class="principle-content">
-                                        <strong><?php esc_html_e('Patient Partnership', 'preetidreams'); ?></strong>
-                                        <p><?php esc_html_e('Collaborative approach with thorough consultation and ongoing support', 'preetidreams'); ?></p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="philosophy-image">
-                        <div class="image-container">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/dr-preeti-consultation.jpg'); ?>"
-                                 alt="<?php esc_attr_e('Dr. Preeti during patient consultation', 'preetidreams'); ?>"
-                                 loading="lazy">
-                            <div class="image-overlay">
-                                <div class="overlay-content">
-                                    <span class="overlay-icon">💎</span>
-                                    <p><?php esc_html_e('Personalized consultation approach', 'preetidreams'); ?></p>
+                            <div class="differentiator-item">
+                                <span class="differentiator-icon">📊</span>
+                                <div class="differentiator-content">
+                                    <h4><?php esc_html_e('Proven Results', 'preetidreams'); ?></h4>
+                                    <p><?php esc_html_e('400+ satisfied clients trust our expertise and approach', 'preetidreams'); ?></p>
+                                </div>
+                            </div>
+
+                            <div class="differentiator-item">
+                                <span class="differentiator-icon">🏡</span>
+                                <div class="differentiator-content">
+                                    <h4><?php esc_html_e('Arizona Community Focus', 'preetidreams'); ?></h4>
+                                    <p><?php esc_html_e('Proud to serve Glendale, Peoria, and Scottsdale communities', 'preetidreams'); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -162,306 +109,261 @@ get_header(); ?>
             </div>
         </section>
 
-        <!-- Team Profiles Section -->
-        <section class="team-profiles" role="region" aria-label="<?php esc_attr_e('Medical Team Profiles', 'preetidreams'); ?>">
+        <!-- Signature Treatments Section -->
+        <section class="signature-treatments" role="region" aria-label="<?php esc_attr_e('Dr. Preeti\'s Signature Treatments', 'preetidreams'); ?>">
             <div class="container">
                 <div class="section-header">
-                    <h2><?php esc_html_e('Meet Our Expert Team', 'preetidreams'); ?></h2>
-                    <p><?php esc_html_e('Our carefully selected team of medical professionals and aesthetic specialists is dedicated to providing you with exceptional care and beautiful results.', 'preetidreams'); ?></p>
+                    <h2><?php esc_html_e('My Specialty Services', 'preetidreams'); ?></h2>
+                </div>
+
+                <div class="treatments-grid">
+                    <div class="treatment-card">
+                        <div class="treatment-icon">💉</div>
+                        <h3><?php esc_html_e('PRP Hair Restoration', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Advanced hair growth stimulation and strand thickening treatments', 'preetidreams'); ?></p>
+                        <a href="<?php echo esc_url(home_url('/services/prp-hair-restoration')); ?>" class="btn btn-outline">
+                            <?php esc_html_e('Learn More', 'preetidreams'); ?>
+                        </a>
+                    </div>
+
+                    <div class="treatment-card">
+                        <div class="treatment-icon">✨</div>
+                        <h3><?php esc_html_e('Injectable Artistry', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Botox and dermal fillers to erase lines and restore volume', 'preetidreams'); ?></p>
+                        <a href="<?php echo esc_url(home_url('/services/injectables')); ?>" class="btn btn-outline">
+                            <?php esc_html_e('View Results', 'preetidreams'); ?>
+                        </a>
+                    </div>
+
+                    <div class="treatment-card">
+                        <div class="treatment-icon">💧</div>
+                        <h3><?php esc_html_e('IV Therapy Wellness', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Bounce Back Drips, Migraine Relief, Seasonal Allergy Boost', 'preetidreams'); ?></p>
+                        <a href="<?php echo esc_url(home_url('/services/iv-therapy')); ?>" class="btn btn-outline">
+                            <?php esc_html_e('Book Session', 'preetidreams'); ?>
+                        </a>
+                    </div>
+
+                    <div class="treatment-card">
+                        <div class="treatment-icon">🕸️</div>
+                        <h3><?php esc_html_e('Sclerotherapy Solutions', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Effective spider vein treatment for confident, clear skin', 'preetidreams'); ?></p>
+                        <a href="<?php echo esc_url(home_url('/services/sclerotherapy')); ?>" class="btn btn-outline">
+                            <?php esc_html_e('Schedule Treatment', 'preetidreams'); ?>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="additional-treatments">
+                    <h4><?php esc_html_e('Plus:', 'preetidreams'); ?></h4>
+                    <p><?php esc_html_e('HydraFacial, Microneedling, PDO Thread Lifts & Laser Treatments', 'preetidreams'); ?></p>
+                    <a href="<?php echo esc_url(home_url('/services')); ?>" class="btn btn-primary">
+                        <?php esc_html_e('View All Services', 'preetidreams'); ?>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expert Team Section -->
+        <section class="expert-team" role="region" aria-label="<?php esc_attr_e('Our Expert Team of 4', 'preetidreams'); ?>">
+            <div class="container">
+                <div class="section-header">
+                    <h2><?php esc_html_e('Our Expert Team', 'preetidreams'); ?></h2>
+                    <p><?php esc_html_e('While I personally oversee every treatment, I\'m supported by 4 highly trained professionals who share my commitment to excellence:', 'preetidreams'); ?></p>
                 </div>
 
                 <div class="team-grid">
-                    <?php
-                    // Get staff members from custom post type
-                    $staff_query = new WP_Query([
-                        'post_type' => 'staff',
-                        'posts_per_page' => -1,
-                        'orderby' => 'menu_order',
-                        'order' => 'ASC',
-                        'meta_query' => [
-                            [
-                                'key' => 'staff_featured',
-                                'value' => '1',
-                                'compare' => '='
-                            ]
-                        ]
-                    ]);
-
-                    if ($staff_query->have_posts()) :
-                        while ($staff_query->have_posts()) : $staff_query->the_post();
-                            $position = get_post_meta(get_the_ID(), 'staff_position', true);
-                            $credentials = get_post_meta(get_the_ID(), 'staff_credentials', true);
-                            $specialties = get_post_meta(get_the_ID(), 'staff_specialties', true);
-                            $experience = get_post_meta(get_the_ID(), 'staff_experience', true);
-                    ?>
-                            <div class="team-member">
-                                <div class="member-image">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('staff-photo', ['alt' => get_the_title()]); ?>
-                                    <?php else : ?>
-                                        <div class="placeholder-staff-image">
-                                            <span class="placeholder-icon">👩‍⚕️</span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="member-info">
-                                    <h3 class="member-name"><?php the_title(); ?></h3>
-                                    <?php if ($position) : ?>
-                                        <p class="member-position"><?php echo esc_html($position); ?></p>
-                                    <?php endif; ?>
-                                    <?php if ($credentials) : ?>
-                                        <p class="member-credentials"><?php echo esc_html($credentials); ?></p>
-                                    <?php endif; ?>
-                                    <div class="member-description">
-                                        <?php the_excerpt(); ?>
-                                    </div>
-                                    <?php if ($specialties) : ?>
-                                        <div class="member-specialties">
-                                            <strong><?php esc_html_e('Specialties:', 'preetidreams'); ?></strong>
-                                            <p><?php echo esc_html($specialties); ?></p>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if ($experience) : ?>
-                                        <div class="member-experience">
-                                            <strong><?php esc_html_e('Experience:', 'preetidreams'); ?></strong>
-                                            <p><?php echo esc_html($experience); ?></p>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                    <?php
-                        endwhile;
-                        wp_reset_postdata();
-                    else :
-                        // Default team members if no staff posts exist
-                    ?>
-                        <div class="team-member">
-                            <div class="member-image">
-                                <div class="placeholder-staff-image">
-                                    <span class="placeholder-icon">👩‍⚕️</span>
-                                </div>
-                            </div>
-                            <div class="member-info">
-                                <h3 class="member-name"><?php esc_html_e('Sarah Johnson, RN', 'preetidreams'); ?></h3>
-                                <p class="member-position"><?php esc_html_e('Lead Aesthetic Nurse', 'preetidreams'); ?></p>
-                                <p class="member-credentials"><?php esc_html_e('BSN, Certified Aesthetic Nurse Specialist', 'preetidreams'); ?></p>
-                                <div class="member-description">
-                                    <p><?php esc_html_e('Sarah brings 8+ years of experience in aesthetic nursing and is specialized in advanced injection techniques and patient care.', 'preetidreams'); ?></p>
-                                </div>
-                                <div class="member-specialties">
-                                    <strong><?php esc_html_e('Specialties:', 'preetidreams'); ?></strong>
-                                    <p><?php esc_html_e('Injectable treatments, Skincare consultation, Patient education', 'preetidreams'); ?></p>
-                                </div>
-                            </div>
+                    <div class="team-member">
+                        <div class="member-icon">🎓</div>
+                        <h3><?php esc_html_e('Medical Assistant Team', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Specially trained in aesthetic procedures and patient care', 'preetidreams'); ?></p>
+                        <div class="member-details">
+                            <ul>
+                                <li><?php esc_html_e('Expert in medical safety protocols', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Patient comfort optimization', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Post-treatment care specialists', 'preetidreams'); ?></li>
+                            </ul>
                         </div>
+                    </div>
 
-                        <div class="team-member">
-                            <div class="member-image">
-                                <div class="placeholder-staff-image">
-                                    <span class="placeholder-icon">👨‍⚕️</span>
-                                </div>
-                            </div>
-                            <div class="member-info">
-                                <h3 class="member-name"><?php esc_html_e('Michael Chen, PA-C', 'preetidreams'); ?></h3>
-                                <p class="member-position"><?php esc_html_e('Physician Assistant', 'preetidreams'); ?></p>
-                                <p class="member-credentials"><?php esc_html_e('Master of Physician Assistant Studies', 'preetidreams'); ?></p>
-                                <div class="member-description">
-                                    <p><?php esc_html_e('Michael specializes in comprehensive aesthetic consultations and advanced treatment planning with a focus on natural results.', 'preetidreams'); ?></p>
-                                </div>
-                                <div class="member-specialties">
-                                    <strong><?php esc_html_e('Specialties:', 'preetidreams'); ?></strong>
-                                    <p><?php esc_html_e('Treatment planning, Laser procedures, Body contouring', 'preetidreams'); ?></p>
-                                </div>
-                            </div>
+                    <div class="team-member">
+                        <div class="member-icon">💼</div>
+                        <h3><?php esc_html_e('Practice Manager', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Ensures seamless experience from consultation to follow-up', 'preetidreams'); ?></p>
+                        <div class="member-details">
+                            <ul>
+                                <li><?php esc_html_e('10+ years practice management experience', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Streamlined operations expert', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Patient satisfaction specialist', 'preetidreams'); ?></li>
+                            </ul>
                         </div>
-                    <?php endif; ?>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-icon">📞</div>
+                        <h3><?php esc_html_e('Patient Coordinator', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Your personal guide through scheduling and treatment planning', 'preetidreams'); ?></p>
+                        <div class="member-details">
+                            <ul>
+                                <li><?php esc_html_e('Bilingual support (English/Spanish)', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Scheduling optimization expert', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Ongoing support coordination', 'preetidreams'); ?></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-icon">🧴</div>
+                        <h3><?php esc_html_e('Aesthetician Specialist', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Expert in advanced skincare and complementary treatments', 'preetidreams'); ?></p>
+                        <div class="member-details">
+                            <ul>
+                                <li><?php esc_html_e('Licensed Master Aesthetician', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Advanced Chemical Peel Certification', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Skin Analysis Specialist', 'preetidreams'); ?></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-summary">
+                    <p><?php esc_html_e('Together, we provide the personalized care that has earned the trust of 400+ clients.', 'preetidreams'); ?></p>
                 </div>
             </div>
         </section>
 
-        <!-- Facility Excellence Section -->
-        <section class="facility-excellence" role="region" aria-label="<?php esc_attr_e('Facility and Safety Standards', 'preetidreams'); ?>">
+        <!-- Arizona Locations Section -->
+        <section class="arizona-locations" role="region" aria-label="<?php esc_attr_e('Arizona Locations and Contact', 'preetidreams'); ?>">
             <div class="container">
                 <div class="section-header">
-                    <h2><?php esc_html_e('State-of-the-Art Facility', 'preetidreams'); ?></h2>
-                    <p><?php esc_html_e('Experience the perfect blend of luxury comfort and medical-grade safety in our thoughtfully designed clinic.', 'preetidreams'); ?></p>
+                    <h2><?php esc_html_e('Serving Arizona', 'preetidreams'); ?></h2>
                 </div>
 
-                <div class="facility-grid">
-                    <div class="facility-feature">
-                        <div class="feature-icon">🏥</div>
-                        <h3><?php esc_html_e('Medical-Grade Safety', 'preetidreams'); ?></h3>
-                        <p><?php esc_html_e('Our facility meets and exceeds all medical safety standards with hospital-grade sterilization and safety protocols.', 'preetidreams'); ?></p>
-                        <ul class="feature-list">
-                            <li><?php esc_html_e('OSHA compliant procedures', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Medical-grade sterilization', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Emergency preparedness protocols', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Ongoing safety training', 'preetidreams'); ?></li>
-                        </ul>
-                    </div>
+                <div class="locations-grid">
+                    <div class="location-info">
+                        <h3><?php esc_html_e('Primary Location', 'preetidreams'); ?> 🏢</h3>
+                        <div class="location-details">
+                            <p><strong><?php esc_html_e('PreetiDreams Medical Spa', 'preetidreams'); ?></strong></p>
+                            <p>19420 N. 59th Ave<br>Glendale, AZ 85308</p>
 
-                    <div class="facility-feature">
-                        <div class="feature-icon">💎</div>
-                        <h3><?php esc_html_e('Luxury Experience', 'preetidreams'); ?></h3>
-                        <p><?php esc_html_e('Relax in our beautifully appointed private consultation suites designed for your comfort and privacy.', 'preetidreams'); ?></p>
-                        <ul class="feature-list">
-                            <li><?php esc_html_e('Private consultation rooms', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Luxury amenities and comfort items', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Discrete and confidential environment', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Personalized service experience', 'preetidreams'); ?></li>
-                        </ul>
-                    </div>
+                            <h4><?php esc_html_e('Hours:', 'preetidreams'); ?> ⏰</h4>
+                            <ul>
+                                <li><?php esc_html_e('Mon-Fri: 9AM-7PM', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Sat: 9AM-5PM', 'preetidreams'); ?></li>
+                                <li><?php esc_html_e('Sun: By appointment', 'preetidreams'); ?></li>
+                            </ul>
 
-                    <div class="facility-feature">
-                        <div class="feature-icon">🔬</div>
-                        <h3><?php esc_html_e('Advanced Technology', 'preetidreams'); ?></h3>
-                        <p><?php esc_html_e('We invest in the latest technology and equipment to provide you with the most effective treatments available.', 'preetidreams'); ?></p>
-                        <ul class="feature-list">
-                            <li><?php esc_html_e('Latest laser and energy devices', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Digital imaging and analysis tools', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Advanced monitoring equipment', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Precision injection systems', 'preetidreams'); ?></li>
-                        </ul>
-                    </div>
-
-                    <div class="facility-feature">
-                        <div class="feature-icon">🌿</div>
-                        <h3><?php esc_html_e('Wellness Environment', 'preetidreams'); ?></h3>
-                        <p><?php esc_html_e('Our spa-like atmosphere promotes relaxation and healing while maintaining the highest medical standards.', 'preetidreams'); ?></p>
-                        <ul class="feature-list">
-                            <li><?php esc_html_e('Calming, spa-like atmosphere', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Natural lighting and air filtration', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Quiet, peaceful treatment rooms', 'preetidreams'); ?></li>
-                            <li><?php esc_html_e('Wellness-focused amenities', 'preetidreams'); ?></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Virtual Tour Section -->
-        <section class="virtual-tour" role="region" aria-label="<?php esc_attr_e('Virtual Facility Tour', 'preetidreams'); ?>">
-            <div class="container">
-                <div class="tour-content">
-                    <div class="tour-text">
-                        <h2><?php esc_html_e('Virtual Facility Tour', 'preetidreams'); ?></h2>
-                        <p><?php esc_html_e('Take a virtual walk through our beautiful facility and see where your transformation journey will take place.', 'preetidreams'); ?></p>
-
-                        <div class="tour-highlights">
-                            <div class="highlight-item">
-                                <span class="highlight-icon">🚪</span>
-                                <span class="highlight-text"><?php esc_html_e('Private entrance and reception', 'preetidreams'); ?></span>
-                            </div>
-                            <div class="highlight-item">
-                                <span class="highlight-icon">💺</span>
-                                <span class="highlight-text"><?php esc_html_e('Luxury consultation suites', 'preetidreams'); ?></span>
-                            </div>
-                            <div class="highlight-item">
-                                <span class="highlight-icon">⚕️</span>
-                                <span class="highlight-text"><?php esc_html_e('Advanced treatment rooms', 'preetidreams'); ?></span>
-                            </div>
-                            <div class="highlight-item">
-                                <span class="highlight-icon">🌸</span>
-                                <span class="highlight-text"><?php esc_html_e('Recovery and relaxation areas', 'preetidreams'); ?></span>
-                            </div>
-                        </div>
-
-                        <div class="tour-actions">
-                            <a href="#virtual-tour-modal" class="btn btn-primary tour-cta" data-tour="virtual">
-                                <?php esc_html_e('Start Virtual Tour', 'preetidreams'); ?>
-                            </a>
-                            <a href="#consultation" class="btn btn-outline consultation-cta" data-source="about-virtual-tour">
-                                <?php esc_html_e('Schedule In-Person Visit', 'preetidreams'); ?>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="tour-preview">
-                        <div class="preview-image">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/facility-reception.jpg'); ?>"
-                                 alt="<?php esc_attr_e('Luxury medical spa reception area', 'preetidreams'); ?>"
-                                 loading="lazy">
-                            <div class="preview-overlay">
-                                <button class="play-button" aria-label="<?php esc_attr_e('Start virtual tour', 'preetidreams'); ?>">
-                                    <span class="play-icon">▶️</span>
-                                    <span class="play-text"><?php esc_html_e('Virtual Tour', 'preetidreams'); ?></span>
-                                </button>
+                            <div class="facility-features">
+                                <span class="feature">🚗 <?php esc_html_e('Ample parking', 'preetidreams'); ?></span>
+                                <span class="feature">🏥 <?php esc_html_e('Modern medical facility', 'preetidreams'); ?></span>
+                                <span class="feature">♿ <?php esc_html_e('ADA accessible', 'preetidreams'); ?></span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Patient Commitment Section -->
-        <section class="patient-commitment" role="region" aria-label="<?php esc_attr_e('Our Commitment to Patients', 'preetidreams'); ?>">
-            <div class="container">
-                <div class="commitment-content">
-                    <div class="commitment-header">
-                        <h2><?php esc_html_e('Our Commitment to You', 'preetidreams'); ?></h2>
-                        <p><?php esc_html_e('Your trust is the foundation of our practice. We are committed to providing you with exceptional care, beautiful results, and complete peace of mind.', 'preetidreams'); ?></p>
-                    </div>
-
-                    <div class="commitment-promises">
-                        <div class="promise-item">
-                            <div class="promise-icon">🤝</div>
-                            <h3><?php esc_html_e('Honest Consultation', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('We provide honest, realistic expectations and will never recommend unnecessary treatments.', 'preetidreams'); ?></p>
+                    <div class="contact-info">
+                        <h3><?php esc_html_e('Contact Information', 'preetidreams'); ?> 📞</h3>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <strong><?php esc_html_e('Office:', 'preetidreams'); ?></strong>
+                                <a href="tel:+14804694249">(480) 469-4249</a>
+                            </div>
+                            <div class="contact-item">
+                                <strong><?php esc_html_e('Call/Text:', 'preetidreams'); ?></strong>
+                                <a href="tel:+12485953987">(248) 595-3987</a>
+                            </div>
+                            <div class="contact-item">
+                                <strong><?php esc_html_e('Email:', 'preetidreams'); ?></strong>
+                                <a href="mailto:infusepreetidreams@gmail.com">infusepreetidreams@gmail.com</a>
+                            </div>
                         </div>
 
-                        <div class="promise-item">
-                            <div class="promise-icon">🛡️</div>
-                            <h3><?php esc_html_e('Complete Privacy', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('Your privacy and confidentiality are absolutely protected throughout your entire experience.', 'preetidreams'); ?></p>
+                        <div class="social-media">
+                            <h4><?php esc_html_e('Social Media:', 'preetidreams'); ?> 🌐</h4>
+                            <p><?php esc_html_e('Follow us for tips, before/after results, and special offers', 'preetidreams'); ?></p>
                         </div>
 
-                        <div class="promise-item">
-                            <div class="promise-icon">💚</div>
-                            <h3><?php esc_html_e('Ongoing Support', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('We provide comprehensive aftercare and are always available for your questions and concerns.', 'preetidreams'); ?></p>
-                        </div>
-
-                        <div class="promise-item">
-                            <div class="promise-icon">✨</div>
-                            <h3><?php esc_html_e('Beautiful Results', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('Our goal is natural, beautiful enhancement that boosts your confidence and makes you feel amazing.', 'preetidreams'); ?></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Consultation CTA Section -->
-        <section class="about-consultation-cta">
-            <div class="container">
-                <div class="cta-content">
-                    <h2><?php esc_html_e('Ready to Begin Your Journey?', 'preetidreams'); ?></h2>
-                    <p><?php esc_html_e('Schedule your personalized consultation with Dr. Preeti Sharma and discover how we can help you achieve your aesthetic goals.', 'preetidreams'); ?></p>
-
-                    <div class="cta-actions">
-                        <a href="#consultation" class="btn btn-primary btn-large consultation-cta" data-source="about-page-bottom">
-                            <?php esc_html_e('Schedule Your Consultation', 'preetidreams'); ?>
+                        <a href="<?php echo esc_url(home_url('/contact')); ?>" class="btn btn-primary">
+                            <?php esc_html_e('Get Directions', 'preetidreams'); ?>
                         </a>
-
-                        <div class="cta-contact-options">
-                            <?php
-                            $phone = preetidreams_get_phone();
-                            if ($phone) : ?>
-                                <a href="tel:<?php echo esc_attr($phone); ?>" class="contact-option">
-                                    <span class="contact-icon">📞</span>
-                                    <span class="contact-text"><?php echo esc_html($phone); ?></span>
-                                </a>
-                            <?php endif; ?>
-
-                            <?php
-                            $email = preetidreams_get_email();
-                            if ($email) : ?>
-                                <a href="mailto:<?php echo esc_attr($email); ?>" class="contact-option">
-                                    <span class="contact-icon">✉️</span>
-                                    <span class="contact-text"><?php echo esc_html($email); ?></span>
-                                </a>
-                            <?php endif; ?>
-                        </div>
                     </div>
+
+                    <div class="service-areas">
+                        <h3><?php esc_html_e('Service Areas', 'preetidreams'); ?> 🌎</h3>
+                        <div class="areas-list">
+                            <div class="area-item">
+                                <h4>📍 <?php esc_html_e('Glendale', 'preetidreams'); ?></h4>
+                                <p><?php esc_html_e('Main location with full service menu', 'preetidreams'); ?></p>
+                            </div>
+                            <div class="area-item">
+                                <h4>📍 <?php esc_html_e('Peoria', 'preetidreams'); ?></h4>
+                                <p><?php esc_html_e('Convenient access for west valley residents', 'preetidreams'); ?></p>
+                            </div>
+                            <div class="area-item">
+                                <h4>📍 <?php esc_html_e('Scottsdale', 'preetidreams'); ?></h4>
+                                <p><?php esc_html_e('Premium services for north valley clientele', 'preetidreams'); ?></p>
+                            </div>
+                        </div>
+                        <p class="service-note"><?php esc_html_e('All locations offer the same personalized, physician-led care that defines PreetiDreams.', 'preetidreams'); ?></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Metrics Section -->
+        <section class="success-metrics" role="region" aria-label="<?php esc_attr_e('Practice Success Metrics', 'preetidreams'); ?>">
+            <div class="container">
+                <div class="section-header">
+                    <h2><?php esc_html_e('Our Track Record', 'preetidreams'); ?></h2>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-number">400+</div>
+                        <h3><?php esc_html_e('Happy Clients', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Successful aesthetic transformations achieved through personalized physician care', 'preetidreams'); ?></p>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-number">4</div>
+                        <h3><?php esc_html_e('Expert Staff', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Highly trained professionals supporting your personalized care journey', 'preetidreams'); ?></p>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-number">15+</div>
+                        <h3><?php esc_html_e('Years of Excellence', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('In aesthetic medicine and patient care excellence', 'preetidreams'); ?></p>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-number">3</div>
+                        <h3><?php esc_html_e('Arizona Locations', 'preetidreams'); ?></h3>
+                        <p><?php esc_html_e('Glendale, Peoria & Scottsdale service areas', 'preetidreams'); ?></p>
+                    </div>
+                </div>
+
+                <div class="testimonial-quote">
+                    <blockquote>
+                        <p><?php esc_html_e('"Your satisfaction is my specialty"', 'preetidreams'); ?></p>
+                        <cite><?php esc_html_e('- Dr. Preeti Sharma', 'preetidreams'); ?></cite>
+                    </blockquote>
+                    <p class="testimonial-note"><?php esc_html_e('Every one of our 400+ clients receives the same personalized attention that has made PreetiDreams Arizona\'s trusted name in physician-led aesthetic care.', 'preetidreams'); ?></p>
+                </div>
+
+                <div class="success-cta">
+                    <a href="<?php echo esc_url(home_url('/testimonials')); ?>" class="btn btn-outline">
+                        <?php esc_html_e('Read Client Success Stories', 'preetidreams'); ?>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/before-after')); ?>" class="btn btn-outline">
+                        <?php esc_html_e('View Before & After Gallery', 'preetidreams'); ?>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/contact')); ?>" class="btn btn-primary">
+                        <?php esc_html_e('Schedule Your Personal Consultation', 'preetidreams'); ?>
+                    </a>
+                    <a href="tel:+12485953987" class="btn btn-secondary">
+                        <?php esc_html_e('Contact Dr. Preeti', 'preetidreams'); ?>
+                    </a>
                 </div>
             </div>
         </section>
