@@ -2816,6 +2816,15 @@ function preetidreams_routing_fix_page() {
         update_option('preetidreams_force_rewrite_flush', true);
         $messages[] = '✅ Forced rewrite refresh scheduled';
 
+        // 6. Create sample treatments if none exist
+        $treatments_count = wp_count_posts('treatment');
+        if ($treatments_count->publish == 0) {
+            preetidreams_create_sample_treatments();
+            $messages[] = '✅ Created sample treatments for testing';
+        } else {
+            $messages[] = '✅ Found ' . $treatments_count->publish . ' existing treatments';
+        }
+
         $messages[] = '<strong>🎉 Routing fix complete! Please test your navigation now.</strong>';
     }
 

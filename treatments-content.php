@@ -1,8 +1,17 @@
 <?php
 /**
  * Treatments Content Template
- * WordPress-compatible version of treatments.html
+ * Dynamic WordPress template that displays treatments from the database
  */
+
+// Query all treatments from the database
+$treatments_query = new WP_Query([
+    'post_type' => 'treatment',
+    'posts_per_page' => -1, // Get all treatments
+    'orderby' => 'menu_order',
+    'order' => 'ASC',
+    'post_status' => 'publish'
+]);
 ?>
 
 <style>
@@ -303,10 +312,55 @@
     height: 200px;
     object-fit: cover;
     transition: var(--transition-smooth);
+    position: relative;
 }
 
-.treatment-card:hover .treatment-image {
+.treatment-card:hover .treatment-image img {
     transform: scale(1.05);
+}
+
+.treatment-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--primary-sage) 0%, var(--primary-navy) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neutral-white);
+    font-size: 3rem;
+    text-decoration: none;
+}
+
+/* Treatment Category Badge */
+.treatment-category-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--primary-sage);
+    color: var(--neutral-white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 1;
+}
+
+.treatment-badge {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    background: var(--accent-gold);
+    color: var(--primary-navy);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    z-index: 1;
 }
 
 /* Treatment Content */
@@ -332,11 +386,40 @@
     line-height: 1.3;
 }
 
+.treatment-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.treatment-title a:hover {
+    color: var(--primary-sage);
+}
+
 .treatment-description {
     color: var(--neutral-gray);
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+}
+
+/* Treatment Meta */
+.treatment-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--neutral-gray);
+}
+
+.meta-item .icon {
+    font-size: 1rem;
 }
 
 /* Treatment Details Grid */
@@ -436,6 +519,38 @@
     color: var(--neutral-white);
 }
 
+/* No Treatments Message */
+.no-treatments-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--neutral-white);
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.no-treatments-message h3 {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    color: var(--primary-navy);
+    margin-bottom: 1rem;
+}
+
+.no-treatments-message p {
+    color: var(--neutral-gray);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-treatments-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 /* Screen Reader Only */
 .sr-only {
     position: absolute;
@@ -480,6 +595,10 @@
         gap: 1rem;
         text-align: center;
     }
+
+    .treatment-meta {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -493,6 +612,11 @@
 
     .filter-actions {
         flex-direction: column;
+    }
+
+    .no-treatments-actions {
+        flex-direction: column;
+        align-items: center;
     }
 }
 </style>
@@ -525,7 +649,7 @@
             aria-describedby="search-results-count"
         >
         <div id="search-results-count" class="search-results-count" aria-live="polite">
-            Showing all treatments
+            Showing <?php echo $treatments_query->found_posts; ?> treatment<?php echo $treatments_query->found_posts !== 1 ? 's' : ''; ?>
         </div>
     </div>
 
@@ -535,11 +659,14 @@
             <label for="category-filter" class="filter-label">Treatment Category</label>
             <select id="category-filter" class="filter-select">
                 <option value="">All Categories</option>
-                <option value="facial">Facial Treatments</option>
-                <option value="body">Body Treatments</option>
-                <option value="laser">Laser Treatments</option>
-                <option value="injectables">Injectables</option>
-                <option value="wellness">Wellness & Recovery</option>
+                <?php
+                // Get all treatment categories
+                $categories = get_terms(['taxonomy' => 'treatment_category', 'hide_empty' => true]);
+                if ($categories && !is_wp_error($categories)) :
+                    foreach ($categories as $category) : ?>
+                        <option value="<?php echo esc_attr($category->slug); ?>"><?php echo esc_html($category->name); ?></option>
+                    <?php endforeach;
+                endif; ?>
             </select>
         </div>
 
@@ -605,253 +732,172 @@
 <section aria-labelledby="treatments-heading">
     <h2 id="treatments-heading" class="sr-only">Available Treatments</h2>
     <div class="treatments-grid" id="treatments-grid">
-        <!-- Treatment cards will be populated here -->
 
-        <!-- Sample Treatment Card 1 -->
-        <article class="treatment-card" data-category="facial" data-price="350" data-duration="60" data-concern="aging">
-            <button type="button" class="btn-compare" aria-label="Add HydraFacial to comparison" data-treatment="hydrafacial">
-                +
-            </button>
-            <img src="https://via.placeholder.com/350x200/8BA888/FFFFFF?text=HydraFacial" alt="HydraFacial treatment room with advanced equipment" class="treatment-image" loading="lazy">
-            <div class="treatment-content">
-                <div class="treatment-category">Facial Treatment</div>
-                <h3 class="treatment-title">HydraFacial MD</h3>
-                <p class="treatment-description">
-                    The ultimate 3-in-1 treatment that cleanses, extracts, and hydrates your skin with patented Vortex-Fusion technology for immediate results.
-                </p>
-                <div class="treatment-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-value">60 minutes</span>
+        <?php if ($treatments_query->have_posts()) : ?>
+            <?php while ($treatments_query->have_posts()) : $treatments_query->the_post();
+                // Get treatment metadata for filtering
+                $categories = get_the_terms(get_the_ID(), 'treatment_category');
+                $primary_category = $categories && !is_wp_error($categories) ? $categories[0]->slug : '';
+                $primary_category_name = $categories && !is_wp_error($categories) ? $categories[0]->name : '';
+                $duration = get_post_meta(get_the_ID(), 'treatment_duration', true);
+                $duration_minutes = get_post_meta(get_the_ID(), 'treatment_duration_minutes', true);
+                $price_range = get_post_meta(get_the_ID(), 'treatment_price_range', true);
+                $price = get_post_meta(get_the_ID(), 'treatment_price', true);
+                $popularity = get_post_meta(get_the_ID(), 'treatment_popularity', true);
+                $featured = get_post_meta(get_the_ID(), 'treatment_featured', true);
+                $downtime = get_post_meta(get_the_ID(), 'treatment_downtime', true);
+                $results_timeline = get_post_meta(get_the_ID(), 'treatment_results_timeline', true);
+                $sessions_needed = get_post_meta(get_the_ID(), 'treatment_sessions_needed', true);
+
+                // Convert price to numeric for filtering
+                $numeric_price = 0;
+                if ($price) {
+                    $numeric_price = intval(preg_replace('/[^0-9]/', '', $price));
+                } elseif ($price_range) {
+                    // Extract first number from range
+                    preg_match('/\d+/', $price_range, $matches);
+                    $numeric_price = $matches ? intval($matches[0]) : 0;
+                }
+
+                // Convert duration to minutes for filtering
+                $duration_in_minutes = $duration_minutes ?: 60;
+                if (!$duration_minutes && $duration) {
+                    if (strpos($duration, 'hour') !== false) {
+                        preg_match('/(\d+)/', $duration, $matches);
+                        $duration_in_minutes = $matches ? intval($matches[0]) * 60 : 60;
+                    } elseif (strpos($duration, 'min') !== false) {
+                        preg_match('/(\d+)/', $duration, $matches);
+                        $duration_in_minutes = $matches ? intval($matches[0]) : 30;
+                    }
+                }
+            ?>
+
+            <article class="treatment-card"
+                     data-category="<?php echo esc_attr($primary_category); ?>"
+                     data-price="<?php echo esc_attr($numeric_price); ?>"
+                     data-duration="<?php echo esc_attr($duration_in_minutes); ?>"
+                     data-concern="<?php echo esc_attr($primary_category); ?>"
+                     data-popularity="<?php echo esc_attr($popularity ?: ($featured ? '5' : '1')); ?>">
+
+                <button type="button" class="btn-compare"
+                        aria-label="Add <?php echo esc_attr(get_the_title()); ?> to comparison"
+                        data-treatment="<?php echo esc_attr(sanitize_title(get_the_title())); ?>">
+                    +
+                </button>
+
+                <div class="treatment-image">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <a href="<?php the_permalink(); ?>">
+                            <?php the_post_thumbnail('treatment-card', ['alt' => get_the_title()]); ?>
+                        </a>
+                    <?php else : ?>
+                        <a href="<?php the_permalink(); ?>" class="treatment-placeholder">
+                            <div class="placeholder-icon">💉</div>
+                        </a>
+                    <?php endif; ?>
+
+                    <!-- Treatment Category Badge -->
+                    <?php if ($primary_category_name) : ?>
+                        <span class="treatment-category-badge"><?php echo esc_html($primary_category_name); ?></span>
+                    <?php endif; ?>
+
+                    <?php if ($featured) : ?>
+                        <span class="treatment-badge popular">
+                            <span class="icon">⭐</span>
+                            Popular
+                        </span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="treatment-content">
+                    <header class="treatment-header">
+                        <h3 class="treatment-title">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php the_title(); ?>
+                            </a>
+                        </h3>
+
+                        <div class="treatment-meta">
+                            <?php if ($duration) : ?>
+                                <span class="meta-item treatment-duration">
+                                    <span class="icon">⏱️</span>
+                                    <?php echo esc_html($duration); ?>
+                                </span>
+                            <?php endif; ?>
+
+                            <?php if ($price_range) : ?>
+                                <span class="meta-item treatment-price">
+                                    <span class="icon">💰</span>
+                                    <?php echo esc_html($price_range); ?>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                    </header>
+
+                    <div class="treatment-description">
+                        <?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 20, '...'); ?>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Downtime</span>
-                        <span class="detail-value">None</span>
+
+                    <!-- Treatment Details Grid -->
+                    <div class="treatment-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Duration</span>
+                            <span class="detail-value"><?php echo esc_html($duration ?: '60 minutes'); ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Downtime</span>
+                            <span class="detail-value"><?php echo esc_html($downtime ?: 'Minimal'); ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Results</span>
+                            <span class="detail-value"><?php echo esc_html($results_timeline ?: 'Immediate'); ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Sessions</span>
+                            <span class="detail-value"><?php echo esc_html($sessions_needed ?: '1-3 recommended'); ?></span>
+                        </div>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Results</span>
-                        <span class="detail-value">Immediate</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Sessions</span>
-                        <span class="detail-value">1-6 recommended</span>
+
+                    <?php if ($price_range || $price) : ?>
+                        <div class="treatment-price">
+                            <span class="price-main"><?php echo esc_html($price ?: $price_range); ?></span>
+                            <?php if ($numeric_price > 100) : ?>
+                                <span class="price-financing">or $<?php echo esc_html(ceil($numeric_price / 12)); ?>/month</span>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="treatment-actions">
+                        <button type="button" class="btn-treatment btn-book"
+                                data-treatment="<?php echo esc_attr(get_the_title()); ?>">
+                            Book Consultation
+                        </button>
+                        <a href="<?php the_permalink(); ?>" class="btn-treatment btn-learn">
+                            Learn More
+                        </a>
                     </div>
                 </div>
-                <div class="treatment-price">
-                    <span class="price-main">$350</span>
-                    <span class="price-financing">or $29/month</span>
-                </div>
-                <div class="treatment-actions">
-                    <button type="button" class="btn-treatment btn-book">Book Consultation</button>
-                    <a href="<?php echo home_url('/treatments/hydrafacial/'); ?>" class="btn-treatment btn-learn">Learn More</a>
+            </article>
+
+            <?php endwhile; ?>
+            <?php wp_reset_postdata(); ?>
+
+        <?php else : ?>
+            <!-- No treatments found message -->
+            <div class="no-treatments-message">
+                <h3>No Treatments Found</h3>
+                <p>We're currently updating our treatment database. Please check back soon or contact us to learn about our available services.</p>
+                <div class="no-treatments-actions">
+                    <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-primary">
+                        Contact Us
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-secondary">
+                        Return Home
+                    </a>
                 </div>
             </div>
-        </article>
+        <?php endif; ?>
 
-        <!-- Sample Treatment Card 2 -->
-        <article class="treatment-card" data-category="laser" data-price="450" data-duration="45" data-concern="pigmentation">
-            <button type="button" class="btn-compare" aria-label="Add IPL Photofacial to comparison" data-treatment="ipl">
-                +
-            </button>
-            <img src="https://via.placeholder.com/350x200/2C3E50/FFFFFF?text=IPL+Photofacial" alt="IPL Photofacial laser treatment setup" class="treatment-image" loading="lazy">
-            <div class="treatment-content">
-                <div class="treatment-category">Laser Treatment</div>
-                <h3 class="treatment-title">IPL Photofacial</h3>
-                <p class="treatment-description">
-                    Advanced light therapy that targets pigmentation, sun damage, and vascular lesions for clearer, more even-toned skin.
-                </p>
-                <div class="treatment-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-value">45 minutes</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Downtime</span>
-                        <span class="detail-value">Minimal</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Results</span>
-                        <span class="detail-value">2-4 weeks</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Sessions</span>
-                        <span class="detail-value">3-5 recommended</span>
-                    </div>
-                </div>
-                <div class="treatment-price">
-                    <span class="price-main">$450</span>
-                    <span class="price-financing">or $38/month</span>
-                </div>
-                <div class="treatment-actions">
-                    <button type="button" class="btn-treatment btn-book">Book Consultation</button>
-                    <a href="<?php echo home_url('/treatments/ipl-photofacial/'); ?>" class="btn-treatment btn-learn">Learn More</a>
-                </div>
-            </div>
-        </article>
-
-        <!-- Sample Treatment Card 3 -->
-        <article class="treatment-card" data-category="injectables" data-price="600" data-duration="30" data-concern="aging">
-            <button type="button" class="btn-compare" aria-label="Add Botox to comparison" data-treatment="botox">
-                +
-            </button>
-            <img src="https://via.placeholder.com/350x200/D4AF37/FFFFFF?text=Botox+Treatment" alt="Botox injection treatment consultation" class="treatment-image" loading="lazy">
-            <div class="treatment-content">
-                <div class="treatment-category">Injectable Treatment</div>
-                <h3 class="treatment-title">Botox Cosmetic</h3>
-                <p class="treatment-description">
-                    FDA-approved neurotoxin that smooths dynamic wrinkles and fine lines for a refreshed, youthful appearance.
-                </p>
-                <div class="treatment-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-value">30 minutes</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Downtime</span>
-                        <span class="detail-value">None</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Results</span>
-                        <span class="detail-value">3-7 days</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-value">3-4 months</span>
-                    </div>
-                </div>
-                <div class="treatment-price">
-                    <span class="price-main">$600</span>
-                    <span class="price-financing">or $50/month</span>
-                </div>
-                <div class="treatment-actions">
-                    <button type="button" class="btn-treatment btn-book">Book Consultation</button>
-                    <a href="<?php echo home_url('/treatments/botox/'); ?>" class="btn-treatment btn-learn">Learn More</a>
-                </div>
-            </div>
-        </article>
-
-        <!-- Sample Treatment Card 4 -->
-        <article class="treatment-card" data-category="body" data-price="800" data-duration="90" data-concern="body-contouring">
-            <button type="button" class="btn-compare" aria-label="Add CoolSculpting to comparison" data-treatment="coolsculpting">
-                +
-            </button>
-            <img src="https://via.placeholder.com/350x200/8BA888/FFFFFF?text=CoolSculpting" alt="CoolSculpting body contouring treatment" class="treatment-image" loading="lazy">
-            <div class="treatment-content">
-                <div class="treatment-category">Body Treatment</div>
-                <h3 class="treatment-title">CoolSculpting</h3>
-                <p class="treatment-description">
-                    Non-invasive fat reduction technology that freezes and eliminates stubborn fat cells for permanent body contouring results.
-                </p>
-                <div class="treatment-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-value">90 minutes</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Downtime</span>
-                        <span class="detail-value">Minimal</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Results</span>
-                        <span class="detail-value">2-3 months</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Sessions</span>
-                        <span class="detail-value">1-3 per area</span>
-                    </div>
-                </div>
-                <div class="treatment-price">
-                    <span class="price-main">$800</span>
-                    <span class="price-financing">or $67/month</span>
-                </div>
-                <div class="treatment-actions">
-                    <button type="button" class="btn-treatment btn-book">Book Consultation</button>
-                    <a href="<?php echo home_url('/treatments/coolsculpting/'); ?>" class="btn-treatment btn-learn">Learn More</a>
-                </div>
-            </div>
-        </article>
-
-        <!-- Sample Treatment Card 5 -->
-        <article class="treatment-card" data-category="laser" data-price="300" data-duration="30" data-concern="hair-removal">
-            <button type="button" class="btn-compare" aria-label="Add Laser Hair Removal to comparison" data-treatment="laser-hair">
-                +
-            </button>
-            <img src="https://via.placeholder.com/350x200/2C3E50/FFFFFF?text=Laser+Hair+Removal" alt="Laser hair removal treatment session" class="treatment-image" loading="lazy">
-            <div class="treatment-content">
-                <div class="treatment-category">Laser Treatment</div>
-                <h3 class="treatment-title">Laser Hair Removal</h3>
-                <p class="treatment-description">
-                    Advanced laser technology that permanently reduces unwanted hair growth for smooth, hair-free skin.
-                </p>
-                <div class="treatment-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-value">30 minutes</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Downtime</span>
-                        <span class="detail-value">None</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Results</span>
-                        <span class="detail-value">Immediate</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Sessions</span>
-                        <span class="detail-value">6-8 recommended</span>
-                    </div>
-                </div>
-                <div class="treatment-price">
-                    <span class="price-main">$300</span>
-                    <span class="price-financing">or $25/month</span>
-                </div>
-                <div class="treatment-actions">
-                    <button type="button" class="btn-treatment btn-book">Book Consultation</button>
-                    <a href="<?php echo home_url('/treatments/laser-hair-removal/'); ?>" class="btn-treatment btn-learn">Learn More</a>
-                </div>
-            </div>
-        </article>
-
-        <!-- Sample Treatment Card 6 -->
-        <article class="treatment-card" data-category="wellness" data-price="200" data-duration="60" data-concern="wellness">
-            <button type="button" class="btn-compare" aria-label="Add IV Therapy to comparison" data-treatment="iv-therapy">
-                +
-            </button>
-            <img src="https://via.placeholder.com/350x200/D4AF37/FFFFFF?text=IV+Therapy" alt="IV therapy wellness treatment" class="treatment-image" loading="lazy">
-            <div class="treatment-content">
-                <div class="treatment-category">Wellness Treatment</div>
-                <h3 class="treatment-title">IV Vitamin Therapy</h3>
-                <p class="treatment-description">
-                    Customized vitamin and nutrient infusions delivered directly to your bloodstream for optimal wellness and energy.
-                </p>
-                <div class="treatment-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-value">60 minutes</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Downtime</span>
-                        <span class="detail-value">None</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Results</span>
-                        <span class="detail-value">Immediate</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Frequency</span>
-                        <span class="detail-value">Weekly/Monthly</span>
-                    </div>
-                </div>
-                <div class="treatment-price">
-                    <span class="price-main">$200</span>
-                    <span class="price-financing">or $17/month</span>
-                </div>
-                <div class="treatment-actions">
-                    <button type="button" class="btn-treatment btn-book">Book Consultation</button>
-                    <a href="<?php echo home_url('/treatments/iv-therapy/'); ?>" class="btn-treatment btn-learn">Learn More</a>
-                </div>
-            </div>
-        </article>
     </div>
 </section>
 
@@ -884,7 +930,7 @@ class TreatmentManager {
             price: parseInt(card.dataset.price),
             duration: parseInt(card.dataset.duration),
             concern: card.dataset.concern,
-            title: card.querySelector('.treatment-title').textContent,
+            title: card.querySelector('.treatment-title a').textContent,
             description: card.querySelector('.treatment-description').textContent
         }));
 
@@ -983,7 +1029,7 @@ class TreatmentManager {
                 }
             }
 
-            // Concern filter
+            // Concern filter (same as category for now)
             if (concernFilter && treatment.concern !== concernFilter) {
                 return false;
             }
@@ -1080,20 +1126,16 @@ class TreatmentManager {
     }
 
     handleBooking(button) {
-        const card = button.closest('.treatment-card');
-        const treatmentTitle = card.querySelector('.treatment-title').textContent;
+        const treatmentTitle = button.dataset.treatment;
 
-        // Here you would typically integrate with your booking system
-        // For now, we'll show an alert
-        alert(`Booking consultation for ${treatmentTitle}. This would integrate with your booking system.`);
-
-        // You could also redirect to a booking page:
-        // window.location.href = '/book-consultation/?treatment=' + encodeURIComponent(treatmentTitle);
+        // Redirect to contact page with treatment pre-filled
+        window.location.href = '<?php echo esc_url(home_url('/contact/')); ?>?treatment=' + encodeURIComponent(treatmentTitle);
     }
 }
 
 // Initialize the treatment manager when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new TreatmentManager();
+    console.log('✅ Dynamic Treatments Page loaded with', document.querySelectorAll('.treatment-card').length, 'treatments');
 });
 </script>
