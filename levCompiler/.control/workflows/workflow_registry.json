@@ -106,13 +106,17 @@
         "workflowId": "BUG-RESOLUTION-WF-001",
         "name": "bug-resolution-workflow",
         "type": "specialized-debugging-and-resolution",
-        "description": "Comprehensive bug resolution workflow with DevKinsta specialization and systematic debugging methodology",
+        "description": "Comprehensive bug resolution workflow with DevKinsta specialization, systematic debugging methodology, and proper delegation to CODE-GEN-WF-001 for implementation",
         "priority": 2,
         "status": "active",
         "triggerPatterns": ["bug", "issue", "problem", "error", "fix", "debug", "troubleshoot", "malfunction", "not working"],
         "parentWorkflow": "base-input-output-workflow",
         "location": "levCompiler/.control/workflows/bug_resolution_workflow.json",
         "primaryAgent": "BUG-RESOLVER-001",
+        "workflowDelegations": {
+          "codeGeneration": "CODE-GEN-WF-001",
+          "toolCreation": "CODE-GEN-WF-001"
+        },
         "devToolsManagement": {
           "outputLocation": "devtools/",
           "toolCategories": ["wp-admin-tools", "standalone-scripts", "automated-checks", "dev-utilities"],

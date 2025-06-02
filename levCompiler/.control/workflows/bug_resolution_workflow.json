@@ -251,29 +251,48 @@
     },
 
     "stage5_devToolsCreation": {
-      "stageName": "Development Tools Creation and Deployment",
-      "description": "Create DevKinsta-specific debugging tools for future use",
+      "stageName": "Development Tools Creation via Code Generation Workflow",
+      "description": "Create DevKinsta-specific debugging tools via CODE-GEN-WF-001 workflow",
       "estimatedDuration": "{DURATION: 1-2_hours}",
       "primaryAgent": "BUG-RESOLVER-001",
-      "supportingAgents": ["CODE-GEN-001"],
+      "supportingAgents": [],
+      "workflowDelegation": {
+        "targetWorkflow": "CODE-GEN-WF-001",
+        "delegationReason": "Tool creation requires specialized code generation capabilities",
+        "contextTransfer": "tool-requirements-and-specifications",
+        "qualityGateHandoff": "validated-tool-designs"
+      },
       "stageActions": [
         {
-          "action": "create-wp-admin-tools",
-          "description": "Develop WordPress admin panel debugging tools",
-          "agent": "CODE-GEN-001",
-          "expectedOutput": "wp-admin-debugging-tools"
+          "action": "design-wp-admin-tools",
+          "description": "Design WordPress admin panel debugging tools specifications",
+          "agent": "BUG-RESOLVER-001",
+          "expectedOutput": "wp-admin-tools-specifications"
         },
         {
-          "action": "develop-standalone-scripts",
-          "description": "Create standalone diagnostic scripts",
-          "agent": "CODE-GEN-001",
-          "expectedOutput": "standalone-diagnostic-scripts"
+          "action": "design-standalone-scripts",
+          "description": "Design standalone diagnostic scripts specifications",
+          "agent": "BUG-RESOLVER-001",
+          "expectedOutput": "standalone-scripts-specifications"
         },
         {
-          "action": "implement-automated-checks",
-          "description": "Build automated health check and monitoring tools",
-          "agent": "CODE-GEN-001",
-          "expectedOutput": "automated-monitoring-tools"
+          "action": "design-automated-checks",
+          "description": "Design automated health check and monitoring tools specifications",
+          "agent": "BUG-RESOLVER-001",
+          "expectedOutput": "automated-monitoring-specifications"
+        },
+        {
+          "action": "delegate-tool-creation-to-code-gen",
+          "description": "Hand off tool creation to CODE-GEN-WF-001 workflow",
+          "agent": "BUG-RESOLVER-001",
+          "targetWorkflow": "CODE-GEN-WF-001",
+          "expectedOutput": "generated-devtools-from-code-gen-workflow"
+        },
+        {
+          "action": "validate-generated-tools",
+          "description": "Validate tools received from CODE-GEN-WF-001 workflow",
+          "agent": "BUG-RESOLVER-001",
+          "expectedOutput": "tool-validation-report"
         },
         {
           "action": "create-tool-documentation",
@@ -290,6 +309,12 @@
       ],
       "qualityGates": [
         {
+          "gateName": "code-generation-workflow-success",
+          "description": "Verify CODE-GEN-WF-001 workflow completed tool creation successfully",
+          "threshold": 0.88,
+          "validator": "BUG-RESOLVER-001"
+        },
+        {
           "gateName": "tool-functionality",
           "description": "Verify all created tools function correctly",
           "threshold": 0.88,
@@ -303,25 +328,45 @@
         }
       ],
       "stageOutputs": [
-        "complete-devtools-suite",
+        "complete-devtools-suite-via-delegation",
         "tool-documentation-package",
         "deployment-verification-report",
-        "future-maintenance-guidelines"
+        "future-maintenance-guidelines",
+        "code-generation-workflow-completion-report"
       ]
     },
 
     "stage6_solutionImplementation": {
-      "stageName": "Solution Implementation and Validation",
-      "description": "Implement validated solution and perform comprehensive testing",
+      "stageName": "Solution Implementation via Code Generation Workflow",
+      "description": "Delegate solution implementation to CODE-GEN-WF-001 workflow and validate results",
       "estimatedDuration": "{DURATION: 1-2_hours}",
-      "primaryAgent": "CODE-GEN-001",
-      "supportingAgents": ["BUG-RESOLVER-001", "DRY-RUN-001"],
+      "primaryAgent": "BUG-RESOLVER-001",
+      "supportingAgents": ["DRY-RUN-001"],
+      "workflowDelegation": {
+        "targetWorkflow": "CODE-GEN-WF-001",
+        "delegationReason": "Code generation requires specialized CODE-GEN-001 agent and workflow",
+        "contextTransfer": "solution-requirements-and-specifications",
+        "qualityGateHandoff": "validated-solution-proposal"
+      },
       "stageActions": [
         {
-          "action": "implement-validated-solution",
-          "description": "Apply the validated solution to resolve the issue",
-          "agent": "CODE-GEN-001",
-          "expectedOutput": "implemented-solution"
+          "action": "prepare-code-generation-requirements",
+          "description": "Prepare detailed requirements for CODE-GEN-WF-001 workflow",
+          "agent": "BUG-RESOLVER-001",
+          "expectedOutput": "code-generation-requirements-specification"
+        },
+        {
+          "action": "delegate-to-code-generation-workflow",
+          "description": "Hand off solution implementation to CODE-GEN-WF-001 workflow",
+          "agent": "BUG-RESOLVER-001",
+          "targetWorkflow": "CODE-GEN-WF-001",
+          "expectedOutput": "implemented-solution-from-code-gen-workflow"
+        },
+        {
+          "action": "validate-delegated-solution",
+          "description": "Validate solution received from CODE-GEN-WF-001 workflow",
+          "agent": "BUG-RESOLVER-001",
+          "expectedOutput": "solution-validation-report"
         },
         {
           "action": "execute-comprehensive-testing",
@@ -344,6 +389,12 @@
       ],
       "qualityGates": [
         {
+          "gateName": "code-generation-workflow-success",
+          "description": "Verify CODE-GEN-WF-001 workflow completed successfully",
+          "threshold": 0.90,
+          "validator": "BUG-RESOLVER-001"
+        },
+        {
           "gateName": "issue-resolution-confirmation",
           "description": "Verify original issue is completely resolved",
           "threshold": 0.95,
@@ -357,10 +408,11 @@
         }
       ],
       "stageOutputs": [
-        "successfully-implemented-solution",
+        "successfully-implemented-solution-via-delegation",
         "comprehensive-testing-results",
         "system-stability-confirmation",
-        "performance-impact-analysis"
+        "performance-impact-analysis",
+        "code-generation-workflow-completion-report"
       ]
     },
 

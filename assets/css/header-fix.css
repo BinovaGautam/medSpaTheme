@@ -1,0 +1,290 @@
+/**
+ * Header Transparency Fix for PreetiDreams Medical Spa
+ *
+ * Problem: Header is transparent by default on all pages, causing visibility issues
+ *          on pages without hero sections (treatments, about, contact, etc.)
+ *
+ * Solution: Make header solid by default, dynamic transparency on hero pages
+ */
+
+/* =============================================================================
+   HEADER TRANSPARENCY OVERRIDE - SOLID BY DEFAULT
+   ============================================================================= */
+
+/* Override the default transparent header to be solid by default */
+.professional-header {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid var(--color-neutral-medium) !important;
+  box-shadow: 0 2px 12px rgba(52, 73, 94, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* =============================================================================
+   DYNAMIC SCROLL TRANSPARENCY FOR HERO SECTIONS
+   ============================================================================= */
+
+/* Initial state: Completely transparent for hero sections */
+body.transparent-header .professional-header,
+body.has-hero-section .professional-header,
+html body.transparent-header .professional-header,
+html body.has-hero-section .professional-header {
+  background: rgba(255, 255, 255, 0) !important; /* Start completely transparent */
+  border-bottom: 1px solid rgba(255, 255, 255, 0) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(0px) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Scrolled state classes - applied via JavaScript */
+body.transparent-header .professional-header.scroll-opacity-10,
+body.has-hero-section .professional-header.scroll-opacity-10 {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(2px) !important;
+}
+
+body.transparent-header .professional-header.scroll-opacity-25,
+body.has-hero-section .professional-header.scroll-opacity-25 {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+body.transparent-header .professional-header.scroll-opacity-50,
+body.has-hero-section .professional-header.scroll-opacity-50 {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+body.transparent-header .professional-header.scroll-opacity-75,
+body.has-hero-section .professional-header.scroll-opacity-75 {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+body.transparent-header .professional-header.scroll-opacity-90,
+body.has-hero-section .professional-header.scroll-opacity-90 {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+body.transparent-header .professional-header.scroll-opacity-100,
+body.has-hero-section .professional-header.scroll-opacity-100 {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid var(--color-neutral-medium) !important;
+  box-shadow: 0 2px 12px rgba(52, 73, 94, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* When explicitly scrolled (legacy support): All headers become solid */
+.professional-header.scrolled {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid var(--color-neutral-medium) !important;
+  box-shadow: 0 2px 12px rgba(52, 73, 94, 0.08) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* =============================================================================
+   CONTENT SPACING FIX - ENSURE CONTENT STARTS AFTER HEADER
+   HIGH SPECIFICITY TO OVERRIDE EXISTING RULES
+   ============================================================================= */
+
+/* VERY HIGH SPECIFICITY to override broad CSS reset rules */
+body.solid-header,
+body.no-hero-section,
+html body.solid-header,
+html body.no-hero-section {
+  padding-top: 90px !important; /* Header height (80px) + 10px spacing */
+}
+
+/* Prevent any first-child resets from overriding our spacing */
+body.solid-header > *:first-child,
+body.no-hero-section > *:first-child,
+body.solid-header #page,
+body.no-hero-section #page,
+body.solid-header #main,
+body.no-hero-section #main,
+body.solid-header .site,
+body.no-hero-section .site,
+body.solid-header .site-main,
+body.no-hero-section .site-main {
+  margin-top: 0 !important;
+  /* DO NOT override body padding-top */
+}
+
+/* Specific content containers with additional spacing */
+body.solid-header main,
+body.no-hero-section main,
+body.solid-header .page-content,
+body.no-hero-section .page-content,
+body.solid-header .entry-content,
+body.no-hero-section .entry-content,
+body.solid-header .treatment-content,
+body.no-hero-section .treatment-content,
+body.solid-header .homepage,
+body.no-hero-section .homepage {
+  padding-top: 2rem !important; /* Additional content spacing */
+  margin-top: 0 !important;
+}
+
+/* Page-specific targeting with high specificity */
+body.page-treatments.solid-header .treatment-content,
+body.page-about.solid-header .page-content,
+body.page-contact.solid-header .page-content,
+body.page-testimonials.solid-header .page-content {
+  padding-top: 2rem !important;
+  margin-top: 0 !important;
+}
+
+/* =============================================================================
+   HERO SECTION SPECIFIC ADJUSTMENTS
+   ============================================================================= */
+
+/* Hero sections: NO body padding, content starts right after navbar */
+body.transparent-header,
+body.has-hero-section,
+html body.transparent-header,
+html body.has-hero-section {
+  padding-top: 0 !important; /* No body padding for hero sections */
+}
+
+/* Hero section content: Only account for navbar height */
+body.transparent-header .premium-hero,
+body.has-hero-section .premium-hero,
+body.transparent-header .modern-hero,
+body.has-hero-section .modern-hero,
+body.transparent-header .hero-section,
+body.has-hero-section .hero-section {
+  padding-top: 80px !important; /* Only navbar height */
+  margin-top: 0 !important;
+}
+
+/* All other content in hero pages should have no extra padding */
+body.transparent-header main:not(.premium-hero):not(.modern-hero):not(.hero-section),
+body.has-hero-section main:not(.premium-hero):not(.modern-hero):not(.hero-section),
+body.transparent-header .page-content,
+body.has-hero-section .page-content,
+body.transparent-header .entry-content,
+body.has-hero-section .entry-content,
+body.transparent-header .homepage,
+body.has-hero-section .homepage {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* WordPress admin bar adjustments for hero sections */
+body.admin-bar.transparent-header .premium-hero,
+body.admin-bar.has-hero-section .premium-hero,
+body.admin-bar.transparent-header .modern-hero,
+body.admin-bar.has-hero-section .modern-hero,
+body.admin-bar.transparent-header .hero-section,
+body.admin-bar.has-hero-section .hero-section {
+  padding-top: 112px !important; /* Navbar (80px) + Admin bar (32px) */
+}
+
+/* WordPress admin bar adjustments for solid header pages */
+body.admin-bar.solid-header,
+body.admin-bar.no-hero-section,
+html body.admin-bar.solid-header,
+html body.admin-bar.no-hero-section {
+  padding-top: 122px !important; /* Header (80px) + Admin bar (32px) + 10px spacing */
+}
+
+/* Responsive header height adjustments */
+@media (max-width: 782px) {
+  /* WordPress admin bar is 46px on mobile */
+  body.admin-bar.solid-header,
+  body.admin-bar.no-hero-section,
+  html body.admin-bar.solid-header,
+  html body.admin-bar.no-hero-section {
+    padding-top: 136px !important; /* Header (80px) + Admin bar (46px) + 10px spacing */
+  }
+
+  /* Hero sections with mobile admin bar */
+  body.admin-bar.transparent-header .premium-hero,
+  body.admin-bar.has-hero-section .premium-hero,
+  body.admin-bar.transparent-header .modern-hero,
+  body.admin-bar.has-hero-section .modern-hero,
+  body.admin-bar.transparent-header .hero-section,
+  body.admin-bar.has-hero-section .hero-section {
+    padding-top: 126px !important; /* Navbar (80px) + Admin bar (46px) */
+  }
+}
+
+@media (max-width: 768px) {
+  body.solid-header,
+  body.no-hero-section,
+  html body.solid-header,
+  html body.no-hero-section {
+    padding-top: 85px !important; /* Slightly smaller header on mobile */
+  }
+
+  /* Hero sections with smaller mobile header */
+  body.transparent-header .premium-hero,
+  body.has-hero-section .premium-hero,
+  body.transparent-header .modern-hero,
+  body.has-hero-section .modern-hero,
+  body.transparent-header .hero-section,
+  body.has-hero-section .hero-section {
+    padding-top: 75px !important; /* Smaller navbar on mobile */
+  }
+
+  body.admin-bar.solid-header,
+  body.admin-bar.no-hero-section,
+  html body.admin-bar.solid-header,
+  html body.admin-bar.no-hero-section {
+    padding-top: 131px !important; /* Header (75px) + Admin bar (46px) + 10px spacing */
+  }
+
+  body.admin-bar.transparent-header .premium-hero,
+  body.admin-bar.has-hero-section .premium-hero,
+  body.admin-bar.transparent-header .modern-hero,
+  body.admin-bar.has-hero-section .modern-hero,
+  body.admin-bar.transparent-header .hero-section,
+  body.admin-bar.has-hero-section .hero-section {
+    padding-top: 121px !important; /* Navbar (75px) + Admin bar (46px) */
+  }
+}
+
+@media (max-width: 480px) {
+  body.solid-header,
+  body.no-hero-section,
+  html body.solid-header,
+  html body.no-hero-section {
+    padding-top: 80px !important; /* Even smaller on very small screens */
+  }
+
+  /* Hero sections on very small screens */
+  body.transparent-header .premium-hero,
+  body.has-hero-section .premium-hero,
+  body.transparent-header .modern-hero,
+  body.has-hero-section .modern-hero,
+  body.transparent-header .hero-section,
+  body.has-hero-section .hero-section {
+    padding-top: 70px !important; /* Even smaller navbar */
+  }
+
+  body.admin-bar.solid-header,
+  body.admin-bar.no-hero-section,
+  html body.admin-bar.solid-header,
+  html body.admin-bar.no-hero-section {
+    padding-top: 126px !important; /* Header (70px) + Admin bar (46px) + 10px spacing */
+  }
+
+  body.admin-bar.transparent-header .premium-hero,
+  body.admin-bar.has-hero-section .premium-hero,
+  body.admin-bar.transparent-header .modern-hero,
+  body.admin-bar.has-hero-section .modern-hero,
+  body.admin-bar.transparent-header .hero-section,
+  body.admin-bar.has-hero-section .hero-section {
+    padding-top: 116px !important; /* Navbar (70px) + Admin bar (46px) */
+  }
+}
+
+/* =============================================================================
+   END HEADER TRANSPARENCY OVERRIDE
+   ============================================================================= */

@@ -69,6 +69,23 @@ function preetidreams_enqueue_scripts() {
         PREETIDREAMS_VERSION
     );
 
+    // Header transparency fix - solid header by default
+    wp_enqueue_style(
+        'preetidreams-header-fix',
+        get_template_directory_uri() . '/assets/css/header-fix.css',
+        ['preetidreams-medical-spa'],
+        PREETIDREAMS_VERSION
+    );
+
+    // Header scroll transparency for hero pages
+    wp_enqueue_script(
+        'preetidreams-header-transparency',
+        get_template_directory_uri() . '/assets/js/header-scroll-transparency.js',
+        [],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
     // Enqueue core JavaScript
     wp_enqueue_script(
         'preetidreams-app-core',
@@ -2966,5 +2983,31 @@ add_action('wp_enqueue_scripts', 'preetidreams_enqueue_treatments_fonts');
  * Browser-accessible debugging and diagnostic tools
  */
 require_once get_template_directory() . '/devtools/wp-admin-tools/load-admin-tools.php';
+
+/**
+ * Add custom body classes for header transparency control
+ * This helps distinguish pages that should have transparent headers (with hero sections)
+ * from pages that should have solid headers (regular content pages)
+ */
+function preetidreams_custom_body_classes($classes) {
+    // Pages that should have transparent headers (with hero sections)
+    if (is_front_page() || is_home()) {
+        $classes[] = 'has-hero-section';
+        $classes[] = 'transparent-header';
+    } else {
+        // All other pages should have solid headers
+        $classes[] = 'no-hero-section';
+        $classes[] = 'solid-header';
+    }
+
+    // Add page-specific classes for easier targeting
+    if (is_page()) {
+        global $post;
+        $classes[] = 'page-' . $post->post_name;
+    }
+
+    return $classes;
+}
+add_filter('body_class', 'preetidreams_custom_body_classes');
 
 // Debug scripts removed - tools should now work with direct registration
