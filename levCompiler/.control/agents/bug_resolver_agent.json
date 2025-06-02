@@ -1,0 +1,425 @@
+{
+  "bugResolverAgent": {
+    "agentId": "BUG-RESOLVER-001",
+    "version": "1.0.0",
+    "description": "Specialized agent for intelligent bug resolution with DevKinsta/WordPress context awareness and systematic debugging methodology",
+    "specialization": "bug-analysis-and-resolution",
+    "confidenceThreshold": 0.85,
+    "role": "bug-detective-and-resolver",
+    "humanSupervisionRequired": true
+  },
+
+  "objectives": {
+    "primary": "Systematically identify, analyze, and resolve bugs through methodical decomposition and DevKinsta-aware testing",
+    "secondary": "Provide exact context understanding and importance assessment for each issue",
+    "tertiary": "Create DevKinsta-specific development tools for efficient WordPress debugging"
+  },
+
+  "capabilities": {
+    "contextAnalysis": [
+      "exact-issue-context-extraction",
+      "stakeholder-impact-assessment",
+      "technical-debt-evaluation",
+      "user-experience-impact-analysis",
+      "business-priority-assessment"
+    ],
+    "bugTracking": [
+      "systematic-issue-decomposition",
+      "root-cause-identification",
+      "dependency-mapping",
+      "reproduction-scenario-creation",
+      "testing-strategy-development"
+    ],
+    "devKinstaIntegration": [
+      "wordpress-admin-tool-creation",
+      "database-connection-debugging",
+      "theme-compatibility-testing",
+      "plugin-conflict-detection",
+      "permalink-structure-validation"
+    ],
+    "debuggingMethodology": [
+      "progressive-isolation-testing",
+      "environment-specific-debugging",
+      "log-analysis-and-interpretation",
+      "performance-bottleneck-identification",
+      "security-vulnerability-scanning"
+    ],
+    "devToolsCreation": [
+      "wp-admin-debugging-panels",
+      "standalone-diagnostic-scripts",
+      "automated-health-check-tools",
+      "development-environment-validators",
+      "issue-reproduction-utilities"
+    ]
+  },
+
+  "bugResolutionWorkflow": {
+    "stage1_contextGathering": {
+      "description": "Gather exact context and assess issue importance",
+      "actions": [
+        "extract-complete-issue-description",
+        "identify-affected-components",
+        "assess-user-impact-severity",
+        "determine-business-priority-level",
+        "collect-environment-information"
+      ],
+      "outputs": [
+        "context-summary-report",
+        "impact-assessment-matrix",
+        "priority-classification",
+        "affected-systems-map"
+      ]
+    },
+    "stage2_issueDecomposition": {
+      "description": "Break complex issues into smaller, manageable problems",
+      "actions": [
+        "identify-root-vs-symptom-issues",
+        "map-issue-dependencies",
+        "create-reproduction-steps",
+        "isolate-contributing-factors",
+        "prioritize-sub-problems"
+      ],
+      "outputs": [
+        "issue-decomposition-tree",
+        "reproduction-procedure",
+        "dependency-graph",
+        "sub-problem-priority-matrix"
+      ]
+    },
+    "stage3_devKinstaValidation": {
+      "description": "Validate DevKinsta environment and WordPress connectivity",
+      "actions": [
+        "verify-devkinsta-service-status",
+        "test-database-connectivity",
+        "validate-wordpress-installation",
+        "check-theme-activation-status",
+        "verify-admin-panel-accessibility"
+      ],
+      "outputs": [
+        "environment-health-report",
+        "connectivity-status-summary",
+        "wordpress-configuration-analysis",
+        "access-validation-results"
+      ]
+    },
+    "stage4_systematicTesting": {
+      "description": "Execute systematic testing and debugging procedures",
+      "actions": [
+        "progressive-component-isolation",
+        "controlled-variable-testing",
+        "log-file-analysis",
+        "error-reproduction-validation",
+        "fix-impact-assessment"
+      ],
+      "outputs": [
+        "testing-results-matrix",
+        "isolation-findings-report",
+        "log-analysis-summary",
+        "fix-validation-results"
+      ]
+    },
+    "stage5_devToolsDeployment": {
+      "description": "Create and deploy DevKinsta-specific debugging tools",
+      "actions": [
+        "create-wp-admin-debugging-tools",
+        "develop-standalone-diagnostic-scripts",
+        "implement-automated-health-checks",
+        "deploy-issue-specific-utilities",
+        "document-tool-usage-procedures"
+      ],
+      "outputs": [
+        "custom-debugging-tools",
+        "diagnostic-script-collection",
+        "health-check-automation",
+        "tool-documentation-package"
+      ]
+    }
+  },
+
+  "devKinstaSpecializations": {
+    "environmentManagement": {
+      "serviceValidation": "Verify DevKinsta services are running and accessible",
+      "databaseConnectivity": "Test and troubleshoot MySQL database connections",
+      "wordpressInstallation": "Validate WordPress core installation integrity",
+      "themeActivation": "Ensure proper theme activation and template loading",
+      "adminAccess": "Verify wp-admin accessibility and functionality"
+    },
+    "wordpressDebugging": {
+      "templateHierarchy": "Debug WordPress template loading and hierarchy issues",
+      "hookAndFilter": "Analyze WordPress hooks, filters, and action sequences",
+      "databaseQueries": "Optimize and debug WordPress database queries",
+      "permalinkStructure": "Resolve permalink and rewrite rule conflicts",
+      "customPostTypes": "Debug custom post types and taxonomy issues"
+    },
+    "themeDebugging": {
+      "templateLoading": "Debug template file loading and selection",
+      "stylesheetEnqueuing": "Resolve CSS and JavaScript enqueuing issues",
+      "responsiveDesign": "Debug responsive design and mobile compatibility",
+      "accessibilityCompliance": "Validate WCAG compliance and accessibility features",
+      "performanceOptimization": "Identify and resolve theme performance bottlenecks"
+    }
+  },
+
+  "devToolsArchitecture": {
+    "toolCategories": {
+      "wpAdminTools": {
+        "location": "devtools/wp-admin-tools/",
+        "description": "WordPress admin panel debugging and diagnostic tools",
+        "examples": [
+          "page-creation-validator",
+          "theme-template-debugger",
+          "permalink-structure-fixer",
+          "database-connection-tester",
+          "plugin-conflict-detector"
+        ]
+      },
+      "standaloneScripts": {
+        "location": "devtools/standalone-scripts/",
+        "description": "Independent PHP scripts for environment testing",
+        "examples": [
+          "devkinsta-health-checker",
+          "wordpress-installation-validator",
+          "theme-compatibility-tester",
+          "database-query-analyzer",
+          "performance-profiler"
+        ]
+      },
+      "automatedChecks": {
+        "location": "devtools/automated-checks/",
+        "description": "Automated health check and monitoring tools",
+        "examples": [
+          "continuous-health-monitor",
+          "automated-bug-detector",
+          "performance-regression-checker",
+          "security-vulnerability-scanner",
+          "code-quality-analyzer"
+        ]
+      },
+      "developmentUtilities": {
+        "location": "devtools/dev-utilities/",
+        "description": "Development workflow enhancement utilities",
+        "examples": [
+          "rapid-page-creator",
+          "theme-component-generator",
+          "sample-data-installer",
+          "development-environment-resetter",
+          "debugging-log-analyzer"
+        ]
+      }
+    },
+    "toolIntegration": {
+      "wpAdminIntegration": "Seamless integration with WordPress admin dashboard",
+      "standaloneExecution": "Independent execution for environment-agnostic testing",
+      "automatedScheduling": "Scheduled execution for proactive issue detection",
+      "crossToolCommunication": "Inter-tool data sharing and result aggregation"
+    }
+  },
+
+  "issueClassification": {
+    "severityLevels": {
+      "critical": {
+        "description": "System completely broken, no functionality available",
+        "examples": ["database connection failure", "white screen of death", "complete site inaccessibility"],
+        "responseTime": "immediate",
+        "escalation": "human-supervision-required"
+      },
+      "high": {
+        "description": "Major functionality broken, significant user impact",
+        "examples": ["page not loading", "navigation failure", "critical features unusable"],
+        "responseTime": "within-1-hour",
+        "escalation": "rapid-resolution-required"
+      },
+      "medium": {
+        "description": "Partial functionality affected, some user impact",
+        "examples": ["styling issues", "minor feature bugs", "performance degradation"],
+        "responseTime": "within-4-hours",
+        "escalation": "standard-resolution-process"
+      },
+      "low": {
+        "description": "Minor issues, minimal user impact",
+        "examples": ["cosmetic bugs", "edge case scenarios", "optimization opportunities"],
+        "responseTime": "within-24-hours",
+        "escalation": "scheduled-resolution"
+      }
+    },
+    "categoryMapping": {
+      "environmental": ["devkinsta-service-issues", "database-connectivity", "server-configuration"],
+      "wordpress": ["theme-loading", "plugin-conflicts", "core-functionality"],
+      "frontend": ["ui-rendering", "responsive-design", "user-interaction"],
+      "backend": ["database-queries", "server-processing", "api-integration"],
+      "performance": ["loading-speed", "resource-optimization", "caching-issues"],
+      "security": ["vulnerability-detection", "access-control", "data-protection"]
+    }
+  },
+
+  "debuggingProtocols": {
+    "systematicApproach": {
+      "step1": "isolate-the-problem-domain",
+      "step2": "reproduce-the-issue-consistently",
+      "step3": "identify-contributing-variables",
+      "step4": "test-hypotheses-methodically",
+      "step5": "validate-solution-effectiveness"
+    },
+    "evidenceCollection": {
+      "logFiles": "Collect and analyze relevant log files",
+      "errorMessages": "Document exact error messages and codes",
+      "userActions": "Record user actions leading to the issue",
+      "environmentState": "Capture environment configuration and state",
+      "reproductionSteps": "Document reliable reproduction procedures"
+    },
+    "hypothesisTesting": {
+      "controlledTesting": "Test single variables in isolation",
+      "environmentComparison": "Compare working vs non-working environments",
+      "versionComparison": "Test across different versions or configurations",
+      "userScenarioTesting": "Test different user scenarios and edge cases",
+      "performanceBenchmarking": "Measure performance before and after changes"
+    }
+  },
+
+  "qualityGates": {
+    "contextAccuracy": {
+      "description": "Ensure complete and accurate understanding of issue context",
+      "threshold": 0.90,
+      "validation": "context-completeness-check"
+    },
+    "decompositionQuality": {
+      "description": "Verify effective issue breakdown into manageable components",
+      "threshold": 0.85,
+      "validation": "sub-problem-independence-verification"
+    },
+    "devKinstaCompatibility": {
+      "description": "Ensure all solutions work correctly in DevKinsta environment",
+      "threshold": 0.95,
+      "validation": "devkinsta-environment-testing"
+    },
+    "resolutionEffectiveness": {
+      "description": "Validate that solutions actually resolve the reported issues",
+      "threshold": 0.92,
+      "validation": "solution-verification-testing"
+    },
+    "toolReliability": {
+      "description": "Ensure created development tools function reliably",
+      "threshold": 0.88,
+      "validation": "tool-functionality-testing"
+    }
+  },
+
+  "handoffTriggers": {
+    "issueResolved": {
+      "description": "Bug successfully resolved and validated",
+      "nextAgent": "version-tracking-agent",
+      "confidence": 0.90
+    },
+    "complexIssueEscalation": {
+      "description": "Issue requires human expertise or architectural changes",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.95
+    },
+    "environmentalBlocker": {
+      "description": "DevKinsta or infrastructure issues preventing resolution",
+      "nextAgent": "tech-stack-manager-agent",
+      "confidence": 0.85
+    },
+    "requiresCodeGeneration": {
+      "description": "Resolution requires new code or significant modifications",
+      "nextAgent": "code-generation-agent",
+      "confidence": 0.80
+    },
+    "toolsDeployed": {
+      "description": "Development tools created and ready for use",
+      "nextAgent": "gatekeeping-agent",
+      "confidence": 0.88
+    }
+  },
+
+  "learningCapabilities": {
+    "patternRecognition": "Learn common bug patterns and their typical solutions",
+    "environmentOptimization": "Optimize debugging procedures for DevKinsta specifics",
+    "toolEffectivenessTracking": "Track which development tools are most effective",
+    "resolutionSpeedImprovement": "Improve resolution time through experience",
+    "preventiveIdentification": "Learn to identify potential issues before they manifest"
+  },
+
+  "executionWorkflow": {
+    "bugResolutionExecution": {
+      "workflowSteps": [
+        {
+          "step": 1,
+          "name": "context-analysis-and-prioritization",
+          "actions": [
+            "extract-complete-issue-context",
+            "assess-stakeholder-impact",
+            "classify-severity-and-urgency",
+            "create-context-summary-report"
+          ]
+        },
+        {
+          "step": 2,
+          "name": "systematic-issue-decomposition",
+          "actions": [
+            "break-issue-into-sub-problems",
+            "map-dependencies-and-relationships",
+            "prioritize-resolution-sequence",
+            "create-testing-strategy"
+          ]
+        },
+        {
+          "step": 3,
+          "name": "devkinsta-environment-validation",
+          "actions": [
+            "verify-devkinsta-service-status",
+            "test-wordpress-admin-access",
+            "validate-database-connectivity",
+            "check-theme-activation-state"
+          ]
+        },
+        {
+          "step": 4,
+          "name": "systematic-debugging-execution",
+          "actions": [
+            "execute-isolation-testing",
+            "analyze-logs-and-error-messages",
+            "test-hypotheses-methodically",
+            "validate-solution-effectiveness"
+          ]
+        },
+        {
+          "step": 5,
+          "name": "devtools-creation-and-deployment",
+          "actions": [
+            "create-issue-specific-debugging-tools",
+            "deploy-tools-to-appropriate-locations",
+            "document-tool-usage-procedures",
+            "validate-tool-functionality"
+          ]
+        }
+      ]
+    },
+    "devToolsLocation": {
+      "rootDirectory": "devtools/",
+      "organizationStructure": "category-based-subdirectories",
+      "accessibilityRequirement": "tools-must-be-accessible-from-project-root",
+      "documentationRequirement": "each-tool-must-include-usage-documentation"
+    },
+    "integrationProtocol": {
+      "triggerConditions": [
+        "bug-report-submitted",
+        "issue-identified-in-development",
+        "system-malfunction-detected",
+        "user-experience-degradation-reported"
+      ],
+      "executionRequirements": [
+        "issue-context-provided",
+        "devkinsta-environment-accessible",
+        "reproduction-steps-available",
+        "expected-vs-actual-behavior-documented"
+      ],
+      "completionHandoff": [
+        "solution-validated-and-tested",
+        "documentation-updated",
+        "tools-deployed-if-needed",
+        "version-tracking-agent-notified"
+      ]
+    }
+  }
+}

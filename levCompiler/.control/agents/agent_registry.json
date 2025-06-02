@@ -2,8 +2,8 @@
   "agentRegistry": {
     "version": "1.0.0",
     "lastUpdated": "{CURRENT_DATE}",
-    "totalAgents": 13,
-    "activeAgents": 13,
+    "totalAgents": 14,
+    "activeAgents": 14,
     "systemArchitecture": "intelligent-routing-with-human-supervision"
   },
 
@@ -138,6 +138,18 @@
       "confidenceThreshold": 0.90,
       "humanSupervisionRequired": true,
       "location": "levCompiler/.control/agents/task_planner_agent.json"
+    },
+
+    "bugResolverAgent": {
+      "agentId": "BUG-RESOLVER-001",
+      "status": "active",
+      "role": "bug-detective-and-resolver",
+      "priority": 2,
+      "description": "Specialized agent for intelligent bug resolution with DevKinsta/WordPress context awareness and systematic debugging methodology",
+      "specialization": "bug-analysis-and-resolution",
+      "confidenceThreshold": 0.85,
+      "humanSupervisionRequired": true,
+      "location": "levCompiler/.control/agents/bug_resolver_agent.json"
     }
   },
 

@@ -1,8 +1,8 @@
 {
   "workflowRegistry": {
     "version": "1.0.0",
-    "totalWorkflows": 7,
-    "activeWorkflows": 7,
+    "totalWorkflows": 8,
+    "activeWorkflows": 8,
     "systemArchitecture": "hierarchical-workflow-orchestration"
   },
 
@@ -99,6 +99,24 @@
           "outputLocation": "levCompiler/project_context/tasks/",
           "indexRegistration": "levCompiler/project_context/tasks/index.json",
           "archiveLocation": "levCompiler/project_context/archive/tasks/"
+        }
+      },
+
+      "bugResolutionWorkflow": {
+        "workflowId": "BUG-RESOLUTION-WF-001",
+        "name": "bug-resolution-workflow",
+        "type": "specialized-debugging-and-resolution",
+        "description": "Comprehensive bug resolution workflow with DevKinsta specialization and systematic debugging methodology",
+        "priority": 2,
+        "status": "active",
+        "triggerPatterns": ["bug", "issue", "problem", "error", "fix", "debug", "troubleshoot", "malfunction", "not working"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/bug_resolution_workflow.json",
+        "primaryAgent": "BUG-RESOLVER-001",
+        "devToolsManagement": {
+          "outputLocation": "devtools/",
+          "toolCategories": ["wp-admin-tools", "standalone-scripts", "automated-checks", "dev-utilities"],
+          "documentationRequirement": "each-tool-must-include-readme"
         }
       }
     }
