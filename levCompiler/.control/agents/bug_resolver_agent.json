@@ -164,54 +164,104 @@
     "toolCategories": {
       "wpAdminTools": {
         "location": "devtools/wp-admin-tools/",
-        "description": "WordPress admin panel debugging and diagnostic tools",
+        "description": "WordPress admin panel debugging and diagnostic tools accessible via browser",
+        "accessMethod": "wp-admin integrated pages with proper WordPress admin UI",
         "examples": [
-          "page-creation-validator",
+          "treatments-diagnostic-admin-page",
+          "treatments-fix-utility-admin-page",
           "theme-template-debugger",
           "permalink-structure-fixer",
           "database-connection-tester",
           "plugin-conflict-detector"
-        ]
+        ],
+        "integration": {
+          "adminMenuRegistration": "Add tools to WordPress admin menu under Tools section",
+          "capabilityRequired": "manage_options",
+          "nonceValidation": "All forms must use WordPress nonce validation",
+          "ajaxSupport": "Real-time feedback via WordPress AJAX",
+          "styling": "Use WordPress admin CSS classes for consistency"
+        }
       },
       "standaloneScripts": {
         "location": "devtools/standalone-scripts/",
-        "description": "Independent PHP scripts for environment testing",
+        "description": "Independent PHP scripts for environment testing (CLI and browser)",
+        "accessMethod": "Direct execution via command line or browser URL",
         "examples": [
           "devkinsta-health-checker",
           "wordpress-installation-validator",
           "theme-compatibility-tester",
           "database-query-analyzer",
           "performance-profiler"
-        ]
+        ],
+        "dualAccess": {
+          "commandLine": "php script-name.php",
+          "browserUrl": "http://site.local/wp-content/themes/theme-name/devtools/standalone-scripts/script-name.php",
+          "detection": "Detect CLI vs browser environment and adjust output accordingly",
+          "security": "Basic security checks to prevent unauthorized browser access"
+        }
       },
       "automatedChecks": {
         "location": "devtools/automated-checks/",
-        "description": "Automated health check and monitoring tools",
+        "description": "Automated health check and monitoring tools with browser dashboards",
+        "accessMethod": "Scheduled execution with browser-accessible status dashboards",
         "examples": [
-          "continuous-health-monitor",
-          "automated-bug-detector",
+          "continuous-health-monitor-dashboard",
+          "automated-bug-detector-admin-widget",
           "performance-regression-checker",
           "security-vulnerability-scanner",
           "code-quality-analyzer"
-        ]
+        ],
+        "dashboardIntegration": {
+          "adminWidgets": "WordPress dashboard widgets for status overview",
+          "realTimeUpdates": "AJAX-powered real-time status updates",
+          "alertSystem": "Browser notifications for critical issues",
+          "exportReports": "Downloadable reports in multiple formats"
+        }
       },
       "developmentUtilities": {
         "location": "devtools/dev-utilities/",
-        "description": "Development workflow enhancement utilities",
+        "description": "Development workflow enhancement utilities with web interfaces",
+        "accessMethod": "WordPress admin pages with user-friendly web forms",
         "examples": [
-          "rapid-page-creator",
+          "rapid-page-creator-admin-interface",
+          "sample-data-installer-web-form",
           "theme-component-generator",
-          "sample-data-installer",
           "development-environment-resetter",
-          "debugging-log-analyzer"
-        ]
+          "debugging-log-analyzer-dashboard"
+        ],
+        "webInterface": {
+          "formGeneration": "WordPress-compatible forms with validation",
+          "progressIndicators": "Real-time progress bars for long-running operations",
+          "resultDisplay": "Formatted results with color-coded status indicators",
+          "downloadOptions": "Generated files available for download"
+        }
+      }
+    },
+    "browserAccessibilityRequirements": {
+      "wpAdminIntegration": {
+        "menuRegistration": "Register admin menu items for all major tools",
+        "permissionChecks": "Verify user capabilities before tool access",
+        "securityValidation": "WordPress nonce and capability verification",
+        "userInterface": "Consistent WordPress admin styling and UX patterns"
+      },
+      "responsiveDesign": {
+        "mobileCompatible": "Tools must work on mobile devices in wp-admin",
+        "tabletOptimized": "Optimized layout for tablet access",
+        "desktopFull": "Full feature set available on desktop browsers"
+      },
+      "realTimeFeedback": {
+        "ajaxOperations": "Long-running operations use AJAX for progress updates",
+        "statusIndicators": "Visual feedback for all operations (success/warning/error)",
+        "logStreaming": "Real-time log output for diagnostic operations",
+        "notificationSystem": "WordPress admin notices for important feedback"
       }
     },
     "toolIntegration": {
-      "wpAdminIntegration": "Seamless integration with WordPress admin dashboard",
-      "standaloneExecution": "Independent execution for environment-agnostic testing",
-      "automatedScheduling": "Scheduled execution for proactive issue detection",
-      "crossToolCommunication": "Inter-tool data sharing and result aggregation"
+      "wpAdminSeamless": "Seamless integration with WordPress admin dashboard and existing UI patterns",
+      "browserDirectAccess": "Direct browser access to standalone scripts with security checks",
+      "dualMode": "All tools support both CLI and browser access modes",
+      "crossToolCommunication": "Inter-tool data sharing and result aggregation accessible via browser interface",
+      "dashboardCentralization": "Central dashboard showing status of all tools and system health"
     }
   },
 

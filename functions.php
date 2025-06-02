@@ -2960,3 +2960,11 @@ function preetidreams_enqueue_treatments_fonts() {
     }
 }
 add_action('wp_enqueue_scripts', 'preetidreams_enqueue_treatments_fonts');
+
+/**
+ * Load DevKinsta Admin Tools
+ * Browser-accessible debugging and diagnostic tools
+ */
+require_once get_template_directory() . '/devtools/wp-admin-tools/load-admin-tools.php';
+
+// Debug scripts removed - tools should now work with direct registration
