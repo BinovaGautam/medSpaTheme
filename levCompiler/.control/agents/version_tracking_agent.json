@@ -272,8 +272,14 @@
           },
           {
             "step": "commit-changes",
-            "command": "git commit -m '{SEMANTIC_COMMIT_MESSAGE}'",
-            "purpose": "Create commit with standardized message"
+            "command": "git commit -m \"{SEMANTIC_COMMIT_MESSAGE}\"",
+            "purpose": "Create commit with standardized message",
+            "safety": [
+              "escape-double-quotes-in-message",
+              "remove-newlines-from-message",
+              "limit-message-length-to-72-chars",
+              "fallback-to-simple-message-on-error"
+            ]
           },
           {
             "step": "tag-version",
@@ -518,8 +524,17 @@
   },
 
   "gitWorkflowImplementation": {
-    "commitMessageTemplate": "{TYPE}({SCOPE}): {DESCRIPTION}\n\n{DETAILED_DESCRIPTION}\n\n{METADATA}",
+    "commitMessageTemplate": "{TYPE}({SCOPE}): {DESCRIPTION}",
+    "commitMessageAlternative": "{TYPE}: {DESCRIPTION} - {SCOPE}",
+    "commitMessageSimple": "{TYPE}: {DESCRIPTION}",
     "commitMessageGeneration": {
+      "rules": [
+        "MUST use single-line commit messages for shell safety",
+        "MUST escape quotes and special characters",
+        "MUST keep messages under 72 characters when possible",
+        "MUST use simple format without newlines",
+        "MUST avoid complex metadata in commit message body"
+      ],
       "typeMapping": {
         "task-planning": "feat",
         "agent-creation": "feat",
@@ -530,22 +545,93 @@
         "documentation": "docs",
         "performance": "perf",
         "testing": "test",
-        "configuration": "chore"
+        "configuration": "chore",
+        "refactoring": "refactor",
+        "styling": "style"
       },
-      "scopeDetection": "auto-detect-from-file-paths-and-changes",
-      "metadataInclusion": [
-        "TASK-PLANNER-001: {TASK_DESCRIPTION}",
-        "Files changed: {FILE_COUNT}",
-        "Story points: {STORY_POINTS}",
-        "Quality gates: {QUALITY_GATE_STATUS}"
-      ]
+      "scopeDetection": "auto-detect-from-primary-file-type",
+      "scopePriority": [
+        "treatments",
+        "navigation",
+        "homepage",
+        "admin",
+        "api",
+        "database",
+        "ui",
+        "config",
+        "theme"
+      ],
+      "metadataHandling": "exclude-from-commit-message",
+      "descriptionLimits": {
+        "maxLength": 50,
+        "preferredLength": 45,
+        "fallbackTruncation": true
+      },
+      "characterEscaping": {
+        "quotes": "escape-double-quotes-only",
+        "specialChars": "remove-problematic-chars",
+        "whitespace": "normalize-spaces"
+      }
     },
     "versionTagging": {
       "majorVersion": "Breaking changes or new major features",
       "minorVersion": "New features or significant enhancements",
       "patchVersion": "Bug fixes or minor improvements",
       "tagNamingConvention": "v{MAJOR}.{MINOR}.{PATCH}",
-      "tagMessageFormat": "Release v{VERSION}: {RELEASE_SUMMARY}"
+      "tagMessageFormat": "Release v{VERSION}: {RELEASE_SUMMARY}",
+      "tagMessageSimple": "v{VERSION}"
+    },
+    "shellSafetyMeasures": {
+      "commitMessageValidation": [
+        "no-newlines-in-message",
+        "no-unescaped-quotes",
+        "length-within-limits",
+        "no-shell-metacharacters"
+      ],
+      "errorPrevention": [
+        "test-commit-message-syntax",
+        "escape-shell-special-chars",
+        "validate-before-execution"
+      ],
+      "fallbackStrategies": [
+        "use-simple-template-on-failure",
+        "remove-scope-if-too-long",
+        "truncate-description-if-needed"
+      ]
+    },
+    "commitMessageProcessing": {
+      "sanitization": {
+        "removeNewlines": "Replace \\n with spaces",
+        "escapeQuotes": "Escape double quotes with backslash",
+        "trimWhitespace": "Remove leading/trailing whitespace",
+        "normalizeSpaces": "Replace multiple spaces with single space",
+        "removeShellMetaChars": "Remove or escape shell metacharacters"
+      },
+      "validation": {
+        "maxLength": 72,
+        "preferredLength": 50,
+        "requiredFormat": "type(scope): description",
+        "allowedChars": "alphanumeric, spaces, hyphens, parentheses, colons",
+        "prohibitedChars": "newlines, unescaped quotes, backticks, semicolons"
+      },
+      "fallbackStrategy": {
+        "level1": "Remove scope if message too long",
+        "level2": "Truncate description to fit limit",
+        "level3": "Use simple format: type: description",
+        "level4": "Use generic message: {type}: update files"
+      },
+      "examples": {
+        "good": [
+          "feat(treatments): add dynamic database integration",
+          "fix(navigation): resolve routing issues",
+          "docs: update README with setup instructions"
+        ],
+        "problematic": [
+          "feat(treatments): add dynamic database integration\\n\\nThis commit adds...",
+          "fix: resolve \"navigation\" issues with 'quotes'",
+          "feat: very long message that exceeds the character limit and may cause issues"
+        ]
+      }
     }
   }
 }
