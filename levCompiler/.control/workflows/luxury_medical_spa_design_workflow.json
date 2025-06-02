@@ -1,0 +1,464 @@
+{
+  "luxuryMedicalSpaDesignWorkflow": {
+    "workflowId": "LUXURY-MEDSPA-DESIGN-WF-001",
+    "name": "luxury-medical-spa-design-workflow",
+    "version": "1.0.0",
+    "description": "Complete workflow for creating luxury medical spa UI/UX designs with guaranteed consistency across all deliverables using UI/UX Design Agent",
+    "type": "luxury-brand-design-orchestration",
+    "priority": 1,
+    "status": "active",
+    "parentWorkflow": "ui-ux-creation-workflow",
+    "designApproach": "luxury-medical-spa-positioning",
+    "brandCompliance": "mandatory"
+  },
+
+  "objectives": {
+    "primary": "Create cohesive luxury medical spa experience designs that maintain 100% brand consistency across all pages using UI/UX Design Agent",
+    "secondary": "Ensure every design reflects premium positioning, medical professionalism, and consultation-focused journeys",
+    "tertiary": "Deliver immersive storytelling experiences that eliminate ecommerce patterns and emphasize artistry over transactions"
+  },
+
+  "luxuryDesignPrinciples": {
+    "brandPositioning": {
+      "luxuryMedicalSpa": "Affluent clients seeking premium aesthetic services",
+      "exclusivityFocus": "Convey expertise, luxury, and exclusivity",
+      "consultationDriven": "Guide toward personalized consultations rather than immediate purchases",
+      "medicalCredibility": "Board-certified practitioners and medical-grade technology",
+      "sophisticatedAesthetics": "Calming, premium visual appeal with generous whitespace"
+    },
+    "experienceDesign": {
+      "immersiveStorytelling": "Create anticipation through narrative rather than pricing",
+      "subtleDiscovery": "Progressive information disclosure without overwhelming CTAs",
+      "artistryShowcase": "Present treatments as medical artistry rather than services",
+      "trustBuilding": "Emphasize credentials, safety, and personalized care",
+      "premiumSpacing": "Luxury feel through sophisticated visual hierarchy"
+    },
+    "prohibitedPatterns": {
+      "ecommerceElements": "No pricing on cards, comparison grids, or shop-like layouts",
+      "transactionalLanguage": "Avoid 'buy now', 'add to cart', or sales-focused copy",
+      "masMarketApproach": "No generic medical spa or beauty salon aesthetics",
+      "complexFiltering": "Avoid overwhelming filter systems or search complexity",
+      "aggressiveCTAs": "No multiple CTAs competing for attention on single components"
+    }
+  },
+
+  "workflowStages": {
+    "stage1BrandAlignmentValidation": {
+      "description": "Validate design requirements against luxury medical spa brand principles",
+      "agent": "ui-ux-design-agent",
+      "duration": "45-60 minutes",
+      "agentConfiguration": {
+        "agentId": "UI-UX-DESIGN-001",
+        "humanSupervisionRequired": true,
+        "confidenceThreshold": 0.95,
+        "specialization": "luxury-medical-spa-interface-design"
+      },
+      "validationChecks": {
+        "brandPositioning": "Ensure luxury positioning over mass market approach",
+        "targetAudience": "Validate affluent clientele focus (ages 25-65, quality-conscious)",
+        "medicalCredibility": "Confirm board-certified provider emphasis",
+        "consultationFocus": "Verify consultation-driven rather than transactional approach",
+        "prohibitedPatterns": "Check for and eliminate ecommerce/mass market elements"
+      },
+      "deliverables": [
+        "brand-alignment-assessment",
+        "target-audience-validation",
+        "luxury-positioning-confirmation",
+        "design-principle-compliance-check"
+      ],
+      "qualityGates": {
+        "brandConsistency": 1.0,
+        "luxuryPositioning": 0.98,
+        "medicalCredibility": 0.95
+      },
+      "nextStage": "stage2DesignSystemConsistency"
+    },
+
+    "stage2DesignSystemConsistency": {
+      "description": "Ensure all designs follow established luxury medical spa design system",
+      "agent": "ui-ux-design-agent",
+      "duration": "60-90 minutes",
+      "designSystemReference": "levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+      "consistencyChecks": {
+        "colorPalette": "Verify Sage Green (#87A96B), Gold (#D4AF37), Medical Navy (#1B365D) usage",
+        "typography": "Confirm Playfair Display + Inter luxury hierarchy",
+        "spacing": "Validate premium spacing system (luxury mobile/desktop)",
+        "components": "Ensure component library consistency across all designs",
+        "interactions": "Verify sophisticated micro-interactions and transitions"
+      },
+      "deliverables": [
+        "design-system-compliance-audit",
+        "component-consistency-validation",
+        "typography-hierarchy-verification",
+        "color-palette-usage-analysis"
+      ],
+      "qualityGates": {
+        "designSystemCompliance": 1.0,
+        "componentConsistency": 0.98,
+        "visualHierarchy": 0.95
+      },
+      "nextStage": "stage3ImmersiveExperienceDesign"
+    },
+
+    "stage3ImmersiveExperienceDesign": {
+      "description": "Create immersive luxury experiences using UI/UX Design Agent storytelling capabilities",
+      "agent": "ui-ux-design-agent",
+      "duration": "120-180 minutes",
+      "experiencePatterns": {
+        "heroExperiences": "Immersive storytelling with parallax and premium imagery",
+        "treatmentDiscovery": "Artistic category presentation without pricing focus",
+        "philosophyNarrative": "Medical artistry and expertise storytelling",
+        "consultationJourney": "Sophisticated invitation to personalized care",
+        "trustCredentials": "Board-certified provider emphasis throughout"
+      },
+      "contentApproach": {
+        "educationalFirst": "Inform and inspire before selling",
+        "artistryShowcase": "Present treatments as medical art forms",
+        "personalizedCare": "Emphasize individual consultation and customization",
+        "medicalExcellence": "Highlight technology, safety, and expertise",
+        "luxuryPositioning": "Premium experience over transactional efficiency"
+      },
+      "deliverables": [
+        "immersive-page-layouts",
+        "storytelling-content-structure",
+        "artistic-treatment-presentation",
+        "consultation-journey-design",
+        "trust-building-element-integration"
+      ],
+      "qualityGates": {
+        "immersiveExperience": 0.95,
+        "storytellingEffectiveness": 0.90,
+        "consultationFocus": 0.98
+      },
+      "nextStage": "stage4AccessibilityLuxuryIntegration"
+    },
+
+    "stage4AccessibilityLuxuryIntegration": {
+      "description": "Integrate WCAG AAA accessibility as luxury feature using UI/UX Design Agent accessibility expertise",
+      "agent": "ui-ux-design-agent",
+      "duration": "90-120 minutes",
+      "accessibilityAsLuxury": {
+        "contrastExcellence": "11.5:1 contrast ratios as premium quality indicator",
+        "sophisticatedFocus": "Custom focus indicators with luxury brand colors",
+        "premiumNavigation": "Keyboard navigation with luxury styling",
+        "screenReaderElegance": "Semantic structure for inclusive premium experience",
+        "motorAccessibility": "Generous touch targets (56px) as luxury spacing"
+      },
+      "wcagAAARequirements": {
+        "colorContrast": "11.5:1 minimum ratio for all text elements",
+        "keyboardNavigation": "Full keyboard accessibility with custom focus indicators",
+        "screenReaderSupport": "Comprehensive ARIA labels and semantic markup",
+        "motorAccessibility": "Large touch targets and accessible interactions",
+        "cognitiveAccessibility": "Clear information architecture and simple navigation"
+      },
+      "deliverables": [
+        "accessibility-luxury-integration-plan",
+        "wcag-aaa-compliance-verification",
+        "focus-indicator-luxury-design",
+        "screen-reader-optimization-specs",
+        "motor-accessibility-enhancements"
+      ],
+      "qualityGates": {
+        "accessibilityCompliance": 1.0,
+        "luxuryAccessibilityIntegration": 0.95,
+        "wcagAAAVerification": 1.0
+      },
+      "nextStage": "stage5CrossPageConsistencyValidation"
+    },
+
+    "stage5CrossPageConsistencyValidation": {
+      "description": "Validate consistency across all page designs using UI/UX Design Agent pattern recognition",
+      "agent": "ui-ux-design-agent",
+      "duration": "60-90 minutes",
+      "consistencyChecks": {
+        "visualLanguage": "Consistent luxury aesthetic across all pages",
+        "navigationPatterns": "Uniform navigation and user flow patterns",
+        "contentHierarchy": "Consistent information architecture",
+        "interactionPatterns": "Uniform micro-interactions and transitions",
+        "trustElements": "Consistent credibility and trust signal placement",
+        "consultationJourney": "Coherent path to consultation across all touchpoints"
+      },
+      "crossPageValidation": {
+        "homepage": "Premium brand introduction and treatment discovery",
+        "treatments": "Artistic category presentation without ecommerce patterns",
+        "individualTreatment": "Medical artistry storytelling and consultation focus",
+        "aboutUs": "Founder legacy and medical excellence narrative",
+        "contact": "Sophisticated consultation invitation and premium contact experience"
+      },
+      "deliverables": [
+        "cross-page-consistency-audit",
+        "visual-language-cohesion-report",
+        "navigation-pattern-validation",
+        "consultation-journey-continuity-check",
+        "brand-consistency-verification"
+      ],
+      "qualityGates": {
+        "crossPageConsistency": 0.98,
+        "brandCohesion": 0.95,
+        "consultationJourneyContinuity": 0.90
+      },
+      "nextStage": "stage6StakeholderValidation"
+    },
+
+    "stage6StakeholderValidation": {
+      "description": "Present cohesive luxury design system to stakeholders for validation",
+      "agent": "human-interaction-agent",
+      "duration": "90-120 minutes",
+      "stakeholderGroups": {
+        "medicalSpaOwner": "Business owner validation of luxury positioning",
+        "boardCertifiedProviders": "Medical professional validation of credibility presentation",
+        "accessibilityExpert": "WCAG AAA compliance validation",
+        "luxuryBrandExpert": "Premium positioning and exclusivity validation",
+        "targetAudienceRepresentative": "Affluent client perspective validation"
+      },
+      "presentationMaterials": {
+        "designSystemOverview": "Complete luxury medical spa design foundation",
+        "pageDesignShowcase": "All page designs with consistency demonstration",
+        "interactionPrototypes": "Sophisticated micro-interactions and transitions",
+        "accessibilityDemonstration": "WCAG AAA compliance as luxury feature",
+        "brandPositioningValidation": "Luxury medical spa positioning evidence"
+      },
+      "deliverables": [
+        "stakeholder-feedback-compilation",
+        "luxury-positioning-validation",
+        "medical-credibility-approval",
+        "accessibility-expert-sign-off",
+        "target-audience-validation"
+      ],
+      "qualityGates": {
+        "stakeholderApproval": 1.0,
+        "luxuryPositioningConfirmation": 0.98,
+        "medicalCredibilityValidation": 0.95
+      },
+      "nextStage": "stage7ImplementationReadiness"
+    },
+
+    "stage7ImplementationReadiness": {
+      "description": "Prepare comprehensive implementation package using UI/UX Design Agent technical integration",
+      "agent": "ui-ux-design-agent",
+      "duration": "60-90 minutes",
+      "technicalIntegration": {
+        "wordPressSageCompatibility": "Ensure designs work with Sage theme architecture",
+        "tailwindCSSIntegration": "Component design compatible with Tailwind utility classes",
+        "acfProContentManagement": "Content management-friendly design patterns",
+        "viteBuildOptimization": "Asset organization for build pipeline",
+        "responsiveImplementation": "Mobile-first progressive enhancement specifications"
+      },
+      "implementationPackage": {
+        "designSpecifications": "Detailed implementation guidelines for development team",
+        "componentDocumentation": "Design system usage guides and maintenance docs",
+        "assetRequirements": "Images, fonts, icons, and media specifications",
+        "interactionSpecifications": "Micro-interaction and animation implementation guides",
+        "accessibilityImplementation": "WCAG AAA implementation guidelines and testing procedures"
+      },
+      "deliverables": [
+        "implementation-roadmap",
+        "developer-handoff-documentation",
+        "design-system-maintenance-guide",
+        "accessibility-implementation-checklist",
+        "brand-consistency-monitoring-plan"
+      ],
+      "qualityGates": {
+        "implementationReadiness": 0.95,
+        "technicalFeasibility": 0.90,
+        "documentationCompleteness": 0.98
+      },
+      "nextStage": "stage8QualityAssuranceApproval"
+    },
+
+    "stage8QualityAssuranceApproval": {
+      "description": "Final quality assurance and approval for luxury medical spa design system",
+      "agent": "ui-ux-design-agent",
+      "duration": "30-45 minutes",
+      "finalValidation": {
+        "brandConsistencyFinal": "Complete brand alignment across all designs",
+        "luxuryPositioningFinal": "Confirmed premium medical spa positioning",
+        "accessibilityComplianceFinal": "WCAG AAA verification across all components",
+        "consultationFocusFinal": "Consultation-driven experience validation",
+        "technicalReadinessFinal": "Implementation readiness confirmation"
+      },
+      "approvalCriteria": {
+        "allDesignsConsistent": "100% consistency across all page designs",
+        "luxuryStandardsMet": "Premium positioning and exclusivity achieved",
+        "medicalCredibilityEstablished": "Board-certified provider emphasis throughout",
+        "accessibilityExcellence": "WCAG AAA compliance as luxury feature",
+        "implementationReady": "Complete technical specifications provided"
+      },
+      "deliverables": [
+        "final-quality-assurance-report",
+        "luxury-brand-compliance-certificate",
+        "accessibility-excellence-validation",
+        "implementation-approval-package",
+        "design-system-delivery-confirmation"
+      ],
+      "qualityGates": {
+        "finalQualityApproval": 1.0,
+        "luxuryBrandCompliance": 0.98,
+        "implementationReadiness": 0.95
+      },
+      "nextStage": "workflowComplete"
+    }
+  },
+
+  "agentCoordination": {
+    "primaryAgent": {
+      "agentId": "UI-UX-DESIGN-001",
+      "role": "luxury-medical-spa-design-orchestrator",
+      "responsibilities": [
+        "create-luxury-medical-spa-designs",
+        "ensure-brand-consistency-across-all-pages",
+        "integrate-accessibility-as-luxury-feature",
+        "eliminate-ecommerce-patterns-completely",
+        "maintain-consultation-focused-experience"
+      ],
+      "specializations": [
+        "luxury-medical-spa-interface-design",
+        "premium-brand-visual-identity",
+        "accessibility-compliant-ui-patterns",
+        "patient-journey-optimization",
+        "conversion-focused-ux-design"
+      ]
+    },
+    "supportingAgents": {
+      "humanInteractionAgent": {
+        "role": "stakeholder-coordination-and-validation",
+        "responsibilities": [
+          "facilitate-brand-positioning-discussions",
+          "coordinate-medical-professional-validation",
+          "manage-accessibility-expert-reviews",
+          "oversee-luxury-brand-expert-consultation"
+        ]
+      }
+    }
+  },
+
+  "fileManagementProtocol": {
+    "designSystemLocation": "levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+    "designFilesLocation": "levCompiler/project_context/designs/",
+    "indexRegistration": "levCompiler/project_context/designs/index.json",
+    "namingConvention": "[PAGE_NAME]_DESIGN.md",
+    "versionControl": {
+      "enableVersioning": true,
+      "versionFormat": "LUXURY_REDESIGN_v3.0",
+      "backupLocation": "levCompiler/project_context/archive/designs/"
+    },
+    "consistencyValidation": {
+      "crossReferenceCheck": "Validate all designs reference same design system",
+      "brandComplianceAudit": "Ensure luxury positioning throughout all files",
+      "terminologyConsistency": "Consistent luxury medical spa language usage"
+    }
+  },
+
+  "qualityAssurance": {
+    "luxuryBrandGates": {
+      "brandPositioningCompliance": {
+        "description": "Luxury medical spa positioning maintained throughout",
+        "threshold": 0.98,
+        "validation": "brand-expert-review-and-target-audience-validation"
+      },
+      "ecommercePatternElimination": {
+        "description": "Complete removal of transactional/ecommerce elements",
+        "threshold": 1.0,
+        "validation": "pattern-recognition-audit-and-expert-review"
+      },
+      "medicalCredibilityIntegration": {
+        "description": "Board-certified provider emphasis throughout",
+        "threshold": 0.95,
+        "validation": "medical-professional-review-and-compliance"
+      },
+      "consultationFocusOptimization": {
+        "description": "Consultation-driven experience over transactional",
+        "threshold": 0.95,
+        "validation": "user-journey-analysis-and-conversion-optimization"
+      }
+    },
+    "designConsistencyGates": {
+      "crossPageConsistency": {
+        "description": "100% consistency across all page designs",
+        "threshold": 0.98,
+        "validation": "automated-pattern-matching-and-manual-review"
+      },
+      "designSystemAdherence": {
+        "description": "Complete adherence to luxury design system",
+        "threshold": 1.0,
+        "validation": "component-library-compliance-audit"
+      },
+      "accessibilityExcellence": {
+        "description": "WCAG AAA compliance as luxury feature",
+        "threshold": 1.0,
+        "validation": "accessibility-expert-validation-and-automated-testing"
+      }
+    }
+  },
+
+  "errorHandling": {
+    "brandInconsistencyDetection": {
+      "trigger": "Cross-page design inconsistency detected",
+      "action": "immediate-consistency-audit-and-correction",
+      "agent": "ui-ux-design-agent",
+      "escalation": "human-brand-expert-review"
+    },
+    "ecommercePatternDetection": {
+      "trigger": "Transactional or ecommerce elements detected",
+      "action": "immediate-pattern-elimination-and-luxury-redesign",
+      "agent": "ui-ux-design-agent",
+      "escalation": "stakeholder-validation-required"
+    },
+    "accessibilityViolation": {
+      "trigger": "WCAG AAA compliance failure detected",
+      "action": "immediate-accessibility-correction",
+      "agent": "ui-ux-design-agent",
+      "escalation": "accessibility-expert-consultation"
+    },
+    "luxuryPositioningCompromise": {
+      "trigger": "Premium positioning undermined",
+      "action": "luxury-brand-realignment-process",
+      "agent": "ui-ux-design-agent",
+      "escalation": "luxury-brand-expert-intervention"
+    }
+  },
+
+  "deliverables": {
+    "finalDesignSystem": {
+      "luxuryDesignSystemOverview": "Complete luxury medical spa design foundation",
+      "homepageExperience": "Premium brand introduction and immersive storytelling",
+      "treatmentsExperience": "Artistic category presentation without ecommerce patterns",
+      "individualTreatmentJourney": "Medical artistry showcase and consultation focus",
+      "aboutUsLegacy": "Founder narrative and medical excellence heritage",
+      "consultationInvitation": "Sophisticated contact and consultation experience"
+    },
+    "implementationPackage": {
+      "technicalSpecifications": "WordPress/Sage/Tailwind implementation guidelines",
+      "componentLibrary": "Luxury medical spa component specifications",
+      "accessibilityImplementation": "WCAG AAA implementation and testing procedures",
+      "brandComplianceMonitoring": "Ongoing luxury positioning maintenance guidelines",
+      "performanceOptimization": "Core Web Vitals and user experience optimization"
+    },
+    "validationDocumentation": {
+      "brandExpertApproval": "Luxury positioning validation from industry experts",
+      "medicalProfessionalValidation": "Medical credibility and ethics compliance",
+      "accessibilityExpertCertification": "WCAG AAA compliance certification",
+      "targetAudienceValidation": "Affluent client demographic approval",
+      "stakeholderSignOff": "Complete stakeholder approval documentation"
+    }
+  },
+
+  "success Criteria": {
+    "luxuryPositioningAchieved": "Premium medical spa positioning confirmed by luxury brand experts",
+    "brandConsistencyPerfected": "100% consistency across all page designs and interactions",
+    "ecommercePatternsEliminated": "Complete removal of transactional elements in favor of consultation focus",
+    "accessibilityAsLuxury": "WCAG AAA compliance integrated as premium quality indicator",
+    "consultationConversionOptimized": "Clear pathway to personalized consultation throughout user journey",
+    "medicalCredibilityEstablished": "Board-certified provider emphasis and trust-building throughout",
+    "sophisticatedUserExperience": "Immersive storytelling and artistic treatment presentation",
+    "implementationReadiness": "Complete technical specifications for WordPress/Sage development"
+  },
+
+  "continuousImprovement": {
+    "brandPositioningMonitoring": "Ongoing validation of luxury medical spa positioning",
+    "designConsistencyAudits": "Regular cross-page consistency validation",
+    "accessibilityMaintenance": "Continuous WCAG AAA compliance monitoring",
+    "userExperienceOptimization": "Ongoing consultation conversion pathway improvement",
+    "stakeholderFeedbackIntegration": "Regular design refinement based on user and expert feedback"
+  }
+}

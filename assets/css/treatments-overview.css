@@ -1,0 +1,1110 @@
+/**
+ * Treatments Page - Luxury Medical Spa Experience
+ * Following TREATMENTS_PAGE_DESIGN.md v4.0 specifications
+ *
+ * - Mobile-first responsive design (320px-767px, 1024px+)
+ * - Luxury color palette and sophisticated typography
+ * - Consultation-focused journey (no ecommerce patterns)
+ * - WCAG AAA accessibility compliance
+ * - Premium spacing and elegant interactions
+ */
+
+/* ================================
+   LUXURY COLOR PALETTE & VARIABLES
+   ================================ */
+:root {
+    /* Primary Luxury Colors */
+    --sage-green: #87A96B;           /* Medical tranquility, natural luxury */
+    --premium-gold: #D4AF37;         /* Luxury accents, consultation emphasis */
+    --medical-navy: #1B365D;         /* Professional authority, trust */
+    --cream-base: #FDFCFA;           /* Premium backgrounds, sophistication */
+
+    /* Supporting Colors */
+    --sage-light: #A8C487;           /* Lighter sage for hover states */
+    --sage-dark: #6B8552;            /* Darker sage for focus states */
+    --gold-light: #E8C962;           /* Lighter gold for accents */
+    --navy-light: #2B4A78;           /* Lighter navy for secondary text */
+    --cream-warm: #FBF9F4;           /* Warmer cream for sections */
+
+    /* Semantic Colors */
+    --text-primary: var(--medical-navy);
+    --text-secondary: var(--navy-light);
+    --text-accent: var(--sage-green);
+    --background-primary: var(--cream-base);
+    --background-secondary: var(--cream-warm);
+    --border-subtle: rgba(135, 169, 107, 0.2);
+
+    /* Typography Scale */
+    --font-display: 'Playfair Display', serif;    /* Luxury elegance */
+    --font-body: 'Inter', sans-serif;             /* Medical professionalism */
+
+    /* Premium Spacing System */
+    --space-xs: 0.5rem;    /* 8px */
+    --space-sm: 1rem;      /* 16px */
+    --space-md: 1.5rem;    /* 24px */
+    --space-lg: 2rem;      /* 32px */
+    --space-xl: 3rem;      /* 48px */
+    --space-2xl: 4rem;     /* 64px */
+    --space-3xl: 5rem;     /* 80px */
+    --space-4xl: 7.5rem;   /* 120px */
+
+    /* Responsive Breakpoints */
+    --mobile-max: 767px;
+    --tablet-min: 768px;
+    --desktop-min: 1024px;
+    --large-min: 1280px;
+
+    /* Luxury Transitions */
+    --transition-elegant: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-duration: 0.6s;
+    --transition-fast: 0.3s;
+}
+
+/* ================================
+   GLOBAL TREATMENTS PAGE STYLES
+   ================================ */
+.treatments-luxury-main {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background-color: var(--background-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Container with luxury spacing */
+.treatments-luxury-main .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+@media (min-width: 768px) {
+    .treatments-luxury-main .container {
+        padding: 0 var(--space-lg);
+    }
+}
+
+@media (min-width: 1024px) {
+    .treatments-luxury-main .container {
+        padding: 0 var(--space-xl);
+    }
+}
+
+/* ================================
+   IMMERSIVE LUXURY HERO SECTION
+   ================================ */
+.treatments-hero-luxury {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--medical-navy) 0%, var(--sage-dark) 100%);
+    overflow: hidden;
+}
+
+/* Parallax Video Background */
+.hero-parallax-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.hero-video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+}
+
+.hero-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(27, 54, 93, 0.8) 0%,
+        rgba(135, 169, 107, 0.6) 100%
+    );
+    z-index: 2;
+}
+
+/* Hero Content Wrapper */
+.hero-content-wrapper {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: var(--space-2xl) 0;
+}
+
+.hero-content-luxury {
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Hero Typography */
+.hero-header {
+    margin-bottom: var(--space-xl);
+}
+
+.hero-title-main {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 var(--space-md) 0;
+    letter-spacing: -0.02em;
+}
+
+.hero-title-accent {
+    display: block;
+    color: var(--premium-gold);
+    font-style: italic;
+    margin-top: var(--space-sm);
+}
+
+.hero-subtitle-luxury {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Hero Discovery Invitation */
+.hero-discovery-invitation {
+    margin: var(--space-xl) 0;
+}
+
+.hero-discovery-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    background: rgba(212, 175, 55, 0.2);
+    border: 2px solid var(--premium-gold);
+    border-radius: 40px;
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition-duration) var(--transition-elegant);
+    backdrop-filter: blur(10px);
+    min-height: 56px; /* WCAG AAA touch target */
+}
+
+.hero-discovery-btn:hover,
+.hero-discovery-btn:focus {
+    background: var(--premium-gold);
+    color: var(--medical-navy);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
+
+.hero-discovery-btn:focus {
+    outline: 3px solid var(--sage-light);
+    outline-offset: 4px;
+}
+
+.discovery-icon {
+    font-size: 1.25rem;
+    transition: transform var(--transition-fast) var(--transition-elegant);
+}
+
+.hero-discovery-btn:hover .discovery-icon {
+    transform: scale(1.2);
+}
+
+/* Hero Credibility Markers */
+.hero-credibility-luxury {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+.credibility-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.credibility-icon {
+    font-size: 1.125rem;
+    color: var(--premium-gold);
+}
+
+/* Mobile Hero Adjustments */
+@media (max-width: 767px) {
+    .hero-title-main {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle-luxury {
+        font-size: 1rem;
+    }
+
+    .hero-credibility-luxury {
+        gap: var(--space-sm);
+    }
+
+    .credibility-item {
+        font-size: 0.875rem;
+    }
+}
+
+/* Desktop Hero Enhancements */
+@media (min-width: 1024px) {
+    .hero-title-main {
+        font-size: 3.5rem;
+    }
+
+    .hero-subtitle-luxury {
+        font-size: 1.25rem;
+    }
+
+    .hero-credibility-luxury {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--space-2xl);
+    }
+
+    .credibility-item {
+        font-size: 1rem;
+    }
+}
+
+/* ================================
+   ARTISTIC CATEGORY DISCOVERY
+   ================================ */
+.treatment-artistry-discovery {
+    padding: var(--space-3xl) 0;
+    background: var(--background-primary);
+}
+
+.artistry-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.artistry-title {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 400;
+    color: var(--medical-navy);
+    margin: 0 0 var(--space-md) 0;
+    letter-spacing: -0.02em;
+}
+
+.artistry-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Artistic Categories Grid */
+.artistry-categories-grid {
+    display: grid;
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+}
+
+/* Individual Category Article */
+.artistry-category {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(27, 54, 93, 0.08);
+    transition: all var(--transition-duration) var(--transition-elegant);
+    border: 1px solid var(--border-subtle);
+}
+
+.artistry-category:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(27, 54, 93, 0.15);
+}
+
+/* Category Visual Container */
+.category-visual-container {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.category-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform var(--transition-duration) var(--transition-elegant);
+}
+
+/* Category Image Backgrounds */
+.injectable-image {
+    background-image: linear-gradient(
+        135deg,
+        rgba(135, 169, 107, 0.1) 0%,
+        rgba(212, 175, 55, 0.1) 100%
+    ), url('../images/injectable-artistry.jpg');
+}
+
+.facial-image {
+    background-image: linear-gradient(
+        135deg,
+        rgba(212, 175, 55, 0.1) 0%,
+        rgba(135, 169, 107, 0.1) 100%
+    ), url('../images/facial-renaissance.jpg');
+}
+
+.laser-image {
+    background-image: linear-gradient(
+        135deg,
+        rgba(27, 54, 93, 0.1) 0%,
+        rgba(135, 169, 107, 0.1) 100%
+    ), url('../images/laser-precision.jpg');
+}
+
+.body-image {
+    background-image: linear-gradient(
+        135deg,
+        rgba(135, 169, 107, 0.1) 0%,
+        rgba(27, 54, 93, 0.1) 100%
+    ), url('../images/body-artistry.jpg');
+}
+
+.wellness-image {
+    background-image: linear-gradient(
+        135deg,
+        rgba(212, 175, 55, 0.1) 0%,
+        rgba(27, 54, 93, 0.1) 100%
+    ), url('../images/wellness-sanctuary.jpg');
+}
+
+.artistry-category:hover .category-image {
+    transform: scale(1.05);
+}
+
+/* Category Visual Overlay */
+.category-visual-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(27, 54, 93, 0.3) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-duration) var(--transition-elegant);
+}
+
+.artistry-category:hover .category-visual-overlay {
+    opacity: 1;
+}
+
+.category-artistic-icon {
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8);
+    transition: transform var(--transition-duration) var(--transition-elegant);
+}
+
+.artistry-category:hover .category-artistic-icon {
+    transform: scale(1);
+}
+
+/* Category Content */
+.category-content-luxury {
+    padding: var(--space-xl);
+}
+
+.category-header {
+    margin-bottom: var(--space-md);
+}
+
+.category-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--medical-navy);
+    margin: 0 0 var(--space-sm) 0;
+    letter-spacing: -0.01em;
+}
+
+.category-essence {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 500;
+}
+
+.category-description-luxury {
+    margin: var(--space-md) 0;
+}
+
+.category-description-luxury p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Category Action */
+.category-action-luxury {
+    margin-top: var(--space-lg);
+}
+
+.category-explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: transparent;
+    border: 2px solid var(--sage-green);
+    border-radius: 8px;
+    color: var(--sage-green);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition-fast) var(--transition-elegant);
+    min-height: 56px; /* WCAG AAA touch target */
+}
+
+.category-explore-btn:hover,
+.category-explore-btn:focus {
+    background: var(--sage-green);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(135, 169, 107, 0.3);
+}
+
+.category-explore-btn:focus {
+    outline: 3px solid var(--sage-light);
+    outline-offset: 2px;
+}
+
+.explore-icon {
+    transition: transform var(--transition-fast) var(--transition-elegant);
+}
+
+.category-explore-btn:hover .explore-icon {
+    transform: translateX(4px);
+}
+
+/* Desktop Category Grid */
+@media (min-width: 1024px) {
+    .treatment-artistry-discovery {
+        padding: var(--space-4xl) 0;
+    }
+
+    .artistry-title {
+        font-size: 3rem;
+    }
+
+    .artistry-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .artistry-categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-2xl);
+        margin-top: var(--space-3xl);
+    }
+
+    .category-visual-container {
+        height: 300px;
+    }
+
+    .category-content-luxury {
+        padding: var(--space-2xl);
+    }
+
+    .category-title {
+        font-size: 1.75rem;
+    }
+
+    .category-essence {
+        font-size: 1.125rem;
+    }
+
+    .category-description-luxury p {
+        font-size: 1rem;
+    }
+}
+
+/* ================================
+   MEDICAL ARTISTRY PHILOSOPHY
+   ================================ */
+.medical-artistry-philosophy {
+    padding: var(--space-3xl) 0;
+    background: var(--background-secondary);
+}
+
+.philosophy-content-luxury {
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+}
+
+/* Provider Portrait */
+.provider-portrait-section {
+    text-align: center;
+}
+
+.provider-portrait-container {
+    position: relative;
+    display: inline-block;
+    max-width: 300px;
+}
+
+.provider-portrait-image {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(27, 54, 93, 0.15);
+    transition: transform var(--transition-duration) var(--transition-elegant);
+}
+
+.provider-portrait-container:hover .provider-portrait-image {
+    transform: scale(1.02);
+}
+
+.portrait-artistic-frame {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px solid var(--premium-gold);
+    border-radius: 24px;
+    opacity: 0;
+    transition: opacity var(--transition-duration) var(--transition-elegant);
+}
+
+.provider-portrait-container:hover .portrait-artistic-frame {
+    opacity: 1;
+}
+
+/* Philosophy Narrative */
+.philosophy-narrative-section {
+    text-align: center;
+}
+
+.philosophy-header {
+    margin-bottom: var(--space-xl);
+}
+
+.philosophy-title {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 400;
+    color: var(--medical-navy);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.philosophy-quote {
+    background: white;
+    padding: var(--space-xl);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(27, 54, 93, 0.08);
+    border-left: 4px solid var(--premium-gold);
+    margin: 0;
+}
+
+.quote-text {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--medical-navy);
+    line-height: 1.6;
+    margin: 0 0 var(--space-lg) 0;
+}
+
+.quote-attribution {
+    text-align: left;
+}
+
+.quote-author {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--sage-green);
+    font-style: normal;
+}
+
+.quote-credentials {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: var(--space-xs) 0 0 0;
+    line-height: 1.4;
+}
+
+/* Desktop Philosophy Layout */
+@media (min-width: 1024px) {
+    .medical-artistry-philosophy {
+        padding: var(--space-4xl) 0;
+    }
+
+    .philosophy-content-luxury {
+        grid-template-columns: 1fr 1.5fr;
+        gap: var(--space-3xl);
+        text-align: left;
+    }
+
+    .provider-portrait-section {
+        text-align: center;
+    }
+
+    .philosophy-narrative-section {
+        text-align: left;
+    }
+
+    .philosophy-title {
+        font-size: 3rem;
+    }
+
+    .quote-text {
+        font-size: 1.375rem;
+    }
+
+    .philosophy-quote {
+        padding: var(--space-2xl);
+    }
+}
+
+/* ================================
+   CONSULTATION INVITATION LUXURY
+   ================================ */
+.consultation-invitation-luxury {
+    padding: var(--space-3xl) 0;
+    background: linear-gradient(
+        135deg,
+        var(--cream-base) 0%,
+        var(--cream-warm) 100%
+    );
+}
+
+.consultation-content-luxury {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Consultation Header */
+.consultation-header {
+    margin-bottom: var(--space-2xl);
+}
+
+.consultation-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--medical-navy);
+    margin: 0 0 var(--space-md) 0;
+    letter-spacing: -0.02em;
+}
+
+.consultation-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Consultation Benefits */
+.consultation-benefits-luxury {
+    margin-bottom: var(--space-2xl);
+}
+
+.consultation-card {
+    background: white;
+    padding: var(--space-xl);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(27, 54, 93, 0.08);
+    border: 1px solid var(--border-subtle);
+}
+
+.consultation-card-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--medical-navy);
+    margin: 0 0 var(--space-lg) 0;
+    text-align: center;
+}
+
+.consultation-benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-xl) 0;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    padding: var(--space-sm);
+    border-radius: 8px;
+    transition: background-color var(--transition-fast) var(--transition-elegant);
+}
+
+.benefit-item:hover {
+    background-color: var(--cream-warm);
+}
+
+.benefit-icon {
+    color: var(--sage-green);
+    font-weight: bold;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.benefit-text {
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Primary Consultation CTA */
+.consultation-cta-primary {
+    text-align: center;
+    margin-top: var(--space-xl);
+}
+
+.consultation-schedule-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-2xl);
+    background: var(--sage-green);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all var(--transition-duration) var(--transition-elegant);
+    box-shadow: 0 4px 15px rgba(135, 169, 107, 0.3);
+    min-height: 56px; /* WCAG AAA touch target */
+}
+
+.consultation-schedule-btn:hover,
+.consultation-schedule-btn:focus {
+    background: var(--sage-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(135, 169, 107, 0.4);
+}
+
+.consultation-schedule-btn:focus {
+    outline: 3px solid var(--premium-gold);
+    outline-offset: 4px;
+}
+
+.schedule-icon {
+    font-size: 1.25rem;
+    transition: transform var(--transition-fast) var(--transition-elegant);
+}
+
+.consultation-schedule-btn:hover .schedule-icon {
+    transform: scale(1.1);
+}
+
+/* Alternative Contact Methods */
+.consultation-contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    align-items: center;
+}
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-method-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    border: 2px solid var(--border-subtle);
+    border-radius: 40px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast) var(--transition-elegant);
+    min-height: 48px; /* Accessible touch target */
+}
+
+.contact-method-link:hover,
+.contact-method-link:focus {
+    border-color: var(--sage-green);
+    color: var(--sage-green);
+    background: rgba(135, 169, 107, 0.05);
+}
+
+.contact-method-link:focus {
+    outline: 2px solid var(--sage-light);
+    outline-offset: 2px;
+}
+
+.contact-method-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+.contact-icon {
+    font-size: 1.125rem;
+    color: var(--sage-green);
+}
+
+.contact-text {
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+/* Desktop Contact Methods */
+@media (min-width: 768px) {
+    .consultation-contact-methods {
+        flex-direction: row;
+        gap: var(--space-lg);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Desktop Consultation Enhancements */
+@media (min-width: 1024px) {
+    .consultation-invitation-luxury {
+        padding: var(--space-4xl) 0;
+    }
+
+    .consultation-title {
+        font-size: 3rem;
+    }
+
+    .consultation-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .consultation-card {
+        padding: var(--space-2xl);
+    }
+
+    .consultation-card-title {
+        font-size: 1.75rem;
+    }
+
+    .benefit-text {
+        font-size: 1rem;
+    }
+}
+
+/* ================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================ */
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #000000;
+        --text-secondary: #333333;
+        --border-subtle: #666666;
+    }
+
+    .artistry-category {
+        border: 2px solid #666666;
+    }
+
+    .category-explore-btn,
+    .consultation-schedule-btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-video {
+        display: none;
+    }
+
+    .treatments-hero-luxury {
+        background: var(--medical-navy);
+    }
+}
+
+/* Focus Visible Enhancement */
+.treatments-luxury-main *:focus-visible {
+    outline: 3px solid var(--premium-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ================================
+   MOBILE OPTIMIZATIONS
+   ================================ */
+@media (max-width: 767px) {
+    .treatments-luxury-main .container {
+        padding: 0 var(--space-sm);
+    }
+
+    .artistry-title {
+        font-size: 1.875rem;
+    }
+
+    .artistry-subtitle {
+        font-size: 1rem;
+    }
+
+    .category-title {
+        font-size: 1.25rem;
+    }
+
+    .category-content-luxury {
+        padding: var(--space-lg);
+    }
+
+    .philosophy-title {
+        font-size: 1.875rem;
+    }
+
+    .quote-text {
+        font-size: 1.125rem;
+    }
+
+    .consultation-title {
+        font-size: 2rem;
+    }
+
+    .consultation-subtitle {
+        font-size: 1rem;
+    }
+
+    .consultation-card {
+        padding: var(--space-lg);
+    }
+
+    .consultation-benefits-list {
+        margin-bottom: var(--space-lg);
+    }
+}
+
+/* ================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================ */
+
+/* GPU Acceleration for Smooth Animations */
+.artistry-category,
+.category-image,
+.hero-discovery-btn,
+.category-explore-btn,
+.consultation-schedule-btn {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Optimize for Touch Devices */
+@media (hover: none) and (pointer: coarse) {
+    .artistry-category:hover .category-image {
+        transform: none;
+    }
+
+    .artistry-category:hover .category-visual-overlay {
+        opacity: 0;
+    }
+
+    .category-explore-btn:hover,
+    .consultation-schedule-btn:hover {
+        transform: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .treatments-hero-luxury,
+    .hero-video-background {
+        background: white !important;
+        color: black !important;
+    }
+
+    .artistry-category {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .category-visual-container {
+        display: none;
+    }
+}

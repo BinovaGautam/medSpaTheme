@@ -84,6 +84,35 @@
         }
       },
 
+      "luxuryMedicalSpaDesignWorkflow": {
+        "workflowId": "LUXURY-MEDSPA-DESIGN-WF-001",
+        "name": "luxury-medical-spa-design-workflow",
+        "type": "luxury-brand-design-orchestration",
+        "description": "Complete workflow for creating luxury medical spa UI/UX designs with guaranteed consistency across all deliverables using UI/UX Design Agent with luxury positioning compliance",
+        "priority": 1,
+        "status": "active",
+        "triggerPatterns": ["luxury design", "medical spa design", "premium ui", "brand consistency", "luxury medical spa", "sophisticated design", "consultation focused design"],
+        "parentWorkflow": "ui-ux-creation-workflow",
+        "location": "levCompiler/.control/workflows/luxury_medical_spa_design_workflow.json",
+        "primaryAgent": "UI-UX-DESIGN-001",
+        "specialization": "luxury-medical-spa-interface-design",
+        "brandCompliance": "mandatory",
+        "designApproach": "luxury-medical-spa-positioning",
+        "fileManagement": {
+          "outputLocation": "levCompiler/project_context/designs/",
+          "indexRegistration": "levCompiler/project_context/designs/index.json",
+          "archiveLocation": "levCompiler/project_context/archive/designs/",
+          "designSystemReference": "levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md"
+        },
+        "qualityGates": {
+          "brandConsistency": 1.0,
+          "luxuryPositioning": 0.98,
+          "ecommercePatternElimination": 1.0,
+          "crossPageConsistency": 0.98,
+          "accessibilityCompliance": 1.0
+        }
+      },
+
       "taskManagementWorkflow": {
         "workflowId": "TASK-MANAGEMENT-WF-001",
         "name": "task-management-workflow",
@@ -172,6 +201,18 @@
         "estimatedDuration": "300-480 minutes",
         "requiredAgent": "UI-UX-DESIGN-001",
         "fileOrganization": "project-context-designs-folder"
+      },
+
+      "luxuryMedicalSpaDesign": {
+        "inputPatterns": ["luxury design", "medical spa design", "premium ui", "brand consistency", "luxury medical spa", "sophisticated design", "consultation focused design", "redesign ui", "luxury positioning", "premium medical spa"],
+        "contextRequired": ["base-requirements", "luxury-brand-guidelines", "medical-spa-positioning"],
+        "targetWorkflow": "luxury-medical-spa-design-workflow",
+        "confidence": 0.95,
+        "estimatedDuration": "480-720 minutes",
+        "requiredAgent": "UI-UX-DESIGN-001",
+        "fileOrganization": "project-context-designs-folder",
+        "brandCompliance": "mandatory",
+        "qualityAssurance": "luxury-brand-validation-required"
       },
 
       "codeReview": {
