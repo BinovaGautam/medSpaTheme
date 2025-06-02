@@ -1695,3 +1695,198 @@ function save_hero_treatment_meta_data($post_id) {
     if (!wp_verify_nonce($_POST['hero_treatment_meta_box_nonce'], 'hero_treatment_meta_box')) {
         return;
     }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    $fields = [
+        'hero_treatment_pricing',
+        'hero_treatment_duration',
+        'hero_treatment_icon',
+        'hero_treatment_order',
+        'hero_treatment_featured'
+    ];
+
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post', 'save_hero_treatment_meta_data');
+
+/**
+ * Enqueue Treatments Overview Assets (TASK-001)
+ */
+function preetidreams_enqueue_treatments_overview_assets() {
+    // Only enqueue on treatments overview page
+    if (is_page_template('page-treatments.php') ||
+        is_post_type_archive('treatment') ||
+        (is_page() && get_post_field('post_name') === 'treatments')) {
+
+        // Treatments Overview CSS
+        wp_enqueue_style(
+            'treatments-overview-styles',
+            get_template_directory_uri() . '/assets/css/treatments-overview.css',
+            ['preetidreams-header-fix'],
+            PREETIDREAMS_VERSION
+        );
+
+        // Luxury Treatments JavaScript - New consultation-focused functionality
+        wp_enqueue_script(
+            'treatments-luxury-script',
+            get_template_directory_uri() . '/assets/js/treatments-luxury.js',
+            ['jquery'],
+            PREETIDREAMS_VERSION,
+            true
+        );
+
+        // Localize script with WordPress data - Updated for luxury consultation focus
+        wp_localize_script('treatments-luxury-script', 'treatmentsLuxuryData', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('treatments_luxury_nonce'),
+            'restUrl' => rest_url('wp/v2/'),
+            'phone' => preetidreams_get_phone() ?: '(555) 123-4567',
+            'email' => preetidreams_get_email() ?: 'consultations@preetidreams.com',
+            'themeUrl' => get_template_directory_uri(),
+            'currentUser' => is_user_logged_in() ? wp_get_current_user()->ID : 0,
+            'settings' => [
+                'consultationFocus' => true,
+                'luxuryPositioning' => true,
+                'boardCertifiedPhysician' => true,
+                'accessibilityAAA' => true,
+                'personalizedConsultation' => true,
+                'discretionPrivacy' => true,
+                'enableScrollAnimations' => !wp_is_mobile(),
+                'enableParallax' => !wp_is_mobile(),
+                'reducedMotion' => false, // Will be detected client-side
+            ],
+            'consultation' => [
+                'schedulePage' => get_permalink(get_page_by_path('contact')),
+                'phoneBooking' => preetidreams_get_phone() ?: '(555) 123-4567',
+                'emailBooking' => preetidreams_get_email() ?: 'consultations@preetidreams.com',
+                'virtualAvailable' => true,
+                'complimentary' => true,
+                'boardCertified' => true,
+                'privacyAssured' => true,
+            ],
+            'treatments' => [
+                'categories' => [
+                    'injectable' => [
+                        'title' => 'Injectable Artistry',
+                        'description' => 'Sophisticated enhancement through precise medical artistry',
+                        'icon' => '💎'
+                    ],
+                    'facial' => [
+                        'title' => 'Facial Renaissance',
+                        'description' => 'Advanced skincare treatments for natural radiance',
+                        'icon' => '✨'
+                    ],
+                    'laser' => [
+                        'title' => 'Laser Precision',
+                        'description' => 'Technology-driven treatments with medical precision',
+                        'icon' => '⚡'
+                    ],
+                    'body' => [
+                        'title' => 'Body Artistry',
+                        'description' => 'Advanced body contouring and enhancement',
+                        'icon' => '🌿'
+                    ],
+                    'wellness' => [
+                        'title' => 'Wellness Sanctuary',
+                        'description' => 'Holistic treatments complementing aesthetic enhancements',
+                        'icon' => '🧘'
+                    ]
+                ]
+            ],
+            'i18n' => [
+                'loading' => __('Loading treatment information...', 'preetidreams'),
+                'consultationScheduled' => __('Consultation request sent successfully', 'preetidreams'),
+                'consultationError' => __('Unable to process consultation request. Please call us.', 'preetidreams'),
+                'categoryExplored' => __('Explore consultation options for', 'preetidreams'),
+                'accessibilityAnnounce' => __('Screen reader announcement:', 'preetidreams'),
+                'consultationInvite' => __('Schedule your personalized consultation', 'preetidreams'),
+                'phoneConsultation' => __('Call for consultation', 'preetidreams'),
+                'emailConsultation' => __('Email for consultation inquiry', 'preetidreams'),
+                'virtualConsultation' => __('Virtual consultation available', 'preetidreams'),
+                'privacyAssured' => __('Complete privacy and discretion assured', 'preetidreams'),
+                'boardCertified' => __('Board-certified physician consultation', 'preetidreams'),
+                'personalizedPlan' => __('Personalized treatment plan', 'preetidreams'),
+                'medicalExcellence' => __('15+ years medical excellence', 'preetidreams'),
+                'artisticVision' => __('Medical precision meets artistic vision', 'preetidreams'),
+            ]
+        ]);
+
+        // Add CSS custom properties for luxury design system
+        $custom_css = "
+            :root {
+                /* Luxury Color Palette */
+                --sage-green: #87A96B;
+                --premium-gold: #D4AF37;
+                --medical-navy: #1B365D;
+                --cream-base: #FDFCFA;
+                --sage-light: #A8C487;
+                --sage-dark: #6B8552;
+                --gold-light: #E8C962;
+                --navy-light: #2B4A78;
+                --cream-warm: #FBF9F4;
+
+                /* Typography */
+                --font-display: 'Playfair Display', serif;
+                --font-body: 'Inter', sans-serif;
+            }
+        ";
+        wp_add_inline_style('treatments-overview-styles', $custom_css);
+    }
+}
+add_action('wp_enqueue_scripts', 'preetidreams_enqueue_treatments_overview_assets');
+
+/**
+ * Add custom body classes for header transparency control
+ * This completes the header transparency system by adding the CSS classes
+ * that control whether the header starts transparent (hero pages) or solid (content pages)
+ */
+function preetidreams_custom_body_classes($classes) {
+    // Pages that should have transparent headers (with hero sections)
+    if (is_front_page() || is_home()) {
+        $classes[] = 'has-hero-section';
+        $classes[] = 'transparent-header';
+    } else {
+        // All other pages should have solid headers
+        $classes[] = 'no-hero-section';
+        $classes[] = 'solid-header';
+    }
+
+    // Add page-specific classes for easier targeting
+    if (is_page()) {
+        global $post;
+        if ($post && $post->post_name) {
+            $classes[] = 'page-' . $post->post_name;
+        }
+    }
+
+    // Add post type classes
+    if (is_singular()) {
+        global $post;
+        if ($post) {
+            $classes[] = 'single-' . $post->post_type;
+        }
+    }
+
+    // Add template-specific classes
+    if (is_page_template()) {
+        $template = get_page_template_slug();
+        if ($template) {
+            $template_class = str_replace(['.php', '/'], ['', '-'], $template);
+            $classes[] = 'template-' . $template_class;
+        }
+    }
+
+    return $classes;
+}
+add_filter('body_class', 'preetidreams_custom_body_classes');
