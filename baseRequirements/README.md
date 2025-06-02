@@ -5,34 +5,60 @@
 
 ## 🏥 **Project Vision**
 
-PreetiDreams is a premium WordPress theme specifically designed for luxury medical spas, aesthetic clinics, and high-end wellness centers. The theme must combine medical professionalism with luxury aesthetics to create an immersive digital experience that reflects the premium nature of aesthetic medicine services.
+PreetiDreams is a premium WordPress theme specifically designed for Dr. Preeti Sharma's luxury medical spa practice. The theme must combine medical professionalism with luxury aesthetics to create an immersive digital experience that reflects the premium nature of her solo practitioner aesthetic medicine services, supported by a small team of expert staff.
+
+---
+
+## 👩‍⚕️ **Business Model & Practice Structure**
+
+### **Practice Leadership**
+- **Dr. Preeti Sharma**: Sole physician and medical director
+- **Expert Staff Team**: 4 highly trained support professionals
+- **Client Base**: 400+ satisfied clients with personalized care
+- **Practice Model**: Solo practitioner with dedicated expert support team
+
+### **Geographic Presence**
+- **Primary Location**: Glendale, AZ (19420 N. 59th Ave, Glendale, AZ 85308)
+- **Service Areas**: Glendale, Peoria, and Scottsdale, Arizona
+- **Contact Information**: 
+  - Office: 480-469-4249
+  - Call/Text: 248-595-3987
+  - Email: infusepreetidreams@gmail.com
+
+### **Core Services Portfolio**
+- **PRP Hair Restoration**: Advanced hair growth stimulation treatments
+- **Injectable Treatments**: Botox, dermal fillers for facial rejuvenation
+- **IV Therapy**: Wellness drips including Bounce Back, Migraine Relief, Seasonal Allergy Boost
+- **Sclerotherapy**: Spider vein treatment solutions
+- **Additional Services**: HydraFacial, Microneedling, PDO Thread Lifts, Laser treatments
 
 ---
 
 ## 🎯 **Target Audience & Market**
 
 ### **Primary Users**
-- **Luxury Medical Spas** offering premium aesthetic treatments
-- **Dermatology Clinics** with cosmetic procedure services
-- **Aesthetic Medicine Practitioners** serving high-end clientele
-- **Wellness Centers** providing medical-grade beauty treatments
-- **Plastic Surgery Practices** with non-surgical service offerings
+- **Dr. Preeti Sharma's Medical Spa** - solo practitioner luxury aesthetic medicine
+- **Small Practice Model** - intimate, personalized care approach
+- **Expert Staff Support** - specialized team of 4 trained professionals
+- **High-End Clientele** - 400+ clients seeking premium aesthetic services
 
 ### **Client Demographics**
-- **Affluent clients** seeking premium aesthetic services
+- **Affluent clients** seeking personalized aesthetic services from a board-certified physician
 - **Age range**: 25-65 years old
-- **Mobile-first users** researching treatments and booking consultations
-- **Quality-conscious** individuals willing to invest in premium services
-- **Privacy-aware** clients requiring discretion and professionalism
+- **Arizona residents** primarily from Glendale, Peoria, Scottsdale areas
+- **Quality-conscious** individuals valuing physician-led treatments
+- **Privacy-aware** clients requiring discretion and personalized attention
 
 ---
 
 ## 🎨 **Design Requirements**
 
 ### **Visual Identity Standards**
-- **Luxury Aesthetic**: Sophisticated, calming, and premium visual appeal
-- **Medical Professionalism**: Clean, trustworthy, and credible appearance
-- **Brand Positioning**: Convey expertise, luxury, and exclusivity
+- **Solo Practitioner Focus**: Dr. Preeti Sharma as the central medical authority
+- **Intimate Practice Aesthetic**: Personal, relationship-focused design approach
+- **Medical Expertise Highlighting**: Board-certified physician credentials prominent
+- **Team Support Recognition**: Acknowledge expert staff while maintaining physician leadership
+- **Luxury Positioning**: Convey exclusivity and premium personalized care
 
 ### **Color Palette Requirements**
 - **Primary Colors**: Sage greens for tranquility and natural wellness
