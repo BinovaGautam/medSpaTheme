@@ -504,16 +504,84 @@ class VisualCustomizer {
         const palette = this.palettes[this.settings.colorPalette];
         const root = document.documentElement;
 
+        // Apply visual customizer variables (for visual-customizer.css)
         Object.entries(palette.colors).forEach(([key, value]) => {
             root.style.setProperty(`--color-${key}`, value);
         });
 
-        // Update CSS custom properties
+        // Map to existing theme CSS custom properties
+        root.style.setProperty('--color-primary-forest', palette.colors.primary);
+        root.style.setProperty('--color-primary-navy', palette.colors.primary);
+        root.style.setProperty('--color-primary-teal', palette.colors.primary);
+        root.style.setProperty('--color-primary-blue', palette.colors.primary);
+
+        root.style.setProperty('--color-primary-sage', palette.colors.secondary);
+        root.style.setProperty('--color-secondary-sage', palette.colors.secondary);
+        root.style.setProperty('--color-secondary-mint', palette.colors.secondary);
+
+        root.style.setProperty('--color-primary-gold', palette.colors.accent);
+        root.style.setProperty('--color-secondary-peach', palette.colors.accent);
+        root.style.setProperty('--color-accent-coral', palette.colors.accent);
+
+        root.style.setProperty('--color-neutral-white', palette.colors.light);
+        root.style.setProperty('--color-white', palette.colors.light);
+        root.style.setProperty('--color-soft-gray', palette.colors.light);
+        root.style.setProperty('--color-neutral-light', palette.colors.light);
+
+        root.style.setProperty('--color-neutral-dark', palette.colors.dark);
+        root.style.setProperty('--color-charcoal', palette.colors.dark);
+
+        // Footer-specific variables
+        root.style.setProperty('--sage-green', palette.colors.secondary);
+        root.style.setProperty('--premium-gold', palette.colors.accent);
+        root.style.setProperty('--medical-navy', palette.colors.primary);
+        root.style.setProperty('--cream-base', palette.colors.light);
+        root.style.setProperty('--sage-light', palette.colors.secondary);
+        root.style.setProperty('--sage-dark', palette.colors.secondary);
+        root.style.setProperty('--gold-light', palette.colors.accent);
+        root.style.setProperty('--navy-light', palette.colors.primary);
+        root.style.setProperty('--cream-warm', palette.colors.light);
+        root.style.setProperty('--navy-deep', palette.colors.primary);
+
+        // RGB values for transparent backgrounds
+        const primaryRgb = this.hexToRgb(palette.colors.primary);
+        const secondaryRgb = this.hexToRgb(palette.colors.secondary);
+        const accentRgb = this.hexToRgb(palette.colors.accent);
+
+        if (primaryRgb) {
+            root.style.setProperty('--color-primary-rgb', `${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b}`);
+        }
+        if (secondaryRgb) {
+            root.style.setProperty('--color-secondary-rgb', `${secondaryRgb.r}, ${secondaryRgb.g}, ${secondaryRgb.b}`);
+        }
+        if (accentRgb) {
+            root.style.setProperty('--color-accent-rgb', `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}`);
+        }
+
+        // Update gradient combinations to use new colors
+        root.style.setProperty('--gradient-primary', `linear-gradient(135deg, ${palette.colors.primary} 0%, ${palette.colors.secondary} 100%)`);
+        root.style.setProperty('--gradient-accent', `linear-gradient(135deg, ${palette.colors.accent} 0%, ${palette.colors.primary} 100%)`);
+        root.style.setProperty('--gradient-luxury', `linear-gradient(135deg, ${palette.colors.secondary} 0%, ${palette.colors.primary} 100%)`);
+        root.style.setProperty('--gradient-fresh', `linear-gradient(135deg, ${palette.colors.secondary} 0%, ${palette.colors.primary} 100%)`);
+
+        // Legacy compatibility variables
         root.style.setProperty('--medspaa-primary', palette.colors.primary);
         root.style.setProperty('--medspaa-secondary', palette.colors.secondary);
         root.style.setProperty('--medspaa-accent', palette.colors.accent);
         root.style.setProperty('--medspaa-light', palette.colors.light);
         root.style.setProperty('--medspaa-dark', palette.colors.dark);
+
+        console.log('VisualCustomizer: Color palette applied', palette.name, palette.colors);
+    }
+
+    // Helper function to convert hex to RGB
+    hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
     }
 
     applyFonts() {
@@ -521,8 +589,14 @@ class VisualCustomizer {
         const bodyFont = this.fonts[this.settings.fontBody];
         const root = document.documentElement;
 
+        // Apply to visual customizer variables
         root.style.setProperty('--font-heading', headingFont.family);
         root.style.setProperty('--font-body', bodyFont.family);
+
+        // Map to existing theme CSS custom properties
+        root.style.setProperty('--font-primary', headingFont.family);
+        root.style.setProperty('--font-secondary', bodyFont.family);
+        root.style.setProperty('--font-accent', headingFont.family);
 
         // Apply font size scale
         const sizeMultiplier = {
@@ -532,6 +606,12 @@ class VisualCustomizer {
         }[this.settings.fontSize];
 
         root.style.setProperty('--font-size-multiplier', sizeMultiplier);
+
+        console.log('VisualCustomizer: Fonts applied', {
+            heading: headingFont.name,
+            body: bodyFont.name,
+            sizeMultiplier
+        });
     }
 
     applyStyleSettings() {
