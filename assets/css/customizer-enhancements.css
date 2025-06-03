@@ -1,0 +1,178 @@
+/* =============================================================================
+   CUSTOMIZER ENHANCEMENTS
+   Additional styles for theme customizer functionality
+   ============================================================================= */
+
+/* Customizer Preview Highlighting */
+.customizer-preview .customizer-highlight {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.customizer-preview .customizer-highlight::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid #0073aa;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 1000;
+    animation: customizer-pulse 1s ease-out;
+}
+
+@keyframes customizer-pulse {
+    0% { opacity: 0; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.02); }
+    100% { opacity: 0.7; transform: scale(1); }
+}
+
+/* Header Style Variations */
+.header-transparent {
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.header-solid {
+    background-color: var(--color-primary, #1B365D);
+    backdrop-filter: none;
+}
+
+.header-gradient {
+    background: linear-gradient(135deg, var(--color-primary, #1B365D) 0%, var(--color-secondary, #87A96B) 100%);
+    backdrop-filter: none;
+}
+
+/* Animation State Classes */
+.animations-disabled * {
+    transition: none !important;
+    animation: none !important;
+}
+
+.animations-reduced * {
+    transition-duration: 0.15s !important;
+    animation-duration: 0.15s !important;
+}
+
+.animations-enabled * {
+    transition-duration: 0.3s;
+    animation-duration: 0.3s;
+}
+
+/* Button Style Variations */
+.button-style-rounded .btn,
+.button-style-rounded button,
+.button-style-rounded input[type="submit"],
+.button-style-rounded .button {
+    border-radius: 8px;
+}
+
+.button-style-sharp .btn,
+.button-style-sharp button,
+.button-style-sharp input[type="submit"],
+.button-style-sharp .button {
+    border-radius: 0;
+}
+
+.button-style-pill .btn,
+.button-style-pill button,
+.button-style-pill input[type="submit"],
+.button-style-pill .button {
+    border-radius: 50px;
+}
+
+/* Font Scale Utilities */
+.font-scale-small {
+    font-size: 0.9em;
+}
+
+.font-scale-normal {
+    font-size: 1em;
+}
+
+.font-scale-large {
+    font-size: 1.1em;
+}
+
+/* Color Palette Preview Styles */
+.color-palette-preview {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.color-palette-preview .color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Customizer Control Enhancements */
+.customize-control-medspaa_color_palette .color-palette-preview {
+    margin-top: 10px;
+}
+
+.customize-control label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.customize-control-description {
+    font-style: italic;
+    color: #666;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Live Preview Helper Classes */
+.preview-primary { color: var(--color-primary, #1B365D); }
+.preview-secondary { color: var(--color-secondary, #87A96B); }
+.preview-accent { color: var(--color-accent, #D4AF37); }
+
+.bg-primary { background-color: var(--color-primary, #1B365D); }
+.bg-secondary { background-color: var(--color-secondary, #87A96B); }
+.bg-accent { background-color: var(--color-accent, #D4AF37); }
+
+/* Responsive Customizer Styles */
+@media (max-width: 768px) {
+    .customizer-preview .customizer-highlight::after {
+        border-width: 1px;
+    }
+
+    .color-palette-preview .color-swatch {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+    .customizer-highlight::after {
+        animation: none;
+    }
+
+    .animations-enabled *,
+    .animations-reduced * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .customizer-highlight::after {
+        border-color: #000;
+        border-width: 3px;
+    }
+
+    .color-palette-preview .color-swatch {
+        border-color: #000;
+        border-width: 1px;
+    }
+}

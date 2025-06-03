@@ -3102,6 +3102,9 @@ function medspa_theme_styles() {
     // Main theme stylesheet
     wp_enqueue_style('medspa-theme-style', get_template_directory_uri() . '/assets/css/medical-spa-theme.css', array(), '1.0.0');
 
+    // Customizer enhancements CSS
+    wp_enqueue_style('medspa-customizer-enhancements', get_template_directory_uri() . '/assets/css/customizer-enhancements.css', array('medspa-theme-style'), '1.0.0');
+
     // About Us page specific styles
     if (is_page('about-us') || is_page_template('page-about.php')) {
         wp_enqueue_style('about-us-styles', get_template_directory_uri() . '/assets/css/about-us-fix.css', array('medspa-theme-style'), '1.0.0');
@@ -3111,3 +3114,95 @@ function medspa_theme_styles() {
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
 }
 add_action('wp_enqueue_scripts', 'medspa_theme_styles');
+
+/**
+ * Enqueue Visual Customizer System (Replaces WordPress Customizer)
+ */
+function preetidreams_enqueue_visual_customizer() {
+    // Visual Customizer CSS
+    wp_enqueue_style(
+        'preetidreams-visual-customizer',
+        get_template_directory_uri() . '/assets/css/visual-customizer.css',
+        ['preetidreams-style'],
+        PREETIDREAMS_VERSION
+    );
+
+    // Visual Customizer JavaScript
+    wp_enqueue_script(
+        'preetidreams-visual-customizer',
+        get_template_directory_uri() . '/assets/js/visual-customizer.js',
+        ['jquery'],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Localize script with customizer data
+    wp_localize_script('preetidreams-visual-customizer', 'visualCustomizerData', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('visual_customizer_nonce'),
+        'restUrl' => rest_url('wp/v2/'),
+        'themeUrl' => get_template_directory_uri(),
+        'version' => PREETIDREAMS_VERSION,
+        'settings' => [
+            'enableLocalStorage' => true,
+            'enablePreviewIndicator' => true,
+            'enableKeyboardNavigation' => true,
+            'animationDuration' => 300,
+            'autoCloseDelay' => 0, // 0 = no auto close
+            'mobileBreakpoint' => 768
+        ],
+        'i18n' => [
+            'customizeTheme' => __('Customize Theme Appearance', 'preetidreams'),
+            'colorPalettes' => __('Color Palettes', 'preetidreams'),
+            'typography' => __('Typography', 'preetidreams'),
+            'styleControls' => __('Style Controls', 'preetidreams'),
+            'resetToDefault' => __('Reset to Default', 'preetidreams'),
+            'settingsSaved' => __('Settings Saved', 'preetidreams'),
+            'resetConfirm' => __('Are you sure you want to reset all customizations?', 'preetidreams'),
+            'previewIndicator' => __('Preview:', 'preetidreams'),
+            'accessibilityAnnounce' => __('Customizer settings changed', 'preetidreams')
+        ]
+    ]);
+}
+add_action('wp_enqueue_scripts', 'preetidreams_enqueue_visual_customizer');
+
+/**
+ * Theme setup function
+ */
+function medspa_theme_setup() {
+    // Add theme support for title tag
+    add_theme_support('title-tag');
+
+    // Add theme support for custom logo
+    add_theme_support('custom-logo');
+
+    // Add theme support for post thumbnails
+    add_theme_support('post-thumbnails');
+
+    // Add theme support for HTML5 markup
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+    ));
+
+    // Add theme support for custom background
+    add_theme_support('custom-background');
+
+    // Add theme support for selective refresh for widgets
+    add_theme_support('customize-selective-refresh-widgets');
+}
+add_action('after_setup_theme', 'medspa_theme_setup');
+
+// Remove WordPress Customizer Integration
+// Commented out to disable WordPress customizer panels
+// if (file_exists(get_template_directory() . '/inc/theme-customizer.php')) {
+//     require_once get_template_directory() . '/inc/theme-customizer.php';
+// }
+
+// Include Visual Customizer Integration
+if (file_exists(get_template_directory() . '/inc/visual-customizer-integration.php')) {
+    require_once get_template_directory() . '/inc/visual-customizer-integration.php';
+}
