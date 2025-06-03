@@ -3097,3 +3097,17 @@ function preetidreams_admin_menu_updated() {
     );
 }
 add_action('admin_menu', 'preetidreams_admin_menu_updated');
+
+function medspa_theme_styles() {
+    // Main theme stylesheet
+    wp_enqueue_style('medspa-theme-style', get_template_directory_uri() . '/assets/css/medical-spa-theme.css', array(), '1.0.0');
+
+    // About Us page specific styles
+    if (is_page('about-us') || is_page_template('page-about.php')) {
+        wp_enqueue_style('about-us-styles', get_template_directory_uri() . '/assets/css/about-us-fix.css', array('medspa-theme-style'), '1.0.0');
+    }
+
+    // Font Awesome for icons
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
+}
+add_action('wp_enqueue_scripts', 'medspa_theme_styles');

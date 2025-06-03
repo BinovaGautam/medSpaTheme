@@ -161,3 +161,135 @@ function preetidreams_maybe_force_rewrite_flush() {
     }
 }
 add_action('init', 'preetidreams_maybe_force_rewrite_flush', 99);
+
+// Add About Us Page Creator to WordPress Admin
+function preetidreams_add_about_us_creator() {
+    add_management_page(
+        'About Us Page Creator',
+        'Create About Us Page',
+        'manage_options',
+        'create-about-us-page',
+        'preetidreams_about_us_creator_page'
+    );
+}
+add_action('admin_menu', 'preetidreams_add_about_us_creator');
+
+function preetidreams_about_us_creator_page() {
+    ?>
+    <div class="wrap">
+        <h1>🏥 About Us Page Creator</h1>
+
+        <?php
+        // Handle page creation
+        if (isset($_POST['create_about_page']) && check_admin_referer('create_about_page_nonce')) {
+            // Check if page already exists
+            $existing_page = get_page_by_title('About Us');
+
+            if ($existing_page) {
+                echo '<div class="notice notice-info"><p>✅ About Us page already exists (ID: ' . $existing_page->ID . ')</p>';
+                echo '<p><a href="' . get_permalink($existing_page->ID) . '" target="_blank" class="button">View Page</a> ';
+                echo '<a href="' . admin_url('post.php?post=' . $existing_page->ID . '&action=edit') . '" class="button">Edit Page</a></p></div>';
+            } else {
+                // Create the page
+                $page_data = array(
+                    'post_title'    => 'About Us',
+                    'post_name'     => 'about-us',
+                    'post_content'  => '<!-- About Us content managed by page-about.php template -->',
+                    'post_status'   => 'publish',
+                    'post_type'     => 'page',
+                    'post_author'   => get_current_user_id(),
+                    'meta_input'    => array(
+                        '_wp_page_template' => 'page-about.php'
+                    )
+                );
+
+                $page_id = wp_insert_post($page_data);
+
+                if (is_wp_error($page_id)) {
+                    echo '<div class="notice notice-error"><p>❌ Error creating page: ' . $page_id->get_error_message() . '</p></div>';
+                } else {
+                    echo '<div class="notice notice-success"><p>✅ About Us page created successfully!</p>';
+                    echo '<p><strong>Page ID:</strong> ' . $page_id . '</p>';
+                    echo '<p><a href="' . get_permalink($page_id) . '" target="_blank" class="button button-primary">View Page</a> ';
+                    echo '<a href="' . admin_url('post.php?post=' . $page_id . '&action=edit') . '" class="button">Edit Page</a></p></div>';
+                }
+            }
+        }
+
+        // Status check
+        $about_page = get_page_by_title('About Us');
+        $css_file_exists = file_exists(get_template_directory() . '/assets/css/about-us-fix.css');
+        $template_exists = file_exists(get_template_directory() . '/page-about.php');
+        ?>
+
+        <div class="postbox-container" style="width: 70%;">
+            <div class="postbox">
+                <h2 class="hndle"><span>📄 Page Status</span></h2>
+                <div class="inside">
+                    <?php if ($about_page): ?>
+                        <p><span class="dashicons dashicons-yes-alt" style="color: green;"></span> About Us page exists</p>
+                        <p><strong>ID:</strong> <?php echo $about_page->ID; ?></p>
+                        <p><strong>Template:</strong> <?php echo get_page_template_slug($about_page->ID) ?: 'default'; ?></p>
+                        <p>
+                            <a href="<?php echo get_permalink($about_page->ID); ?>" target="_blank" class="button button-primary">View Page</a>
+                            <a href="<?php echo admin_url('post.php?post=' . $about_page->ID . '&action=edit'); ?>" class="button">Edit Page</a>
+                        </p>
+                    <?php else: ?>
+                        <p><span class="dashicons dashicons-dismiss" style="color: red;"></span> About Us page does not exist</p>
+                        <form method="post" style="margin-top: 15px;">
+                            <?php wp_nonce_field('create_about_page_nonce'); ?>
+                            <button type="submit" name="create_about_page" class="button button-primary button-large">
+                                Create About Us Page
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="postbox">
+                <h2 class="hndle"><span>🎨 Assets Status</span></h2>
+                <div class="inside">
+                    <p>
+                        <span class="dashicons dashicons-<?php echo $css_file_exists ? 'yes-alt' : 'dismiss'; ?>"
+                              style="color: <?php echo $css_file_exists ? 'green' : 'red'; ?>;"></span>
+                        CSS File (about-us-fix.css)
+                    </p>
+                    <p>
+                        <span class="dashicons dashicons-<?php echo $template_exists ? 'yes-alt' : 'dismiss'; ?>"
+                              style="color: <?php echo $template_exists ? 'green' : 'red'; ?>;"></span>
+                        Template File (page-about.php)
+                    </p>
+                    <p>
+                        <span class="dashicons dashicons-<?php echo function_exists('medspa_theme_styles') ? 'yes-alt' : 'dismiss'; ?>"
+                              style="color: <?php echo function_exists('medspa_theme_styles') ? 'green' : 'red'; ?>;"></span>
+                        CSS Enqueue Function
+                    </p>
+                </div>
+            </div>
+
+            <?php if ($about_page && $css_file_exists && $template_exists): ?>
+                <div class="postbox">
+                    <h2 class="hndle"><span>🎉 Setup Complete!</span></h2>
+                    <div class="inside">
+                        <p>All components are in place. The About Us page should be working correctly.</p>
+                        <p><strong>Next Steps:</strong></p>
+                        <ol>
+                            <li><a href="<?php echo get_permalink($about_page->ID); ?>" target="_blank">Test the About Us page</a></li>
+                            <li>Verify responsive design on mobile/tablet</li>
+                            <li>Check all CSS styling is applied</li>
+                            <li>Test hover effects and animations</li>
+                        </ol>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <style>
+        .postbox h2.hndle span { font-size: 16px; }
+        .dashicons { font-size: 16px; width: 16px; height: 16px; }
+        .notice { margin: 15px 0; }
+        .button-large { padding: 10px 20px; height: auto; font-size: 14px; }
+    </style>
+    <?php
+}

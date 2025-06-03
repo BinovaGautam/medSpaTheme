@@ -1,0 +1,863 @@
+/* =============================================================================
+   ABOUT US PAGE - DR. PREETI SHARMA
+   PreetiDreams Medical Spa - Solo Practitioner Excellence
+   ============================================================================= */
+
+/* About Page Global Styles */
+.about-page {
+  margin: 0;
+  padding: 0;
+  background: var(--color-white);
+}
+
+/* =============================================================================
+   DR. PREETI HERO SECTION
+   ============================================================================= */
+
+.dr-preeti-hero {
+  padding: var(--space-4xl) 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.05) 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.dr-preeti-hero .container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.dr-preeti-hero .hero-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .dr-preeti-hero .hero-content {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+  }
+}
+
+.dr-preeti-hero .hero-text {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .dr-preeti-hero .hero-text {
+    text-align: left;
+  }
+}
+
+.dr-preeti-hero .hero-title {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-md);
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .dr-preeti-hero .hero-title {
+    font-size: var(--text-4xl);
+  }
+}
+
+.dr-preeti-hero .hero-subtitle {
+  font-size: var(--text-xl);
+  color: var(--color-primary-sage);
+  margin-bottom: var(--space-lg);
+  font-weight: 500;
+}
+
+.dr-preeti-hero .hero-quote {
+  margin-bottom: var(--space-xl);
+}
+
+.dr-preeti-hero .hero-quote blockquote {
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--color-charcoal);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.dr-preeti-hero .hero-quote blockquote::before {
+  content: '"';
+  font-size: 3em;
+  color: var(--color-primary-gold);
+  position: absolute;
+  top: -0.2em;
+  left: -0.3em;
+  font-family: Georgia, serif;
+}
+
+.dr-preeti-hero .credentials-highlights {
+  display: grid;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .dr-preeti-hero .credentials-highlights {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dr-preeti-hero .credential-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.dr-preeti-hero .credential-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.dr-preeti-hero .credential-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.dr-preeti-hero .credential-text {
+  font-weight: 600;
+  color: var(--color-primary-forest);
+}
+
+.dr-preeti-hero .hero-cta {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .dr-preeti-hero .hero-cta {
+    text-align: left;
+  }
+}
+
+.dr-preeti-hero .hero-image {
+  position: relative;
+  order: -1;
+}
+
+@media (min-width: 768px) {
+  .dr-preeti-hero .hero-image {
+    order: 0;
+  }
+}
+
+.dr-preeti-hero .hero-portrait {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+  max-height: 500px;
+}
+
+.dr-preeti-hero .placeholder-image {
+  background: linear-gradient(135deg, var(--color-primary-sage) 0%, var(--color-primary-forest) 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4xl);
+  text-align: center;
+  color: var(--color-white);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.dr-preeti-hero .placeholder-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-lg);
+}
+
+/* =============================================================================
+   PRACTICE STORY SECTION
+   ============================================================================= */
+
+.practice-story {
+  padding: var(--space-4xl) 0;
+  background: var(--color-white);
+}
+
+.practice-story .container {
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.practice-story .story-header h2 {
+  text-align: center;
+  font-size: var(--text-3xl);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-xl);
+}
+
+.practice-story .story-text {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.practice-story .story-text p {
+  font-size: var(--text-lg);
+  line-height: 1.7;
+  color: var(--color-charcoal);
+  margin-bottom: var(--space-xl);
+}
+
+.practice-story .story-text h3 {
+  font-size: var(--text-xl);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.practice-story .practice-differentiators {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+@media (min-width: 768px) {
+  .practice-story .practice-differentiators {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.practice-story .differentiator-item {
+  display: flex;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.05) 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.practice-story .differentiator-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.practice-story .differentiator-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  margin-top: var(--space-sm);
+}
+
+.practice-story .differentiator-content h4 {
+  font-size: var(--text-lg);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-sm);
+  font-weight: 600;
+}
+
+.practice-story .differentiator-content p {
+  color: var(--color-charcoal);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =============================================================================
+   SIGNATURE TREATMENTS SECTION
+   ============================================================================= */
+
+.signature-treatments {
+  padding: var(--space-4xl) 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.02) 100%);
+}
+
+.signature-treatments .container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.signature-treatments .section-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.signature-treatments .section-header h2 {
+  font-size: var(--text-3xl);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-lg);
+}
+
+.signature-treatments .treatments-grid {
+  display: grid;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+@media (min-width: 768px) {
+  .signature-treatments .treatments-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .signature-treatments .treatments-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.signature-treatments .treatment-card {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid rgba(135, 169, 107, 0.1);
+}
+
+.signature-treatments .treatment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary-gold);
+}
+
+.signature-treatments .treatment-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-lg);
+  display: block;
+}
+
+.signature-treatments .treatment-card h3 {
+  font-size: var(--text-lg);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+}
+
+.signature-treatments .treatment-card p {
+  color: var(--color-charcoal);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.signature-treatments .additional-treatments {
+  text-align: center;
+  padding: var(--space-xl);
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.signature-treatments .additional-treatments h4 {
+  font-size: var(--text-lg);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-md);
+}
+
+.signature-treatments .additional-treatments p {
+  color: var(--color-charcoal);
+  margin-bottom: var(--space-lg);
+}
+
+/* =============================================================================
+   EXPERT TEAM SECTION
+   ============================================================================= */
+
+.expert-team {
+  padding: var(--space-4xl) 0;
+  background: var(--color-white);
+}
+
+.expert-team .container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.expert-team .section-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.expert-team .section-header h2 {
+  font-size: var(--text-3xl);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-lg);
+}
+
+.expert-team .section-header p {
+  font-size: var(--text-lg);
+  color: var(--color-charcoal);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.expert-team .team-grid {
+  display: grid;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+@media (min-width: 768px) {
+  .expert-team .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .expert-team .team-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.expert-team .team-member {
+  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.05) 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.expert-team .team-member:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.expert-team .member-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-lg);
+  display: block;
+}
+
+.expert-team .team-member h3 {
+  font-size: var(--text-lg);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+}
+
+.expert-team .team-member p {
+  color: var(--color-charcoal);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.expert-team .member-details ul {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.expert-team .member-details li {
+  color: var(--color-charcoal);
+  margin-bottom: var(--space-sm);
+  padding-left: var(--space-lg);
+  position: relative;
+}
+
+.expert-team .member-details li::before {
+  content: "✓";
+  color: var(--color-primary-gold);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.expert-team .team-summary {
+  text-align: center;
+  padding: var(--space-xl);
+  background: linear-gradient(135deg, var(--color-primary-sage) 0%, var(--color-primary-forest) 100%);
+  border-radius: var(--radius-xl);
+  color: var(--color-white);
+}
+
+.expert-team .team-summary p {
+  font-size: var(--text-lg);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* =============================================================================
+   ARIZONA LOCATIONS SECTION
+   ============================================================================= */
+
+.arizona-locations {
+  padding: var(--space-4xl) 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.02) 100%);
+}
+
+.arizona-locations .container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.arizona-locations .section-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.arizona-locations .section-header h2 {
+  font-size: var(--text-3xl);
+  color: var(--color-primary-forest);
+}
+
+.arizona-locations .locations-grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .arizona-locations .locations-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.arizona-locations .location-info,
+.arizona-locations .contact-info,
+.arizona-locations .service-areas {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.arizona-locations .location-info:hover,
+.arizona-locations .contact-info:hover,
+.arizona-locations .service-areas:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.arizona-locations h3 {
+  font-size: var(--text-lg);
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-lg);
+  font-weight: 600;
+}
+
+.arizona-locations h4 {
+  font-size: var(--text-base);
+  color: var(--color-primary-sage);
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+}
+
+.arizona-locations .location-details p,
+.arizona-locations .contact-details p,
+.arizona-locations .areas-list p {
+  color: var(--color-charcoal);
+  margin-bottom: var(--space-sm);
+  line-height: 1.6;
+}
+
+.arizona-locations .location-details ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0;
+}
+
+.arizona-locations .location-details li {
+  color: var(--color-charcoal);
+  margin-bottom: var(--space-sm);
+  padding-left: var(--space-lg);
+  position: relative;
+}
+
+.arizona-locations .location-details li::before {
+  content: "•";
+  color: var(--color-primary-gold);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.arizona-locations .facility-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.arizona-locations .feature {
+  background: linear-gradient(135deg, var(--color-primary-sage) 0%, var(--color-primary-forest) 100%);
+  color: var(--color-white);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.arizona-locations .contact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.arizona-locations .contact-item a {
+  color: var(--color-primary-forest);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.arizona-locations .contact-item a:hover {
+  color: var(--color-primary-gold);
+}
+
+.arizona-locations .area-item {
+  margin-bottom: var(--space-lg);
+}
+
+.arizona-locations .area-item h4 {
+  color: var(--color-primary-forest);
+  margin-bottom: var(--space-sm);
+}
+
+.arizona-locations .service-note {
+  font-style: italic;
+  color: var(--color-primary-sage);
+  text-align: center;
+  margin-top: var(--space-lg);
+}
+
+/* =============================================================================
+   SUCCESS METRICS SECTION
+   ============================================================================= */
+
+.success-metrics {
+  padding: var(--space-4xl) 0;
+  background: linear-gradient(135deg, var(--color-primary-forest) 0%, var(--color-primary-sage) 100%);
+  color: var(--color-white);
+}
+
+.success-metrics .container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.success-metrics .section-header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.success-metrics .section-header h2 {
+  font-size: var(--text-3xl);
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+}
+
+.success-metrics .metrics-grid {
+  display: grid;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+@media (min-width: 768px) {
+  .success-metrics .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .success-metrics .metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.success-metrics .metric-item {
+  text-align: center;
+  padding: var(--space-xl);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+}
+
+.success-metrics .metric-item:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.success-metrics .metric-number {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: var(--color-primary-gold);
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.success-metrics .metric-item h3 {
+  font-size: var(--text-lg);
+  color: var(--color-white);
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+}
+
+.success-metrics .metric-item p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.success-metrics .testimonial-quote {
+  text-align: center;
+  padding: var(--space-3xl);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: var(--space-3xl);
+}
+
+.success-metrics .testimonial-quote blockquote {
+  font-size: var(--text-2xl);
+  font-style: italic;
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+  line-height: 1.4;
+}
+
+.success-metrics .testimonial-quote cite {
+  font-size: var(--text-lg);
+  color: var(--color-primary-gold);
+  font-weight: 600;
+  font-style: normal;
+}
+
+.success-metrics .testimonial-note {
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: var(--space-lg);
+  line-height: 1.6;
+}
+
+.success-metrics .success-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .success-metrics .success-cta {
+    flex-direction: column;
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================= */
+
+@media (max-width: 767px) {
+  .dr-preeti-hero {
+    padding: var(--space-2xl) 0;
+  }
+
+  .dr-preeti-hero .hero-title {
+    font-size: var(--text-2xl);
+  }
+
+  .dr-preeti-hero .credentials-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .practice-story,
+  .signature-treatments,
+  .expert-team,
+  .arizona-locations,
+  .success-metrics {
+    padding: var(--space-3xl) 0;
+  }
+
+  .treatments-grid,
+  .team-grid,
+  .locations-grid,
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .practice-differentiators {
+    grid-template-columns: 1fr;
+  }
+
+  .differentiator-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .success-metrics .metric-number {
+    font-size: var(--text-3xl);
+  }
+
+  .success-metrics .testimonial-quote blockquote {
+    font-size: var(--text-xl);
+  }
+}
+
+/* =============================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .dr-preeti-hero .credential-item,
+  .practice-story .differentiator-item,
+  .signature-treatments .treatment-card,
+  .expert-team .team-member,
+  .arizona-locations .location-info,
+  .arizona-locations .contact-info,
+  .arizona-locations .service-areas,
+  .success-metrics .metric-item {
+    transition: none;
+  }
+
+  .dr-preeti-hero .credential-item:hover,
+  .practice-story .differentiator-item:hover,
+  .signature-treatments .treatment-card:hover,
+  .expert-team .team-member:hover,
+  .arizona-locations .location-info:hover,
+  .arizona-locations .contact-info:hover,
+  .arizona-locations .service-areas:hover,
+  .success-metrics .metric-item:hover {
+    transform: none;
+  }
+}
+
+/* Focus states for accessibility */
+.dr-preeti-hero .btn:focus,
+.signature-treatments .btn:focus,
+.arizona-locations .btn:focus,
+.success-metrics .btn:focus {
+  outline: 3px solid var(--color-primary-gold);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dr-preeti-hero .credential-item,
+  .practice-story .differentiator-item,
+  .signature-treatments .treatment-card,
+  .expert-team .team-member,
+  .arizona-locations .location-info,
+  .arizona-locations .contact-info,
+  .arizona-locations .service-areas {
+    border: 2px solid var(--color-primary-forest);
+  }
+}
