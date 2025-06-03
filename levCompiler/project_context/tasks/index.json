@@ -73,15 +73,15 @@
   },
 
   "tasks": {
-    "totalTasks": 9,
-    "activeTasks": 0,
+    "totalTasks": 10,
+    "activeTasks": 1,
     "completedTasks": 5,
-    "inProgressTasks": 0,
+    "inProgressTasks": 1,
     "plannedTasks": 2,
     "removedTasks": 1,
     "blockedTasks": 0,
     "taskCategories": {
-      "development": 5,
+      "development": 6,
       "design": 1,
       "testing": 2,
       "documentation": 1,
@@ -90,14 +90,14 @@
     },
     "taskPriorities": {
       "critical": 3,
-      "high": 3,
+      "high": 4,
       "medium": 2,
       "low": 0,
       "removed": 1
     },
     "taskStatusBreakdown": {
       "completed": ["TASK-001", "TASK-002", "TASK-003", "TASK-006", "TASK-CUS-008"],
-      "in-progress": [],
+      "in-progress": ["VISUAL-CUSTOMIZER-PHASE1-001"],
       "planned": ["TASK-008", "TASK-009"],
       "partially-completed": ["TASK-004"],
       "removed": ["TASK-005"]

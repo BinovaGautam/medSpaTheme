@@ -1,11 +1,12 @@
 /**
- * Visual Customizer System
+ * Visual Customizer System - Phase 1 Enhanced
  * Modern floating customizer with real-time visual options
+ * Added: Medical Spa color palettes, preview thumbnails, save/load functionality
  */
 
 class VisualCustomizer {
     constructor() {
-        console.log('VisualCustomizer: Initializing...');
+        console.log('VisualCustomizer: Initializing Phase 1 Enhanced Version...');
 
         this.settings = {
             colorPalette: 'classic-forest',
@@ -17,10 +18,12 @@ class VisualCustomizer {
             animations: true
         };
 
+        // Enhanced medical spa color palettes
         this.palettes = {
             'classic-forest': {
                 name: 'Classic Forest',
                 description: 'Sophisticated sage and navy palette',
+                category: 'classic',
                 colors: {
                     primary: '#1B365D',
                     secondary: '#87A96B',
@@ -32,6 +35,7 @@ class VisualCustomizer {
             'ocean-blue': {
                 name: 'Ocean Blue',
                 description: 'Calming blues with gold accents',
+                category: 'classic',
                 colors: {
                     primary: '#0A4D68',
                     secondary: '#4A90A4',
@@ -43,6 +47,7 @@ class VisualCustomizer {
             'rose-gold': {
                 name: 'Rose Gold',
                 description: 'Warm rose with elegant gold',
+                category: 'classic',
                 colors: {
                     primary: '#8B4B72',
                     secondary: '#C4998D',
@@ -54,6 +59,7 @@ class VisualCustomizer {
             'sage-mint': {
                 name: 'Sage Mint',
                 description: 'Fresh sage with mint undertones',
+                category: 'classic',
                 colors: {
                     primary: '#5D6A52',
                     secondary: '#9CAF88',
@@ -65,6 +71,7 @@ class VisualCustomizer {
             'lavender-grey': {
                 name: 'Lavender Grey',
                 description: 'Soft lavender with sophisticated grey',
+                category: 'classic',
                 colors: {
                     primary: '#6B5B73',
                     secondary: '#A69CAC',
@@ -76,6 +83,7 @@ class VisualCustomizer {
             'warm-earth': {
                 name: 'Warm Earth',
                 description: 'Rich earthy tones with copper',
+                category: 'classic',
                 colors: {
                     primary: '#8B4513',
                     secondary: '#CD853F',
@@ -87,12 +95,110 @@ class VisualCustomizer {
             'modern-monochrome': {
                 name: 'Modern Monochrome',
                 description: 'Sophisticated blacks and greys',
+                category: 'classic',
                 colors: {
                     primary: '#2D3748',
                     secondary: '#4A5568',
                     accent: '#A0AEC0',
                     light: '#F7FAFC',
                     dark: '#1A202C'
+                }
+            },
+            // NEW MEDICAL SPA PALETTES - Phase 1
+            'spa-serenity': {
+                name: 'Spa Serenity',
+                description: 'Calming spa blues with pearl accents',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#2E5266',
+                    secondary: '#7FB3D3',
+                    accent: '#E8F4F8',
+                    light: '#F9FDFF',
+                    dark: '#1C3D4A'
+                }
+            },
+            'wellness-green': {
+                name: 'Wellness Green',
+                description: 'Natural healing greens with gold',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#2D5016',
+                    secondary: '#6B8E23',
+                    accent: '#C7B377',
+                    light: '#F7F9F4',
+                    dark: '#1A2F0C'
+                }
+            },
+            'clinical-elegance': {
+                name: 'Clinical Elegance',
+                description: 'Medical white with trust-building blue',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#1E3A8A',
+                    secondary: '#60A5FA',
+                    accent: '#F1F5F9',
+                    light: '#FFFFFF',
+                    dark: '#0F172A'
+                }
+            },
+            'therapeutic-rose': {
+                name: 'Therapeutic Rose',
+                description: 'Soft healing rose with cream',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#9F1239',
+                    secondary: '#F43F5E',
+                    accent: '#FDF2F8',
+                    light: '#FFFBFE',
+                    dark: '#4C0519'
+                }
+            },
+            'rejuvenation-purple': {
+                name: 'Rejuvenation Purple',
+                description: 'Luxurious purple with silver accents',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#581C87',
+                    secondary: '#A855F7',
+                    accent: '#F3E8FF',
+                    light: '#FEFAFF',
+                    dark: '#2E1065'
+                }
+            },
+            'holistic-teal': {
+                name: 'Holistic Teal',
+                description: 'Balanced teal with warm undertones',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#134E4A',
+                    secondary: '#14B8A6',
+                    accent: '#CCFBF1',
+                    light: '#F0FDFA',
+                    dark: '#042F2E'
+                }
+            },
+            'premium-bronze': {
+                name: 'Premium Bronze',
+                description: 'Sophisticated bronze with cream luxury',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#92400E',
+                    secondary: '#D97706',
+                    accent: '#FEF3C7',
+                    light: '#FFFBEB',
+                    dark: '#451A03'
+                }
+            },
+            'platinum-spa': {
+                name: 'Platinum Spa',
+                description: 'High-end platinum with pearl finishes',
+                category: 'medical-spa',
+                colors: {
+                    primary: '#374151',
+                    secondary: '#9CA3AF',
+                    accent: '#F9FAFB',
+                    light: '#FFFFFF',
+                    dark: '#111827'
                 }
             }
         };
@@ -170,6 +276,69 @@ class VisualCustomizer {
         console.log('VisualCustomizer: Settings saved', this.settings);
     }
 
+    // NEW: Save/Load Configuration Methods
+    exportConfiguration() {
+        const config = {
+            settings: this.settings,
+            timestamp: new Date().toISOString(),
+            version: '1.1.0-phase1'
+        };
+
+        const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `medspaa-customizer-config-${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        this.showPreviewIndicator('Configuration Exported');
+    }
+
+    importConfiguration(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const config = JSON.parse(e.target.result);
+                if (config.settings && this.validateConfiguration(config.settings)) {
+                    this.settings = { ...this.settings, ...config.settings };
+                    this.saveSettings();
+                    this.applyCurrentSettings();
+                    this.updateUI();
+                    this.showPreviewIndicator('Configuration Imported Successfully');
+                } else {
+                    throw new Error('Invalid configuration format');
+                }
+            } catch (error) {
+                console.error('Configuration import failed:', error);
+                this.showPreviewIndicator('Configuration Import Failed', 'error');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    validateConfiguration(settings) {
+        const requiredKeys = ['colorPalette', 'fontHeading', 'fontBody'];
+        return requiredKeys.every(key => settings.hasOwnProperty(key));
+    }
+
+    // NEW: Generate Preview Thumbnail
+    generatePaletteThumbnail(paletteKey) {
+        const palette = this.palettes[paletteKey];
+        if (!palette) return '';
+
+        return `
+            <div class="palette-thumbnail">
+                <div class="color-swatch" style="background-color: ${palette.colors.primary}"></div>
+                <div class="color-swatch" style="background-color: ${palette.colors.secondary}"></div>
+                <div class="color-swatch" style="background-color: ${palette.colors.accent}"></div>
+                <div class="color-swatch" style="background-color: ${palette.colors.light}"></div>
+            </div>
+        `;
+    }
+
     createTriggerButton() {
         console.log('VisualCustomizer: Creating trigger button...');
         const button = document.createElement('button');
@@ -201,22 +370,64 @@ class VisualCustomizer {
     getDrawerHTML() {
         return `
             <div class="customizer-header">
-                <h2>Theme Customizer</h2>
+                <h2>Theme Customizer <span class="version-badge">v1.1</span></h2>
                 <p>Personalize your viewing experience</p>
                 <button class="customizer-close" aria-label="Close Customizer">×</button>
             </div>
 
             <div class="customizer-content">
+                ${this.getConfigurationSection()}
                 ${this.getColorPalettesSection()}
                 ${this.getFontsSection()}
                 ${this.getStyleControlsSection()}
             </div>
 
-            <button class="customizer-reset">Reset to Default</button>
+            <div class="customizer-footer">
+                <button class="customizer-reset">Reset to Default</button>
+            </div>
+        `;
+    }
+
+    // NEW: Configuration Save/Load Section
+    getConfigurationSection() {
+        return `
+            <div class="customizer-section">
+                <button class="section-header" data-section="config">
+                    <h3 class="section-title">
+                        <span class="section-icon">💾</span>
+                        Configuration
+                    </h3>
+                    <span class="section-arrow">▼</span>
+                </button>
+                <div class="section-content" data-content="config">
+                    <div class="section-body">
+                        <div class="config-controls">
+                            <button class="config-btn export-config" type="button">
+                                <span class="btn-icon">📥</span>
+                                Export Settings
+                            </button>
+                            <div class="import-config-wrapper">
+                                <input type="file" id="import-config" accept=".json" class="import-config-input" hidden>
+                                <button class="config-btn import-config-btn" type="button">
+                                    <span class="btn-icon">📤</span>
+                                    Import Settings
+                                </button>
+                            </div>
+                        </div>
+                        <div class="config-info">
+                            <small>Save and share your customization preferences</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
     }
 
     getColorPalettesSection() {
+        // Group palettes by category
+        const classicPalettes = Object.entries(this.palettes).filter(([_, palette]) => palette.category === 'classic');
+        const medicalSpaPalettes = Object.entries(this.palettes).filter(([_, palette]) => palette.category === 'medical-spa');
+
         return `
             <div class="customizer-section">
                 <button class="section-header" data-section="colors">
@@ -228,20 +439,56 @@ class VisualCustomizer {
                 </button>
                 <div class="section-content" data-content="colors">
                     <div class="section-body">
-                        <div class="color-palettes-grid">
-                            ${Object.entries(this.palettes).map(([key, palette]) => `
-                                <div class="color-palette-option ${this.settings.colorPalette === key ? 'active' : ''}"
-                                     data-palette="${key}">
-                                    <div class="palette-name">${palette.name}</div>
-                                    <div class="palette-description">${palette.description}</div>
-                                    <div class="palette-colors">
-                                        <div class="palette-color" style="background-color: ${palette.colors.primary}"></div>
-                                        <div class="palette-color" style="background-color: ${palette.colors.secondary}"></div>
-                                        <div class="palette-color" style="background-color: ${palette.colors.accent}"></div>
-                                        <div class="palette-color" style="background-color: ${palette.colors.light}"></div>
+                        <!-- Medical Spa Palettes -->
+                        <div class="palette-category">
+                            <h4 class="category-title">
+                                <span class="category-icon">🏥</span>
+                                Medical Spa Professional
+                            </h4>
+                            <div class="color-palettes-grid">
+                                ${medicalSpaPalettes.map(([key, palette]) => `
+                                    <div class="color-palette-option ${this.settings.colorPalette === key ? 'active' : ''}"
+                                         data-palette="${key}">
+                                        <div class="palette-header">
+                                            <div class="palette-name">${palette.name}</div>
+                                            ${this.generatePaletteThumbnail(key)}
+                                        </div>
+                                        <div class="palette-description">${palette.description}</div>
+                                        <div class="palette-colors">
+                                            <div class="palette-color" style="background-color: ${palette.colors.primary}" title="Primary"></div>
+                                            <div class="palette-color" style="background-color: ${palette.colors.secondary}" title="Secondary"></div>
+                                            <div class="palette-color" style="background-color: ${palette.colors.accent}" title="Accent"></div>
+                                            <div class="palette-color" style="background-color: ${palette.colors.light}" title="Light"></div>
+                                        </div>
                                     </div>
-                                </div>
-                            `).join('')}
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Classic Palettes -->
+                        <div class="palette-category">
+                            <h4 class="category-title">
+                                <span class="category-icon">🎭</span>
+                                Classic Collection
+                            </h4>
+                            <div class="color-palettes-grid">
+                                ${classicPalettes.map(([key, palette]) => `
+                                    <div class="color-palette-option ${this.settings.colorPalette === key ? 'active' : ''}"
+                                         data-palette="${key}">
+                                        <div class="palette-header">
+                                            <div class="palette-name">${palette.name}</div>
+                                            ${this.generatePaletteThumbnail(key)}
+                                        </div>
+                                        <div class="palette-description">${palette.description}</div>
+                                        <div class="palette-colors">
+                                            <div class="palette-color" style="background-color: ${palette.colors.primary}" title="Primary"></div>
+                                            <div class="palette-color" style="background-color: ${palette.colors.secondary}" title="Secondary"></div>
+                                            <div class="palette-color" style="background-color: ${palette.colors.accent}" title="Accent"></div>
+                                            <div class="palette-color" style="background-color: ${palette.colors.light}" title="Light"></div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -365,6 +612,34 @@ class VisualCustomizer {
         this.drawer.querySelectorAll('.section-header').forEach(header => {
             header.addEventListener('click', (e) => this.toggleSection(e.target.closest('.section-header')));
         });
+
+        // NEW: Configuration export/import handlers
+        const exportBtn = this.drawer.querySelector('.export-config');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                console.log('VisualCustomizer: Export configuration clicked');
+                this.exportConfiguration();
+            });
+        }
+
+        const importBtn = this.drawer.querySelector('.import-config-btn');
+        const importInput = this.drawer.querySelector('.import-config-input');
+        if (importBtn && importInput) {
+            importBtn.addEventListener('click', () => {
+                console.log('VisualCustomizer: Import configuration clicked');
+                importInput.click();
+            });
+
+            importInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    console.log('VisualCustomizer: Configuration file selected', file.name);
+                    this.importConfiguration(file);
+                    // Clear input for next import
+                    e.target.value = '';
+                }
+            });
+        }
 
         // Color palette options
         this.drawer.querySelectorAll('.color-palette-option').forEach(option => {
@@ -708,6 +983,36 @@ class VisualCustomizer {
         });
 
         this.drawer.querySelector('.customizer-reset').addEventListener('click', () => this.resetToDefaults());
+    }
+
+    // NEW: Update UI elements to reflect current settings
+    updateUI() {
+        console.log('VisualCustomizer: Updating UI elements...');
+
+        // Update active palette
+        this.drawer.querySelectorAll('.color-palette-option').forEach(option => {
+            option.classList.toggle('active', option.dataset.palette === this.settings.colorPalette);
+        });
+
+        // Update active fonts
+        this.drawer.querySelectorAll('.font-option').forEach(option => {
+            const fontType = option.dataset.font;
+            const fontValue = option.dataset.value;
+            const settingKey = fontType === 'heading' ? 'fontHeading' : 'fontBody';
+            option.classList.toggle('active', this.settings[settingKey] === fontValue);
+        });
+
+        // Update active style options
+        this.drawer.querySelectorAll('.style-option').forEach(option => {
+            const setting = option.dataset.setting;
+            const value = option.dataset.value;
+            const isActive = value === 'true' ? this.settings[setting] === true :
+                            value === 'false' ? this.settings[setting] === false :
+                            this.settings[setting] === value;
+            option.classList.toggle('active', isActive);
+        });
+
+        console.log('VisualCustomizer: UI updated successfully');
     }
 }
 
