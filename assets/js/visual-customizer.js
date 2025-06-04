@@ -1,12 +1,24 @@
 /**
- * Visual Customizer System - Phase 1 Enhanced
+ * Visual Customizer System - Phase 2 Advanced
  * Modern floating customizer with real-time visual options
- * Added: Medical Spa color palettes, preview thumbnails, save/load functionality
+ * Phase 1: Medical Spa color palettes, preview thumbnails, save/load functionality
+ * Phase 2: Component-level theming, advanced color science, gradient systems
  */
 
 class VisualCustomizer {
     constructor() {
-        console.log('VisualCustomizer: Initializing Phase 1 Enhanced Version...');
+        console.log('VisualCustomizer: Initializing Phase 2 Advanced Version...');
+
+        // Check if user has admin access
+        this.isAdmin = visualCustomizerData.isAdmin || false;
+        this.adminOnlyMode = visualCustomizerData.settings.adminOnlyMode || false;
+        this.globalConfig = visualCustomizerData.globalConfig || {};
+
+        // If not admin and in admin-only mode, don't initialize
+        if (this.adminOnlyMode && !this.isAdmin) {
+            console.log('VisualCustomizer: Admin-only mode - not initializing for non-admin user');
+            return;
+        }
 
         this.settings = {
             colorPalette: 'classic-forest',
@@ -15,7 +27,41 @@ class VisualCustomizer {
             fontSize: 'normal',
             headerStyle: 'transparent',
             buttonStyle: 'rounded',
-            animations: true
+            animations: true,
+            // NEW PHASE 2: Component-Level Settings
+            componentSettings: {
+                header: {
+                    style: 'transparent',
+                    background: 'default',
+                    pattern: 'none',
+                    opacity: 1.0
+                },
+                footer: {
+                    layout: 'default',
+                    background: 'default',
+                    contentArrangement: 'standard'
+                },
+                buttons: {
+                    style: 'rounded',
+                    effect: 'none',
+                    interaction: 'hover'
+                },
+                cards: {
+                    design: 'modern',
+                    shadow: 'medium',
+                    borderRadius: 'rounded'
+                },
+                navigation: {
+                    mobileStyle: 'hamburger',
+                    desktopStyle: 'inline',
+                    position: 'top'
+                },
+                forms: {
+                    style: 'modern',
+                    fieldStyle: 'outlined',
+                    buttonAlignment: 'center'
+                }
+            }
         };
 
         // Enhanced medical spa color palettes
@@ -248,21 +294,240 @@ class VisualCustomizer {
             }
         };
 
+        // NEW PHASE 2: Component Theming Definitions
+        this.componentDefinitions = {
+            header: {
+                name: 'Header',
+                icon: '🏠',
+                description: 'Main navigation and site header',
+                options: {
+                    style: {
+                        name: 'Header Style',
+                        options: {
+                            'transparent': 'Transparent',
+                            'solid': 'Solid Color',
+                            'gradient': 'Gradient',
+                            'blur': 'Glass Effect'
+                        }
+                    },
+                    background: {
+                        name: 'Background',
+                        options: {
+                            'default': 'Theme Default',
+                            'custom': 'Custom Color',
+                            'pattern': 'Pattern Overlay'
+                        }
+                    },
+                    pattern: {
+                        name: 'Pattern',
+                        options: {
+                            'none': 'None',
+                            'dots': 'Subtle Dots',
+                            'lines': 'Fine Lines',
+                            'waves': 'Wave Pattern'
+                        }
+                    }
+                }
+            },
+            footer: {
+                name: 'Footer',
+                icon: '📍',
+                description: 'Site footer with contact and links',
+                options: {
+                    layout: {
+                        name: 'Layout Style',
+                        options: {
+                            'default': 'Standard Layout',
+                            'centered': 'Centered Content',
+                            'split': 'Split Columns',
+                            'minimal': 'Minimal Design'
+                        }
+                    },
+                    background: {
+                        name: 'Background Style',
+                        options: {
+                            'default': 'Theme Default',
+                            'dark': 'Dark Mode',
+                            'gradient': 'Gradient Background',
+                            'textured': 'Textured Surface'
+                        }
+                    }
+                }
+            },
+            buttons: {
+                name: 'Buttons',
+                icon: '🔘',
+                description: 'Site-wide button styling',
+                options: {
+                    style: {
+                        name: 'Button Style',
+                        options: {
+                            'rounded': 'Rounded Corners',
+                            'sharp': 'Sharp Edges',
+                            'pill': 'Pill Shape',
+                            'outlined': 'Outlined Style'
+                        }
+                    },
+                    effect: {
+                        name: 'Visual Effects',
+                        options: {
+                            'none': 'None',
+                            'shadow': 'Drop Shadow',
+                            'glow': 'Soft Glow',
+                            'gradient': 'Gradient Fill'
+                        }
+                    },
+                    interaction: {
+                        name: 'Hover Interaction',
+                        options: {
+                            'hover': 'Color Change',
+                            'lift': 'Lift Effect',
+                            'scale': 'Scale Transform',
+                            'slide': 'Slide Animation'
+                        }
+                    }
+                }
+            },
+            cards: {
+                name: 'Cards',
+                icon: '🃏',
+                description: 'Treatment and content cards',
+                options: {
+                    design: {
+                        name: 'Card Design',
+                        options: {
+                            'modern': 'Modern Clean',
+                            'elegant': 'Elegant Classic',
+                            'minimal': 'Minimal Style',
+                            'luxury': 'Luxury Premium'
+                        }
+                    },
+                    shadow: {
+                        name: 'Shadow Effect',
+                        options: {
+                            'none': 'No Shadow',
+                            'light': 'Light Shadow',
+                            'medium': 'Medium Shadow',
+                            'heavy': 'Heavy Shadow'
+                        }
+                    },
+                    borderRadius: {
+                        name: 'Corner Radius',
+                        options: {
+                            'none': 'Sharp Corners',
+                            'small': 'Slightly Rounded',
+                            'rounded': 'Rounded',
+                            'large': 'Very Rounded'
+                        }
+                    }
+                }
+            },
+            navigation: {
+                name: 'Navigation',
+                icon: '🧭',
+                description: 'Site navigation menu',
+                options: {
+                    mobileStyle: {
+                        name: 'Mobile Menu',
+                        options: {
+                            'hamburger': 'Hamburger Menu',
+                            'slide': 'Slide-out Drawer',
+                            'overlay': 'Full Overlay',
+                            'tabs': 'Tab Navigation'
+                        }
+                    },
+                    desktopStyle: {
+                        name: 'Desktop Menu',
+                        options: {
+                            'inline': 'Inline Menu',
+                            'dropdown': 'Dropdown Style',
+                            'mega': 'Mega Menu',
+                            'sidebar': 'Sidebar Menu'
+                        }
+                    }
+                }
+            },
+            forms: {
+                name: 'Forms',
+                icon: '📝',
+                description: 'Contact and consultation forms',
+                options: {
+                    style: {
+                        name: 'Form Style',
+                        options: {
+                            'modern': 'Modern Design',
+                            'classic': 'Classic Style',
+                            'minimal': 'Minimal Clean',
+                            'medical': 'Medical Professional'
+                        }
+                    },
+                    fieldStyle: {
+                        name: 'Field Style',
+                        options: {
+                            'outlined': 'Outlined Fields',
+                            'filled': 'Filled Background',
+                            'underlined': 'Underlined Only',
+                            'floating': 'Floating Labels'
+                        }
+                    }
+                }
+            }
+        };
+
         this.init();
     }
 
     init() {
-        console.log('VisualCustomizer: Starting initialization...');
+        console.log('VisualCustomizer: Initializing Phase 2 system...');
+
+        // Load Phase 2 CSS
+        this.loadPhase2Styles();
+
+        // Load existing settings
         this.loadSettings();
+
+        // Create UI elements
         this.createTriggerButton();
         this.createDrawer();
+
+        // Setup event handlers
         this.bindEvents();
+
+        // Apply current settings
         this.applyCurrentSettings();
+
+        // Load Google Fonts
         this.loadGoogleFonts();
-        console.log('VisualCustomizer: Initialization complete');
+
+        // Initialize component preview
+        this.initializeComponentPreview();
+
+        // NEW: Load Global Configuration on Init (Admin Only)
+        this.loadGlobalConfiguration();
+
+        console.log('VisualCustomizer: Phase 2 initialization complete');
+    }
+
+    // NEW PHASE 2: Load Phase 2 Stylesheet
+    loadPhase2Styles() {
+        const existingPhase2 = document.querySelector('link[data-customizer-phase2]');
+        if (!existingPhase2) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/wp-content/themes/medSpaTheme/assets/css/customizer-phase2.css';
+            link.setAttribute('data-customizer-phase2', 'true');
+            document.head.appendChild(link);
+            console.log('VisualCustomizer: Phase 2 CSS loaded');
+        }
     }
 
     loadSettings() {
+        // In admin-only mode, don't load from localStorage
+        if (this.adminOnlyMode && this.isAdmin) {
+            console.log('VisualCustomizer: Admin-only mode - skipping localStorage load');
+            return;
+        }
+
         const saved = localStorage.getItem('medspaa_visual_customizer');
         if (saved) {
             this.settings = { ...this.settings, ...JSON.parse(saved) };
@@ -271,6 +536,13 @@ class VisualCustomizer {
     }
 
     saveSettings() {
+        // In admin-only mode, don't save to localStorage (only preview changes)
+        if (this.adminOnlyMode && this.isAdmin) {
+            console.log('VisualCustomizer: Admin-only mode - settings not saved to localStorage (preview only)');
+            this.showPreviewIndicator('Preview Mode - Use "Apply Globally" to save');
+            return;
+        }
+
         localStorage.setItem('medspaa_visual_customizer', JSON.stringify(this.settings));
         this.showPreviewIndicator('Settings Saved');
         console.log('VisualCustomizer: Settings saved', this.settings);
@@ -343,9 +615,15 @@ class VisualCustomizer {
         console.log('VisualCustomizer: Creating trigger button...');
         const button = document.createElement('button');
         button.className = 'visual-customizer-trigger';
+
+        // Add admin-mode class if user is admin
+        if (this.isAdmin) {
+            button.classList.add('admin-mode');
+        }
+
         button.innerHTML = '🎨';
-        button.setAttribute('aria-label', 'Open Visual Customizer');
-        button.setAttribute('title', 'Customize Theme Appearance');
+        button.setAttribute('aria-label', this.isAdmin ? 'Open Visual Customizer (Admin Mode)' : 'Open Visual Customizer');
+        button.setAttribute('title', this.isAdmin ? 'Customize Theme Appearance (Admin Only)' : 'Customize Theme Appearance');
 
         // Append to body for absolute positioning
         document.body.appendChild(button);
@@ -368,39 +646,70 @@ class VisualCustomizer {
     }
 
     getDrawerHTML() {
+        // Default open section for admin users should be Configuration
+        const defaultOpenSection = this.isAdmin ? 'config' : 'colors';
+
         return `
-            <div class="customizer-header">
-                <h2>Theme Customizer <span class="version-badge">v1.1</span></h2>
-                <p>Personalize your viewing experience</p>
-                <button class="customizer-close" aria-label="Close Customizer">×</button>
+            <div class="visual-customizer-drawer">
+                <div class="customizer-header">
+                    <h2 class="customizer-title">${this.isAdmin ? '👑 Admin Visual Customizer' : '🎨 Visual Customizer'}</h2>
+                    <button class="customizer-close" aria-label="Close customizer">&times;</button>
+                </div>
+                <div class="customizer-content">
+                    ${this.getConfigurationSection()}
+                    ${this.getColorPalettesSection()}
+                    ${this.getFontsSection()}
+                    ${this.getStyleControlsSection()}
+                </div>
+                <div class="customizer-footer">
+                    <button class="customizer-reset" data-confirm="true">Reset to Default</button>
+                    <div class="version-badge">v2.0</div>
+                </div>
             </div>
-
-            <div class="customizer-content">
-                ${this.getConfigurationSection()}
-                ${this.getColorPalettesSection()}
-                ${this.getFontsSection()}
-                ${this.getStyleControlsSection()}
-            </div>
-
-            <div class="customizer-footer">
-                <button class="customizer-reset">Reset to Default</button>
-            </div>
+            <script>
+                // Auto-open the default section for admin users
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(() => {
+                        const defaultHeader = document.querySelector('[data-section="${defaultOpenSection}"]');
+                        if (defaultHeader && !defaultHeader.classList.contains('active')) {
+                            defaultHeader.click();
+                        }
+                    }, 100);
+                });
+            </script>
         `;
     }
 
     // NEW: Configuration Save/Load Section
     getConfigurationSection() {
+        const adminControls = this.isAdmin ? `
+            <div class="admin-controls">
+                <div class="admin-notice">
+                    <span class="admin-icon">👑</span>
+                    ${visualCustomizerData.i18n.adminOnlyNotice}
+                </div>
+                <button class="config-btn apply-global-config" type="button">
+                    <span class="btn-icon">🌍</span>
+                    ${visualCustomizerData.i18n.applyGlobally}
+                </button>
+                <div class="global-config-info">
+                    <small>Apply current settings for all website visitors</small>
+                </div>
+            </div>
+        ` : '';
+
         return `
             <div class="customizer-section">
                 <button class="section-header" data-section="config">
                     <h3 class="section-title">
                         <span class="section-icon">💾</span>
-                        Configuration
+                        Configuration ${this.isAdmin ? '<span class="admin-badge">Admin</span>' : ''}
                     </h3>
                     <span class="section-arrow">▼</span>
                 </button>
                 <div class="section-content" data-content="config">
                     <div class="section-body">
+                        ${adminControls}
                         <div class="config-controls">
                             <button class="config-btn export-config" type="button">
                                 <span class="btn-icon">📥</span>
@@ -593,8 +902,78 @@ class VisualCustomizer {
         `;
     }
 
+    // NEW PHASE 2: Component Theming Section
+    getComponentThemingSection() {
+        return `
+            <div class="component-theming-section">
+                <div class="component-grid">
+                    ${Object.entries(this.componentDefinitions).map(([componentKey, component]) => `
+                        <div class="component-card" data-component="${componentKey}">
+                            <div class="component-header">
+                                <span class="component-icon">${component.icon}</span>
+                                <div class="component-info">
+                                    <h4 class="component-name">${component.name}</h4>
+                                    <p class="component-description">${component.description}</p>
+                                </div>
+                                <button class="component-expand" data-component="${componentKey}">
+                                    <span class="expand-icon">⚙️</span>
+                                </button>
+                            </div>
+
+                            <div class="component-controls" data-component-controls="${componentKey}">
+                                ${Object.entries(component.options).map(([optionKey, option]) => `
+                                    <div class="component-option">
+                                        <label class="option-label">${option.name}</label>
+                                        <div class="option-controls">
+                                            ${Object.entries(option.options).map(([valueKey, valueName]) => `
+                                                <button class="option-button ${this.settings.componentSettings[componentKey]?.[optionKey] === valueKey ? 'active' : ''}"
+                                                        data-component="${componentKey}"
+                                                        data-option="${optionKey}"
+                                                        data-value="${valueKey}">
+                                                    ${valueName}
+                                                </button>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Component Preview Area -->
+                <div class="component-preview-area">
+                    <div class="preview-header">
+                        <h4>Component Preview</h4>
+                        <div class="preview-mode-selector">
+                            <button class="preview-mode active" data-mode="desktop">
+                                <span class="mode-icon">🖥️</span>
+                                Desktop
+                            </button>
+                            <button class="preview-mode" data-mode="tablet">
+                                <span class="mode-icon">📱</span>
+                                Tablet
+                            </button>
+                            <button class="preview-mode" data-mode="mobile">
+                                <span class="mode-icon">📱</span>
+                                Mobile
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="component-preview-frame" id="component-preview">
+                        <div class="preview-loading">
+                            <span class="loading-icon">⏳</span>
+                            Select a component to preview
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     bindEvents() {
-        console.log('VisualCustomizer: Binding events...');
+        console.log('VisualCustomizer: Binding Phase 2 events...');
 
         // Trigger button
         this.triggerButton.addEventListener('click', () => {
@@ -608,12 +987,40 @@ class VisualCustomizer {
             this.closeDrawer();
         });
 
-        // Section headers
+        // NEW PHASE 2: Tab Navigation
+        this.drawer.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const tabName = e.target.closest('.tab-button').dataset.tab;
+                this.switchTab(tabName);
+            });
+        });
+
+        // NEW PHASE 2: Component Theming Events
+        this.drawer.querySelectorAll('.component-expand').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const componentKey = e.target.closest('.component-expand').dataset.component;
+                this.toggleComponentControls(componentKey);
+            });
+        });
+
+        this.drawer.querySelectorAll('.option-button').forEach(button => {
+            button.addEventListener('click', (e) => this.selectComponentOption(e.target.closest('.option-button')));
+        });
+
+        // NEW PHASE 2: Preview Mode Selection
+        this.drawer.querySelectorAll('.preview-mode').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const mode = e.target.closest('.preview-mode').dataset.mode;
+                this.setPreviewMode(mode);
+            });
+        });
+
+        // Section headers (for backward compatibility)
         this.drawer.querySelectorAll('.section-header').forEach(header => {
             header.addEventListener('click', (e) => this.toggleSection(e.target.closest('.section-header')));
         });
 
-        // NEW: Configuration export/import handlers
+        // Configuration export/import handlers
         const exportBtn = this.drawer.querySelector('.export-config');
         if (exportBtn) {
             exportBtn.addEventListener('click', () => {
@@ -635,9 +1042,17 @@ class VisualCustomizer {
                 if (file) {
                     console.log('VisualCustomizer: Configuration file selected', file.name);
                     this.importConfiguration(file);
-                    // Clear input for next import
                     e.target.value = '';
                 }
+            });
+        }
+
+        // Admin-only Apply Globally handler
+        const applyGlobalBtn = this.drawer.querySelector('.apply-global-config');
+        if (applyGlobalBtn && this.isAdmin) {
+            applyGlobalBtn.addEventListener('click', () => {
+                console.log('VisualCustomizer: Apply globally clicked');
+                this.applyConfigurationGlobally();
             });
         }
 
@@ -673,7 +1088,7 @@ class VisualCustomizer {
             }
         });
 
-        console.log('VisualCustomizer: Events bound successfully');
+        console.log('VisualCustomizer: Phase 2 events bound successfully');
     }
 
     toggleDrawer() {
@@ -692,12 +1107,16 @@ class VisualCustomizer {
         this.triggerButton.classList.add('active');
         document.body.style.overflow = 'hidden';
 
-        // Open first section by default
-        const firstSection = this.drawer.querySelector('.section-header');
-        if (firstSection && !firstSection.classList.contains('active')) {
-            this.toggleSection(firstSection);
+        // Auto-open Configuration section for admin users, Colors for others
+        const defaultSection = this.isAdmin ? 'config' : 'colors';
+        const defaultHeader = this.drawer.querySelector(`[data-section="${defaultSection}"]`);
+        if (defaultHeader && !defaultHeader.classList.contains('active')) {
+            setTimeout(() => {
+                this.toggleSection(defaultHeader);
+            }, 100);
         }
-        console.log('VisualCustomizer: Drawer opened');
+
+        console.log('VisualCustomizer: Drawer opened' + (this.isAdmin ? ' (Admin mode - Configuration section auto-opened)' : ''));
     }
 
     closeDrawer() {
@@ -770,9 +1189,31 @@ class VisualCustomizer {
     }
 
     applyCurrentSettings() {
+        console.log('VisualCustomizer: Applying current settings (Phase 2)...', this.settings);
+
+        // Apply color palette
         this.applyColorPalette();
+
+        // Apply fonts
         this.applyFonts();
+
+        // Apply style settings
         this.applyStyleSettings();
+
+        // NEW PHASE 2: Apply component theming
+        this.applyAllComponentTheming();
+
+        console.log('VisualCustomizer: All Phase 2 settings applied successfully');
+    }
+
+    // NEW PHASE 2: Apply All Component Theming
+    applyAllComponentTheming() {
+        if (this.settings.componentSettings) {
+            Object.keys(this.settings.componentSettings).forEach(componentKey => {
+                this.applyComponentTheming(componentKey);
+            });
+            console.log('VisualCustomizer: All component theming applied');
+        }
     }
 
     applyColorPalette() {
@@ -928,20 +1369,36 @@ class VisualCustomizer {
         }
     }
 
-    showPreviewIndicator(message) {
-        let indicator = document.querySelector('.preview-indicator');
+    showPreviewIndicator(message, type = 'info') {
+        let indicator = document.querySelector('.customizer-preview-indicator');
         if (!indicator) {
             indicator = document.createElement('div');
-            indicator.className = 'preview-indicator';
+            indicator.className = 'customizer-preview-indicator';
+
+            // Add admin-mode class if user is admin
+            if (this.isAdmin) {
+                indicator.classList.add('admin-mode');
+            }
+
             document.body.appendChild(indicator);
+        }
+
+        // Remove existing type classes
+        indicator.classList.remove('success', 'error', 'warning');
+
+        // Add type class
+        if (type !== 'info') {
+            indicator.classList.add(type);
         }
 
         indicator.textContent = message;
         indicator.classList.add('show');
 
+        // Auto-hide after delay (longer for errors)
+        const hideDelay = type === 'error' ? 4000 : type === 'success' ? 3000 : 2000;
         setTimeout(() => {
             indicator.classList.remove('show');
-        }, 2000);
+        }, hideDelay);
     }
 
     resetToDefaults() {
@@ -952,7 +1409,41 @@ class VisualCustomizer {
             fontSize: 'normal',
             headerStyle: 'transparent',
             buttonStyle: 'rounded',
-            animations: true
+            animations: true,
+            // NEW PHASE 2: Component-Level Settings
+            componentSettings: {
+                header: {
+                    style: 'transparent',
+                    background: 'default',
+                    pattern: 'none',
+                    opacity: 1.0
+                },
+                footer: {
+                    layout: 'default',
+                    background: 'default',
+                    contentArrangement: 'standard'
+                },
+                buttons: {
+                    style: 'rounded',
+                    effect: 'none',
+                    interaction: 'hover'
+                },
+                cards: {
+                    design: 'modern',
+                    shadow: 'medium',
+                    borderRadius: 'rounded'
+                },
+                navigation: {
+                    mobileStyle: 'hamburger',
+                    desktopStyle: 'inline',
+                    position: 'top'
+                },
+                forms: {
+                    style: 'modern',
+                    fieldStyle: 'outlined',
+                    buttonAlignment: 'center'
+                }
+            }
         };
 
         // Update drawer UI
@@ -1013,6 +1504,436 @@ class VisualCustomizer {
         });
 
         console.log('VisualCustomizer: UI updated successfully');
+    }
+
+    // NEW PHASE 2: Tab Navigation
+    switchTab(tabName) {
+        console.log('VisualCustomizer: Switching to tab:', tabName);
+
+        // Update tab buttons
+        this.drawer.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.toggle('active', button.dataset.tab === tabName);
+        });
+
+        // Update tab content
+        this.drawer.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.toggle('active', content.dataset.tabContent === tabName);
+        });
+    }
+
+    // NEW PHASE 2: Component Controls Toggle
+    toggleComponentControls(componentKey) {
+        const controls = this.drawer.querySelector(`[data-component-controls="${componentKey}"]`);
+        const expandButton = this.drawer.querySelector(`[data-component="${componentKey}"] .component-expand`);
+
+        if (controls && expandButton) {
+            const isExpanded = controls.classList.contains('expanded');
+
+            // Close all other component controls
+            this.drawer.querySelectorAll('.component-controls').forEach(ctrl => ctrl.classList.remove('expanded'));
+            this.drawer.querySelectorAll('.component-expand').forEach(btn => btn.classList.remove('active'));
+
+            if (!isExpanded) {
+                controls.classList.add('expanded');
+                expandButton.classList.add('active');
+                this.generateComponentPreview(componentKey);
+            } else {
+                this.clearComponentPreview();
+            }
+        }
+    }
+
+    // NEW PHASE 2: Component Option Selection
+    selectComponentOption(button) {
+        const component = button.dataset.component;
+        const option = button.dataset.option;
+        const value = button.dataset.value;
+
+        // Update UI
+        const optionGroup = button.parentElement;
+        optionGroup.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Update settings
+        if (!this.settings.componentSettings[component]) {
+            this.settings.componentSettings[component] = {};
+        }
+        this.settings.componentSettings[component][option] = value;
+
+        // Apply component styling
+        this.applyComponentTheming(component);
+        this.saveSettings();
+        this.showPreviewIndicator(`Updated ${component} ${option}`);
+
+        // Update preview if component is active
+        if (button.closest('.component-controls').classList.contains('expanded')) {
+            this.generateComponentPreview(component);
+        }
+    }
+
+    // NEW PHASE 2: Preview Mode Selection
+    setPreviewMode(mode) {
+        console.log('VisualCustomizer: Setting preview mode:', mode);
+
+        // Update preview mode buttons
+        this.drawer.querySelectorAll('.preview-mode').forEach(button => {
+            button.classList.toggle('active', button.dataset.mode === mode);
+        });
+
+        // Update preview frame
+        const previewFrame = this.drawer.querySelector('#component-preview');
+        if (previewFrame) {
+            previewFrame.className = `component-preview-frame ${mode}-mode`;
+        }
+    }
+
+    // NEW PHASE 2: Component Preview Generation
+    generateComponentPreview(componentKey) {
+        const previewFrame = this.drawer.querySelector('#component-preview');
+        if (!previewFrame) return;
+
+        const component = this.componentDefinitions[componentKey];
+        const settings = this.settings.componentSettings[componentKey] || {};
+
+        let previewHTML = '';
+
+        switch (componentKey) {
+            case 'header':
+                previewHTML = this.generateHeaderPreview(settings);
+                break;
+            case 'footer':
+                previewHTML = this.generateFooterPreview(settings);
+                break;
+            case 'buttons':
+                previewHTML = this.generateButtonPreview(settings);
+                break;
+            case 'cards':
+                previewHTML = this.generateCardPreview(settings);
+                break;
+            case 'navigation':
+                previewHTML = this.generateNavigationPreview(settings);
+                break;
+            case 'forms':
+                previewHTML = this.generateFormPreview(settings);
+                break;
+            default:
+                previewHTML = `<div class="preview-placeholder">Preview for ${component.name}</div>`;
+        }
+
+        previewFrame.innerHTML = `
+            <div class="component-preview-content">
+                <h5>${component.icon} ${component.name} Preview</h5>
+                ${previewHTML}
+            </div>
+        `;
+    }
+
+    // NEW PHASE 2: Clear Component Preview
+    clearComponentPreview() {
+        const previewFrame = this.drawer.querySelector('#component-preview');
+        if (previewFrame) {
+            previewFrame.innerHTML = `
+                <div class="preview-loading">
+                    <span class="loading-icon">⏳</span>
+                    Select a component to preview
+                </div>
+            `;
+        }
+    }
+
+    // NEW PHASE 2: Generate Specific Component Previews
+    generateHeaderPreview(settings) {
+        const style = settings.style || 'transparent';
+        const background = settings.background || 'default';
+        const pattern = settings.pattern || 'none';
+
+        return `
+            <div class="header-preview header-${style} bg-${background} pattern-${pattern}">
+                <div class="header-content">
+                    <div class="logo">
+                        <span class="logo-icon">🏥</span>
+                        MedSpa
+                    </div>
+                    <nav class="header-nav">
+                        <a href="#" class="nav-link">Home</a>
+                        <a href="#" class="nav-link">Treatments</a>
+                        <a href="#" class="nav-link">About</a>
+                        <a href="#" class="nav-link">Contact</a>
+                    </nav>
+                </div>
+            </div>
+        `;
+    }
+
+    generateButtonPreview(settings) {
+        const style = settings.style || 'rounded';
+        const effect = settings.effect || 'none';
+        const interaction = settings.interaction || 'hover';
+
+        return `
+            <div class="button-preview">
+                <button class="btn-preview btn-${style} effect-${effect} interaction-${interaction}">
+                    Book Consultation
+                </button>
+                <button class="btn-preview btn-${style} effect-${effect} interaction-${interaction} btn-secondary">
+                    Learn More
+                </button>
+            </div>
+        `;
+    }
+
+    generateCardPreview(settings) {
+        const design = settings.design || 'modern';
+        const shadow = settings.shadow || 'medium';
+        const borderRadius = settings.borderRadius || 'rounded';
+
+        return `
+            <div class="card-preview card-${design} shadow-${shadow} radius-${borderRadius}">
+                <div class="card-image">
+                    <div class="placeholder-image">🌿</div>
+                </div>
+                <div class="card-content">
+                    <h6>Facial Treatment</h6>
+                    <p>Rejuvenating facial therapy for glowing skin</p>
+                    <button class="card-button">Learn More</button>
+                </div>
+            </div>
+        `;
+    }
+
+    generateFormPreview(settings) {
+        const style = settings.style || 'modern';
+        const fieldStyle = settings.fieldStyle || 'outlined';
+
+        return `
+            <div class="form-preview form-${style}">
+                <div class="form-field field-${fieldStyle}">
+                    <label>Name</label>
+                    <input type="text" placeholder="Your Name" />
+                </div>
+                <div class="form-field field-${fieldStyle}">
+                    <label>Email</label>
+                    <input type="email" placeholder="your@email.com" />
+                </div>
+                <button class="form-submit">Submit</button>
+            </div>
+        `;
+    }
+
+    generateFooterPreview(settings) {
+        const layout = settings.layout || 'default';
+        const background = settings.background || 'default';
+
+        return `
+            <div class="footer-preview footer-${layout} bg-${background}">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h6>Contact</h6>
+                        <p>📍 123 Wellness St</p>
+                        <p>📞 (555) 123-4567</p>
+                    </div>
+                    <div class="footer-section">
+                        <h6>Services</h6>
+                        <p>Facial Treatments</p>
+                        <p>Body Wellness</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    generateNavigationPreview(settings) {
+        const mobileStyle = settings.mobileStyle || 'hamburger';
+        const desktopStyle = settings.desktopStyle || 'inline';
+
+        return `
+            <div class="navigation-preview">
+                <div class="nav-desktop nav-${desktopStyle}">
+                    <span>Desktop: ${desktopStyle}</span>
+                    <div class="nav-items">
+                        <span class="nav-item">Home</span>
+                        <span class="nav-item">Services</span>
+                        <span class="nav-item">About</span>
+                    </div>
+                </div>
+                <div class="nav-mobile nav-${mobileStyle}">
+                    <span>Mobile: ${mobileStyle}</span>
+                    <div class="mobile-trigger">☰</div>
+                </div>
+            </div>
+        `;
+    }
+
+    // NEW PHASE 2: Apply Component Theming
+    applyComponentTheming(componentKey) {
+        const settings = this.settings.componentSettings[componentKey];
+        if (!settings) return;
+
+        const root = document.documentElement;
+
+        switch (componentKey) {
+            case 'header':
+                this.applyHeaderTheming(settings, root);
+                break;
+            case 'footer':
+                this.applyFooterTheming(settings, root);
+                break;
+            case 'buttons':
+                this.applyButtonTheming(settings, root);
+                break;
+            case 'cards':
+                this.applyCardTheming(settings, root);
+                break;
+            case 'navigation':
+                this.applyNavigationTheming(settings, root);
+                break;
+            case 'forms':
+                this.applyFormTheming(settings, root);
+                break;
+        }
+
+        console.log(`VisualCustomizer: Applied ${componentKey} theming`, settings);
+    }
+
+    applyHeaderTheming(settings, root) {
+        root.style.setProperty('--header-style', settings.style || 'transparent');
+        root.style.setProperty('--header-background', settings.background || 'default');
+        root.style.setProperty('--header-pattern', settings.pattern || 'none');
+        root.style.setProperty('--header-opacity', settings.opacity || '1.0');
+
+        // Apply to body classes for global effect
+        document.body.className = document.body.className.replace(/header-\w+/g, '');
+        document.body.classList.add(`header-${settings.style || 'transparent'}`);
+    }
+
+    applyButtonTheming(settings, root) {
+        root.style.setProperty('--button-style', settings.style || 'rounded');
+        root.style.setProperty('--button-effect', settings.effect || 'none');
+        root.style.setProperty('--button-interaction', settings.interaction || 'hover');
+
+        document.body.className = document.body.className.replace(/buttons?-\w+/g, '');
+        document.body.classList.add(`buttons-${settings.style || 'rounded'}`);
+    }
+
+    applyCardTheming(settings, root) {
+        root.style.setProperty('--card-design', settings.design || 'modern');
+        root.style.setProperty('--card-shadow', settings.shadow || 'medium');
+        root.style.setProperty('--card-border-radius', settings.borderRadius || 'rounded');
+    }
+
+    applyFormTheming(settings, root) {
+        root.style.setProperty('--form-style', settings.style || 'modern');
+        root.style.setProperty('--form-field-style', settings.fieldStyle || 'outlined');
+    }
+
+    applyFooterTheming(settings, root) {
+        root.style.setProperty('--footer-layout', settings.layout || 'default');
+        root.style.setProperty('--footer-background', settings.background || 'default');
+    }
+
+    applyNavigationTheming(settings, root) {
+        root.style.setProperty('--nav-mobile-style', settings.mobileStyle || 'hamburger');
+        root.style.setProperty('--nav-desktop-style', settings.desktopStyle || 'inline');
+    }
+
+    // Initialize component preview
+    initializeComponentPreview() {
+        const previewFrame = document.querySelector('.component-preview-frame');
+        if (previewFrame && !previewFrame.innerHTML.trim()) {
+            previewFrame.innerHTML = `
+                <div class="preview-placeholder">
+                    <div class="preview-icon">🧩</div>
+                    <h5>Select a Component</h5>
+                    <p>Choose a component from the list to see a live preview of your customization options.</p>
+                </div>
+            `;
+        }
+    }
+
+    // NEW: Apply Configuration Globally (Admin Only)
+    applyConfigurationGlobally() {
+        if (!this.isAdmin) {
+            console.warn('VisualCustomizer: Apply globally attempted by non-admin user');
+            return;
+        }
+
+        console.log('VisualCustomizer: Applying configuration globally');
+
+        // Show loading state
+        const applyBtn = this.drawer.querySelector('.apply-global-config');
+        const originalText = applyBtn.innerHTML;
+        applyBtn.innerHTML = '<span class="btn-icon">⏳</span> Applying...';
+        applyBtn.disabled = true;
+
+        // Prepare settings data
+        const settingsData = {
+            ...this.settings,
+            timestamp: new Date().toISOString(),
+            appliedBy: 'admin'
+        };
+
+        // Send AJAX request to save global configuration
+        const formData = new FormData();
+        formData.append('action', 'visual_customizer_admin_action');
+        formData.append('action_type', 'apply_global_config');
+        formData.append('settings', JSON.stringify(settingsData));
+        formData.append('nonce', visualCustomizerData.nonce);
+
+        fetch(visualCustomizerData.ajaxUrl, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('VisualCustomizer: Configuration applied globally successfully', data.data);
+                this.showPreviewIndicator(visualCustomizerData.i18n.configApplied, 'success');
+
+                // Update global config reference
+                this.globalConfig = data.data.appliedSettings;
+
+                // Show success state
+                applyBtn.innerHTML = '<span class="btn-icon">✅</span> Applied Successfully';
+                setTimeout(() => {
+                    applyBtn.innerHTML = originalText;
+                    applyBtn.disabled = false;
+                }, 3000);
+
+            } else {
+                console.error('VisualCustomizer: Failed to apply configuration globally', data.data);
+                this.showPreviewIndicator('Failed to apply configuration: ' + data.data, 'error');
+
+                // Restore button state
+                applyBtn.innerHTML = originalText;
+                applyBtn.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error('VisualCustomizer: AJAX error applying configuration globally', error);
+            this.showPreviewIndicator('Network error applying configuration', 'error');
+
+            // Restore button state
+            applyBtn.innerHTML = originalText;
+            applyBtn.disabled = false;
+        });
+    }
+
+    // NEW: Load Global Configuration on Init (Admin Only)
+    loadGlobalConfiguration() {
+        if (!this.isAdmin || !this.globalConfig || Object.keys(this.globalConfig).length === 0) {
+            return;
+        }
+
+        console.log('VisualCustomizer: Loading global configuration', this.globalConfig);
+
+        // Merge global config with current settings
+        this.settings = { ...this.settings, ...this.globalConfig };
+
+        // Apply the loaded settings
+        this.applyCurrentSettings();
+        this.updateUI();
+
+        console.log('VisualCustomizer: Global configuration loaded and applied');
     }
 }
 

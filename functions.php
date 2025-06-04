@@ -3116,14 +3116,27 @@ function medspa_theme_styles() {
 add_action('wp_enqueue_scripts', 'medspa_theme_styles');
 
 /**
- * Enqueue Visual Customizer System (Replaces WordPress Customizer)
+ * Enqueue Visual Customizer System (Admin Only with Global Configuration)
  */
 function preetidreams_enqueue_visual_customizer() {
+    // Only load customizer for admin users
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+
     // Visual Customizer CSS
     wp_enqueue_style(
         'preetidreams-visual-customizer',
         get_template_directory_uri() . '/assets/css/visual-customizer.css',
         ['preetidreams-style'],
+        PREETIDREAMS_VERSION
+    );
+
+    // Visual Customizer Phase 2 CSS
+    wp_enqueue_style(
+        'preetidreams-visual-customizer-phase2',
+        get_template_directory_uri() . '/assets/css/customizer-phase2.css',
+        ['preetidreams-visual-customizer'],
         PREETIDREAMS_VERSION
     );
 
@@ -3136,6 +3149,9 @@ function preetidreams_enqueue_visual_customizer() {
         true
     );
 
+    // Get current global configuration
+    $global_config = get_option('preetidreams_visual_customizer_config', []);
+
     // Localize script with customizer data
     wp_localize_script('preetidreams-visual-customizer', 'visualCustomizerData', [
         'ajaxUrl' => admin_url('admin-ajax.php'),
@@ -3143,16 +3159,19 @@ function preetidreams_enqueue_visual_customizer() {
         'restUrl' => rest_url('wp/v2/'),
         'themeUrl' => get_template_directory_uri(),
         'version' => PREETIDREAMS_VERSION,
+        'isAdmin' => current_user_can('manage_options'),
+        'globalConfig' => $global_config,
         'settings' => [
-            'enableLocalStorage' => true,
+            'enableLocalStorage' => false, // Disabled for admin-only mode
             'enablePreviewIndicator' => true,
             'enableKeyboardNavigation' => true,
             'animationDuration' => 300,
             'autoCloseDelay' => 0, // 0 = no auto close
-            'mobileBreakpoint' => 768
+            'mobileBreakpoint' => 768,
+            'adminOnlyMode' => true
         ],
         'i18n' => [
-            'customizeTheme' => __('Customize Theme Appearance', 'preetidreams'),
+            'customizeTheme' => __('Customize Theme Appearance (Admin Only)', 'preetidreams'),
             'colorPalettes' => __('Color Palettes', 'preetidreams'),
             'typography' => __('Typography', 'preetidreams'),
             'styleControls' => __('Style Controls', 'preetidreams'),
@@ -3160,11 +3179,216 @@ function preetidreams_enqueue_visual_customizer() {
             'settingsSaved' => __('Settings Saved', 'preetidreams'),
             'resetConfirm' => __('Are you sure you want to reset all customizations?', 'preetidreams'),
             'previewIndicator' => __('Preview:', 'preetidreams'),
-            'accessibilityAnnounce' => __('Customizer settings changed', 'preetidreams')
+            'accessibilityAnnounce' => __('Customizer settings changed', 'preetidreams'),
+            'applyGlobally' => __('Apply Configuration Globally', 'preetidreams'),
+            'configApplied' => __('Configuration applied successfully! All users will now see this theme.', 'preetidreams'),
+            'adminOnlyNotice' => __('Admin Mode: Changes are visible to you only until applied globally.', 'preetidreams')
         ]
     ]);
 }
 add_action('wp_enqueue_scripts', 'preetidreams_enqueue_visual_customizer');
+
+/**
+ * Apply Global Visual Customizer Configuration for All Users
+ */
+function preetidreams_apply_global_customizer_config() {
+    $global_config = get_option('preetidreams_visual_customizer_config', []);
+
+    if (empty($global_config)) {
+        return;
+    }
+
+    // Generate CSS variables from configuration
+    $css_variables = preetidreams_generate_css_from_config($global_config);
+
+    if (!empty($css_variables)) {
+        wp_add_inline_style('medspa-theme-style', $css_variables);
+    }
+}
+add_action('wp_enqueue_scripts', 'preetidreams_apply_global_customizer_config');
+
+/**
+ * Generate CSS Variables from Visual Customizer Configuration
+ */
+function preetidreams_generate_css_from_config($config) {
+    if (empty($config)) {
+        return '';
+    }
+
+    $css = ":root {\n";
+
+    // Color palette configuration
+    if (isset($config['colorPalette'])) {
+        $palettes = preetidreams_get_color_palettes();
+        if (isset($palettes[$config['colorPalette']])) {
+            $palette = $palettes[$config['colorPalette']];
+            foreach ($palette['colors'] as $key => $value) {
+                $css .= "    --color-{$key}: {$value};\n";
+                // Map to existing theme variables
+                $css .= "    --medspaa-{$key}: {$value};\n";
+            }
+        }
+    }
+
+    // Font configuration
+    if (isset($config['fontHeading'])) {
+        $fonts = preetidreams_get_font_options();
+        if (isset($fonts[$config['fontHeading']])) {
+            $css .= "    --font-heading: {$fonts[$config['fontHeading']]['family']};\n";
+            $css .= "    --font-primary: {$fonts[$config['fontHeading']]['family']};\n";
+        }
+    }
+
+    if (isset($config['fontBody'])) {
+        $fonts = preetidreams_get_font_options();
+        if (isset($fonts[$config['fontBody']])) {
+            $css .= "    --font-body: {$fonts[$config['fontBody']]['family']};\n";
+            $css .= "    --font-secondary: {$fonts[$config['fontBody']]['family']};\n";
+        }
+    }
+
+    $css .= "}\n";
+
+    return $css;
+}
+
+/**
+ * AJAX Handler for Visual Customizer Admin Actions
+ */
+function preetidreams_handle_visual_customizer_admin_ajax() {
+    // Verify user capabilities
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('Insufficient permissions');
+    }
+
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'visual_customizer_nonce')) {
+        wp_send_json_error('Security check failed');
+    }
+
+    $action_type = sanitize_text_field($_POST['action_type']);
+
+    switch ($action_type) {
+        case 'apply_global_config':
+            $settings = json_decode(wp_unslash($_POST['settings']), true);
+
+            // Validate and sanitize settings
+            $clean_settings = preetidreams_sanitize_customizer_settings($settings);
+
+            // Save to database as global configuration
+            update_option('preetidreams_visual_customizer_config', $clean_settings);
+
+            // Log the action
+            do_action('preetidreams_visual_customizer_applied_globally', $clean_settings, get_current_user_id());
+
+            wp_send_json_success([
+                'message' => 'Configuration applied globally successfully',
+                'appliedSettings' => $clean_settings
+            ]);
+            break;
+
+        case 'get_global_config':
+            $global_config = get_option('preetidreams_visual_customizer_config', []);
+            wp_send_json_success(['config' => $global_config]);
+            break;
+
+        case 'reset_global_config':
+            delete_option('preetidreams_visual_customizer_config');
+            do_action('preetidreams_visual_customizer_reset_globally', get_current_user_id());
+            wp_send_json_success(['message' => 'Global configuration reset successfully']);
+            break;
+
+        default:
+            wp_send_json_error('Invalid action');
+    }
+}
+add_action('wp_ajax_visual_customizer_admin_action', 'preetidreams_handle_visual_customizer_admin_ajax');
+
+/**
+ * Sanitize Visual Customizer Settings
+ */
+function preetidreams_sanitize_customizer_settings($settings) {
+    $clean_settings = [];
+
+    // Define allowed settings and their validation
+    $allowed_settings = [
+        'colorPalette' => 'sanitize_key',
+        'fontHeading' => 'sanitize_key',
+        'fontBody' => 'sanitize_key',
+        'fontSize' => 'sanitize_key',
+        'headerStyle' => 'sanitize_key',
+        'buttonStyle' => 'sanitize_key',
+        'animations' => 'rest_sanitize_boolean'
+    ];
+
+    foreach ($allowed_settings as $key => $sanitize_function) {
+        if (isset($settings[$key])) {
+            $clean_settings[$key] = call_user_func($sanitize_function, $settings[$key]);
+        }
+    }
+
+    return $clean_settings;
+}
+
+/**
+ * Get Available Color Palettes
+ */
+function preetidreams_get_color_palettes() {
+    return [
+        'classic-forest' => [
+            'name' => 'Classic Forest',
+            'colors' => [
+                'primary' => '#1B365D',
+                'secondary' => '#87A96B',
+                'accent' => '#D4AF37',
+                'light' => '#F8F9FA',
+                'dark' => '#2C3E50'
+            ]
+        ],
+        'medical-navy' => [
+            'name' => 'Medical Navy',
+            'colors' => [
+                'primary' => '#2C5F7C',
+                'secondary' => '#7FB3D3',
+                'accent' => '#E8B547',
+                'light' => '#F7F9FC',
+                'dark' => '#1A3A4F'
+            ]
+        ],
+        'wellness-sage' => [
+            'name' => 'Wellness Sage',
+            'colors' => [
+                'primary' => '#4A6741',
+                'secondary' => '#8FBC8F',
+                'accent' => '#DAA520',
+                'light' => '#F9FAF7',
+                'dark' => '#2F4F2F'
+            ]
+        ]
+        // Add more palettes as needed
+    ];
+}
+
+/**
+ * Get Available Font Options
+ */
+function preetidreams_get_font_options() {
+    return [
+        'playfair-display' => [
+            'name' => 'Playfair Display',
+            'family' => '"Playfair Display", serif'
+        ],
+        'inter' => [
+            'name' => 'Inter',
+            'family' => '"Inter", sans-serif'
+        ],
+        'crimson-text' => [
+            'name' => 'Crimson Text',
+            'family' => '"Crimson Text", serif'
+        ]
+        // Add more fonts as needed
+    ];
+}
 
 /**
  * Theme setup function

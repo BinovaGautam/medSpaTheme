@@ -226,6 +226,12 @@
     box-shadow: 0 4px 12px rgba(27, 54, 93, 0.2);
 }
 
+.config-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .config-btn .btn-icon {
     font-size: 1.1em;
 }
@@ -499,6 +505,346 @@
     }
 
     .color-palette-option.active {
+        animation: none;
+    }
+}
+
+/* Admin-Only Styles */
+.admin-controls {
+    background: linear-gradient(135deg, #1B365D 0%, #87A96B 100%);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.admin-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.9em;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.admin-icon {
+    font-size: 1.2em;
+    filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.8));
+}
+
+/* Pulsing animation for Apply Globally button */
+@keyframes applyGlobalPulse {
+    0% {
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+        transform: scale(1.02);
+    }
+    100% {
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        transform: scale(1);
+    }
+}
+
+.apply-global-config {
+    background: linear-gradient(135deg, #D4AF37 0%, #E8C962 100%);
+    color: #1B365D;
+    border: 2px solid #D4AF37;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    width: 100%;
+    margin: 16px 0 8px 0;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: applyGlobalPulse 2s ease-in-out infinite;
+}
+
+.apply-global-config:hover:not(:disabled) {
+    background: linear-gradient(135deg, #E8C962 0%, #F0D85A 100%);
+    border-color: #E8C962;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    color: #152B4F;
+    animation: none;
+}
+
+.apply-global-config:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    animation: none;
+}
+
+.global-config-info {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 0.85em;
+    opacity: 0.9;
+}
+
+.admin-badge {
+    background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+    color: #1B365D;
+    font-size: 0.7em;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+}
+
+/* Success/Error States for Apply Button */
+.apply-global-config.success {
+    background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+    border-color: #10B981;
+}
+
+.apply-global-config.error {
+    background: linear-gradient(135deg, #EF4444 0%, #F87171 100%);
+    border-color: #EF4444;
+}
+
+/* Enhanced Preview Indicator for Admin Mode */
+.customizer-preview-indicator.admin-mode {
+    background: linear-gradient(135deg, #1B365D 0%, #87A96B 100%);
+    border-left: 4px solid #D4AF37;
+}
+
+.customizer-preview-indicator.admin-mode::before {
+    content: '👑 ';
+    margin-right: 4px;
+}
+
+/* Admin-Only Visual Customizer Trigger Button Enhancement */
+.visual-customizer-trigger.admin-mode {
+    background: linear-gradient(135deg, #1B365D 0%, #87A96B 100%);
+    box-shadow: 0 4px 20px rgba(27, 54, 93, 0.3);
+    border: 2px solid rgba(212, 175, 55, 0.5);
+}
+
+.visual-customizer-trigger.admin-mode::after {
+    content: '👑';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #D4AF37;
+    color: #1B365D;
+    font-size: 0.7em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Responsive Admin Controls */
+@media (max-width: 768px) {
+    .admin-controls {
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+
+    .admin-notice {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+
+    .apply-global-config {
+        font-size: 0.9em;
+        padding: 10px 14px;
+    }
+
+    .admin-badge {
+        font-size: 0.6em;
+        padding: 1px 6px;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .admin-controls {
+        background: #000;
+        border: 2px solid #fff;
+    }
+
+    .admin-notice {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid #fff;
+    }
+
+    .apply-global-config {
+        background: #fff;
+        color: #000;
+        border-color: #000;
+    }
+
+    .admin-badge {
+        background: #fff;
+        color: #000;
+        border: 1px solid #000;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .config-btn,
+    .apply-global-config,
+    .admin-controls * {
+        transition: none;
+        transform: none !important;
+        animation: none;
+    }
+}
+
+/* Enhanced Preview Indicator */
+.customizer-preview-indicator {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: rgba(27, 54, 93, 0.95);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    font-weight: 500;
+    z-index: 999999;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    max-width: 90vw;
+    text-align: center;
+}
+
+.customizer-preview-indicator.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.customizer-preview-indicator.success {
+    background: rgba(16, 185, 129, 0.95);
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+.customizer-preview-indicator.error {
+    background: rgba(239, 68, 68, 0.95);
+    border-color: rgba(248, 113, 113, 0.3);
+}
+
+.customizer-preview-indicator.warning {
+    background: rgba(245, 158, 11, 0.95);
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+/* Admin Mode Preview Indicator */
+.customizer-preview-indicator.admin-mode {
+    background: linear-gradient(135deg, rgba(27, 54, 93, 0.95) 0%, rgba(135, 169, 107, 0.95) 100%);
+    border-left: 4px solid #D4AF37;
+    padding-left: 20px;
+}
+
+.customizer-preview-indicator.admin-mode::before {
+    content: '👑 ';
+    margin-right: 6px;
+    filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.8));
+}
+
+/* Responsive Preview Indicator */
+@media (max-width: 768px) {
+    .customizer-preview-indicator {
+        top: 10px;
+        padding: 10px 20px;
+        font-size: 0.8em;
+        border-radius: 20px;
+        max-width: 95vw;
+    }
+
+    .customizer-preview-indicator.admin-mode {
+        padding-left: 16px;
+    }
+}
+
+/* High Contrast Mode for Preview Indicator */
+@media (prefers-contrast: high) {
+    .customizer-preview-indicator {
+        background: #000;
+        color: #fff;
+        border: 2px solid #fff;
+    }
+
+    .customizer-preview-indicator.success {
+        background: #000;
+        border-color: #0f0;
+    }
+
+    .customizer-preview-indicator.error {
+        background: #000;
+        border-color: #f00;
+    }
+
+    .customizer-preview-indicator.warning {
+        background: #000;
+        border-color: #ff0;
+    }
+
+    .customizer-preview-indicator.admin-mode {
+        background: #000;
+        border-left-color: #ff0;
+    }
+}
+
+/* Animation for Preview Indicator */
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes slideOutToTop {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-100px);
+    }
+}
+
+.customizer-preview-indicator.show {
+    animation: slideInFromTop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduced Motion for Preview Indicator */
+@media (prefers-reduced-motion: reduce) {
+    .customizer-preview-indicator {
+        transition: opacity 0.2s ease;
+        transform: translateX(-50%) translateY(0) !important;
+    }
+
+    .customizer-preview-indicator.show {
         animation: none;
     }
 }

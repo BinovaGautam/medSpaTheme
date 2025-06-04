@@ -1,0 +1,413 @@
+{
+  "taskDelegation": {
+    "taskId": "VISUAL-CUSTOMIZER-IMPL-001",
+    "delegationDate": "{CURRENT_DATE}",
+    "sourceAgent": "UI-UX-DESIGN-001",
+    "targetWorkflow": "CODE-GEN-WF-001",
+    "priority": "high",
+    "estimatedComplexity": "medium",
+    "estimatedDuration": "45-90 minutes"
+  },
+
+  "taskOverview": {
+    "title": "Elementor-Style Visual Customizer Implementation",
+    "description": "Implement complete visual customizer system with WordPress admin bar integration, educational color system, and professional static panel design based on UI-UX-DESIGN-001 specifications",
+    "category": "frontend-development",
+    "platform": "wordpress-theme",
+    "targetEnvironment": "devkinsta-local-development"
+  },
+
+  "requirementsSummary": {
+    "coreFeatures": [
+      "wordpress-admin-bar-integration",
+      "static-320px-sidebar-panel",
+      "educational-color-system-with-tooltips",
+      "automatic-contrast-pairing",
+      "admin-only-access-control",
+      "global-configuration-saving",
+      "responsive-mobile-first-design",
+      "wcag-aaa-accessibility-compliance"
+    ],
+    "userExperience": [
+      "non-technical-user-friendly",
+      "elementor-style-professional-appearance",
+      "smooth-animations-300ms",
+      "educational-tooltips",
+      "confidence-building-ui"
+    ],
+    "technicalRequirements": [
+      "wordpress-capability-manage_options",
+      "ajax-configuration-saving",
+      "css-custom-properties-integration",
+      "keyboard-navigation-support",
+      "screen-reader-compatibility"
+    ]
+  },
+
+  "designSpecifications": {
+    "primaryDesignFile": "levCompiler/project_context/designs/visual-customizer-redesign-specs.md",
+    "supportingDesignFiles": [
+      "levCompiler/project_context/designs/color-system-mockups.md",
+      "levCompiler/project_context/designs/complete_ui_ux_designs.md"
+    ],
+    "designSystemCompliance": "luxury-medical-spa-theme",
+    "brandAlignment": "professional-clinical-positioning"
+  },
+
+  "implementationRequirements": {
+    "adminBarIntegration": {
+      "placement": "wordpress-admin-bar",
+      "buttonText": "🎨 Customize Theme",
+      "capability": "manage_options",
+      "hookPriority": 999,
+      "onclick": "openThemeCustomizer(); return false;"
+    },
+
+    "panelStructure": {
+      "width": "320px",
+      "slideDirection": "right-edge",
+      "animation": "slideInFromRight-300ms",
+      "backdrop": "semi-transparent-overlay",
+      "sections": [
+        {
+          "name": "colorScheme",
+          "title": "Color Scheme",
+          "priority": 1,
+          "defaultOpen": true,
+          "features": [
+            "24x24px-color-squares",
+            "educational-tooltips",
+            "automatic-contrast-pairing",
+            "live-preview-updates"
+          ]
+        },
+        {
+          "name": "typography",
+          "title": "Typography",
+          "priority": 2,
+          "features": [
+            "heading-font-dropdown",
+            "body-font-dropdown",
+            "font-size-selector"
+          ]
+        },
+        {
+          "name": "layoutControls",
+          "title": "Layout Controls",
+          "priority": 3,
+          "features": [
+            "header-style-toggle",
+            "button-style-selector"
+          ]
+        },
+        {
+          "name": "livePreview",
+          "title": "Live Preview",
+          "priority": 4,
+          "features": [
+            "interactive-demo-components",
+            "sample-button-card-nav"
+          ]
+        }
+      ]
+    },
+
+    "colorSystem": {
+      "colorSquareSize": "24px-x-24px",
+      "spacing": "4px-gap",
+      "layout": "horizontal-row-desktop-grid-mobile",
+      "colorPalette": {
+        "primary": "#1B365D",
+        "secondary": "#87A96B",
+        "accent": "#D4AF37",
+        "light": "#F8F9FA",
+        "dark": "#2C3E50"
+      },
+      "tooltips": {
+        "primary": {
+          "title": "🎨 Primary Color",
+          "usage": ["Navigation bars", "Main buttons", "Website header", "Professional elements"],
+          "visibility": "High contrast with white",
+          "purpose": "Brand authority"
+        },
+        "secondary": {
+          "title": "🌿 Secondary Color",
+          "usage": ["Accent highlights", "Hover effects", "Supporting elements", "Brand touches"],
+          "visibility": "Works with light & dark",
+          "purpose": "Calming medical spa feel"
+        },
+        "accent": {
+          "title": "✨ Accent Color",
+          "usage": ["Premium highlights", "Luxury touches", "Special offers", "VIP elements"],
+          "visibility": "Best on dark backgrounds",
+          "purpose": "Luxury positioning"
+        },
+        "light": {
+          "title": "🤍 Light Background",
+          "usage": ["Page backgrounds", "Card backgrounds", "Clean content areas", "Easy reading spaces"],
+          "visibility": "Perfect with dark text",
+          "purpose": "Clean, open feeling"
+        },
+        "dark": {
+          "title": "📝 Dark Text",
+          "usage": ["Body text", "Headlines", "Menu items", "Easy-to-read content"],
+          "visibility": "Perfect on light backgrounds",
+          "purpose": "Excellent readability"
+        }
+      },
+      "contrastPairing": {
+        "lightBackground": {
+          "background": "#F8F9FA",
+          "text": "#2C3E50",
+          "ratio": "11.2:1",
+          "label": "Easy Reading"
+        },
+        "darkBackground": {
+          "background": "#2C3E50",
+          "text": "#FFFFFF",
+          "ratio": "15.3:1",
+          "label": "High Contrast"
+        },
+        "primaryColor": {
+          "background": "#1B365D",
+          "text": "#FFFFFF",
+          "ratio": "8.7:1",
+          "label": "Professional"
+        }
+      }
+    },
+
+    "responsiveDesign": {
+      "mobile": {
+        "breakpoint": "320-768px",
+        "behavior": "slides-from-bottom",
+        "height": "70vh",
+        "sections": "accordion-style",
+        "colorLayout": "2x3-grid"
+      },
+      "tablet": {
+        "breakpoint": "768-1024px",
+        "behavior": "slides-from-right",
+        "width": "280px",
+        "colorLayout": "horizontal-row"
+      },
+      "desktop": {
+        "breakpoint": "1024px+",
+        "behavior": "slides-from-right",
+        "width": "320px",
+        "colorLayout": "horizontal-row"
+      }
+    },
+
+    "accessibilityRequirements": {
+      "wcagLevel": "AAA",
+      "colorContrast": "minimum-7:1",
+      "focusIndicators": "2px-solid-primary-outline",
+      "keyboardNavigation": "full-tab-order",
+      "screenReader": "aria-labels-descriptions",
+      "touchTargets": "minimum-44px-mobile",
+      "ariaImplementation": {
+        "colorPalette": "role=radiogroup",
+        "colorSquares": "role=radio aria-checked aria-describedby",
+        "sections": "aria-expanded aria-controls",
+        "liveRegions": "aria-live=polite for announcements"
+      }
+    },
+
+    "globalConfigurationSystem": {
+      "storage": "wordpress-options-table",
+      "optionName": "preetidreams_visual_customizer_global_config",
+      "ajaxAction": "save_visual_customizer_global_config",
+      "capability": "manage_options",
+      "dataStructure": {
+        "colorPalette": "string",
+        "fontHeading": "string",
+        "fontBody": "string",
+        "fontSize": "string",
+        "headerStyle": "string",
+        "buttonStyle": "string",
+        "timestamp": "ISO-string",
+        "appliedBy": "admin"
+      },
+      "applyGloballyButton": {
+        "styling": "gold-gradient-prominent",
+        "animation": "pulsing-attention-grabber",
+        "position": "footer-section",
+        "confirmation": "success-message-with-preview-indicator"
+      }
+    }
+  },
+
+  "fileImplementationPlan": {
+    "modifyExistingFiles": [
+      {
+        "file": "functions.php",
+        "changes": [
+          "add-admin-bar-integration-hook",
+          "add-global-configuration-ajax-handlers",
+          "update-visual-customizer-enqueue-logic",
+          "add-admin-only-access-control",
+          "add-localization-data-for-tooltips"
+        ]
+      },
+      {
+        "file": "assets/js/visual-customizer.js",
+        "changes": [
+          "complete-rewrite-for-admin-bar-integration",
+          "implement-static-panel-design",
+          "add-educational-tooltip-system",
+          "implement-automatic-contrast-pairing",
+          "add-global-configuration-saving",
+          "implement-responsive-behavior",
+          "add-accessibility-compliance"
+        ]
+      },
+      {
+        "file": "assets/css/visual-customizer.css",
+        "changes": [
+          "implement-320px-static-sidebar-design",
+          "add-24x24px-color-square-styling",
+          "implement-educational-tooltip-styling",
+          "add-responsive-mobile-tablet-desktop",
+          "implement-smooth-animations",
+          "add-accessibility-focus-indicators"
+        ]
+      },
+      {
+        "file": "assets/css/customizer-enhancements.css",
+        "changes": [
+          "add-admin-mode-styling",
+          "implement-apply-globally-button-styling",
+          "add-gold-gradient-prominent-button",
+          "implement-pulsing-attention-animation",
+          "add-preview-indicator-styling",
+          "implement-contrast-pair-display-styling"
+        ]
+      }
+    ],
+    "createNewFiles": [
+      {
+        "file": "assets/js/contrast-calculator.js",
+        "purpose": "automatic-contrast-ratio-calculations",
+        "features": [
+          "wcag-contrast-ratio-calculator",
+          "automatic-pairing-logic",
+          "accessibility-validation"
+        ]
+      },
+      {
+        "file": "assets/css/customizer-accessibility.css",
+        "purpose": "dedicated-accessibility-styling",
+        "features": [
+          "high-contrast-mode-support",
+          "reduced-motion-preferences",
+          "screen-reader-optimizations"
+        ]
+      }
+    ]
+  },
+
+  "qualityGates": {
+    "functionalRequirements": [
+      "admin-bar-integration-working",
+      "static-panel-slides-correctly",
+      "color-squares-display-properly",
+      "tooltips-show-educational-content",
+      "contrast-pairing-calculates-correctly",
+      "global-configuration-saves-successfully",
+      "responsive-behavior-works-all-devices",
+      "accessibility-compliance-verified"
+    ],
+    "designCompliance": [
+      "matches-elementor-quality-standards",
+      "follows-luxury-medical-spa-branding",
+      "professional-appearance-maintained",
+      "smooth-animations-implemented",
+      "educational-ux-achieved"
+    ],
+    "technicalValidation": [
+      "wordpress-integration-seamless",
+      "admin-only-security-enforced",
+      "ajax-functionality-working",
+      "keyboard-navigation-complete",
+      "screen-reader-compatibility-verified",
+      "performance-optimized",
+      "cross-browser-compatibility"
+    ]
+  },
+
+  "testingScenarios": [
+    {
+      "scenario": "admin-user-workflow",
+      "description": "Admin logs in, sees customizer button in admin bar, opens panel, selects colors, applies globally",
+      "expectedBehavior": "smooth-professional-experience-with-educational-tooltips"
+    },
+    {
+      "scenario": "non-admin-user-workflow",
+      "description": "Regular user or visitor accesses website",
+      "expectedBehavior": "no-customizer-access-sees-applied-global-configuration"
+    },
+    {
+      "scenario": "accessibility-workflow",
+      "description": "User with screen reader or keyboard-only navigation uses customizer",
+      "expectedBehavior": "full-functionality-with-proper-announcements-and-navigation"
+    },
+    {
+      "scenario": "mobile-responsive-workflow",
+      "description": "Admin accesses customizer on mobile device",
+      "expectedBehavior": "bottom-slide-panel-with-touch-friendly-interactions"
+    }
+  ],
+
+  "successMetrics": {
+    "userExperience": [
+      "non-technical-users-understand-color-usage",
+      "professional-elementor-like-appearance",
+      "smooth-confident-interaction-flow",
+      "educational-value-delivered"
+    ],
+    "technicalAchievement": [
+      "wcag-aaa-compliance-verified",
+      "wordpress-standards-followed",
+      "performance-optimized",
+      "secure-admin-only-access"
+    ],
+    "businessValue": [
+      "luxury-medical-spa-branding-maintained",
+      "admin-confidence-in-customization",
+      "reduced-support-queries-through-education",
+      "professional-brand-positioning-enhanced"
+    ]
+  },
+
+  "deliverables": {
+    "codeFiles": [
+      "modified-functions.php",
+      "updated-visual-customizer.js",
+      "enhanced-visual-customizer.css",
+      "improved-customizer-enhancements.css",
+      "new-contrast-calculator.js",
+      "new-customizer-accessibility.css"
+    ],
+    "documentation": [
+      "implementation-notes.md",
+      "testing-results.md",
+      "accessibility-compliance-report.md",
+      "user-guide-for-admins.md"
+    ],
+    "qualityReports": [
+      "code-review-results",
+      "security-validation-report",
+      "performance-analysis",
+      "accessibility-audit-results"
+    ]
+  },
+
+  "workflowDelegationProtocol": {
+    "entryPoint": "step1RequirementAnalysis",
+    "contextHandoff": "complete-specifications-and-designs-provided",
+    "qualityExpectations": "luxury-medical-spa-professional-standards",
+    "communicationProtocol": "progress-updates-at-each-quality-gate",
+    "completionCriteria": "all-quality-gates-passed-and-deliverables-complete"
+  }
+}
