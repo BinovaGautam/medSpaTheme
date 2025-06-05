@@ -164,7 +164,7 @@ class VisualCustomizerRedesign {
             <div class="customizer-section ${isExpanded ? 'expanded' : ''}" data-section="colors">
                 <div class="section-header" onclick="window.visualCustomizer.toggleSection('colors')">
                     <span class="section-icon">${isExpanded ? '▼' : '▶'}</span>
-                    <h3 class="section-title">Color Scheme</h3>
+                    <h3 class="customizer-section-title">Color Scheme</h3>
                 </div>
                 <div class="section-content" style="${isExpanded ? 'display: block;' : 'display: none;'}">
                     <div class="educational-intro">
@@ -283,7 +283,7 @@ class VisualCustomizerRedesign {
             <div class="customizer-section ${isExpanded ? 'expanded' : ''}" data-section="typography">
                 <div class="section-header" onclick="window.visualCustomizer.toggleSection('typography')">
                     <span class="section-icon">${isExpanded ? '▼' : '▶'}</span>
-                    <h3 class="section-title">Typography</h3>
+                    <h3 class="customizer-section-title">Typography</h3>
                 </div>
                 <div class="section-content">
                     <div class="typography-controls">
@@ -326,7 +326,7 @@ class VisualCustomizerRedesign {
             <div class="customizer-section ${isExpanded ? 'expanded' : ''}" data-section="layout">
                 <div class="section-header" onclick="window.visualCustomizer.toggleSection('layout')">
                     <span class="section-icon">${isExpanded ? '▼' : '▶'}</span>
-                    <h3 class="section-title">Layout Controls</h3>
+                    <h3 class="customizer-section-title">Layout Controls</h3>
                 </div>
                 <div class="section-content">
                     <div class="layout-controls">
@@ -366,7 +366,7 @@ class VisualCustomizerRedesign {
             <div class="customizer-section ${isExpanded ? 'expanded' : ''}" data-section="preview">
                 <div class="section-header" onclick="window.visualCustomizer.toggleSection('preview')">
                     <span class="section-icon">${isExpanded ? '▼' : '▶'}</span>
-                    <h3 class="section-title">Live Preview</h3>
+                    <h3 class="customizer-section-title">Live Preview</h3>
                 </div>
                 <div class="section-content">
                     <div class="live-preview-area">

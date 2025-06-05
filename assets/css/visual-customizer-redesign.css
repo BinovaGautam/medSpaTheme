@@ -1,6 +1,6 @@
 /**
  * Visual Customizer Redesign - CSS Implementation
- * Based on visual-customizer-redesign-specs.md
+ * Plugin-Style Overlay System - Completely Isolated from Theme
  * 320px Fixed Sidebar, Educational Color System, Collapsible Sections
  * Elementor-Style: Panel pushes content left with proportional scaling
  * Device Preview Controls at Bottom
@@ -18,8 +18,7 @@ body.visual-customizer-active {
 
 /* Main content container that gets scaled - ONLY when customizer is active */
 body.visual-customizer-active .visual-customizer-main-content-wrapper,
-body.visual-customizer-active .visual-customizer-main-content-wrapper,
-    body.visual-customizer-active .customizer-main-content {
+body.visual-customizer-active .customizer-main-content {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: top left;
     position: relative;
@@ -35,8 +34,7 @@ body.visual-customizer-active .visual-customizer-main-content-wrapper,
 
 /* Ensure main content stays clear and interactive when panel is open */
 body.visual-customizer-active .visual-customizer-main-content-wrapper *,
-body.visual-customizer-active .visual-customizer-main-content-wrapper,
-    body.visual-customizer-active .customizer-main-content * {
+body.visual-customizer-active .customizer-main-content * {
     filter: none !important;
     backdrop-filter: none !important;
     pointer-events: auto;
@@ -126,8 +124,7 @@ body.visual-customizer-active .mobile-menu.opening {
 
 /* When panel is open, scale and move content */
 body.visual-customizer-active .visual-customizer-main-content-wrapper,
-body.visual-customizer-active .visual-customizer-main-content-wrapper,
-    body.visual-customizer-active .customizer-main-content {
+body.visual-customizer-active .customizer-main-content {
     width: calc(100vw - 320px);
     transform: scale(0.83) translateX(0); /* Default scale ratio */
     /* Ensure no blur or filter effects */
@@ -190,10 +187,10 @@ body.admin-bar .elementor-customizer-panel {
 }
 
 /* ============================================================================
-   HEADER SECTION
+   HEADER SECTION (ISOLATED NAMESPACE)
    ============================================================================ */
 
-.customizer-header {
+.elementor-customizer-panel .customizer-header {
     height: 60px;
     background: linear-gradient(135deg, #1B365D 0%, #87A96B 100%);
     color: white;
@@ -205,31 +202,31 @@ body.admin-bar .elementor-customizer-panel {
     flex-shrink: 0;
 }
 
-.customizer-title {
+.elementor-customizer-panel .customizer-title {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.customizer-icon {
+.elementor-customizer-panel .customizer-icon {
     font-size: 20px;
 }
 
-.customizer-title h3 {
+.elementor-customizer-panel .customizer-title h3 {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
     line-height: 1.2;
 }
 
-.customizer-subtitle {
+.elementor-customizer-panel .customizer-subtitle {
     margin: 0;
     font-size: 12px;
     opacity: 0.9;
     line-height: 1.2;
 }
 
-.customizer-close-btn {
+.elementor-customizer-panel .customizer-close-btn {
     background: none;
     border: none;
     color: white;
@@ -241,47 +238,51 @@ body.admin-bar .elementor-customizer-panel {
     line-height: 1;
 }
 
-.customizer-close-btn:hover {
+.elementor-customizer-panel .customizer-close-btn:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
 /* ============================================================================
-   CONTENT AREA & SECTIONS
+   CONTENT AREA & SECTIONS (FIXED HEIGHT CALCULATION)
    ============================================================================ */
 
-.customizer-content {
+.elementor-customizer-panel .customizer-content {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
     scrollbar-color: #ccc transparent;
-    padding: 0 0 16px 0; /* Remove bottom padding since footer is absolute */
-    max-height: calc(100vh - 60px - 80px - 60px); /* viewport - header - device controls - footer */
+    padding: 0;
+    /* FIXED: Proper height calculation to prevent auto-scroll to bottom */
+    height: calc(100vh - 60px - 80px - 60px); /* viewport - header - device controls - footer */
+    max-height: calc(100vh - 60px - 80px - 60px);
+    min-height: 0; /* Allow shrinking */
 }
 
 /* Admin bar adjustment for content */
-body.admin-bar .customizer-content {
-    max-height: calc(100vh - 32px - 60px - 80px - 60px); /* viewport - admin bar - header - device controls - footer */
+body.admin-bar .elementor-customizer-panel .customizer-content {
+    height: calc(100vh - 32px - 60px - 80px - 60px); /* viewport - admin bar - header - device controls - footer */
+    max-height: calc(100vh - 32px - 60px - 80px - 60px);
 }
 
-.customizer-content::-webkit-scrollbar {
+.elementor-customizer-panel .customizer-content::-webkit-scrollbar {
     width: 6px;
 }
 
-.customizer-content::-webkit-scrollbar-track {
+.elementor-customizer-panel .customizer-content::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.customizer-content::-webkit-scrollbar-thumb {
+.elementor-customizer-panel .customizer-content::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 3px;
 }
 
-.customizer-section {
+.elementor-customizer-panel .customizer-section {
     border-bottom: 1px solid #e0e0e0;
 }
 
-.section-header {
+.elementor-customizer-panel .section-header {
     padding: 16px 20px;
     background: #f8f9fa;
     cursor: pointer;
@@ -294,38 +295,40 @@ body.admin-bar .customizer-content {
     text-align: left;
 }
 
-.section-header:hover {
+.elementor-customizer-panel .section-header:hover {
     background: #e9ecef;
 }
 
-.section-header:focus {
+.elementor-customizer-panel .section-header:focus {
     outline: 2px solid #1B365D;
     outline-offset: -2px;
 }
 
-.section-icon {
+.elementor-customizer-panel .section-icon {
     font-size: 14px;
     color: #6c757d;
     transition: transform 0.2s;
 }
 
-.customizer-section.expanded .section-icon {
+.elementor-customizer-panel .customizer-section.expanded .section-icon {
     transform: rotate(0deg);
 }
 
-.section-title {
+/* FIXED: Properly namespaced section-title to avoid theme conflicts */
+.elementor-customizer-panel .customizer-section-title {
     margin: 0;
     font-size: 14px;
     font-weight: 600;
     color: #2c3e50;
+    background: none !important; /* Explicitly override any theme styles */
 }
 
-.section-content {
+.elementor-customizer-panel .section-content {
     padding: 0 20px 20px;
     display: none;
 }
 
-.customizer-section.expanded .section-content {
+.elementor-customizer-panel .customizer-section.expanded .section-content {
     display: block !important;
     animation: slideDown 0.3s ease-out;
 }
@@ -342,10 +345,10 @@ body.admin-bar .customizer-content {
 }
 
 /* ============================================================================
-   EDUCATIONAL INTRO
+   EDUCATIONAL INTRO (ISOLATED)
    ============================================================================ */
 
-.educational-intro {
+.elementor-customizer-panel .educational-intro {
     margin-bottom: 16px;
     padding: 12px;
     background: #f0f8ff;
@@ -353,7 +356,7 @@ body.admin-bar .customizer-content {
     border-radius: 4px;
 }
 
-.educational-intro p {
+.elementor-customizer-panel .educational-intro p {
     margin: 0;
     font-size: 13px;
     color: #555;
@@ -361,16 +364,16 @@ body.admin-bar .customizer-content {
 }
 
 /* ============================================================================
-   COLOR PALETTE SYSTEM (24x24px Squares)
+   COLOR PALETTE SYSTEM (24x24px Squares) - ISOLATED
    ============================================================================ */
 
-.color-palettes-grid {
+.elementor-customizer-panel .color-palettes-grid {
     display: grid;
     gap: 12px;
     margin-bottom: 20px;
 }
 
-.color-palette-option {
+.elementor-customizer-panel .color-palette-option {
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     padding: 12px;
@@ -379,32 +382,32 @@ body.admin-bar .customizer-content {
     background: white;
 }
 
-.color-palette-option:hover {
+.elementor-customizer-panel .color-palette-option:hover {
     border-color: #87A96B;
     box-shadow: 0 2px 8px rgba(135, 169, 107, 0.2);
 }
 
-.color-palette-option.active {
+.elementor-customizer-panel .color-palette-option.active {
     border-color: #1B365D;
     box-shadow: 0 2px 12px rgba(27, 54, 93, 0.3);
     background: #f8fafc;
 }
 
-.palette-name {
+.elementor-customizer-panel .palette-name {
     margin: 0 0 8px 0;
     font-size: 13px;
     font-weight: 600;
     color: #2c3e50;
 }
 
-.color-squares-row {
+.elementor-customizer-panel .color-squares-row {
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
 }
 
 /* 24x24px Color Squares as specified in design */
-.color-square {
+.elementor-customizer-panel .color-square {
     width: 24px;
     height: 24px;
     border-radius: 4px;
@@ -414,14 +417,14 @@ body.admin-bar .customizer-content {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.color-square:hover {
+.elementor-customizer-panel .color-square:hover {
     transform: scale(1.1) translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 10;
 }
 
 /* Educational Tooltips */
-.color-tooltip {
+.elementor-customizer-panel .color-tooltip {
     position: absolute;
     bottom: 100%;
     left: 50%;
@@ -444,13 +447,13 @@ body.admin-bar .customizer-content {
     max-width: 240px;
 }
 
-.color-square:hover .color-tooltip {
+.elementor-customizer-panel .color-square:hover .color-tooltip {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(-4px);
 }
 
-.color-tooltip::after {
+.elementor-customizer-panel .color-tooltip::after {
     content: '';
     position: absolute;
     top: 100%;
@@ -460,7 +463,7 @@ body.admin-bar .customizer-content {
     border-top-color: #2C3E50;
 }
 
-.tooltip-header {
+.elementor-customizer-panel .tooltip-header {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -468,36 +471,36 @@ body.admin-bar .customizer-content {
     font-weight: 600;
 }
 
-.tooltip-icon {
+.elementor-customizer-panel .tooltip-icon {
     font-size: 12px;
 }
 
-.tooltip-usage {
+.elementor-customizer-panel .tooltip-usage {
     font-size: 10px;
     margin-bottom: 6px;
     opacity: 0.9;
 }
 
-.tooltip-examples {
+.elementor-customizer-panel .tooltip-examples {
     display: flex;
     flex-direction: column;
     gap: 2px;
 }
 
-.tooltip-examples span {
+.elementor-customizer-panel .tooltip-examples span {
     font-size: 9px;
     opacity: 0.8;
 }
 
 /* ============================================================================
-   CONTRAST INFO SECTION (Simplified)
+   CONTRAST INFO SECTION (Simplified) - ISOLATED
    ============================================================================ */
 
-.contrast-pairs-section {
+.elementor-customizer-panel .contrast-pairs-section {
     margin-top: 20px;
 }
 
-.subsection-title {
+.elementor-customizer-panel .subsection-title {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -507,49 +510,49 @@ body.admin-bar .customizer-content {
     color: #6c757d;
 }
 
-.subsection-icon {
+.elementor-customizer-panel .subsection-icon {
     font-size: 14px;
 }
 
-.contrast-info-box {
+.elementor-customizer-panel .contrast-info-box {
     background: #f0f8ff;
     border-left: 4px solid #87A96B;
     border-radius: 6px;
     padding: 12px;
 }
 
-.contrast-info-box p {
+.elementor-customizer-panel .contrast-info-box p {
     margin: 0 0 8px 0;
     font-size: 12px;
     line-height: 1.4;
     color: #2c3e50;
 }
 
-.contrast-info-box p:last-child {
+.elementor-customizer-panel .contrast-info-box p:last-child {
     margin-bottom: 0;
 }
 
 /* ============================================================================
-   TYPOGRAPHY CONTROLS
+   TYPOGRAPHY CONTROLS - ISOLATED
    ============================================================================ */
 
-.typography-controls {
+.elementor-customizer-panel .typography-controls {
     display: grid;
     gap: 16px;
 }
 
-.font-control {
+.elementor-customizer-panel .font-control {
     display: grid;
     gap: 6px;
 }
 
-.font-control label {
+.elementor-customizer-panel .font-control label {
     font-size: 12px;
     font-weight: 600;
     color: #2c3e50;
 }
 
-.font-dropdown {
+.elementor-customizer-panel .font-dropdown {
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -559,18 +562,18 @@ body.admin-bar .customizer-content {
     transition: border-color 0.2s;
 }
 
-.font-dropdown:focus {
+.elementor-customizer-panel .font-dropdown:focus {
     outline: none;
     border-color: #1B365D;
     box-shadow: 0 0 0 2px rgba(27, 54, 93, 0.1);
 }
 
-.font-size-options {
+.elementor-customizer-panel .font-size-options {
     display: flex;
     gap: 4px;
 }
 
-.size-option {
+.elementor-customizer-panel .size-option {
     flex: 1;
     padding: 8px;
     border: 1px solid #ddd;
@@ -582,42 +585,42 @@ body.admin-bar .customizer-content {
     transition: all 0.2s;
 }
 
-.size-option:hover {
+.elementor-customizer-panel .size-option:hover {
     border-color: #87A96B;
 }
 
-.size-option.active {
+.elementor-customizer-panel .size-option.active {
     background: #1B365D;
     color: white;
     border-color: #1B365D;
 }
 
 /* ============================================================================
-   LAYOUT CONTROLS
+   LAYOUT CONTROLS - ISOLATED
    ============================================================================ */
 
-.layout-controls {
+.elementor-customizer-panel .layout-controls {
     display: grid;
     gap: 16px;
 }
 
-.layout-control {
+.elementor-customizer-panel .layout-control {
     display: grid;
     gap: 6px;
 }
 
-.layout-control label {
+.elementor-customizer-panel .layout-control label {
     font-size: 12px;
     font-weight: 600;
     color: #2c3e50;
 }
 
-.style-options {
+.elementor-customizer-panel .style-options {
     display: flex;
     gap: 4px;
 }
 
-.style-option {
+.elementor-customizer-panel .style-option {
     flex: 1;
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -629,31 +632,31 @@ body.admin-bar .customizer-content {
     transition: all 0.2s;
 }
 
-.style-option:hover {
+.elementor-customizer-panel .style-option:hover {
     border-color: #87A96B;
 }
 
-.style-option.active {
+.elementor-customizer-panel .style-option.active {
     background: #87A96B;
     color: white;
     border-color: #87A96B;
 }
 
 /* ============================================================================
-   LIVE PREVIEW SECTION
+   LIVE PREVIEW SECTION - ISOLATED
    ============================================================================ */
 
-.live-preview-area {
+.elementor-customizer-panel .live-preview-area {
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     overflow: hidden;
 }
 
-.preview-demo {
+.elementor-customizer-panel .preview-demo {
     font-family: Arial, sans-serif;
 }
 
-.demo-header {
+.elementor-customizer-panel .demo-header {
     padding: 12px;
     display: flex;
     align-items: center;
@@ -661,38 +664,38 @@ body.admin-bar .customizer-content {
     font-size: 12px;
 }
 
-.demo-logo {
+.elementor-customizer-panel .demo-logo {
     font-weight: 600;
 }
 
-.demo-nav {
+.elementor-customizer-panel .demo-nav {
     display: flex;
     gap: 12px;
 }
 
-.demo-nav a {
+.elementor-customizer-panel .demo-nav a {
     text-decoration: none;
     font-size: 11px;
 }
 
-.demo-content h4 {
+.elementor-customizer-panel .demo-content h4 {
     font-size: 14px;
 }
 
-.demo-button {
+.elementor-customizer-panel .demo-button {
     transition: all 0.2s;
 }
 
-.demo-button:hover {
+.elementor-customizer-panel .demo-button:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* ============================================================================
-   DEVICE PREVIEW CONTROLS (Bottom of Panel)
+   DEVICE PREVIEW CONTROLS (Bottom of Panel) - ISOLATED
    ============================================================================ */
 
-.device-preview-controls {
+.elementor-customizer-panel .device-preview-controls {
     position: absolute;
     bottom: 60px; /* Above footer */
     left: 0;
@@ -703,9 +706,10 @@ body.admin-bar .customizer-content {
     display: flex;
     justify-content: center;
     gap: 8px;
+    flex-shrink: 0;
 }
 
-.device-btn {
+.elementor-customizer-panel .device-btn {
     padding: 8px 12px;
     border: 1px solid #ddd;
     background: white;
@@ -720,25 +724,25 @@ body.admin-bar .customizer-content {
     justify-content: center;
 }
 
-.device-btn:hover {
+.elementor-customizer-panel .device-btn:hover {
     border-color: #87A96B;
 }
 
-.device-btn.active {
+.elementor-customizer-panel .device-btn.active {
     background: #1B365D;
     color: white;
     border-color: #1B365D;
 }
 
-.device-icon {
+.elementor-customizer-panel .device-icon {
     font-size: 14px;
 }
 
 /* ============================================================================
-   FOOTER SECTION
+   FOOTER SECTION - ISOLATED
    ============================================================================ */
 
-.customizer-footer {
+.elementor-customizer-panel .customizer-footer {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -747,9 +751,10 @@ body.admin-bar .customizer-content {
     background: #f8f9fa;
     border-top: 1px solid #e0e0e0;
     flex-shrink: 0;
+    height: 60px; /* Fixed height */
 }
 
-.apply-globally-btn {
+.elementor-customizer-panel .apply-globally-btn {
     width: 100%;
     padding: 12px 16px;
     background: linear-gradient(135deg, #1B365D 0%, #87A96B 100%);
@@ -767,30 +772,30 @@ body.admin-bar .customizer-content {
     margin-bottom: 8px;
 }
 
-.apply-globally-btn:hover:not(:disabled) {
+.elementor-customizer-panel .apply-globally-btn:hover:not(:disabled) {
     background: linear-gradient(135deg, #87A96B 0%, #D4AF37 100%);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.apply-globally-btn:disabled {
+.elementor-customizer-panel .apply-globally-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
 
-.apply-globally-btn.success {
+.elementor-customizer-panel .apply-globally-btn.success {
     background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
 }
 
-.apply-globally-btn.error {
+.elementor-customizer-panel .apply-globally-btn.error {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
-.btn-icon {
+.elementor-customizer-panel .btn-icon {
     font-size: 14px;
 }
 
-.btn-icon.spin {
+.elementor-customizer-panel .btn-icon.spin {
     animation: spin 1s linear infinite;
 }
 
@@ -800,11 +805,11 @@ body.admin-bar .customizer-content {
     }
 }
 
-.footer-info {
+.elementor-customizer-panel .footer-info {
     text-align: center;
 }
 
-.footer-info small {
+.elementor-customizer-panel .footer-info small {
     font-size: 10px;
     color: #6c757d;
 }
@@ -847,12 +852,14 @@ body.admin-bar .customizer-content {
         height: calc(100vh - 32px);
     }
 
-    .customizer-content {
-        max-height: calc(100vh - 56px - 80px - 60px); /* viewport - header - device controls - footer */
+    .elementor-customizer-panel .customizer-content {
+        height: calc(100vh - 56px - 80px - 60px); /* viewport - header - device controls - footer */
+        max-height: calc(100vh - 56px - 80px - 60px);
     }
 
-    body.admin-bar .customizer-content {
-        max-height: calc(100vh - 32px - 56px - 80px - 60px); /* viewport - admin bar - header - device controls - footer */
+    body.admin-bar .elementor-customizer-panel .customizer-content {
+        height: calc(100vh - 32px - 56px - 80px - 60px); /* viewport - admin bar - header - device controls - footer */
+        max-height: calc(100vh - 32px - 56px - 80px - 60px);
     }
 
     body.visual-customizer-active .visual-customizer-main-content-wrapper,
@@ -860,21 +867,21 @@ body.admin-bar .customizer-content {
         transform: scale(0.72); /* (1024-280)/1024 */
     }
 
-    .customizer-header {
+    .elementor-customizer-panel .customizer-header {
         height: 56px;
         padding: 0 16px;
         flex-shrink: 0;
     }
 
-    .customizer-title h3 {
+    .elementor-customizer-panel .customizer-title h3 {
         font-size: 15px;
     }
 
-    .section-content {
+    .elementor-customizer-panel .section-content {
         padding: 0 16px 16px;
     }
 
-    .customizer-footer {
+    .elementor-customizer-panel .customizer-footer {
         flex-shrink: 0;
     }
 }
@@ -898,8 +905,9 @@ body.admin-bar .customizer-content {
         transform: translateY(0);
     }
 
-    .customizer-content {
-        max-height: calc(70vh - 52px - 60px); /* viewport - header - footer */
+    .elementor-customizer-panel .customizer-content {
+        height: calc(70vh - 52px - 60px); /* viewport - header - footer */
+        max-height: calc(70vh - 52px - 60px);
         overflow-y: auto;
         overflow-x: hidden;
     }
@@ -909,42 +917,43 @@ body.admin-bar .customizer-content {
         transform: scale(1); /* No scaling on mobile */
     }
 
-    .customizer-header {
+    .elementor-customizer-panel .customizer-header {
         height: 52px;
         border-radius: 16px 16px 0 0;
         flex-shrink: 0; /* Prevent header from shrinking */
     }
 
-    .customizer-footer {
+    .elementor-customizer-panel .customizer-footer {
         flex-shrink: 0; /* Prevent footer from shrinking */
+        height: 60px; /* Fixed height */
     }
 
-    .color-squares-row {
+    .elementor-customizer-panel .color-squares-row {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
         justify-items: center;
     }
 
-    .color-square {
+    .elementor-customizer-panel .color-square {
         width: 32px;
         height: 32px;
     }
 
-    .color-tooltip {
+    .elementor-customizer-panel .color-tooltip {
         display: none; /* Hide tooltips on mobile */
     }
 
-    .style-options {
+    .elementor-customizer-panel .style-options {
         gap: 6px;
     }
 
-    .style-option {
+    .elementor-customizer-panel .style-option {
         padding: 10px 8px;
         font-size: 11px;
     }
 
-    .device-preview-controls {
+    .elementor-customizer-panel .device-preview-controls {
         display: none; /* Hide device controls on mobile */
     }
 }
@@ -971,11 +980,11 @@ body.admin-bar .customizer-content {
         background: rgba(0, 0, 0, 0.8);
     }
 
-    .color-square {
+    .elementor-customizer-panel .color-square {
         border-width: 2px;
     }
 
-    .section-header:focus {
+    .elementor-customizer-panel .section-header:focus {
         outline-width: 3px;
     }
 }
@@ -985,14 +994,14 @@ body.admin-bar .customizer-content {
     .elementor-customizer-panel,
     .customizer-backdrop,
     .customizer-main-content,
-    .color-square,
-    .apply-globally-btn,
-    .style-option,
-    .size-option {
+    .elementor-customizer-panel .color-square,
+    .elementor-customizer-panel .apply-globally-btn,
+    .elementor-customizer-panel .style-option,
+    .elementor-customizer-panel .size-option {
         transition: none;
     }
 
-    .btn-icon.spin {
+    .elementor-customizer-panel .btn-icon.spin {
         animation: none;
     }
 
@@ -1003,10 +1012,10 @@ body.admin-bar .customizer-content {
 }
 
 /* Focus styles for keyboard navigation */
-.color-square:focus,
-.style-option:focus,
-.size-option:focus,
-.device-btn:focus {
+.elementor-customizer-panel .color-square:focus,
+.elementor-customizer-panel .style-option:focus,
+.elementor-customizer-panel .size-option:focus,
+.elementor-customizer-panel .device-btn:focus {
     outline: 2px solid #1B365D;
     outline-offset: 2px;
 }
