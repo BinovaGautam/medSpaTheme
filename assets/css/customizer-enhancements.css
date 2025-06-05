@@ -848,3 +848,495 @@
         animation: none;
     }
 }
+
+/**
+ * Visual Customizer Enhancements CSS
+ * Advanced styling, animations, and visual polish
+ * Version 2.0 - Elementor Style Enhancements
+ */
+
+/* ==========================================================================
+   ADVANCED ANIMATIONS & TRANSITIONS
+   ========================================================================== */
+
+/* Panel slide-in animation with spring effect */
+.elementor-customizer-panel {
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Backdrop fade with blur effect */
+.customizer-backdrop {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.customizer-backdrop.visible {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* Color square hover animations */
+.color-square {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.color-square::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.color-square:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.color-square:active {
+    transform: scale(0.95);
+}
+
+/* Tooltip entrance animation */
+.educational-tooltip {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(-10px) scale(0.95);
+}
+
+.educational-tooltip.visible {
+    transform: translateY(0) scale(1);
+}
+
+/* Button press animations */
+.apply-globally-btn {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.apply-globally-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.apply-globally-btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ==========================================================================
+   ENHANCED VISUAL EFFECTS
+   ========================================================================== */
+
+/* Panel shadow enhancement */
+.elementor-customizer-panel {
+    box-shadow:
+        -2px 0 20px rgba(0, 0, 0, 0.15),
+        -1px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.elementor-customizer-panel.open {
+    box-shadow:
+        -8px 0 40px rgba(0, 0, 0, 0.2),
+        -2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Header gradient enhancement */
+.customizer-header {
+    background: linear-gradient(135deg, #1B365D 0%, #2C5F7C 50%, #1B365D 100%);
+    position: relative;
+}
+
+.customizer-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* Color square enhancements */
+.color-square {
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.color-square:hover {
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Tooltip enhancements */
+.educational-tooltip {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.educational-tooltip::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #2c3e50;
+}
+
+/* Button gradient enhancements */
+.apply-globally-btn {
+    background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%);
+    box-shadow:
+        0 4px 15px rgba(212, 175, 55, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.apply-globally-btn:hover {
+    background: linear-gradient(135deg, #E6C547 0%, #F7E04F 50%, #E6C547 100%);
+    box-shadow:
+        0 6px 20px rgba(212, 175, 55, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   MICRO-INTERACTIONS
+   ========================================================================== */
+
+/* Section expand animation */
+.section-content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Font selector enhancements */
+.font-selector select {
+    transition: all 0.2s ease;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 32px;
+}
+
+.font-selector select:hover {
+    border-color: #87A96B;
+    box-shadow: 0 0 0 3px rgba(135, 169, 107, 0.1);
+}
+
+/* Style option enhancements */
+.style-option {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.style-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(27, 54, 93, 0.1), rgba(135, 169, 107, 0.1));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.style-option:hover::before {
+    opacity: 1;
+}
+
+.style-option.active {
+    background: linear-gradient(135deg, #1B365D 0%, #2C5F7C 100%);
+    box-shadow:
+        0 2px 8px rgba(27, 54, 93, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   LOADING STATES & FEEDBACK
+   ========================================================================== */
+
+/* Button loading state */
+.apply-globally-btn:disabled {
+    background: linear-gradient(135deg, #bbb 0%, #ddd 50%, #bbb 100%);
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.apply-globally-btn.loading {
+    position: relative;
+}
+
+.apply-globally-btn.loading .btn-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Success state animation */
+.apply-globally-btn.success {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #27ae60 100%);
+    color: white;
+}
+
+.apply-globally-btn.success .btn-icon {
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 60%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    80% { transform: translateY(-5px); }
+}
+
+/* Error state animation */
+.apply-globally-btn.error {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 50%, #e74c3c 100%);
+    color: white;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* ==========================================================================
+   ENHANCED CONTRAST PAIRS
+   ========================================================================== */
+
+.contrast-pair {
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.contrast-pair::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.contrast-pair:hover::before {
+    left: 100%;
+}
+
+.contrast-pair:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   PREVIEW COMPONENT ENHANCEMENTS
+   ========================================================================== */
+
+.preview-component {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.preview-component:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.preview-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.preview-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.preview-btn:hover::before {
+    width: 200px;
+    height: 200px;
+}
+
+.preview-card {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.preview-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--color-secondary, #87A96B), var(--color-accent, #D4AF37));
+    transition: width 0.3s ease;
+}
+
+.preview-card:hover::before {
+    width: 6px;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* Enhanced focus indicators */
+.color-square:focus {
+    box-shadow:
+        0 0 0 3px rgba(27, 54, 93, 0.3),
+        0 0 0 6px rgba(27, 54, 93, 0.1);
+    transform: scale(1.05);
+}
+
+.apply-globally-btn:focus {
+    box-shadow:
+        0 4px 15px rgba(212, 175, 55, 0.3),
+        0 0 0 3px rgba(212, 175, 55, 0.5);
+}
+
+/* High contrast mode enhancements */
+@media (prefers-contrast: high) {
+    .color-square {
+        border-width: 3px;
+    }
+
+    .educational-tooltip {
+        border-width: 2px;
+    }
+
+    .apply-globally-btn {
+        border: 2px solid #000;
+    }
+}
+
+/* ==========================================================================
+   MOBILE ENHANCEMENTS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* Enhanced mobile panel animation */
+    .elementor-customizer-panel {
+        transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Mobile-specific hover effects (touch-friendly) */
+    .color-square:active {
+        transform: scale(0.9);
+        transition: transform 0.1s ease;
+    }
+
+    /* Enhanced mobile tooltip */
+    .educational-tooltip {
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Mobile button enhancements */
+    .apply-globally-btn {
+        padding: 16px 20px;
+        font-size: 16px;
+    }
+}
+
+/* ==========================================================================
+   DARK MODE SUPPORT (Future Enhancement)
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .elementor-customizer-panel {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+
+    .section-title {
+        background: #2a2a2a;
+        color: #ffffff;
+    }
+
+    .educational-intro {
+        background: #2a2a2a;
+        border-left-color: #87A96B;
+    }
+
+    .customizer-footer {
+        background: #2a2a2a;
+    }
+
+    .contrast-description {
+        background: #2a2a2a;
+        color: #cccccc;
+    }
+}
+
+/* ==========================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ========================================================================== */
+
+/* GPU acceleration for smooth animations */
+.elementor-customizer-panel,
+.customizer-backdrop,
+.color-square,
+.educational-tooltip,
+.apply-globally-btn {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Optimize repaints */
+.color-square:hover,
+.apply-globally-btn:hover,
+.preview-btn:hover {
+    will-change: transform, box-shadow;
+}
+
+/* ==========================================================================
+   PRINT OPTIMIZATIONS
+   ========================================================================== */
+
+@media print {
+    .elementor-customizer-panel,
+    .customizer-backdrop,
+    .educational-tooltip {
+        display: none !important;
+    }
+}

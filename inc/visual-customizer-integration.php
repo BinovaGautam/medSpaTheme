@@ -270,7 +270,7 @@ function preetidreams_add_customizer_admin_bar($wp_admin_bar) {
             'href' => '#',
             'meta' => [
                 'class' => 'visual-customizer-admin-bar-trigger',
-                'onclick' => 'if(window.visualCustomizer) window.visualCustomizer.openDrawer(); return false;'
+                'onclick' => 'if(window.openThemeCustomizer) window.openThemeCustomizer(); else if(window.visualCustomizer) window.visualCustomizer.openPanel(); return false;'
             ]
         ]);
     }
@@ -297,6 +297,18 @@ function preetidreams_visual_customizer_body_classes($classes) {
     // Add class to indicate customizer availability
     if (!is_admin()) {
         $classes[] = 'visual-customizer-enabled';
+    }
+
+    // Load global configuration and apply body classes
+    $global_config = preetidreams_get_visual_customizer_global_config();
+
+    // Add configuration-based classes
+    $classes[] = 'palette-' . $global_config['colorPalette'];
+    $classes[] = 'header-' . $global_config['headerStyle'];
+    $classes[] = 'buttons-' . $global_config['buttonStyle'];
+
+    if (!$global_config['animations']) {
+        $classes[] = 'animations-disabled';
     }
 
     return $classes;
@@ -364,4 +376,547 @@ function preetidreams_get_visual_customizer_defaults() {
         'buttonStyle' => 'rounded',
         'animations' => true
     ];
+}
+
+/**
+ * Enqueue Visual Customizer Assets (Admin Only with Global Configuration)
+ */
+function preetidreams_enqueue_visual_customizer() {
+    // Only enqueue for admin users
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+
+    // Don't load in admin area
+    if (is_admin()) {
+        return;
+    }
+
+    // Enqueue Contrast Calculator
+    wp_enqueue_script(
+        'contrast-calculator',
+        get_template_directory_uri() . '/assets/js/contrast-calculator.js',
+        [],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Enqueue Visual Customizer Redesign JavaScript
+    wp_enqueue_script(
+        'visual-customizer-redesign',
+        get_template_directory_uri() . '/assets/js/visual-customizer-redesign.js',
+        ['contrast-calculator'],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Enqueue Visual Customizer Redesign CSS
+    wp_enqueue_style(
+        'visual-customizer-redesign',
+        get_template_directory_uri() . '/assets/css/visual-customizer-redesign.css',
+        [],
+        PREETIDREAMS_VERSION
+    );
+
+    // Enqueue Enhancement CSS
+    wp_enqueue_style(
+        'customizer-enhancements',
+        get_template_directory_uri() . '/assets/css/customizer-enhancements.css',
+        ['visual-customizer-redesign'],
+        PREETIDREAMS_VERSION
+    );
+
+    // Enqueue Accessibility CSS
+    wp_enqueue_style(
+        'customizer-accessibility',
+        get_template_directory_uri() . '/assets/css/customizer-accessibility.css',
+        ['customizer-enhancements'],
+        PREETIDREAMS_VERSION
+    );
+
+    // Color palette data
+    $color_palettes = [
+        'classic-forest' => [
+            'name' => 'Classic Forest',
+            'primary' => '#1B365D',
+            'secondary' => '#87A96B',
+            'accent' => '#D4AF37',
+            'light' => '#FDFCFA',
+            'dark' => '#2C3E50'
+        ],
+        'ocean-blue' => [
+            'name' => 'Ocean Blue',
+            'primary' => '#2E5984',
+            'secondary' => '#6B9BD1',
+            'accent' => '#F4A261',
+            'light' => '#F8FAFC',
+            'dark' => '#1E293B'
+        ],
+        'rose-gold' => [
+            'name' => 'Rose Gold',
+            'primary' => '#8B4B7A',
+            'secondary' => '#E4A853',
+            'accent' => '#C2847A',
+            'light' => '#FDF2F8',
+            'dark' => '#374151'
+        ],
+        'sage-mint' => [
+            'name' => 'Sage Mint',
+            'primary' => '#5F7A61',
+            'secondary' => '#A8C4A2',
+            'accent' => '#F7E7CE',
+            'light' => '#F9FDF9',
+            'dark' => '#1F2937'
+        ],
+        'lavender-grey' => [
+            'name' => 'Lavender Grey',
+            'primary' => '#6B7280',
+            'secondary' => '#A78BFA',
+            'accent' => '#F3E8FF',
+            'light' => '#FAFAFA',
+            'dark' => '#111827'
+        ],
+        'warm-earth' => [
+            'name' => 'Warm Earth',
+            'primary' => '#92400E',
+            'secondary' => '#D97706',
+            'accent' => '#FED7AA',
+            'light' => '#FFFBEB',
+            'dark' => '#1F2937'
+        ],
+        'modern-monochrome' => [
+            'name' => 'Modern Monochrome',
+            'primary' => '#1F2937',
+            'secondary' => '#6B7280',
+            'accent' => '#F3F4F6',
+            'light' => '#FFFFFF',
+            'dark' => '#000000'
+        ]
+    ];
+
+    // Font options
+    $font_options = [
+        'heading_fonts' => [
+            'playfair-display' => ['name' => 'Playfair Display', 'url' => 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap'],
+            'crimson-text' => ['name' => 'Crimson Text', 'url' => 'https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap'],
+            'libre-baskerville' => ['name' => 'Libre Baskerville', 'url' => 'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap'],
+            'cormorant-garamond' => ['name' => 'Cormorant Garamond', 'url' => 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap']
+        ],
+        'body_fonts' => [
+            'inter' => ['name' => 'Inter', 'url' => 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap'],
+            'source-sans-pro' => ['name' => 'Source Sans Pro', 'url' => 'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap'],
+            'nunito-sans' => ['name' => 'Nunito Sans', 'url' => 'https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap'],
+            'open-sans' => ['name' => 'Open Sans', 'url' => 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap']
+        ]
+    ];
+
+    // Tooltips for educational purpose
+    $tooltips = [
+        'primary' => [
+            'title' => 'Primary Brand Color',
+            'usage' => 'Used for navigation bars, main buttons, and header elements',
+            'examples' => ['Navigation backgrounds', 'Call-to-action buttons', 'Header elements', 'Important links']
+        ],
+        'secondary' => [
+            'title' => 'Secondary Support Color',
+            'usage' => 'Perfect for accent elements and supporting content areas',
+            'examples' => ['Section backgrounds', 'Hover effects', 'Accent borders', 'Icon highlights']
+        ],
+        'accent' => [
+            'title' => 'Accent Highlight Color',
+            'usage' => 'Great for special highlights and premium features',
+            'examples' => ['Special offers', 'Premium badges', 'Success messages', 'Featured content']
+        ],
+        'light' => [
+            'title' => 'Light Background',
+            'usage' => 'Main content areas and card backgrounds for easy reading',
+            'examples' => ['Page backgrounds', 'Content cards', 'Form backgrounds', 'Modal windows']
+        ],
+        'dark' => [
+            'title' => 'Dark Text & Elements',
+            'usage' => 'Text content and darker UI elements for contrast',
+            'examples' => ['Body text', 'Headings', 'Form labels', 'Footer content']
+        ]
+    ];
+
+    // Contrast pairs for automatic pairing
+    $contrast_pairs = [
+        [
+            'background' => '#FDFCFA',
+            'text' => '#2C3E50',
+            'ratio' => '11.2:1',
+            'label' => 'Easy Reading',
+            'usage' => 'Perfect for main content areas and long-form text'
+        ],
+        [
+            'background' => '#1B365D',
+            'text' => '#FDFCFA',
+            'ratio' => '15.3:1',
+            'label' => 'High Contrast',
+            'usage' => 'Ideal for headers, navigation, and emphasis sections'
+        ],
+        [
+            'background' => '#87A96B',
+            'text' => '#FFFFFF',
+            'ratio' => '8.7:1',
+            'label' => 'Professional',
+            'usage' => 'Great for buttons, calls-to-action, and branding elements'
+        ]
+    ];
+
+    // Localize script data for Redesigned Customizer
+    wp_localize_script('visual-customizer-redesign', 'visualCustomizerData', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('visual_customizer_global_config'),
+        'isAdmin' => current_user_can('manage_options'),
+        'colorPalettes' => $color_palettes,
+        'fontOptions' => $font_options,
+        'tooltips' => $tooltips,
+        'contrastPairs' => $contrast_pairs,
+        'themeVersion' => PREETIDREAMS_VERSION,
+        'implementation' => 'redesign', // Indicate this is the redesigned version
+        'i18n' => [
+            'title' => __('Theme Customizer', 'preetidreams'),
+            'subtitle' => __('Customize your website appearance', 'preetidreams'),
+            'colorScheme' => __('Color Scheme', 'preetidreams'),
+            'typography' => __('Typography', 'preetidreams'),
+            'layoutControls' => __('Layout Controls', 'preetidreams'),
+            'livePreview' => __('Live Preview', 'preetidreams'),
+            'applyGlobally' => __('Apply Globally', 'preetidreams'),
+            'loading' => __('Loading...', 'preetidreams'),
+            'applied' => __('Configuration Applied Successfully', 'preetidreams'),
+            'error' => __('Error applying configuration', 'preetidreams'),
+            'adminOnly' => __('Admin Only: Changes will be applied globally for all visitors', 'preetidreams'),
+            'educationalIntro' => __('Choose colors that create the perfect medical spa atmosphere. Each color has been carefully selected for professionalism and trust.', 'preetidreams')
+        ]
+    ]);
+}
+add_action('wp_enqueue_scripts', 'preetidreams_enqueue_visual_customizer');
+
+/**
+ * AJAX Handler for Global Visual Customizer Configuration
+ */
+function preetidreams_save_visual_customizer_global_config() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'visual_customizer_global_config')) {
+        wp_send_json_error('Security check failed');
+    }
+
+    // Verify admin permissions
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('Insufficient permissions');
+    }
+
+    // Parse JSON configuration data
+    $config_json = wp_unslash($_POST['config']);
+    $config = json_decode($config_json, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        wp_send_json_error('Invalid JSON configuration data');
+    }
+
+    // Sanitize configuration data
+    $sanitized_config = [
+        'colorPalette' => sanitize_text_field($config['colorPalette'] ?? 'classic-forest'),
+        'fontHeading' => sanitize_text_field($config['fontHeading'] ?? 'playfair-display'),
+        'fontBody' => sanitize_text_field($config['fontBody'] ?? 'inter'),
+        'fontSize' => sanitize_text_field($config['fontSize'] ?? 'normal'),
+        'headerStyle' => sanitize_text_field($config['headerStyle'] ?? 'transparent'),
+        'buttonStyle' => sanitize_text_field($config['buttonStyle'] ?? 'rounded'),
+        'animations' => wp_validate_boolean($config['animations'] ?? true)
+    ];
+
+    // Save to WordPress options
+    $saved = update_option('preetidreams_visual_customizer_global_config', $sanitized_config);
+
+    if ($saved !== false) {
+        // Log the configuration change
+        do_action('preetidreams_visual_customizer_global_config_saved', $sanitized_config, get_current_user_id());
+
+        wp_send_json_success([
+            'message' => 'Global configuration saved successfully',
+            'config' => $sanitized_config,
+            'timestamp' => current_time('mysql')
+        ]);
+    } else {
+        wp_send_json_error('Failed to save configuration to database');
+    }
+}
+add_action('wp_ajax_save_visual_customizer_global_config', 'preetidreams_save_visual_customizer_global_config');
+
+/**
+ * Get Global Visual Customizer Configuration
+ */
+function preetidreams_get_visual_customizer_global_config() {
+    $default_config = [
+        'colorPalette' => 'classic-forest',
+        'fontHeading' => 'playfair-display',
+        'fontBody' => 'inter',
+        'fontSize' => 'normal',
+        'headerStyle' => 'transparent',
+        'buttonStyle' => 'rounded',
+        'animations' => true
+    ];
+
+    return get_option('preetidreams_visual_customizer_global_config', $default_config);
+}
+
+/**
+ * Output Global Configuration JavaScript
+ */
+function preetidreams_output_visual_customizer_global_config_js() {
+    $global_config = preetidreams_get_visual_customizer_global_config();
+    ?>
+    <script>
+    // Global configuration data for JavaScript
+    window.preetidreamsGlobalConfig = <?php echo wp_json_encode($global_config); ?>;
+    </script>
+    <?php
+}
+
+/**
+ * Initialize Visual Customizer on Frontend
+ */
+function preetidreams_init_visual_customizer() {
+    // Load global CSS for all users
+    add_action('wp_head', 'preetidreams_add_visual_customizer_global_css');
+
+    // Output global configuration JavaScript for all users
+    add_action('wp_head', 'preetidreams_output_visual_customizer_global_config_js');
+
+    // Only add trigger and admin features for admin users
+    if (current_user_can('manage_options') && !is_admin()) {
+        add_action('wp_footer', 'preetidreams_add_visual_customizer_trigger');
+    }
+}
+add_action('init', 'preetidreams_init_visual_customizer');
+
+/**
+ * Add Visual Customizer Trigger Button to Footer
+ */
+function preetidreams_add_visual_customizer_trigger() {
+    ?>
+    <script>
+    // Initialize Visual Customizer Redesign when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create global function for admin bar trigger
+        window.openThemeCustomizer = function() {
+            if (window.VisualCustomizerRedesign && window.visualCustomizer) {
+                window.visualCustomizer.openPanel();
+            } else if (window.visualCustomizer) {
+                window.visualCustomizer.openPanel();
+            } else {
+                console.log('Visual Customizer Redesign loading...');
+                setTimeout(window.openThemeCustomizer, 100);
+            }
+        };
+
+        // Auto-initialize redesigned customizer
+        if (window.VisualCustomizerRedesign && window.visualCustomizerData) {
+            window.visualCustomizer = new VisualCustomizerRedesign();
+        }
+    });
+    </script>
+    <?php
+}
+
+/**
+ * Add Global CSS for Visual Customizer
+ */
+function preetidreams_add_visual_customizer_global_css() {
+    // Load global configuration
+    $global_config = preetidreams_get_visual_customizer_global_config();
+    $color_palettes = [
+        'classic-forest' => [
+            'name' => 'Classic Forest',
+            'primary' => '#1B365D',
+            'secondary' => '#87A96B',
+            'accent' => '#D4AF37',
+            'light' => '#FDFCFA',
+            'dark' => '#2C3E50'
+        ],
+        'ocean-blue' => [
+            'name' => 'Ocean Blue',
+            'primary' => '#2E5984',
+            'secondary' => '#6B9BD1',
+            'accent' => '#F4A261',
+            'light' => '#F8FAFC',
+            'dark' => '#1E293B'
+        ],
+        'rose-gold' => [
+            'name' => 'Rose Gold',
+            'primary' => '#8B4B7A',
+            'secondary' => '#E4A853',
+            'accent' => '#C2847A',
+            'light' => '#FDF2F8',
+            'dark' => '#374151'
+        ],
+        'sage-mint' => [
+            'name' => 'Sage Mint',
+            'primary' => '#5F7A61',
+            'secondary' => '#A8C4A2',
+            'accent' => '#F7E7CE',
+            'light' => '#F9FDF9',
+            'dark' => '#1F2937'
+        ],
+        'lavender-grey' => [
+            'name' => 'Lavender Grey',
+            'primary' => '#6B7280',
+            'secondary' => '#A78BFA',
+            'accent' => '#F3E8FF',
+            'light' => '#FAFAFA',
+            'dark' => '#111827'
+        ],
+        'warm-earth' => [
+            'name' => 'Warm Earth',
+            'primary' => '#92400E',
+            'secondary' => '#D97706',
+            'accent' => '#FED7AA',
+            'light' => '#FFFBEB',
+            'dark' => '#1F2937'
+        ],
+        'modern-monochrome' => [
+            'name' => 'Modern Monochrome',
+            'primary' => '#1F2937',
+            'secondary' => '#6B7280',
+            'accent' => '#F3F4F6',
+            'light' => '#FFFFFF',
+            'dark' => '#000000'
+        ]
+    ];
+
+    // Get the selected color palette
+    $selected_palette = $color_palettes[$global_config['colorPalette']] ?? $color_palettes['classic-forest'];
+
+    ?>
+    <style id="visual-customizer-global-css">
+    /* Visual Customizer Admin Bar Styling */
+    #wp-admin-bar-visual-customizer {
+        background: linear-gradient(135deg, #1B365D 0%, #87A96B 100%);
+    }
+
+    #wp-admin-bar-visual-customizer:hover {
+        background: linear-gradient(135deg, #87A96B 0%, #D4AF37 100%);
+    }
+
+    #wp-admin-bar-visual-customizer a {
+        color: white !important;
+        text-decoration: none !important;
+    }
+
+    #wp-admin-bar-visual-customizer a:hover {
+        color: white !important;
+    }
+
+    /* Ensure admin bar is visible */
+    #wpadminbar {
+        z-index: 99999;
+    }
+
+    /* Visual Customizer accessibility */
+    .visual-customizer-admin-bar-trigger {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .visual-customizer-admin-bar-trigger:focus {
+        outline: 2px solid #D4AF37;
+        outline-offset: 2px;
+    }
+
+    /* Hide standard customizer if it exists */
+    #wp-admin-bar-customize {
+        display: none !important;
+    }
+
+    /* Admin notice styling */
+    body.admin-bar {
+        --admin-bar-height: 32px;
+    }
+
+    @media screen and (max-width: 782px) {
+        body.admin-bar {
+            --admin-bar-height: 46px;
+        }
+    }
+
+    /* ============================================================================
+       GLOBAL VISUAL CUSTOMIZER CONFIGURATION STYLES
+       ============================================================================ */
+
+    :root {
+        /* Applied Color Palette: <?php echo esc_html($selected_palette['name']); ?> */
+        --color-primary: <?php echo esc_html($selected_palette['primary']); ?>;
+        --color-secondary: <?php echo esc_html($selected_palette['secondary']); ?>;
+        --color-accent: <?php echo esc_html($selected_palette['accent']); ?>;
+        --color-light: <?php echo esc_html($selected_palette['light']); ?>;
+        --color-dark: <?php echo esc_html($selected_palette['dark']); ?>;
+
+        /* Typography Settings */
+        --font-heading: '<?php echo esc_html($global_config['fontHeading']); ?>';
+        --font-body: '<?php echo esc_html($global_config['fontBody']); ?>';
+        --font-size-base: <?php echo $global_config['fontSize'] === 'small' ? '14px' : ($global_config['fontSize'] === 'large' ? '18px' : '16px'); ?>;
+    }
+
+    /* Apply global styles based on configuration */
+    <?php if ($global_config['headerStyle'] === 'transparent'): ?>
+    body.header-transparent .site-header,
+    body.header-transparent header {
+        background: rgba(<?php echo esc_html($selected_palette['primary']); ?>, 0.9);
+        backdrop-filter: blur(10px);
+    }
+    <?php endif; ?>
+
+    <?php if ($global_config['buttonStyle'] === 'sharp'): ?>
+    body.buttons-sharp button,
+    body.buttons-sharp .button,
+    body.buttons-sharp input[type="submit"] {
+        border-radius: 2px !important;
+    }
+    <?php else: ?>
+    body.buttons-rounded button,
+    body.buttons-rounded .button,
+    body.buttons-rounded input[type="submit"] {
+        border-radius: 6px !important;
+    }
+    <?php endif; ?>
+
+    <?php if (!$global_config['animations']): ?>
+    body.animations-disabled * {
+        animation: none !important;
+        transition: none !important;
+    }
+    <?php endif; ?>
+
+    /* Apply color scheme to common elements */
+    .primary-color,
+    .site-header,
+    .main-navigation,
+    .btn-primary {
+        background-color: var(--color-primary) !important;
+        color: white !important;
+    }
+
+    .secondary-color,
+    .btn-secondary {
+        background-color: var(--color-secondary) !important;
+        color: white !important;
+    }
+
+    .accent-color {
+        background-color: var(--color-accent) !important;
+        color: var(--color-dark) !important;
+    }
+
+    .light-bg {
+        background-color: var(--color-light) !important;
+        color: var(--color-dark) !important;
+    }
+
+    body {
+        background-color: var(--color-light);
+        color: var(--color-dark);
+    }
+    </style>
+    <?php
 }
