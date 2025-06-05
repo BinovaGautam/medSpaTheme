@@ -860,31 +860,17 @@ function preetidreams_add_visual_customizer_global_css() {
     }
     <?php endif; ?>
 
-    /* Apply color scheme to common elements */
-    .primary-color,
-    .site-header,
-    .main-navigation,
-    .btn-primary {
-        background-color: var(--color-primary) !important;
-        color: white !important;
-    }
+    /* REMOVED: Overly broad color application rules that interfere with theme styles
+       These rules were causing inappropriate background colors on menu text and headings:
+       - .primary-color, .site-header, .main-navigation, .btn-primary
+       - .secondary-color, .btn-secondary
+       - .accent-color
+       - .light-bg
 
-    .secondary-color,
-    .btn-secondary {
-        background-color: var(--color-secondary) !important;
-        color: white !important;
-    }
+       Color variables are available via CSS custom properties for theme to use appropriately.
+    */
 
-    .accent-color {
-        background-color: var(--color-accent) !important;
-        color: var(--color-dark) !important;
-    }
-
-    .light-bg {
-        background-color: var(--color-light) !important;
-        color: var(--color-dark) !important;
-    }
-
+    /* Only apply background color to body element */
     body {
         background-color: var(--color-light);
         color: var(--color-dark);
