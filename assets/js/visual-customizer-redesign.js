@@ -531,25 +531,189 @@ class VisualCustomizerRedesign {
         Object.entries(palette).forEach(([colorKey, colorValue]) => {
             if (colorKey !== 'name') {
                 root.style.setProperty(`--color-${colorKey}`, colorValue);
+                // Also set RGB version for opacity usage
+                root.style.setProperty(`--color-${colorKey}-rgb`, this.hexToRgb(colorValue));
             }
         });
+
+        // Force refresh of global CSS with immediate effect
+        this.refreshGlobalCSS();
     }
 
     applySettings() {
         this.applyColorPalette(this.settings.colorPalette);
 
-        // Apply typography settings
+        // Apply typography settings with immediate effect
         const root = document.documentElement;
         root.style.setProperty('--font-heading', this.settings.fontHeading);
         root.style.setProperty('--font-body', this.settings.fontBody);
         root.style.setProperty('--font-size-base', this.settings.fontSize === 'small' ? '14px' : this.settings.fontSize === 'large' ? '18px' : '16px');
 
-        // Apply layout settings
-        document.body.classList.remove('header-transparent', 'header-solid');
+        // Apply layout settings with body classes for immediate effect
+        document.body.classList.remove('header-transparent', 'header-solid', 'buttons-sharp', 'buttons-rounded', 'animations-disabled');
         document.body.classList.add(`header-${this.settings.headerStyle}`);
+        document.body.classList.add(`buttons-${this.settings.buttonStyle}`);
 
-        document.body.classList.toggle('buttons-sharp', this.settings.buttonStyle === 'sharp');
-        document.body.classList.toggle('animations-disabled', !this.settings.animations);
+        if (!this.settings.animations) {
+            document.body.classList.add('animations-disabled');
+        }
+
+        // Apply immediate styling to key elements
+        this.applyImmediateStyling();
+    }
+
+    /**
+     * Apply immediate styling to key theme elements
+     */
+    applyImmediateStyling() {
+        // Apply to common elements immediately
+        const elementsToStyle = [
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            '.site-title', '.page-title', '.entry-title',
+            'button', '.button', '.btn',
+            'a', '.nav-link'
+        ];
+
+        elementsToStyle.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                // Force style refresh
+                el.style.color = '';
+                el.style.fontFamily = '';
+                el.style.backgroundColor = '';
+
+                // Re-apply styles
+                const computedStyle = window.getComputedStyle(el);
+                if (selector.startsWith('h') || selector.includes('title')) {
+                    el.style.fontFamily = `var(--font-heading), serif`;
+                    el.style.color = `var(--color-primary)`;
+                } else if (selector.includes('button') || selector.includes('btn')) {
+                    el.style.backgroundColor = `var(--color-primary)`;
+                    el.style.color = `var(--color-light)`;
+                    el.style.borderRadius = this.settings.buttonStyle === 'sharp' ? '2px' : '6px';
+                } else if (selector === 'a' || selector.includes('nav')) {
+                    el.style.color = `var(--color-primary)`;
+                }
+            });
+        });
+
+        // Update page background
+        document.body.style.backgroundColor = `var(--color-light)`;
+        document.body.style.color = `var(--color-dark)`;
+        document.body.style.fontFamily = `var(--font-body), sans-serif`;
+    }
+
+    /**
+     * Convert hex color to RGB for CSS custom properties
+     */
+    hexToRgb(hex) {
+        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ?
+            parseInt(result[1], 16) + ', ' + parseInt(result[2], 16) + ', ' + parseInt(result[3], 16)
+            : '0, 0, 0';
+    }
+
+    /**
+     * Force refresh of global CSS by triggering a server-side update
+     */
+    refreshGlobalCSS() {
+        // Create a style element with updated CSS custom properties
+        const existingStyle = document.getElementById('visual-customizer-live-css');
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+
+        const palette = visualCustomizerData.colorPalettes[this.settings.colorPalette];
+        if (!palette) return;
+
+        const liveCSS = document.createElement('style');
+        liveCSS.id = 'visual-customizer-live-css';
+        liveCSS.innerHTML = `
+            :root {
+                --color-primary: ${palette.primary} !important;
+                --color-secondary: ${palette.secondary} !important;
+                --color-accent: ${palette.accent} !important;
+                --color-light: ${palette.light} !important;
+                --color-dark: ${palette.dark} !important;
+                --color-primary-rgb: ${this.hexToRgb(palette.primary)} !important;
+                --color-secondary-rgb: ${this.hexToRgb(palette.secondary)} !important;
+                --font-heading: '${this.settings.fontHeading}' !important;
+                --font-body: '${this.settings.fontBody}' !important;
+                --font-size-base: ${this.settings.fontSize === 'small' ? '14px' : this.settings.fontSize === 'large' ? '18px' : '16px'} !important;
+            }
+
+            /* Immediate application styles */
+            body {
+                background-color: var(--color-light) !important;
+                color: var(--color-dark) !important;
+                font-family: var(--font-body), sans-serif !important;
+                font-size: var(--font-size-base) !important;
+            }
+
+            h1, h2, h3, h4, h5, h6,
+            .page-title, .post-title, .section-title, .widget-title,
+            .entry-title, .hero-title, .treatment-title,
+            .site-title, .professional-header h1, .professional-header h2 {
+                font-family: var(--font-heading), serif !important;
+                color: var(--color-primary) !important;
+            }
+
+            button, .button, .btn, input[type="submit"], input[type="button"],
+            .wp-block-button__link, .elementor-button,
+            .btn-primary, .btn-secondary, .btn-consultation,
+            .book-appointment, .contact-button, .cta-button {
+                background-color: var(--color-primary) !important;
+                color: var(--color-light) !important;
+                border-radius: ${this.settings.buttonStyle === 'sharp' ? '2px' : '6px'} !important;
+                font-family: var(--font-body), sans-serif !important;
+            }
+
+            button:hover, .button:hover, .btn:hover, input[type="submit"]:hover,
+            .btn-primary:hover, .btn-secondary:hover, .btn-consultation:hover {
+                background-color: var(--color-secondary) !important;
+            }
+
+            a, .nav-link, .menu-item a, .navigation a {
+                color: var(--color-primary) !important;
+            }
+
+            a:hover, .nav-link:hover, .menu-item a:hover, .navigation a:hover {
+                color: var(--color-secondary) !important;
+            }
+
+            /* Header styling based on settings */
+            ${this.settings.headerStyle === 'transparent' ? `
+                .site-header, header, .professional-header {
+                    background: rgba(${this.hexToRgb(palette.primary)}, 0.9) !important;
+                    backdrop-filter: blur(10px) !important;
+                    color: var(--color-light) !important;
+                }
+                .site-header a, header a, .professional-header a {
+                    color: var(--color-light) !important;
+                }
+            ` : `
+                .site-header, header, .professional-header {
+                    background: var(--color-light) !important;
+                    color: var(--color-dark) !important;
+                    border-bottom: 1px solid rgba(${this.hexToRgb(palette.primary)}, 0.1) !important;
+                }
+            `}
+
+            /* Animation controls */
+            ${!this.settings.animations ? `
+                * {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            ` : ''}
+        `;
+
+        document.head.appendChild(liveCSS);
     }
 
     async applyConfigurationGlobally() {
