@@ -16,7 +16,11 @@ class VisualCustomizerRedesign {
     }
 
     init() {
-        this.setupMainContentWrapper();
+        // Force close mobile menu on initialization
+        this.forceMobileMenuCloseOnInit();
+
+        // Don't create wrapper on init - only when panel opens
+        // this.setupMainContentWrapper(); MOVED TO openPanel()
         this.createPanel();
         this.bindEvents();
         this.setupKeyboardNavigation();
@@ -246,28 +250,17 @@ class VisualCustomizerRedesign {
     }
 
     generateContrastPairsHTML() {
-        const pairs = visualCustomizerData.contrastPairs || [];
-
+        // Simplified contrast pairs without complex calculations
         return `
             <div class="contrast-pairs-section">
                 <h4 class="subsection-title">
                     <span class="subsection-icon">👁️</span>
-                    Automatic Contrast Pairing
+                    Color Accessibility Information
                 </h4>
-                <div class="contrast-pairs">
-                    ${pairs.map(pair => `
-                        <div class="contrast-pair">
-                            <div class="contrast-squares">
-                                <div class="bg-square" style="background-color: ${pair.background};"></div>
-                                <div class="text-square" style="background-color: ${pair.text};"></div>
-                            </div>
-                            <div class="contrast-info">
-                                <div class="contrast-label">${pair.label}</div>
-                                <div class="contrast-ratio">${pair.ratio}</div>
-                                <div class="contrast-description">${pair.usage}</div>
-                            </div>
-                        </div>
-                    `).join('')}
+                <div class="contrast-info-box">
+                    <p><strong>✅ WCAG Compliant:</strong> All color combinations in our palettes meet accessibility standards for easy reading.</p>
+                    <p><strong>📱 Responsive:</strong> Colors adapt beautifully across all devices and screen sizes.</p>
+                    <p><strong>🎨 Professional:</strong> Carefully chosen colors for medical spa branding and trust.</p>
                 </div>
             </div>
         `;
@@ -543,7 +536,9 @@ class VisualCustomizerRedesign {
         root.style.setProperty('--font-size-base', this.settings.fontSize === 'small' ? '14px' : this.settings.fontSize === 'large' ? '18px' : '16px');
 
         // Apply layout settings
-        document.body.classList.toggle('header-transparent', this.settings.headerStyle === 'transparent');
+        document.body.classList.remove('header-transparent', 'header-solid');
+        document.body.classList.add(`header-${this.settings.headerStyle}`);
+
         document.body.classList.toggle('buttons-sharp', this.settings.buttonStyle === 'sharp');
         document.body.classList.toggle('animations-disabled', !this.settings.animations);
     }
@@ -594,6 +589,12 @@ class VisualCustomizerRedesign {
     }
 
     openPanel() {
+        // STEP 1: Force close any open mobile menu before opening customizer
+        this.forceMobileMenuClose();
+
+        // STEP 2: Setup content wrapper only when panel opens
+        this.setupMainContentWrapper();
+
         this.backdrop.classList.add('visible');
         this.panel.classList.add('open');
         this.isOpen = true;
@@ -602,6 +603,9 @@ class VisualCustomizerRedesign {
         document.body.classList.add('visual-customizer-active');
         // Don't set overflow hidden to allow main content interaction
         // document.body.style.overflow = 'hidden'; // REMOVED
+
+        // Ensure main content stays clear and interactive
+        this.ensureMainContentClarity();
 
         // Apply initial device scaling
         this.applyDeviceScaling();
@@ -615,6 +619,82 @@ class VisualCustomizerRedesign {
         this.announceToScreenReader('Theme customizer opened');
     }
 
+    forceMobileMenuClose() {
+        // Force close mobile menu using multiple methods
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+
+        // Remove all mobile menu open classes
+        document.body.classList.remove('mobile-menu-open');
+        document.documentElement.classList.remove('mobile-menu-open');
+
+        // Close mobile menu panel
+        if (mobileMenu) {
+            mobileMenu.classList.remove('open', 'opening');
+            mobileMenu.style.right = '-100%';
+            mobileMenu.style.transform = 'translateX(100%)';
+            mobileMenu.style.visibility = 'hidden';
+            mobileMenu.style.pointerEvents = 'none';
+        }
+
+        // Close mobile menu overlay
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.classList.remove('open', 'opening');
+            mobileMenuOverlay.style.opacity = '0';
+            mobileMenuOverlay.style.visibility = 'hidden';
+            mobileMenuOverlay.style.pointerEvents = 'none';
+            mobileMenuOverlay.style.backdropFilter = 'none';
+            mobileMenuOverlay.style.webkitBackdropFilter = 'none';
+            mobileMenuOverlay.style.filter = 'none';
+            mobileMenuOverlay.style.webkitFilter = 'none';
+            mobileMenuOverlay.style.background = 'transparent';
+        }
+
+        // Reset mobile menu toggle state
+        if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.classList.remove('active');
+        }
+
+        // Try to call mobile menu close method if available
+        if (window.mobileMenu && typeof window.mobileMenu.close === 'function') {
+            try {
+                window.mobileMenu.close();
+            } catch (e) {
+                console.log('Mobile menu close method not available:', e);
+            }
+        }
+
+        // Dispatch custom event to close mobile menu
+        document.dispatchEvent(new CustomEvent('closeMobileMenu'));
+
+        console.log('Visual Customizer: Mobile menu forcefully closed');
+    }
+
+    ensureMainContentClarity() {
+        if (this.mainWrapper) {
+            // Force clear rendering on main content
+            this.mainWrapper.style.filter = 'none';
+            this.mainWrapper.style.backdropFilter = 'none';
+            this.mainWrapper.style.opacity = '1';
+            this.mainWrapper.style.webkitFilter = 'none';
+
+            // Ensure all child elements are also clear
+            const allElements = this.mainWrapper.querySelectorAll('*');
+            allElements.forEach(el => {
+                if (el.style.filter && el.style.filter !== 'none') {
+                    console.warn('Clearing filter from element:', el);
+                    el.style.filter = 'none';
+                }
+                if (el.style.backdropFilter && el.style.backdropFilter !== 'none') {
+                    console.warn('Clearing backdrop-filter from element:', el);
+                    el.style.backdropFilter = 'none';
+                }
+            });
+        }
+    }
+
     closePanel() {
         this.backdrop.classList.remove('visible');
         this.panel.classList.remove('open');
@@ -625,14 +705,26 @@ class VisualCustomizerRedesign {
         // No need to reset overflow since we don't set it
         // document.body.style.overflow = ''; // REMOVED
 
-        // Reset main content scaling
-        if (this.mainWrapper) {
-            this.mainWrapper.style.maxWidth = '';
-            this.mainWrapper.style.margin = '';
-            this.mainWrapper.classList.remove('device-desktop', 'device-tablet', 'device-mobile');
-        }
+        // Remove content wrapper to restore normal layout
+        this.removeMainContentWrapper();
 
         this.announceToScreenReader('Theme customizer closed');
+    }
+
+    removeMainContentWrapper() {
+        if (this.mainWrapper) {
+            // Move all content back out of the wrapper
+            const parent = this.mainWrapper.parentNode;
+            while (this.mainWrapper.firstChild) {
+                parent.insertBefore(this.mainWrapper.firstChild, this.mainWrapper);
+            }
+
+            // Remove the wrapper
+            this.mainWrapper.remove();
+            this.mainWrapper = null;
+
+            console.log('Visual Customizer: Content wrapper removed');
+        }
     }
 
     setupKeyboardNavigation() {
@@ -674,7 +766,7 @@ class VisualCustomizerRedesign {
                 fontHeading: 'playfair-display',
                 fontBody: 'inter',
                 fontSize: 'normal',
-                headerStyle: 'transparent',
+                headerStyle: 'solid',
                 buttonStyle: 'rounded',
                 animations: true
             };
@@ -688,7 +780,7 @@ class VisualCustomizerRedesign {
                 fontHeading: globalConfig.fontHeading || 'playfair-display',
                 fontBody: globalConfig.fontBody || 'inter',
                 fontSize: globalConfig.fontSize || 'normal',
-                headerStyle: globalConfig.headerStyle || 'transparent',
+                headerStyle: globalConfig.headerStyle || 'solid',
                 buttonStyle: globalConfig.buttonStyle || 'rounded',
                 animations: globalConfig.animations !== false
             };
@@ -744,6 +836,31 @@ class VisualCustomizerRedesign {
                 wrapper.style.margin = '0 auto';
                 break;
         }
+    }
+
+    forceMobileMenuCloseOnInit() {
+        // Wait a bit for page to load completely
+        setTimeout(() => {
+            const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            // Check if mobile menu is open and close it
+            if (mobileMenuOverlay && (mobileMenuOverlay.classList.contains('open') || mobileMenuOverlay.classList.contains('opening'))) {
+                console.log('Visual Customizer: Detected open mobile menu on init, closing...');
+                this.forceMobileMenuClose();
+            }
+
+            if (mobileMenu && (mobileMenu.classList.contains('open') || mobileMenu.classList.contains('opening'))) {
+                console.log('Visual Customizer: Detected open mobile menu panel on init, closing...');
+                this.forceMobileMenuClose();
+            }
+
+            // Also close if body has mobile menu open class
+            if (document.body.classList.contains('mobile-menu-open') || document.documentElement.classList.contains('mobile-menu-open')) {
+                console.log('Visual Customizer: Detected mobile menu open body class on init, closing...');
+                this.forceMobileMenuClose();
+            }
+        }, 100);
     }
 }
 

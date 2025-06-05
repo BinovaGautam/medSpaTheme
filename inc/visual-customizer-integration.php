@@ -289,27 +289,17 @@ function preetidreams_disable_customizer_preview() {
 add_action('init', 'preetidreams_disable_customizer_preview');
 
 /**
- * Add Visual Customizer Body Classes
+ * Add Body Classes for Visual Customizer (Only when panel is actually open)
  */
 function preetidreams_visual_customizer_body_classes($classes) {
-    $classes[] = 'has-visual-customizer';
+    // Only add class if explicitly requested (when panel is open)
+    // This prevents automatic layout changes when customizer is just available
+    // The class will be added via JavaScript when panel actually opens
 
-    // Add class to indicate customizer availability
-    if (!is_admin()) {
-        $classes[] = 'visual-customizer-enabled';
-    }
-
-    // Load global configuration and apply body classes
-    $global_config = preetidreams_get_visual_customizer_global_config();
-
-    // Add configuration-based classes
-    $classes[] = 'palette-' . $global_config['colorPalette'];
-    $classes[] = 'header-' . $global_config['headerStyle'];
-    $classes[] = 'buttons-' . $global_config['buttonStyle'];
-
-    if (!$global_config['animations']) {
-        $classes[] = 'animations-disabled';
-    }
+    // REMOVED: Automatic class addition that caused layout issues
+    // if (current_user_can('manage_options') && !is_admin()) {
+    //     $classes[] = 'has-visual-customizer';
+    // }
 
     return $classes;
 }
@@ -372,7 +362,7 @@ function preetidreams_get_visual_customizer_defaults() {
         'fontHeading' => 'playfair-display',
         'fontBody' => 'inter',
         'fontSize' => 'normal',
-        'headerStyle' => 'transparent',
+        'headerStyle' => 'solid',
         'buttonStyle' => 'rounded',
         'animations' => true
     ];
@@ -392,45 +382,20 @@ function preetidreams_enqueue_visual_customizer() {
         return;
     }
 
-    // Enqueue Contrast Calculator
-    wp_enqueue_script(
-        'contrast-calculator',
-        get_template_directory_uri() . '/assets/js/contrast-calculator.js',
-        [],
-        PREETIDREAMS_VERSION,
-        true
-    );
-
-    // Enqueue Visual Customizer Redesign JavaScript
+    // Enqueue Visual Customizer Redesign JavaScript (standalone, no dependencies)
     wp_enqueue_script(
         'visual-customizer-redesign',
         get_template_directory_uri() . '/assets/js/visual-customizer-redesign.js',
-        ['contrast-calculator'],
+        [], // No dependencies - standalone implementation
         PREETIDREAMS_VERSION,
         true
     );
 
-    // Enqueue Visual Customizer Redesign CSS
+    // Enqueue Visual Customizer Redesign CSS ONLY
     wp_enqueue_style(
         'visual-customizer-redesign',
         get_template_directory_uri() . '/assets/css/visual-customizer-redesign.css',
         [],
-        PREETIDREAMS_VERSION
-    );
-
-    // Enqueue Enhancement CSS
-    wp_enqueue_style(
-        'customizer-enhancements',
-        get_template_directory_uri() . '/assets/css/customizer-enhancements.css',
-        ['visual-customizer-redesign'],
-        PREETIDREAMS_VERSION
-    );
-
-    // Enqueue Accessibility CSS
-    wp_enqueue_style(
-        'customizer-accessibility',
-        get_template_directory_uri() . '/assets/css/customizer-accessibility.css',
-        ['customizer-enhancements'],
         PREETIDREAMS_VERSION
     );
 
@@ -539,31 +504,6 @@ function preetidreams_enqueue_visual_customizer() {
         ]
     ];
 
-    // Contrast pairs for automatic pairing
-    $contrast_pairs = [
-        [
-            'background' => '#FDFCFA',
-            'text' => '#2C3E50',
-            'ratio' => '11.2:1',
-            'label' => 'Easy Reading',
-            'usage' => 'Perfect for main content areas and long-form text'
-        ],
-        [
-            'background' => '#1B365D',
-            'text' => '#FDFCFA',
-            'ratio' => '15.3:1',
-            'label' => 'High Contrast',
-            'usage' => 'Ideal for headers, navigation, and emphasis sections'
-        ],
-        [
-            'background' => '#87A96B',
-            'text' => '#FFFFFF',
-            'ratio' => '8.7:1',
-            'label' => 'Professional',
-            'usage' => 'Great for buttons, calls-to-action, and branding elements'
-        ]
-    ];
-
     // Localize script data for Redesigned Customizer
     wp_localize_script('visual-customizer-redesign', 'visualCustomizerData', [
         'ajaxUrl' => admin_url('admin-ajax.php'),
@@ -572,7 +512,6 @@ function preetidreams_enqueue_visual_customizer() {
         'colorPalettes' => $color_palettes,
         'fontOptions' => $font_options,
         'tooltips' => $tooltips,
-        'contrastPairs' => $contrast_pairs,
         'themeVersion' => PREETIDREAMS_VERSION,
         'implementation' => 'redesign', // Indicate this is the redesigned version
         'i18n' => [
@@ -621,7 +560,7 @@ function preetidreams_save_visual_customizer_global_config() {
         'fontHeading' => sanitize_text_field($config['fontHeading'] ?? 'playfair-display'),
         'fontBody' => sanitize_text_field($config['fontBody'] ?? 'inter'),
         'fontSize' => sanitize_text_field($config['fontSize'] ?? 'normal'),
-        'headerStyle' => sanitize_text_field($config['headerStyle'] ?? 'transparent'),
+        'headerStyle' => sanitize_text_field($config['headerStyle'] ?? 'solid'),
         'buttonStyle' => sanitize_text_field($config['buttonStyle'] ?? 'rounded'),
         'animations' => wp_validate_boolean($config['animations'] ?? true)
     ];
@@ -653,7 +592,7 @@ function preetidreams_get_visual_customizer_global_config() {
         'fontHeading' => 'playfair-display',
         'fontBody' => 'inter',
         'fontSize' => 'normal',
-        'headerStyle' => 'transparent',
+        'headerStyle' => 'solid',
         'buttonStyle' => 'rounded',
         'animations' => true
     ];
@@ -861,9 +800,42 @@ function preetidreams_add_visual_customizer_global_css() {
     /* Apply global styles based on configuration */
     <?php if ($global_config['headerStyle'] === 'transparent'): ?>
     body.header-transparent .site-header,
-    body.header-transparent header {
+    body.header-transparent header,
+    body.header-transparent .professional-header {
         background: rgba(<?php echo esc_html($selected_palette['primary']); ?>, 0.9);
         backdrop-filter: blur(10px);
+    }
+    <?php else: ?>
+    body.header-solid .site-header,
+    body.header-solid header,
+    body.header-solid .professional-header {
+        background: var(--color-light) !important;
+        border-bottom: 1px solid rgba(<?php echo esc_html($selected_palette['primary']); ?>, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.header-solid .site-header,
+    body.header-solid .professional-header {
+        color: var(--color-dark) !important;
+    }
+
+    body.header-solid .site-title,
+    body.header-solid .site-title a,
+    body.header-solid .nav-menu a {
+        color: var(--color-primary) !important;
+    }
+
+    body.header-solid .nav-menu a:hover {
+        color: var(--color-secondary) !important;
+    }
+
+    body.header-solid .btn-consultation {
+        background: var(--color-primary) !important;
+        color: white !important;
+    }
+
+    body.header-solid .btn-consultation:hover {
+        background: var(--color-secondary) !important;
     }
     <?php endif; ?>
 

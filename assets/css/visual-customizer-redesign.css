@@ -24,17 +24,110 @@ body.visual-customizer-active {
     z-index: 1;
     width: 100%;
     min-height: 100vh;
+    /* Ensure crystal clear rendering */
+    filter: none !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+    -webkit-filter: none !important;
+}
+
+/* Ensure main content stays clear and interactive when panel is open */
+body.visual-customizer-active .customizer-main-content * {
+    filter: none !important;
+    backdrop-filter: none !important;
+    pointer-events: auto;
+}
+
+/* Mobile menu overrides only apply when visual customizer panel is active */
+body.visual-customizer-active .mobile-menu-overlay {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+body.visual-customizer-active .mobile-menu {
+    right: -100% !important;
+    transform: translateX(100%) !important;
+}
+
+/* Prevent body scroll lock from mobile menu when customizer is active */
+body.visual-customizer-active.mobile-menu-open {
+    overflow: visible !important;
+    position: relative !important;
+}
+
+/* ============================================================================
+   MOBILE MENU CONFLICT RESOLUTION (AGGRESSIVE OVERRIDES)
+   Note: This section replaces and supersedes any previous mobile menu overrides
+   ============================================================================ */
+
+/* Force close mobile menu when visual customizer is active - HIGHEST PRIORITY */
+body.visual-customizer-active .mobile-menu-overlay,
+body.visual-customizer-active.mobile-menu-open .mobile-menu-overlay,
+html.mobile-menu-open body.visual-customizer-active .mobile-menu-overlay {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    z-index: -1 !important;
+}
+
+/* Force close mobile menu panel when visual customizer is active */
+body.visual-customizer-active .mobile-menu,
+body.visual-customizer-active.mobile-menu-open .mobile-menu,
+html.mobile-menu-open body.visual-customizer-active .mobile-menu {
+    right: -100% !important;
+    transform: translateX(100%) !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+}
+
+/* Prevent body scroll lock from mobile menu when customizer is active */
+body.visual-customizer-active,
+body.visual-customizer-active.mobile-menu-open,
+html.mobile-menu-open body.visual-customizer-active {
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+    width: auto !important;
+}
+
+/* Ensure main content is never blurred when visual customizer is active */
+body.visual-customizer-active *:not(.elementor-customizer-panel):not(.customizer-backdrop):not(.elementor-customizer-panel *):not(.customizer-backdrop *) {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Extra protection against any mobile menu blur effects */
+body.visual-customizer-active .mobile-menu-overlay.open,
+body.visual-customizer-active .mobile-menu-overlay.opening,
+body.visual-customizer-active .mobile-menu.open,
+body.visual-customizer-active .mobile-menu.opening {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    background: transparent !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 /* When panel is open, scale and move content */
 body.visual-customizer-active .customizer-main-content {
     width: calc(100vw - 320px);
     transform: scale(0.83) translateX(0); /* Default scale ratio */
-}
-
-/* Scale content proportionally to maintain aspect ratio */
-body.visual-customizer-active .customizer-main-content {
-    transform: scale(0.83) translateX(0); /* 1000px/1200px = 0.83 */
+    /* Ensure no blur or filter effects */
+    filter: none;
+    backdrop-filter: none;
+    opacity: 1;
 }
 
 /* ============================================================================
@@ -382,7 +475,7 @@ body.admin-bar .elementor-customizer-panel {
 }
 
 /* ============================================================================
-   CONTRAST PAIRS SECTION
+   CONTRAST INFO SECTION (Simplified)
    ============================================================================ */
 
 .contrast-pairs-section {
@@ -403,55 +496,22 @@ body.admin-bar .elementor-customizer-panel {
     font-size: 14px;
 }
 
-.contrast-pairs {
-    display: grid;
-    gap: 8px;
-}
-
-.contrast-pair {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px;
-    background: #f8f9fa;
+.contrast-info-box {
+    background: #f0f8ff;
+    border-left: 4px solid #87A96B;
     border-radius: 6px;
-    border: 1px solid #e9ecef;
+    padding: 12px;
 }
 
-.contrast-squares {
-    display: flex;
-    gap: 2px;
-    flex-shrink: 0;
-}
-
-.bg-square,
-.text-square {
-    width: 16px;
-    height: 16px;
-    border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.contrast-info {
-    flex: 1;
-    font-size: 11px;
-}
-
-.contrast-label {
-    font-weight: 600;
+.contrast-info-box p {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    line-height: 1.4;
     color: #2c3e50;
-    margin-bottom: 2px;
 }
 
-.contrast-ratio {
-    font-weight: 600;
-    color: #87A96B;
-    margin-bottom: 2px;
-}
-
-.contrast-description {
-    color: #6c757d;
-    font-size: 10px;
+.contrast-info-box p:last-child {
+    margin-bottom: 0;
 }
 
 /* ============================================================================

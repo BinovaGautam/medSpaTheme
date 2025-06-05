@@ -3129,3 +3129,45 @@ add_action('wp_enqueue_scripts', 'medspa_theme_styles');
 
 // Include the Visual Customizer Integration
 require_once get_template_directory() . '/inc/visual-customizer-integration.php';
+
+/**
+ * ============================================================================
+ * ESSENTIAL THEME SETUP FUNCTION (RESTORED)
+ * ============================================================================
+ */
+
+/**
+ * Theme setup function
+ */
+function medspa_theme_setup() {
+    // Add theme support for title tag
+    add_theme_support('title-tag');
+
+    // Add theme support for custom logo
+    add_theme_support('custom-logo');
+
+    // Add theme support for post thumbnails
+    add_theme_support('post-thumbnails');
+
+    // Add theme support for HTML5 markup
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+    ));
+
+    // Add theme support for custom background
+    add_theme_support('custom-background');
+
+    // Add theme support for selective refresh for widgets
+    add_theme_support('customize-selective-refresh-widgets');
+
+    // Register navigation menus
+    register_nav_menus(array(
+        'primary' => esc_html__('Primary Menu', 'preetidreams'),
+        'footer' => esc_html__('Footer Menu', 'preetidreams'),
+    ));
+}
+add_action('after_setup_theme', 'medspa_theme_setup');
