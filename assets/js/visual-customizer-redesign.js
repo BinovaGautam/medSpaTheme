@@ -29,9 +29,17 @@ class VisualCustomizerRedesign {
     }
 
     setupMainContentWrapper() {
-        // Skip if wrapper already exists
-        if (document.querySelector('.customizer-main-content')) {
-            this.mainWrapper = document.querySelector('.customizer-main-content');
+        // Skip if wrapper already exists for THIS instance
+        if (this.mainWrapper && document.body.contains(this.mainWrapper)) {
+            return;
+        }
+
+        // Use a more specific class name to avoid conflicts
+        const wrapperClass = 'visual-customizer-main-content-wrapper';
+
+        // Check if any wrapper from this instance exists
+        if (document.querySelector(`.${wrapperClass}`)) {
+            this.mainWrapper = document.querySelector(`.${wrapperClass}`);
             return;
         }
 
@@ -39,16 +47,17 @@ class VisualCustomizerRedesign {
         const body = document.body;
         const adminBar = document.getElementById('wpadminbar');
 
-        // Create main content wrapper
+        // Create main content wrapper with specific class
         const mainWrapper = document.createElement('div');
-        mainWrapper.className = 'customizer-main-content';
+        mainWrapper.className = `${wrapperClass} customizer-main-content`;
 
         // Move all content except admin bar into wrapper
         const elementsToWrap = Array.from(body.children).filter(child =>
             child !== adminBar &&
             !child.classList.contains('customizer-backdrop') &&
             !child.classList.contains('elementor-customizer-panel') &&
-            !child.classList.contains('customizer-main-content') && // Avoid wrapping existing wrapper
+            !child.classList.contains(wrapperClass) && // Avoid wrapping existing wrapper
+            !child.classList.contains('customizer-main-content') && // Avoid wrapping any existing wrapper
             child.tagName !== 'SCRIPT' && // Skip script tags
             child.tagName !== 'STYLE' // Skip style tags
         );
@@ -71,7 +80,7 @@ class VisualCustomizerRedesign {
         }
 
         this.mainWrapper = mainWrapper;
-        console.log('Visual Customizer: Content wrapper created successfully');
+        console.log('Visual Customizer: Content wrapper created successfully with class:', wrapperClass);
     }
 
     createPanel() {

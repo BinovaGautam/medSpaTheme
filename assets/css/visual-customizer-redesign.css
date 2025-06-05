@@ -17,7 +17,9 @@ body.visual-customizer-active {
 }
 
 /* Main content container that gets scaled - ONLY when customizer is active */
-body.visual-customizer-active .customizer-main-content {
+body.visual-customizer-active .visual-customizer-main-content-wrapper,
+body.visual-customizer-active .visual-customizer-main-content-wrapper,
+    body.visual-customizer-active .customizer-main-content {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: top left;
     position: relative;
@@ -32,7 +34,9 @@ body.visual-customizer-active .customizer-main-content {
 }
 
 /* Ensure main content stays clear and interactive when panel is open */
-body.visual-customizer-active .customizer-main-content * {
+body.visual-customizer-active .visual-customizer-main-content-wrapper *,
+body.visual-customizer-active .visual-customizer-main-content-wrapper,
+    body.visual-customizer-active .customizer-main-content * {
     filter: none !important;
     backdrop-filter: none !important;
     pointer-events: auto;
@@ -121,7 +125,9 @@ body.visual-customizer-active .mobile-menu.opening {
 }
 
 /* When panel is open, scale and move content */
-body.visual-customizer-active .customizer-main-content {
+body.visual-customizer-active .visual-customizer-main-content-wrapper,
+body.visual-customizer-active .visual-customizer-main-content-wrapper,
+    body.visual-customizer-active .customizer-main-content {
     width: calc(100vw - 320px);
     transform: scale(0.83) translateX(0); /* Default scale ratio */
     /* Ensure no blur or filter effects */
@@ -800,18 +806,21 @@ body.admin-bar .elementor-customizer-panel {
 
 /* Desktop scaling ratios */
 @media screen and (min-width: 1400px) {
+    body.visual-customizer-active .visual-customizer-main-content-wrapper,
     body.visual-customizer-active .customizer-main-content {
         transform: scale(0.77); /* (1400-320)/1400 */
     }
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1399px) {
+    body.visual-customizer-active .visual-customizer-main-content-wrapper,
     body.visual-customizer-active .customizer-main-content {
         transform: scale(0.73); /* (1200-320)/1200 */
     }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1199px) {
+    body.visual-customizer-active .visual-customizer-main-content-wrapper,
     body.visual-customizer-active .customizer-main-content {
         transform: scale(0.70); /* (1000-320)/1000 */
     }
@@ -823,6 +832,7 @@ body.admin-bar .elementor-customizer-panel {
         width: 280px;
     }
 
+    body.visual-customizer-active .visual-customizer-main-content-wrapper,
     body.visual-customizer-active .customizer-main-content {
         transform: scale(0.72); /* (1024-280)/1024 */
     }
@@ -858,6 +868,7 @@ body.admin-bar .elementor-customizer-panel {
         transform: translateY(0);
     }
 
+    body.visual-customizer-active .visual-customizer-main-content-wrapper,
     body.visual-customizer-active .customizer-main-content {
         transform: scale(1); /* No scaling on mobile */
     }

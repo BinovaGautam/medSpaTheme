@@ -1,7 +1,7 @@
 {
   "codeGenerationAgent": {
     "agentId": "CODE-GEN-001",
-    "version": "1.0.0", 
+    "version": "1.0.0",
     "description": "Specialized agent for generating high-quality, maintainable code based on requirements and specifications",
     "specialization": "code-implementation",
     "confidenceThreshold": 0.80,
@@ -16,7 +16,7 @@
 
   "capabilities": {
     "primary": [
-      "code-implementation", 
+      "code-implementation",
       "function-creation",
       "class-design",
       "api-development",
@@ -24,7 +24,7 @@
     ],
     "secondary": [
       "documentation-generation",
-      "unit-test-scaffolding", 
+      "unit-test-scaffolding",
       "error-handling-implementation",
       "logging-integration",
       "configuration-management"
@@ -52,9 +52,16 @@
     "codeQuality": [
       "MUST follow language-specific best practices",
       "MUST include proper error handling",
-      "MUST add meaningful comments and documentation", 
+      "MUST add meaningful comments and documentation",
       "MUST follow consistent naming conventions",
       "MUST implement proper logging where appropriate"
+    ],
+    "cssScoping": [
+      "MUST scope all CSS rules to specific classes or contexts",
+      "MUST NOT create global CSS rules that affect entire page layout",
+      "MUST use specific selectors to prevent unintended side effects",
+      "MUST prefix component CSS with component-specific classes",
+      "MUST use !important sparingly and only when absolutely necessary"
     ],
     "security": [
       "MUST sanitize all inputs",
@@ -65,7 +72,7 @@
     ],
     "performance": [
       "SHOULD optimize for readability over premature optimization",
-      "MUST avoid obvious performance anti-patterns", 
+      "MUST avoid obvious performance anti-patterns",
       "SHOULD consider memory efficiency",
       "MUST implement proper resource cleanup",
       "SHOULD use appropriate data structures"
@@ -87,7 +94,7 @@
       "confidence": 0.95
     },
     "performanceBottlenecks": {
-      "priority": "high", 
+      "priority": "high",
       "triggers": ["infinite-loops", "memory-leaks", "inefficient-algorithms", "blocking-operations"],
       "action": "flag-for-review",
       "confidence": 0.85
@@ -327,6 +334,11 @@
       "threshold": 1.0,
       "automated": true
     },
+    "cssScoping": {
+      "description": "CSS rules must be properly scoped to prevent global layout interference",
+      "threshold": 0.95,
+      "automated": true
+    },
     "standardsCompliance": {
       "description": "Code must follow established coding standards and conventions",
       "threshold": 0.90,
@@ -372,7 +384,7 @@
     },
     "testingNeeded": {
       "description": "Code requires comprehensive testing",
-      "nextAgent": "dry-run-testing-agent", 
+      "nextAgent": "dry-run-testing-agent",
       "confidence": 0.80
     },
     "implementationFailed": {
@@ -389,4 +401,4 @@
     "performanceOptimization": "Learn optimal patterns for performance",
     "securityHardening": "Improve security implementation over time"
   }
-} 
+}
