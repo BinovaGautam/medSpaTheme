@@ -16,8 +16,8 @@ body.visual-customizer-active {
     /* overflow: hidden; REMOVED */
 }
 
-/* Main content container that gets scaled */
-.customizer-main-content {
+/* Main content container that gets scaled - ONLY when customizer is active */
+body.visual-customizer-active .customizer-main-content {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: top left;
     position: relative;
