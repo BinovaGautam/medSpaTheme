@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Loading Verification Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background: #f8fafc;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .pass { background: #f0fdf4; color: #059669; border: 1px solid #bbf7d0; }
+        .fail { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .loading { background: #fffbeb; color: #d97706; border: 1px solid #fed7aa; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Script Loading Verification</h1>
+    <p>Verifying that all JavaScript files load correctly from devtools directory</p>
+
+    <div id="results"></div>
+
+    <script src="../assets/js/semantic-color-system.js"></script>
+    <script src="../assets/js/color-system-manager.js"></script>
+    <script src="../assets/js/color-palette-interface.js"></script>
+    <script>
+        const results = document.getElementById('results');
+
+        function addResult(name, status, message) {
+            const div = document.createElement('div');
+            div.className = `test-result ${status}`;
+            div.innerHTML = `<strong>${name}:</strong> ${message}`;
+            results.appendChild(div);
+        }
+
+        // Test script loading
+        addResult('Script Loading', 'loading', 'Testing script availability...');
+
+        setTimeout(() => {
+            // Test SemanticColorSystem
+            if (typeof SemanticColorSystem === 'function') {
+                addResult('SemanticColorSystem', 'pass', 'Successfully loaded and available');
+            } else {
+                addResult('SemanticColorSystem', 'fail', 'Not loaded or not available');
+            }
+
+            // Test ColorSystemManager
+            if (typeof ColorSystemManager === 'function') {
+                addResult('ColorSystemManager', 'pass', 'Successfully loaded and available');
+            } else {
+                addResult('ColorSystemManager', 'fail', 'Not loaded or not available');
+            }
+
+            // Test ColorPaletteInterface
+            if (typeof ColorPaletteInterface === 'function') {
+                addResult('ColorPaletteInterface', 'pass', 'Successfully loaded and available');
+            } else {
+                addResult('ColorPaletteInterface', 'fail', 'Not loaded or not available');
+            }
+
+            // Test instantiation
+            try {
+                const semanticSystem = new SemanticColorSystem();
+                addResult('SemanticColorSystem Instantiation', 'pass', 'Can be instantiated successfully');
+            } catch (error) {
+                addResult('SemanticColorSystem Instantiation', 'fail', `Instantiation failed: ${error.message}`);
+            }
+
+            try {
+                const manager = new ColorSystemManager({ autoInit: false });
+                addResult('ColorSystemManager Instantiation', 'pass', 'Can be instantiated successfully');
+            } catch (error) {
+                addResult('ColorSystemManager Instantiation', 'fail', `Instantiation failed: ${error.message}`);
+            }
+
+            // Summary
+            const passCount = results.querySelectorAll('.pass').length;
+            const failCount = results.querySelectorAll('.fail').length;
+            const total = passCount + failCount;
+
+            const summary = document.createElement('div');
+            summary.style.marginTop = '20px';
+            summary.style.padding = '15px';
+            summary.style.background = passCount === total ? '#f0fdf4' : '#fef2f2';
+            summary.style.border = passCount === total ? '2px solid #059669' : '2px solid #dc2626';
+            summary.style.borderRadius = '6px';
+            summary.innerHTML = `
+                <h3>Summary</h3>
+                <p><strong>Total Tests:</strong> ${total}</p>
+                <p><strong>Passed:</strong> ${passCount}</p>
+                <p><strong>Failed:</strong> ${failCount}</p>
+                <p><strong>Status:</strong> ${passCount === total ? '✅ All scripts loaded successfully' : '❌ Some scripts failed to load'}</p>
+            `;
+            results.appendChild(summary);
+        }, 100);
+    </script>
+</body>
+</html>
