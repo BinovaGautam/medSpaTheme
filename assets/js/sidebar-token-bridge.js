@@ -254,12 +254,58 @@ class SidebarTokenBridge {
      */
     onSidebarOpened() {
         this.log('📂 Sidebar opened - refreshing interfaces');
+
+        // Add version indicator at the top of sidebar
+        this.addVersionIndicator();
+
         this.refreshInterfaces();
 
         // Ensure visual interfaces are loaded
         setTimeout(() => {
             this.ensureVisualInterfaces();
         }, 100);
+    }
+
+    /**
+     * Add version indicator to sidebar
+     */
+    addVersionIndicator() {
+        const sidebar = document.querySelector('#simple-vc-sidebar .simple-vc-content');
+        if (!sidebar) return;
+
+        // Remove existing indicator if present
+        const existingIndicator = sidebar.querySelector('.sprint-version-indicator');
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+
+        // Create version indicator
+        const indicator = document.createElement('div');
+        indicator.className = 'sprint-version-indicator';
+        indicator.innerHTML = `
+            <div class="version-header">
+                <div class="version-badge">
+                    <span class="version-icon">🚀</span>
+                    <div class="version-info">
+                        <div class="version-title">Sprint 2 Extension ACTIVE</div>
+                        <div class="version-subtitle">Visual Customizer v1.0.0</div>
+                    </div>
+                </div>
+                <div class="version-timestamp">
+                    Updated: ${new Date().toLocaleDateString()}
+                </div>
+            </div>
+            <div class="version-features">
+                <span class="feature-tag">✨ Visual Color Palettes</span>
+                <span class="feature-tag">📝 Typography Previews</span>
+                <span class="feature-tag">⚡ Real-time Updates</span>
+            </div>
+        `;
+
+        // Insert at the very top
+        sidebar.insertBefore(indicator, sidebar.firstChild);
+
+        this.log('✅ Version indicator added to sidebar');
     }
 
     /**

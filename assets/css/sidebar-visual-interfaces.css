@@ -10,6 +10,99 @@
  */
 
 /* =============================================================================
+   VERSION INDICATOR
+   ============================================================================= */
+
+.sprint-version-indicator {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    animation: versionPulse 2s ease-in-out;
+}
+
+.version-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.version-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.version-icon {
+    font-size: 24px;
+    animation: versionRocket 3s ease-in-out infinite;
+}
+
+.version-info {
+    line-height: 1.2;
+}
+
+.version-title {
+    font-size: 16px;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.version-subtitle {
+    font-size: 12px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.version-timestamp {
+    font-size: 11px;
+    opacity: 0.8;
+    text-align: right;
+}
+
+.version-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.feature-tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+@keyframes versionPulse {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-2px);
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes versionRocket {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* =============================================================================
    FEEDBACK SYSTEM
    ============================================================================= */
 
