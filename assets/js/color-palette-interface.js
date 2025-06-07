@@ -122,22 +122,18 @@ class ColorPaletteInterface {
     }
 
     /**
-     * Load palettes data from semantic color system
+     * Load palette data and current state
      */
     async loadPalettesData() {
-        // Initialize semantic color system if not available
+        console.log('🔄 Loading palette data...');
+
         if (!this.semanticColorSystem) {
-            try {
-                if (typeof SemanticColorSystem === 'function') {
-                    this.semanticColorSystem = new SemanticColorSystem();
-                    console.log('✅ SemanticColorSystem initialized');
-                } else {
-                    throw new Error('SemanticColorSystem class not available');
-                }
-            } catch (error) {
-                console.error('❌ Failed to initialize SemanticColorSystem:', error);
-                throw new Error('Cannot initialize without SemanticColorSystem');
-            }
+            throw new Error('SemanticColorSystem not initialized');
+        }
+
+        // Check for ColorSystemManager
+        if (!this.colorSystemManager) {
+            console.warn('⚠️ ColorSystemManager not available, manual selection only');
         }
 
         // Load palette data
@@ -147,17 +143,156 @@ class ColorPaletteInterface {
 
             console.log(`📊 Loaded ${this.state.allPalettes.length} palettes`);
 
-            // Get current palette if available
-            if (this.colorSystemManager) {
-                const currentPalette = this.colorSystemManager.getCurrentPalette();
-                if (currentPalette) {
-                    this.state.selectedPalette = currentPalette.id;
-                    console.log(`🎯 Current palette: ${currentPalette.id}`);
-                }
-            }
+            // ENHANCED: Load current palette with better error handling and debugging
+            await this.loadCurrentPaletteState();
+
         } catch (error) {
             console.error('❌ Failed to load palette data:', error);
             throw error;
+        }
+    }
+
+    /**
+     * ENHANCED: Load current palette state with comprehensive debugging
+     */
+    async loadCurrentPaletteState() {
+        console.log('🎯 Loading current palette state...');
+
+        let currentPaletteId = null;
+
+        // Method 1: Try to get from ColorSystemManager
+        if (this.colorSystemManager) {
+            try {
+                const currentPalette = this.colorSystemManager.getCurrentPalette();
+                if (currentPalette && currentPalette.id) {
+                    currentPaletteId = currentPalette.id;
+                    console.log(`✅ ColorSystemManager current palette: ${currentPaletteId}`);
+                } else {
+                    console.log('⚠️ ColorSystemManager has no current palette');
+                }
+            } catch (error) {
+                console.warn('⚠️ ColorSystemManager getCurrentPalette failed:', error);
+            }
+        }
+
+        // Method 2: Try to get from SemanticColorSystem
+        if (!currentPaletteId && this.semanticColorSystem) {
+            try {
+                const semanticCurrent = this.semanticColorSystem.getCurrentPalette();
+                if (semanticCurrent && semanticCurrent.id) {
+                    currentPaletteId = semanticCurrent.id;
+                    console.log(`✅ SemanticColorSystem current palette: ${currentPaletteId}`);
+                } else {
+                    console.log('⚠️ SemanticColorSystem has no current palette');
+                }
+            } catch (error) {
+                console.warn('⚠️ SemanticColorSystem getCurrentPalette failed:', error);
+            }
+        }
+
+        // Method 3: Try to get from WordPress/backend (via AJAX)
+        if (!currentPaletteId) {
+            try {
+                currentPaletteId = await this.loadCurrentPaletteFromBackend();
+                if (currentPaletteId) {
+                    console.log(`✅ Backend current palette: ${currentPaletteId}`);
+                }
+            } catch (error) {
+                console.warn('⚠️ Backend getCurrentPalette failed:', error);
+            }
+        }
+
+        // Method 4: Check localStorage as fallback
+        if (!currentPaletteId) {
+            try {
+                currentPaletteId = localStorage.getItem('visual_customizer_current_palette');
+                if (currentPaletteId) {
+                    console.log(`✅ localStorage current palette: ${currentPaletteId}`);
+                }
+            } catch (error) {
+                console.warn('⚠️ localStorage access failed:', error);
+            }
+        }
+
+        // Set the current palette if found
+        if (currentPaletteId) {
+            // Verify the palette exists in our data
+            const paletteExists = this.state.allPalettes.some(p => p.id === currentPaletteId);
+
+            if (paletteExists) {
+                this.state.selectedPalette = currentPaletteId;
+                console.log(`🎯 Set current palette: ${currentPaletteId}`);
+
+                // Also ensure the color systems are in sync
+                this.syncColorSystemsWithCurrentPalette(currentPaletteId);
+            } else {
+                console.warn(`⚠️ Current palette '${currentPaletteId}' not found in available palettes`);
+                console.log('Available palettes:', this.state.allPalettes.map(p => p.id));
+
+                // Set to null and let user select
+                this.state.selectedPalette = null;
+            }
+        } else {
+            console.log('📝 No current palette found - user will need to select');
+            this.state.selectedPalette = null;
+        }
+    }
+
+    /**
+     * Load current palette from WordPress backend
+     */
+    async loadCurrentPaletteFromBackend() {
+        return new Promise((resolve) => {
+            // If wp_localize_script data is available
+            if (typeof simpleCustomizer !== 'undefined' && simpleCustomizer.currentPalette) {
+                resolve(simpleCustomizer.currentPalette);
+                return;
+            }
+
+            // Try AJAX call to WordPress
+            if (typeof jQuery !== 'undefined' && typeof simpleCustomizer !== 'undefined') {
+                jQuery.ajax({
+                    url: simpleCustomizer.ajaxUrl,
+                    method: 'POST',
+                    data: {
+                        action: 'get_current_palette',
+                        nonce: simpleCustomizer.nonce
+                    },
+                    timeout: 3000,
+                    success: function(response) {
+                        if (response.success && response.data) {
+                            resolve(response.data);
+                        } else {
+                            resolve(null);
+                        }
+                    },
+                    error: function() {
+                        resolve(null);
+                    }
+                });
+            } else {
+                resolve(null);
+            }
+        });
+    }
+
+    /**
+     * Sync color systems with current palette
+     */
+    syncColorSystemsWithCurrentPalette(paletteId) {
+        try {
+            // Sync SemanticColorSystem
+            if (this.semanticColorSystem && this.semanticColorSystem.setCurrentPalette) {
+                this.semanticColorSystem.setCurrentPalette(paletteId);
+                console.log(`🔄 Synced SemanticColorSystem with ${paletteId}`);
+            }
+
+            // Store in localStorage for persistence
+            localStorage.setItem('visual_customizer_current_palette', paletteId);
+            console.log(`💾 Stored ${paletteId} in localStorage`);
+
+        } catch (error) {
+            console.warn('⚠️ Failed to sync color systems:', error);
         }
     }
 

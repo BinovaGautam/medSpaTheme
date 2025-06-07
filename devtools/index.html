@@ -187,6 +187,13 @@
         .status-active { background: #27ae60; }
         .status-beta { background: #f39c12; }
         .status-development { background: #e74c3c; }
+        .status-critical { background: #e74c3c; animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -301,6 +308,27 @@
                             Contrast Validation Test
                         </a>
                         <div class="tool-description">WCAG contrast validation testing</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="testing-tools/emergency-script-test-simple.html" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Emergency Script Test (Working)
+                        </a>
+                        <div class="tool-description">🚨 WORKING - Direct script loading test without WordPress dependencies</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="testing-tools/emergency-visual-customizer-fix.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Emergency Visual Customizer Fix
+                        </a>
+                        <div class="tool-description">✅ FIXED - Bypass WordPress script enqueuing to test direct Visual Customizer loading</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="testing-tools/wp-integrated-script-test.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            WordPress Integrated Script Test
+                        </a>
+                        <div class="tool-description">✅ FIXED - Test Visual Customizer scripts within WordPress environment context</div>
                     </li>
                 </ul>
             </div>

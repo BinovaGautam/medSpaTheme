@@ -39,42 +39,18 @@ function simple_visual_customizer_enqueue_assets() {
         return;
     }
 
-    // PVC-005 Core System - Live Preview
+    // FIXED DEPENDENCY CHAIN - Load in correct order
+
+    // 1. Core Foundation - Semantic Color System (no dependencies except jQuery)
     wp_enqueue_script(
-        'live-preview-system',
-        get_template_directory_uri() . '/assets/js/live-preview-system.js',
+        'semantic-color-system',
+        get_template_directory_uri() . '/assets/js/semantic-color-system.js',
         ['jquery'],
         PREETIDREAMS_VERSION,
         true
     );
 
-    // PVC-005 Communication System - Preview Messenger
-    wp_enqueue_script(
-        'preview-messenger',
-        get_template_directory_uri() . '/assets/js/preview-messenger.js',
-        ['live-preview-system'],
-        PREETIDREAMS_VERSION,
-        true
-    );
-
-    // PVC-005 WordPress Integration - Customizer Bridge
-    wp_enqueue_script(
-        'wp-customizer-bridge',
-        get_template_directory_uri() . '/assets/js/wp-customizer-bridge.js',
-        ['preview-messenger'],
-        PREETIDREAMS_VERSION,
-        true
-    );
-
-    // Existing color system components (Sprint 1)
-    wp_enqueue_script(
-        'semantic-color-system',
-        get_template_directory_uri() . '/assets/js/semantic-color-system.js',
-        ['wp-customizer-bridge'],
-        PREETIDREAMS_VERSION,
-        true
-    );
-
+    // 2. Color System Manager (depends on semantic color system)
     wp_enqueue_script(
         'color-system-manager',
         get_template_directory_uri() . '/assets/js/color-system-manager.js',
@@ -83,15 +59,43 @@ function simple_visual_customizer_enqueue_assets() {
         true
     );
 
+    // 3. Live Preview System (depends on color system manager)
     wp_enqueue_script(
-        'color-palette-interface',
-        get_template_directory_uri() . '/assets/js/color-palette-interface.js',
+        'live-preview-system',
+        get_template_directory_uri() . '/assets/js/live-preview-system.js',
         ['color-system-manager'],
         PREETIDREAMS_VERSION,
         true
     );
 
-    // Enhanced Simple Visual Customizer
+    // 4. Preview Messenger (depends on live preview)
+    wp_enqueue_script(
+        'preview-messenger',
+        get_template_directory_uri() . '/assets/js/preview-messenger.js',
+        ['live-preview-system'],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // 5. WordPress Customizer Bridge (depends on preview messenger)
+    wp_enqueue_script(
+        'wp-customizer-bridge',
+        get_template_directory_uri() . '/assets/js/wp-customizer-bridge.js',
+        ['preview-messenger'],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // 6. Color Palette Interface (depends on all core systems)
+    wp_enqueue_script(
+        'color-palette-interface',
+        get_template_directory_uri() . '/assets/js/color-palette-interface.js',
+        ['wp-customizer-bridge'],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // 7. Simple Visual Customizer (top level - depends on everything)
     wp_enqueue_script(
         'simple-visual-customizer',
         get_template_directory_uri() . '/assets/js/simple-visual-customizer.js',

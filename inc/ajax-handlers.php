@@ -37,9 +37,11 @@ class VisualCustomizerAJAXHandlers {
         add_action('wp_ajax_visual_customizer_preview_palette', array($this, 'handle_preview_palette'));
         add_action('wp_ajax_visual_customizer_get_palettes', array($this, 'handle_get_palettes'));
         add_action('wp_ajax_visual_customizer_validate_accessibility', array($this, 'handle_validate_accessibility'));
+        add_action('wp_ajax_get_current_palette', array($this, 'handle_get_current_palette'));
 
         // AJAX handlers for preview (may include non-logged-in users in customizer)
         add_action('wp_ajax_nopriv_visual_customizer_preview_palette', array($this, 'handle_preview_palette'));
+        add_action('wp_ajax_nopriv_get_current_palette', array($this, 'handle_get_current_palette'));
     }
 
     private function load_dependencies() {
@@ -201,6 +203,64 @@ class VisualCustomizerAJAXHandlers {
             'recommendations' => $accessibility_report['recommendations'],
             'compliance_level' => $this->get_compliance_level($accessibility_report['overall_score'])
         ));
+    }
+
+    /**
+     * Handle get current palette request
+     */
+    public function handle_get_current_palette() {
+        // Verify nonce (less strict for this read-only operation)
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'simple_visual_customizer')) {
+            // Try backup nonce verification
+            if (!$this->verify_preview_request()) {
+                wp_send_json_error(array(
+                    'message' => __('Security check failed', 'medspa-theme')
+                ));
+                return;
+            }
+        }
+
+        try {
+            // Method 1: Check theme mod (WordPress Customizer)
+            $current_palette = get_theme_mod('visual_customizer_active_palette');
+
+            if ($current_palette) {
+                wp_send_json_success($current_palette);
+                return;
+            }
+
+            // Method 2: Check simple visual customizer config
+            $config = get_option('preetidreams_visual_customizer_config', array());
+            if (!empty($config) && isset($config['activePalette'])) {
+                wp_send_json_success($config['activePalette']);
+                return;
+            }
+
+            // Method 3: Check direct palette option
+            $direct_palette = get_option('preetidreams_active_palette');
+            if ($direct_palette) {
+                wp_send_json_success($direct_palette);
+                return;
+            }
+
+            // Method 4: Check if ColorSystemManager has current palette
+            if ($this->color_system && method_exists($this->color_system, 'get_current_palette')) {
+                $system_palette = $this->color_system->get_current_palette();
+                if ($system_palette && isset($system_palette['id'])) {
+                    wp_send_json_success($system_palette['id']);
+                    return;
+                }
+            }
+
+            // No current palette found - return default
+            wp_send_json_success('luxury-spa'); // Default palette
+
+        } catch (Exception $e) {
+            wp_send_json_error(array(
+                'message' => __('Error retrieving current palette', 'medspa-theme'),
+                'error' => $e->getMessage()
+            ));
+        }
     }
 
     /**

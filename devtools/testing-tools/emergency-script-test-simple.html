@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 Emergency Script Test - PVC-009</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .status-good { color: #28a745; font-weight: bold; }
+        .status-bad { color: #dc3545; font-weight: bold; }
+        .status-warning { color: #ffc107; font-weight: bold; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .test-button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .emergency-button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .test-button:hover { background: #005a87; }
+        .emergency-button:hover { background: #c82333; }
+        .live-test-area {
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--color-primary-navy, #2c3e50);
+            color: var(--color-neutral-white, #ffffff);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .color-block {
+            padding: 15px;
+            margin: 10px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            min-width: 150px;
+        }
+        .block-navy { background: var(--color-primary-navy, #2c3e50); }
+        .block-teal { background: var(--color-primary-teal, #16a085); }
+        .block-peach { background: var(--color-secondary-peach, #f39c12); }
+        .block-gradient { background: var(--gradient-accent, linear-gradient(135deg, #f39c12 0%, #e67e22 100%)); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 Emergency Script Test - PVC-009 Resolution</h1>
+        <p><strong>Purpose:</strong> Direct script loading test without WordPress dependencies</p>
+
+        <div id="test-status">
+            <h3>📊 Test Status</h3>
+            <div class="code-block" id="status-log">
+Initializing emergency script test...
+            </div>
+        </div>
+
+        <div>
+            <h3>🔧 Emergency Controls</h3>
+            <button class="emergency-button" onclick="loadAllScripts()">🚨 Load All Scripts</button>
+            <button class="test-button" onclick="testLoadedObjects()">🧪 Test Objects</button>
+            <button class="test-button" onclick="testScriptUrls()">🔗 Test URLs</button>
+            <button class="test-button" onclick="resetTest()">🔄 Reset Test</button>
+        </div>
+
+        <div id="live-test-area" class="live-test-area">
+            <h3>🎯 Live Visual Test Area</h3>
+            <p>This area should change colors when palettes are applied:</p>
+
+            <div class="color-block block-navy">
+                <strong>Primary Navy</strong><br>
+                --color-primary-navy
+            </div>
+
+            <div class="color-block block-teal">
+                <strong>Primary Teal</strong><br>
+                --color-primary-teal
+            </div>
+
+            <div class="color-block block-peach">
+                <strong>Secondary Peach</strong><br>
+                --color-secondary-peach
+            </div>
+
+            <div class="color-block block-gradient">
+                <strong>Accent Gradient</strong><br>
+                --gradient-accent
+            </div>
+        </div>
+
+        <div>
+            <h3>🎨 Palette Test Buttons</h3>
+            <button class="test-button" onclick="applyPalette('luxury-spa')">✨ Luxury Spa</button>
+            <button class="test-button" onclick="applyPalette('medical-clean')">🏥 Medical Clean</button>
+            <button class="test-button" onclick="applyPalette('calming-oasis')">🌿 Calming Oasis</button>
+            <button class="test-button" onclick="applyManualCSS()">🔧 Manual CSS Test</button>
+        </div>
+
+        <div id="debug-output">
+            <h3>🔍 Debug Output</h3>
+            <div class="code-block" id="debug-log">
+Emergency test ready. Click "Load All Scripts" to begin...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let debugLog = document.getElementById('debug-log');
+        let statusLog = document.getElementById('status-log');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const icon = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            debugLog.textContent += `[${timestamp}] ${icon} ${message}\n`;
+            debugLog.scrollTop = debugLog.scrollHeight;
+            console.log(`${icon} ${message}`);
+        }
+
+        function updateStatus(message) {
+            statusLog.textContent += message + '\n';
+            statusLog.scrollTop = statusLog.scrollHeight;
+        }
+
+        // Test script URLs first
+        function testScriptUrls() {
+            log('Testing script URL accessibility...', 'info');
+            updateStatus('🔗 Testing Script URLs:');
+
+            // Use relative paths from the current location
+            const baseUrl = '../../assets/js';
+            const scripts = [
+                'semantic-color-system.js',
+                'color-system-manager.js',
+                'live-preview-system.js',
+                'preview-messenger.js',
+                'wp-customizer-bridge.js',
+                'color-palette-interface.js',
+                'simple-visual-customizer.js'
+            ];
+
+            let testCount = 0;
+            scripts.forEach(script => {
+                fetch(`${baseUrl}/${script}`, { method: 'HEAD' })
+                    .then(response => {
+                        testCount++;
+                        const status = response.ok ? '✅ ACCESSIBLE' : '❌ FAILED';
+                        updateStatus(`${status} ${script} (${response.status})`);
+                        log(`${script}: ${response.ok ? 'accessible' : 'failed'} (${response.status})`, response.ok ? 'success' : 'error');
+
+                        if (testCount === scripts.length) {
+                            updateStatus('🔍 URL test complete');
+                        }
+                    })
+                    .catch(error => {
+                        testCount++;
+                        updateStatus(`❌ ERROR ${script}: ${error.message}`);
+                        log(`${script}: ${error.message}`, 'error');
+                    });
+            });
+        }
+
+        // Load all scripts directly
+        function loadAllScripts() {
+            log('Starting emergency script loading...', 'warning');
+            updateStatus('\n🚨 Emergency Script Loading:');
+
+            // Clear any existing scripts
+            document.querySelectorAll('script[data-emergency]').forEach(s => s.remove());
+
+            const baseUrl = '../../assets/js';
+            const scripts = [
+                'semantic-color-system.js',
+                'color-system-manager.js',
+                'live-preview-system.js',
+                'preview-messenger.js',
+                'wp-customizer-bridge.js',
+                'color-palette-interface.js',
+                'simple-visual-customizer.js'
+            ];
+
+            let loadedCount = 0;
+            let failedCount = 0;
+
+            scripts.forEach((scriptName, index) => {
+                const script = document.createElement('script');
+                script.src = `${baseUrl}/${scriptName}`;
+                script.setAttribute('data-emergency', 'true');
+                script.id = `emergency-${scriptName.replace('.js', '')}`;
+
+                script.onload = () => {
+                    loadedCount++;
+                    updateStatus(`✅ Loaded: ${scriptName}`);
+                    log(`Loaded: ${scriptName}`, 'success');
+
+                    if (loadedCount + failedCount === scripts.length) {
+                        completeLoading();
+                    }
+                };
+
+                script.onerror = () => {
+                    failedCount++;
+                    updateStatus(`❌ Failed: ${scriptName}`);
+                    log(`Failed to load: ${scriptName}`, 'error');
+
+                    if (loadedCount + failedCount === scripts.length) {
+                        completeLoading();
+                    }
+                };
+
+                document.head.appendChild(script);
+                updateStatus(`📥 Loading: ${scriptName}`);
+            });
+        }
+
+        function completeLoading() {
+            updateStatus(`\n🔍 Loading complete. Loaded: ${loadedCount} Failed: ${failedCount}`);
+            log(`Script loading complete: ${loadedCount} loaded, ${failedCount} failed`, loadedCount > 0 ? 'success' : 'error');
+
+            // Auto-test objects after loading
+            setTimeout(testLoadedObjects, 1000);
+        }
+
+        // Test loaded objects
+        function testLoadedObjects() {
+            log('Testing loaded JavaScript objects...', 'info');
+            updateStatus('\n🧪 Testing JavaScript Objects:');
+
+            const objectsToTest = [
+                'SemanticColorSystem',
+                'ColorSystemManager',
+                'LivePreviewSystem',
+                'PreviewMessenger',
+                'ColorPaletteInterface',
+                'simpleVisualCustomizer'
+            ];
+
+            let availableCount = 0;
+            objectsToTest.forEach(objName => {
+                const exists = window[objName] !== undefined;
+                const status = exists ? '✅ AVAILABLE' : '❌ MISSING';
+                updateStatus(`• ${objName}: ${status}`);
+                log(`${objName}: ${exists ? 'available' : 'missing'}`, exists ? 'success' : 'error');
+
+                if (exists) {
+                    availableCount++;
+
+                    // Test instantiation for classes
+                    if (objName === 'LivePreviewSystem' || objName === 'ColorSystemManager') {
+                        try {
+                            const instance = new window[objName]();
+                            updateStatus(`  ↳ Instantiation: ✅ SUCCESS`);
+                            log(`${objName} instantiation: success`, 'success');
+                        } catch (e) {
+                            updateStatus(`  ↳ Instantiation: ❌ FAILED (${e.message})`);
+                            log(`${objName} instantiation failed: ${e.message}`, 'error');
+                        }
+                    }
+                }
+            });
+
+            updateStatus(`\n📊 Results: ${availableCount}/${objectsToTest.length} objects available`);
+            log(`Object test complete: ${availableCount}/${objectsToTest.length} available`, availableCount > 0 ? 'success' : 'error');
+        }
+
+        // Apply palette
+        function applyPalette(paletteId) {
+            log(`Attempting to apply palette: ${paletteId}`, 'info');
+            updateStatus(`\n🎨 Applying palette: ${paletteId}`);
+
+            try {
+                // Method 1: Try via simpleVisualCustomizer
+                if (typeof simpleVisualCustomizer !== 'undefined' && simpleVisualCustomizer.applyPalette) {
+                    simpleVisualCustomizer.applyPalette(paletteId);
+                    updateStatus(`✅ Applied via simpleVisualCustomizer`);
+                    log(`Palette ${paletteId} applied via simpleVisualCustomizer`, 'success');
+                    return;
+                }
+
+                // Method 2: Try via LivePreviewSystem
+                if (typeof LivePreviewSystem !== 'undefined') {
+                    const livePreview = new LivePreviewSystem();
+                    if (livePreview.applyPalette) {
+                        livePreview.applyPalette(paletteId);
+                        updateStatus(`✅ Applied via LivePreviewSystem`);
+                        log(`Palette ${paletteId} applied via LivePreviewSystem`, 'success');
+                        return;
+                    }
+                }
+
+                // Method 3: Manual CSS fallback
+                updateStatus(`⚠️ Falling back to manual CSS`);
+                applyManualPalette(paletteId);
+
+            } catch (error) {
+                updateStatus(`❌ Palette application failed: ${error.message}`);
+                log(`Palette application failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Apply manual CSS palette
+        function applyManualPalette(paletteId) {
+            const palettes = {
+                'luxury-spa': {
+                    '--color-primary-navy': '#4a2c50',
+                    '--color-primary-teal': '#b8860b',
+                    '--color-secondary-peach': '#daa520',
+                    '--gradient-accent': 'linear-gradient(135deg, #daa520 0%, #b8860b 100%)'
+                },
+                'medical-clean': {
+                    '--color-primary-navy': '#2c3e50',
+                    '--color-primary-teal': '#16a085',
+                    '--color-secondary-peach': '#3498db',
+                    '--gradient-accent': 'linear-gradient(135deg, #3498db 0%, #16a085 100%)'
+                },
+                'calming-oasis': {
+                    '--color-primary-navy': '#2c5f2d',
+                    '--color-primary-teal': '#48a999',
+                    '--color-secondary-peach': '#97d4a6',
+                    '--gradient-accent': 'linear-gradient(135deg, #97d4a6 0%, #48a999 100%)'
+                }
+            };
+
+            const palette = palettes[paletteId];
+            if (!palette) {
+                log(`Unknown palette: ${paletteId}`, 'error');
+                return;
+            }
+
+            // Remove existing manual styles
+            const existing = document.getElementById('manual-palette-css');
+            if (existing) existing.remove();
+
+            // Create new style element
+            const style = document.createElement('style');
+            style.id = 'manual-palette-css';
+
+            let css = ':root {\n';
+            Object.entries(palette).forEach(([property, value]) => {
+                css += `    ${property}: ${value} !important;\n`;
+                log(`Setting ${property}: ${value}`, 'info');
+            });
+            css += '}\n';
+
+            style.textContent = css;
+            document.head.appendChild(style);
+
+            updateStatus(`✅ Manual palette ${paletteId} applied`);
+            log(`Manual palette ${paletteId} applied successfully`, 'success');
+        }
+
+        // Apply manual CSS test
+        function applyManualCSS() {
+            log('Applying manual CSS test...', 'info');
+            updateStatus('\n🔧 Manual CSS Test:');
+
+            const testCSS = `
+                :root {
+                    --color-primary-navy: #ff6b6b !important;
+                    --color-primary-teal: #4ecdc4 !important;
+                    --color-secondary-peach: #45b7d1 !important;
+                    --gradient-accent: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%) !important;
+                }
+            `;
+
+            const existing = document.getElementById('manual-test-css');
+            if (existing) existing.remove();
+
+            const style = document.createElement('style');
+            style.id = 'manual-test-css';
+            style.textContent = testCSS;
+            document.head.appendChild(style);
+
+            updateStatus('✅ Manual CSS test applied - colors should change to red/blue');
+            log('Manual CSS test applied', 'success');
+        }
+
+        // Reset test
+        function resetTest() {
+            log('Resetting test environment...', 'info');
+
+            // Clear logs
+            debugLog.textContent = 'Test environment reset.\n';
+            statusLog.textContent = 'Ready for new test.\n';
+
+            // Remove emergency scripts
+            document.querySelectorAll('script[data-emergency]').forEach(s => s.remove());
+
+            // Remove manual styles
+            document.getElementById('manual-palette-css')?.remove();
+            document.getElementById('manual-test-css')?.remove();
+
+            log('Test environment reset complete', 'success');
+        }
+
+        // Auto-start
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Emergency script test initialized', 'info');
+            updateStatus('🚨 Emergency Script Test Ready');
+            updateStatus('Click "Load All Scripts" to begin testing');
+
+            // Auto-test URLs on load
+            setTimeout(testScriptUrls, 1000);
+        });
+    </script>
+</body>
+</html>

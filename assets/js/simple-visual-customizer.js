@@ -672,4 +672,7 @@
         getWPCustomizerBridge: () => wpCustomizerBridge
     };
 
+    // Also export lowercase version for WordPress integration
+    window.simpleVisualCustomizer = window.SimpleVisualCustomizer;
+
 })(jQuery);

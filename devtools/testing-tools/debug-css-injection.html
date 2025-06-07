@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Injection Debug - PVC-009 Integration Issue</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .debug-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .debug-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .debug-section h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        .status-good { color: #4CAF50; font-weight: bold; }
+        .status-bad { color: #f44336; font-weight: bold; }
+        .status-warning { color: #ff9800; font-weight: bold; }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin: 10px 0;
+        }
+
+        .test-element {
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .header-test {
+            background: var(--color-primary-navy, #2c3e50);
+            color: var(--color-neutral-white, #ffffff);
+        }
+
+        .button-test {
+            background: var(--gradient-accent, linear-gradient(135deg, #f39c12 0%, #e67e22 100%));
+            color: var(--color-neutral-white, #ffffff);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .nav-test {
+            background: var(--color-primary-teal, #16a085);
+            color: var(--color-neutral-white, #ffffff);
+            padding: 10px 15px;
+            border-radius: 4px;
+        }
+
+        .diagnostic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .diagnostic-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .variable-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+
+        .test-button:hover {
+            background: #45a049;
+        }
+
+        .integration-status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 5px solid;
+        }
+
+        .integration-good {
+            background: #e8f5e8;
+            border-left-color: #4CAF50;
+            color: #2e7d32;
+        }
+
+        .integration-bad {
+            background: #ffebee;
+            border-left-color: #f44336;
+            color: #c62828;
+        }
+
+        .integration-warning {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+            color: #ef6c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔧 CSS Injection Debug - PVC-009 Integration Issue</h1>
+        <p><strong>Purpose:</strong> Diagnose why Live Preview System reports success but no visual changes occur</p>
+
+        <!-- Integration Status -->
+        <div class="debug-section">
+            <h3>🔗 Integration Status</h3>
+            <div id="integrationStatus"></div>
+        </div>
+
+        <!-- DOM Inspection -->
+        <div class="debug-section">
+            <h3>🔍 DOM CSS Injection Check</h3>
+            <div class="diagnostic-grid">
+                <div class="diagnostic-card">
+                    <h4>Style Element Detection</h4>
+                    <div id="styleElementStatus"></div>
+                    <button class="test-button" onclick="checkStyleElements()">🔄 Check Style Elements</button>
+                </div>
+                <div class="diagnostic-card">
+                    <h4>CSS Variables Check</h4>
+                    <div id="cssVariablesStatus"></div>
+                    <button class="test-button" onclick="checkCSSVariables()">🔄 Check Variables</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live CSS Variables Display -->
+        <div class="debug-section">
+            <h3>📊 Current CSS Variables</h3>
+            <div id="currentVariables" class="variable-list">
+                Click "Check Variables" to inspect current CSS variables...
+            </div>
+        </div>
+
+        <!-- Visual Test Elements -->
+        <div class="debug-section">
+            <h3>🎨 Visual Test Elements</h3>
+            <p>These elements use CSS variables. If integration is working, they should change when palette is applied:</p>
+
+            <div class="test-element header-test">
+                <strong>Header Test:</strong> Background should use --color-primary-navy
+            </div>
+
+            <div class="test-element">
+                <button class="button-test">Button Test: Should use --gradient-accent</button>
+            </div>
+
+            <div class="test-element nav-test">
+                <strong>Nav Test:</strong> Background should use --color-primary-teal
+            </div>
+        </div>
+
+        <!-- Manual CSS Injection Test -->
+        <div class="debug-section">
+            <h3>🧪 Manual CSS Injection Test</h3>
+            <p>Test direct CSS variable injection to see if the issue is with injection or variables:</p>
+            <button class="test-button" onclick="injectTestCSS()">💉 Inject Test Variables</button>
+            <button class="test-button" onclick="clearTestCSS()">🧹 Clear Test Variables</button>
+            <div id="injectionResults"></div>
+        </div>
+
+        <!-- WordPress Integration Check -->
+        <div class="debug-section">
+            <h3>🔌 WordPress Integration Check</h3>
+            <div class="diagnostic-grid">
+                <div class="diagnostic-card">
+                    <h4>Script Loading</h4>
+                    <div id="scriptLoadingStatus"></div>
+                    <button class="test-button" onclick="checkScriptLoading()">🔄 Check Scripts</button>
+                </div>
+                <div class="diagnostic-card">
+                    <h4>Event System</h4>
+                    <div id="eventSystemStatus"></div>
+                    <button class="test-button" onclick="checkEventSystem()">🔄 Check Events</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Factory Pattern Integration -->
+        <div class="debug-section">
+            <h3>🏭 Factory Pattern Integration (PVC-009)</h3>
+            <div id="factoryIntegrationStatus"></div>
+            <button class="test-button" onclick="checkFactoryIntegration()">🔄 Check Factory Integration</button>
+        </div>
+
+        <!-- Live Preview System Status -->
+        <div class="debug-section">
+            <h3>🎬 Live Preview System Status</h3>
+            <div id="livePreviewStatus"></div>
+            <button class="test-button" onclick="checkLivePreviewSystem()">🔄 Check Live Preview</button>
+        </div>
+
+        <!-- Real-time Monitoring -->
+        <div class="debug-section">
+            <h3>📡 Real-time CSS Monitoring</h3>
+            <button class="test-button" onclick="startCSSMonitoring()">▶️ Start Monitoring</button>
+            <button class="test-button" onclick="stopCSSMonitoring()">⏹️ Stop Monitoring</button>
+            <div id="cssMonitoringOutput" class="code-block">
+                Monitoring stopped. Click "Start Monitoring" to watch CSS changes in real-time.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cssMonitoringInterval = null;
+
+        // Check Integration Status
+        function updateIntegrationStatus() {
+            const statusDiv = document.getElementById('integrationStatus');
+
+            let status = 'integration-good';
+            let message = '✅ PVC-009 Integration: All systems operational';
+
+            // Check critical components
+            const livePreviewExists = typeof LivePreviewSystem !== 'undefined';
+            const colorSystemExists = typeof ColorSystemManager !== 'undefined';
+            const paletteInterfaceExists = typeof window.ColorPaletteInterface !== 'undefined';
+
+            if (!livePreviewExists || !colorSystemExists || !paletteInterfaceExists) {
+                status = 'integration-bad';
+                message = '❌ PVC-009 Integration: Missing core components';
+            }
+
+            statusDiv.innerHTML = `<div class="${status}">${message}</div>`;
+
+            // Detailed component status
+            statusDiv.innerHTML += `
+                <div style="margin-top: 15px; font-size: 14px;">
+                    <strong>Component Status:</strong><br>
+                    • LivePreviewSystem: ${livePreviewExists ? '✅' : '❌'}<br>
+                    • ColorSystemManager: ${colorSystemExists ? '✅' : '❌'}<br>
+                    • ColorPaletteInterface: ${paletteInterfaceExists ? '✅' : '❌'}
+                </div>
+            `;
+        }
+
+        // Check Style Elements
+        function checkStyleElements() {
+            const statusDiv = document.getElementById('styleElementStatus');
+
+            const livePreviewStyles = document.getElementById('live-preview-styles');
+            const customStyles = document.querySelectorAll('style[data-preview-system]');
+
+            let html = '<div style="font-size: 14px;">';
+
+            if (livePreviewStyles) {
+                html += `<div class="status-good">✅ Found #live-preview-styles element</div>`;
+                html += `<div>Content length: ${livePreviewStyles.textContent.length} characters</div>`;
+                if (livePreviewStyles.textContent.length > 0) {
+                    html += `<div class="status-good">✅ Style element has content</div>`;
+                } else {
+                    html += `<div class="status-bad">❌ Style element is empty</div>`;
+                }
+            } else {
+                html += `<div class="status-bad">❌ #live-preview-styles element not found</div>`;
+            }
+
+            html += `<div>Total preview system styles: ${customStyles.length}</div>`;
+            html += '</div>';
+
+            statusDiv.innerHTML = html;
+        }
+
+        // Check CSS Variables
+        function checkCSSVariables() {
+            const statusDiv = document.getElementById('cssVariablesStatus');
+            const variablesDiv = document.getElementById('currentVariables');
+
+            const computedStyle = getComputedStyle(document.documentElement);
+            const variables = [];
+
+            // Check for theme-specific variables
+            const themeVariables = [
+                '--color-primary-navy',
+                '--color-primary-teal',
+                '--color-secondary-peach',
+                '--color-neutral-white',
+                '--gradient-primary',
+                '--gradient-accent'
+            ];
+
+            let foundVariables = 0;
+            let variablesList = '<strong>Theme Variables Status:</strong><br>';
+
+            themeVariables.forEach(varName => {
+                const value = computedStyle.getPropertyValue(varName).trim();
+                if (value) {
+                    foundVariables++;
+                    variablesList += `✅ ${varName}: ${value}<br>`;
+                    variables.push(`${varName}: ${value}`);
+                } else {
+                    variablesList += `❌ ${varName}: not found<br>`;
+                }
+            });
+
+            // Status summary
+            let status = 'status-good';
+            let message = `✅ Found ${foundVariables}/${themeVariables.length} theme variables`;
+
+            if (foundVariables === 0) {
+                status = 'status-bad';
+                message = `❌ No theme variables found - CSS injection not working`;
+            } else if (foundVariables < themeVariables.length) {
+                status = 'status-warning';
+                message = `⚠️ Partial variable injection - ${foundVariables}/${themeVariables.length} found`;
+            }
+
+            statusDiv.innerHTML = `<div class="${status}">${message}</div>`;
+            variablesDiv.innerHTML = variablesList;
+
+            // Check all CSS custom properties
+            const allCustomProps = [];
+            for (let i = 0; i < document.styleSheets.length; i++) {
+                try {
+                    const sheet = document.styleSheets[i];
+                    if (sheet.cssRules) {
+                        for (let j = 0; j < sheet.cssRules.length; j++) {
+                            const rule = sheet.cssRules[j];
+                            if (rule.selectorText === ':root' && rule.style) {
+                                for (let k = 0; k < rule.style.length; k++) {
+                                    const prop = rule.style[k];
+                                    if (prop.startsWith('--')) {
+                                        allCustomProps.push(`${prop}: ${rule.style.getPropertyValue(prop)}`);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    // Skip sheets that can't be accessed due to CORS
+                }
+            }
+
+            if (allCustomProps.length > 0) {
+                variablesDiv.innerHTML += `<br><strong>All Custom Properties (${allCustomProps.length}):</strong><br>` +
+                    allCustomProps.join('<br>');
+            }
+        }
+
+        // Inject Test CSS
+        function injectTestCSS() {
+            const resultsDiv = document.getElementById('injectionResults');
+
+            // Remove existing test style
+            const existingTest = document.getElementById('manual-test-styles');
+            if (existingTest) existingTest.remove();
+
+            // Create test style element
+            const testStyle = document.createElement('style');
+            testStyle.id = 'manual-test-styles';
+            testStyle.innerHTML = `
+                :root {
+                    --color-primary-navy: #e91e63 !important;
+                    --color-primary-teal: #9c27b0 !important;
+                    --color-secondary-peach: #ff5722 !important;
+                    --color-neutral-white: #ffffff !important;
+                    --gradient-primary: linear-gradient(135deg, #e91e63 0%, #ad1457 100%) !important;
+                    --gradient-accent: linear-gradient(135deg, #ff5722 0%, #d84315 100%) !important;
+                }
+            `;
+
+            document.head.appendChild(testStyle);
+
+            resultsDiv.innerHTML = `
+                <div class="status-good">✅ Test CSS variables injected successfully!</div>
+                <div style="margin-top: 10px; font-size: 14px;">
+                    If integration is working, test elements above should now show:
+                    <ul>
+                        <li>Header: Pink background</li>
+                        <li>Button: Orange gradient</li>
+                        <li>Nav: Purple background</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Clear Test CSS
+        function clearTestCSS() {
+            const resultsDiv = document.getElementById('injectionResults');
+            const testStyle = document.getElementById('manual-test-styles');
+
+            if (testStyle) {
+                testStyle.remove();
+                resultsDiv.innerHTML = `<div class="status-good">✅ Test CSS variables cleared</div>`;
+            } else {
+                resultsDiv.innerHTML = `<div class="status-warning">⚠️ No test CSS to clear</div>`;
+            }
+        }
+
+        // Check Script Loading
+        function checkScriptLoading() {
+            const statusDiv = document.getElementById('scriptLoadingStatus');
+
+            const scripts = [
+                'live-preview-system',
+                'simple-visual-customizer',
+                'color-palette-interface',
+                'semantic-color-system'
+            ];
+
+            let html = '<div style="font-size: 14px;">';
+            let loadedScripts = 0;
+
+            scripts.forEach(scriptId => {
+                const scriptElement = document.querySelector(`script[src*="${scriptId}"]`);
+                if (scriptElement) {
+                    loadedScripts++;
+                    html += `<div class="status-good">✅ ${scriptId} loaded</div>`;
+                } else {
+                    html += `<div class="status-bad">❌ ${scriptId} not found</div>`;
+                }
+            });
+
+            html += `<div><strong>Total:</strong> ${loadedScripts}/${scripts.length} scripts loaded</div>`;
+            html += '</div>';
+
+            statusDiv.innerHTML = html;
+        }
+
+        // Check Event System
+        function checkEventSystem() {
+            const statusDiv = document.getElementById('eventSystemStatus');
+
+            // Test event listener registration
+            let eventTest = false;
+
+            function testEventHandler(event) {
+                eventTest = true;
+                document.removeEventListener('test-integration-event', testEventHandler);
+            }
+
+            document.addEventListener('test-integration-event', testEventHandler);
+
+            // Dispatch test event
+            const testEvent = new CustomEvent('test-integration-event', {
+                detail: { test: true }
+            });
+            document.dispatchEvent(testEvent);
+
+            setTimeout(() => {
+                const status = eventTest ? 'status-good' : 'status-bad';
+                const message = eventTest ? '✅ Event system working' : '❌ Event system not responding';
+                statusDiv.innerHTML = `<div class="${status}">${message}</div>`;
+            }, 100);
+        }
+
+        // Check Factory Integration
+        function checkFactoryIntegration() {
+            const statusDiv = document.getElementById('factoryIntegrationStatus');
+
+            // This would check for PreetiDreamsCustomizerFactory integration
+            // For now, we'll check for the existence of key integration points
+
+            const integrationPoints = {
+                'Visual Customizer Simple': typeof simpleVisualCustomizer !== 'undefined',
+                'Live Preview System': typeof LivePreviewSystem !== 'undefined',
+                'Color System Manager': typeof ColorSystemManager !== 'undefined',
+                'WordPress Integration': typeof wp !== 'undefined'
+            };
+
+            let html = '<div style="font-size: 14px;"><strong>PVC-009 Integration Status:</strong><br>';
+            let passedChecks = 0;
+
+            Object.entries(integrationPoints).forEach(([name, exists]) => {
+                if (exists) {
+                    passedChecks++;
+                    html += `<div class="status-good">✅ ${name}</div>`;
+                } else {
+                    html += `<div class="status-bad">❌ ${name}</div>`;
+                }
+            });
+
+            const overallStatus = passedChecks === Object.keys(integrationPoints).length ?
+                'integration-good' : 'integration-warning';
+
+            html += `</div><div class="${overallStatus}" style="margin-top: 15px; padding: 10px;">
+                <strong>Integration Score:</strong> ${passedChecks}/${Object.keys(integrationPoints).length}
+            </div>`;
+
+            statusDiv.innerHTML = html;
+        }
+
+        // Check Live Preview System
+        function checkLivePreviewSystem() {
+            const statusDiv = document.getElementById('livePreviewStatus');
+
+            if (typeof LivePreviewSystem === 'undefined') {
+                statusDiv.innerHTML = `<div class="status-bad">❌ LivePreviewSystem class not available</div>`;
+                return;
+            }
+
+            // Try to get instance status
+            let html = '<div style="font-size: 14px;">';
+
+            try {
+                // Check if instance exists in global scope
+                if (window.livePreviewSystem) {
+                    const status = window.livePreviewSystem.getStatus();
+                    html += `<div class="status-good">✅ Live Preview System instance found</div>`;
+                    html += `<div>Preview Mode: ${status.isPreviewMode ? '✅ Active' : '❌ Inactive'}</div>`;
+                    html += `<div>Current Palette: ${status.currentPalette || 'None'}</div>`;
+                    html += `<div>Performance: ${JSON.stringify(status.performance)}</div>`;
+                } else {
+                    html += `<div class="status-warning">⚠️ Live Preview System not instantiated</div>`;
+                    html += `<div>Try creating instance: new LivePreviewSystem()</div>`;
+                }
+            } catch (error) {
+                html += `<div class="status-bad">❌ Error checking Live Preview System: ${error.message}</div>`;
+            }
+
+            html += '</div>';
+            statusDiv.innerHTML = html;
+        }
+
+        // CSS Monitoring
+        function startCSSMonitoring() {
+            const outputDiv = document.getElementById('cssMonitoringOutput');
+
+            if (cssMonitoringInterval) {
+                stopCSSMonitoring();
+            }
+
+            outputDiv.innerHTML = 'Starting CSS monitoring...\n';
+
+            let lastStyleContent = '';
+
+            cssMonitoringInterval = setInterval(() => {
+                const livePreviewStyles = document.getElementById('live-preview-styles');
+
+                if (livePreviewStyles) {
+                    const currentContent = livePreviewStyles.textContent;
+
+                    if (currentContent !== lastStyleContent) {
+                        const timestamp = new Date().toLocaleTimeString();
+                        outputDiv.innerHTML += `\n[${timestamp}] CSS Content Changed:\n`;
+                        outputDiv.innerHTML += `Length: ${currentContent.length} characters\n`;
+                        outputDiv.innerHTML += `Content Preview: ${currentContent.substring(0, 200)}...\n`;
+                        outputDiv.innerHTML += '─'.repeat(50) + '\n';
+
+                        lastStyleContent = currentContent;
+                        outputDiv.scrollTop = outputDiv.scrollHeight;
+                    }
+                } else {
+                    const timestamp = new Date().toLocaleTimeString();
+                    outputDiv.innerHTML += `[${timestamp}] No live-preview-styles element found\n`;
+                }
+            }, 500);
+        }
+
+        function stopCSSMonitoring() {
+            if (cssMonitoringInterval) {
+                clearInterval(cssMonitoringInterval);
+                cssMonitoringInterval = null;
+                document.getElementById('cssMonitoringOutput').innerHTML += '\nMonitoring stopped.\n';
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateIntegrationStatus();
+            checkStyleElements();
+            checkCSSVariables();
+        });
+
+        // Auto-refresh every 5 seconds
+        setInterval(() => {
+            updateIntegrationStatus();
+        }, 5000);
+    </script>
+</body>
+</html>

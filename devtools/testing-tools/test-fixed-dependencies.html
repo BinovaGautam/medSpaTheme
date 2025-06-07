@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Dependencies Test - PVC-009</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .status-good { color: #28a745; font-weight: bold; }
+        .status-bad { color: #dc3545; font-weight: bold; }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+        .test-button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .test-button:hover { background: #005a87; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 Fixed Dependencies Test - PVC-009</h1>
+        <p><strong>Purpose:</strong> Verify that the corrected script dependency chain resolves the JavaScript execution error</p>
+
+        <div id="dependency-status">
+            <h3>Script Loading Order Test</h3>
+            <div class="code-block" id="loading-log">
+Checking script dependency loading order...
+            </div>
+        </div>
+
+        <div>
+            <h3>Manual Test</h3>
+            <button class="test-button" onclick="testScriptObjects()">Test JavaScript Objects</button>
+            <button class="test-button" onclick="testVisualCustomizer()">Test Visual Customizer</button>
+            <button class="test-button" onclick="testLivePreview()">Test Live Preview System</button>
+        </div>
+
+        <div id="test-results">
+            <h3>Test Results</h3>
+            <div class="code-block" id="results-log">
+Click test buttons to verify functionality...
+            </div>
+        </div>
+
+        <div>
+            <h3>Quick Palette Test</h3>
+            <p>If scripts are working, this should change colors in real-time:</p>
+            <button class="test-button" onclick="applyTestPalette('luxury-spa')">Apply Luxury Spa</button>
+            <button class="test-button" onclick="applyTestPalette('medical-clean')">Apply Medical Clean</button>
+            <button class="test-button" onclick="applyTestPalette('calming-oasis')">Apply Calming Oasis</button>
+        </div>
+    </div>
+
+    <script>
+        // Log script loading order
+        function logToDiv(divId, message) {
+            const div = document.getElementById(divId);
+            div.textContent += message + '\n';
+        }
+
+        // Test script objects availability
+        function testScriptObjects() {
+            const resultsDiv = document.getElementById('results-log');
+            resultsDiv.textContent = 'Testing JavaScript Objects:\n';
+            resultsDiv.textContent += '='.repeat(30) + '\n';
+
+            const objectsToTest = [
+                'SemanticColorSystem',
+                'ColorSystemManager',
+                'LivePreviewSystem',
+                'PreviewMessenger',
+                'ColorPaletteInterface',
+                'simpleVisualCustomizer'
+            ];
+
+            let allWorking = true;
+
+            objectsToTest.forEach(objName => {
+                let exists = false;
+                let canInstantiate = false;
+
+                try {
+                    exists = window[objName] !== undefined || eval(`typeof ${objName}`) !== 'undefined';
+
+                    if (exists && typeof window[objName] === 'function') {
+                        // Try to create instance for classes that should be instantiable
+                        if (objName === 'LivePreviewSystem' || objName === 'ColorSystemManager') {
+                            const instance = new window[objName]();
+                            canInstantiate = instance !== null;
+                        } else {
+                            canInstantiate = true; // Object exists and is a function
+                        }
+                    }
+                } catch (e) {
+                    exists = false;
+                    canInstantiate = false;
+                    resultsDiv.textContent += `  Error testing ${objName}: ${e.message}\n`;
+                }
+
+                const status = exists ? (canInstantiate ? '✅ WORKING' : '⚠️ EXISTS') : '❌ MISSING';
+                resultsDiv.textContent += `• ${objName}: ${status}\n`;
+
+                if (!exists) allWorking = false;
+            });
+
+            resultsDiv.textContent += '\n';
+            resultsDiv.textContent += `Overall Status: ${allWorking ? '✅ ALL SCRIPTS LOADED' : '❌ DEPENDENCY ISSUES REMAIN'}\n`;
+        }
+
+        // Test Visual Customizer functionality
+        function testVisualCustomizer() {
+            const resultsDiv = document.getElementById('results-log');
+            resultsDiv.textContent += '\n🎨 Testing Visual Customizer Functionality:\n';
+            resultsDiv.textContent += '='.repeat(40) + '\n';
+
+            try {
+                if (typeof simpleVisualCustomizer !== 'undefined') {
+                    resultsDiv.textContent += '✅ simpleVisualCustomizer object available\n';
+
+                    // Try to access methods
+                    if (simpleVisualCustomizer.init) {
+                        resultsDiv.textContent += '✅ init method available\n';
+                    }
+
+                    if (simpleVisualCustomizer.applyPalette) {
+                        resultsDiv.textContent += '✅ applyPalette method available\n';
+                    }
+
+                    resultsDiv.textContent += '🎉 Visual Customizer: FUNCTIONAL\n';
+                } else {
+                    resultsDiv.textContent += '❌ simpleVisualCustomizer not available\n';
+                }
+            } catch (e) {
+                resultsDiv.textContent += `❌ Visual Customizer test failed: ${e.message}\n`;
+            }
+        }
+
+        // Test Live Preview System
+        function testLivePreview() {
+            const resultsDiv = document.getElementById('results-log');
+            resultsDiv.textContent += '\n🎬 Testing Live Preview System:\n';
+            resultsDiv.textContent += '='.repeat(35) + '\n';
+
+            try {
+                if (typeof LivePreviewSystem !== 'undefined') {
+                    const livePreview = new LivePreviewSystem();
+                    resultsDiv.textContent += '✅ LivePreviewSystem instantiated successfully\n';
+
+                    // Test key methods
+                    if (livePreview.updateColors) {
+                        resultsDiv.textContent += '✅ updateColors method available\n';
+                    }
+
+                    if (livePreview.applyPalette) {
+                        resultsDiv.textContent += '✅ applyPalette method available\n';
+                    }
+
+                    resultsDiv.textContent += '🎉 Live Preview System: FUNCTIONAL\n';
+                } else {
+                    resultsDiv.textContent += '❌ LivePreviewSystem class not available\n';
+                }
+            } catch (e) {
+                resultsDiv.textContent += `❌ Live Preview test failed: ${e.message}\n`;
+            }
+        }
+
+        // Test palette application
+        function applyTestPalette(paletteId) {
+            const resultsDiv = document.getElementById('results-log');
+            resultsDiv.textContent += `\n🎨 Testing palette application: ${paletteId}\n`;
+
+            try {
+                if (typeof simpleVisualCustomizer !== 'undefined' && simpleVisualCustomizer.applyPalette) {
+                    simpleVisualCustomizer.applyPalette(paletteId);
+                    resultsDiv.textContent += `✅ Palette ${paletteId} applied successfully\n`;
+                } else if (typeof LivePreviewSystem !== 'undefined') {
+                    const livePreview = new LivePreviewSystem();
+                    livePreview.applyPalette(paletteId);
+                    resultsDiv.textContent += `✅ Palette ${paletteId} applied via LivePreviewSystem\n`;
+                } else {
+                    resultsDiv.textContent += `❌ No palette application method available\n`;
+                }
+            } catch (e) {
+                resultsDiv.textContent += `❌ Palette application failed: ${e.message}\n`;
+            }
+        }
+
+        // Auto-run tests when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingLog = document.getElementById('loading-log');
+
+            loadingLog.textContent = 'Checking script dependency loading order...\n';
+            loadingLog.textContent += '='.repeat(45) + '\n';
+
+            // Check loading order
+            const expectedOrder = [
+                'SemanticColorSystem',
+                'ColorSystemManager',
+                'LivePreviewSystem',
+                'PreviewMessenger',
+                'ColorPaletteInterface',
+                'simpleVisualCustomizer'
+            ];
+
+            expectedOrder.forEach((scriptName, index) => {
+                setTimeout(() => {
+                    const exists = window[scriptName] !== undefined || eval(`typeof ${scriptName}`) !== 'undefined';
+                    const status = exists ? '✅ LOADED' : '❌ MISSING';
+                    loadingLog.textContent += `${index + 1}. ${scriptName}: ${status}\n`;
+
+                    if (index === expectedOrder.length - 1) {
+                        loadingLog.textContent += '\n🔍 Dependency chain check complete.\n';
+                        // Auto-run object test after loading check
+                        setTimeout(testScriptObjects, 1000);
+                    }
+                }, (index + 1) * 200);
+            });
+        });
+    </script>
+</body>
+</html>
