@@ -31,118 +31,90 @@ function simple_visual_customizer_admin_bar($wp_admin_bar) {
 add_action('admin_bar_menu', 'simple_visual_customizer_admin_bar', 100);
 
 /**
- * Enqueue PVC-005 Enhanced Scripts and Styles
+ * Enqueue Visual Customizer Scripts - Enhanced Approach
  */
-function simple_visual_customizer_enqueue_assets() {
-    // Only for admin users
-    if (!current_user_can('manage_options')) {
+function enqueue_simple_visual_customizer_scripts() {
+    // Only load for users who can manage options or when explicitly enabled
+    if (!current_user_can('manage_options') && !apply_filters('enable_visual_customizer_for_all', false)) {
         return;
     }
 
-    // FIXED DEPENDENCY CHAIN - Load in correct order
+    $script_path = get_template_directory() . '/assets/js/';
+    $script_url = get_template_directory_uri() . '/assets/js/';
 
-    // 1. Core Foundation - Semantic Color System (no dependencies except jQuery)
-    wp_enqueue_script(
-        'semantic-color-system',
-        get_template_directory_uri() . '/assets/js/semantic-color-system.js',
-        ['jquery'],
-        PREETIDREAMS_VERSION,
-        true
-    );
+    // Core color system dependencies
+    $dependencies = array('jquery');
 
-    // 2. Color System Manager (depends on semantic color system)
-    wp_enqueue_script(
-        'color-system-manager',
-        get_template_directory_uri() . '/assets/js/color-system-manager.js',
-        ['semantic-color-system'],
-        PREETIDREAMS_VERSION,
-        true
-    );
+    if (file_exists($script_path . 'semantic-color-system.js')) {
+        wp_enqueue_script(
+            'semantic-color-system',
+            $script_url . 'semantic-color-system.js',
+            array('jquery'),
+            filemtime($script_path . 'semantic-color-system.js'),
+            true
+        );
+        $dependencies[] = 'semantic-color-system';
+    }
 
-    // 3. Live Preview System (depends on color system manager)
-    wp_enqueue_script(
-        'live-preview-system',
-        get_template_directory_uri() . '/assets/js/live-preview-system.js',
-        ['color-system-manager'],
-        PREETIDREAMS_VERSION,
-        true
-    );
+    if (file_exists($script_path . 'color-system-manager.js')) {
+        wp_enqueue_script(
+            'color-system-manager',
+            $script_url . 'color-system-manager.js',
+            array('jquery', 'semantic-color-system'),
+            filemtime($script_path . 'color-system-manager.js'),
+            true
+        );
+        $dependencies[] = 'color-system-manager';
+    }
 
-    // 4. Preview Messenger (depends on live preview)
-    wp_enqueue_script(
-        'preview-messenger',
-        get_template_directory_uri() . '/assets/js/preview-messenger.js',
-        ['live-preview-system'],
-        PREETIDREAMS_VERSION,
-        true
-    );
+    if (file_exists($script_path . 'color-palette-interface.js')) {
+        wp_enqueue_script(
+            'color-palette-interface',
+            $script_url . 'color-palette-interface.js',
+            array('jquery', 'semantic-color-system', 'color-system-manager'),
+            filemtime($script_path . 'color-palette-interface.js'),
+            true
+        );
+        $dependencies[] = 'color-palette-interface';
+    }
 
-    // 5. WordPress Customizer Bridge (depends on preview messenger)
-    wp_enqueue_script(
-        'wp-customizer-bridge',
-        get_template_directory_uri() . '/assets/js/wp-customizer-bridge.js',
-        ['preview-messenger'],
-        PREETIDREAMS_VERSION,
-        true
-    );
+    // Main Simple Visual Customizer (loads last)
+    if (file_exists($script_path . 'simple-visual-customizer.js')) {
+        wp_enqueue_script(
+            'simple-visual-customizer',
+            $script_url . 'simple-visual-customizer.js',
+            $dependencies,
+            filemtime($script_path . 'simple-visual-customizer.js'),
+            true
+        );
 
-    // 6. Color Palette Interface (depends on all core systems)
-    wp_enqueue_script(
-        'color-palette-interface',
-        get_template_directory_uri() . '/assets/js/color-palette-interface.js',
-        ['wp-customizer-bridge'],
-        PREETIDREAMS_VERSION,
-        true
-    );
+        // Pass configuration to JavaScript
+        wp_localize_script('simple-visual-customizer', 'simpleCustomizer', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('simple_visual_customizer'),
+            'debug' => defined('WP_DEBUG') && WP_DEBUG,
+            'currentUserId' => get_current_user_id(),
+            'canManageOptions' => current_user_can('manage_options')
+        ));
+    }
 
-    // 7. Simple Visual Customizer (top level - depends on everything)
-    wp_enqueue_script(
-        'simple-visual-customizer',
-        get_template_directory_uri() . '/assets/js/simple-visual-customizer.js',
-        ['color-palette-interface'],
-        PREETIDREAMS_VERSION,
-        true
-    );
+    // Enqueue styles
+    $style_path = get_template_directory() . '/assets/css/';
+    $style_url = get_template_directory_uri() . '/assets/css/';
 
-    // Enhanced CSS with responsive design
-    wp_enqueue_style(
-        'simple-visual-customizer-css',
-        get_template_directory_uri() . '/assets/css/simple-visual-customizer.css',
-        [],
-        PREETIDREAMS_VERSION
-    );
-
-    // Enhanced configuration data
-    wp_localize_script('simple-visual-customizer', 'simpleCustomizer', [
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('simple_visual_customizer'),
-        'isAdmin' => current_user_can('manage_options'),
-        'debug' => defined('WP_DEBUG') && WP_DEBUG,
-        'pvc005Enabled' => true, // PVC-005 Live Preview System
-        'capabilities' => [
-            'livePreview' => true,
-            'previewMessenger' => true,
-            'wpCustomizerBridge' => true,
-            'performanceMonitoring' => true
-        ],
-        'config' => [
-            'updateDelay' => 50, // < 100ms requirement
-            'previewMode' => 'live',
-            'cssVariablePrefix' => '--color-',
-            'enableDebug' => defined('WP_DEBUG') && WP_DEBUG
-        ],
-        'strings' => [
-            'loading' => __('Loading Live Preview System...', 'medspatheme'),
-            'applying' => __('Applying palette...', 'medspatheme'),
-            'applied' => __('Palette applied in real-time!', 'medspatheme'),
-            'error' => __('Error applying palette', 'medspatheme'),
-            'reset' => __('Reset to defaults', 'medspatheme'),
-            'performance' => __('Performance metrics', 'medspatheme')
-        ]
-    ]);
+    if (file_exists($style_path . 'simple-visual-customizer.css')) {
+        wp_enqueue_style(
+            'simple-visual-customizer',
+            $style_url . 'simple-visual-customizer.css',
+            array(),
+            filemtime($style_path . 'simple-visual-customizer.css')
+        );
+    }
 }
-add_action('wp_enqueue_scripts', 'simple_visual_customizer_enqueue_assets');
-add_action('admin_enqueue_scripts', 'simple_visual_customizer_enqueue_assets');
+
+// Hook the enhanced approach
+add_action('wp_enqueue_scripts', 'enqueue_simple_visual_customizer_scripts');
+add_action('admin_enqueue_scripts', 'enqueue_simple_visual_customizer_scripts');
 
 /**
  * Enhanced AJAX Handler - Apply Changes with Live Preview Integration

@@ -21,6 +21,12 @@
         // Initialize PVC-005 components first
         initPVC005Components();
 
+        // CRITICAL FIX: Make LivePreviewSystem globally available
+        if (livePreviewSystem) {
+            window.livePreviewSystem = livePreviewSystem;
+            console.log('✅ LivePreviewSystem made globally available');
+        }
+
         // Admin bar trigger
         $(document).on('click', '#wp-admin-bar-visual-customizer a', function(e) {
             e.preventDefault();
@@ -54,7 +60,7 @@
     }
 
     /**
-     * PVC-005: Initialize Live Preview System components
+     * PVC-005: Initialize Live Preview System components with enhanced approach
      */
     function initPVC005Components() {
         try {
@@ -64,7 +70,9 @@
                     debug: simpleCustomizer.debug || false,
                     updateDelay: 50 // < 100ms requirement
                 });
-                console.log('✅ LivePreviewSystem initialized');
+                console.log('✅ LivePreviewSystem initialized with Enhanced CSS Generation');
+            } else {
+                console.warn('⚠️ LivePreviewSystem not available');
             }
 
             // Initialize Preview Messenger
@@ -175,9 +183,17 @@
         // Load color palette interface
         loadColorPaletteInterface();
 
+        // CRITICAL FIX: Load and highlight current palette after interface loads
+        setTimeout(() => {
+            loadAndHighlightCurrentPalette();
+        }, 1000);
+
         // Enable live preview mode
         if (livePreviewSystem) {
             livePreviewSystem.enablePreviewMode();
+            console.log('✅ Live Preview mode enabled');
+        } else {
+            console.warn('⚠️ LivePreviewSystem not available when opening sidebar');
         }
     }
 
@@ -400,6 +416,20 @@
                 console.log('🎨 Fallback palette selected:', paletteId, fullPaletteData);
                 console.log('💾 Fallback - Current config updated:', currentConfig);
 
+                // CRITICAL FIX: Ensure LivePreviewSystem is available
+                if (!livePreviewSystem) {
+                    console.warn('⚠️ LivePreviewSystem not in scope, checking global...');
+                    if (window.livePreviewSystem) {
+                        livePreviewSystem = window.livePreviewSystem;
+                        console.log('✅ Found LivePreviewSystem in global scope');
+                    } else if (typeof LivePreviewSystem !== 'undefined') {
+                        console.log('🔧 Creating new LivePreviewSystem instance...');
+                        livePreviewSystem = new LivePreviewSystem({ debug: true });
+                        window.livePreviewSystem = livePreviewSystem;
+                        console.log('✅ Created new LivePreviewSystem instance');
+                    }
+                }
+
                 // Dispatch the same event as the main interface
                 console.log('📡 Dispatching paletteInterface:paletteSelected event...');
                 document.dispatchEvent(new CustomEvent('paletteInterface:paletteSelected', {
@@ -409,17 +439,39 @@
                 // Apply via Live Preview System if available
                 if (livePreviewSystem && fullPaletteData) {
                     console.log('🚀 Fallback - Applying via Live Preview System...');
+                    console.log('🎯 LivePreviewSystem status:', {
+                        exists: !!livePreviewSystem,
+                        isPreviewMode: livePreviewSystem.isPreviewMode,
+                        hasApplyMethod: typeof livePreviewSystem.applyPalette === 'function'
+                    });
+
+                    // CRITICAL: Ensure preview mode is enabled
+                    if (!livePreviewSystem.isPreviewMode) {
+                        console.log('🔧 Enabling preview mode before applying palette...');
+                        livePreviewSystem.enablePreviewMode();
+                    }
+
                     livePreviewSystem.applyPalette(fullPaletteData).then(() => {
                         console.log('✅ Fallback - Live Preview applied successfully');
                         showMessage('Palette applied! Changes are live.', 'success');
                     }).catch(error => {
                         console.error('❌ Fallback - Live Preview error:', error);
                         showMessage('Error applying palette: ' + error.message, 'error');
+
+                        // FALLBACK: Try manual CSS injection as emergency
+                        console.log('🚨 Attempting emergency manual CSS injection...');
+                        emergencyManualCSSInjection(fullPaletteData);
                     });
                 } else {
                     console.warn('⚠️ Fallback - Live Preview not available');
-                    console.log('Live Preview System:', livePreviewSystem);
+                    console.log('LivePreviewSystem:', livePreviewSystem);
                     console.log('Full Palette Data:', fullPaletteData);
+
+                    // FALLBACK: Try manual CSS injection
+                    if (fullPaletteData) {
+                        console.log('🚨 Attempting emergency manual CSS injection...');
+                        emergencyManualCSSInjection(fullPaletteData);
+                    }
                 }
 
                 // Show color preview
@@ -433,6 +485,189 @@
         });
 
         console.log('✅ Fallback handlers set up');
+    }
+
+    /**
+     * Emergency manual CSS injection when LivePreviewSystem fails - ENHANCED with Dynamic Classes
+     */
+    function emergencyManualCSSInjection(paletteData) {
+        try {
+            console.log('🚨 Emergency CSS injection for palette:', paletteData);
+
+            if (!paletteData || !paletteData.colors) {
+                console.error('❌ No palette colors for emergency injection');
+                return;
+            }
+
+            const paletteId = paletteData.id || 'emergency';
+            const paletteClass = `palette-${paletteId}`;
+
+            // STEP 1: Apply dynamic palette class to body
+            console.log(`🏷️ Emergency: Applying palette class: ${paletteClass}`);
+
+            // Remove existing palette classes
+            const bodyClasses = document.body.className.split(' ');
+            bodyClasses.forEach(className => {
+                if (className.startsWith('palette-')) {
+                    document.body.classList.remove(className);
+                    console.log(`🗑️ Emergency: Removed old class: ${className}`);
+                }
+            });
+
+            // Add new palette class and preview class
+            document.body.classList.add(paletteClass);
+            document.body.classList.add('live-preview-active');
+            console.log(`✅ Emergency: Added classes: ${paletteClass}, live-preview-active`);
+
+            // STEP 2: Create emergency style element
+            let emergencyStyle = document.getElementById('emergency-palette-styles');
+            if (!emergencyStyle) {
+                emergencyStyle = document.createElement('style');
+                emergencyStyle.id = 'emergency-palette-styles';
+                document.head.appendChild(emergencyStyle);
+            }
+
+            // STEP 3: Generate emergency CSS with DYNAMIC CLASSES and maximum specificity
+            let css = `/* Emergency Palette CSS with Dynamic Classes - ${new Date().toLocaleTimeString()} */\n`;
+
+            // Extract actual color values
+            const primaryColor = paletteData.colors.primary?.hex || '#2c3e50';
+            const secondaryColor = paletteData.colors.secondary?.hex || '#16a085';
+            const accentColor = paletteData.colors.accent?.hex || '#f39c12';
+            const surfaceColor = paletteData.colors.surface?.hex || '#ffffff';
+            const backgroundColor = paletteData.colors.background?.hex || '#ecf0f1';
+            const textColor = paletteData.colors.text?.hex || '#34495e';
+
+            // Generate ultra-high specificity emergency CSS
+            css += `
+/* EMERGENCY DYNAMIC PALETTE CSS - ${paletteClass} */
+
+/* HEADER - Emergency Override */
+body.${paletteClass}.live-preview-active .site-header,
+body.${paletteClass}.live-preview-active .professional-header,
+body.${paletteClass}.live-preview-active .site-header.professional-header {
+    background: ${primaryColor} !important;
+    background-color: ${primaryColor} !important;
+    border-bottom-color: ${secondaryColor} !important;
+    transition: all 0.3s ease !important;
+}
+
+/* NAVIGATION - Emergency Override */
+body.${paletteClass}.live-preview-active .main-navigation .nav-menu .menu-item a,
+body.${paletteClass}.live-preview-active .site-header .main-navigation .nav-menu .menu-item a {
+    color: ${surfaceColor} !important;
+}
+
+body.${paletteClass}.live-preview-active .main-navigation .nav-menu .menu-item a:hover {
+    color: ${secondaryColor} !important;
+    background: rgba(${hexToRgb(secondaryColor)}, 0.15) !important;
+}
+
+/* CTA BUTTONS - Emergency Override */
+body.${paletteClass}.live-preview-active .header-actions .btn-consultation,
+body.${paletteClass}.live-preview-active .btn-primary,
+body.${paletteClass}.live-preview-active button.btn-primary {
+    background: ${accentColor} !important;
+    background-color: ${accentColor} !important;
+    color: ${surfaceColor} !important;
+    border-color: ${accentColor} !important;
+}
+
+body.${paletteClass}.live-preview-active .header-actions .btn-consultation:hover,
+body.${paletteClass}.live-preview-active .btn-primary:hover,
+body.${paletteClass}.live-preview-active button.btn-primary:hover {
+    background: ${secondaryColor} !important;
+    background-color: ${secondaryColor} !important;
+    border-color: ${secondaryColor} !important;
+}
+
+/* PREVIEW ELEMENTS - Emergency Override */
+body.${paletteClass}.live-preview-active .preview-element {
+    background: ${primaryColor} !important;
+    background-color: ${primaryColor} !important;
+    color: ${surfaceColor} !important;
+    border-color: ${secondaryColor} !important;
+}
+
+body.${paletteClass}.live-preview-active .cta-button {
+    background: ${accentColor} !important;
+    background-color: ${accentColor} !important;
+    color: ${surfaceColor} !important;
+    border-color: ${accentColor} !important;
+}
+
+body.${paletteClass}.live-preview-active .nav-item {
+    color: ${secondaryColor} !important;
+}
+
+/* EMERGENCY INDICATOR */
+body.${paletteClass}.live-preview-active::after {
+    content: "🚨 EMERGENCY PALETTE: ${paletteData.name || paletteId}";
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    background: red;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    z-index: 999999;
+    animation: emergencyFlash 1s infinite;
+}
+
+@keyframes emergencyFlash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+            `;
+
+            // Map palette colors to actual CSS variables (traditional approach as backup)
+            css += `\n/* EMERGENCY CSS VARIABLES */\nhtml body {\n`;
+            const colorMapping = {
+                primary: '--color-primary-navy',
+                secondary: '--color-primary-teal',
+                accent: '--color-secondary-peach',
+                surface: '--color-neutral-white',
+                background: '--color-neutral-light',
+                text: '--color-neutral-dark'
+            };
+
+            Object.entries(paletteData.colors).forEach(([role, colorData]) => {
+                const cssVar = colorMapping[role];
+                const colorValue = colorData.hex || colorData;
+
+                if (cssVar && colorValue) {
+                    css += `  ${cssVar}: ${colorValue} !important;\n`;
+                    console.log(`🎨 Emergency mapping: ${role} -> ${cssVar}: ${colorValue}`);
+                }
+            });
+
+            css += `}\n`;
+
+            // Apply emergency CSS
+            emergencyStyle.textContent = css;
+
+            // Force DOM reflow multiple times
+            document.body.offsetHeight;
+            setTimeout(() => document.body.offsetHeight, 100);
+
+            console.log('✅ Emergency CSS injection with dynamic classes completed');
+            showMessage(`Emergency dynamic palette applied: ${paletteData.name || paletteId}`, 'warning');
+
+        } catch (error) {
+            console.error('❌ Emergency CSS injection failed:', error);
+            showMessage('All CSS application methods failed', 'error');
+        }
+    }
+
+    // Helper function for emergency CSS
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        if (!result) return '0, 0, 0';
+        const r = parseInt(result[1], 16);
+        const g = parseInt(result[2], 16);
+        const b = parseInt(result[3], 16);
+        return `${r}, ${g}, ${b}`;
     }
 
     /**
@@ -648,6 +883,216 @@
                 </button>
             </div>
         `);
+    }
+
+    /**
+     * CRITICAL FIX: Load and highlight current palette
+     */
+    function loadAndHighlightCurrentPalette() {
+        console.log('🎯 Loading current palette to highlight...');
+
+        // Method 1: Try AJAX call to get current palette
+        if (typeof simpleCustomizer !== 'undefined' && simpleCustomizer.ajaxUrl) {
+            $.ajax({
+                url: simpleCustomizer.ajaxUrl,
+                method: 'POST',
+                data: {
+                    action: 'get_current_palette',
+                    nonce: simpleCustomizer.nonce
+                },
+                success: function(response) {
+                    if (response.success && response.data) {
+                        const currentPaletteId = response.data;
+                        console.log(`✅ Current palette from AJAX: ${currentPaletteId}`);
+
+                        // CRITICAL FIX: Verify palette exists before using it
+                        const paletteElement = $(`.palette-item-simple[data-palette="${currentPaletteId}"], .palette-card[data-palette-id="${currentPaletteId}"]`);
+                        if (paletteElement.length > 0) {
+                            console.log(`✅ Verified palette ${currentPaletteId} exists in interface`);
+                            highlightPalette(currentPaletteId);
+                            loadCurrentPaletteData(currentPaletteId);
+                        } else {
+                            console.warn(`⚠️ AJAX returned palette '${currentPaletteId}' but it doesn't exist in available palettes`);
+                            console.log('📋 Available palettes in interface:');
+                            $('.palette-item-simple[data-palette]').each(function() {
+                                console.log(`  - ${$(this).data('palette')}`);
+                            });
+                            tryAlternativeCurrentPaletteDetection();
+                        }
+                    } else {
+                        console.warn('⚠️ AJAX returned no current palette data');
+                        tryAlternativeCurrentPaletteDetection();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('❌ AJAX Error loading current palette:', status, error);
+                    tryAlternativeCurrentPaletteDetection();
+                }
+            });
+        } else {
+            console.warn('⚠️ simpleCustomizer config not available for AJAX');
+            tryAlternativeCurrentPaletteDetection();
+        }
+    }
+
+    /**
+     * Try alternative methods to detect current palette
+     */
+    function tryAlternativeCurrentPaletteDetection() {
+        console.log('🔍 Trying alternative current palette detection...');
+
+        // Method 2: Check semantic color system
+        if (typeof SemanticColorSystem !== 'undefined') {
+            try {
+                const semanticSystem = new SemanticColorSystem();
+                const currentPalette = semanticSystem.getCurrentPalette();
+                if (currentPalette && currentPalette.id) {
+                    console.log(`✅ Current palette from SemanticColorSystem: ${currentPalette.id}`);
+                    highlightPalette(currentPalette.id);
+                    return;
+                }
+            } catch (error) {
+                console.error('❌ SemanticColorSystem getCurrentPalette failed:', error);
+            }
+        }
+
+        // Method 3: Check color system manager
+        if (typeof ColorSystemManager !== 'undefined') {
+            try {
+                const colorManager = new ColorSystemManager();
+                const currentPalette = colorManager.getCurrentPalette();
+                if (currentPalette && currentPalette.id) {
+                    console.log(`✅ Current palette from ColorSystemManager: ${currentPalette.id}`);
+                    highlightPalette(currentPalette.id);
+                    return;
+                }
+            } catch (error) {
+                console.error('❌ ColorSystemManager getCurrentPalette failed:', error);
+            }
+        }
+
+        // Method 4: ENHANCED - Get first available palette from interface
+        const availablePalettes = $('.palette-item-simple[data-palette]');
+        if (availablePalettes.length > 0) {
+            const firstPaletteId = $(availablePalettes[0]).data('palette');
+            console.log(`✅ Using first available palette: ${firstPaletteId}`);
+            highlightPalette(firstPaletteId);
+            loadCurrentPaletteData(firstPaletteId);
+            return;
+        }
+
+        // Method 5: Final fallback
+        console.warn('⚠️ Could not detect any current palette, checking system defaults...');
+        const fallbackPalettes = ['modern-monochrome', 'professional-trust', 'modern-clinical'];
+        for (const fallbackId of fallbackPalettes) {
+            if ($(`.palette-item-simple[data-palette="${fallbackId}"]`).length > 0) {
+                console.log(`✅ Using system fallback: ${fallbackId}`);
+                highlightPalette(fallbackId);
+                loadCurrentPaletteData(fallbackId);
+                return;
+            }
+        }
+
+        console.warn('⚠️ No valid palettes found in the interface');
+    }
+
+    /**
+     * Highlight the selected palette in the interface
+     */
+    function highlightPalette(paletteId) {
+        console.log(`🎯 Highlighting palette: ${paletteId}`);
+
+        // Remove existing selections
+        $('.palette-item-simple, .palette-card').removeClass('active selected');
+
+        // Highlight the current palette
+        const paletteElement = $(`.palette-item-simple[data-palette="${paletteId}"], .palette-card[data-palette-id="${paletteId}"]`);
+        if (paletteElement.length > 0) {
+            paletteElement.addClass('active selected');
+            console.log(`✅ Highlighted palette: ${paletteId}`);
+
+            // Scroll to the highlighted palette if needed
+            const container = $('#simple-color-palette-container');
+            if (container.length && paletteElement.length) {
+                container.animate({
+                    scrollTop: paletteElement.offset().top - container.offset().top + container.scrollTop() - 50
+                }, 300);
+            }
+        } else {
+            console.warn(`⚠️ Could not find palette element for: ${paletteId}`);
+        }
+    }
+
+    /**
+     * Load current palette data for immediate preview
+     */
+    function loadCurrentPaletteData(paletteId) {
+        console.log(`📊 Loading palette data for: ${paletteId}`);
+
+        try {
+            // Try to get full palette data
+            let paletteData = null;
+
+            if (typeof SemanticColorSystem !== 'undefined') {
+                const semanticSystem = new SemanticColorSystem();
+                paletteData = semanticSystem.getPalette(paletteId);
+            }
+
+            if (paletteData) {
+                console.log(`✅ Loaded palette data for ${paletteId}:`, paletteData);
+
+                // Store in current config
+                currentConfig = {
+                    activePalette: paletteId,
+                    paletteData: paletteData,
+                    timestamp: performance.now()
+                };
+
+                // Apply via LivePreviewSystem if available
+                if (livePreviewSystem) {
+                    console.log(`🚀 Applying current palette ${paletteId} via LivePreviewSystem...`);
+                    livePreviewSystem.applyPalette(paletteData).then(() => {
+                        console.log(`✅ Current palette ${paletteId} applied successfully`);
+                    }).catch(error => {
+                        console.error(`❌ Error applying current palette ${paletteId}:`, error);
+                    });
+                } else {
+                    console.warn('⚠️ LivePreviewSystem not available for current palette application');
+                }
+            } else {
+                console.warn(`⚠️ Could not load palette data for: ${paletteId}`);
+
+                // ENHANCED: Try to get palette data from DOM element
+                const paletteElement = $(`.palette-item-simple[data-palette="${paletteId}"]`);
+                if (paletteElement.length > 0) {
+                    const domPaletteData = paletteElement.data('palette-data');
+                    if (domPaletteData) {
+                        console.log(`✅ Found palette data in DOM for ${paletteId}:`, domPaletteData);
+
+                        currentConfig = {
+                            activePalette: paletteId,
+                            paletteData: domPaletteData,
+                            timestamp: performance.now()
+                        };
+
+                        if (livePreviewSystem) {
+                            console.log(`🚀 Applying DOM palette ${paletteId} via LivePreviewSystem...`);
+                            livePreviewSystem.applyPalette(domPaletteData).then(() => {
+                                console.log(`✅ DOM palette ${paletteId} applied successfully`);
+                            }).catch(error => {
+                                console.error(`❌ Error applying DOM palette ${paletteId}:`, error);
+                            });
+                        }
+                        return;
+                    }
+                }
+
+                console.warn(`⚠️ No palette data available for ${paletteId} from any source`);
+            }
+
+        } catch (error) {
+            console.error(`❌ Error loading palette data for ${paletteId}:`, error);
+        }
     }
 
     // Initialize when document is ready

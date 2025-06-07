@@ -221,10 +221,32 @@ class VisualCustomizerAJAXHandlers {
         }
 
         try {
+            // CRITICAL FIX: Get list of available palettes first
+            $available_palettes = array();
+
+            // Get available palettes from SemanticColorSystem
+            if (class_exists('SemanticColorSystem')) {
+                $semantic_system = new SemanticColorSystem();
+                $all_palettes = $semantic_system->getAllPalettes();
+                $available_palettes = array_column($all_palettes, 'id');
+            }
+
+            // Fallback palette list if SemanticColorSystem not available
+            if (empty($available_palettes)) {
+                $available_palettes = [
+                    'professional-trust',
+                    'modern-clinical',
+                    'rose-gold-elegance',
+                    'sage-tranquility',
+                    'lavender-calm',
+                    'warm-earth',
+                    'modern-monochrome'
+                ];
+            }
+
             // Method 1: Check theme mod (WordPress Customizer)
             $current_palette = get_theme_mod('visual_customizer_active_palette');
-
-            if ($current_palette) {
+            if ($current_palette && in_array($current_palette, $available_palettes)) {
                 wp_send_json_success($current_palette);
                 return;
             }
@@ -232,13 +254,15 @@ class VisualCustomizerAJAXHandlers {
             // Method 2: Check simple visual customizer config
             $config = get_option('preetidreams_visual_customizer_config', array());
             if (!empty($config) && isset($config['activePalette'])) {
-                wp_send_json_success($config['activePalette']);
-                return;
+                if (in_array($config['activePalette'], $available_palettes)) {
+                    wp_send_json_success($config['activePalette']);
+                    return;
+                }
             }
 
             // Method 3: Check direct palette option
             $direct_palette = get_option('preetidreams_active_palette');
-            if ($direct_palette) {
+            if ($direct_palette && in_array($direct_palette, $available_palettes)) {
                 wp_send_json_success($direct_palette);
                 return;
             }
@@ -246,14 +270,19 @@ class VisualCustomizerAJAXHandlers {
             // Method 4: Check if ColorSystemManager has current palette
             if ($this->color_system && method_exists($this->color_system, 'get_current_palette')) {
                 $system_palette = $this->color_system->get_current_palette();
-                if ($system_palette && isset($system_palette['id'])) {
+                if ($system_palette && isset($system_palette['id']) && in_array($system_palette['id'], $available_palettes)) {
                     wp_send_json_success($system_palette['id']);
                     return;
                 }
             }
 
-            // No current palette found - return default
-            wp_send_json_success('luxury-spa'); // Default palette
+            // CRITICAL FIX: Return first available palette as default instead of hardcoded invalid one
+            $default_palette = !empty($available_palettes) ? $available_palettes[0] : 'modern-monochrome';
+
+            // Update the database to store this valid default
+            update_option('preetidreams_active_palette', $default_palette);
+
+            wp_send_json_success($default_palette);
 
         } catch (Exception $e) {
             wp_send_json_error(array(
