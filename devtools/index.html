@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTools - Development Utilities Index</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-category {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tool-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .category-description {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .tool-list {
+            list-style: none;
+        }
+
+        .tool-item {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .tool-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .tool-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .tool-link:hover {
+            color: #3498db;
+        }
+
+        .tool-description {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+
+        .stats {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-active { background: #27ae60; }
+        .status-beta { background: #f39c12; }
+        .status-development { background: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛠️ DevTools</h1>
+            <p>Comprehensive Development Utilities for Medical Spa Theme</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search tools..." id="searchInput">
+        </div>
+
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">28</div>
+                    <div class="stat-label">Total Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Testing Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Admin Tools</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Testing Tools -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">🧪</div>
+                    <div class="category-title">Testing Tools</div>
+                </div>
+                <div class="category-description">
+                    Comprehensive testing utilities for theme validation and debugging
+                </div>
+                <ul class="tool-list">
+                    <li class="tool-item">
+                        <a href="testing-tools/test-surgical-fix.html" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Surgical Fix Test
+                        </a>
+                        <div class="tool-description">Test PVC-005 Live Preview System surgical fix</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="testing-tools/test-visual-customizer-debug.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Visual Customizer Debug
+                        </a>
+                        <div class="tool-description">Debug visual customizer functionality</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="testing-tools/debug-visual-customizer.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Debug Visual Customizer Admin
+                        </a>
+                        <div class="tool-description">Admin panel debug tool</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="testing-tools/test-luxury-footer.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Luxury Footer Test
+                        </a>
+                        <div class="tool-description">Test luxury footer implementation</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="testing-tools/debug-routing.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Debug Routing
+                        </a>
+                        <div class="tool-description">WordPress routing debug utility</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="test-color-palette-interface.html" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Color Palette Interface Test
+                        </a>
+                        <div class="tool-description">Test color palette interface components</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="test-semantic-system.html" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Semantic System Test
+                        </a>
+                        <div class="tool-description">Test semantic color system functionality</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="test-color-system-manager.html" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Color System Manager Test
+                        </a>
+                        <div class="tool-description">Test color system manager functionality</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="test-script-loading.html" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Script Loading Test
+                        </a>
+                        <div class="tool-description">Test JavaScript loading and initialization</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="contrast-validation-test.html" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Contrast Validation Test
+                        </a>
+                        <div class="tool-description">WCAG contrast validation testing</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- WordPress Admin Tools -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">⚙️</div>
+                    <div class="category-title">WordPress Admin Tools</div>
+                </div>
+                <div class="category-description">
+                    WordPress admin interface tools for management and diagnostics
+                </div>
+                <ul class="tool-list">
+                    <li class="tool-item">
+                        <a href="wp-admin-tools/load-admin-tools.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Load Admin Tools
+                        </a>
+                        <div class="tool-description">Bootstrap loader for all admin tools</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="wp-admin-tools/treatments-diagnostic-admin.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Treatments Diagnostic Admin
+                        </a>
+                        <div class="tool-description">WordPress admin diagnostic tool</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="wp-admin-tools/treatments-fix-utility-admin.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Treatments Fix Utility Admin
+                        </a>
+                        <div class="tool-description">WordPress admin fix utility</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="test-loading.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Test Loading
+                        </a>
+                        <div class="tool-description">Test tool loading functionality</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="debug-user-capabilities.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Debug User Capabilities
+                        </a>
+                        <div class="tool-description">Debug WordPress user capabilities</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Development Utilities -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">🔧</div>
+                    <div class="category-title">Development Utilities</div>
+                </div>
+                <div class="category-description">
+                    Utilities for development workflow enhancement and content creation
+                </div>
+                <ul class="tool-list">
+                    <li class="tool-item">
+                        <a href="dev-utilities/fix-treatments-page.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Fix Treatments Page
+                        </a>
+                        <div class="tool-description">Automated treatments page fix utility</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="dev-utilities/create-treatments-page.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Create Treatments Page
+                        </a>
+                        <div class="tool-description">Create and configure treatments page</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="about-page-creator.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            About Page Creator
+                        </a>
+                        <div class="tool-description">Create and configure about page</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="create-about-page.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Create About Page
+                        </a>
+                        <div class="tool-description">Simple about page creator</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="create-about-page-wp-cli.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Create About Page (WP-CLI)
+                        </a>
+                        <div class="tool-description">WP-CLI version of about page creator</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Standalone Scripts -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">📊</div>
+                    <div class="category-title">Standalone Scripts</div>
+                </div>
+                <div class="category-description">
+                    Independent scripts for command-line and browser-based diagnostics
+                </div>
+                <ul class="tool-list">
+                    <li class="tool-item">
+                        <a href="standalone-scripts/treatments-diagnostic.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Treatments Diagnostic
+                        </a>
+                        <div class="tool-description">Comprehensive treatments diagnostic tool</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Automated Checks -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">🤖</div>
+                    <div class="category-title">Automated Checks</div>
+                </div>
+                <div class="category-description">
+                    Automated monitoring and validation systems
+                </div>
+                <ul class="tool-list">
+                    <li class="tool-item">
+                        <a href="automated-checks/" class="tool-link">
+                            <span class="status-indicator status-development"></span>
+                            Health Monitors
+                        </a>
+                        <div class="tool-description">Automated health monitoring scripts</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Quality Assurance -->
+            <div class="tool-category">
+                <div class="category-header">
+                    <div class="category-icon">✅</div>
+                    <div class="category-title">Quality Assurance</div>
+                </div>
+                <div class="category-description">
+                    Quality assurance and accessibility validation tools
+                </div>
+                <ul class="tool-list">
+                    <li class="tool-item">
+                        <a href="contrast-checker.php" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Contrast Checker
+                        </a>
+                        <div class="tool-description">WCAG AAA compliance contrast checker</div>
+                    </li>
+                    <li class="tool-item">
+                        <a href="contrast-audit-report.md" class="tool-link">
+                            <span class="status-indicator status-active"></span>
+                            Contrast Audit Report
+                        </a>
+                        <div class="tool-description">Latest contrast audit results</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🚀 Generated by DEVTOOLS-ORG-WF-001 | Medical Spa Theme Development Tools</p>
+            <p>Last updated: <span id="lastUpdated"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Set last updated timestamp
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const toolItems = document.querySelectorAll('.tool-item');
+
+            toolItems.forEach(item => {
+                const toolName = item.querySelector('.tool-link').textContent.toLowerCase();
+                const toolDesc = item.querySelector('.tool-description').textContent.toLowerCase();
+
+                if (toolName.includes(searchTerm) || toolDesc.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && e.target !== document.getElementById('searchInput')) {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+        });
+    </script>
+</body>
+</html>
