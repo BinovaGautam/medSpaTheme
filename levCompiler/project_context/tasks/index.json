@@ -59,6 +59,20 @@
     "sprintHistory": [],
     "sprintPlans": "levCompiler/project_context/tasks/sprints/",
     "sprintReports": "levCompiler/project_context/tasks/reports/sprints/",
+    "sprintExtensions": {
+      "SPRINT-002-EXT-001": {
+        "title": "Visual Customizer Integration Crisis Resolution",
+        "filePath": "levCompiler/project_context/tasks/sprints/sprint-2-extension-visual-integration.md",
+        "priority": "CRITICAL",
+        "status": "planned",
+        "storyPoints": 16,
+        "estimatedDuration": "5_days",
+        "createdDate": "{CURRENT_DATE}",
+        "parentSprint": "SPRINT-002",
+        "urgencyLevel": "immediate",
+        "description": "Critical UX integration for Design Token System with Visual Customizer sidebar"
+      }
+    },
     "currentSprintDetails": {
       "sprintId": "SPRINT-001",
       "title": "Core Website Foundation - Treatments & About Pages",
