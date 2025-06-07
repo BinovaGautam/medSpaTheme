@@ -16,6 +16,16 @@ if (!defined('ABSPATH')) {
 // Theme version
 define('PREETIDREAMS_VERSION', '1.0.0');
 
+// Simple Visual Customizer - Clean Admin Bar Implementation
+require_once get_template_directory() . '/inc/visual-customizer-simple.php';
+
+// Visual Customizer Integration - Sprint 2 PVC-004 (Legacy - keeping for compatibility)
+require_once get_template_directory() . '/inc/visual-customizer-integration.php';
+require_once get_template_directory() . '/inc/ajax-handlers.php';
+require_once get_template_directory() . '/inc/visual-customizer-admin-page.php';
+require_once get_template_directory() . '/inc/visual-customizer-simple-admin.php';
+require_once get_template_directory() . '/inc/visual-customizer-dashboard.php';
+
 /**
  * Theme setup
  */
