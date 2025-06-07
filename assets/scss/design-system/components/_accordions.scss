@@ -1,0 +1,698 @@
+/**
+ * Accordion/Collapse Component System
+ *
+ * Complete tokenization-aware accordion library for medical spa applications
+ * Includes FAQs, content organization, treatment information, and collapsible sections
+ *
+ * @package MedSpaTheme
+ * @version 3.0.0 - Sprint 3 Advanced Interactive Components
+ */
+
+/* ==========================================================================
+   ACCORDION FOUNDATION
+   ========================================================================== */
+
+.accordion {
+  @include tokenization-aware-component();
+
+  /* Accordion container styling */
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  overflow: hidden;
+
+  /* Content spacing */
+  > .accordion__item:not(:last-child) {
+    border-bottom: 1px solid var(--color-border-light);
+  }
+}
+
+/**
+ * Accordion Item - Individual collapsible section
+ */
+.accordion__item {
+  @include component-variant('surface');
+
+  /* Item state management */
+  position: relative;
+  transition: all var(--transition-duration-base) var(--transition-timing);
+
+  /* Active/expanded state */
+  &.is-active {
+    background-color: var(--color-surface-secondary);
+  }
+
+  /* Hover state */
+  &:hover {
+    background-color: rgba(var(--color-primary-rgb), 0.02);
+  }
+}
+
+/**
+ * Accordion Header/Trigger
+ */
+.accordion__header {
+  @include tokenization-aware-component();
+
+  /* Header layout and styling */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-5) var(--space-6);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+
+  /* Typography */
+  font-family: var(--font-family-secondary);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+
+  /* Enhanced accessibility */
+  &:focus-visible {
+    @include focus-management();
+    outline-offset: -2px;
+  }
+
+  /* Hover effects */
+  &:hover {
+    background-color: rgba(var(--color-primary-rgb), 0.05);
+
+    .accordion__title {
+      color: var(--color-primary);
+    }
+  }
+
+  /* Active state */
+  .accordion__item.is-active & {
+    background-color: rgba(var(--color-primary-rgb), 0.1);
+
+    .accordion__title {
+      color: var(--color-primary);
+    }
+  }
+}
+
+/**
+ * Accordion Title
+ */
+.accordion__title {
+  @include heading(4);
+
+  /* Title styling */
+  margin: 0;
+  flex: 1;
+  transition: color var(--transition-duration-fast) var(--transition-timing);
+
+  /* Medical spa context */
+  &.title--treatment::before {
+    content: '💉 ';
+    margin-right: var(--space-2);
+    opacity: 0.7;
+  }
+
+  &.title--faq::before {
+    content: '❓ ';
+    margin-right: var(--space-2);
+    opacity: 0.7;
+  }
+
+  &.title--policy::before {
+    content: '📋 ';
+    margin-right: var(--space-2);
+    opacity: 0.7;
+  }
+}
+
+/**
+ * Accordion Icon/Indicator
+ */
+.accordion__icon {
+  /* Icon styling */
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: all var(--transition-duration-base) var(--transition-timing);
+  flex-shrink: 0;
+  margin-left: var(--space-3);
+
+  /* Plus/minus toggle */
+  &::before {
+    content: '+';
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    transition: transform var(--transition-duration-base) var(--transition-timing);
+  }
+
+  /* Active state - rotate to X or change to minus */
+  .accordion__item.is-active & {
+    color: var(--color-primary);
+    transform: rotate(45deg);
+  }
+
+  /* Arrow variant */
+  &.icon--arrow {
+    &::before {
+      content: '⌄';
+      transform: rotate(0deg);
+    }
+
+    .accordion__item.is-active & {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* Chevron variant */
+  &.icon--chevron {
+    &::before {
+      content: '›';
+      transform: rotate(90deg);
+    }
+
+    .accordion__item.is-active & {
+      transform: rotate(90deg) rotateY(180deg);
+    }
+  }
+}
+
+/**
+ * Accordion Content/Panel
+ */
+.accordion__content {
+  /* Content container */
+  overflow: hidden;
+  background-color: var(--color-surface);
+
+  /* Initially hidden */
+  max-height: 0;
+  transition: max-height var(--transition-duration-slow) var(--transition-timing-ease-out);
+
+  /* Content inner wrapper */
+  .accordion__body {
+    padding: 0 var(--space-6) var(--space-6) var(--space-6);
+
+    /* Content typography */
+    @include typography('base');
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+
+    /* Content spacing */
+    > * + * {
+      margin-top: var(--space-4);
+    }
+
+    /* Enhanced readability */
+    p {
+      margin-bottom: var(--space-4);
+    }
+
+    ul, ol {
+      margin: var(--space-4) 0;
+      padding-left: var(--space-6);
+
+      li {
+        margin-bottom: var(--space-2);
+      }
+    }
+  }
+
+  /* Expanded state */
+  .accordion__item.is-active & {
+    max-height: 1000px; /* Large enough for most content */
+  }
+}
+
+/* ==========================================================================
+   ACCORDION VARIANTS
+   ========================================================================== */
+
+/**
+ * Bordered Accordion - Enhanced visual separation
+ */
+.accordion--bordered {
+  border: 2px solid var(--color-border);
+
+  .accordion__item {
+    border-bottom-width: 2px;
+  }
+
+  .accordion__header {
+    padding: var(--space-6) var(--space-8);
+  }
+
+  .accordion__body {
+    padding: 0 var(--space-8) var(--space-8) var(--space-8);
+  }
+}
+
+/**
+ * Flush Accordion - No outer borders
+ */
+.accordion--flush {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+
+  .accordion__item {
+    background: transparent;
+    border-radius: 0;
+
+    &:first-child .accordion__header {
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    &.is-active {
+      background-color: var(--color-surface-secondary);
+    }
+  }
+}
+
+/**
+ * Card Accordion - Each item as separate card
+ */
+.accordion--cards {
+  background: transparent;
+  border: none;
+
+  .accordion__item {
+    @extend .card;
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-lg);
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    &.is-active {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary);
+    }
+  }
+}
+
+/**
+ * Compact Accordion - Reduced spacing
+ */
+.accordion--compact {
+  .accordion__header {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-base);
+  }
+
+  .accordion__body {
+    padding: 0 var(--space-4) var(--space-4) var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .accordion__icon {
+    width: 20px;
+    height: 20px;
+
+    &::before {
+      font-size: var(--text-lg);
+    }
+  }
+}
+
+/* ==========================================================================
+   MEDICAL SPA SPECIFIC ACCORDIONS
+   ========================================================================== */
+
+/**
+ * Treatment FAQ Accordion
+ */
+.accordion--treatment-faq {
+  .accordion__item {
+    /* Treatment-specific styling */
+    &.faq--consultation::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--color-primary);
+    }
+
+    &.faq--procedure::before {
+      background: var(--treatment-laser);
+    }
+
+    &.faq--recovery::before {
+      background: var(--color-success);
+    }
+
+    &.faq--pricing::before {
+      background: var(--color-warning);
+    }
+  }
+
+  .accordion__title {
+    padding-left: var(--space-4);
+
+    /* FAQ numbering */
+    counter-increment: faq-counter;
+
+    &::before {
+      content: 'Q' counter(faq-counter) ': ';
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      margin-right: var(--space-2);
+    }
+  }
+
+  .accordion__body {
+    /* Answer styling */
+    &::before {
+      content: 'A: ';
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+      margin-right: var(--space-1);
+    }
+  }
+}
+
+/**
+ * Treatment Information Accordion
+ */
+.accordion--treatment-info {
+  .accordion__header {
+    background: linear-gradient(135deg,
+      rgba(var(--color-primary-rgb), 0.05),
+      rgba(var(--color-accent-rgb), 0.05)
+    );
+  }
+
+  .treatment-section {
+    &.section--what-to-expect .accordion__title::before {
+      content: '📋 ';
+    }
+
+    &.section--preparation .accordion__title::before {
+      content: '🎯 ';
+    }
+
+    &.section--procedure .accordion__title::before {
+      content: '⚕️ ';
+    }
+
+    &.section--aftercare .accordion__title::before {
+      content: '🏥 ';
+    }
+
+    &.section--results .accordion__title::before {
+      content: '✨ ';
+    }
+  }
+
+  .accordion__body {
+    /* Information sections */
+    .info-highlight {
+      background: var(--color-surface-secondary);
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-primary);
+      margin: var(--space-4) 0;
+
+      .highlight__title {
+        @include heading(6);
+        color: var(--color-primary);
+        margin-bottom: var(--space-2);
+      }
+    }
+
+    .contraindications {
+      background: rgba(var(--color-warning-rgb), 0.1);
+      border-left-color: var(--color-warning);
+
+      .highlight__title {
+        color: var(--color-warning);
+      }
+    }
+
+    .safety-notice {
+      background: rgba(var(--color-error-rgb), 0.1);
+      border-left-color: var(--color-error);
+
+      .highlight__title {
+        color: var(--color-error);
+      }
+    }
+  }
+}
+
+/**
+ * Policy Accordion - Terms, privacy, etc.
+ */
+.accordion--policies {
+  .accordion__header {
+    font-size: var(--text-base);
+    padding: var(--space-4) var(--space-6);
+  }
+
+  .accordion__title {
+    &.policy--privacy::before {
+      content: '🔒 ';
+    }
+
+    &.policy--terms::before {
+      content: '📜 ';
+    }
+
+    &.policy--cancellation::before {
+      content: '📅 ';
+    }
+
+    &.policy--hipaa::before {
+      content: '🏥 ';
+    }
+  }
+
+  .accordion__body {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+
+    .policy-section {
+      margin-bottom: var(--space-6);
+
+      .section-title {
+        @include heading(6);
+        color: var(--color-primary);
+        margin-bottom: var(--space-3);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   COLLAPSE UTILITY COMPONENT
+   ========================================================================== */
+
+/**
+ * Simple Collapse - Standalone collapsible content
+ */
+.collapse {
+  @include tokenization-aware-component();
+
+  /* Collapse container */
+  overflow: hidden;
+  transition: all var(--transition-duration-base) var(--transition-timing);
+
+  /* Initially collapsed */
+  max-height: 0;
+  opacity: 0;
+
+  /* Expanded state */
+  &.is-open {
+    max-height: 1000px;
+    opacity: 1;
+  }
+
+  /* Smooth height transitions */
+  &.collapse--smooth {
+    transition: max-height var(--transition-duration-slow) var(--transition-timing-ease-out),
+                opacity var(--transition-duration-base) var(--transition-timing);
+  }
+}
+
+/**
+ * Collapse Trigger
+ */
+.collapse__trigger {
+  @extend .btn--ghost;
+
+  /* Trigger styling */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  .trigger__icon {
+    transition: transform var(--transition-duration-base) var(--transition-timing);
+
+    &::before {
+      content: '⌄';
+    }
+  }
+
+  /* Active state */
+  &[aria-expanded="true"] .trigger__icon {
+    transform: rotate(180deg);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE ACCORDION BEHAVIOR
+   ========================================================================== */
+
+/* Mobile optimizations */
+@media (max-width: 639px) {
+  .accordion__header {
+    padding: var(--space-4) var(--space-4);
+    font-size: var(--text-base);
+  }
+
+  .accordion__body {
+    padding: 0 var(--space-4) var(--space-4) var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .accordion__icon {
+    width: 20px;
+    height: 20px;
+    margin-left: var(--space-2);
+  }
+
+  .accordion--cards .accordion__item {
+    margin-bottom: var(--space-3);
+  }
+
+  /* Stack accordions better on mobile */
+  .accordion--treatment-info .accordion__title {
+    padding-left: var(--space-2);
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 1024px) {
+  .accordion__header:hover {
+    /* Enhanced hover effects on desktop */
+    transform: translateX(2px);
+  }
+
+  .accordion--bordered {
+    /* Larger spacing on desktop */
+    .accordion__header {
+      padding: var(--space-8) var(--space-10);
+    }
+
+    .accordion__body {
+      padding: 0 var(--space-10) var(--space-10) var(--space-10);
+    }
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .accordion {
+    border-width: 2px;
+  }
+
+  .accordion__item {
+    border-bottom-width: 2px;
+  }
+
+  .accordion__header:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .accordion__content,
+  .accordion__icon,
+  .collapse {
+    transition: none;
+  }
+
+  .accordion__icon {
+    transform: none;
+
+    .accordion__item.is-active & {
+      transform: none;
+    }
+  }
+}
+
+/* Screen reader enhancements */
+.accordion__header[aria-expanded="true"] + .accordion__content {
+  /* Content is expanded */
+}
+
+.accordion__header[aria-expanded="false"] + .accordion__content {
+  /* Content is collapsed */
+}
+
+/* Focus management */
+.accordion__header:focus-visible {
+  z-index: 1;
+}
+
+/* Keyboard navigation improvements */
+.accordion {
+  /* Focus trap for keyboard users */
+}
+
+/* Screen reader text for state */
+.accordion__header::after {
+  @include sr-only();
+  content: ' (click to expand)';
+}
+
+.accordion__header[aria-expanded="true"]::after {
+  content: ' (click to collapse)';
+}
+
+/* ==========================================================================
+   JAVASCRIPT INTEGRATION HOOKS
+   ========================================================================== */
+
+/* JavaScript hooks for functionality */
+.accordion[data-accordion-id] {
+  /* Accordion identification for JS */
+}
+
+.accordion__header[data-target] {
+  /* Header targets for JS event handling */
+}
+
+.accordion__item[data-accordion-item] {
+  /* Item identification for JS */
+}
+
+/* Multi-accordion support */
+.accordion[data-allow-multiple="false"] {
+  /* Only one item can be open at a time */
+}
+
+.accordion[data-allow-multiple="true"] {
+  /* Multiple items can be open */
+}
+
+/* ==========================================================================
+   END OF ACCORDION COMPONENT SYSTEM
+   ========================================================================== */

@@ -52,21 +52,23 @@
       },
       "EPIC-004": {
         "title": "Design System Architecture",
-        "status": "planned",
+        "status": "completed",
         "storyPoints": 13,
-        "completedStoryPoints": 0,
+        "completedStoryPoints": 13,
         "priority": "critical",
-        "completionPercentage": 0,
-        "sprint": "SPRINT-003"
+        "completionPercentage": 100,
+        "sprint": "SPRINT-003",
+        "completedDate": "2025-01-20"
       },
       "EPIC-005": {
         "title": "Core UI Component Library",
-        "status": "planned",
+        "status": "in-progress",
         "storyPoints": 21,
         "completedStoryPoints": 0,
         "priority": "high",
         "completionPercentage": 0,
-        "sprint": "SPRINT-003"
+        "sprint": "SPRINT-003",
+        "startedDate": "2025-01-20"
       },
       "EPIC-006": {
         "title": "Advanced Interactive Components",
@@ -133,8 +135,8 @@
         "title": "Tokenization-Aware Design System Foundation",
         "status": "in-progress",
         "plannedStoryPoints": 47,
-        "completedStoryPoints": 0,
-        "completionPercentage": 0,
+        "completedStoryPoints": 13,
+        "completionPercentage": 28,
         "startDate": "2025-01-20",
         "endDate": "2025-02-10",
         "estimatedDuration": "21_days",
@@ -149,8 +151,8 @@
       "title": "Tokenization-Aware Design System Foundation",
       "status": "in-progress",
       "plannedStoryPoints": 47,
-      "completedStoryPoints": 0,
-      "completionPercentage": 0,
+      "completedStoryPoints": 13,
+      "completionPercentage": 28,
       "startDate": "2025-01-20",
       "endDate": "2025-02-10",
       "remainingDays": 21,
