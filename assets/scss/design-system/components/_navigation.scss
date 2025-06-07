@@ -1,0 +1,798 @@
+/**
+ * Navigation Component System
+ *
+ * Complete tokenization-aware navigation library for medical spa websites
+ * Includes headers, menus, breadcrumbs, and specialized navigation elements
+ *
+ * @package MedSpaTheme
+ * @version 3.0.0 - Sprint 3 Component Library
+ */
+
+/* ==========================================================================
+   NAVIGATION FOUNDATION
+   ========================================================================== */
+
+.nav {
+  /* Base navigation styling */
+  @include tokenization-aware-component();
+
+  /* Navigation list styling */
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--nav-gap);
+  }
+
+  li {
+    position: relative;
+  }
+
+  a {
+    @include nav-link-base();
+
+    /* Navigation link styling */
+    display: block;
+    text-decoration: none;
+    transition: all var(--transition-duration-fast) var(--transition-timing);
+
+    /* Focus management */
+    &:focus-visible {
+      @include focus-management();
+    }
+  }
+}
+
+/* ==========================================================================
+   HEADER NAVIGATION
+   ========================================================================== */
+
+/**
+ * Main Header Navigation - Primary site navigation
+ */
+.nav--header {
+  @extend .nav;
+
+  /* Header-specific styling */
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+
+  /* Header container */
+  .nav__container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--header-height);
+  }
+
+  /* Logo/brand section */
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    .brand__logo {
+      height: 40px;
+      width: auto;
+    }
+
+    .brand__text {
+      @include heading(4);
+      color: var(--color-primary);
+      font-family: var(--font-family-primary);
+      margin: 0;
+    }
+  }
+
+  /* Main navigation menu */
+  .nav__menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+
+    /* Hide on mobile */
+    @media (max-width: 768px) {
+      display: none;
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--color-surface);
+      flex-direction: column;
+      padding: var(--space-6);
+      box-shadow: var(--shadow-lg);
+      z-index: 50;
+
+      &.is-open {
+        display: flex;
+      }
+    }
+
+    ul {
+      flex-direction: row;
+      gap: var(--space-6);
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        gap: var(--space-4);
+      }
+    }
+
+    a {
+      @include typography('base');
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-medium);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+
+      &:hover {
+        color: var(--color-primary);
+        background-color: rgba(var(--color-primary-rgb), 0.1);
+      }
+
+      &.is-active {
+        color: var(--color-primary);
+        background-color: rgba(var(--color-primary-rgb), 0.15);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+        padding: var(--space-4);
+        font-size: var(--text-lg);
+      }
+    }
+  }
+
+  /* Header actions (CTA buttons, search, etc.) */
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    .btn {
+      /* Header button styling */
+      @media (max-width: 640px) {
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-sm);
+      }
+    }
+  }
+
+  /* Mobile menu toggle */
+  .nav__toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-2);
+    color: var(--color-text-primary);
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+
+    .toggle__icon {
+      width: 24px;
+      height: 24px;
+      display: block;
+      position: relative;
+
+      /* Hamburger lines */
+      &::before,
+      &::after,
+      span {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: currentColor;
+        transition: all var(--transition-duration-base) var(--transition-timing);
+      }
+
+      &::before {
+        top: 6px;
+      }
+
+      span {
+        top: 12px;
+      }
+
+      &::after {
+        top: 18px;
+      }
+    }
+
+    /* Active state (X icon) */
+    &.is-active .toggle__icon {
+      &::before {
+        transform: rotate(45deg);
+        top: 12px;
+      }
+
+      span {
+        opacity: 0;
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+        top: 12px;
+      }
+    }
+  }
+}
+
+/**
+ * Sticky Header Behavior
+ */
+.nav--header.is-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background-color: rgba(var(--color-surface-rgb), 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  .nav__container {
+    min-height: calc(var(--header-height) - 10px);
+  }
+}
+
+/* ==========================================================================
+   DROPDOWN MENUS
+   ========================================================================== */
+
+/**
+ * Dropdown Navigation - Multi-level menus
+ */
+.nav__dropdown {
+  position: relative;
+
+  /* Dropdown trigger */
+  .dropdown__trigger {
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid currentColor;
+      margin-left: var(--space-2);
+      transition: transform var(--transition-duration-fast) var(--transition-timing);
+    }
+
+    &:hover::after,
+    &[aria-expanded="true"]::after {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* Dropdown menu */
+  .dropdown__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-2) 0;
+    z-index: 50;
+
+    /* Initially hidden */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-duration-base) var(--transition-timing);
+
+    /* Show on hover/focus */
+    .nav__dropdown:hover &,
+    .nav__dropdown:focus-within & {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    ul {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    a {
+      padding: var(--space-3) var(--space-4);
+      border-radius: 0;
+
+      &:hover {
+        background-color: var(--color-surface-secondary);
+      }
+    }
+  }
+
+  /* Mega menu variant */
+  &.dropdown--mega .dropdown__menu {
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    min-width: 400px;
+    padding: var(--space-6);
+
+    &:hover,
+    .nav__dropdown:focus-within & {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .mega__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    .mega__section {
+      .section__title {
+        @include heading(6);
+        color: var(--color-primary);
+        margin-bottom: var(--space-3);
+        padding: 0 var(--space-4);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   SIDEBAR NAVIGATION
+   ========================================================================== */
+
+/**
+ * Sidebar Navigation - Secondary navigation
+ */
+.nav--sidebar {
+  @extend .nav;
+
+  /* Sidebar styling */
+  background-color: var(--color-surface-secondary);
+  border-right: 1px solid var(--color-border-light);
+  padding: var(--space-6);
+  min-height: 100vh;
+  width: 280px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+
+  /* Transform off-screen initially */
+  transform: translateX(-100%);
+  transition: transform var(--transition-duration-base) var(--transition-timing);
+
+  &.is-open {
+    transform: translateX(0);
+  }
+
+  /* Sidebar header */
+  .sidebar__header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border-light);
+
+    .sidebar__title {
+      @include heading(4);
+      color: var(--color-primary);
+      margin: 0;
+    }
+  }
+
+  /* Sidebar menu */
+  .sidebar__menu {
+    ul {
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    a {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      border-left: 3px solid transparent;
+
+      &:hover {
+        background-color: var(--color-surface);
+        border-left-color: var(--color-primary);
+      }
+
+      &.is-active {
+        background-color: rgba(var(--color-primary-rgb), 0.1);
+        border-left-color: var(--color-primary);
+        color: var(--color-primary);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+  }
+
+  /* Sidebar overlay */
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-duration-base) var(--transition-timing);
+    z-index: -1;
+  }
+
+  &.is-open::before {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* ==========================================================================
+   BREADCRUMBS
+   ========================================================================== */
+
+/**
+ * Breadcrumb Navigation - Page hierarchy
+ */
+.breadcrumbs {
+  @extend .nav;
+
+  /* Breadcrumb styling */
+  padding: var(--space-4) 0;
+
+  ul {
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    /* Separator */
+    &:not(:last-child)::after {
+      content: '›';
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    /* Last item (current page) */
+    &:last-child a {
+      color: var(--color-text-muted);
+      pointer-events: none;
+      font-weight: var(--font-weight-medium);
+    }
+  }
+
+  a {
+    @include typography('sm');
+    color: var(--color-text-secondary);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+
+    &:hover {
+      color: var(--color-primary);
+      background-color: rgba(var(--color-primary-rgb), 0.1);
+    }
+  }
+
+  /* Rich breadcrumbs with icons */
+  &.breadcrumbs--rich {
+    li {
+      .breadcrumb__icon {
+        width: 16px;
+        height: 16px;
+        margin-right: var(--space-1);
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   MEDICAL SPA SPECIFIC NAVIGATION
+   ========================================================================== */
+
+/**
+ * Treatment Navigation - Treatment category navigation
+ */
+.nav--treatments {
+  @extend .nav;
+
+  /* Treatment navigation styling */
+  background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary));
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+
+  .treatments__title {
+    @include heading(4);
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+
+  ul {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .treatment-category {
+    position: relative;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      border: 2px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface);
+      transition: all var(--transition-duration-base) var(--transition-timing);
+
+      &:hover {
+        border-color: var(--color-primary);
+        background-color: rgba(var(--color-primary-rgb), 0.05);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      &.is-active {
+        border-color: var(--color-primary);
+        background-color: rgba(var(--color-primary-rgb), 0.1);
+      }
+    }
+
+    .category__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xl);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .category__content {
+      flex: 1;
+    }
+
+    .category__name {
+      @include heading(5);
+      margin: 0 0 var(--space-1) 0;
+      color: var(--color-text-primary);
+    }
+
+    .category__description {
+      @include typography('sm');
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    .category__count {
+      @include typography('xs');
+      background-color: var(--color-primary);
+      color: white;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-full);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* Treatment category variants */
+    &.category--facial .category__icon {
+      background: linear-gradient(135deg, var(--treatment-facial), var(--color-accent));
+    }
+
+    &.category--body .category__icon {
+      background: linear-gradient(135deg, var(--treatment-body), var(--color-accent));
+    }
+
+    &.category--laser .category__icon {
+      background: linear-gradient(135deg, var(--treatment-laser), var(--color-accent));
+    }
+
+    &.category--injectable .category__icon {
+      background: linear-gradient(135deg, var(--treatment-injectable), var(--color-accent));
+    }
+
+    &.category--skin .category__icon {
+      background: linear-gradient(135deg, var(--treatment-skin), var(--color-accent));
+    }
+  }
+}
+
+/**
+ * Provider Navigation - Staff/doctor navigation
+ */
+.nav--providers {
+  @extend .nav;
+
+  /* Provider navigation styling */
+  .providers__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .provider-card {
+    text-align: center;
+    padding: var(--space-6);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    transition: all var(--transition-duration-base) var(--transition-timing);
+
+    &:hover {
+      border-color: var(--trust-certification);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .provider__photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto var(--space-4) auto;
+      border: 3px solid var(--trust-certification);
+    }
+
+    .provider__name {
+      @include heading(5);
+      color: var(--trust-certification);
+      margin-bottom: var(--space-1);
+    }
+
+    .provider__title {
+      @include typography('sm');
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .provider__specialties {
+      @include typography('xs');
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE NAVIGATION BEHAVIOR
+   ========================================================================== */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .nav--header {
+    .nav__menu ul {
+      gap: var(--space-4);
+    }
+
+    .nav__dropdown .dropdown__menu {
+      position: static;
+      box-shadow: none;
+      border: none;
+      background: transparent;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      padding: var(--space-2) 0 0 var(--space-4);
+    }
+  }
+
+  .nav--sidebar {
+    width: 100%;
+    transform: translateX(-100%);
+  }
+
+  .nav--treatments ul {
+    flex-direction: column;
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 1024px) {
+  .nav--header .nav__menu a {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--color-primary);
+      transition: all var(--transition-duration-fast) var(--transition-timing);
+      transform: translateX(-50%);
+    }
+
+    &:hover::after,
+    &.is-active::after {
+      width: 100%;
+    }
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .nav a:focus-visible {
+    outline-width: 3px;
+  }
+
+  .nav--header {
+    border-bottom-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .nav a,
+  .nav__dropdown .dropdown__menu,
+  .nav--sidebar {
+    transition: none;
+  }
+
+  .nav--treatments .treatment-category a:hover {
+    transform: none;
+  }
+}
+
+/* Screen reader enhancements */
+.nav[aria-label] {
+  /* Landmark navigation */
+}
+
+.nav__toggle[aria-expanded="false"] + .nav__menu {
+  @include sr-only();
+}
+
+/* Focus trap for mobile menu */
+.nav__menu.is-open {
+  /* Focus management for mobile menu */
+}
+
+/* Skip links */
+.nav__skip {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  background: var(--color-primary);
+  color: white;
+  padding: var(--space-2) var(--space-4);
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  z-index: 100;
+
+  &:focus {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================================================
+   END OF NAVIGATION COMPONENT SYSTEM
+   ========================================================================== */

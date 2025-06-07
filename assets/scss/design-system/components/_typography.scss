@@ -1,0 +1,684 @@
+/**
+ * Typography Component System
+ *
+ * Complete tokenization-aware typography library with semantic meaning
+ * Provides all text components for medical spa content with accessibility
+ *
+ * @package MedSpaTheme
+ * @version 3.0.0 - Sprint 3 Component Library
+ */
+
+/* ==========================================================================
+   TYPOGRAPHY FOUNDATION
+   ========================================================================== */
+
+/**
+ * Text Base Class - Universal text foundation
+ */
+.text {
+  font-family: var(--font-family-secondary);
+  color: var(--color-text-primary);
+  line-height: var(--leading-normal);
+  margin: 0;
+
+  /* Automatic token inheritance */
+  transition: color var(--transition-duration-fast) var(--transition-timing);
+
+  /* Text rendering optimization */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   HEADING SYSTEM
+   ========================================================================== */
+
+/**
+ * Heading Level 1 - Page titles, hero headings
+ */
+.heading-1,
+.h1 {
+  @include heading(1);
+
+  /* Medical spa luxury styling */
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+
+  /* Enhanced hierarchy */
+  margin-bottom: var(--space-6);
+
+  /* Responsive scaling */
+  @media (max-width: 768px) {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+  }
+}
+
+/**
+ * Heading Level 2 - Section headings, treatment categories
+ */
+.heading-2,
+.h2 {
+  @include heading(2);
+
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-5);
+
+  /* Medical spa accent */
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -var(--space-2);
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: var(--radius-full);
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--text-2xl);
+  }
+}
+
+/**
+ * Heading Level 3 - Subsections, treatment names
+ */
+.heading-3,
+.h3 {
+  @include heading(3);
+
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.015em;
+  margin-bottom: var(--space-4);
+
+  @media (max-width: 768px) {
+    font-size: var(--text-xl);
+  }
+}
+
+/**
+ * Heading Level 4 - Card titles, component headers
+ */
+.heading-4,
+.h4 {
+  @include heading(4);
+
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-4);
+}
+
+/**
+ * Heading Level 5 - Small section headers, labels
+ */
+.heading-5,
+.h5 {
+  @include heading(5);
+
+  font-family: var(--font-family-secondary);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
+}
+
+/**
+ * Heading Level 6 - Micro headers, overlines
+ */
+.heading-6,
+.h6 {
+  @include heading(6);
+
+  font-family: var(--font-family-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+/* ==========================================================================
+   BODY TEXT SYSTEM
+   ========================================================================== */
+
+/**
+ * Primary Body Text - Main content, descriptions
+ */
+.body-text,
+.text-body {
+  @extend .text;
+  @include typography('base');
+
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-4);
+
+  /* Enhanced readability */
+  max-width: 65ch;
+}
+
+/**
+ * Lead Text - Introduction paragraphs, emphasis
+ */
+.text-lead {
+  @extend .text;
+  @include typography('lg');
+
+  color: var(--color-text-primary);
+  line-height: var(--leading-relaxed);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-6);
+
+  /* Luxury medical spa styling */
+  max-width: 60ch;
+}
+
+/**
+ * Small Text - Fine print, disclaimers, metadata
+ */
+.text-small,
+.text-sm {
+  @extend .text;
+  @include typography('sm');
+
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+/**
+ * Extra Small Text - Micro copy, badges
+ */
+.text-xs {
+  @extend .text;
+  @include typography('xs');
+
+  color: var(--color-text-muted);
+  line-height: var(--leading-tight);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-medium);
+}
+
+/**
+ * Large Text - Callouts, important information
+ */
+.text-lg {
+  @extend .text;
+  @include typography('lg');
+
+  color: var(--color-text-primary);
+  line-height: var(--leading-normal);
+  font-weight: var(--font-weight-medium);
+}
+
+/**
+ * Extra Large Text - Hero subheadings, prominent text
+ */
+.text-xl {
+  @extend .text;
+  @include typography('xl');
+
+  color: var(--color-text-primary);
+  line-height: var(--leading-snug);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================================
+   SPECIALIZED TEXT TYPES
+   ========================================================================== */
+
+/**
+ * Display Text - Hero text, large promotional text
+ */
+.text-display {
+  @extend .text;
+  font-size: var(--text-4xl);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-none);
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+
+  @media (min-width: 768px) {
+    font-size: var(--text-5xl);
+  }
+
+  @media (min-width: 1024px) {
+    font-size: var(--text-6xl);
+  }
+}
+
+/**
+ * Quote Text - Testimonials, blockquotes
+ */
+.text-quote {
+  @extend .text;
+  @include typography('lg');
+
+  font-style: italic;
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  position: relative;
+
+  /* Luxury quote styling */
+  &::before {
+    content: '"';
+    font-size: var(--text-4xl);
+    color: var(--color-primary);
+    font-family: var(--font-family-primary);
+    position: absolute;
+    top: -var(--space-2);
+    left: -var(--space-4);
+    line-height: 1;
+  }
+
+  &::after {
+    content: '"';
+    font-size: var(--text-4xl);
+    color: var(--color-primary);
+    font-family: var(--font-family-primary);
+    line-height: 1;
+  }
+}
+
+/**
+ * Code Text - Technical information, references
+ */
+.text-code {
+  @extend .text;
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+  background-color: var(--color-surface-secondary);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-light);
+}
+
+/* ==========================================================================
+   LINK SYSTEM
+   ========================================================================== */
+
+/**
+ * Primary Link - Standard text links
+ */
+.link,
+.text-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all var(--transition-duration-fast) var(--transition-timing);
+
+  &:hover {
+    color: var(--color-primary-hover);
+    text-decoration-thickness: 2px;
+  }
+
+  &:focus-visible {
+    @include focus-management();
+  }
+
+  /* Active state */
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+/**
+ * Subtle Link - Minimal styling, secondary links
+ */
+.link--subtle {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+}
+
+/**
+ * Bold Link - Emphasized links, call-to-action links
+ */
+.link--bold {
+  @extend .link;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/**
+ * External Link - Links to external sites
+ */
+.link--external {
+  @extend .link;
+
+  &::after {
+    content: ' ↗';
+    font-size: 0.875em;
+    color: var(--color-text-muted);
+    margin-left: var(--space-1);
+  }
+}
+
+/* ==========================================================================
+   LABEL SYSTEM
+   ========================================================================== */
+
+/**
+ * Form Label - Input field labels
+ */
+.label,
+.form-label {
+  @extend .text;
+  @include typography('sm');
+
+  display: block;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+
+  /* Required field indicator */
+  &.required::after {
+    content: ' *';
+    color: var(--color-error);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/**
+ * Field Label - Inline field labels
+ */
+.label--inline {
+  display: inline-block;
+  margin-right: var(--space-3);
+  margin-bottom: 0;
+}
+
+/**
+ * Helper Label - Descriptive text for inputs
+ */
+.label--helper {
+  @extend .text-small;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+}
+
+/**
+ * Error Label - Error messages for inputs
+ */
+.label--error {
+  @extend .text-small;
+  color: var(--color-error);
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+  font-weight: var(--font-weight-medium);
+}
+
+/**
+ * Success Label - Success messages for inputs
+ */
+.label--success {
+  @extend .text-small;
+  color: var(--color-success);
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+  font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================================
+   MEDICAL SPA SPECIFIC TYPOGRAPHY
+   ========================================================================== */
+
+/**
+ * Medical Heading - Professional medical content
+ */
+.heading--medical {
+  color: var(--medical-accent-primary);
+  font-weight: var(--font-weight-bold);
+
+  &::before {
+    content: '🏥';
+    margin-right: var(--space-2);
+    font-size: 0.8em;
+  }
+}
+
+/**
+ * Treatment Title - Individual treatment names
+ */
+.text--treatment {
+  @extend .heading-3;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+
+  /* Treatment category indicators */
+  &.treatment--facial {
+    border-left: 4px solid var(--treatment-facial);
+    padding-left: var(--space-3);
+  }
+
+  &.treatment--body {
+    border-left: 4px solid var(--treatment-body);
+    padding-left: var(--space-3);
+  }
+
+  &.treatment--laser {
+    border-left: 4px solid var(--treatment-laser);
+    padding-left: var(--space-3);
+  }
+
+  &.treatment--injectable {
+    border-left: 4px solid var(--treatment-injectable);
+    padding-left: var(--space-3);
+  }
+
+  &.treatment--skin {
+    border-left: 4px solid var(--treatment-skin);
+    padding-left: var(--space-3);
+  }
+}
+
+/**
+ * Provider Name - Medical professional names
+ */
+.text--provider {
+  @extend .heading-4;
+  color: var(--trust-certification);
+
+  &::after {
+    content: ', MD';
+    font-size: 0.75em;
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-normal);
+  }
+}
+
+/**
+ * Certification Text - Professional credentials
+ */
+.text--certification {
+  @extend .text-small;
+  color: var(--trust-certification);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  &::before {
+    content: '✓ ';
+    color: var(--color-success);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/**
+ * Price Text - Treatment pricing
+ */
+.text--price {
+  @extend .text-lg;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+
+  /* Price formatting */
+  &::before {
+    content: '$';
+    font-size: 0.8em;
+    vertical-align: top;
+    margin-right: var(--space-1);
+  }
+
+  /* Starting from indicator */
+  &.price--starting::before {
+    content: 'Starting from $';
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-muted);
+    vertical-align: baseline;
+  }
+}
+
+/**
+ * Disclaimer Text - Legal and medical disclaimers
+ */
+.text--disclaimer {
+  @extend .text-xs;
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: var(--leading-relaxed);
+
+  /* Legal emphasis */
+  &::before {
+    content: '* ';
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/* ==========================================================================
+   TEXT ALIGNMENT UTILITIES
+   ========================================================================== */
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* ==========================================================================
+   TEXT STYLING UTILITIES
+   ========================================================================== */
+
+.text-italic { font-style: italic; }
+.text-normal { font-style: normal; }
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.text-capitalize { text-transform: capitalize; }
+
+/* Font weight utilities */
+.text-thin { font-weight: 100; }
+.text-light { font-weight: 300; }
+.text-normal { font-weight: 400; }
+.text-medium { font-weight: 500; }
+.text-semibold { font-weight: 600; }
+.text-bold { font-weight: 700; }
+.text-extrabold { font-weight: 800; }
+.text-black { font-weight: 900; }
+
+/* Text decoration utilities */
+.text-underline { text-decoration: underline; }
+.text-line-through { text-decoration: line-through; }
+.text-no-underline { text-decoration: none; }
+
+/* ==========================================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================================== */
+
+/* Mobile typography adjustments */
+@media (max-width: 639px) {
+  .text-display {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+  }
+
+  .text-lead {
+    font-size: var(--text-base);
+  }
+
+  .heading-1,
+  .h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .heading-2,
+  .h2 {
+    font-size: var(--text-xl);
+  }
+}
+
+/* Desktop typography enhancements */
+@media (min-width: 1024px) {
+  .text-display {
+    font-size: var(--text-7xl);
+    letter-spacing: -0.04em;
+  }
+
+  .heading-1,
+  .h1 {
+    font-size: var(--text-6xl);
+  }
+
+  .heading-2,
+  .h2 {
+    font-size: var(--text-5xl);
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-quote::before,
+  .text-quote::after {
+    color: currentColor;
+  }
+
+  .heading-2::after {
+    background: currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .link:active {
+    transform: none;
+  }
+}
+
+/* Screen reader improvements */
+.sr-text {
+  @include sr-only();
+}
+
+/* Focus improvements for readability */
+.text:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   END OF TYPOGRAPHY COMPONENT SYSTEM
+   ========================================================================== */

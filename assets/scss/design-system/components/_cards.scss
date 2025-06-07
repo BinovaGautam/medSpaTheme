@@ -1,0 +1,852 @@
+/**
+ * Card Component System
+ *
+ * Complete tokenization-aware card library for medical spa content
+ * Includes treatment cards, service cards, info cards, and specialized types
+ *
+ * @package MedSpaTheme
+ * @version 3.0.0 - Sprint 3 Component Library
+ */
+
+/* ==========================================================================
+   CARD FOUNDATION
+   ========================================================================== */
+
+.card {
+  @include card-base();
+
+  /* Default surface styling */
+  @include component-variant('surface');
+
+  /* Enhanced foundation */
+  position: relative;
+  overflow: hidden;
+
+  /* Smooth transitions for all interactions */
+  transition: all var(--transition-duration-base) var(--transition-timing);
+
+  /* Content organization */
+  display: flex;
+  flex-direction: column;
+
+  /* Automatic content spacing */
+  > * + * {
+    margin-top: var(--space-4);
+  }
+}
+
+/* ==========================================================================
+   CARD STRUCTURE COMPONENTS
+   ========================================================================== */
+
+/**
+ * Card Header - Top section with titles and actions
+ */
+.card__header {
+  padding: var(--card-padding);
+  border-bottom: 1px solid var(--color-border-light);
+  background-color: var(--color-surface-secondary);
+
+  /* First child styling */
+  &:first-child {
+    border-top-left-radius: var(--card-border-radius);
+    border-top-right-radius: var(--card-border-radius);
+  }
+
+  /* Header content layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+
+  /* Typography in header */
+  .card__title {
+    @include heading(4);
+    margin: 0;
+    flex: 1;
+  }
+
+  .card__subtitle {
+    @include typography('sm');
+    color: var(--color-text-muted);
+    margin: var(--space-1) 0 0 0;
+  }
+
+  /* Header actions */
+  .card__actions {
+    display: flex;
+    gap: var(--space-2);
+    flex-shrink: 0;
+  }
+}
+
+/**
+ * Card Body - Main content area
+ */
+.card__body {
+  padding: var(--card-padding);
+  flex: 1;
+
+  /* Content typography */
+  .card__title {
+    @include heading(4);
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .card__subtitle {
+    @include typography('lg');
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .card__description {
+    @include typography('base');
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .card__content {
+    @include typography('base');
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+}
+
+/**
+ * Card Footer - Bottom section with actions
+ */
+.card__footer {
+  padding: var(--card-padding);
+  border-top: 1px solid var(--color-border-light);
+  background-color: var(--color-surface-secondary);
+  margin-top: auto;
+
+  /* Last child styling */
+  &:last-child {
+    border-bottom-left-radius: var(--card-border-radius);
+    border-bottom-right-radius: var(--card-border-radius);
+  }
+
+  /* Footer layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+
+  /* Footer actions */
+  .card__actions {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+}
+
+/**
+ * Card Media - Image/video container
+ */
+.card__media {
+  position: relative;
+  overflow: hidden;
+
+  /* First child removes top padding */
+  &:first-child {
+    border-top-left-radius: var(--card-border-radius);
+    border-top-right-radius: var(--card-border-radius);
+  }
+
+  /* Last child removes bottom padding */
+  &:last-child {
+    border-bottom-left-radius: var(--card-border-radius);
+    border-bottom-right-radius: var(--card-border-radius);
+  }
+
+  /* Media content */
+  img,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Media overlay */
+  .card__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-6);
+    color: white;
+
+    .card__title {
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      margin: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   CARD VARIANTS
+   ========================================================================== */
+
+/**
+ * Elevated Card - Enhanced shadow and depth
+ */
+.card--elevated {
+  box-shadow: var(--shadow-md);
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+}
+
+/**
+ * Bordered Card - Prominent borders
+ */
+.card--bordered {
+  border-width: 2px;
+  border-color: var(--color-border);
+
+  &:hover {
+    border-color: var(--color-primary);
+  }
+}
+
+/**
+ * Interactive Card - Clickable/hoverable
+ */
+.card--interactive {
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  /* Focus state for accessibility */
+  &:focus-visible {
+    @include focus-management();
+  }
+}
+
+/**
+ * Compact Card - Reduced padding for dense layouts
+ */
+.card--compact {
+  .card__header,
+  .card__body,
+  .card__footer {
+    padding: var(--card-padding-sm);
+  }
+}
+
+/**
+ * Spacious Card - Increased padding for premium feel
+ */
+.card--spacious {
+  .card__header,
+  .card__body,
+  .card__footer {
+    padding: var(--card-padding-lg);
+  }
+}
+
+/**
+ * Horizontal Card - Side-by-side layout
+ */
+.card--horizontal {
+  flex-direction: row;
+
+  .card__media {
+    flex: 0 0 40%;
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: var(--card-border-radius);
+      border-bottom-left-radius: var(--card-border-radius);
+    }
+  }
+
+  .card__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .card__media {
+      flex: none;
+
+      &:first-child {
+        border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   MEDICAL SPA SPECIFIC CARDS
+   ========================================================================== */
+
+/**
+ * Treatment Card - Individual treatment showcase
+ */
+.card--treatment {
+  @extend .card;
+  @extend .card--interactive;
+
+  /* Treatment-specific styling */
+  position: relative;
+
+  /* Category indicator */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  }
+
+  /* Treatment variants */
+  &.treatment--facial::before {
+    background: var(--treatment-facial);
+  }
+
+  &.treatment--body::before {
+    background: var(--treatment-body);
+  }
+
+  &.treatment--laser::before {
+    background: var(--treatment-laser);
+  }
+
+  &.treatment--injectable::before {
+    background: var(--treatment-injectable);
+  }
+
+  &.treatment--skin::before {
+    background: var(--treatment-skin);
+  }
+
+  /* Treatment content styling */
+  .treatment__name {
+    @include heading(4);
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .treatment__category {
+    @include typography('xs');
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  .treatment__description {
+    @include typography('base');
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-4);
+  }
+
+  .treatment__benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4) 0;
+
+    li {
+      position: relative;
+      padding-left: var(--space-5);
+      margin-bottom: var(--space-2);
+
+      &::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--color-success);
+        font-weight: var(--font-weight-bold);
+      }
+    }
+  }
+
+  .treatment__duration,
+  .treatment__price {
+    @include typography('sm');
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .treatment__price {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-lg);
+  }
+}
+
+/**
+ * Service Card - Service/package showcase
+ */
+.card--service {
+  @extend .card;
+  @extend .card--elevated;
+
+  /* Service-specific styling */
+  text-align: center;
+
+  .service__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-4) auto;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--text-2xl);
+  }
+
+  .service__name {
+    @include heading(4);
+    margin-bottom: var(--space-3);
+  }
+
+  .service__description {
+    @include typography('base');
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-6);
+  }
+
+  .service__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-6) 0;
+    text-align: left;
+
+    li {
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--color-border-light);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+/**
+ * Provider Card - Staff/doctor profiles
+ */
+.card--provider {
+  @extend .card;
+  @extend .card--horizontal;
+
+  .provider__photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: var(--space-4);
+  }
+
+  .provider__name {
+    @include heading(4);
+    color: var(--trust-certification);
+    margin-bottom: var(--space-1);
+  }
+
+  .provider__title {
+    @include typography('lg');
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-3);
+  }
+
+  .provider__credentials {
+    @include typography('sm');
+    color: var(--trust-certification);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-4);
+
+    &::before {
+      content: '✓ ';
+      color: var(--color-success);
+    }
+  }
+
+  .provider__bio {
+    @include typography('base');
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+}
+
+/**
+ * Testimonial Card - Client reviews and feedback
+ */
+.card--testimonial {
+  @extend .card;
+
+  /* Quote styling */
+  position: relative;
+
+  &::before {
+    content: '"';
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    font-size: var(--text-4xl);
+    color: var(--color-primary);
+    font-family: var(--font-family-primary);
+    line-height: 1;
+    opacity: 0.3;
+  }
+
+  .testimonial__quote {
+    @include typography('lg');
+    font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-6);
+    padding-left: var(--space-8);
+  }
+
+  .testimonial__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    .author__photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .author__info {
+      flex: 1;
+    }
+
+    .author__name {
+      @include typography('base');
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+
+    .author__treatment {
+      @include typography('sm');
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+  }
+
+  .testimonial__rating {
+    display: flex;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+    justify-content: center;
+
+    .star {
+      color: var(--color-warning);
+      font-size: var(--text-lg);
+    }
+
+    .star--empty {
+      color: var(--color-border);
+    }
+  }
+}
+
+/**
+ * Info Card - General information display
+ */
+.card--info {
+  @extend .card;
+
+  /* Info icon */
+  .info__icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--space-4);
+    background: var(--color-info);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .info__title {
+    @include heading(5);
+    margin-bottom: var(--space-3);
+  }
+
+  .info__content {
+    @include typography('base');
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Info variants */
+  &.info--success {
+    border-left: 4px solid var(--color-success);
+
+    .info__icon {
+      background: var(--color-success);
+    }
+  }
+
+  &.info--warning {
+    border-left: 4px solid var(--color-warning);
+
+    .info__icon {
+      background: var(--color-warning);
+    }
+  }
+
+  &.info--error {
+    border-left: 4px solid var(--color-error);
+
+    .info__icon {
+      background: var(--color-error);
+    }
+  }
+}
+
+/**
+ * Consultation Card - Booking and consultation display
+ */
+.card--consultation {
+  @extend .card;
+  @extend .card--elevated;
+
+  background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary));
+  border: 2px solid var(--color-primary);
+
+  .consultation__type {
+    @include typography('xs');
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-2);
+  }
+
+  .consultation__title {
+    @include heading(4);
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .consultation__description {
+    @include typography('base');
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+
+  .consultation__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-6) 0;
+
+    li {
+      padding: var(--space-1) 0;
+
+      &::before {
+        content: '📅 ';
+        margin-right: var(--space-2);
+      }
+    }
+  }
+
+  .consultation__cta {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   CARD LAYOUTS
+   ========================================================================== */
+
+/**
+ * Card Grid - Responsive grid layout for cards
+ */
+.card-grid {
+  display: grid;
+  gap: var(--space-6);
+
+  /* Responsive columns */
+  grid-template-columns: 1fr;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Dense grid variant */
+  &.card-grid--dense {
+    gap: var(--space-4);
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Wide grid variant */
+  &.card-grid--wide {
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+/**
+ * Card Masonry - Pinterest-style layout
+ */
+.card-masonry {
+  column-count: 1;
+  column-gap: var(--space-6);
+
+  @media (min-width: 640px) {
+    column-count: 2;
+  }
+
+  @media (min-width: 1024px) {
+    column-count: 3;
+  }
+
+  .card {
+    break-inside: avoid;
+    margin-bottom: var(--space-6);
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE CARD BEHAVIOR
+   ========================================================================== */
+
+/* Mobile optimizations */
+@media (max-width: 639px) {
+  .card {
+    /* Reduce padding on mobile */
+    .card__header,
+    .card__body,
+    .card__footer {
+      padding: var(--space-4);
+    }
+  }
+
+  .card--horizontal {
+    /* Force vertical layout on mobile */
+    flex-direction: column;
+
+    .card__media:first-child {
+      border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+    }
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 1024px) {
+  .card--treatment:hover .treatment__name {
+    color: var(--color-primary-hover);
+  }
+
+  .card--interactive:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+
+  .card--bordered {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card--interactive,
+  .card--elevated {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+/* Focus improvements */
+.card--interactive:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Screen reader enhancements */
+.card[role="button"] {
+  cursor: pointer;
+}
+
+.card[aria-expanded] .card__header::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid currentColor;
+  margin-left: var(--space-2);
+  transition: transform var(--transition-duration-fast) var(--transition-timing);
+}
+
+.card[aria-expanded="true"] .card__header::after {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   END OF CARD COMPONENT SYSTEM
+   ========================================================================== */
