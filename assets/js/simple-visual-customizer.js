@@ -1,6 +1,6 @@
 /**
- * Simple Visual Customizer JavaScript
- * Clean implementation for admin bar triggered sidebar
+ * Simple Visual Customizer JavaScript - PVC-005 Enhanced
+ * Clean implementation for admin bar triggered sidebar with Live Preview System integration
  */
 
 (function($) {
@@ -8,11 +8,19 @@
 
     let colorPaletteInterface = null;
     let currentConfig = {};
+    let livePreviewSystem = null;
+    let previewMessenger = null;
+    let wpCustomizerBridge = null;
 
     /**
-     * Initialize Simple Visual Customizer
+     * Initialize Simple Visual Customizer - PVC-005 Enhanced
      */
     function initSimpleVisualCustomizer() {
+        console.log('🚀 Simple Visual Customizer: Initializing with PVC-005 Live Preview...');
+
+        // Initialize PVC-005 components first
+        initPVC005Components();
+
         // Admin bar trigger
         $(document).on('click', '#wp-admin-bar-visual-customizer a', function(e) {
             e.preventDefault();
@@ -39,41 +47,193 @@
             resetChanges();
         });
 
-        // ESC key to close
-        $(document).on('keydown', function(e) {
-            if (e.key === 'Escape' && $('.simple-vc-sidebar').hasClass('open')) {
-                closeSidebar();
-            }
-        });
+        // PVC-005: Setup real-time preview event handlers
+        setupLivePreviewEventHandlers();
 
-        console.log('Simple Visual Customizer initialized');
+        console.log('✅ Simple Visual Customizer: Ready with Live Preview');
     }
 
     /**
-     * Open Sidebar
+     * PVC-005: Initialize Live Preview System components
      */
-    function openSidebar() {
-        $('.simple-vc-sidebar').addClass('open');
-        $('.simple-vc-overlay').addClass('show');
-        $('body').css('overflow', 'hidden');
+    function initPVC005Components() {
+        try {
+            // Initialize Live Preview System
+            if (typeof LivePreviewSystem !== 'undefined') {
+                livePreviewSystem = new LivePreviewSystem({
+                    debug: simpleCustomizer.debug || false,
+                    updateDelay: 50 // < 100ms requirement
+                });
+                console.log('✅ LivePreviewSystem initialized');
+            }
 
-        // Load color palette interface if not already loaded
-        if (!colorPaletteInterface) {
-            loadColorPaletteInterface();
+            // Initialize Preview Messenger
+            if (typeof PreviewMessenger !== 'undefined') {
+                previewMessenger = new PreviewMessenger({
+                    debug: simpleCustomizer.debug || false
+                });
+
+                // Setup handlers if live preview is available
+                if (livePreviewSystem) {
+                    previewMessenger.setupPreviewHandlers(livePreviewSystem);
+                }
+                console.log('✅ PreviewMessenger initialized');
+            }
+
+            // Initialize WordPress Customizer Bridge
+            if (typeof WordPressCustomizerBridge !== 'undefined') {
+                wpCustomizerBridge = new WordPressCustomizerBridge({
+                    debug: simpleCustomizer.debug || false
+                });
+                console.log('✅ WordPressCustomizerBridge initialized');
+            }
+
+        } catch (error) {
+            console.error('❌ Error initializing PVC-005 components:', error);
         }
     }
 
     /**
-     * Close Sidebar
+     * PVC-005: Setup Live Preview event handlers
      */
-    function closeSidebar() {
-        $('.simple-vc-sidebar').removeClass('open');
-        $('.simple-vc-overlay').removeClass('show');
-        $('body').css('overflow', '');
+    function setupLivePreviewEventHandlers() {
+        console.log('🔧 Setting up Live Preview event handlers...');
+
+        // Listen for palette selection events
+        document.addEventListener('paletteInterface:paletteSelected', function(event) {
+            const { paletteId, palette } = event.detail;
+            console.log('🎨 Palette selected:', paletteId);
+            console.log('📊 Palette data:', palette);
+
+            // Store current config
+            currentConfig = {
+                activePalette: paletteId,
+                paletteData: palette,
+                timestamp: performance.now()
+            };
+
+            console.log('💾 Current config updated:', currentConfig);
+
+            // Apply immediately via Live Preview System
+            if (livePreviewSystem && palette) {
+                console.log('🚀 Applying palette via Live Preview System...');
+                livePreviewSystem.applyPalette(palette).then(() => {
+                    console.log('✅ Live Preview System: Palette applied successfully');
+                    showMessage('Palette applied! Changes are visible in real-time.', 'success');
+                }).catch(error => {
+                    console.error('❌ Live Preview System error:', error);
+                    showMessage('Error applying palette: ' + error.message, 'error');
+                });
+            } else {
+                console.warn('⚠️ Live Preview System not available or no palette data');
+                console.log('Live Preview System:', livePreviewSystem);
+                console.log('Palette Data:', palette);
+            }
+
+            // Update apply button state
+            updateApplyButton();
+        });
+
+        // Listen for live preview events
+        document.addEventListener('preview:paletteApplied', function(event) {
+            const { palette, duration, performance } = event.detail;
+            console.log(`✅ PALETTE APPLIED in ${duration.toFixed(2)}ms`, performance);
+            console.log('🎨 Applied palette details:', palette);
+
+            // Update UI feedback
+            showPerformanceMetrics(duration, performance);
+        });
+
+        document.addEventListener('preview:error', function(event) {
+            console.error('❌ Live Preview Error:', event.detail);
+            showMessage('Preview error: ' + event.detail.message, 'error');
+        });
+
+        console.log('✅ Live Preview event handlers set up');
     }
 
     /**
-     * Load Color Palette Interface
+     * Open sidebar with enhanced loading
+     */
+    function openSidebar() {
+        console.log('📂 Opening Simple Visual Customizer sidebar...');
+
+        // Create overlay
+        if (!$('#simple-vc-overlay').length) {
+            $('body').append('<div id="simple-vc-overlay" class="simple-vc-overlay"></div>');
+        }
+
+        // Create sidebar if it doesn't exist
+        if (!$('#simple-vc-sidebar').length) {
+            createSidebar();
+        }
+
+        // Show overlay and sidebar
+        $('#simple-vc-overlay').fadeIn(200);
+        $('#simple-vc-sidebar').addClass('open');
+
+        // Load color palette interface
+        loadColorPaletteInterface();
+
+        // Enable live preview mode
+        if (livePreviewSystem) {
+            livePreviewSystem.enablePreviewMode();
+        }
+    }
+
+    /**
+     * Close sidebar with proper cleanup
+     */
+    function closeSidebar() {
+        $('#simple-vc-sidebar').removeClass('open');
+        $('#simple-vc-overlay').fadeOut(200);
+
+        // Disable live preview mode
+        if (livePreviewSystem) {
+            livePreviewSystem.disablePreviewMode();
+        }
+
+        console.log('📁 Simple Visual Customizer sidebar closed');
+    }
+
+    /**
+     * Create sidebar HTML
+     */
+    function createSidebar() {
+        const sidebarHtml = `
+            <div id="simple-vc-sidebar" class="simple-vc-sidebar">
+                <div class="simple-vc-header">
+                    <h3>🎨 Visual Customizer</h3>
+                    <button id="simple-vc-close" class="simple-vc-close" title="Close">×</button>
+                </div>
+                <div class="simple-vc-content">
+                    <div class="simple-vc-section">
+                        <h4>Color Palettes</h4>
+                        <div id="simple-color-palette-container" class="simple-color-palette-container">
+                            <p>Loading color palettes...</p>
+                        </div>
+                    </div>
+
+                    <div class="simple-vc-section">
+                        <h4>Live Preview</h4>
+                        <div id="simple-vc-status" class="simple-vc-status">
+                            <span class="status-indicator">⚡ Live Preview Active</span>
+                            <div id="performance-metrics" class="performance-metrics"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="simple-vc-footer">
+                    <button id="simple-vc-reset" class="simple-vc-btn simple-vc-btn-secondary">Reset</button>
+                    <button id="simple-vc-apply" class="simple-vc-btn simple-vc-btn-primary" disabled>Apply Globally</button>
+                </div>
+            </div>
+        `;
+
+        $('body').append(sidebarHtml);
+    }
+
+    /**
+     * Load Color Palette Interface - PVC-005 Enhanced
      */
     function loadColorPaletteInterface() {
         const container = $('#simple-color-palette-container');
@@ -84,299 +244,289 @@
             typeof SemanticColorSystem !== 'undefined') {
 
             try {
-                console.log('🎨 Initializing full ColorPaletteInterface...');
+                console.log('🎨 Initializing full ColorPaletteInterface with Live Preview...');
                 container.html('<p>Initializing color palette interface...</p>');
 
                 // Initialize ColorSystemManager first
                 const colorSystemManager = new ColorSystemManager({ autoInit: false });
-                console.log('✅ ColorSystemManager created');
 
-                // Create ColorPaletteInterface with proper configuration
+                // Create ColorPaletteInterface with enhanced config for sidebar
                 colorPaletteInterface = new ColorPaletteInterface('simple-color-palette-container', {
                     colorSystemManager: colorSystemManager,
-                    enablePreview: true,
+                    enablePreview: true, // PVC-005: Enable live preview
                     showAccessibilityInfo: true,
                     enableSearch: true,
-                    compact: true,
-                    onPaletteChange: function(paletteId, paletteData) {
-                        currentConfig = {
-                            activePalette: paletteId,
-                            colorConfig: paletteData.colors || {},
-                            paletteData: paletteData,
-                            timestamp: Date.now()
-                        };
-                        console.log('🎯 Palette changed via ColorPaletteInterface:', paletteId);
+                    compact: true, // For narrow sidebar
+                    previewDelay: 50, // PVC-005: < 100ms requirement
+                    onPaletteSelect: function(paletteId, paletteData) {
+                        // This will trigger the event listener above
+                        console.log('🎨 Palette selected via interface:', paletteId);
                     }
                 });
 
-                console.log('✅ ColorPaletteInterface created');
+                // Initialize
+                colorSystemManager.initialize().then(() => {
+                    return colorPaletteInterface.initialize();
+                }).then(() => {
+                    console.log('✅ ColorPaletteInterface ready with live preview');
 
-                // Initialize the interface
-                if (typeof colorPaletteInterface.initialize === 'function') {
-                    colorPaletteInterface.initialize().then(initResult => {
-                        console.log('✅ ColorPaletteInterface initialized successfully:', initResult);
+                    // Setup real-time preview integration
+                    setupColorPaletteIntegration();
 
-                        // Set up event listeners for the interface
-                        setupColorPaletteInterfaceEvents();
-
-                    }).catch(error => {
-                        console.error('❌ ColorPaletteInterface initialization failed:', error);
-                        showFallbackInterface(container);
-                    });
-                } else {
-                    console.log('✅ ColorPaletteInterface created (no async initialization)');
-                    setupColorPaletteInterfaceEvents();
-                }
-
-                return;
+                }).catch(error => {
+                    console.error('❌ Error initializing ColorPaletteInterface:', error);
+                    loadFallbackInterface();
+                });
 
             } catch (error) {
-                console.error('❌ Error creating ColorPaletteInterface:', error);
-                showFallbackInterface(container);
-                return;
+                console.error('❌ Error setting up ColorPaletteInterface:', error);
+                loadFallbackInterface();
             }
+        } else {
+            console.warn('⚠️ ColorPaletteInterface components not available, loading fallback');
+            loadFallbackInterface();
         }
-
-        console.log('⚠️ ColorPaletteInterface components not available, showing fallback');
-        showFallbackInterface(container);
     }
 
     /**
-     * Setup Color Palette Interface Events
+     * PVC-005: Setup Color Palette Interface integration
      */
-    function setupColorPaletteInterfaceEvents() {
-        // Listen for palette selection events from the interface
-        document.addEventListener('paletteInterface:paletteSelected', function(event) {
-            const { paletteId, paletteData } = event.detail;
-            console.log('📡 Received paletteSelected event:', paletteId);
+    function setupColorPaletteIntegration() {
+        // Enhanced palette selection handling
+        $(document).on('click', '.palette-card', function() {
+            const paletteId = $(this).data('palette-id');
+            const paletteData = $(this).data('palette-data');
 
-            currentConfig = {
-                activePalette: paletteId,
-                colorConfig: paletteData.colors || {},
-                paletteData: paletteData,
-                timestamp: Date.now()
-            };
+            if (paletteId && paletteData) {
+                // Immediate visual feedback
+                $('.palette-card').removeClass('selected');
+                $(this).addClass('selected');
 
-            // Show preview immediately when palette is selected
-            if (paletteData) {
-                console.log('🎨 Auto-previewing selected palette');
-                applyPaletteCSS(paletteData);
-                showMessage(`Previewing "${paletteData.name}" palette. Click "Apply Changes" to save.`, 'success');
+                // Dispatch enhanced event with palette data
+                document.dispatchEvent(new CustomEvent('paletteInterface:paletteSelected', {
+                    detail: { paletteId, paletteData }
+                }));
             }
         });
 
-        // Listen for apply button clicks from the interface
-        document.addEventListener('paletteInterface:paletteApplied', function(event) {
-            console.log('📡 Received paletteApplied event:', event.detail);
-            // The interface applied the palette, now save it
-            applyChanges();
+        // Performance monitoring display
+        document.addEventListener('preview:paletteApplied', function(event) {
+            updatePerformanceDisplay(event.detail);
         });
-
-        // Listen for preview toggle events
-        document.addEventListener('paletteInterface:previewToggled', function(event) {
-            const { isPreviewMode, paletteData } = event.detail;
-            console.log('📡 Preview toggled:', isPreviewMode);
-
-            if (isPreviewMode && paletteData) {
-                applyPaletteCSS(paletteData);
-                showMessage('Preview mode enabled', 'success');
-            } else {
-                // Remove preview styles
-                $('#simple-vc-custom-styles').remove();
-                showMessage('Preview mode disabled', 'success');
-            }
-        });
-
-        console.log('✅ ColorPaletteInterface event listeners set up');
     }
 
     /**
-     * Show Fallback Interface
+     * Load fallback interface with live preview support
      */
-    function showFallbackInterface(container) {
-        console.log('🔄 Loading fallback interface...');
+    function loadFallbackInterface() {
+        const container = $('#simple-color-palette-container');
 
-        // Try to use SemanticColorSystem for fallback
         if (typeof SemanticColorSystem !== 'undefined') {
             try {
+                console.log('🎨 Loading fallback interface with SemanticColorSystem...');
                 const colorSystem = new SemanticColorSystem();
                 const allPalettes = colorSystem.getAllPalettes();
 
-                console.log(`Found ${allPalettes.length} palettes for fallback:`, allPalettes.map(p => p.name));
+                let html = `<div class="palette-grid-simple">`;
 
-                let paletteHTML = `
-                    <div class="simple-palette-fallback">
-                        <h5>Available Palettes (${allPalettes.length})</h5>
-                        <div class="palette-list">
-                `;
+                allPalettes.forEach(palette => {
+                    const truncatedDesc = palette.description ?
+                        (palette.description.length > 50 ?
+                            palette.description.substring(0, 50) + '...' :
+                            palette.description) : '';
 
-                allPalettes.forEach((palette, index) => {
-                    const isActive = index === 0 ? 'active' : '';
-                    const categoryInfo = colorSystem.getCategory(palette.category);
-                    const icon = categoryInfo?.icon || '🎨';
-
-                    paletteHTML += `
-                        <div class="palette-item ${isActive}" data-palette="${palette.id}">
-                            ${icon} ${palette.name}
-                            <small style="display: block; opacity: 0.7; font-size: 10px;">
-                                ${palette.description?.substring(0, 40) || ''}...
-                            </small>
+                    html += `
+                        <div class="palette-item-simple" data-palette="${palette.id}" data-palette-data='${JSON.stringify(palette)}'>
+                            <div class="palette-header">
+                                <span class="palette-icon">${palette.icon || '🎨'}</span>
+                                <strong>${palette.name}</strong>
+                            </div>
+                            <div class="palette-description">${truncatedDesc}</div>
+                            <div class="palette-colors">
+                                ${Object.entries(palette.colors).slice(0, 4).map(([role, color]) =>
+                                    `<span class="color-swatch" style="background-color: ${color.hex || color}" title="${role}"></span>`
+                                ).join('')}
+                            </div>
                         </div>
                     `;
                 });
 
-                paletteHTML += `
-                        </div>
-                        <p><small>Using fallback palette selector (${allPalettes.length} palettes)</small></p>
-                    </div>
-                `;
+                html += `</div>`;
+                container.html(html);
 
-                container.html(paletteHTML);
+                // Setup enhanced fallback handlers
+                setupFallbackHandlers(colorSystem);
 
-                // Set default config to first palette
-                if (allPalettes.length > 0) {
-                    currentConfig = {
-                        activePalette: allPalettes[0].id,
-                        colorConfig: allPalettes[0].colors,
-                        timestamp: Date.now()
-                    };
-                }
-
-                setupSemanticPaletteHandlers(colorSystem);
-                return;
+                console.log('✅ Fallback interface loaded with live preview support');
 
             } catch (error) {
-                console.error('❌ Error with SemanticColorSystem fallback:', error);
+                console.error('❌ Error loading SemanticColorSystem fallback:', error);
+                loadBasicFallback();
             }
+        } else {
+            loadBasicFallback();
         }
-
-        // Final fallback: Basic palette selector
-        console.log('🔄 Using basic fallback palette selector');
-        container.html(`
-            <div class="simple-vc-message error">
-                Advanced color systems unavailable
-            </div>
-            <div class="simple-palette-fallback">
-                <h5>Basic Palettes</h5>
-                <div class="palette-list">
-                    <div class="palette-item active" data-palette="medical-clean">🏥 Medical Clean</div>
-                    <div class="palette-item" data-palette="luxury-spa">✨ Luxury Spa</div>
-                    <div class="palette-item" data-palette="professional">💼 Professional</div>
-                </div>
-                <p><small>Basic fallback (3 palettes)</small></p>
-            </div>
-        `);
-
-        currentConfig = {
-            activePalette: 'medical-clean',
-            colorConfig: {},
-            timestamp: Date.now()
-        };
-
-        setupFallbackPaletteHandlers();
     }
 
     /**
-     * Setup Semantic Color System Palette Handlers
+     * Setup enhanced fallback handlers with live preview
      */
-    function setupSemanticPaletteHandlers(colorSystem) {
-        $(document).on('click', '.palette-item', function() {
+    function setupFallbackHandlers(colorSystem) {
+        console.log('🔧 Setting up fallback handlers...');
+
+        $(document).on('click', '.palette-item-simple', function() {
+            console.log('🖱️ Fallback palette item clicked');
+
             const paletteId = $(this).data('palette');
-            $('.palette-item').removeClass('active');
+            const paletteData = $(this).data('palette-data');
+
+            console.log('📋 Fallback - Palette ID:', paletteId);
+            console.log('📋 Fallback - Palette Data (raw):', paletteData);
+
+            $('.palette-item-simple').removeClass('active');
             $(this).addClass('active');
 
             try {
-                const palette = colorSystem.getPalette(paletteId);
+                // Get full palette data if not embedded
+                const fullPaletteData = paletteData || colorSystem.getPalette(paletteId);
+                console.log('📋 Fallback - Full Palette Data:', fullPaletteData);
+
                 currentConfig = {
                     activePalette: paletteId,
-                    colorConfig: palette.colors,
-                    paletteData: palette,
-                    timestamp: Date.now()
+                    paletteData: fullPaletteData,
+                    timestamp: performance.now()
                 };
 
-                console.log('Semantic palette selected:', paletteId, palette);
+                console.log('🎨 Fallback palette selected:', paletteId, fullPaletteData);
+                console.log('💾 Fallback - Current config updated:', currentConfig);
 
-                // Show preview of colors
-                showPalettePreview(palette);
+                // Dispatch the same event as the main interface
+                console.log('📡 Dispatching paletteInterface:paletteSelected event...');
+                document.dispatchEvent(new CustomEvent('paletteInterface:paletteSelected', {
+                    detail: { paletteId, paletteData: fullPaletteData }
+                }));
 
-                // Apply CSS immediately for visual feedback
-                applyPaletteCSS(palette);
-                showMessage(`Previewing "${palette.name}" palette. Click "Apply Changes" to save.`, 'success');
+                // Apply via Live Preview System if available
+                if (livePreviewSystem && fullPaletteData) {
+                    console.log('🚀 Fallback - Applying via Live Preview System...');
+                    livePreviewSystem.applyPalette(fullPaletteData).then(() => {
+                        console.log('✅ Fallback - Live Preview applied successfully');
+                        showMessage('Palette applied! Changes are live.', 'success');
+                    }).catch(error => {
+                        console.error('❌ Fallback - Live Preview error:', error);
+                        showMessage('Error applying palette: ' + error.message, 'error');
+                    });
+                } else {
+                    console.warn('⚠️ Fallback - Live Preview not available');
+                    console.log('Live Preview System:', livePreviewSystem);
+                    console.log('Full Palette Data:', fullPaletteData);
+                }
+
+                // Show color preview
+                showColorPreview(fullPaletteData);
+                updateApplyButton();
 
             } catch (error) {
-                console.error('Error selecting palette:', error);
-                currentConfig = {
-                    activePalette: paletteId,
-                    colorConfig: {},
-                    timestamp: Date.now()
-                };
-                showMessage('Error loading palette, but selection saved.', 'error');
+                console.error('❌ Error handling fallback palette selection:', error);
+                showMessage('Error selecting palette: ' + error.message, 'error');
             }
         });
+
+        console.log('✅ Fallback handlers set up');
     }
 
     /**
-     * Show Palette Preview
+     * Show enhanced color preview
      */
-    function showPalettePreview(palette) {
-        // Create a small preview of the selected palette colors
-        let previewHTML = '<div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px;">';
-        previewHTML += '<strong>Preview:</strong><br>';
-        previewHTML += '<div style="display: flex; gap: 3px; margin-top: 5px;">';
+    function showColorPreview(paletteData) {
+        const existingPreview = $('#palette-preview');
+        existingPreview.remove();
 
-        Object.entries(palette.colors).forEach(([role, color]) => {
-            previewHTML += `
-                <div style="
-                    width: 20px;
-                    height: 20px;
-                    background: ${color.hex};
-                    border-radius: 3px;
-                    border: 1px solid #ddd;
-                    title: '${role}: ${color.hex}'
-                "></div>
+        if (!paletteData || !paletteData.colors) return;
+
+        const previewHtml = `
+            <div id="palette-preview" class="palette-preview">
+                <h5>🎨 ${paletteData.name} Preview</h5>
+                <div class="color-swatches">
+                    ${Object.entries(paletteData.colors).map(([role, colorData]) => {
+                        const colorValue = colorData.hex || colorData;
+                        return `
+                            <div class="color-swatch-detail">
+                                <div class="swatch" style="background-color: ${colorValue}"></div>
+                                <span class="role">${role}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                <div class="preview-status">
+                    <span class="live-indicator">⚡ Live Preview Active</span>
+                </div>
+            </div>
+        `;
+
+        $('#simple-color-palette-container').append(previewHtml);
+    }
+
+    /**
+     * Update performance display
+     */
+    function updatePerformanceDisplay(data) {
+        const { duration, performance } = data;
+        const metricsContainer = $('#performance-metrics');
+
+        if (metricsContainer.length) {
+            const html = `
+                <div class="perf-metric">
+                    <span>Update Time:</span>
+                    <span class="${duration < 50 ? 'good' : duration < 100 ? 'okay' : 'slow'}">
+                        ${duration.toFixed(1)}ms
+                    </span>
+                </div>
+                <div class="perf-metric">
+                    <span>Avg Performance:</span>
+                    <span>${performance.avgUpdateTime ? performance.avgUpdateTime.toFixed(1) + 'ms' : 'N/A'}</span>
+                </div>
             `;
-        });
-
-        previewHTML += '</div></div>';
-
-        // Remove existing preview and add new one
-        $('.palette-preview').remove();
-        $(previewHTML).addClass('palette-preview').insertAfter('.palette-list');
+            metricsContainer.html(html);
+        }
     }
 
     /**
-     * Setup Fallback Palette Handlers
+     * Show performance metrics (enhanced version)
      */
-    function setupFallbackPaletteHandlers() {
-        $(document).on('click', '.palette-item', function() {
-            const paletteId = $(this).data('palette');
-            $('.palette-item').removeClass('active');
-            $(this).addClass('active');
+    function showPerformanceMetrics(duration, performanceData) {
+        console.log('📊 Showing performance metrics:', { duration, performanceData });
 
-            // Create fallback palette data
-            const paletteData = {
-                id: paletteId,
-                name: paletteId.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
-                colors: {}
-            };
+        const metricsContainer = $('#performance-metrics');
 
-            currentConfig = {
-                activePalette: paletteId,
-                colorConfig: {},
-                paletteData: paletteData,
-                timestamp: Date.now()
-            };
+        if (metricsContainer.length) {
+            const html = `
+                <div class="perf-metrics-title">⚡ Performance</div>
+                <div class="perf-metric">
+                    <span>Update Time:</span>
+                    <span class="perf-value ${duration < 50 ? 'good' : duration < 100 ? 'okay' : 'slow'}">
+                        ${duration.toFixed(1)}ms
+                    </span>
+                </div>
+                <div class="perf-metric">
+                    <span>Average:</span>
+                    <span class="perf-value">${performanceData?.avgUpdateTime ? performanceData.avgUpdateTime.toFixed(1) + 'ms' : 'N/A'}</span>
+                </div>
+                <div class="perf-metric">
+                    <span>Total Updates:</span>
+                    <span class="perf-value">${performanceData?.totalUpdates || 0}</span>
+                </div>
+            `;
+            metricsContainer.html(html);
 
-            console.log('Fallback palette selected:', paletteId);
-
-            // Apply CSS immediately for visual feedback
-            applyPaletteCSS(paletteData);
-            showMessage(`Previewing "${paletteData.name}" palette. Click "Apply Changes" to save.`, 'success');
-        });
+            console.log('📊 Performance metrics updated in UI');
+        } else {
+            console.warn('⚠️ Performance metrics container not found');
+        }
     }
 
     /**
-     * Apply Changes
+     * Apply Changes - Enhanced with Live Preview
      */
     function applyChanges() {
         if (!currentConfig.activePalette) {
@@ -387,11 +537,10 @@
         const $button = $('#simple-vc-apply');
         $button.prop('disabled', true).text('Applying...');
 
-        // Generate and apply CSS immediately for visual feedback
-        if (currentConfig.paletteData) {
-            applyPaletteCSS(currentConfig.paletteData);
-            showMessage('Palette applied to page! Saving settings...', 'success');
-        }
+        console.log('🎨 Applying changes globally...', currentConfig);
+
+        // Note: Changes are already applied via Live Preview
+        // This saves them globally for all users
 
         $.ajax({
             url: simpleCustomizer.ajaxUrl,
@@ -403,330 +552,124 @@
             },
             success: function(response) {
                 if (response.success) {
-                    showMessage('Visual customizer settings saved successfully! Changes are now permanent.', 'success');
+                    showMessage('Settings applied globally! All visitors will now see this theme.', 'success');
 
-                    // No need to reload if CSS is already applied
-                    console.log('✅ Settings saved to database');
+                    // Update apply button to show success
+                    $button.text('Applied ✓').removeClass('simple-vc-btn-primary').addClass('simple-vc-btn-success');
+
+                    // Reset after delay
+                    setTimeout(() => {
+                        $button.text('Apply Globally').removeClass('simple-vc-btn-success').addClass('simple-vc-btn-primary').prop('disabled', false);
+                    }, 3000);
                 } else {
-                    showMessage(response.data || 'Failed to save changes permanently.', 'error');
+                    showMessage('Error: ' + response.data.message, 'error');
+                    $button.prop('disabled', false).text('Apply Globally');
                 }
             },
             error: function() {
-                showMessage('Network error. Changes applied locally but may not be saved.', 'error');
-            },
-            complete: function() {
-                $button.prop('disabled', false).text('Apply Changes');
+                showMessage('Network error occurred', 'error');
+                $button.prop('disabled', false).text('Apply Globally');
             }
         });
     }
 
     /**
-     * Apply Palette CSS to the Page
-     */
-    function applyPaletteCSS(paletteData) {
-        try {
-            console.log('🎨 Applying palette CSS:', paletteData);
-
-            // Remove existing custom palette styles
-            $('#simple-vc-custom-styles').remove();
-
-            // Generate CSS for the palette
-            let css = generatePaletteCSS(paletteData);
-
-            // Create style element and inject CSS
-            const styleElement = $(`<style id="simple-vc-custom-styles">${css}</style>`);
-            $('head').append(styleElement);
-
-            console.log('✅ Palette CSS applied to page');
-
-            // Show visual feedback
-            $('body').addClass('simple-vc-palette-applied');
-            setTimeout(() => {
-                $('body').removeClass('simple-vc-palette-applied');
-            }, 1000);
-
-        } catch (error) {
-            console.error('❌ Error applying palette CSS:', error);
-            showMessage('Error applying visual changes: ' + error.message, 'error');
-        }
-    }
-
-    /**
-     * Generate CSS from Palette Data
-     */
-    function generatePaletteCSS(paletteData) {
-        if (!paletteData.colors) {
-            console.warn('⚠️ No colors in palette data, using SemanticColorSystem fallback');
-            return generateFallbackCSS(paletteData.id);
-        }
-
-        let css = `
-        /* Simple Visual Customizer - Applied Palette: ${paletteData.name} */
-        :root {
-        `;
-
-        // Generate CSS custom properties from palette colors
-        Object.entries(paletteData.colors).forEach(([role, colorData]) => {
-            const colorValue = colorData.hex || colorData;
-            css += `    --color-${role}: ${colorValue};\n`;
-            css += `    --color-${role}-rgb: ${hexToRgb(colorValue)};\n`;
-        });
-
-        css += `
-        }
-
-        /* ===== MEDICAL SPA THEME INTEGRATION ===== */
-
-        /* Professional Header (Transparent/Fixed Navigation) */
-        .professional-header {
-            background-color: var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}) !important;
-        }
-
-        .professional-header.scrolled {
-            background: rgba(${hexToRgb(paletteData.colors.primary?.hex || '#87A96B')}, 0.95) !important;
-        }
-
-        .professional-header .nav-link,
-        .professional-header .logo-fallback {
-            color: var(--color-surface, ${paletteData.colors.surface?.hex || '#FFFFFF'}) !important;
-        }
-
-        /* Buttons - Medical Spa Theme */
-        .btn-primary, .button-primary,
-        .hero-discovery-btn,
-        .consultation-booking-btn {
-            background-color: var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}) !important;
-            border-color: var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}) !important;
-            color: var(--color-surface, ${paletteData.colors.surface?.hex || '#FFFFFF'}) !important;
-        }
-
-        .btn-secondary, .button-secondary {
-            background-color: var(--color-secondary, ${paletteData.colors.secondary?.hex || '#1B365D'}) !important;
-            border-color: var(--color-secondary, ${paletteData.colors.secondary?.hex || '#1B365D'}) !important;
-            color: var(--color-surface, ${paletteData.colors.surface?.hex || '#FFFFFF'}) !important;
-        }
-
-        /* Hero Sections - Medical Spa */
-        .treatments-hero-luxury,
-        .hero-content-luxury,
-        .premium-hero {
-            background: linear-gradient(
-                135deg,
-                var(--color-secondary, ${paletteData.colors.secondary?.hex || '#1B365D'}),
-                var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'})
-            ) !important;
-        }
-
-        .hero-title-main,
-        .premium-hero .hero-title {
-            color: var(--color-surface, ${paletteData.colors.surface?.hex || '#FFFFFF'}) !important;
-        }
-
-        .hero-title-accent {
-            color: var(--color-accent, ${paletteData.colors.accent?.hex || '#D4AF37'}) !important;
-        }
-
-        /* Treatment Cards - Modern Cards */
-        .modern-card {
-            border-color: var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}) !important;
-        }
-
-        .modern-card:hover {
-            border-color: var(--color-accent, ${paletteData.colors.accent?.hex || '#D4AF37'}) !important;
-            box-shadow: 0 8px 25px rgba(${hexToRgb(paletteData.colors.primary?.hex || '#87A96B')}, 0.3) !important;
-        }
-
-        .artistry-card:hover,
-        .category-card:hover {
-            border-color: var(--color-accent, ${paletteData.colors.accent?.hex || '#D4AF37'}) !important;
-        }
-
-        /* Section Backgrounds */
-        .bg-primary,
-        .treatment-artistry-discovery {
-            background: linear-gradient(
-                135deg,
-                var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}),
-                var(--color-secondary, ${paletteData.colors.secondary?.hex || '#1B365D'})
-            ) !important;
-            color: var(--color-surface, ${paletteData.colors.surface?.hex || '#FFFFFF'}) !important;
-        }
-
-        .modern-section {
-            background-color: var(--color-background, ${paletteData.colors.background?.hex || '#FDFCFA'}) !important;
-        }
-
-        /* Typography Colors */
-        .section-title,
-        .artistry-title {
-            color: var(--color-secondary, ${paletteData.colors.secondary?.hex || '#1B365D'}) !important;
-        }
-
-        .text-primary {
-            color: var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}) !important;
-        }
-
-        /* Footer Styling */
-        .site-footer,
-        .luxury-footer {
-            background-color: var(--color-secondary, ${paletteData.colors.secondary?.hex || '#1B365D'}) !important;
-            color: var(--color-surface, ${paletteData.colors.surface?.hex || '#FFFFFF'}) !important;
-        }
-
-        /* Consultation/CTA Elements */
-        .consultation-cta,
-        .discovery-invitation {
-            background: linear-gradient(
-                135deg,
-                var(--color-accent, ${paletteData.colors.accent?.hex || '#D4AF37'}),
-                var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'})
-            ) !important;
-        }
-
-        /* Interactive Elements */
-        .treatment-selection-interface {
-            border-color: var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}) !important;
-        }
-
-        .category-btn.active,
-        .treatment-btn.active {
-            background-color: var(--color-primary, ${paletteData.colors.primary?.hex || '#87A96B'}) !important;
-            color: var(--color-surface, ${paletteData.colors.surface?.hex || '#FFFFFF'}) !important;
-        }
-
-        /* Visual feedback for applied changes */
-        body.simple-vc-palette-applied {
-            transition: all 0.3s ease;
-        }
-        `;
-
-        return css;
-    }
-
-    /**
-     * Generate Fallback CSS for Basic Palettes
-     */
-    function generateFallbackCSS(paletteId) {
-        const fallbackPalettes = {
-            'medical-clean': {
-                primary: '#87A96B',
-                secondary: '#1B365D',
-                accent: '#D4AF37',
-                surface: '#FFFFFF',
-                background: '#FDFCFA'
-            },
-            'luxury-spa': {
-                primary: '#D4AF37',
-                secondary: '#8B4513',
-                accent: '#87A96B',
-                surface: '#FFF8DC',
-                background: '#FFFACD'
-            },
-            'professional': {
-                primary: '#1B365D',
-                secondary: '#87A96B',
-                accent: '#D4AF37',
-                surface: '#FFFFFF',
-                background: '#F8F9FA'
-            }
-        };
-
-        const colors = fallbackPalettes[paletteId] || fallbackPalettes['medical-clean'];
-
-        return generatePaletteCSS({
-            id: paletteId,
-            name: paletteId,
-            colors: Object.fromEntries(
-                Object.entries(colors).map(([role, hex]) => [role, { hex }])
-            )
-        });
-    }
-
-    /**
-     * Convert hex to RGB string
-     */
-    function hexToRgb(hex) {
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        if (!result) return '0, 0, 0';
-
-        const r = parseInt(result[1], 16);
-        const g = parseInt(result[2], 16);
-        const b = parseInt(result[3], 16);
-        return `${r}, ${g}, ${b}`;
-    }
-
-    /**
-     * Reset Changes
+     * Reset Changes - Enhanced
      */
     function resetChanges() {
-        if (!confirm('Are you sure you want to reset all customizations to defaults?')) {
-            return;
+        console.log('🔄 Resetting visual customizer...');
+
+        // Reset Live Preview System
+        if (livePreviewSystem) {
+            livePreviewSystem.resetPreview();
         }
 
-        const $button = $('#simple-vc-reset');
-        $button.prop('disabled', true).text('Resetting...');
+        // Reset UI
+        $('.palette-item, .palette-item-simple, .palette-card').removeClass('active selected');
+        $('#palette-preview').remove();
+        $('#performance-metrics').empty();
 
-        $.ajax({
-            url: simpleCustomizer.ajaxUrl,
-            type: 'POST',
-            data: {
-                action: 'simple_visual_customizer_reset',
-                nonce: simpleCustomizer.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    showMessage(response.data.message, 'success');
-                    currentConfig = {};
+        currentConfig = {};
+        updateApplyButton();
 
-                    // Reset interface
-                    if (colorPaletteInterface && colorPaletteInterface.reset) {
-                        colorPaletteInterface.reset();
-                    }
-
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    showMessage(response.data || 'Failed to reset changes.', 'error');
-                }
-            },
-            error: function() {
-                showMessage('Network error. Please try again.', 'error');
-            },
-            complete: function() {
-                $button.prop('disabled', false).text('Reset');
-            }
-        });
+        showMessage('Visual customizer reset to defaults', 'info');
     }
 
     /**
-     * Show Message
+     * Update apply button state
      */
-    function showMessage(message, type) {
-        const messageHtml = `<div class="simple-vc-message ${type}">${message}</div>`;
+    function updateApplyButton() {
+        const $button = $('#simple-vc-apply');
+        if (currentConfig.activePalette) {
+            $button.prop('disabled', false);
+        } else {
+            $button.prop('disabled', true);
+        }
+    }
 
-        // Remove existing messages
-        $('.simple-vc-message').remove();
+    /**
+     * Show enhanced message with better styling
+     */
+    function showMessage(message, type = 'info') {
+        const existingMessage = $('.simple-vc-message');
+        existingMessage.remove();
 
-        // Add new message
+        const messageClass = `simple-vc-message simple-vc-message-${type}`;
+        const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+
+        const messageHtml = `
+            <div class="${messageClass}">
+                <span class="message-icon">${icon}</span>
+                <span class="message-text">${message}</span>
+            </div>
+        `;
+
         $('.simple-vc-content').prepend(messageHtml);
 
-        // Auto-remove after 5 seconds
-        setTimeout(function() {
-            $('.simple-vc-message').fadeOut(function() {
+        // Auto remove after delay
+        setTimeout(() => {
+            $('.simple-vc-message').fadeOut(300, function() {
                 $(this).remove();
             });
         }, 5000);
     }
 
     /**
-     * Initialize when document is ready
+     * Load basic fallback (last resort)
      */
+    function loadBasicFallback() {
+        const container = $('#simple-color-palette-container');
+        container.html(`
+            <div class="fallback-message">
+                <p>⚠️ Color system not available</p>
+                <p>Please ensure all required scripts are loaded.</p>
+                <button class="simple-vc-btn simple-vc-btn-secondary" onclick="location.reload()">
+                    Reload Page
+                </button>
+            </div>
+        `);
+    }
+
+    // Initialize when document is ready
     $(document).ready(function() {
-        // Only initialize for admin users
-        if (simpleCustomizer.isAdmin) {
+        if (typeof simpleCustomizer !== 'undefined') {
             initSimpleVisualCustomizer();
+        } else {
+            console.warn('⚠️ Simple Customizer data not available');
         }
     });
+
+    // Export for global access
+    window.SimpleVisualCustomizer = {
+        init: initSimpleVisualCustomizer,
+        openSidebar: openSidebar,
+        closeSidebar: closeSidebar,
+        applyChanges: applyChanges,
+        resetChanges: resetChanges,
+        getCurrentConfig: () => currentConfig,
+        getLivePreviewSystem: () => livePreviewSystem,
+        getPreviewMessenger: () => previewMessenger,
+        getWPCustomizerBridge: () => wpCustomizerBridge
+    };
 
 })(jQuery);

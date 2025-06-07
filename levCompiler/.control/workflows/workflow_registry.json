@@ -1,8 +1,8 @@
 {
   "workflowRegistry": {
     "version": "1.0.0",
-    "totalWorkflows": 8,
-    "activeWorkflows": 8,
+    "totalWorkflows": 9,
+    "activeWorkflows": 9,
     "systemArchitecture": "hierarchical-workflow-orchestration"
   },
 
@@ -144,13 +144,35 @@
         "primaryAgent": "BUG-RESOLVER-001",
         "workflowDelegations": {
           "codeGeneration": "CODE-GEN-WF-001",
-          "toolCreation": "CODE-GEN-WF-001"
+          "toolCreation": "CODE-GEN-WF-001",
+          "devToolsManagement": "DEVTOOLS-ORG-WF-001"
         },
         "devToolsManagement": {
           "outputLocation": "devtools/",
           "toolCategories": ["wp-admin-tools", "standalone-scripts", "automated-checks", "dev-utilities"],
-          "documentationRequirement": "each-tool-must-include-readme"
+          "documentationRequirement": "each-tool-must-include-readme",
+          "delegatedWorkflow": "DEVTOOLS-ORG-WF-001"
         }
+      },
+
+      "devToolsOrganizationWorkflow": {
+        "workflowId": "DEVTOOLS-ORG-WF-001",
+        "name": "devtools-organization-workflow",
+        "type": "specialized-development-tooling",
+        "description": "Comprehensive workflow for organizing development tools into structured devtools directory with web-based indexing and proper import management",
+        "priority": 2,
+        "status": "active",
+        "triggerPatterns": ["organize devtools", "migrate tools", "devtools index", "development tools", "tool organization", "create devtools index", "move testing tools"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/devtools-organization-workflow.json",
+        "primaryAgent": "FILE-OPERATIONS-001",
+        "fileManagement": {
+          "outputLocation": "devtools/",
+          "indexRegistration": "devtools/index.html",
+          "toolCategories": ["testing-tools", "wp-admin-tools", "standalone-scripts", "automated-checks", "dev-utilities"],
+          "documentationRequirement": "comprehensive-web-index-and-readme"
+        },
+        "delegatedFrom": ["BUG-RESOLUTION-WF-001"]
       }
     }
   },
@@ -231,6 +253,16 @@
         "confidence": 0.80,
         "estimatedDuration": "20-40 minutes",
         "status": "planned"
+      },
+
+      "devToolsOrganization": {
+        "inputPatterns": ["organize devtools", "migrate tools", "devtools index", "development tools", "tool organization", "create devtools index", "move testing tools", "organize development tools"],
+        "contextRequired": ["tool-inventory", "target-structure", "migration-requirements"],
+        "targetWorkflow": "devtools-organization-workflow",
+        "confidence": 0.90,
+        "estimatedDuration": "45-60 minutes",
+        "requiredAgent": "FILE-OPERATIONS-001",
+        "fileOrganization": "devtools-directory-structure"
       }
     }
   },

@@ -170,12 +170,14 @@
       "integrationTesting": "Test integration with existing systems",
       "userAcceptanceTesting": "Human validation of workflow design and outcomes"
     },
-    "phase5DeploymentAndOptimization": {
+    "phase5DeploymentAndRegistration": {
       "deploymentPlanning": "Plan phased rollout and deployment strategy",
+      "workflowRegistryUpdate": "MANDATORY: Register workflow in workflow_registry.json",
       "monitoringSetup": "Set up monitoring and alerting infrastructure",
       "documentationCreation": "Create comprehensive workflow documentation",
       "optimizationBaseline": "Establish baseline metrics for future optimization",
-      "maintenancePlanning": "Plan ongoing maintenance and evolution"
+      "maintenancePlanning": "Plan ongoing maintenance and evolution",
+      "delegationMapping": "Map workflow delegations from existing workflows"
     }
   },
 
@@ -237,6 +239,11 @@
       "description": "Comprehensive monitoring and alerting is configured",
       "threshold": 0.85,
       "validation": "monitoring-configuration-completeness"
+    },
+    "registryIntegration": {
+      "description": "Workflow is properly registered in workflow_registry.json with correct routing patterns",
+      "threshold": 1.0,
+      "validation": "workflow-registry-registration-verification"
     }
   },
 
@@ -263,7 +270,7 @@
     },
     "deploymentAuthorization": {
       "description": "Human authorizes workflow deployment and activation",
-      "stage": "phase5DeploymentAndOptimization",
+      "stage": "phase5DeploymentAndRegistration",
       "required": true
     }
   },
@@ -327,4 +334,4 @@
     "agentCoordinationOptimization": "Optimize agent coordination patterns",
     "humanPreferenceAdaptation": "Adapt to human supervisor preferences and feedback"
   }
-} 
+}
