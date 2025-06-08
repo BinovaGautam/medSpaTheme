@@ -47,18 +47,28 @@ function output_server_rendering_debug_analysis() {
     // Capture initial CSS variables state
     const rootStyle = getComputedStyle(document.documentElement);
     const criticalVars = [
+        // SEMANTIC COMPONENT TOKENS (the future of tokenization)
+        '--component-bg-color-primary',
+        '--component-text-color-primary',
+        '--component-bg-color-secondary',
+        '--component-bg-color-accent',
+        '--component-surface-color',
+        '--component-neutral-color',
+        '--color-primary',
+        '--color-secondary',
+        '--color-accent',
+        '--palette-primary',
+        '--palette-secondary',
+        '--palette-accent',
+        '--gradient-primary',
+        '--gradient-accent',
+        // LEGACY VARIABLES (for backward compatibility only)
         '--color-primary-navy',
         '--color-primary-teal',
         '--color-secondary-peach',
         '--color-neutral-white',
         '--color-soft-cream',
-        '--color-charcoal',
-        '--gradient-primary',
-        '--gradient-accent',
-        '--component-bg-color-primary',
-        '--component-text-color-primary',
-        '--component-bg-color-secondary',
-        '--component-bg-color-accent'
+        '--color-charcoal'
     ];
 
     criticalVars.forEach(varName => {

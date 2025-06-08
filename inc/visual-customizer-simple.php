@@ -279,6 +279,8 @@ function output_visual_customizer_global_css() {
     $config = get_option('preetidreams_visual_customizer_config', []);
 
     if (empty($config) || !isset($config['paletteData'])) {
+        // Add debug comment when no data is available
+        echo "<!-- Visual Customizer: No palette data available -->\n";
         return;
     }
 
@@ -286,16 +288,20 @@ function output_visual_customizer_global_css() {
     $css = generate_css_from_palette_data($config['paletteData']);
 
     if (!empty($css)) {
-        echo "<style id='visual-customizer-global-css' data-generated='" . current_time('c') . "'>\n";
+        echo "<style id='visual-customizer-global-css' data-generated='" . current_time('c') . "' data-palette='" . esc_attr($config['activePalette'] ?? 'unknown') . "'>\n";
         echo "/* Visual Customizer Global CSS - Applied Palette: " . esc_attr($config['activePalette'] ?? 'unknown') . " */\n";
+        echo "/* CSS Length: " . strlen($css) . " characters */\n";
         echo $css;
         echo "\n</style>\n";
+    } else {
+        echo "<!-- Visual Customizer: CSS generation failed -->\n";
     }
 }
-add_action('wp_head', 'output_visual_customizer_global_css', 100);
+// HIGH PRIORITY to override other CSS output functions
+add_action('wp_head', 'output_visual_customizer_global_css', 5);
 
 /**
- * PVC-005: Generate CSS from palette data with proper theme variable mapping
+ * PVC-005: Generate CSS from palette data with PURE TOKENIZATION approach
  */
 function generate_css_from_palette_data($palette_data) {
     if (!is_array($palette_data) || !isset($palette_data['colors'])) {
@@ -304,28 +310,8 @@ function generate_css_from_palette_data($palette_data) {
 
     $css = ":root {\n";
 
-    // CRITICAL FIX: Generate the SAME component tokens that JavaScript generates
-    foreach ($palette_data['colors'] as $role => $color_data) {
-        $color_value = is_array($color_data) ? ($color_data['hex'] ?? $color_data) : $color_data;
-
-        if (!empty($color_value)) {
-            // Generate RGB variants for alpha usage
-            $rgb = hex_to_rgb($color_value);
-            if ($rgb) {
-                $css .= "    --color-{$role}-rgb: {$rgb};\n";
-            }
-
-            // Generate variations
-            $css .= "    --color-{$role}: {$color_value};\n";
-            $css .= "    --color-{$role}-light: " . adjust_color_brightness($color_value, 0.2) . ";\n";
-            $css .= "    --color-{$role}-dark: " . adjust_color_brightness($color_value, -0.2) . ";\n";
-        }
-    }
-
-    // CRITICAL FIX: Add the EXACT theme-specific variables that the debug script expects
-    // These are the variables that were showing "NOT SET" in your debug output
-
-    // Map palette colors to theme-specific variables
+    // PURE TOKENIZATION: Generate ONLY semantic component tokens
+    // Map palette colors to semantic roles (not hardcoded theme names)
     $primaryColor = isset($palette_data['colors']['primary']) ?
         ($palette_data['colors']['primary']['hex'] ?? $palette_data['colors']['primary']) : '#1B365D';
     $secondaryColor = isset($palette_data['colors']['secondary']) ?
@@ -336,25 +322,10 @@ function generate_css_from_palette_data($palette_data) {
         ($palette_data['colors']['surface']['hex'] ?? $palette_data['colors']['surface']) : '#FDF2F8';
     $neutralColor = isset($palette_data['colors']['neutral']) ?
         ($palette_data['colors']['neutral']['hex'] ?? $palette_data['colors']['neutral']) : '#ffffff';
-    $charcoalColor = isset($palette_data['colors']['dark']) ?
+    $darkColor = isset($palette_data['colors']['dark']) ?
         ($palette_data['colors']['dark']['hex'] ?? $palette_data['colors']['dark']) : '#34495e';
 
-    // THEME-SPECIFIC VARIABLES - These were missing and causing "NOT SET" in debug
-    $css .= "    --color-primary-navy: {$primaryColor};\n";
-    $css .= "    --color-primary-navy-rgb: " . hex_to_rgb($primaryColor) . ";\n";
-    $css .= "    --color-primary-teal: {$secondaryColor};\n";
-    $css .= "    --color-primary-teal-rgb: " . hex_to_rgb($secondaryColor) . ";\n";
-    $css .= "    --color-secondary-peach: {$accentColor};\n";
-    $css .= "    --color-secondary-peach-rgb: " . hex_to_rgb($accentColor) . ";\n";
-    $css .= "    --color-neutral-white: {$neutralColor};\n";
-    $css .= "    --color-soft-cream: {$surfaceColor};\n";
-    $css .= "    --color-charcoal: {$charcoalColor};\n";
-
-    // GRADIENTS - These were also missing
-    $css .= "    --gradient-primary: linear-gradient(135deg, {$primaryColor} 0%, {$secondaryColor} 100%);\n";
-    $css .= "    --gradient-accent: linear-gradient(135deg, {$accentColor} 0%, " . adjust_color_brightness($accentColor, -0.1) . " 100%);\n";
-
-    // COMPONENT TOKENS - Root cause of server/client mismatch (keep these for tokenization)
+    // COMPONENT TOKENS - The core of tokenization (works with ANY palette)
     $css .= "    --component-bg-color-primary: {$primaryColor};\n";
     $css .= "    --component-text-color-primary: {$surfaceColor};\n";
     $css .= "    --component-border-color-primary: {$primaryColor};\n";
@@ -364,8 +335,22 @@ function generate_css_from_palette_data($palette_data) {
     $css .= "    --component-bg-color-accent: {$accentColor};\n";
     $css .= "    --component-text-color-accent: {$surfaceColor};\n";
     $css .= "    --component-border-color-accent: {$accentColor};\n";
+    $css .= "    --component-surface-color: {$surfaceColor};\n";
+    $css .= "    --component-neutral-color: {$neutralColor};\n";
+    $css .= "    --component-dark-color: {$darkColor};\n";
 
-    // PALETTE TOKENS - Bridge between component and foundation
+    // SEMANTIC COLOR ROLES (palette-agnostic)
+    $css .= "    --color-primary: {$primaryColor};\n";
+    $css .= "    --color-primary-rgb: " . hex_to_rgb($primaryColor) . ";\n";
+    $css .= "    --color-secondary: {$secondaryColor};\n";
+    $css .= "    --color-secondary-rgb: " . hex_to_rgb($secondaryColor) . ";\n";
+    $css .= "    --color-accent: {$accentColor};\n";
+    $css .= "    --color-accent-rgb: " . hex_to_rgb($accentColor) . ";\n";
+    $css .= "    --color-surface: {$surfaceColor};\n";
+    $css .= "    --color-neutral: {$neutralColor};\n";
+    $css .= "    --color-dark: {$darkColor};\n";
+
+    // PALETTE TOKENS (bridge between component and foundation)
     $css .= "    --palette-primary: {$primaryColor};\n";
     $css .= "    --palette-primary-contrast: {$surfaceColor};\n";
     $css .= "    --palette-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
@@ -376,18 +361,23 @@ function generate_css_from_palette_data($palette_data) {
     $css .= "    --palette-accent-contrast: {$surfaceColor};\n";
     $css .= "    --palette-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
 
-    // FOUNDATION TOKENS - Complete inheritance chain
-    $css .= "    --color-primary-contrast: {$surfaceColor};\n";
+    // INTERACTION STATES (hover, focus, active)
     $css .= "    --color-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
-    $css .= "    --color-primary-dark: " . adjust_color_brightness($primaryColor, -0.2) . ";\n";
-    $css .= "    --color-secondary-contrast: {$surfaceColor};\n";
+    $css .= "    --color-primary-focus: " . adjust_color_brightness($primaryColor, -0.1) . ";\n";
+    $css .= "    --color-primary-active: " . adjust_color_brightness($primaryColor, -0.2) . ";\n";
     $css .= "    --color-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . ";\n";
-    $css .= "    --color-secondary-dark: " . adjust_color_brightness($secondaryColor, -0.2) . ";\n";
-    $css .= "    --color-accent-contrast: {$surfaceColor};\n";
+    $css .= "    --color-secondary-focus: " . adjust_color_brightness($secondaryColor, -0.1) . ";\n";
+    $css .= "    --color-secondary-active: " . adjust_color_brightness($secondaryColor, -0.2) . ";\n";
     $css .= "    --color-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
-    $css .= "    --color-accent-dark: " . adjust_color_brightness($accentColor, -0.2) . ";\n";
+    $css .= "    --color-accent-focus: " . adjust_color_brightness($accentColor, -0.1) . ";\n";
+    $css .= "    --color-accent-active: " . adjust_color_brightness($accentColor, -0.2) . ";\n";
 
-    // Status color tokens for component inheritance
+    // GRADIENTS (semantic, not hardcoded)
+    $css .= "    --gradient-primary: linear-gradient(135deg, {$primaryColor} 0%, {$secondaryColor} 100%);\n";
+    $css .= "    --gradient-accent: linear-gradient(135deg, {$accentColor} 0%, " . adjust_color_brightness($accentColor, -0.1) . " 100%);\n";
+    $css .= "    --gradient-surface: linear-gradient(135deg, {$surfaceColor} 0%, " . adjust_color_brightness($surfaceColor, -0.05) . " 100%);\n";
+
+    // STATUS COLORS (semantic system colors)
     $statusColors = [
         'success' => '#10b981',
         'warning' => '#f59e0b',
@@ -397,14 +387,135 @@ function generate_css_from_palette_data($palette_data) {
 
     foreach ($statusColors as $status => $color) {
         $css .= "    --color-{$status}: {$color};\n";
-        $css .= "    --color-{$status}-dark: " . adjust_color_brightness($color, -0.15) . ";\n";
+        $css .= "    --color-{$status}-hover: " . adjust_color_brightness($color, -0.15) . ";\n";
         $css .= "    --color-{$status}-light: " . adjust_color_brightness($color, 0.15) . ";\n";
+        $css .= "    --color-{$status}-rgb: " . hex_to_rgb($color) . ";\n";
     }
+
+    // LEGACY THEME COMPATIBILITY (only for backward compatibility - to be phased out)
+    // These are the ones the debug script checks for, but we should move away from these
+    $css .= "    /* Legacy theme variables - to be deprecated */\n";
+    $css .= "    --color-primary-navy: {$primaryColor};\n";
+    $css .= "    --color-primary-navy-rgb: " . hex_to_rgb($primaryColor) . ";\n";
+    $css .= "    --color-primary-teal: {$secondaryColor};\n";
+    $css .= "    --color-primary-teal-rgb: " . hex_to_rgb($secondaryColor) . ";\n";
+    $css .= "    --color-secondary-peach: {$accentColor};\n";
+    $css .= "    --color-secondary-peach-rgb: " . hex_to_rgb($accentColor) . ";\n";
+    $css .= "    --color-neutral-white: {$neutralColor};\n";
+    $css .= "    --color-soft-cream: {$surfaceColor};\n";
+    $css .= "    --color-charcoal: {$darkColor};\n";
 
     $css .= "}\n\n";
 
-    // Add comprehensive button CSS rules that match the JavaScript implementation
-    $css .= generate_server_button_css($palette_data['colors']);
+    // Add comprehensive button CSS rules using SEMANTIC tokens
+    $css .= generate_semantic_button_css();
+
+    return $css;
+}
+
+/**
+ * Generate semantic button CSS using component tokens
+ */
+function generate_semantic_button_css() {
+    $css = "/* SEMANTIC BUTTON TOKENIZATION - Works with ANY palette */\n\n";
+
+    // PRIMARY BUTTONS - Use semantic component tokens
+    $css .= "
+/* PRIMARY BUTTONS - Semantic Tokenization */
+html body button.btn.btn--primary[class],
+html body button.cta-primary[class],
+html body a.btn-consultation[class],
+html body button.btn--consultation[class] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--primary[class]:hover,
+html body button.cta-primary[class]:hover,
+html body a.btn-consultation[class]:hover,
+html body button.btn--consultation[class]:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+    color: var(--component-text-color-primary) !important;
+}
+
+/* SECONDARY BUTTONS - Semantic Tokenization */
+html body button.btn.btn--secondary[class],
+html body button.cta-secondary[class] {
+    background-color: var(--component-bg-color-secondary) !important;
+    color: var(--component-text-color-secondary) !important;
+    border-color: var(--component-border-color-secondary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--secondary[class]:hover,
+html body button.cta-secondary[class]:hover {
+    background-color: var(--color-secondary-hover) !important;
+    border-color: var(--color-secondary-hover) !important;
+}
+
+/* ACCENT BUTTONS - Semantic Tokenization */
+html body button.btn.btn--accent[class],
+html body button.btn.btn--accent.btn--sm[class] {
+    background-color: var(--component-bg-color-accent) !important;
+    color: var(--component-text-color-accent) !important;
+    border-color: var(--component-border-color-accent) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--accent[class]:hover,
+html body button.btn.btn--accent.btn--sm[class]:hover {
+    background-color: var(--color-accent-hover) !important;
+    border-color: var(--color-accent-hover) !important;
+}
+
+/* OUTLINE BUTTONS - Semantic Tokenization */
+html body button.btn.btn--outline[class],
+html body button.btn.btn--outline.btn--sm[class] {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: var(--component-bg-color-primary) !important;
+    border: 2px solid var(--component-bg-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--outline[class]:hover,
+html body button.btn.btn--outline.btn--sm[class]:hover {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+}
+
+/* GHOST BUTTONS - Semantic Tokenization */
+html body button.btn.btn--ghost[class] {
+    background-color: transparent !important;
+    color: var(--component-bg-color-primary) !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--ghost[class]:hover {
+    background-color: var(--color-primary-focus) !important;
+    color: var(--component-text-color-primary) !important;
+}
+
+/* GENERIC BUTTON FALLBACKS - Semantic Tokenization */
+button:not([class*='wp-']):not([class*='admin']),
+.btn:not([class*='wp-']),
+input[type='submit']:not([class*='wp-']) {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+button:not([class*='wp-']):not([class*='admin']):hover,
+.btn:not([class*='wp-']):hover,
+input[type='submit']:not([class*='wp-']):hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+}
+";
 
     return $css;
 }
@@ -801,159 +912,3 @@ function handle_get_current_palette() {
     }
 }
 add_action('wp_ajax_get_current_palette', 'handle_get_current_palette');
-
-/**
- * Generate Server-Side Button CSS - Matches JavaScript Implementation
- */
-function generate_server_button_css($colors) {
-    $css = "/* Server-Generated Button CSS - Matches JavaScript Implementation */\n\n";
-
-    $primaryColor = isset($colors['primary']) ? ($colors['primary']['hex'] ?? $colors['primary']) : null;
-    $secondaryColor = isset($colors['secondary']) ? ($colors['secondary']['hex'] ?? $colors['secondary']) : null;
-    $accentColor = isset($colors['accent']) ? ($colors['accent']['hex'] ?? $colors['accent']) : null;
-    $surfaceColor = isset($colors['surface']) ? ($colors['surface']['hex'] ?? $colors['surface']) : '#ffffff';
-
-    if ($primaryColor) {
-        $primaryDark = adjust_color_brightness($primaryColor, -0.15);
-
-        // Primary button rules - ULTRA HIGH SPECIFICITY to match tokenization CSS
-        $css .= "
-/* PRIMARY BUTTONS - Ultra-High Specificity */
-html body button.btn.btn--primary[class],
-html body button.cta-primary[class],
-html body a.btn-consultation[class],
-html body button.btn--consultation[class] {
-    background-color: var(--component-bg-color-primary) !important;
-    color: var(--component-text-color-primary) !important;
-    border-color: var(--component-border-color-primary) !important;
-    transition: all 0.3s ease !important;
-}
-
-html body button.btn.btn--primary[class]:hover,
-html body button.cta-primary[class]:hover,
-html body a.btn-consultation[class]:hover,
-html body button.btn--consultation[class]:hover {
-    background-color: var(--palette-primary-hover, {$primaryDark}) !important;
-    border-color: var(--palette-primary-hover, {$primaryDark}) !important;
-    color: var(--component-text-color-primary) !important;
-}
-";
-    }
-
-    if ($secondaryColor) {
-        $secondaryDark = adjust_color_brightness($secondaryColor, -0.15);
-
-        // Secondary button rules
-        $css .= "
-/* SECONDARY BUTTONS - Use Secondary Color */
-html body button.btn.btn--secondary[class],
-html body button.cta-secondary[class] {
-    background-color: var(--component-bg-color-secondary) !important;
-    color: var(--component-text-color-secondary) !important;
-    border-color: var(--component-border-color-secondary) !important;
-    transition: all 0.3s ease !important;
-}
-
-html body button.btn.btn--secondary[class]:hover,
-html body button.cta-secondary[class]:hover {
-    background-color: var(--palette-secondary-hover, {$secondaryDark}) !important;
-    border-color: var(--palette-secondary-hover, {$secondaryDark}) !important;
-}
-";
-    }
-
-    if ($accentColor) {
-        $accentDark = adjust_color_brightness($accentColor, -0.15);
-
-        // Accent button rules
-        $css .= "
-/* ACCENT BUTTONS - Use Accent Color */
-html body button.btn.btn--accent[class],
-html body button.btn.btn--accent.btn--sm[class] {
-    background-color: var(--component-bg-color-accent) !important;
-    color: var(--component-text-color-accent) !important;
-    border-color: var(--component-border-color-accent) !important;
-    transition: all 0.3s ease !important;
-}
-
-html body button.btn.btn--accent[class]:hover,
-html body button.btn.btn--accent.btn--sm[class]:hover {
-    background-color: var(--palette-accent-hover, {$accentDark}) !important;
-    border-color: var(--palette-accent-hover, {$accentDark}) !important;
-}
-";
-    }
-
-    if ($primaryColor) {
-        // Outline buttons
-        $css .= "
-/* OUTLINE BUTTONS - Transparent Background with Colored Border */
-html body button.btn.btn--outline[class],
-html body button.btn.btn--outline.btn--sm[class] {
-    background-color: transparent !important;
-    background: transparent !important;
-    color: var(--component-bg-color-primary) !important;
-    border: 2px solid var(--component-bg-color-primary) !important;
-    border-color: var(--component-bg-color-primary) !important;
-    transition: all 0.3s ease !important;
-}
-
-html body button.btn.btn--outline[class]:hover,
-html body button.btn.btn--outline.btn--sm[class]:hover {
-    background-color: var(--component-bg-color-primary) !important;
-    background: var(--component-bg-color-primary) !important;
-    color: var(--component-text-color-primary) !important;
-    border-color: var(--component-bg-color-primary) !important;
-}
-
-/* GHOST BUTTONS - Fully Transparent with Colored Text */
-html body button.btn.btn--ghost[class] {
-    background-color: transparent !important;
-    background: transparent !important;
-    color: var(--component-bg-color-primary) !important;
-    border: none !important;
-    border-color: transparent !important;
-    transition: all 0.3s ease !important;
-}
-
-html body button.btn.btn--ghost[class]:hover {
-    background-color: rgba(var(--color-primary-rgb, 135, 169, 107), 0.1) !important;
-    background: rgba(var(--color-primary-rgb, 135, 169, 107), 0.1) !important;
-    color: var(--component-bg-color-primary) !important;
-}
-";
-    }
-
-    // Force CSS variables on ANY element with button classes
-    $css .= "
-/* ATTRIBUTE-BASED SELECTORS - Maximum Override Power */
-[class*=\"btn\"][class*=\"primary\"] {
-    background-color: var(--component-bg-color-primary) !important;
-    color: var(--component-text-color-primary) !important;
-    border-color: var(--component-border-color-primary) !important;
-}
-
-[class*=\"btn\"][class*=\"secondary\"] {
-    background-color: var(--component-bg-color-secondary) !important;
-    color: var(--component-text-color-secondary) !important;
-    border-color: var(--component-border-color-secondary) !important;
-}
-
-[class*=\"btn\"][class*=\"accent\"] {
-    background-color: var(--component-bg-color-accent) !important;
-    color: var(--component-text-color-accent) !important;
-    border-color: var(--component-border-color-accent) !important;
-}
-
-/* Override ANY button with a style attribute */
-button[style],
-.btn[style],
-a[style][class*=\"btn\"] {
-    background-color: var(--component-bg-color-primary) !important;
-    color: var(--component-text-color-primary) !important;
-    border-color: var(--component-border-color-primary) !important;
-}
-";
-
-    return $css;
-}
