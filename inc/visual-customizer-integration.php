@@ -63,7 +63,8 @@ class VisualCustomizerIntegration {
 
         // Frontend integration
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_scripts'));
-        add_action('wp_head', array($this, 'output_custom_css'));
+        // DISABLED: Conflicts with pure tokenization in visual-customizer-simple.php
+        // add_action('wp_head', array($this, 'output_custom_css'));
 
         // Admin integration
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));

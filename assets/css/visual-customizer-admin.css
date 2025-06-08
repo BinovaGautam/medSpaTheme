@@ -33,7 +33,7 @@
    ========================================================================== */
 
 .vc-header {
-    background: linear-gradient(135deg, #87A96B 0%, #6B8552 100%);
+    background: linear-gradient(135deg, #8B4B7A 0%, #642453 100%);
     color: white;
     padding: 30px;
     display: flex;
@@ -175,7 +175,7 @@
 #semantic-color-system-container h3 {
     margin: 0 0 20px 0;
     padding: 0 0 15px 0;
-    border-bottom: 2px solid #87A96B;
+    border-bottom: 2px solid #8B4B7A;
     color: #1B365D;
     font-size: 18px;
     font-weight: 600;
@@ -203,7 +203,7 @@
 .vc-settings-panel h3 {
     margin: 0 0 20px 0;
     padding: 0 0 15px 0;
-    border-bottom: 2px solid #87A96B;
+    border-bottom: 2px solid #8B4B7A;
     color: #1B365D;
     font-size: 18px;
     font-weight: 600;
@@ -240,8 +240,8 @@
 }
 
 .vc-settings-panel .button-primary {
-    background: #87A96B;
-    border-color: #87A96B;
+    background: #8B4B7A;
+    border-color: #8B4B7A;
     text-shadow: none;
     box-shadow: none;
     height: 40px;
@@ -252,8 +252,8 @@
 }
 
 .vc-settings-panel .button-primary:hover {
-    background: #6B8552;
-    border-color: #6B8552;
+    background: #642453;
+    border-color: #642453;
     transform: translateY(-1px);
 }
 
@@ -386,7 +386,7 @@
 }
 
 .visual-customizer-admin .notice-success {
-    border-left-color: #87A96B;
+    border-left-color: #8B4B7A;
 }
 
 .visual-customizer-admin .notice-error {
@@ -529,7 +529,7 @@
     justify-content: space-between;
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #87A96B;
+    border-bottom: 2px solid #8B4B7A;
 }
 
 .visual-customizer-admin .component-status {
@@ -561,7 +561,7 @@
 
 /* Accessibility enhancements */
 .visual-customizer-admin *:focus {
-    outline: 2px solid #87A96B;
+    outline: 2px solid #8B4B7A;
     outline-offset: 2px;
 }
 

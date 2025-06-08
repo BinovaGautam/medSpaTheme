@@ -14,14 +14,14 @@
    ================================ */
 :root {
     /* Primary Luxury Colors */
-    --sage-green: #87A96B;           /* Medical tranquility, natural luxury */
+    --sage-green: #8B4B7A;           /* Medical tranquility, natural luxury */
     --premium-gold: #D4AF37;         /* Luxury accents, consultation emphasis */
     --medical-navy: #1B365D;         /* Professional authority, trust */
     --cream-base: #FDFCFA;           /* Premium backgrounds, sophistication */
 
     /* Supporting Colors */
     --sage-light: #A8C487;           /* Lighter sage for hover states */
-    --sage-dark: #6B8552;            /* Darker sage for focus states */
+    --sage-dark: #642453;            /* Darker sage for focus states */
     --gold-light: #E8C962;           /* Lighter gold for accents */
     --navy-light: #2B4A78;           /* Lighter navy for secondary text */
     --cream-warm: #FBF9F4;           /* Warmer cream for sections */

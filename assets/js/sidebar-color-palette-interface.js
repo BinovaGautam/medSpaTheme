@@ -108,7 +108,7 @@ class SidebarColorPaletteInterface {
                 name: 'Medical Clean',
                 description: 'Professional medical spa aesthetic',
                 colors: {
-                    primary: '#87A96B',
+                    primary: '#8B4B7A',
                     secondary: '#1B365D',
                     accent: '#F8F5F2',
                     surface: '#FFFFFF',
@@ -339,7 +339,7 @@ class SidebarColorPaletteInterface {
             }
         } else {
             // Default color scheme
-            colors.primary = '#87A96B';
+            colors.primary = '#8B4B7A';
             colors.secondary = '#1B365D';
             colors.accent = '#F8F5F2';
             colors.surface = '#FFFFFF';

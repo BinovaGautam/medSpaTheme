@@ -33,7 +33,7 @@
 
 .dr-preeti-hero .hero-subtitle {
   font-size: 1.25rem;
-  color: var(--color-secondary, #87A96B);
+  color: var(--color-secondary, #8B4B7A);
   margin-bottom: 1.5rem;
   font-weight: 500;
 }
@@ -78,7 +78,7 @@
 .dr-preeti-hero .credential-icon {
   font-size: 1.5rem;
   flex-shrink: 0;
-  color: var(--color-secondary, #87A96B);
+  color: var(--color-secondary, #8B4B7A);
 }
 
 .dr-preeti-hero .credential-text {
@@ -87,7 +87,7 @@
 }
 
 .dr-preeti-hero .placeholder-image {
-  background: linear-gradient(135deg, var(--color-secondary, #87A96B) 0%, var(--color-primary, #1B365D) 100%);
+  background: linear-gradient(135deg, var(--color-secondary, #8B4B7A) 0%, var(--color-primary, #1B365D) 100%);
   border-radius: 16px;
   padding: 4rem;
   text-align: center;
@@ -161,7 +161,7 @@
   font-size: 2.5rem;
   flex-shrink: 0;
   margin-top: 0.5rem;
-  color: var(--color-secondary, #87A96B);
+  color: var(--color-secondary, #8B4B7A);
 }
 
 .practice-story .differentiator-content h4 {
@@ -324,7 +324,7 @@
 .expert-team .member-icon {
   font-size: 3rem;
   margin-bottom: 1.5rem;
-  color: var(--color-secondary, #87A96B);
+  color: var(--color-secondary, #8B4B7A);
 }
 
 .expert-team .team-member h3 {
@@ -407,7 +407,7 @@
 
 .arizona-locations h4 {
   font-size: 1.125rem;
-  color: var(--color-secondary, #87A96B);
+  color: var(--color-secondary, #8B4B7A);
   margin-bottom: 1rem;
   font-weight: 600;
 }
@@ -424,7 +424,7 @@
 }
 
 .arizona-locations .contact-item a {
-  color: var(--color-secondary, #87A96B);
+  color: var(--color-secondary, #8B4B7A);
   text-decoration: none;
 }
 
@@ -538,7 +538,7 @@
 
 .success-metrics .testimonial-quote cite {
   font-size: 0.875rem;
-  color: var(--color-secondary, #87A96B);
+  color: var(--color-secondary, #8B4B7A);
   font-weight: 600;
   font-style: normal;
 }

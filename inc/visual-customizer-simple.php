@@ -275,6 +275,9 @@ add_action('wp_ajax_simple_visual_customizer_reset', 'handle_simple_visual_custo
  * This ensures that applied palettes are visible to all visitors
  */
 function output_visual_customizer_global_css() {
+    // CONFLICT RESOLUTION: Disable other CSS output functions that interfere
+    remove_action('wp_head', 'medspaa_output_dynamic_css');
+
     // Get saved configuration
     $config = get_option('preetidreams_visual_customizer_config', []);
 
@@ -290,6 +293,7 @@ function output_visual_customizer_global_css() {
     if (!empty($css)) {
         echo "<style id='visual-customizer-global-css' data-generated='" . current_time('c') . "' data-palette='" . esc_attr($config['activePalette'] ?? 'unknown') . "'>\n";
         echo "/* Visual Customizer Global CSS - Applied Palette: " . esc_attr($config['activePalette'] ?? 'unknown') . " */\n";
+        echo "/* PURE TOKENIZATION: Semantic component tokens only */\n";
         echo "/* CSS Length: " . strlen($css) . " characters */\n";
         echo $css;
         echo "\n</style>\n";
@@ -297,8 +301,8 @@ function output_visual_customizer_global_css() {
         echo "<!-- Visual Customizer: CSS generation failed -->\n";
     }
 }
-// HIGH PRIORITY to override other CSS output functions
-add_action('wp_head', 'output_visual_customizer_global_css', 5);
+// HIGHEST PRIORITY to override other CSS output functions
+add_action('wp_head', 'output_visual_customizer_global_css', 50);
 
 /**
  * PVC-005: Generate CSS from palette data with PURE TOKENIZATION approach
@@ -308,10 +312,12 @@ function generate_css_from_palette_data($palette_data) {
         return '';
     }
 
-    $css = ":root {\n";
+    // SPECIFICITY BOOST: Add body selector for higher specificity
+    $css = "/* SERVER CSS OVERRIDE - Priority 50 with specificity boost */\n";
+    $css .= "body:root, html:root {\n";
 
     // PURE TOKENIZATION: Generate ONLY semantic component tokens
-    // Map palette colors to semantic roles (not hardcoded theme names)
+    // Map palette colors to semantic roles (NO hardcoded theme names)
     $primaryColor = isset($palette_data['colors']['primary']) ?
         ($palette_data['colors']['primary']['hex'] ?? $palette_data['colors']['primary']) : '#1B365D';
     $secondaryColor = isset($palette_data['colors']['secondary']) ?
@@ -326,56 +332,56 @@ function generate_css_from_palette_data($palette_data) {
         ($palette_data['colors']['dark']['hex'] ?? $palette_data['colors']['dark']) : '#34495e';
 
     // COMPONENT TOKENS - The core of tokenization (works with ANY palette)
-    $css .= "    --component-bg-color-primary: {$primaryColor};\n";
-    $css .= "    --component-text-color-primary: {$surfaceColor};\n";
-    $css .= "    --component-border-color-primary: {$primaryColor};\n";
-    $css .= "    --component-bg-color-secondary: {$secondaryColor};\n";
-    $css .= "    --component-text-color-secondary: {$surfaceColor};\n";
-    $css .= "    --component-border-color-secondary: {$secondaryColor};\n";
-    $css .= "    --component-bg-color-accent: {$accentColor};\n";
-    $css .= "    --component-text-color-accent: {$surfaceColor};\n";
-    $css .= "    --component-border-color-accent: {$accentColor};\n";
-    $css .= "    --component-surface-color: {$surfaceColor};\n";
-    $css .= "    --component-neutral-color: {$neutralColor};\n";
-    $css .= "    --component-dark-color: {$darkColor};\n";
+    $css .= "    --component-bg-color-primary: {$primaryColor} !important;\n";
+    $css .= "    --component-text-color-primary: {$surfaceColor} !important;\n";
+    $css .= "    --component-border-color-primary: {$primaryColor} !important;\n";
+    $css .= "    --component-bg-color-secondary: {$secondaryColor} !important;\n";
+    $css .= "    --component-text-color-secondary: {$surfaceColor} !important;\n";
+    $css .= "    --component-border-color-secondary: {$secondaryColor} !important;\n";
+    $css .= "    --component-bg-color-accent: {$accentColor} !important;\n";
+    $css .= "    --component-text-color-accent: {$surfaceColor} !important;\n";
+    $css .= "    --component-border-color-accent: {$accentColor} !important;\n";
+    $css .= "    --component-surface-color: {$surfaceColor} !important;\n";
+    $css .= "    --component-neutral-color: {$neutralColor} !important;\n";
+    $css .= "    --component-dark-color: {$darkColor} !important;\n";
 
     // SEMANTIC COLOR ROLES (palette-agnostic)
-    $css .= "    --color-primary: {$primaryColor};\n";
-    $css .= "    --color-primary-rgb: " . hex_to_rgb($primaryColor) . ";\n";
-    $css .= "    --color-secondary: {$secondaryColor};\n";
-    $css .= "    --color-secondary-rgb: " . hex_to_rgb($secondaryColor) . ";\n";
-    $css .= "    --color-accent: {$accentColor};\n";
-    $css .= "    --color-accent-rgb: " . hex_to_rgb($accentColor) . ";\n";
-    $css .= "    --color-surface: {$surfaceColor};\n";
-    $css .= "    --color-neutral: {$neutralColor};\n";
-    $css .= "    --color-dark: {$darkColor};\n";
+    $css .= "    --color-primary: {$primaryColor} !important;\n";
+    $css .= "    --color-primary-rgb: " . hex_to_rgb($primaryColor) . " !important;\n";
+    $css .= "    --color-secondary: {$secondaryColor} !important;\n";
+    $css .= "    --color-secondary-rgb: " . hex_to_rgb($secondaryColor) . " !important;\n";
+    $css .= "    --color-accent: {$accentColor} !important;\n";
+    $css .= "    --color-accent-rgb: " . hex_to_rgb($accentColor) . " !important;\n";
+    $css .= "    --color-surface: {$surfaceColor} !important;\n";
+    $css .= "    --color-neutral: {$neutralColor} !important;\n";
+    $css .= "    --color-dark: {$darkColor} !important;\n";
 
     // PALETTE TOKENS (bridge between component and foundation)
-    $css .= "    --palette-primary: {$primaryColor};\n";
-    $css .= "    --palette-primary-contrast: {$surfaceColor};\n";
-    $css .= "    --palette-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
-    $css .= "    --palette-secondary: {$secondaryColor};\n";
-    $css .= "    --palette-secondary-contrast: {$surfaceColor};\n";
-    $css .= "    --palette-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . ";\n";
-    $css .= "    --palette-accent: {$accentColor};\n";
-    $css .= "    --palette-accent-contrast: {$surfaceColor};\n";
-    $css .= "    --palette-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
+    $css .= "    --palette-primary: {$primaryColor} !important;\n";
+    $css .= "    --palette-primary-contrast: {$surfaceColor} !important;\n";
+    $css .= "    --palette-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . " !important;\n";
+    $css .= "    --palette-secondary: {$secondaryColor} !important;\n";
+    $css .= "    --palette-secondary-contrast: {$surfaceColor} !important;\n";
+    $css .= "    --palette-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . " !important;\n";
+    $css .= "    --palette-accent: {$accentColor} !important;\n";
+    $css .= "    --palette-accent-contrast: {$surfaceColor} !important;\n";
+    $css .= "    --palette-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . " !important;\n";
 
     // INTERACTION STATES (hover, focus, active)
-    $css .= "    --color-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
-    $css .= "    --color-primary-focus: " . adjust_color_brightness($primaryColor, -0.1) . ";\n";
-    $css .= "    --color-primary-active: " . adjust_color_brightness($primaryColor, -0.2) . ";\n";
-    $css .= "    --color-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . ";\n";
-    $css .= "    --color-secondary-focus: " . adjust_color_brightness($secondaryColor, -0.1) . ";\n";
-    $css .= "    --color-secondary-active: " . adjust_color_brightness($secondaryColor, -0.2) . ";\n";
-    $css .= "    --color-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
-    $css .= "    --color-accent-focus: " . adjust_color_brightness($accentColor, -0.1) . ";\n";
-    $css .= "    --color-accent-active: " . adjust_color_brightness($accentColor, -0.2) . ";\n";
+    $css .= "    --color-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . " !important;\n";
+    $css .= "    --color-primary-focus: " . adjust_color_brightness($primaryColor, -0.1) . " !important;\n";
+    $css .= "    --color-primary-active: " . adjust_color_brightness($primaryColor, -0.2) . " !important;\n";
+    $css .= "    --color-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . " !important;\n";
+    $css .= "    --color-secondary-focus: " . adjust_color_brightness($secondaryColor, -0.1) . " !important;\n";
+    $css .= "    --color-secondary-active: " . adjust_color_brightness($secondaryColor, -0.2) . " !important;\n";
+    $css .= "    --color-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . " !important;\n";
+    $css .= "    --color-accent-focus: " . adjust_color_brightness($accentColor, -0.1) . " !important;\n";
+    $css .= "    --color-accent-active: " . adjust_color_brightness($accentColor, -0.2) . " !important;\n";
 
     // GRADIENTS (semantic, not hardcoded)
-    $css .= "    --gradient-primary: linear-gradient(135deg, {$primaryColor} 0%, {$secondaryColor} 100%);\n";
-    $css .= "    --gradient-accent: linear-gradient(135deg, {$accentColor} 0%, " . adjust_color_brightness($accentColor, -0.1) . " 100%);\n";
-    $css .= "    --gradient-surface: linear-gradient(135deg, {$surfaceColor} 0%, " . adjust_color_brightness($surfaceColor, -0.05) . " 100%);\n";
+    $css .= "    --gradient-primary: linear-gradient(135deg, {$primaryColor} 0%, {$secondaryColor} 100%) !important;\n";
+    $css .= "    --gradient-accent: linear-gradient(135deg, {$accentColor} 0%, " . adjust_color_brightness($accentColor, -0.1) . " 100%) !important;\n";
+    $css .= "    --gradient-surface: linear-gradient(135deg, {$surfaceColor} 0%, " . adjust_color_brightness($surfaceColor, -0.05) . " 100%) !important;\n";
 
     // STATUS COLORS (semantic system colors)
     $statusColors = [
@@ -386,24 +392,11 @@ function generate_css_from_palette_data($palette_data) {
     ];
 
     foreach ($statusColors as $status => $color) {
-        $css .= "    --color-{$status}: {$color};\n";
-        $css .= "    --color-{$status}-hover: " . adjust_color_brightness($color, -0.15) . ";\n";
-        $css .= "    --color-{$status}-light: " . adjust_color_brightness($color, 0.15) . ";\n";
-        $css .= "    --color-{$status}-rgb: " . hex_to_rgb($color) . ";\n";
+        $css .= "    --color-{$status}: {$color} !important;\n";
+        $css .= "    --color-{$status}-hover: " . adjust_color_brightness($color, -0.15) . " !important;\n";
+        $css .= "    --color-{$status}-light: " . adjust_color_brightness($color, 0.15) . " !important;\n";
+        $css .= "    --color-{$status}-rgb: " . hex_to_rgb($color) . " !important;\n";
     }
-
-    // LEGACY THEME COMPATIBILITY (only for backward compatibility - to be phased out)
-    // These are the ones the debug script checks for, but we should move away from these
-    $css .= "    /* Legacy theme variables - to be deprecated */\n";
-    $css .= "    --color-primary-navy: {$primaryColor};\n";
-    $css .= "    --color-primary-navy-rgb: " . hex_to_rgb($primaryColor) . ";\n";
-    $css .= "    --color-primary-teal: {$secondaryColor};\n";
-    $css .= "    --color-primary-teal-rgb: " . hex_to_rgb($secondaryColor) . ";\n";
-    $css .= "    --color-secondary-peach: {$accentColor};\n";
-    $css .= "    --color-secondary-peach-rgb: " . hex_to_rgb($accentColor) . ";\n";
-    $css .= "    --color-neutral-white: {$neutralColor};\n";
-    $css .= "    --color-soft-cream: {$surfaceColor};\n";
-    $css .= "    --color-charcoal: {$darkColor};\n";
 
     $css .= "}\n\n";
 
@@ -912,3 +905,538 @@ function handle_get_current_palette() {
     }
 }
 add_action('wp_ajax_get_current_palette', 'handle_get_current_palette');
+
+/**
+ * URL Parameter Test - Verify JavaScript Respects Server CSS
+ */
+function handle_javascript_server_respect_test() {
+    if (!isset($_GET['test_js_server_respect']) || !current_user_can('manage_options')) {
+        return;
+    }
+
+    add_action('wp_head', function() {
+        ?>
+        <script>
+        console.log('🧪 TESTING: JavaScript Server CSS Respect');
+
+        // Wait for page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                console.log('🔍 Checking server vs client CSS status...');
+
+                const rootStyle = getComputedStyle(document.documentElement);
+
+                // Check server CSS variables
+                const serverVars = {
+                    '--component-bg-color-primary': rootStyle.getPropertyValue('--component-bg-color-primary').trim(),
+                    '--color-primary': rootStyle.getPropertyValue('--color-primary').trim(),
+                    '--component-bg-color-secondary': rootStyle.getPropertyValue('--component-bg-color-secondary').trim(),
+                    '--color-secondary': rootStyle.getPropertyValue('--color-secondary').trim()
+                };
+
+                console.log('🖥️ Server CSS Variables:', serverVars);
+
+                // Check if any are set
+                const serverHasVars = Object.values(serverVars).some(val => val !== '');
+
+                if (serverHasVars) {
+                    console.log('✅ SERVER CSS VARIABLES ACTIVE');
+                    console.log('✅ JavaScript should respect these and NOT override');
+
+                    // Test if JavaScript tries to override
+                    const originalPrimary = serverVars['--component-bg-color-primary'];
+
+                    // Store original
+                    console.log('🎯 Original server primary:', originalPrimary);
+
+                    // Check if it gets overridden by JavaScript
+                    setTimeout(() => {
+                        const afterJSPrimary = getComputedStyle(document.documentElement).getPropertyValue('--component-bg-color-primary').trim();
+
+                        if (originalPrimary === afterJSPrimary) {
+                            console.log('✅ SUCCESS: JavaScript RESPECTED server CSS variables');
+                            console.log('✅ No override occurred - fix is working!');
+
+                            // Show success message
+                            document.body.innerHTML += `
+                                <div style="position: fixed; top: 20px; left: 20px; background: #d4af37; color: #000; padding: 15px; border-radius: 8px; z-index: 9999; font-family: Arial;">
+                                    ✅ SUCCESS: JavaScript respects server CSS!<br>
+                                    Server color preserved: ${originalPrimary}
+                                </div>
+                            `;
+                        } else {
+                            console.log('❌ FAILURE: JavaScript OVERRODE server CSS variables');
+                            console.log(`❌ ${originalPrimary} → ${afterJSPrimary}`);
+
+                            // Show failure message
+                            document.body.innerHTML += `
+                                <div style="position: fixed; top: 20px; left: 20px; background: #ef4444; color: #fff; padding: 15px; border-radius: 8px; z-index: 9999; font-family: Arial;">
+                                    ❌ FAILURE: JavaScript overrode server CSS<br>
+                                    ${originalPrimary} → ${afterJSPrimary}
+                                </div>
+                            `;
+                        }
+                    }, 2000);
+
+                } else {
+                    console.log('⚠️ NO SERVER CSS VARIABLES DETECTED');
+                    console.log('⚠️ JavaScript fallbacks should activate');
+
+                    document.body.innerHTML += `
+                        <div style="position: fixed; top: 20px; left: 20px; background: #f59e0b; color: #000; padding: 15px; border-radius: 8px; z-index: 9999; font-family: Arial;">
+                            ⚠️ NO SERVER CSS DETECTED<br>
+                            JavaScript fallbacks should activate
+                        </div>
+                    `;
+                }
+
+            }, 1000);
+        });
+        </script>
+        <?php
+    });
+}
+add_action('init', 'handle_javascript_server_respect_test');
+
+/**
+ * URL Parameter Handler for Cache Clear and Sync
+ */
+function handle_cache_clear_and_sync() {
+    if (!isset($_GET['clear_cache_sync']) || !current_user_can('manage_options')) {
+        return;
+    }
+
+    // Clear all potential localStorage conflicts
+    add_action('wp_head', function() {
+        ?>
+        <script>
+        console.log('🧹 CACHE CLEAR & SYNC: Starting localStorage cleanup...');
+
+        // Clear ALL conflicting localStorage keys
+        const conflictingKeys = [
+            'visual_customizer_current_palette',
+            'visual_customizer_settings',
+            'medspaa_visual_customizer',
+            'medSpa_colorSystem_settings',
+            'preetidreams_visual_customizer_settings',
+            'visual_customizer_temp_settings'
+        ];
+
+        conflictingKeys.forEach(key => {
+            localStorage.removeItem(key);
+            console.log(`🗑️ Removed localStorage: ${key}`);
+        });
+
+        // Get server palette and force sync
+        const serverPalette = '<?php echo esc_js(get_option('preetidreams_active_palette', 'medical-clean')); ?>';
+        console.log('🖥️ Server palette:', serverPalette);
+
+        // Set the correct palette in localStorage
+        const consolidatedSettings = {
+            currentPalette: serverPalette,
+            timestamp: Date.now(),
+            source: 'cache_clear_sync',
+            forcedSync: true
+        };
+
+        localStorage.setItem('visual_customizer_settings', JSON.stringify(consolidatedSettings));
+        console.log('✅ Set consolidated localStorage:', consolidatedSettings);
+
+        // Force reload after 2 seconds to apply changes
+        setTimeout(() => {
+            console.log('🔄 Reloading page to apply synced settings...');
+            window.location.href = window.location.pathname;
+        }, 2000);
+
+        // Show user feedback
+        document.body.innerHTML = `
+            <div style="padding: 40px; font-family: Arial, sans-serif; text-align: center; background: #f0f0f0;">
+                <h1>🧹 Cache Clear & Sync</h1>
+                <p>✅ localStorage cleared</p>
+                <p>✅ Server palette: <strong>${serverPalette}</strong></p>
+                <p>🔄 Page will reload automatically...</p>
+            </div>
+        `;
+        </script>
+        <?php
+    });
+}
+add_action('init', 'handle_cache_clear_and_sync');
+
+/**
+ * NUCLEAR Cache Clear - Complete Reset
+ */
+function handle_nuclear_cache_clear() {
+    if (!isset($_GET['nuclear_cache_clear']) || !current_user_can('manage_options')) {
+        return;
+    }
+
+    // Override the template completely
+    add_filter('template_include', function() {
+        ?>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>🧨 Nuclear Cache Clear</title>
+            <style>
+                body { font-family: Arial, sans-serif; padding: 40px; text-align: center; background: #f0f0f0; }
+                .step { margin: 20px 0; padding: 15px; background: #fff; border-radius: 8px; }
+                .success { color: green; }
+                .error { color: red; }
+                .warning { color: orange; }
+            </style>
+        </head>
+        <body>
+
+        <h1>🧨 Nuclear Cache Clear in Progress</h1>
+
+        <div class="step">
+            <h3>Step 1: Complete localStorage Wipe</h3>
+            <p id="localStorage-status">Processing...</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Server Palette Sync</h3>
+            <p><strong>Server Palette:</strong> <?php echo esc_html(get_option('preetidreams_active_palette', 'NOT SET')); ?></p>
+            <p><strong>Server Config Exists:</strong> <?php echo !empty(get_option('preetidreams_visual_customizer_config')) ? 'YES' : 'NO'; ?></p>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Force Hard Reload</h3>
+            <p id="reload-status">Preparing...</p>
+        </div>
+
+        <script>
+        console.log('🧨 NUCLEAR CACHE CLEAR: Starting complete reset...');
+
+        // STEP 1: Completely wipe ALL browser storage
+        try {
+            // Clear localStorage completely
+            localStorage.clear();
+            console.log('✅ localStorage cleared');
+
+            // Clear sessionStorage
+            sessionStorage.clear();
+            console.log('✅ sessionStorage cleared');
+
+            // Clear any cached data
+            if ('caches' in window) {
+                caches.keys().then(cacheNames => {
+                    cacheNames.forEach(cacheName => {
+                        caches.delete(cacheName);
+                    });
+                    console.log('✅ Browser caches cleared');
+                });
+            }
+
+            document.getElementById('localStorage-status').innerHTML = '<span class="success">✅ All browser storage cleared</span>';
+        } catch (e) {
+            console.error('❌ Error clearing storage:', e);
+            document.getElementById('localStorage-status').innerHTML = '<span class="error">❌ Storage clear failed</span>';
+        }
+
+        // STEP 2: Force set correct server palette
+        const serverPalette = '<?php echo esc_js(get_option('preetidreams_active_palette', 'medical-clean')); ?>';
+
+        // Set the ONLY localStorage entry we want
+        const nuclearSyncSettings = {
+            currentPalette: serverPalette,
+            timestamp: Date.now(),
+            source: 'nuclear_cache_clear',
+            nuclearSync: true,
+            clearAttempt: Date.now()
+        };
+
+        localStorage.setItem('visual_customizer_settings', JSON.stringify(nuclearSyncSettings));
+        console.log('✅ Nuclear sync settings:', nuclearSyncSettings);
+
+        // STEP 3: Force hard reload with cache bypass
+        document.getElementById('reload-status').innerHTML = '<span class="warning">🔄 Forcing hard reload in 3 seconds...</span>';
+
+        setTimeout(() => {
+            console.log('🔄 Executing nuclear reload...');
+
+            // Force hard reload with cache bypass
+            window.location.href = window.location.origin + window.location.pathname + '?t=' + Date.now() + '&cache_bust=' + Math.random();
+        }, 3000);
+
+        // Visual countdown
+        let countdown = 3;
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) {
+                document.getElementById('reload-status').innerHTML = `<span class="warning">🔄 Reloading in ${countdown} seconds...</span>`;
+            } else {
+                document.getElementById('reload-status').innerHTML = '<span class="success">🚀 Reloading now...</span>';
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+        </script>
+
+        </body>
+        </html>
+        <?php
+        exit;
+    });
+}
+add_action('init', 'handle_nuclear_cache_clear');
+
+/**
+ * COMPREHENSIVE DIAGNOSTIC - Find ALL sources of CSS variable conflicts
+ */
+function handle_comprehensive_css_diagnostic() {
+    if (!isset($_GET['comprehensive_css_diagnostic']) || !current_user_can('manage_options')) {
+        return;
+    }
+
+    add_action('wp_head', function() {
+        ?>
+        <script>
+        console.log('🔍 COMPREHENSIVE CSS DIAGNOSTIC STARTING...');
+
+        // 1. CAPTURE INITIAL SERVER STATE
+        document.addEventListener('DOMContentLoaded', function() {
+            const initialDiagnostic = {
+                timestamp: Date.now(),
+                serverVars: {},
+                appliedVars: {},
+                loadedStylesheets: [],
+                loadedScripts: [],
+                conflicts: []
+            };
+
+            const rootStyle = getComputedStyle(document.documentElement);
+
+            // Capture server CSS variables
+            const criticalVars = [
+                '--component-bg-color-primary',
+                '--color-primary',
+                '--component-bg-color-secondary',
+                '--color-secondary',
+                '--component-bg-color-accent',
+                '--color-accent'
+            ];
+
+            criticalVars.forEach(varName => {
+                initialDiagnostic.serverVars[varName] = rootStyle.getPropertyValue(varName).trim();
+            });
+
+            console.log('🖥️ INITIAL SERVER STATE:', initialDiagnostic.serverVars);
+
+            // 2. CAPTURE ALL LOADED STYLESHEETS
+            Array.from(document.styleSheets).forEach((sheet, index) => {
+                try {
+                    initialDiagnostic.loadedStylesheets.push({
+                        index: index,
+                        href: sheet.href || 'inline',
+                        title: sheet.title || 'untitled',
+                        disabled: sheet.disabled,
+                        type: sheet.type,
+                        media: sheet.media ? Array.from(sheet.media) : []
+                    });
+                } catch (e) {
+                    initialDiagnostic.loadedStylesheets.push({
+                        index: index,
+                        href: 'CORS_BLOCKED',
+                        error: e.message
+                    });
+                }
+            });
+
+            console.log('📋 LOADED STYLESHEETS:', initialDiagnostic.loadedStylesheets);
+
+            // 3. CAPTURE ALL LOADED SCRIPTS
+            Array.from(document.scripts).forEach((script, index) => {
+                initialDiagnostic.loadedScripts.push({
+                    index: index,
+                    src: script.src || 'inline',
+                    id: script.id || 'no-id',
+                    type: script.type || 'text/javascript',
+                    async: script.async,
+                    defer: script.defer
+                });
+            });
+
+            console.log('📜 LOADED SCRIPTS:', initialDiagnostic.loadedScripts);
+
+            // 4. MONITOR CSS VARIABLE CHANGES IN REAL-TIME
+            let changeCount = 0;
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' &&
+                        (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
+
+                        changeCount++;
+                        const currentVars = {};
+                        const currentStyle = getComputedStyle(document.documentElement);
+
+                        criticalVars.forEach(varName => {
+                            currentVars[varName] = currentStyle.getPropertyValue(varName).trim();
+                        });
+
+                        // Check for changes
+                        let hasChanges = false;
+                        criticalVars.forEach(varName => {
+                            if (currentVars[varName] !== initialDiagnostic.serverVars[varName]) {
+                                hasChanges = true;
+                                console.log(`🔄 CSS VARIABLE CHANGED: ${varName}`);
+                                console.log(`   Server: ${initialDiagnostic.serverVars[varName]}`);
+                                console.log(`   Current: ${currentVars[varName]}`);
+                                console.log(`   Change #${changeCount} at:`, Date.now());
+                                console.log(`   Stack trace:`, new Error().stack);
+                            }
+                        });
+
+                        if (hasChanges) {
+                            initialDiagnostic.conflicts.push({
+                                changeNumber: changeCount,
+                                timestamp: Date.now(),
+                                target: mutation.target.tagName + (mutation.target.id ? '#' + mutation.target.id : ''),
+                                attributeName: mutation.attributeName,
+                                beforeVars: initialDiagnostic.serverVars,
+                                afterVars: currentVars,
+                                stackTrace: new Error().stack
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Start observing
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['style', 'class'],
+                subtree: true
+            });
+
+            console.log('👁️ CSS MUTATION OBSERVER STARTED');
+
+            // 5. CHECK FOR SPECIFIC JAVASCRIPT INTERFERENCE
+            setTimeout(() => {
+                console.log('🔍 CHECKING FOR JAVASCRIPT INTERFERENCE...');
+
+                // Check window object for color-related properties
+                const windowColorProps = [];
+                for (let prop in window) {
+                    if (prop.includes('color') || prop.includes('Color') || prop.includes('palette') || prop.includes('Palette')) {
+                        windowColorProps.push({
+                            property: prop,
+                            type: typeof window[prop],
+                            value: window[prop]
+                        });
+                    }
+                }
+
+                console.log('🔍 Window color properties:', windowColorProps);
+
+                // Check for common color system objects
+                const colorSystems = [
+                    'SemanticColorSystem',
+                    'ColorSystemManager',
+                    'ColorPaletteInterface',
+                    'simpleVisualCustomizer',
+                    'livePreviewSystem'
+                ];
+
+                colorSystems.forEach(systemName => {
+                    if (window[systemName]) {
+                        console.log(`🔍 Found color system: ${systemName}`, window[systemName]);
+
+                        // Check if it has a current palette
+                        if (typeof window[systemName].getCurrentPalette === 'function') {
+                            try {
+                                const currentPalette = window[systemName].getCurrentPalette();
+                                console.log(`🔍 ${systemName} current palette:`, currentPalette);
+                            } catch (e) {
+                                console.log(`🔍 ${systemName} getCurrentPalette error:`, e);
+                            }
+                        }
+                    }
+                });
+
+                // 6. CHECK LOCALSTORAGE FOR CONFLICTS
+                console.log('🔍 CHECKING LOCALSTORAGE...');
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key.includes('color') || key.includes('palette') || key.includes('customizer')) {
+                        try {
+                            const value = localStorage.getItem(key);
+                            const parsed = JSON.parse(value);
+                            console.log(`🔍 localStorage[${key}]:`, parsed);
+                        } catch (e) {
+                            console.log(`🔍 localStorage[${key}]:`, localStorage.getItem(key));
+                        }
+                    }
+                }
+
+            }, 2000);
+
+            // 7. FINAL DIAGNOSTIC AFTER EVERYTHING LOADS
+            setTimeout(() => {
+                console.log('📊 FINAL DIAGNOSTIC SUMMARY:');
+
+                const finalVars = {};
+                const finalStyle = getComputedStyle(document.documentElement);
+
+                criticalVars.forEach(varName => {
+                    finalVars[varName] = finalStyle.getPropertyValue(varName).trim();
+                });
+
+                console.log('🖥️ Server CSS (initial):', initialDiagnostic.serverVars);
+                console.log('🎨 Applied CSS (final):', finalVars);
+                console.log('⚠️ Total conflicts detected:', initialDiagnostic.conflicts.length);
+                console.log('📋 All conflicts:', initialDiagnostic.conflicts);
+
+                // Show visual summary
+                const summaryDiv = document.createElement('div');
+                summaryDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #000;
+                    color: #fff;
+                    padding: 20px;
+                    border-radius: 8px;
+                    z-index: 999999;
+                    font-family: monospace;
+                    font-size: 12px;
+                    max-width: 400px;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                `;
+
+                let summaryHTML = '<h3>🔍 CSS Diagnostic Summary</h3>';
+                summaryHTML += `<p><strong>Conflicts:</strong> ${initialDiagnostic.conflicts.length}</p>`;
+                summaryHTML += `<p><strong>Stylesheets:</strong> ${initialDiagnostic.loadedStylesheets.length}</p>`;
+                summaryHTML += `<p><strong>Scripts:</strong> ${initialDiagnostic.loadedScripts.length}</p>`;
+
+                summaryHTML += '<h4>Server vs Applied:</h4>';
+                criticalVars.forEach(varName => {
+                    const server = initialDiagnostic.serverVars[varName];
+                    const applied = finalVars[varName];
+                    const match = server === applied;
+                    summaryHTML += `<div style="color: ${match ? '#0f0' : '#f00'}">
+                        ${varName}:<br>
+                        Server: ${server}<br>
+                        Applied: ${applied}
+                    </div><br>`;
+                });
+
+                summaryDiv.innerHTML = summaryHTML;
+                document.body.appendChild(summaryDiv);
+
+                // Store for external access
+                window.cssExtraDiagnostic = {
+                    initial: initialDiagnostic,
+                    final: finalVars,
+                    conflicts: initialDiagnostic.conflicts
+                };
+
+            }, 5000);
+
+        });
+        </script>
+        <?php
+    });
+}
+add_action('init', 'handle_comprehensive_css_diagnostic');

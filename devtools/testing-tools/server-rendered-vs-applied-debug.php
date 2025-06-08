@@ -47,28 +47,36 @@ function output_server_rendering_debug_analysis() {
     // Capture initial CSS variables state
     const rootStyle = getComputedStyle(document.documentElement);
     const criticalVars = [
-        // SEMANTIC COMPONENT TOKENS (the future of tokenization)
+        // SEMANTIC COMPONENT TOKENS (pure tokenization)
         '--component-bg-color-primary',
         '--component-text-color-primary',
         '--component-bg-color-secondary',
         '--component-bg-color-accent',
         '--component-surface-color',
         '--component-neutral-color',
+        '--component-dark-color',
+        // SEMANTIC COLOR ROLES (palette-agnostic)
         '--color-primary',
         '--color-secondary',
         '--color-accent',
+        '--color-surface',
+        '--color-neutral',
+        '--color-dark',
+        // PALETTE TOKENS (bridge layer)
         '--palette-primary',
         '--palette-secondary',
         '--palette-accent',
+        '--palette-primary-contrast',
+        '--palette-secondary-contrast',
+        '--palette-accent-contrast',
+        // INTERACTION STATES
+        '--color-primary-hover',
+        '--color-secondary-hover',
+        '--color-accent-hover',
+        // GRADIENTS (semantic)
         '--gradient-primary',
         '--gradient-accent',
-        // LEGACY VARIABLES (for backward compatibility only)
-        '--color-primary-navy',
-        '--color-primary-teal',
-        '--color-secondary-peach',
-        '--color-neutral-white',
-        '--color-soft-cream',
-        '--color-charcoal'
+        '--gradient-surface'
     ];
 
     criticalVars.forEach(varName => {

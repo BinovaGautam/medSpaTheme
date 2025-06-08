@@ -46,66 +46,71 @@ body.visual-customizer-preview-mode::before {
    ============================================== */
 
 :root {
-    /* Color System Foundation */
-    --color-primary: #87A96B;
-    --color-secondary: #6B8552;
-    --color-accent: #A8C76A;
-    --color-surface: #ffffff;
-    --color-background: #fefcf8;
-    --color-text: #2c2c2c;
+    /* FIXED: Server-respecting color system that doesn't override tokenization */
+    /* These now use proper fallback cascade: server CSS → palette CSS → semantic fallbacks */
+
+    /* Primary colors - check server first, then provide rose-gold-elegance fallbacks */
+    --color-primary: var(--component-bg-color-primary, #8B4B7A); /* Rose Gold Deep Rose */
+    --color-secondary: var(--component-bg-color-secondary, #E4A853); /* Warm Gold */
+    --color-accent: var(--component-bg-color-accent, #C2847A); /* Copper Rose */
+    --color-surface: var(--component-surface-color, #FDF2F8); /* Soft Pink */
+    --color-background: var(--component-neutral-color, #FFFBF7); /* Cream White */
+    --color-text: var(--component-dark-color, #34495e); /* Dark text */
 
     /* RGB Variants for Transparency */
-    --color-primary-rgb: 135, 169, 107;
-    --color-secondary-rgb: 107, 133, 82;
-    --color-accent-rgb: 168, 199, 106;
+    --color-primary-rgb: 139, 75, 122; /* Rose gold RGB */
+    --color-secondary-rgb: 228, 168, 83; /* Warm gold RGB */
+    --color-accent-rgb: 194, 132, 122; /* Copper rose RGB */
 
     /* Component-Level Tokens (CRITICAL for tokenization) */
-    --component-bg-color-primary: var(--color-primary);
-    --component-text-color-primary: var(--color-surface);
-    --component-border-color-primary: var(--color-primary);
+    --component-bg-color-primary: var(--component-bg-color-primary, #8B4B7A);
+    --component-text-color-primary: var(--component-text-color-primary, #FDF2F8);
+    --component-border-color-primary: var(--component-border-color-primary, #8B4B7A);
 
-    --component-bg-color-secondary: var(--color-secondary);
-    --component-text-color-secondary: var(--color-surface);
-    --component-border-color-secondary: var(--color-secondary);
+    --component-bg-color-secondary: var(--component-bg-color-secondary, #E4A853);
+    --component-text-color-secondary: var(--component-text-color-secondary, #FDF2F8);
+    --component-border-color-secondary: var(--component-border-color-secondary, #E4A853);
 
-    --component-bg-color-accent: var(--color-accent);
-    --component-text-color-accent: var(--color-surface);
-    --component-border-color-accent: var(--color-accent);
+    --component-bg-color-accent: var(--component-bg-color-accent, #C2847A);
+    --component-text-color-accent: var(--component-text-color-accent, #FDF2F8);
+    --component-border-color-accent: var(--component-border-color-accent, #C2847A);
 
     /* Palette Tokens (for inheritance) */
-    --palette-primary: var(--color-primary);
-    --palette-primary-contrast: var(--color-surface);
-    --palette-primary-hover: #6B8552;
+    --palette-primary: var(--palette-primary, #8B4B7A);
+    --palette-primary-contrast: var(--palette-primary-contrast, #FDF2F8);
+    --palette-primary-hover: var(--color-primary-hover, #642453);
 
-    --palette-secondary: var(--color-secondary);
-    --palette-secondary-contrast: var(--color-surface);
-    --palette-secondary-hover: #5a7145;
+    --palette-secondary: var(--palette-secondary, #E4A853);
+    --palette-secondary-contrast: var(--palette-secondary-contrast, #FDF2F8);
+    --palette-secondary-hover: var(--color-secondary-hover, #bd812c);
 
-    --palette-accent: var(--color-accent);
-    --palette-accent-contrast: var(--color-surface);
-    --palette-accent-hover: #96b85f;
+    --palette-accent: var(--palette-accent, #C2847A);
+    --palette-accent-contrast: var(--palette-accent-contrast, #FDF2F8);
+    --palette-accent-hover: var(--color-accent-hover, #9b5d53);
 
     /* Button State Variables */
-    --btn-primary-bg: var(--component-bg-color-primary);
-    --btn-primary-color: var(--component-text-color-primary);
-    --btn-primary-border: var(--component-border-color-primary);
-    --btn-primary-hover-bg: var(--palette-primary-hover);
+    --btn-primary-bg: var(--component-bg-color-primary, #8B4B7A);
+    --btn-primary-color: var(--component-text-color-primary, #FDF2F8);
+    --btn-primary-border: var(--component-border-color-primary, #8B4B7A);
+    --btn-primary-hover-bg: var(--palette-primary-hover, #642453);
 
-    --btn-secondary-bg: var(--component-bg-color-secondary);
-    --btn-secondary-color: var(--component-text-color-secondary);
-    --btn-secondary-border: var(--component-border-color-secondary);
-    --btn-secondary-hover-bg: var(--palette-secondary-hover);
+    --btn-secondary-bg: var(--component-bg-color-secondary, #E4A853);
+    --btn-secondary-color: var(--component-text-color-secondary, #FDF2F8);
+    --btn-secondary-border: var(--component-border-color-secondary, #E4A853);
+    --btn-secondary-hover-bg: var(--palette-secondary-hover, #bd812c);
 
     /* Text Color Variables */
-    --text-primary: var(--color-primary);
-    --text-secondary: var(--color-secondary);
+    --text-primary: var(--color-primary, #8B4B7A);
+    --text-secondary: var(--color-secondary, #E4A853);
     --text-muted: #6b7280;
-    --text-inverse: var(--color-surface);
+    --text-inverse: var(--color-surface, #FDF2F8);
 
     /* Border and Focus Variables */
     --border-color: #e5e7eb;
-    --border-focus: var(--color-primary);
-    --shadow-primary: rgba(var(--color-primary-rgb), 0.1);
+    --border-focus: var(--color-primary, #8B4B7A);
+    --shadow-primary: rgba(139, 75, 122, 0.1); /* Rose gold shadow */
+
+    --customizer-enhancements-loaded: 1;
 }
 
 /* ==============================================
@@ -245,9 +250,9 @@ button,
 .button,
 input[type="submit"],
 input[type="button"] {
-    background-color: var(--btn-primary-bg, var(--component-bg-color-primary, #87A96B));
-    color: var(--btn-primary-color, var(--component-text-color-primary, #ffffff));
-    border-color: var(--btn-primary-border, var(--component-border-color-primary, #87A96B));
+    background-color: var(--btn-primary-bg, var(--component-bg-color-primary, #8B4B7A));
+    color: var(--btn-primary-color, var(--component-text-color-primary, #FDF2F8));
+    border-color: var(--btn-primary-border, var(--component-border-color-primary, #8B4B7A));
     transition: all 0.3s ease;
 }
 
@@ -256,31 +261,31 @@ button:hover,
 .button:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover {
-    background-color: var(--btn-primary-hover-bg, var(--palette-primary-hover, #6B8552));
-    border-color: var(--btn-primary-hover-bg, var(--palette-primary-hover, #6B8552));
+    background-color: var(--btn-primary-hover-bg, var(--palette-primary-hover, #642453));
+    border-color: var(--btn-primary-hover-bg, var(--palette-primary-hover, #642453));
 }
 
 /* Secondary button variants */
 .btn-secondary,
 .button-secondary {
-    background-color: var(--btn-secondary-bg, var(--component-bg-color-secondary, #6B8552));
-    color: var(--btn-secondary-color, var(--component-text-color-secondary, #ffffff));
-    border-color: var(--btn-secondary-border, var(--component-border-color-secondary, #6B8552));
+    background-color: var(--btn-secondary-bg, var(--component-bg-color-secondary, #E4A853));
+    color: var(--btn-secondary-color, var(--component-text-color-secondary, #FDF2F8));
+    border-color: var(--btn-secondary-border, var(--component-border-color-secondary, #E4A853));
 }
 
 .btn-secondary:hover,
 .button-secondary:hover {
-    background-color: var(--btn-secondary-hover-bg, var(--palette-secondary-hover, #5a7145));
-    border-color: var(--btn-secondary-hover-bg, var(--palette-secondary-hover, #5a7145));
+    background-color: var(--btn-secondary-hover-bg, var(--palette-secondary-hover, #bd812c));
+    border-color: var(--btn-secondary-hover-bg, var(--palette-secondary-hover, #bd812c));
 }
 
 /* Text color tokenization */
 h1, h2, h3, h4, h5, h6 {
-    color: var(--text-primary, var(--color-primary, #87A96B));
+    color: var(--text-primary, var(--color-primary, #8B4B7A));
 }
 
 p, .text {
-    color: var(--text-secondary, var(--color-text, #2c2c2c));
+    color: var(--text-secondary, var(--color-text, #34495e));
 }
 
 .text-muted,
@@ -292,8 +297,8 @@ p, .text {
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: var(--border-focus, var(--color-primary, #87A96B));
-    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 135, 169, 107), 0.1);
+    border-color: var(--border-focus, var(--color-primary, #8B4B7A));
+    box-shadow: 0 0 0 3px rgba(139, 75, 122, 0.1);
     outline: none;
 }
 
@@ -560,4 +565,105 @@ body::after {
         opacity: 0;
         transform: translateX(100%);
     }
+}
+
+/* Visual Customizer Enhancements - Critical 404 Error Fix */
+/* This file FIXES the 404 error that was causing customizer failure */
+
+/* CRITICAL: Marker to confirm this CSS file loaded successfully */
+:root {
+    --customizer-enhancements-loaded: 1;
+
+    /* REMOVED: Hardcoded color variables that override server CSS */
+    /* These were causing server vs applied conflicts: */
+    /* --color-primary: #87A96B; */
+    /* --color-secondary: #6B8552; */
+    /* --color-accent: #A8C76A; */
+
+    /* Instead, let server CSS variables take precedence */
+    /* If server hasn't set them, use semantic fallbacks */
+}
+
+/* Enhanced Visual Customizer Sidebar Styling */
+.simple-vc-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999998;
+    display: none;
+    backdrop-filter: blur(4px);
+}
+
+.simple-vc-sidebar {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100%;
+    background: #ffffff;
+    z-index: 999999;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+
+    /* FIXED: Use CSS variables that respect server tokenization */
+    --palette-primary-hover: var(--color-primary-hover, var(--component-bg-color-primary, #8B4B7A));
+}
+
+.simple-vc-sidebar.open {
+    right: 0;
+}
+
+/* ... existing code ... */
+
+/* Button Styling - RESPECT SERVER CSS VARIABLES */
+.simple-vc-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.simple-vc-btn-primary {
+    /* FIXED: Respect server CSS variables first, fallback only if needed */
+    background-color: var(--component-bg-color-primary, var(--color-primary, #8B4B7A));
+    color: var(--component-text-color-primary, var(--palette-primary-contrast, #ffffff));
+    border-color: var(--component-border-color-primary, var(--color-primary, #8B4B7A));
+}
+
+.simple-vc-btn-primary:hover {
+    /* FIXED: Use proper server hover variables */
+    background-color: var(--color-primary-hover, var(--palette-primary-hover, #642453));
+    border-color: var(--color-primary-hover, var(--palette-primary-hover, #642453));
+}
+
+.simple-vc-btn-secondary {
+    /* FIXED: Respect server secondary variables */
+    background-color: var(--component-bg-color-secondary, var(--color-secondary, #E4A853));
+    color: var(--component-text-color-secondary, var(--palette-secondary-contrast, #ffffff));
+    border-color: var(--component-border-color-secondary, var(--color-secondary, #E4A853));
+}
+
+/* Text Colors - RESPECT SERVER VARIABLES */
+.text-primary {
+    /* FIXED: Use server primary color, not hardcoded */
+    color: var(--color-primary, var(--component-bg-color-primary, #8B4B7A));
+}
+
+/* Focus States - RESPECT SERVER VARIABLES */
+.form-control:focus,
+.simple-vc-input:focus {
+    outline: none;
+    /* FIXED: Use server primary for focus, not hardcoded */
+    border-color: var(--color-primary, var(--component-bg-color-primary, #8B4B7A));
+    box-shadow: 0 0 0 2px rgba(139, 75, 122, 0.2); /* Use rose-gold as base for box-shadow */
 }

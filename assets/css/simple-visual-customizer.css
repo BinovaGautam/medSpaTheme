@@ -76,7 +76,13 @@
 }
 
 .launcher-icon.active .icon-bg {
-    filter: brightness(1.2);
+    background: var(--component-bg-color-primary, #8B4B7A);
+    color: var(--component-text-color-primary, #FDF2F8);
+}
+
+.launcher-icon:hover .icon-bg {
+    background: var(--color-primary-hover, #642453);
+    border-bottom: 1px solid var(--palette-secondary, #E4A853);
 }
 
 .icon-label {
@@ -388,8 +394,9 @@
 }
 
 .simple-vc-btn-primary {
-    background: #007cba;
-    color: white;
+    background: var(--component-bg-color-primary, #8B4B7A) !important;
+    color: var(--component-text-color-primary, #FDF2F8) !important;
+    border-color: var(--color-primary-hover, #642453) !important;
 }
 
 .simple-vc-btn-primary:hover:not(:disabled) {
@@ -402,8 +409,8 @@
 }
 
 .simple-vc-btn-secondary {
-    background: #f1f1f1;
-    color: #333;
+    background: var(--component-bg-color-secondary, #E4A853) !important;
+    border: 1px solid var(--palette-secondary-hover, #bd812c) !important;
 }
 
 .simple-vc-btn-secondary:hover {
@@ -513,13 +520,13 @@
 
 /* Header */
 .simple-vc-header {
-    background: #87A96B;
+    background: #8B4B7A;
     color: white;
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #6B8552;
+    border-bottom: 1px solid #642453;
 }
 
 .simple-vc-header h3 {
@@ -564,7 +571,7 @@
     font-size: 16px;
     font-weight: 600;
     color: #1B365D;
-    border-bottom: 2px solid #87A96B;
+    border-bottom: 2px solid #8B4B7A;
     padding-bottom: 8px;
 }
 
@@ -600,12 +607,12 @@
 }
 
 .simple-vc-btn.primary {
-    background: #87A96B;
+    background: #8B4B7A;
     color: white;
 }
 
 .simple-vc-btn.primary:hover {
-    background: #6B8552;
+    background: #642453;
 }
 
 .simple-vc-btn.secondary {
@@ -698,12 +705,12 @@
 }
 
 .simple-vc-sidebar .palette-card:hover {
-    border-color: #87A96B !important;
+    border-color: #8B4B7A !important;
     box-shadow: 0 2px 8px rgba(135, 169, 107, 0.2) !important;
 }
 
 .simple-vc-sidebar .palette-card.selected {
-    border-color: #87A96B !important;
+    border-color: #8B4B7A !important;
     background-color: #f8faf6 !important;
     box-shadow: 0 2px 12px rgba(135, 169, 107, 0.3) !important;
 }
@@ -768,9 +775,9 @@
 }
 
 .simple-vc-sidebar .category-filter-btn.active {
-    background: #87A96B !important;
+    background: #8B4B7A !important;
     color: white !important;
-    border-color: #6B8552 !important;
+    border-color: #642453 !important;
 }
 
 /* Search Input */
@@ -813,8 +820,8 @@
 }
 
 .simple-vc-sidebar .preview-controls button[data-action="apply-palette"] {
-    background: #87A96B !important;
-    border: 1px solid #6B8552 !important;
+    background: #8B4B7A !important;
+    border: 1px solid #642453 !important;
     color: white !important;
 }
 
@@ -911,13 +918,13 @@
 
 .simple-vc-sidebar .palette-item:hover {
     background-color: #f8f9fa;
-    border-color: #87A96B;
+    border-color: #8B4B7A;
 }
 
 .simple-vc-sidebar .palette-item.active {
-    background-color: #87A96B;
+    background-color: #8B4B7A;
     color: white;
-    border-color: #6B8552;
+    border-color: #642453;
 }
 
 /* Success/Error Messages */
@@ -1068,4 +1075,59 @@ body.palette-transition * {
         transform: scale(1.02);
         box-shadow: 0 4px 15px rgba(0,123,255,0.3);
     }
+}
+
+/* Sprint 2 Extension Version Badge with rose gold styling */
+.version-badge {
+    background: linear-gradient(135deg, var(--component-bg-color-primary, #8B4B7A) 0%, var(--component-bg-color-secondary, #E4A853) 100%);
+    color: var(--component-text-color-primary, #FDF2F8);
+    border-radius: 12px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid var(--palette-primary-hover, #642453);
+}
+
+/* Enhanced palette selection styling */
+.palette-item-simple.active,
+.palette-item-simple.selected {
+    border-color: var(--component-bg-color-primary, #8B4B7A) !important;
+    background: rgba(139, 75, 122, 0.05) !important; /* Rose gold transparent */
+    box-shadow: 0 4px 12px rgba(139, 75, 122, 0.2) !important;
+}
+
+.palette-item-simple.active::before {
+    background: var(--component-bg-color-primary, #8B4B7A);
+    color: var(--component-text-color-primary, #FDF2F8);
+}
+
+.palette-item-simple:hover {
+    background: var(--component-bg-color-secondary, #E4A853) !important; /* Warm gold hover */
+}
+
+/* Button styling updates */
+.simple-vc-btn-primary {
+    background: var(--component-bg-color-primary, #8B4B7A) !important;
+    color: var(--component-text-color-primary, #FDF2F8) !important;
+    border-color: var(--color-primary-hover, #642453) !important;
+}
+
+.simple-vc-btn-secondary {
+    background: var(--component-bg-color-secondary, #E4A853) !important;
+    border: 1px solid var(--palette-secondary-hover, #bd812c) !important;
+}
+
+/* Focus and active states */
+.simple-vc-input:focus,
+.simple-vc-select:focus {
+    border-color: var(--component-bg-color-primary, #8B4B7A);
+}
+
+.simple-vc-btn:focus {
+    background-color: var(--component-bg-color-primary, #8B4B7A);
+}
+
+.simple-vc-btn:hover {
+    border-color: var(--color-primary-hover, #642453);
 }

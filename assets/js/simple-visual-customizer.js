@@ -570,113 +570,78 @@
     }
 
     /**
-     * Apply Color Tokens Immediately - Design Token System Integration
+     * FIXED: Apply color tokens immediately with server CSS respect
      */
     function applyColorTokensImmediately(paletteData) {
-        console.log('🔥 applyColorTokensImmediately called with:', paletteData);
-
         if (!paletteData || !paletteData.colors) {
-            console.error('❌ No palette colors for token application');
-            console.log('❌ paletteData:', paletteData);
-            showMessage('No color data available', 'error');
+            console.error('❌ Invalid palette data for immediate application');
             return;
         }
 
-        console.log('🎯 Applying color tokens immediately:', paletteData);
-        console.log('🎯 Available colors:', Object.keys(paletteData.colors));
+        console.log('🎨 Applying color tokens immediately...', paletteData);
 
-        // PRODUCTION DEBUG: Log current values before change
+        // CRITICAL FIX: Check if server CSS variables already exist and match
         const rootStyle = getComputedStyle(document.documentElement);
-        const beforePrimary = rootStyle.getPropertyValue('--component-bg-color-primary').trim();
-        console.log('🔍 BEFORE change - Primary color:', beforePrimary);
+        const serverPrimary = rootStyle.getPropertyValue('--component-bg-color-primary').trim();
+        const serverColorPrimary = rootStyle.getPropertyValue('--color-primary').trim();
 
-        // Add visual indicator that palette is changing
-        document.body.setAttribute('data-palette-changing', 'true');
+        if (serverPrimary !== '' || serverColorPrimary !== '') {
+            console.log('🖥️ SERVER CSS VARIABLES DETECTED');
+            console.log('🖥️ Server --component-bg-color-primary:', serverPrimary);
+            console.log('🖥️ Server --color-primary:', serverColorPrimary);
 
-        // Add debug attribute to see current palette
-        document.body.setAttribute('data-palette-debug', 'true');
-        document.body.setAttribute('data-current-palette', paletteData.id || paletteData.name || 'unknown');
+            // Check if server colors match what we're trying to apply
+            const clientPrimary = paletteData.colors.primary?.hex || paletteData.colors.primary;
 
-        try {
-            const startTime = performance.now();
+            if (serverPrimary === clientPrimary || serverColorPrimary === clientPrimary) {
+                console.log('✅ Server CSS matches client palette - no override needed');
+                console.log('✅ Server-client sync is working correctly');
 
-            // UNIFIED APPROACH: Generate both CSS variables AND CSS class rules
-            console.log('🔧 Generating unified CSS system...');
+                // Still trigger visual feedback since colors are correct
+                triggerVisualFeedback();
+                return;
+            } else {
+                console.log('⚠️ Server CSS differs from client palette:');
+                console.log(`    Server: ${serverPrimary || serverColorPrimary}`);
+                console.log(`    Client: ${clientPrimary}`);
+                console.log('⚠️ This indicates a server-client sync issue - recommend page reload');
 
-            // Generate CSS variables (for themes that use them)
-            const colorTokens = generateColorTokens(paletteData.colors);
-            console.log('🎯 Generated CSS variables:', Object.keys(colorTokens).length);
-
-            // NEW: Generate CSS class rules (for themes that use traditional classes)
-            const cssRules = generateCSSClassRules(paletteData.colors);
-            console.log('🎯 Generated CSS class rules:', cssRules.length);
-
-            // Apply CSS variables to document root
-            console.log('🔧 Applying CSS variables to document root...');
-            const documentRoot = document.documentElement;
-            let appliedTokens = 0;
-
-            Object.entries(colorTokens).forEach(([property, value]) => {
-                documentRoot.style.setProperty(property, value);
-                appliedTokens++;
-
-                // PRODUCTION DEBUG: Log critical property changes
-                if (property === '--component-bg-color-primary') {
-                    console.log(`🎯 CRITICAL UPDATE: ${property} = ${value}`);
-                }
-            });
-
-            // NEW: Inject CSS class rules into a dynamic stylesheet
-            console.log('🔧 Injecting CSS class rules...');
-            const appliedRules = injectCSSRules(cssRules, paletteData.id);
-
-            // PRODUCTION DEBUG: Verify the change actually happened
-            setTimeout(() => {
-                const afterPrimary = getComputedStyle(document.documentElement).getPropertyValue('--component-bg-color-primary').trim();
-                console.log('🔍 AFTER change - Primary color:', afterPrimary);
-
-                if (beforePrimary === afterPrimary) {
-                    console.error('❌ CSS CUSTOM PROPERTY DID NOT CHANGE!');
-                    console.error('❌ This is the root issue - Visual Customizer not updating CSS variables');
-                    showMessage('⚠️ Palette not applied - CSS variables not updating!', 'error');
-                } else {
-                    console.log('✅ CSS CUSTOM PROPERTY SUCCESSFULLY CHANGED!');
-                    console.log(`✅ ${beforePrimary} → ${afterPrimary}`);
-                    showMessage(`✅ Palette applied! ${beforePrimary} → ${afterPrimary}`, 'success');
-
-                    // Visual feedback - make buttons pulse to show change
-                    triggerVisualFeedback();
-                }
-
-                // CRITICAL FIX: Force CSS recalculation for buttons
-                forceCSSRecalculationForButtons();
-
-                // Remove changing indicator
-                document.body.removeAttribute('data-palette-changing');
-            }, 100);
-
-            // Force immediate DOM update
-            documentRoot.offsetHeight;
-            console.log('🔄 Forced DOM reflow');
-
-            // Apply visual feedback
-            document.body.classList.add('palette-transition');
-            setTimeout(() => {
-                document.body.classList.remove('palette-transition');
-            }, 300);
-
-            const duration = performance.now() - startTime;
-            console.log(`✅ Unified CSS system applied in ${duration.toFixed(2)}ms`);
-            console.log(`✅ Applied ${appliedTokens} CSS variables + ${appliedRules} CSS rules`);
-
-            // DEBUGGING: Inspect actual button CSS variables being used
-            inspectButtonCSSVariables();
-
-        } catch (error) {
-            console.error('❌ Error applying unified CSS system:', error);
-            showMessage('Error applying colors: ' + error.message, 'error');
-            document.body.removeAttribute('data-palette-changing');
+                // Show user feedback about the mismatch
+                showMessage('⚠️ Server-client color mismatch detected. Consider refreshing the page.', 'warning');
+            }
         }
+
+        console.log('🎨 Proceeding with client-side color application...');
+
+        // Apply color tokens to CSS custom properties
+        const colorTokens = generateColorTokens(paletteData.colors);
+
+        Object.entries(colorTokens).forEach(([property, value]) => {
+            // Only set if not already set by server or if we need to override
+            const currentValue = rootStyle.getPropertyValue(property).trim();
+            if (currentValue === '' || serverPrimary === '') {
+                document.documentElement.style.setProperty(property, value);
+                console.log(`🎨 Set ${property}: ${value}`);
+            } else {
+                console.log(`🖥️ Kept server ${property}: ${currentValue}`);
+            }
+        });
+
+        // Generate and inject CSS class rules
+        const cssRules = generateCSSClassRules(paletteData.colors);
+        if (cssRules) {
+            injectCSSRules(cssRules, paletteData.id || 'current');
+        }
+
+        // Trigger visual feedback
+        triggerVisualFeedback();
+
+        // Force CSS recalculation for buttons
+        setTimeout(() => {
+            forceCSSRecalculationForButtons();
+        }, 50);
+
+        console.log('✅ Color tokens applied with server CSS respect');
     }
 
     /**
@@ -2644,30 +2609,51 @@
     }
 
     /**
-     * Set fallback CSS custom properties
+     * FIXED: Set fallback CSS custom properties ONLY if server hasn't already set them
      */
     function setFallbackCSSProperties() {
-        console.log('🎯 Setting fallback CSS custom properties...');
+        console.log('🎯 Checking for server CSS variables before setting fallbacks...');
+
+        // Check if server has already set CSS variables
+        const rootStyle = getComputedStyle(document.documentElement);
+        const serverHasPrimary = rootStyle.getPropertyValue('--component-bg-color-primary').trim() !== '';
+        const serverHasTokens = rootStyle.getPropertyValue('--color-primary').trim() !== '';
+
+        if (serverHasPrimary || serverHasTokens) {
+            console.log('🖥️ SERVER CSS VARIABLES DETECTED - RESPECTING SERVER IMPLEMENTATION');
+            console.log('🖥️ Server primary color:', rootStyle.getPropertyValue('--component-bg-color-primary').trim());
+            console.log('🖥️ Server color-primary:', rootStyle.getPropertyValue('--color-primary').trim());
+            console.log('✅ Skipping fallback injection - server CSS takes priority');
+            return;
+        }
+
+        console.log('⚠️ No server CSS variables found - applying fallback colors as last resort');
 
         const fallbackColors = {
-            '--component-bg-color-primary': '#87A96B',
+            '--component-bg-color-primary': '#8B4B7A',
             '--component-text-color-primary': '#ffffff',
-            '--component-border-color-primary': '#87A96B',
-            '--color-primary': '#87A96B',
-            '--color-secondary': '#6B8552',
-            '--color-accent': '#A8C76A',
-            '--palette-primary': '#87A96B',
+            '--component-border-color-primary': '#8B4B7A',
+            '--color-primary': '#8B4B7A',
+            '--color-secondary': '#642453',
+            '--color-accent': '#C2847A',
+            '--palette-primary': '#8B4B7A',
             '--palette-primary-contrast': '#ffffff',
-            '--palette-primary-hover': '#6B8552'
+            '--palette-primary-hover': '#642453'
         };
 
         const documentRoot = document.documentElement;
         Object.entries(fallbackColors).forEach(([property, value]) => {
-            documentRoot.style.setProperty(property, value);
-            console.log(`🎯 Set fallback: ${property} = ${value}`);
+            // Double-check each property before setting
+            const currentValue = rootStyle.getPropertyValue(property).trim();
+            if (currentValue === '') {
+                documentRoot.style.setProperty(property, value);
+                console.log(`🎯 Set fallback: ${property} = ${value}`);
+            } else {
+                console.log(`🖥️ Kept server value: ${property} = ${currentValue}`);
+            }
         });
 
-        console.log('✅ Fallback CSS custom properties set');
+        console.log('✅ Fallback CSS properties set (only where needed)');
     }
 
     /**

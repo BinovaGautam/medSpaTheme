@@ -133,7 +133,7 @@
     function updateDynamicStyles() {
         const colors = {
             primary: wp.customize('medspaa_primary_color')() || '#1B365D',
-            secondary: wp.customize('medspaa_secondary_color')() || '#87A96B',
+            secondary: wp.customize('medspaa_secondary_color')() || '#8B4B7A',
             accent: wp.customize('medspaa_accent_color')() || '#D4AF37'
         };
 
