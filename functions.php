@@ -16,6 +16,17 @@ if (!defined('ABSPATH')) {
 // Theme version
 define('PREETIDREAMS_VERSION', '1.0.0');
 
+// =============================================================================
+// SPRINT 4: INDUSTRY-STANDARD WORDPRESS CUSTOMIZER ARCHITECTURE
+// =============================================================================
+
+// Load new WordPress Core Customizer Integration (Sprint 4)
+require_once get_template_directory() . '/inc/medspa-customizer.php';
+
+// =============================================================================
+// LEGACY VISUAL CUSTOMIZER SYSTEM (Maintaining compatibility)
+// =============================================================================
+
 // Simple Visual Customizer - Clean Admin Bar Implementation
 require_once get_template_directory() . '/inc/visual-customizer-simple.php';
 
