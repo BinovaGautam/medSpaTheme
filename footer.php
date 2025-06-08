@@ -49,28 +49,28 @@
                 <div class="contact-details">
 
                     <?php $address = preetidreams_get_address(); if ($address) : ?>
-                    <div class="contact-item">
+                        <div class="contact-item">
                         <span class="icon" aria-hidden="true">📍</span>
                         <div class="details">
                             <strong><?php echo wp_kses_post(nl2br(esc_html($address))); ?></strong>
                             <span><?php echo esc_html(get_theme_mod('footer_address_line2', '')); ?></span>
                         </div>
                     </div>
-                    <?php endif; ?>
+                <?php endif; ?>
 
                     <?php $phone = preetidreams_get_phone(); if ($phone) : ?>
                     <div class="contact-item">
                         <span class="icon" aria-hidden="true">📞</span>
                         <div class="details">
                             <strong>
-                                <a href="tel:<?php echo esc_attr($phone); ?>" class="contact-link">
-                                    <?php echo esc_html($phone); ?>
-                                </a>
+                        <a href="tel:<?php echo esc_attr($phone); ?>" class="contact-link">
+                            <?php echo esc_html($phone); ?>
+                        </a>
                             </strong>
                             <span><?php esc_html_e('Direct Practice Line', 'preetidreams'); ?></span>
                         </div>
                     </div>
-                    <?php endif; ?>
+                <?php endif; ?>
 
                     <?php $hours = preetidreams_get_hours(); if ($hours) : ?>
                     <div class="contact-item">
@@ -159,14 +159,14 @@
                         <span class="icon" aria-hidden="true">📧</span>
                         <div class="social-text">
                             <strong>
-                                <a href="mailto:<?php echo esc_attr($email); ?>" class="contact-link">
-                                    <?php echo esc_html($email); ?>
-                                </a>
+                        <a href="mailto:<?php echo esc_attr($email); ?>" class="contact-link">
+                            <?php echo esc_html($email); ?>
+                        </a>
                             </strong>
                             <span><?php esc_html_e('Confidential inquiries welcomed', 'preetidreams'); ?></span>
                         </div>
                     </div>
-                    <?php endif; ?>
+                <?php endif; ?>
 
                     <div class="social-links">
                         <?php $linkedin = preetidreams_get_social_link('linkedin'); if ($linkedin) : ?>
@@ -342,8 +342,8 @@
                             <div class="quick-contact-item">
                                 <span class="contact-label"><?php esc_html_e('Hours:', 'preetidreams'); ?></span>
                                 <span class="contact-value"><?php echo esc_html($hours); ?></span>
-                            </div>
-                            <?php endif; ?>
+                    </div>
+                <?php endif; ?>
                         </div>
                     </div>
 

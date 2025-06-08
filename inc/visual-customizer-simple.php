@@ -137,26 +137,69 @@ function handle_simple_visual_customizer_apply() {
         wp_send_json_error(['message' => 'Invalid configuration data']);
     }
 
-    try {
-        // Save configuration to database
-        update_option('preetidreams_visual_customizer_config', $config);
+    // Initialize variables
+    $active_palette = null;
+    $config_saved = false;
+    $palette_saved = false;
+    $verify_config = null;
+    $verify_palette = null;
 
-        // Set active palette for quick access
-        if (isset($config['activePalette'])) {
-            update_option('preetidreams_active_palette', $config['activePalette']);
+    try {
+        // PRODUCTION FIX: Validate that palette is actually available
+        $active_palette = $config['activePalette'] ?? null;
+        if (!$active_palette) {
+            wp_send_json_error(['message' => 'No active palette specified']);
+        }
+
+        // PRODUCTION FIX: Clear any stale options first to prevent second-to-last issue
+        delete_option('preetidreams_visual_customizer_config');
+        delete_option('preetidreams_active_palette');
+
+        // PRODUCTION FIX: Add small delay to ensure DB write completion
+        usleep(50000); // 50ms delay
+
+        // Save configuration to database with timestamp
+        $config['saved_at'] = current_time('mysql');
+        $config['saved_timestamp'] = time();
+
+        $config_saved = update_option('preetidreams_visual_customizer_config', $config);
+
+        // Set active palette for quick access with explicit update
+        $palette_saved = update_option('preetidreams_active_palette', $active_palette);
+
+        // PRODUCTION FIX: Also save to theme_mods for WordPress Customizer compatibility
+        set_theme_mod('visual_customizer_active_palette', $active_palette);
+
+        // PRODUCTION FIX: Force database flush to ensure write completion
+        if (function_exists('wp_cache_flush')) {
+            wp_cache_flush();
+        }
+
+        // Verify the save was successful
+        $verify_config = get_option('preetidreams_visual_customizer_config');
+        $verify_palette = get_option('preetidreams_active_palette');
+
+        if (!$verify_config || !$verify_palette || $verify_palette !== $active_palette) {
+            wp_send_json_error([
+                'message' => 'Database save verification failed',
+                'debug' => [
+                    'config_saved' => $config_saved,
+                    'palette_saved' => $palette_saved,
+                    'verify_config' => !empty($verify_config),
+                    'verify_palette' => $verify_palette,
+                    'expected_palette' => $active_palette
+                ]
+            ]);
         }
 
         // PVC-005: Generate CSS file for performance (optional)
         $css_generated = generate_global_css_from_config($config);
 
-        // PVC-005: Clear any caching
-        if (function_exists('wp_cache_flush')) {
-            wp_cache_flush();
-        }
-
         // Log the change for debugging
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('Visual Customizer: Applied palette - ' . ($config['activePalette'] ?? 'unknown'));
+            error_log("Visual Customizer PRODUCTION FIX: Applied palette - {$active_palette} at " . current_time('mysql'));
+            error_log("Visual Customizer: Config verified - " . ($verify_config ? 'YES' : 'NO'));
+            error_log("Visual Customizer: Palette verified - {$verify_palette}");
         }
 
         wp_send_json_success([
@@ -164,6 +207,12 @@ function handle_simple_visual_customizer_apply() {
             'config' => $config,
             'css_generated' => $css_generated,
             'timestamp' => current_time('mysql'),
+            'applied_palette' => $active_palette,
+            'verification' => [
+                'config_saved' => $config_saved,
+                'palette_saved' => $palette_saved,
+                'verified_palette' => $verify_palette
+            ],
             'performance' => [
                 'save_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']
             ]
@@ -171,7 +220,11 @@ function handle_simple_visual_customizer_apply() {
 
     } catch (Exception $e) {
         wp_send_json_error([
-            'message' => 'Error saving configuration: ' . $e->getMessage()
+            'message' => 'Error saving configuration: ' . $e->getMessage(),
+            'debug' => [
+                'active_palette' => $active_palette ?? 'not set',
+                'config_keys' => array_keys($config ?? [])
+            ]
         ]);
     }
 }
@@ -683,3 +736,36 @@ function sanitize_visual_customizer_config($config) {
 
     return $sanitized;
 }
+
+/**
+ * PRODUCTION FIX: AJAX Handler - Get Current Palette
+ */
+function handle_get_current_palette() {
+    // Security check
+    if (!wp_verify_nonce($_POST['nonce'], 'simple_visual_customizer')) {
+        wp_send_json_error(['message' => 'Security check failed']);
+    }
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(['message' => 'Insufficient permissions']);
+    }
+
+    try {
+        // Get current palette from database
+        $current_palette = get_option('preetidreams_active_palette', 'modern-clinical');
+
+        // Also check theme mods
+        $theme_mod_palette = get_theme_mod('visual_customizer_active_palette', '');
+
+        // Use theme mod if available, otherwise use option
+        $palette_to_return = !empty($theme_mod_palette) ? $theme_mod_palette : $current_palette;
+
+        wp_send_json_success($palette_to_return);
+
+    } catch (Exception $e) {
+        wp_send_json_error([
+            'message' => 'Error getting current palette: ' . $e->getMessage()
+        ]);
+    }
+}
+add_action('wp_ajax_get_current_palette', 'handle_get_current_palette');

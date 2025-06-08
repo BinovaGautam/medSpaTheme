@@ -90,6 +90,15 @@ function preetidreams_enqueue_scripts() {
         PREETIDREAMS_VERSION
     );
 
+    // CRITICAL FIX: Tokenization Contact Page Overrides
+    // Fixes CSS conflicts preventing Visual Customizer from working on contact page
+    wp_enqueue_style(
+        'preetidreams-tokenization-contact-overrides',
+        get_template_directory_uri() . '/assets/css/tokenization-contact-overrides.css',
+        ['preetidreams-header-fix'],
+        PREETIDREAMS_VERSION . '-tokenization-fix'
+    );
+
     // Header scroll transparency for hero pages
     wp_enqueue_script(
         'preetidreams-header-transparency',
@@ -2907,7 +2916,7 @@ function preetidreams_save_staff_meta_data($post_id) {
     }
 
     if ($credentials_nonce && !wp_verify_nonce($credentials_nonce, 'staff_credentials_meta_box')) {
-        return;
+            return;
     }
 
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {

@@ -1,0 +1,927 @@
+/**
+ * Tokenization Contact Page Overrides
+ *
+ * Critical CSS fixes for contact page tokenization issues
+ * Based on CSS conflict analysis and garbage cleanup methodology
+ *
+ * Purpose: Ensure Visual Customizer tokens work on contact page components
+ * Fixes: WordPress block overrides, hardcoded colors, specificity conflicts
+ *
+ * @package MedSpaTheme
+ * @subpackage Tokenization
+ * @priority Critical
+ */
+
+/* ==============================================
+   CRITICAL FIX: WordPress Block Button Overrides
+   Problem: .wp-block-button__link { background: none !important; }
+   Solution: Add tokenization-aware overrides with higher specificity
+   ============================================== */
+
+/* WordPress block buttons with tokenization support */
+.theme-tokenized .wp-block-button__link,
+.contact-page .wp-block-button__link,
+.wp-block-button__link.tokenized {
+    background: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    transition: all 0.3s ease;
+}
+
+.theme-tokenized .wp-block-button__link:hover,
+.contact-page .wp-block-button__link:hover,
+.wp-block-button__link.tokenized:hover {
+    background: var(--component-bg-color-primary-hover, var(--palette-primary-hover)) !important;
+    color: var(--component-text-color-primary-hover, var(--palette-primary-contrast)) !important;
+    border-color: var(--component-border-color-primary-hover, var(--palette-primary-hover)) !important;
+}
+
+/* Secondary button variants */
+.theme-tokenized .wp-block-button__link.is-style-secondary,
+.contact-page .wp-block-button__link.is-style-secondary {
+    background: var(--component-bg-color-secondary) !important;
+    color: var(--component-text-color-secondary) !important;
+    border-color: var(--component-border-color-secondary) !important;
+}
+
+/* ==============================================
+   PRODUCTION FIX: Real Contact Page Selectors
+   Problem: Test environment vs production structure differences
+   Solution: Add comprehensive selectors for actual contact page
+   ============================================== */
+
+/* Real-world contact page detection and button targeting */
+body.contact button,
+body.page-contact button,
+body.single-contact button,
+body[class*="contact"] button,
+.page-template-contact button,
+.page-template-page-contact button,
+.contact-form button,
+.contact-section button,
+.contact-container button,
+form.contact-form button,
+form.contact-form input[type="submit"],
+form.contact-form input[type="button"],
+.wpforms-container button,
+.wpforms-submit,
+.gform_wrapper button,
+.gform_wrapper input[type="submit"],
+.elementor-button,
+.elementor-button-wrapper .elementor-button,
+div[id*="contact"] button,
+div[class*="contact"] button,
+section[class*="contact"] button {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Hover states for all contact buttons */
+body.contact button:hover,
+body.page-contact button:hover,
+body.single-contact button:hover,
+body[class*="contact"] button:hover,
+.page-template-contact button:hover,
+.page-template-page-contact button:hover,
+.contact-form button:hover,
+.contact-section button:hover,
+.contact-container button:hover,
+form.contact-form button:hover,
+form.contact-form input[type="submit"]:hover,
+form.contact-form input[type="button"]:hover,
+.wpforms-submit:hover,
+.gform_wrapper button:hover,
+.gform_wrapper input[type="submit"]:hover,
+.elementor-button:hover,
+.elementor-button-wrapper .elementor-button:hover,
+div[id*="contact"] button:hover,
+div[class*="contact"] button:hover,
+section[class*="contact"] button:hover {
+    background-color: var(--component-bg-color-primary-hover, var(--palette-primary-hover)) !important;
+    color: var(--component-text-color-primary-hover, var(--palette-primary-contrast)) !important;
+    border-color: var(--component-border-color-primary-hover, var(--palette-primary-hover)) !important;
+}
+
+/* ==============================================
+   CONTACT PAGE SPECIFIC TOKENIZATION
+   Problem: Contact components not responding to Visual Customizer
+   Solution: Force tokenization on all contact page elements
+   ============================================== */
+
+/* Contact page root tokenization */
+.contact-page,
+.page-template-contact,
+body.contact {
+    --component-bg-color: var(--component-bg-color-primary, var(--color-primary));
+    --component-text-color: var(--component-text-color-primary, var(--color-surface));
+    --component-border-color: var(--component-border-color-primary, var(--color-primary));
+}
+
+/* Contact form elements */
+.contact-page button,
+.contact-page .btn,
+.contact-page input[type="submit"],
+.contact-page .action-btn,
+.contact-page .cta-btn,
+.contact-page .contact-btn {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+.contact-page button:hover,
+.contact-page .btn:hover,
+.contact-page input[type="submit"]:hover,
+.contact-page .action-btn:hover,
+.contact-page .cta-btn:hover,
+.contact-page .contact-btn:hover {
+    background-color: var(--component-bg-color-primary-hover, var(--palette-primary-hover)) !important;
+    color: var(--component-text-color-primary-hover, var(--palette-primary-contrast)) !important;
+    border-color: var(--component-border-color-primary-hover, var(--palette-primary-hover)) !important;
+}
+
+/* Contact method buttons and links */
+.contact-method-link,
+.contact-link,
+.contact-item a {
+    background-color: var(--component-bg-color-secondary, var(--color-secondary)) !important;
+    color: var(--component-text-color-secondary, var(--color-surface)) !important;
+    border-color: var(--component-border-color-secondary, var(--color-secondary)) !important;
+}
+
+.contact-method-link:hover,
+.contact-link:hover,
+.contact-item a:hover {
+    background-color: var(--component-bg-color-secondary-hover, var(--palette-secondary-hover)) !important;
+    color: var(--component-text-color-secondary-hover, var(--palette-secondary-contrast)) !important;
+    border-color: var(--component-border-color-secondary-hover, var(--palette-secondary-hover)) !important;
+}
+
+/* ==============================================
+   PRODUCTION FIX: WordPress Plugin Form Support
+   Problem: Contact forms from plugins not being tokenized
+   Solution: Add support for common contact form plugins
+   ============================================== */
+
+/* WPForms Plugin Support */
+.wpforms-container .wpforms-submit,
+.wpforms-container button,
+.wpforms-container input[type="submit"] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Gravity Forms Plugin Support */
+.gform_wrapper .gform_button,
+.gform_wrapper input[type="submit"],
+.gform_wrapper button {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Contact Form 7 Plugin Support */
+.wpcf7-form .wpcf7-submit,
+.wpcf7-form button,
+.wpcf7-form input[type="submit"] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Elementor Contact Forms */
+.elementor-field-group-submit .elementor-button,
+.elementor-button-wrapper .elementor-button,
+.elementor-widget-form .elementor-button {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* ==============================================
+   HARDCODED COLOR REPLACEMENTS
+   Problem: Specific hardcoded colors blocking tokenization
+   Solution: Replace with appropriate tokens
+   ============================================== */
+
+/* Replace #87A96B (sage green) with primary tokens */
+.contact-page *[style*="#87A96B"],
+.contact-page *[style*="background: #87A96B"],
+.contact-page *[style*="background-color: #87A96B"] {
+    background-color: var(--component-bg-color-primary) !important;
+}
+
+/* Replace #007bff (blue) with secondary tokens */
+.contact-page *[style*="#007bff"],
+.contact-page *[style*="background: #007bff"],
+.contact-page *[style*="background-color: #007bff"] {
+    background-color: var(--component-bg-color-secondary) !important;
+}
+
+/* Replace #6B8552 (dark sage) with hover tokens */
+.contact-page *[style*="#6B8552"],
+.contact-page *[style*="background: #6B8552"],
+.contact-page *[style*="background-color: #6B8552"] {
+    background-color: var(--component-bg-color-primary-hover) !important;
+}
+
+/* ==============================================
+   VISUAL CUSTOMIZER COMPATIBILITY
+   Problem: Customizer changes not applying to contact components
+   Solution: Add data-driven tokenization support
+   ============================================== */
+
+/* Data-driven tokenization for Visual Customizer */
+[data-tokenized="true"] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+[data-tokenized="secondary"] {
+    background-color: var(--component-bg-color-secondary) !important;
+    color: var(--component-text-color-secondary) !important;
+    border-color: var(--component-border-color-secondary) !important;
+}
+
+[data-tokenized="accent"] {
+    background-color: var(--component-bg-color-accent) !important;
+    color: var(--component-text-color-accent) !important;
+    border-color: var(--component-border-color-accent) !important;
+}
+
+/* ==============================================
+   FOOTER CONTACT SECTION FIXES
+   Problem: Footer contact elements not updating with tokens
+   Solution: Specific footer contact tokenization
+   ============================================== */
+
+/* Footer contact tokenization */
+.footer .contact-link,
+.footer .contact-value,
+.footer .contact-quick-access {
+    background-color: var(--component-bg-color-secondary, var(--color-secondary)) !important;
+    color: var(--component-text-color-secondary, var(--color-surface)) !important;
+}
+
+.footer .contact-link:hover,
+.footer .contact-value:hover {
+    background-color: var(--component-bg-color-secondary-hover, var(--palette-secondary-hover)) !important;
+    color: var(--component-text-color-secondary-hover, var(--palette-secondary-contrast)) !important;
+}
+
+/* ==============================================
+   SPECIFICITY OVERRIDES
+   Problem: Other CSS rules have higher specificity
+   Solution: Ultra-high specificity tokenization rules
+   ============================================== */
+
+/* Ultra-high specificity for contact page */
+body.contact .contact-page button,
+body.contact .contact-page .btn,
+body.page-template-contact button,
+body.page-template-contact .btn {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Emergency override for stubborn elements */
+.contact-page [class*="btn"],
+.contact-page [class*="button"],
+.contact-page [class*="contact"] {
+    background-color: var(--component-bg-color-primary, var(--color-primary, #87A96B)) !important;
+    color: var(--component-text-color-primary, var(--color-surface, #ffffff)) !important;
+}
+
+/* ==============================================
+   PRODUCTION FIX: Page ID Based Targeting
+   Problem: Contact page might have specific page ID
+   Solution: Target common contact page IDs
+   ============================================== */
+
+/* Common contact page IDs */
+.page-id-2 button,  /* Common contact page ID */
+.page-id-5 button,  /* Another common contact page ID */
+.page-id-7 button,  /* Contact page ID */
+.page-id-contact button,
+.page-id-contact-us button,
+.postid-2 button,
+.postid-5 button,
+.postid-7 button {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* ==============================================
+   TEXT COLOR TOKENIZATION
+   Problem: Only some text colors working with Visual Customizer
+   Solution: Comprehensive text color token application
+   ============================================== */
+
+/* Primary text tokenization */
+.contact-page h1,
+.contact-page h2,
+.contact-page h3,
+.contact-page .heading,
+.contact-page .title {
+    color: var(--color-primary, var(--component-text-color-heading)) !important;
+}
+
+/* Secondary text tokenization */
+.contact-page p,
+.contact-page .text,
+.contact-page .description {
+    color: var(--color-secondary-text, var(--component-text-color-body)) !important;
+}
+
+/* Muted text tokenization */
+.contact-page .muted,
+.contact-page .subtitle,
+.contact-page small {
+    color: var(--color-muted-text, var(--component-text-color-muted)) !important;
+}
+
+/* Accent text tokenization */
+.contact-page .accent,
+.contact-page .highlight,
+.contact-page .brand {
+    color: var(--color-accent, var(--component-text-color-accent)) !important;
+}
+
+/* ==============================================
+   PRODUCTION FIX: Force Apply CSS Variables
+   Problem: CSS variables not updating on apply
+   Solution: Add forced CSS variable application
+   ============================================== */
+
+/* Force CSS variable refresh */
+html[data-customizer-applied="true"] {
+    --component-bg-color-primary: var(--customizer-primary, var(--color-primary));
+    --component-text-color-primary: var(--customizer-primary-text, var(--color-surface));
+    --component-bg-color-secondary: var(--customizer-secondary, var(--color-secondary));
+    --component-text-color-secondary: var(--customizer-secondary-text, var(--color-surface));
+}
+
+/* Force recalculation trigger */
+body[data-tokenization-force-update] button,
+body[data-tokenization-force-update] .btn {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    animation: tokenization-force-update 0.1s ease;
+}
+
+@keyframes tokenization-force-update {
+    0% { opacity: 0.99; }
+    100% { opacity: 1; }
+}
+
+/* ==============================================
+   RESPONSIVE TOKENIZATION
+   Problem: Tokenization might not work on mobile
+   Solution: Responsive token application
+   ============================================== */
+
+@media (max-width: 768px) {
+    .contact-page button,
+    .contact-page .btn {
+        background-color: var(--component-bg-color-primary) !important;
+        color: var(--component-text-color-primary) !important;
+        font-size: 1rem !important;
+        padding: 12px 24px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-page .contact-method-link,
+    .contact-page .contact-link {
+        background-color: var(--component-bg-color-secondary) !important;
+        color: var(--component-text-color-secondary) !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+}
+
+/* ==============================================
+   DEBUG AND VALIDATION
+   Problem: Hard to debug tokenization issues
+   Solution: Visual indicators for successful tokenization
+   ============================================== */
+
+/* Debug mode - add data-debug="true" to body */
+[data-debug="true"] .contact-page [style*="var(--"] {
+    border: 2px solid #00ff00 !important;
+    position: relative;
+}
+
+[data-debug="true"] .contact-page [style*="var(--"]:before {
+    content: "✅ TOKENIZED";
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: #00ff00;
+    color: white;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+/* ==============================================
+   LOAD ORDER PROTECTION
+   Problem: This CSS might load before other styles
+   Solution: Ensure these rules always take precedence
+   ============================================== */
+
+/* Force precedence with attribute selectors */
+button[class],
+.btn[class],
+.contact-link[class] {
+    background-color: var(--component-bg-color-primary, var(--color-primary)) !important;
+    color: var(--component-text-color-primary, var(--color-surface)) !important;
+}
+
+/* Final fallback for any missed elements */
+.contact-page * {
+    --fallback-primary: var(--component-bg-color-primary, var(--color-primary, #87A96B));
+    --fallback-text: var(--component-text-color-primary, var(--color-surface, #ffffff));
+}
+
+/* ==============================================
+   PRODUCTION FIX: Apply vs Reload Behavior
+   Problem: Different behavior between Apply and Reload
+   Solution: Force immediate CSS recalculation on apply
+   ============================================== */
+
+/* Trigger reflow on customizer apply */
+body[data-customizer-applying="true"] button,
+body[data-customizer-applying="true"] .btn {
+    transform: translateZ(0); /* Force hardware acceleration */
+    will-change: background-color, color, border-color;
+}
+
+/* Post-apply cleanup */
+body[data-customizer-applied="true"] button,
+body[data-customizer-applied="true"] .btn {
+    transform: none;
+    will-change: auto;
+}
+
+/* ==============================================
+   PERFORMANCE OPTIMIZATION
+   Problem: Too many !important rules might affect performance
+   Solution: Optimize selectors and reduce specificity where safe
+   ============================================== */
+
+/* Optimized tokenization classes */
+.tokenized-primary {
+    background-color: var(--component-bg-color-primary);
+    color: var(--component-text-color-primary);
+    border-color: var(--component-border-color-primary);
+}
+
+.tokenized-secondary {
+    background-color: var(--component-bg-color-secondary);
+    color: var(--component-text-color-secondary);
+    border-color: var(--component-border-color-secondary);
+}
+
+.tokenized-accent {
+    background-color: var(--component-bg-color-accent);
+    color: var(--component-text-color-accent);
+    border-color: var(--component-border-color-accent);
+}
+
+/* ==============================================
+   PRODUCTION FIX: Actual Contact Page Button Selectors
+   Based on real contact page analysis - 32 buttons found
+   ============================================== */
+
+/* Consultation Buttons */
+a.btn-consultation,
+a.mobile-consultation-btn,
+button.btn--consultation {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+a.btn-consultation:hover,
+a.mobile-consultation-btn:hover,
+button.btn--consultation:hover {
+    background-color: var(--component-bg-color-primary-hover, var(--palette-primary-hover)) !important;
+    color: var(--component-text-color-primary-hover, var(--palette-primary-contrast)) !important;
+    border-color: var(--component-border-color-primary-hover, var(--palette-primary-hover)) !important;
+}
+
+/* Primary Button Variants */
+button.btn.btn--primary,
+button.btn.btn--primary.btn--sm,
+button.btn.btn--primary.btn--lg,
+button.btn.btn--primary.btn--full,
+button.btn.btn--primary.success,
+button.btn.btn--primary.warning,
+button.btn.btn--primary.error,
+button.btn.btn--primary.loading {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+button.btn.btn--primary:hover,
+button.btn.btn--primary.btn--sm:hover,
+button.btn.btn--primary.btn--lg:hover,
+button.btn.btn--primary.btn--full:hover {
+    background-color: var(--component-bg-color-primary-hover, var(--palette-primary-hover)) !important;
+    border-color: var(--component-border-color-primary-hover, var(--palette-primary-hover)) !important;
+}
+
+/* ==============================================
+   FIX: Proper Button Variant Colors
+   Problem: All buttons using primary color instead of variant colors
+   Solution: Map each button type to correct color variables
+   ============================================== */
+
+/* SECONDARY BUTTONS - Use secondary color */
+html body button.btn.btn--secondary[class],
+html body button.cta-secondary[class],
+html body .btn-secondary[class],
+html body .button-secondary[class] {
+    background-color: var(--component-bg-color-secondary) !important;
+    color: var(--component-text-color-secondary) !important;
+    border-color: var(--component-border-color-secondary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--secondary[class]:hover,
+html body button.cta-secondary[class]:hover {
+    background-color: var(--palette-secondary-hover, var(--component-bg-color-secondary)) !important;
+    border-color: var(--palette-secondary-hover, var(--component-bg-color-secondary)) !important;
+}
+
+/* ACCENT BUTTONS - Use accent color */
+html body button.btn.btn--accent[class],
+html body button.btn.btn--accent.btn--sm[class],
+html body .btn-accent[class],
+html body .button-accent[class] {
+    background-color: var(--component-bg-color-accent) !important;
+    color: var(--component-text-color-accent) !important;
+    border-color: var(--component-border-color-accent) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--accent[class]:hover,
+html body button.btn.btn--accent.btn--sm[class]:hover {
+    background-color: var(--palette-accent-hover, var(--component-bg-color-accent)) !important;
+    border-color: var(--palette-accent-hover, var(--component-bg-color-accent)) !important;
+}
+
+/* OUTLINE BUTTONS - Transparent background with colored border */
+html body button.btn.btn--outline[class],
+html body button.btn.btn--outline.btn--sm[class],
+html body .btn-outline[class],
+html body .button-outline[class] {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: var(--component-bg-color-primary) !important;
+    border: 2px solid var(--component-bg-color-primary) !important;
+    border-color: var(--component-bg-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--outline[class]:hover,
+html body button.btn.btn--outline.btn--sm[class]:hover {
+    background-color: var(--component-bg-color-primary) !important;
+    background: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-bg-color-primary) !important;
+}
+
+/* GHOST BUTTONS - Fully transparent with colored text */
+html body button.btn.btn--ghost[class],
+html body .btn-ghost[class],
+html body .button-ghost[class] {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: var(--component-bg-color-primary) !important;
+    border: none !important;
+    border-color: transparent !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--ghost[class]:hover {
+    background-color: rgba(var(--color-primary-rgb, 135, 169, 107), 0.1) !important;
+    background: rgba(var(--color-primary-rgb, 135, 169, 107), 0.1) !important;
+    color: var(--component-bg-color-primary) !important;
+}
+
+/* SPECIFIC BUTTON STATE VARIANTS */
+html body button.btn.btn--primary.success[class] {
+    background-color: var(--color-success, #10b981) !important;
+    color: #ffffff !important;
+    border-color: var(--color-success, #10b981) !important;
+}
+
+html body button.btn.btn--primary.warning[class] {
+    background-color: var(--color-warning, #f59e0b) !important;
+    color: #ffffff !important;
+    border-color: var(--color-warning, #f59e0b) !important;
+}
+
+html body button.btn.btn--primary.error[class] {
+    background-color: var(--color-error, #ef4444) !important;
+    color: #ffffff !important;
+    border-color: var(--color-error, #ef4444) !important;
+}
+
+/* LOADING STATE */
+html body button.btn.btn--primary.loading[class] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    opacity: 0.8 !important;
+    cursor: not-allowed !important;
+}
+
+/* ==============================================
+   DEBUGGING: Visual Feedback for Palette Changes
+   ============================================== */
+
+/* Debug indicator when palette changes */
+[data-palette-debug="true"] button {
+    position: relative;
+}
+
+[data-palette-debug="true"] button::after {
+    content: "🎨 " attr(data-current-palette);
+    position: absolute;
+    top: -20px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 2px;
+    white-space: nowrap;
+    z-index: 10000;
+}
+
+/* Real-time palette change indicator */
+body[data-palette-changing="true"] {
+    --palette-transition-active: 1;
+}
+
+body[data-palette-changing="true"] button,
+body[data-palette-changing="true"] .btn {
+    animation: paletteChangeIndicator 0.5s ease;
+}
+
+@keyframes paletteChangeIndicator {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--component-bg-color-primary-rgb, 27, 54, 93), 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(var(--component-bg-color-primary-rgb, 27, 54, 93), 0.1);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--component-bg-color-primary-rgb, 27, 54, 93), 0);
+    }
+}
+
+/* ==============================================
+   PRODUCTION FIX: Ultra-High Specificity Force Override
+   Problem: CSS variables set but buttons not using them due to specificity
+   Solution: Force CSS variable inheritance with maximum specificity
+   ============================================== */
+
+/* CRITICAL: Force CSS variable usage with maximum specificity */
+html body.contact button[class],
+html body.page-contact button[class],
+html body.page-template-contact button[class],
+html body[class*="contact"] button[class],
+html body button.btn.btn--primary[class],
+html body button.btn.btn--secondary[class],
+html body button.btn.btn--accent[class],
+html body button.cta-primary[class],
+html body button.cta-secondary[class],
+html body a.btn-consultation[class],
+html body a.mobile-consultation-btn[class],
+html body button.btn--consultation[class],
+html body button.mobile-menu-toggle[class],
+html body button.mobile-menu-close[class],
+html body button.back-to-top[class] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Secondary buttons with ultra-high specificity */
+html body button.btn.btn--secondary[class],
+html body button.cta-secondary[class] {
+    background-color: var(--component-bg-color-secondary) !important;
+    color: var(--component-text-color-secondary) !important;
+    border-color: var(--component-border-color-secondary) !important;
+}
+
+/* Accent buttons with ultra-high specificity */
+html body button.btn.btn--accent[class],
+html body button.btn.btn--accent.btn--sm[class] {
+    background-color: var(--component-bg-color-accent) !important;
+    color: var(--component-text-color-accent) !important;
+    border-color: var(--component-border-color-accent) !important;
+}
+
+/* Hover states with ultra-high specificity */
+html body button[class]:hover,
+html body .btn[class]:hover,
+html body .cta-primary[class]:hover,
+html body .btn-consultation[class]:hover {
+    background-color: var(--palette-primary-hover, var(--component-bg-color-primary)) !important;
+    border-color: var(--palette-primary-hover, var(--component-bg-color-primary)) !important;
+}
+
+/* ==============================================
+   NUCLEAR OPTION: Attribute-based CSS Variable Forcing
+   Problem: Even ultra-high specificity might not work
+   Solution: Use attribute selectors for maximum override power
+   ============================================== */
+
+/* Force CSS variables on ANY element with these classes */
+[class*="btn"][class*="primary"],
+[class*="cta"][class*="primary"],
+[class*="button"][class*="primary"] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+[class*="btn"][class*="secondary"],
+[class*="cta"][class*="secondary"],
+[class*="button"][class*="secondary"] {
+    background-color: var(--component-bg-color-secondary) !important;
+    color: var(--component-text-color-secondary) !important;
+    border-color: var(--component-border-color-secondary) !important;
+}
+
+[class*="btn"][class*="accent"],
+[class*="cta"][class*="accent"],
+[class*="button"][class*="accent"] {
+    background-color: var(--component-bg-color-accent) !important;
+    color: var(--component-text-color-accent) !important;
+    border-color: var(--component-border-color-accent) !important;
+}
+
+/* ==============================================
+   ATOMIC BOMB: Style Attribute Override Detection
+   Problem: Inline styles or very specific rules blocking CSS variables
+   Solution: Override any potential inline or highly specific styles
+   ============================================== */
+
+/* Override any button with a style attribute */
+button[style],
+.btn[style],
+a[style][class*="btn"],
+input[type="submit"][style] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Emergency CSS variable application for specific button types */
+button[class*="btn--primary"],
+button[class*="cta-primary"],
+a[class*="btn-consultation"] {
+    background: var(--component-bg-color-primary) !important;
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border: 1px solid var(--component-border-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* ==============================================
+   DEBUGGING: Visual Confirmation of CSS Variable Application
+   Problem: Hard to tell if CSS variables are actually being used
+   Solution: Add visual indicators when variables are working
+   ============================================== */
+
+/* Add a visual indicator when CSS variables are successfully applied */
+[data-palette-debug="true"] button:hover::before,
+[data-palette-debug="true"] .btn:hover::before {
+    content: "CSS VAR: " attr(data-current-palette);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--component-bg-color-primary);
+    color: var(--component-text-color-primary);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    z-index: 10000;
+    opacity: 0.9;
+}
+
+/* ==============================================
+   FORCE RECALCULATION: CSS Variable Change Detection
+   Problem: CSS variables update but computed styles don't recalculate
+   Solution: Force DOM recalculation when variables change
+   ============================================== */
+
+/* Force recalculation trigger */
+body[data-palette-changing="true"] button,
+body[data-palette-changing="true"] .btn {
+    animation: forceRecalculation 0.1s ease;
+    transform: translateZ(0); /* Force hardware acceleration */
+}
+
+body[data-customizer-applying="true"] button,
+body[data-customizer-applying="true"] .btn {
+    will-change: background-color, color, border-color;
+    transform: translateZ(0);
+}
+
+@keyframes forceRecalculation {
+    0% {
+        opacity: 0.999;
+        transform: translateZ(0) scale(0.999);
+    }
+    50% {
+        opacity: 1;
+        transform: translateZ(0) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateZ(0) scale(1);
+    }
+}
+
+/* ==============================================
+   NUCLEAR OPTION: Override Stubborn Red Buttons
+   Problem: 4 red buttons still not changing despite all previous rules
+   Solution: Maximum override power including inline styles and IDs
+   ============================================== */
+
+/* Override ANY button with red colors (hardcoded) */
+button[style*="background-color: #"],
+button[style*="background: #"],
+.btn[style*="background-color: #"],
+.btn[style*="background: #"],
+input[type="submit"][style*="background-color: #"],
+input[type="submit"][style*="background: #"] {
+    background: var(--component-bg-color-primary) !important;
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Override specific red color values */
+*[style*="#d32f2f"],
+*[style*="#f44336"],
+*[style*="#e53e3e"],
+*[style*="#dc2626"],
+*[style*="#b91c1c"],
+*[style*="rgb(211, 47, 47)"],
+*[style*="rgb(244, 67, 54)"],
+*[style*="rgb(229, 62, 62)"],
+*[style*="rgb(220, 38, 38)"],
+*[style*="rgb(185, 28, 28)"] {
+    background: var(--component-bg-color-primary) !important;
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Target by common ID patterns */
+#submit-btn,
+#contact-submit,
+#form-submit,
+#action-btn,
+button[id*="submit"],
+button[id*="action"],
+button[id*="contact"] {
+    background: var(--component-bg-color-primary) !important;
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+/* Override with maximum specificity + type + attribute + class */
+html body button.btn.btn--primary[type="submit"][class],
+html body button.btn.btn--primary[type="button"][class],
+html body input[type="submit"].btn[class],
+html body input[type="button"].btn[class] {
+    background: var(--component-bg-color-primary) !important;
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border: 1px solid var(--component-border-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}

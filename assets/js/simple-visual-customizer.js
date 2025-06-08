@@ -18,6 +18,21 @@
     function initSimpleVisualCustomizer() {
         console.log('🚀 Simple Visual Customizer: Initializing with PVC-005 Live Preview...');
 
+        // PRODUCTION FIX: Verify critical CSS files are loaded first
+        const cssStatus = verifyCriticalCSSFiles();
+        console.log('🔧 CSS Status:', cssStatus);
+
+        if (!cssStatus.customizerEnhancementsFixed) {
+            console.error('❌ CRITICAL: customizer-enhancements.css missing - this was causing 404 error');
+            showMessage('Critical CSS file missing - Visual Customizer may not work properly', 'error');
+        } else {
+            console.log('✅ customizer-enhancements.css 404 error FIXED!');
+        }
+
+        // PRODUCTION FIX: Ensure CSS tokenization is active
+        const tokenizationStatus = ensureCSSTokenizationActive();
+        console.log('🔧 Tokenization status:', tokenizationStatus);
+
         // Initialize PVC-005 components first
         initPVC005Components();
 
@@ -570,6 +585,18 @@
         console.log('🎯 Applying color tokens immediately:', paletteData);
         console.log('🎯 Available colors:', Object.keys(paletteData.colors));
 
+        // PRODUCTION DEBUG: Log current values before change
+        const rootStyle = getComputedStyle(document.documentElement);
+        const beforePrimary = rootStyle.getPropertyValue('--component-bg-color-primary').trim();
+        console.log('🔍 BEFORE change - Primary color:', beforePrimary);
+
+        // Add visual indicator that palette is changing
+        document.body.setAttribute('data-palette-changing', 'true');
+
+        // Add debug attribute to see current palette
+        document.body.setAttribute('data-palette-debug', 'true');
+        document.body.setAttribute('data-current-palette', paletteData.id || paletteData.name || 'unknown');
+
         try {
             const startTime = performance.now();
 
@@ -592,11 +619,41 @@
             Object.entries(colorTokens).forEach(([property, value]) => {
                 documentRoot.style.setProperty(property, value);
                 appliedTokens++;
+
+                // PRODUCTION DEBUG: Log critical property changes
+                if (property === '--component-bg-color-primary') {
+                    console.log(`🎯 CRITICAL UPDATE: ${property} = ${value}`);
+                }
             });
 
             // NEW: Inject CSS class rules into a dynamic stylesheet
             console.log('🔧 Injecting CSS class rules...');
             const appliedRules = injectCSSRules(cssRules, paletteData.id);
+
+            // PRODUCTION DEBUG: Verify the change actually happened
+            setTimeout(() => {
+                const afterPrimary = getComputedStyle(document.documentElement).getPropertyValue('--component-bg-color-primary').trim();
+                console.log('🔍 AFTER change - Primary color:', afterPrimary);
+
+                if (beforePrimary === afterPrimary) {
+                    console.error('❌ CSS CUSTOM PROPERTY DID NOT CHANGE!');
+                    console.error('❌ This is the root issue - Visual Customizer not updating CSS variables');
+                    showMessage('⚠️ Palette not applied - CSS variables not updating!', 'error');
+                } else {
+                    console.log('✅ CSS CUSTOM PROPERTY SUCCESSFULLY CHANGED!');
+                    console.log(`✅ ${beforePrimary} → ${afterPrimary}`);
+                    showMessage(`✅ Palette applied! ${beforePrimary} → ${afterPrimary}`, 'success');
+
+                    // Visual feedback - make buttons pulse to show change
+                    triggerVisualFeedback();
+                }
+
+                // CRITICAL FIX: Force CSS recalculation for buttons
+                forceCSSRecalculationForButtons();
+
+                // Remove changing indicator
+                document.body.removeAttribute('data-palette-changing');
+            }, 100);
 
             // Force immediate DOM update
             documentRoot.offsetHeight;
@@ -612,15 +669,73 @@
             console.log(`✅ Unified CSS system applied in ${duration.toFixed(2)}ms`);
             console.log(`✅ Applied ${appliedTokens} CSS variables + ${appliedRules} CSS rules`);
 
-            showMessage(`Colors applied via Unified CSS System! (${appliedTokens} vars + ${appliedRules} rules in ${duration.toFixed(0)}ms)`, 'success');
-
             // DEBUGGING: Inspect actual button CSS variables being used
             inspectButtonCSSVariables();
 
         } catch (error) {
             console.error('❌ Error applying unified CSS system:', error);
             showMessage('Error applying colors: ' + error.message, 'error');
+            document.body.removeAttribute('data-palette-changing');
         }
+    }
+
+    /**
+     * PRODUCTION DEBUG: Trigger visual feedback when palette changes
+     */
+    function triggerVisualFeedback() {
+        console.log('🎨 Triggering visual feedback for palette change...');
+
+        // Find all buttons and give them a visual indicator
+        const buttons = document.querySelectorAll('button, .btn, .cta-primary, .cta-secondary, .btn-consultation');
+        console.log(`🎨 Found ${buttons.length} buttons for visual feedback`);
+
+        buttons.forEach((button, index) => {
+            if (index < 5) { // Only feedback first 5 buttons to avoid performance issues
+                button.style.animation = 'paletteChangeIndicator 0.5s ease';
+                setTimeout(() => {
+                    button.style.animation = '';
+                }, 500);
+            }
+        });
+
+        // Show temporary color indicator
+        showColorChangeIndicator();
+    }
+
+    /**
+     * PRODUCTION DEBUG: Show temporary color change indicator
+     */
+    function showColorChangeIndicator() {
+        const indicator = document.createElement('div');
+        indicator.style.cssText = `
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 999999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+        `;
+
+        const currentPalette = document.body.getAttribute('data-current-palette') || 'Unknown';
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--component-bg-color-primary').trim();
+
+        indicator.innerHTML = `
+            🎨 Palette Changed<br>
+            <small>${currentPalette}</small><br>
+            <small style="font-family: monospace;">${primaryColor}</small>
+        `;
+
+        document.body.appendChild(indicator);
+
+        setTimeout(() => {
+            indicator.remove();
+        }, 3000);
     }
 
     /**
@@ -845,65 +960,75 @@
     }
 
     /**
-     * Inspect what CSS variables are actually being used by buttons on the page
+     * PRODUCTION DEBUG: Inspect actual button CSS variables being used
      */
     function inspectButtonCSSVariables() {
-        console.log('🔍 Inspecting actual button CSS variables used on page...');
+        console.log('🔍 INSPECTING BUTTON CSS VARIABLES...');
 
-        // Find action buttons, CTA buttons, and other button elements
-        const buttonSelectors = [
-            'button', '.btn', '.button', '.cta', '.action-btn', '.action-button',
-            '[class*="btn"]', '[class*="button"]', '[class*="cta"]', '[class*="action"]',
-            'input[type="submit"]', 'input[type="button"]', '.wp-block-button'
+        // Find key buttons to inspect
+        const buttonsToInspect = [
+            'button.btn.btn--primary',
+            'button.cta-primary',
+            'button.cta-secondary',
+            'a.btn-consultation'
         ];
 
-        buttonSelectors.forEach(selector => {
-            const elements = document.querySelectorAll(selector);
-            if (elements.length > 0) {
-                console.log(`🔍 Found ${elements.length} elements with selector: ${selector}`);
+        buttonsToInspect.forEach(selector => {
+            const button = document.querySelector(selector);
+            if (button) {
+                const computedStyle = getComputedStyle(button);
+                const bgColor = computedStyle.backgroundColor;
+                const textColor = computedStyle.color;
+                const borderColor = computedStyle.borderColor;
 
-                elements.forEach((element, index) => {
-                    if (index < 3) { // Only inspect first 3 of each type
-                        const computedStyle = window.getComputedStyle(element);
-                        const backgroundColor = computedStyle.backgroundColor;
-                        const borderColor = computedStyle.borderColor;
-                        const color = computedStyle.color;
+                console.log(`🔘 ${selector}:`);
+                console.log(`   Background: ${bgColor}`);
+                console.log(`   Text Color: ${textColor}`);
+                console.log(`   Border: ${borderColor}`);
 
-                        console.log(`  Element ${index + 1}:`, {
-                            className: element.className,
-                            backgroundColor,
-                            borderColor,
-                            color
-                        });
+                // Check if it's using CSS variables
+                const isUsingVariables = bgColor.includes('var(') ||
+                                       getComputedStyle(document.documentElement)
+                                       .getPropertyValue('--component-bg-color-primary')
+                                       .trim() === rgbToHex(bgColor);
 
-                        // Try to detect CSS custom properties
-                        const cssText = computedStyle.cssText;
-                        if (cssText.includes('var(')) {
-                            console.log(`  CSS Variables detected in style:`, cssText.match(/var\([^)]+\)/g));
-                        }
-                    }
-                });
+                console.log(`   Using Variables: ${isUsingVariables ? '✅' : '❌'}`);
+            } else {
+                console.log(`❌ ${selector}: NOT FOUND`);
             }
         });
 
-        // Also check document.documentElement for all CSS custom properties
-        const rootStyles = window.getComputedStyle(document.documentElement);
-        const allCustomProps = [];
+        // Check root CSS variables
+        const rootStyle = getComputedStyle(document.documentElement);
+        const criticalVars = [
+            '--component-bg-color-primary',
+            '--component-text-color-primary',
+            '--component-bg-color-secondary',
+            '--component-bg-color-accent'
+        ];
 
-        for (let i = 0; i < rootStyles.length; i++) {
-            const prop = rootStyles[i];
-            if (prop.startsWith('--') && (prop.includes('btn') || prop.includes('button') || prop.includes('action') || prop.includes('cta'))) {
-                const value = rootStyles.getPropertyValue(prop);
-                allCustomProps.push(`${prop}: ${value}`);
-            }
-        }
+        console.log('🎨 ROOT CSS VARIABLES:');
+        criticalVars.forEach(varName => {
+            const value = rootStyle.getPropertyValue(varName).trim();
+            console.log(`   ${varName}: ${value || 'NOT SET'}`);
+        });
+    }
 
-        if (allCustomProps.length > 0) {
-            console.log('🔍 Button-related CSS custom properties found on document root:');
-            allCustomProps.forEach(prop => console.log(`  ${prop}`));
-        } else {
-            console.log('🔍 No button-related CSS custom properties found on document root');
-        }
+    /**
+     * Helper: Convert RGB to Hex for comparison
+     */
+    function rgbToHex(rgb) {
+        if (!rgb || !rgb.includes('rgb')) return rgb;
+
+        const values = rgb.match(/\d+/g);
+        if (!values || values.length < 3) return rgb;
+
+        const hex = values.slice(0, 3).map(val => {
+            const hexVal = parseInt(val).toString(16);
+            return hexVal.length === 1 ? '0' + hexVal : hexVal;
+        }).join('');
+
+        return '#' + hex.toUpperCase();
     }
 
     /**
@@ -1134,6 +1259,153 @@
 
         // Add comprehensive button state variables for all color combinations
         console.log('🎯 Adding comprehensive button state variables...');
+
+        // ⚡ CRITICAL FIX: Add component-level tokens for tokenization-aware architecture
+        console.log('🚨 FIXING: Adding missing component-level tokens for tokenization-aware components...');
+
+        if (colors.primary) {
+            const primaryColor = colors.primary.hex || colors.primary;
+
+            // MISSING COMPONENT TOKENS - Root cause of button BG inconsistency
+            tokens['--component-bg-color-primary'] = primaryColor;
+            tokens['--component-text-color-primary'] = colors.surface ? (colors.surface.hex || colors.surface) : '#ffffff';
+            tokens['--component-border-color-primary'] = primaryColor;
+
+            // Palette tokens that component tokens inherit from
+            tokens['--palette-primary'] = primaryColor;
+            tokens['--palette-primary-contrast'] = tokens['--component-text-color-primary'];
+            tokens['--palette-primary-hover'] = darkenColor(primaryColor, 15);
+
+            // CRITICAL: Add missing foundation tokens for complete inheritance chain
+            tokens['--color-primary-contrast'] = tokens['--component-text-color-primary'];
+            tokens['--color-primary-hover'] = darkenColor(primaryColor, 15);
+            tokens['--color-primary-dark'] = darkenColor(primaryColor, 20);
+        }
+
+        if (colors.secondary) {
+            const secondaryColor = colors.secondary.hex || colors.secondary;
+
+            // Component tokens for secondary variants
+            tokens['--component-bg-color-secondary'] = secondaryColor;
+            tokens['--component-text-color-secondary'] = colors.surface ? (colors.surface.hex || colors.surface) : '#ffffff';
+            tokens['--component-border-color-secondary'] = secondaryColor;
+
+            // Palette tokens
+            tokens['--palette-secondary'] = secondaryColor;
+            tokens['--palette-secondary-contrast'] = tokens['--component-text-color-secondary'];
+            tokens['--palette-secondary-hover'] = darkenColor(secondaryColor, 15);
+
+            // Foundation tokens for inheritance chain
+            tokens['--color-secondary-contrast'] = tokens['--component-text-color-secondary'];
+            tokens['--color-secondary-hover'] = darkenColor(secondaryColor, 15);
+            tokens['--color-secondary-dark'] = darkenColor(secondaryColor, 20);
+        }
+
+        if (colors.accent) {
+            const accentColor = colors.accent.hex || colors.accent;
+
+            // Component tokens for accent variants
+            tokens['--component-bg-color-accent'] = accentColor;
+            tokens['--component-text-color-accent'] = colors.surface ? (colors.surface.hex || colors.surface) : '#ffffff';
+            tokens['--component-border-color-accent'] = accentColor;
+
+            // Palette tokens
+            tokens['--palette-accent'] = accentColor;
+            tokens['--palette-accent-contrast'] = tokens['--component-text-color-accent'];
+            tokens['--palette-accent-hover'] = darkenColor(accentColor, 15);
+
+            // Foundation tokens for inheritance chain
+            tokens['--color-accent-contrast'] = tokens['--component-text-color-accent'];
+            tokens['--color-accent-hover'] = darkenColor(accentColor, 15);
+            tokens['--color-accent-dark'] = darkenColor(accentColor, 20);
+        }
+
+        if (colors.surface) {
+            const surfaceColor = colors.surface.hex || colors.surface;
+
+            // Default component tokens (fallback values)
+            tokens['--component-bg-color'] = surfaceColor;
+            tokens['--component-text-color'] = colors.primary ? (colors.primary.hex || colors.primary) : '#0f172a';
+            tokens['--component-border-color'] = colors.border || '#e2e8f0';
+
+            // Palette surface tokens
+            tokens['--palette-surface'] = surfaceColor;
+            tokens['--palette-surface-secondary'] = lightenColor(surfaceColor, 5);
+            tokens['--palette-surface-tertiary'] = lightenColor(surfaceColor, 10);
+
+            // Foundation surface tokens
+            tokens['--color-surface-secondary'] = lightenColor(surfaceColor, 5);
+            tokens['--color-surface-tertiary'] = lightenColor(surfaceColor, 10);
+        }
+
+        if (colors.background) {
+            const backgroundColor = colors.background.hex || colors.background;
+
+            // Background palette tokens
+            tokens['--palette-background'] = backgroundColor;
+        }
+
+        // Text color tokens for component inheritance
+        if (colors.primary) {
+            const primaryColor = colors.primary.hex || colors.primary;
+            tokens['--palette-text-primary'] = primaryColor;
+            tokens['--color-text-primary'] = colors.secondary ? (colors.secondary.hex || colors.secondary) : '#0f172a';
+            tokens['--color-text-inverse'] = colors.surface ? (colors.surface.hex || colors.surface) : '#ffffff';
+        }
+
+        if (colors.secondary) {
+            const secondaryColor = colors.secondary.hex || colors.secondary;
+            tokens['--palette-text-secondary'] = secondaryColor;
+        }
+
+        // Border tokens
+        if (colors.border) {
+            tokens['--palette-border'] = colors.border;
+            tokens['--color-border'] = colors.border;
+        } else {
+            // Generate sensible border color from primary or use default
+            const borderColor = colors.primary ? lightenColor(colors.primary.hex || colors.primary, 40) : '#e2e8f0';
+            tokens['--palette-border'] = borderColor;
+            tokens['--color-border'] = borderColor;
+        }
+
+        // Focus and interaction state tokens
+        if (colors.primary) {
+            const primaryColor = colors.primary.hex || colors.primary;
+            tokens['--color-border-focus'] = primaryColor;
+            tokens['--color-focus'] = primaryColor;
+        }
+
+        // Status color tokens for component inheritance
+        const statusColors = {
+            success: '#10b981',
+            warning: '#f59e0b',
+            error: '#ef4444',
+            info: '#3b82f6'
+        };
+
+        Object.entries(statusColors).forEach(([status, color]) => {
+            tokens[`--color-${status}`] = color;
+            tokens[`--color-${status}-dark`] = darkenColor(color, 15);
+            tokens[`--color-${status}-light`] = lightenColor(color, 15);
+        });
+
+        // Medical spa treatment-specific tokens (from SCSS)
+        if (colors.primary && colors.secondary && colors.accent) {
+            const primaryColor = colors.primary.hex || colors.primary;
+            const secondaryColor = colors.secondary.hex || colors.secondary;
+            const accentColor = colors.accent.hex || colors.accent;
+
+            tokens['--treatment-facial'] = accentColor;
+            tokens['--treatment-body'] = secondaryColor;
+            tokens['--treatment-laser'] = primaryColor;
+            tokens['--treatment-injectable'] = lightenColor(primaryColor, 10);
+            tokens['--treatment-skin'] = lightenColor(secondaryColor, 10);
+        }
+
+        console.log('✅ Component-level tokens added for tokenization-aware architecture compatibility');
+        console.log('✅ Foundation tokens added for complete inheritance chain');
+        console.log('✅ Status and treatment-specific tokens added');
 
         // Outline button variants
         if (colors.primary) {
@@ -1424,7 +1696,7 @@
     }
 
     /**
-     * Apply Changes - Enhanced with Live Preview
+     * CRITICAL FIX: Apply Changes with Better Persistence
      */
     function applyChanges() {
         if (!currentConfig.activePalette) {
@@ -1437,6 +1709,23 @@
 
         console.log('🎨 Applying changes globally...', currentConfig);
 
+        // PRODUCTION FIX: Add force update attribute to trigger CSS recalculation
+        document.body.setAttribute('data-customizer-applying', 'true');
+
+        // PRODUCTION FIX: Save to consolidated localStorage immediately
+        savePaletteToLocalStorage(currentConfig.activePalette, currentConfig);
+
+        // ENHANCED: Prepare complete configuration for save
+        const saveConfig = {
+            activePalette: currentConfig.activePalette,
+            paletteData: currentConfig.paletteData,
+            typographyPairing: currentConfig.typographyPairing,
+            typographyData: currentConfig.typographyData,
+            timestamp: Date.now(),
+            userAgent: navigator.userAgent,
+            url: window.location.href
+        };
+
         // Note: Changes are already applied via Live Preview
         // This saves them globally for all users
 
@@ -1446,11 +1735,56 @@
             data: {
                 action: 'simple_visual_customizer_apply',
                 nonce: simpleCustomizer.nonce,
-                config: JSON.stringify(currentConfig)
+                config: JSON.stringify(saveConfig),
+                timestamp: Date.now(), // Add timestamp to prevent caching issues
+                palette_id: currentConfig.activePalette,
+                palette_data: JSON.stringify(currentConfig.paletteData)
             },
+            timeout: 30000, // 30 second timeout
             success: function(response) {
+                console.log('📡 AJAX Success Response:', response);
+
                 if (response.success) {
-                    showMessage('Settings applied globally! All visitors will now see this theme.', 'success');
+                    showMessage('✅ Settings applied globally! All visitors will now see this theme.', 'success');
+
+                    // PRODUCTION FIX: Verify save worked by checking response data
+                    if (response.data && response.data.saved_palette) {
+                        console.log('✅ Server confirmed palette saved:', response.data.saved_palette);
+
+                        if (response.data.saved_palette === currentConfig.activePalette) {
+                            console.log('✅ Server palette matches current palette - save successful');
+                        } else {
+                            console.warn('⚠️ Server palette mismatch:', {
+                                sent: currentConfig.activePalette,
+                                saved: response.data.saved_palette
+                            });
+                        }
+                    }
+
+                    // PRODUCTION FIX: Force CSS recalculation after save
+                    setTimeout(() => {
+                        document.body.setAttribute('data-customizer-applied', 'true');
+                        document.body.removeAttribute('data-customizer-applying');
+
+                        // Force reflow to ensure styles update
+                        document.body.style.display = 'none';
+                        document.body.offsetHeight; // Trigger reflow
+                        document.body.style.display = '';
+
+                        // Add data attribute for tokenization force update
+                        document.body.setAttribute('data-tokenization-force-update', 'true');
+
+                        // Reapply current palette to ensure consistency
+                        if (currentConfig.paletteData) {
+                            console.log('🔄 Reapplying palette after global save...');
+                            applyColorTokensImmediately(currentConfig.paletteData);
+                        }
+
+                        // Remove force update after animation completes
+                        setTimeout(() => {
+                            document.body.removeAttribute('data-tokenization-force-update');
+                        }, 500);
+                    }, 100);
 
                     // Update apply button to show success
                     $button.text('Applied ✓').removeClass('simple-vc-btn-primary').addClass('simple-vc-btn-success');
@@ -1459,14 +1793,38 @@
                     setTimeout(() => {
                         $button.text('Apply Globally').removeClass('simple-vc-btn-success').addClass('simple-vc-btn-primary').prop('disabled', false);
                     }, 3000);
+
                 } else {
-                    showMessage('Error: ' + response.data.message, 'error');
+                    console.error('❌ Server returned error:', response);
+                    const errorMessage = response.data?.message || 'Unknown server error';
+                    showMessage('❌ Server Error: ' + errorMessage, 'error');
                     $button.prop('disabled', false).text('Apply Globally');
+                    document.body.removeAttribute('data-customizer-applying');
                 }
             },
-            error: function() {
-                showMessage('Network error occurred', 'error');
+            error: function(xhr, status, error) {
+                console.error('❌ AJAX Error:', { xhr, status, error });
+                console.error('❌ Response Text:', xhr.responseText);
+
+                let errorMessage = 'Network error occurred';
+                if (status === 'timeout') {
+                    errorMessage = 'Request timed out - server may be busy';
+                } else if (xhr.status === 403) {
+                    errorMessage = 'Permission denied - please refresh and try again';
+                } else if (xhr.status === 500) {
+                    errorMessage = 'Server error - please check server logs';
+                } else if (xhr.responseText) {
+                    try {
+                        const errorData = JSON.parse(xhr.responseText);
+                        errorMessage = errorData.message || errorMessage;
+                    } catch (e) {
+                        errorMessage += ': ' + xhr.responseText.substring(0, 100);
+                    }
+                }
+
+                showMessage('❌ ' + errorMessage, 'error');
                 $button.prop('disabled', false).text('Apply Globally');
+                document.body.removeAttribute('data-customizer-applying');
             }
         });
     }
@@ -1554,6 +1912,22 @@
     function loadAndHighlightCurrentPalette() {
         console.log('🎯 Loading current palette to highlight...');
 
+        // PRODUCTION FIX: Check consolidated localStorage first
+        const localStoragePalette = getCurrentPaletteFromLocalStorage();
+        if (localStoragePalette) {
+            console.log(`✅ Current palette from consolidated localStorage: ${localStoragePalette}`);
+
+            const paletteElement = $(`.palette-item-simple[data-palette="${localStoragePalette}"], .palette-card[data-palette-id="${localStoragePalette}"]`);
+            if (paletteElement.length > 0) {
+                console.log(`✅ Verified palette ${localStoragePalette} exists in interface`);
+                highlightPalette(localStoragePalette);
+                loadCurrentPaletteData(localStoragePalette);
+                return;
+            } else {
+                console.warn(`⚠️ localStorage palette '${localStoragePalette}' not found in interface`);
+            }
+        }
+
         // Method 1: Try AJAX call to get current palette
         if (typeof simpleCustomizer !== 'undefined' && simpleCustomizer.ajaxUrl) {
             $.ajax({
@@ -1574,6 +1948,9 @@
                             console.log(`✅ Verified palette ${currentPaletteId} exists in interface`);
                             highlightPalette(currentPaletteId);
                             loadCurrentPaletteData(currentPaletteId);
+
+                            // Save to consolidated localStorage for future use
+                            savePaletteToLocalStorage(currentPaletteId, { activePalette: currentPaletteId });
                         } else {
                             console.warn(`⚠️ AJAX returned palette '${currentPaletteId}' but it doesn't exist in available palettes`);
                             console.log('📋 Available palettes in interface:');
@@ -2061,5 +2438,618 @@
 
     // Also export lowercase version for WordPress integration
     window.simpleVisualCustomizer = window.SimpleVisualCustomizer;
+
+    /**
+     * PRODUCTION FIX: Clean up conflicting localStorage keys
+     */
+    function cleanupConflictingLocalStorage() {
+        console.log('🧹 Cleaning up conflicting localStorage keys...');
+
+        // List of conflicting keys found in production
+        const conflictingKeys = [
+            'visual_customizer_current_palette',
+            'medspaa_visual_customizer',
+            'medSpa_colorSystem_settings',
+            'preetidreams_visual_customizer_settings',
+            'visual_customizer_temp_settings'
+        ];
+
+        // Get all values before clearing
+        const existingValues = {};
+        conflictingKeys.forEach(key => {
+            const value = localStorage.getItem(key);
+            if (value) {
+                try {
+                    existingValues[key] = JSON.parse(value);
+                } catch (e) {
+                    existingValues[key] = value;
+                }
+            }
+        });
+
+        console.log('🔍 Found existing localStorage values:', existingValues);
+
+        // Determine the most recent/valid palette
+        let consolidatedPalette = null;
+
+        // Priority order for palette selection
+        if (existingValues['visual_customizer_current_palette']) {
+            consolidatedPalette = existingValues['visual_customizer_current_palette'];
+        } else if (existingValues['medSpa_colorSystem_settings']?.currentPalette) {
+            consolidatedPalette = existingValues['medSpa_colorSystem_settings'].currentPalette;
+        } else if (existingValues['medspaa_visual_customizer']?.colorPalette) {
+            consolidatedPalette = existingValues['medspaa_visual_customizer'].colorPalette;
+        } else if (existingValues['preetidreams_visual_customizer_settings']?.colorPalette) {
+            consolidatedPalette = existingValues['preetidreams_visual_customizer_settings'].colorPalette;
+        }
+
+        console.log('🎯 Consolidated palette determined:', consolidatedPalette);
+
+        // Clear all conflicting keys
+        conflictingKeys.forEach(key => {
+            localStorage.removeItem(key);
+            console.log(`🗑️ Removed localStorage key: ${key}`);
+        });
+
+        // Set single source of truth
+        if (consolidatedPalette) {
+            const consolidatedSettings = {
+                currentPalette: consolidatedPalette,
+                timestamp: Date.now(),
+                source: 'consolidated_cleanup',
+                previousConflicts: Object.keys(existingValues)
+            };
+
+            localStorage.setItem('visual_customizer_settings', JSON.stringify(consolidatedSettings));
+            console.log('✅ Set consolidated localStorage:', consolidatedSettings);
+
+            return consolidatedPalette;
+        }
+
+        return null;
+    }
+
+    /**
+     * PRODUCTION FIX: Get current palette from single source
+     */
+    function getCurrentPaletteFromLocalStorage() {
+        console.log('🔍 Getting current palette from localStorage...');
+
+        // First check our consolidated key
+        const consolidatedSettings = localStorage.getItem('visual_customizer_settings');
+        if (consolidatedSettings) {
+            try {
+                const settings = JSON.parse(consolidatedSettings);
+                console.log('✅ Found consolidated settings:', settings);
+                return settings.currentPalette;
+            } catch (e) {
+                console.error('❌ Error parsing consolidated settings:', e);
+            }
+        }
+
+        // If no consolidated settings, clean up conflicts
+        return cleanupConflictingLocalStorage();
+    }
+
+    /**
+     * PRODUCTION FIX: Save palette to single localStorage source
+     */
+    function savePaletteToLocalStorage(paletteId, config) {
+        console.log('💾 Saving palette to localStorage:', paletteId);
+
+        // Clean up any conflicts first
+        cleanupConflictingLocalStorage();
+
+        // Save to single source
+        const settings = {
+            currentPalette: paletteId,
+            config: config,
+            timestamp: Date.now(),
+            source: 'simple_visual_customizer'
+        };
+
+        localStorage.setItem('visual_customizer_settings', JSON.stringify(settings));
+        console.log('✅ Saved to localStorage:', settings);
+    }
+
+    /**
+     * PRODUCTION FIX: Ensure CSS Custom Properties are Set and Tokenization CSS Loads
+     */
+    function ensureCSSTokenizationActive() {
+        console.log('🔧 Ensuring CSS tokenization is active...');
+
+        // Check if tokenization CSS is loaded
+        const tokenizationCSSExists = Array.from(document.styleSheets).some(sheet => {
+            try {
+                return sheet.href && (
+                    sheet.href.includes('tokenization-contact-overrides') ||
+                    sheet.href.includes('simple-visual-customizer') ||
+                    sheet.href.includes('visual-customizer')
+                );
+            } catch (e) {
+                return false;
+            }
+        });
+
+        console.log('🔍 Tokenization CSS loaded:', tokenizationCSSExists);
+
+        // Check if CSS custom properties exist
+        const rootStyle = getComputedStyle(document.documentElement);
+        const criticalProperties = [
+            '--component-bg-color-primary',
+            '--component-text-color-primary',
+            '--color-primary',
+            '--palette-primary'
+        ];
+
+        const existingProperties = {};
+        criticalProperties.forEach(prop => {
+            const value = rootStyle.getPropertyValue(prop).trim();
+            existingProperties[prop] = value || 'NOT SET';
+        });
+
+        console.log('🔍 Critical CSS custom properties:', existingProperties);
+
+        // If no tokenization CSS or properties, force load
+        if (!tokenizationCSSExists || Object.values(existingProperties).every(val => val === 'NOT SET')) {
+            console.warn('⚠️ Tokenization CSS or properties missing, forcing load...');
+            forceLoadTokenizationCSS();
+        }
+
+        // Set minimum viable CSS custom properties if none exist
+        const hasAnyProperties = Object.values(existingProperties).some(val => val !== 'NOT SET');
+        if (!hasAnyProperties) {
+            console.warn('⚠️ No CSS custom properties found, setting fallbacks...');
+            setFallbackCSSProperties();
+        }
+
+        return {
+            tokenizationCSSLoaded: tokenizationCSSExists,
+            customPropertiesSet: hasAnyProperties,
+            properties: existingProperties
+        };
+    }
+
+    /**
+     * Force load tokenization CSS if missing
+     */
+    function forceLoadTokenizationCSS() {
+        console.log('💉 Force loading tokenization CSS...');
+
+        const themeUri = window.location.origin + window.location.pathname.split('/wp-content')[0] + '/wp-content/themes/medSpaTheme';
+        const cssUrl = `${themeUri}/assets/css/tokenization-contact-overrides.css`;
+
+        // Check if already exists
+        const existingLink = document.querySelector(`link[href*="tokenization-contact-overrides"]`);
+        if (existingLink) {
+            console.log('🔍 Tokenization CSS link already exists, forcing reload...');
+            existingLink.href = cssUrl + '?t=' + Date.now();
+            return;
+        }
+
+        // Create new link element
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = cssUrl + '?t=' + Date.now();
+        link.onload = () => {
+            console.log('✅ Tokenization CSS force loaded successfully');
+        };
+        link.onerror = () => {
+            console.error('❌ Failed to force load tokenization CSS');
+        };
+
+        document.head.appendChild(link);
+        console.log('💉 Injected tokenization CSS link:', cssUrl);
+    }
+
+    /**
+     * Set fallback CSS custom properties
+     */
+    function setFallbackCSSProperties() {
+        console.log('🎯 Setting fallback CSS custom properties...');
+
+        const fallbackColors = {
+            '--component-bg-color-primary': '#87A96B',
+            '--component-text-color-primary': '#ffffff',
+            '--component-border-color-primary': '#87A96B',
+            '--color-primary': '#87A96B',
+            '--color-secondary': '#6B8552',
+            '--color-accent': '#A8C76A',
+            '--palette-primary': '#87A96B',
+            '--palette-primary-contrast': '#ffffff',
+            '--palette-primary-hover': '#6B8552'
+        };
+
+        const documentRoot = document.documentElement;
+        Object.entries(fallbackColors).forEach(([property, value]) => {
+            documentRoot.style.setProperty(property, value);
+            console.log(`🎯 Set fallback: ${property} = ${value}`);
+        });
+
+        console.log('✅ Fallback CSS custom properties set');
+    }
+
+    /**
+     * PRODUCTION FIX: Verify critical CSS files are loaded
+     */
+    function verifyCriticalCSSFiles() {
+        console.log('🔍 Verifying critical CSS files are loaded...');
+
+        const criticalFiles = [
+            'customizer-enhancements.css',
+            'tokenization-contact-overrides.css',
+            'simple-visual-customizer.css'
+        ];
+
+        const loadedFiles = [];
+        const missingFiles = [];
+
+        // Check if CSS custom property exists as a marker
+        const rootStyle = getComputedStyle(document.documentElement);
+        const customizerEnhancementsLoaded = rootStyle.getPropertyValue('--customizer-enhancements-loaded').trim();
+
+        if (customizerEnhancementsLoaded === '1') {
+            loadedFiles.push('customizer-enhancements.css');
+            console.log('✅ customizer-enhancements.css loaded successfully');
+        } else {
+            missingFiles.push('customizer-enhancements.css');
+            console.error('❌ customizer-enhancements.css NOT loaded - this was the 404 error cause');
+        }
+
+        // Check other files
+        criticalFiles.slice(1).forEach(filename => {
+            const fileExists = Array.from(document.styleSheets).some(sheet => {
+                try {
+                    return sheet.href && sheet.href.includes(filename);
+                } catch (e) {
+                    return false;
+                }
+            });
+
+            if (fileExists) {
+                loadedFiles.push(filename);
+                console.log(`✅ ${filename} loaded successfully`);
+            } else {
+                missingFiles.push(filename);
+                console.warn(`⚠️ ${filename} not detected in stylesheets`);
+            }
+        });
+
+        const allCriticalFilesLoaded = missingFiles.length === 0;
+
+        console.log('📊 CSS File Status:', {
+            loaded: loadedFiles,
+            missing: missingFiles,
+            allLoaded: allCriticalFilesLoaded
+        });
+
+        return {
+            allLoaded: allCriticalFilesLoaded,
+            loaded: loadedFiles,
+            missing: missingFiles,
+            customizerEnhancementsFixed: customizerEnhancementsLoaded === '1'
+        };
+    }
+
+    /**
+     * CRITICAL FIX: Force CSS Recalculation for Buttons
+     * Problem: CSS variables update but buttons don't visually change
+     * Solution: Force browser to recalculate button styles
+     */
+    function forceCSSRecalculationForButtons() {
+        console.log('🔄 Forcing CSS recalculation for buttons...');
+
+        // Find all buttons that should be using CSS variables
+        const buttonSelectors = [
+            'button.btn.btn--primary',
+            'button.btn.btn--secondary',
+            'button.btn.btn--accent',
+            'button.cta-primary',
+            'button.cta-secondary',
+            'a.btn-consultation',
+            'a.mobile-consultation-btn',
+            'button.btn--consultation',
+            'button.mobile-menu-toggle',
+            'button.mobile-menu-close',
+            'button.back-to-top'
+        ];
+
+        let buttonsUpdated = 0;
+
+        buttonSelectors.forEach(selector => {
+            const buttons = document.querySelectorAll(selector);
+            buttons.forEach(button => {
+                // Force style recalculation by temporarily changing and restoring display
+                const originalDisplay = button.style.display;
+                button.style.display = 'none';
+                button.offsetHeight; // Trigger reflow
+                button.style.display = originalDisplay || '';
+
+                // Force CSS variable re-evaluation by adding and removing a class
+                button.classList.add('force-css-recalc');
+                button.offsetHeight; // Trigger reflow
+                button.classList.remove('force-css-recalc');
+
+                // Add data attribute to trigger CSS recalculation
+                button.setAttribute('data-css-recalc', Date.now());
+                button.offsetHeight; // Trigger reflow
+                button.removeAttribute('data-css-recalc');
+
+                buttonsUpdated++;
+            });
+        });
+
+        console.log(`🔄 Forced CSS recalculation for ${buttonsUpdated} buttons`);
+
+        // Additional force recalculation for the entire page
+        setTimeout(() => {
+            document.body.style.transform = 'translateZ(0)';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.transform = '';
+            console.log('🔄 Forced global CSS recalculation');
+        }, 50);
+
+        // Verify button colors after recalculation
+        setTimeout(() => {
+            verifyButtonColorUpdate();
+        }, 150);
+    }
+
+    /**
+     * Verify that button colors actually updated after CSS variable change
+     */
+    function verifyButtonColorUpdate() {
+        console.log('🔍 Verifying button color updates...');
+
+        const primaryButton = document.querySelector('button.btn.btn--primary, button.cta-primary');
+        if (primaryButton) {
+            const computedStyle = getComputedStyle(primaryButton);
+            const actualBgColor = computedStyle.backgroundColor;
+            const expectedBgColor = getComputedStyle(document.documentElement).getPropertyValue('--component-bg-color-primary').trim();
+
+            console.log('🔍 Button verification:');
+            console.log(`   Expected (CSS var): ${expectedBgColor}`);
+            console.log(`   Actual (computed): ${actualBgColor}`);
+
+            // Convert hex to rgb for comparison
+            const expectedRgb = hexToRgb(expectedBgColor);
+            const actualRgb = actualBgColor.match(/\d+/g);
+
+            if (expectedRgb && actualRgb && actualRgb.length >= 3) {
+                const rgbMatch =
+                    Math.abs(expectedRgb.r - parseInt(actualRgb[0])) <= 2 &&
+                    Math.abs(expectedRgb.g - parseInt(actualRgb[1])) <= 2 &&
+                    Math.abs(expectedRgb.b - parseInt(actualRgb[2])) <= 2;
+
+                if (rgbMatch) {
+                    console.log('✅ Button colors successfully updated to match CSS variables!');
+
+                    // CRITICAL: Check for and fix any remaining red buttons
+                    setTimeout(() => {
+                        const redButtonsFixed = identifyAndFixRedButtons();
+                        if (redButtonsFixed > 0) {
+                            showMessage(`✅ Button colors updated + fixed ${redButtonsFixed} stubborn buttons!`, 'success');
+                        } else {
+                            showMessage('✅ Button colors updated successfully!', 'success');
+                        }
+                    }, 100);
+                } else {
+                    console.error('❌ Button colors still do not match CSS variables after recalculation');
+                    console.error(`❌ Expected RGB: ${expectedRgb.r}, ${expectedRgb.g}, ${expectedRgb.b}`);
+                    console.error(`❌ Actual RGB: ${actualRgb[0]}, ${actualRgb[1]}, ${actualRgb[2]}`);
+
+                    // CRITICAL: Force fix red buttons immediately
+                    const redButtonsFixed = identifyAndFixRedButtons();
+
+                    if (redButtonsFixed > 0) {
+                        showMessage(`🔧 Fixed ${redButtonsFixed} stubborn buttons that weren't responding to CSS!`, 'warning');
+                    } else {
+                        showMessage('⚠️ Button colors may not have updated - try refreshing the page', 'warning');
+                        // Try emergency CSS injection
+                        emergencyDirectCSSInjection();
+                    }
+                }
+            } else {
+                console.warn('⚠️ Could not parse colors for verification');
+
+                // Still check for red buttons as a safety measure
+                setTimeout(() => {
+                    const redButtonsFixed = identifyAndFixRedButtons();
+                    if (redButtonsFixed > 0) {
+                        showMessage(`🔧 Fixed ${redButtonsFixed} stubborn red buttons!`, 'info');
+                    } else {
+                        showMessage('Colors applied - verification inconclusive', 'info');
+                    }
+                }, 100);
+            }
+        } else {
+            console.warn('⚠️ No primary button found for verification');
+
+            // Still run red button fix
+            setTimeout(() => {
+                identifyAndFixRedButtons();
+            }, 100);
+        }
+    }
+
+    /**
+     * Emergency direct CSS injection when CSS variables fail
+     */
+    function emergencyDirectCSSInjection() {
+        console.log('🚨 Emergency: Injecting direct CSS colors...');
+
+        const rootStyle = getComputedStyle(document.documentElement);
+        const primaryColor = rootStyle.getPropertyValue('--component-bg-color-primary').trim();
+        const primaryTextColor = rootStyle.getPropertyValue('--component-text-color-primary').trim();
+        const secondaryColor = rootStyle.getPropertyValue('--component-bg-color-secondary').trim();
+        const accentColor = rootStyle.getPropertyValue('--component-bg-color-accent').trim();
+
+        if (primaryColor) {
+            const emergencyCSS = `
+                /* Emergency direct color injection */
+                button.btn.btn--primary,
+                button.cta-primary,
+                a.btn-consultation {
+                    background-color: ${primaryColor} !important;
+                    color: ${primaryTextColor || '#ffffff'} !important;
+                    border-color: ${primaryColor} !important;
+                }
+
+                button.btn.btn--secondary,
+                button.cta-secondary {
+                    background-color: ${secondaryColor || primaryColor} !important;
+                    color: ${primaryTextColor || '#ffffff'} !important;
+                    border-color: ${secondaryColor || primaryColor} !important;
+                }
+
+                button.btn.btn--accent {
+                    background-color: ${accentColor || primaryColor} !important;
+                    color: ${primaryTextColor || '#ffffff'} !important;
+                    border-color: ${accentColor || primaryColor} !important;
+                }
+            `;
+
+            // Remove any existing emergency styles
+            const existingEmergencyStyle = document.getElementById('emergency-button-styles');
+            if (existingEmergencyStyle) {
+                existingEmergencyStyle.remove();
+            }
+
+            // Inject emergency styles
+            const styleElement = document.createElement('style');
+            styleElement.id = 'emergency-button-styles';
+            styleElement.textContent = emergencyCSS;
+            document.head.appendChild(styleElement);
+
+            console.log('🚨 Emergency CSS injected with direct colors');
+            showMessage('🚨 Emergency color fix applied - buttons should now update!', 'warning');
+        } else {
+            console.error('❌ No primary color available for emergency injection');
+        }
+    }
+
+    /**
+     * EMERGENCY: Identify and Fix Stubborn Red Buttons
+     * Problem: Some buttons have inline styles or very specific CSS that overrides everything
+     * Solution: Find red buttons and directly set their styles
+     */
+    function identifyAndFixRedButtons() {
+        console.log('🔍 Identifying stubborn red buttons...');
+
+        // Find all buttons on the page
+        const allButtons = document.querySelectorAll('button, .btn, input[type="submit"], input[type="button"], a[class*="btn"]');
+        const redButtons = [];
+        const currentPrimaryColor = getComputedStyle(document.documentElement).getPropertyValue('--component-bg-color-primary').trim();
+        const currentPrimaryTextColor = getComputedStyle(document.documentElement).getPropertyValue('--component-text-color-primary').trim();
+
+        console.log('🎯 Target colors:', { primary: currentPrimaryColor, text: currentPrimaryTextColor });
+
+        allButtons.forEach((button, index) => {
+            const computedStyle = getComputedStyle(button);
+            const bgColor = computedStyle.backgroundColor;
+            const borderColor = computedStyle.borderColor;
+
+            // Check if button is red (various red color patterns)
+            const isRedButton =
+                bgColor.includes('rgb(211, 47, 47)') ||
+                bgColor.includes('rgb(244, 67, 54)') ||
+                bgColor.includes('rgb(229, 62, 62)') ||
+                bgColor.includes('rgb(220, 38, 38)') ||
+                bgColor.includes('rgb(185, 28, 28)') ||
+                bgColor.includes('rgb(239, 68, 68)') ||
+                bgColor.includes('rgb(248, 113, 113)') ||
+                borderColor.includes('rgb(211, 47, 47)') ||
+                borderColor.includes('rgb(244, 67, 54)') ||
+                borderColor.includes('rgb(220, 38, 38)') ||
+                button.style.backgroundColor?.includes('#d32f2f') ||
+                button.style.backgroundColor?.includes('#f44336') ||
+                button.style.backgroundColor?.includes('#dc2626') ||
+                button.style.backgroundColor?.includes('#ef4444');
+
+            if (isRedButton) {
+                redButtons.push({
+                    element: button,
+                    index: index,
+                    originalBg: bgColor,
+                    originalBorder: borderColor,
+                    classList: Array.from(button.classList),
+                    id: button.id,
+                    tagName: button.tagName,
+                    inlineStyle: button.getAttribute('style')
+                });
+
+                console.log(`🔴 Found red button ${index}:`, {
+                    tagName: button.tagName,
+                    classes: Array.from(button.classList),
+                    id: button.id,
+                    bgColor: bgColor,
+                    borderColor: borderColor,
+                    inlineStyle: button.getAttribute('style')
+                });
+            }
+        });
+
+        console.log(`🔍 Found ${redButtons.length} red buttons to fix`);
+
+        // Force fix each red button
+        redButtons.forEach((buttonInfo, index) => {
+            const button = buttonInfo.element;
+
+            console.log(`🔧 Fixing red button ${index + 1}/${redButtons.length}...`);
+
+            // Remove any inline style background colors
+            if (button.style.backgroundColor) {
+                console.log(`   Removing inline background: ${button.style.backgroundColor}`);
+                button.style.removeProperty('background-color');
+            }
+            if (button.style.background) {
+                console.log(`   Removing inline background: ${button.style.background}`);
+                button.style.removeProperty('background');
+            }
+            if (button.style.borderColor) {
+                console.log(`   Removing inline border-color: ${button.style.borderColor}`);
+                button.style.removeProperty('border-color');
+            }
+
+            // Force apply our colors with highest priority
+            button.style.setProperty('background-color', currentPrimaryColor, 'important');
+            button.style.setProperty('color', currentPrimaryTextColor || '#ffffff', 'important');
+            button.style.setProperty('border-color', currentPrimaryColor, 'important');
+            button.style.setProperty('transition', 'all 0.3s ease', 'important');
+
+            // Add a data attribute to mark as fixed
+            button.setAttribute('data-force-fixed', 'true');
+            button.setAttribute('data-original-bg', buttonInfo.originalBg);
+
+            console.log(`   ✅ Fixed button - new style:`, {
+                backgroundColor: button.style.backgroundColor,
+                color: button.style.color,
+                borderColor: button.style.borderColor
+            });
+
+            // Add hover effect via JavaScript
+            button.addEventListener('mouseenter', function() {
+                if (this.getAttribute('data-force-fixed') === 'true') {
+                    this.style.setProperty('opacity', '0.9', 'important');
+                }
+            });
+
+            button.addEventListener('mouseleave', function() {
+                if (this.getAttribute('data-force-fixed') === 'true') {
+                    this.style.setProperty('opacity', '1', 'important');
+                }
+            });
+        });
+
+        if (redButtons.length > 0) {
+            showMessage(`🔧 Force-fixed ${redButtons.length} stubborn red buttons!`, 'success');
+            console.log(`✅ Successfully force-fixed ${redButtons.length} red buttons`);
+        } else {
+            console.log('✅ No red buttons found - all buttons appear to be using correct colors');
+        }
+
+        return redButtons.length;
+    }
 
 })(jQuery);
