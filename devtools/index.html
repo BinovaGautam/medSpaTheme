@@ -551,6 +551,25 @@
                     </li>
                 </ul>
             </div>
+
+            <!-- Server Rendering Debug Tool -->
+            <div class="tool-card priority-critical">
+                <div class="tool-header">
+                    <h3>🔍 Server vs Applied Debug</h3>
+                    <span class="tool-status critical">CRITICAL</span>
+                </div>
+                <div class="tool-description">
+                    Comprehensive diagnostic tool to identify and fix differences between server-rendered designs and what Visual Customizer applied.
+                </div>
+                <div class="tool-actions">
+                    <button onclick="openServerRenderingDebug()" class="action-btn critical">
+                        Debug Server Rendering
+                    </button>
+                    <button onclick="showServerDebugInfo()" class="action-btn secondary">
+                        View Info
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div class="footer">
@@ -587,6 +606,25 @@
                 document.getElementById('searchInput').focus();
             }
         });
+
+        function openServerRenderingDebug() {
+            const currentUrl = window.location.origin + window.location.pathname;
+            const debugUrl = currentUrl + '?debug_server_rendering=1';
+            window.open(debugUrl, '_blank');
+            showMessage('🔍 Server Rendering Debug tool opened in new tab', 'info');
+        }
+
+        function showServerDebugInfo() {
+            showMessage(`
+                <strong>Server vs Applied Debug Tool:</strong><br>
+                • Compares server-rendered designs vs Visual Customizer applied state<br>
+                • Identifies CSS variable mismatches<br>
+                • Detects palette synchronization issues<br>
+                • Provides one-click fixes for common problems<br>
+                • Analyzes WordPress hooks and CSS generation<br><br>
+                <strong>Usage:</strong> Add ?debug_server_rendering=1 to any URL
+            `, 'info');
+        }
     </script>
 </body>
 </html>

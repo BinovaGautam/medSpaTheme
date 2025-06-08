@@ -29,6 +29,9 @@ require_once get_template_directory() . '/inc/visual-customizer-dashboard.php';
 // Sprint 2 PVC-007-DT: Design Token System WordPress Integration
 require_once get_template_directory() . '/inc/design-token-customizer.php';
 
+// Include server-rendered vs applied design debug tool
+require_once get_template_directory() . '/devtools/testing-tools/server-rendered-vs-applied-debug.php';
+
 /**
  * Theme setup
  */
