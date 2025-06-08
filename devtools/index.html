@@ -570,6 +570,25 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Palette Data Structure Debug Tool -->
+            <div class="tool-card priority-critical">
+                <div class="tool-header">
+                    <h3>🎨 Palette Data Debug</h3>
+                    <span class="tool-status critical">CRITICAL</span>
+                </div>
+                <div class="tool-description">
+                    Deep diagnostic tool to analyze palette data structure and identify CSS generation failures.
+                </div>
+                <div class="tool-actions">
+                    <button onclick="openPaletteDataDebug()" class="action-btn critical">
+                        Debug Palette Data
+                    </button>
+                    <button onclick="showPaletteDebugInfo()" class="action-btn secondary">
+                        Debug Info
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div class="footer">
@@ -623,6 +642,28 @@
                 • Provides one-click fixes for common problems<br>
                 • Analyzes WordPress hooks and CSS generation<br><br>
                 <strong>Usage:</strong> Add ?debug_server_rendering=1 to any URL
+            `, 'info');
+        }
+
+        function openPaletteDataDebug() {
+            const currentUrl = window.location.origin + window.location.pathname;
+            const debugUrl = currentUrl + '?debug_palette_data=1';
+            window.open(debugUrl, '_blank');
+            showMessage('🎨 Palette Data Debug tool opened in new tab', 'info');
+        }
+
+        function showPaletteDebugInfo() {
+            showMessage(`
+                <strong>Palette Data Structure Debug Tool:</strong><br>
+                • Analyzes palette data structure in database<br>
+                • Tests CSS generation function directly<br>
+                • Checks wp_head hook registration<br>
+                • Provides one-click fixes for common issues<br>
+                • Shows raw JSON data and validation results<br><br>
+                <strong>Use this when:</strong><br>
+                • Server CSS variables show "NOT SET"<br>
+                • Visual Customizer saves but doesn't apply server-side<br>
+                • CSS generation claims to work but produces no output
             `, 'info');
         }
     </script>

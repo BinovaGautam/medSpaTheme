@@ -322,69 +322,70 @@ function generate_css_from_palette_data($palette_data) {
         }
     }
 
-    // CRITICAL FIX: Add component-level tokens that match JavaScript exactly
-    if (isset($palette_data['colors']['primary'])) {
-        $primaryColor = $palette_data['colors']['primary']['hex'] ?? $palette_data['colors']['primary'];
-        $surfaceColor = isset($palette_data['colors']['surface']) ?
-            ($palette_data['colors']['surface']['hex'] ?? $palette_data['colors']['surface']) : '#ffffff';
+    // CRITICAL FIX: Add the EXACT theme-specific variables that the debug script expects
+    // These are the variables that were showing "NOT SET" in your debug output
 
-        // MISSING COMPONENT TOKENS - Root cause of server/client mismatch
-        $css .= "    --component-bg-color-primary: {$primaryColor};\n";
-        $css .= "    --component-text-color-primary: {$surfaceColor};\n";
-        $css .= "    --component-border-color-primary: {$primaryColor};\n";
+    // Map palette colors to theme-specific variables
+    $primaryColor = isset($palette_data['colors']['primary']) ?
+        ($palette_data['colors']['primary']['hex'] ?? $palette_data['colors']['primary']) : '#1B365D';
+    $secondaryColor = isset($palette_data['colors']['secondary']) ?
+        ($palette_data['colors']['secondary']['hex'] ?? $palette_data['colors']['secondary']) : '#E4A853';
+    $accentColor = isset($palette_data['colors']['accent']) ?
+        ($palette_data['colors']['accent']['hex'] ?? $palette_data['colors']['accent']) : '#C2847A';
+    $surfaceColor = isset($palette_data['colors']['surface']) ?
+        ($palette_data['colors']['surface']['hex'] ?? $palette_data['colors']['surface']) : '#FDF2F8';
+    $neutralColor = isset($palette_data['colors']['neutral']) ?
+        ($palette_data['colors']['neutral']['hex'] ?? $palette_data['colors']['neutral']) : '#ffffff';
+    $charcoalColor = isset($palette_data['colors']['dark']) ?
+        ($palette_data['colors']['dark']['hex'] ?? $palette_data['colors']['dark']) : '#34495e';
 
-        // Palette tokens that component tokens inherit from
-        $css .= "    --palette-primary: {$primaryColor};\n";
-        $css .= "    --palette-primary-contrast: {$surfaceColor};\n";
-        $css .= "    --palette-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
+    // THEME-SPECIFIC VARIABLES - These were missing and causing "NOT SET" in debug
+    $css .= "    --color-primary-navy: {$primaryColor};\n";
+    $css .= "    --color-primary-navy-rgb: " . hex_to_rgb($primaryColor) . ";\n";
+    $css .= "    --color-primary-teal: {$secondaryColor};\n";
+    $css .= "    --color-primary-teal-rgb: " . hex_to_rgb($secondaryColor) . ";\n";
+    $css .= "    --color-secondary-peach: {$accentColor};\n";
+    $css .= "    --color-secondary-peach-rgb: " . hex_to_rgb($accentColor) . ";\n";
+    $css .= "    --color-neutral-white: {$neutralColor};\n";
+    $css .= "    --color-soft-cream: {$surfaceColor};\n";
+    $css .= "    --color-charcoal: {$charcoalColor};\n";
 
-        // Foundation tokens for complete inheritance chain
-        $css .= "    --color-primary-contrast: {$surfaceColor};\n";
-        $css .= "    --color-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
-        $css .= "    --color-primary-dark: " . adjust_color_brightness($primaryColor, -0.2) . ";\n";
-    }
+    // GRADIENTS - These were also missing
+    $css .= "    --gradient-primary: linear-gradient(135deg, {$primaryColor} 0%, {$secondaryColor} 100%);\n";
+    $css .= "    --gradient-accent: linear-gradient(135deg, {$accentColor} 0%, " . adjust_color_brightness($accentColor, -0.1) . " 100%);\n";
 
-    if (isset($palette_data['colors']['secondary'])) {
-        $secondaryColor = $palette_data['colors']['secondary']['hex'] ?? $palette_data['colors']['secondary'];
-        $surfaceColor = isset($palette_data['colors']['surface']) ?
-            ($palette_data['colors']['surface']['hex'] ?? $palette_data['colors']['surface']) : '#ffffff';
+    // COMPONENT TOKENS - Root cause of server/client mismatch (keep these for tokenization)
+    $css .= "    --component-bg-color-primary: {$primaryColor};\n";
+    $css .= "    --component-text-color-primary: {$surfaceColor};\n";
+    $css .= "    --component-border-color-primary: {$primaryColor};\n";
+    $css .= "    --component-bg-color-secondary: {$secondaryColor};\n";
+    $css .= "    --component-text-color-secondary: {$surfaceColor};\n";
+    $css .= "    --component-border-color-secondary: {$secondaryColor};\n";
+    $css .= "    --component-bg-color-accent: {$accentColor};\n";
+    $css .= "    --component-text-color-accent: {$surfaceColor};\n";
+    $css .= "    --component-border-color-accent: {$accentColor};\n";
 
-        // Component tokens for secondary variants
-        $css .= "    --component-bg-color-secondary: {$secondaryColor};\n";
-        $css .= "    --component-text-color-secondary: {$surfaceColor};\n";
-        $css .= "    --component-border-color-secondary: {$secondaryColor};\n";
+    // PALETTE TOKENS - Bridge between component and foundation
+    $css .= "    --palette-primary: {$primaryColor};\n";
+    $css .= "    --palette-primary-contrast: {$surfaceColor};\n";
+    $css .= "    --palette-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
+    $css .= "    --palette-secondary: {$secondaryColor};\n";
+    $css .= "    --palette-secondary-contrast: {$surfaceColor};\n";
+    $css .= "    --palette-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . ";\n";
+    $css .= "    --palette-accent: {$accentColor};\n";
+    $css .= "    --palette-accent-contrast: {$surfaceColor};\n";
+    $css .= "    --palette-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
 
-        // Palette tokens
-        $css .= "    --palette-secondary: {$secondaryColor};\n";
-        $css .= "    --palette-secondary-contrast: {$surfaceColor};\n";
-        $css .= "    --palette-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . ";\n";
-
-        // Foundation tokens
-        $css .= "    --color-secondary-contrast: {$surfaceColor};\n";
-        $css .= "    --color-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . ";\n";
-        $css .= "    --color-secondary-dark: " . adjust_color_brightness($secondaryColor, -0.2) . ";\n";
-    }
-
-    if (isset($palette_data['colors']['accent'])) {
-        $accentColor = $palette_data['colors']['accent']['hex'] ?? $palette_data['colors']['accent'];
-        $surfaceColor = isset($palette_data['colors']['surface']) ?
-            ($palette_data['colors']['surface']['hex'] ?? $palette_data['colors']['surface']) : '#ffffff';
-
-        // Component tokens for accent variants
-        $css .= "    --component-bg-color-accent: {$accentColor};\n";
-        $css .= "    --component-text-color-accent: {$surfaceColor};\n";
-        $css .= "    --component-border-color-accent: {$accentColor};\n";
-
-        // Palette tokens
-        $css .= "    --palette-accent: {$accentColor};\n";
-        $css .= "    --palette-accent-contrast: {$surfaceColor};\n";
-        $css .= "    --palette-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
-
-        // Foundation tokens
-        $css .= "    --color-accent-contrast: {$surfaceColor};\n";
-        $css .= "    --color-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
-        $css .= "    --color-accent-dark: " . adjust_color_brightness($accentColor, -0.2) . ";\n";
-    }
+    // FOUNDATION TOKENS - Complete inheritance chain
+    $css .= "    --color-primary-contrast: {$surfaceColor};\n";
+    $css .= "    --color-primary-hover: " . adjust_color_brightness($primaryColor, -0.15) . ";\n";
+    $css .= "    --color-primary-dark: " . adjust_color_brightness($primaryColor, -0.2) . ";\n";
+    $css .= "    --color-secondary-contrast: {$surfaceColor};\n";
+    $css .= "    --color-secondary-hover: " . adjust_color_brightness($secondaryColor, -0.15) . ";\n";
+    $css .= "    --color-secondary-dark: " . adjust_color_brightness($secondaryColor, -0.2) . ";\n";
+    $css .= "    --color-accent-contrast: {$surfaceColor};\n";
+    $css .= "    --color-accent-hover: " . adjust_color_brightness($accentColor, -0.15) . ";\n";
+    $css .= "    --color-accent-dark: " . adjust_color_brightness($accentColor, -0.2) . ";\n";
 
     // Status color tokens for component inheritance
     $statusColors = [
