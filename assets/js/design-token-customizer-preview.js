@@ -28,6 +28,15 @@
      */
     function initializeDesignTokenPreview() {
         const engine = window.universalCustomizationEngine;
+        const typographySystem = window.typographyDomainSystem;
+        const tokenRegistry = window.designTokenRegistry;
+
+        if (!engine) {
+            console.warn('[Design Token Preview] Universal Customization Engine not available');
+            return;
+        }
+
+        console.log('[Design Token Preview] Initializing with WordPress Customizer API');
 
         // =============================================================================
         // COLOR DOMAIN PREVIEW
@@ -38,14 +47,12 @@
             value.bind(function(newval) {
                 console.log('[Design Token Preview] Color palette changed to:', newval);
 
-                // Apply through Universal Customization Engine
                 engine.applyCustomization('color', {
-                    paletteId: newval
+                    paletteId: newval,
+                    previewMode: true
                 }).then(results => {
-                    console.log('[Design Token Preview] Color palette applied:', results);
                     updateCSSVariables(results.directChanges);
-                }).catch(error => {
-                    console.error('[Design Token Preview] Color palette error:', error);
+                    showPreviewFeedback('Color palette updated', 'success');
                 });
             });
         });
@@ -74,12 +81,13 @@
                     contrastMode: newval
                 }).then(results => {
                     updateCSSVariables(results.directChanges);
+                    showPreviewFeedback('Contrast mode updated', 'info');
                 });
             });
         });
 
         // =============================================================================
-        // TYPOGRAPHY DOMAIN PREVIEW
+        // TYPOGRAPHY DOMAIN PREVIEW - ENHANCED
         // =============================================================================
 
         // Typography Pairing Changes
@@ -87,12 +95,37 @@
             value.bind(function(newval) {
                 console.log('[Design Token Preview] Typography pairing changed to:', newval);
 
-                engine.applyCustomization('typography', {
-                    pairingId: newval
-                }).then(results => {
-                    updateCSSVariables(results.directChanges);
-                    updateFontLoading(results.directChanges);
-                });
+                if (typographySystem) {
+                    // Generate typography tokens using Typography Domain System
+                    const fontSelection = {
+                        style: newval,
+                        baseSize: wp.customize('dt_typography_base_size')() + 'px',
+                        scale: wp.customize('dt_typography_scale')(),
+                        readabilityLevel: 'optimal'
+                    };
+
+                    const typographyTokens = typographySystem.generateFromSelection(fontSelection);
+
+                    if (typographyTokens && typographyTokens.optimized) {
+                        // Apply typography tokens to preview
+                        applyTypographyTokens(typographyTokens.optimized);
+
+                        // Load web fonts if needed
+                        if (typographyTokens.fontLoading && typographyTokens.fontLoading.webfonts) {
+                            loadWebFonts(typographyTokens.fontLoading.webfonts);
+                        }
+
+                        showPreviewFeedback(`Typography pairing "${newval}" applied`, 'success');
+                    }
+                } else {
+                    // Fallback to basic engine
+                    engine.applyCustomization('typography', {
+                        pairingId: newval
+                    }).then(results => {
+                        updateCSSVariables(results.directChanges);
+                        updateFontLoading(results.directChanges);
+                    });
+                }
             });
         });
 
@@ -101,24 +134,60 @@
             value.bind(function(newval) {
                 console.log('[Design Token Preview] Typography scale changed to:', newval);
 
-                engine.applyCustomization('typography', {
-                    scale: newval
-                }).then(results => {
-                    updateCSSVariables(results.directChanges);
-                });
+                if (typographySystem) {
+                    // Regenerate with new scale
+                    const fontSelection = {
+                        style: wp.customize('dt_typography_pairing')(),
+                        baseSize: wp.customize('dt_typography_base_size')() + 'px',
+                        scale: newval,
+                        readabilityLevel: 'optimal'
+                    };
+
+                    const typographyTokens = typographySystem.generateFromSelection(fontSelection);
+
+                    if (typographyTokens && typographyTokens.optimized) {
+                        applyTypographyTokens(typographyTokens.optimized);
+                        showPreviewFeedback(`Typography scale "${newval}" applied`, 'success');
+                    }
+                } else {
+                    // Fallback
+                    engine.applyCustomization('typography', {
+                        scale: newval
+                    }).then(results => {
+                        updateCSSVariables(results.directChanges);
+                    });
+                }
             });
         });
 
         // Base Font Size Changes
         wp.customize('dt_typography_base_size', function(value) {
             value.bind(function(newval) {
-                console.log('[Design Token Preview] Base font size changed to:', newval);
+                console.log('[Design Token Preview] Base font size changed to:', newval + 'px');
 
-                engine.applyCustomization('typography', {
-                    baseSize: parseInt(newval)
-                }).then(results => {
-                    updateCSSVariables(results.directChanges);
-                });
+                if (typographySystem) {
+                    // Regenerate with new base size
+                    const fontSelection = {
+                        style: wp.customize('dt_typography_pairing')(),
+                        baseSize: newval + 'px',
+                        scale: wp.customize('dt_typography_scale')(),
+                        readabilityLevel: 'optimal'
+                    };
+
+                    const typographyTokens = typographySystem.generateFromSelection(fontSelection);
+
+                    if (typographyTokens && typographyTokens.optimized) {
+                        applyTypographyTokens(typographyTokens.optimized);
+                        showPreviewFeedback(`Base font size ${newval}px applied`, 'success');
+                    }
+                } else {
+                    // Fallback
+                    engine.applyCustomization('typography', {
+                        baseSize: newval + 'px'
+                    }).then(results => {
+                        updateCSSVariables(results.directChanges);
+                    });
+                }
             });
         });
 
@@ -132,9 +201,10 @@
                 console.log('[Design Token Preview] Component style changed to:', newval);
 
                 engine.applyCustomization('component', {
-                    stylePreset: newval
+                    styleId: newval
                 }).then(results => {
                     updateCSSVariables(results.directChanges);
+                    showPreviewFeedback('Component style updated', 'success');
                 });
             });
         });
@@ -314,5 +384,122 @@
         toggleDarkModeClass: toggleDarkModeClass,
         monitorPerformance: monitorPerformance
     };
+
+    /**
+     * Apply typography tokens to the preview
+     * @param {Object} typographyTokens - Generated typography tokens
+     */
+    function applyTypographyTokens(typographyTokens) {
+        if (!typographyTokens) return;
+
+        const cssVariables = {};
+
+        Object.entries(typographyTokens).forEach(([roleKey, token]) => {
+            if (token.cssVariable) {
+                // Apply font size
+                cssVariables[token.cssVariable + '-size'] = token.fontSize;
+
+                // Apply font family
+                cssVariables[token.cssVariable + '-family'] = token.fontFamily;
+
+                // Apply font weight
+                cssVariables[token.cssVariable + '-weight'] = token.fontWeight;
+
+                // Apply line height
+                cssVariables[token.cssVariable + '-line-height'] = token.lineHeight;
+
+                // Apply letter spacing
+                cssVariables[token.cssVariable + '-letter-spacing'] = token.letterSpacing;
+
+                // Apply color if coordinated
+                if (token.color) {
+                    cssVariables[token.cssVariable + '-color'] = token.color;
+                }
+            }
+        });
+
+        // Apply all CSS variables at once
+        updateCSSVariables(cssVariables);
+
+        console.log('[Design Token Preview] Applied typography tokens:', Object.keys(cssVariables).length, 'variables');
+    }
+
+    /**
+     * Load web fonts dynamically
+     * @param {Object} webfonts - Web font configuration
+     */
+    function loadWebFonts(webfonts) {
+        if (!webfonts) return;
+
+        Object.entries(webfonts).forEach(([fontType, fontUrl]) => {
+            if (fontUrl && fontUrl.startsWith('http')) {
+                const linkId = `webfont-${fontType}`;
+
+                // Remove existing link if present
+                const existingLink = document.getElementById(linkId);
+                if (existingLink) {
+                    existingLink.remove();
+                }
+
+                // Create new font link
+                const link = document.createElement('link');
+                link.id = linkId;
+                link.rel = 'stylesheet';
+                link.href = fontUrl;
+                link.onload = () => {
+                    console.log(`[Design Token Preview] Loaded web font: ${fontType}`);
+                };
+
+                document.head.appendChild(link);
+            }
+        });
+    }
+
+    /**
+     * Show preview feedback to user
+     * @param {string} message - Feedback message
+     * @param {string} type - Message type (success, info, warning, error)
+     */
+    function showPreviewFeedback(message, type = 'info') {
+        // Create or update feedback element
+        let feedback = document.getElementById('design-token-preview-feedback');
+
+        if (!feedback) {
+            feedback = document.createElement('div');
+            feedback.id = 'design-token-preview-feedback';
+            feedback.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                padding: 12px 16px;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: 500;
+                color: white;
+                transition: all 0.3s ease;
+                transform: translateX(100%);
+            `;
+            document.body.appendChild(feedback);
+        }
+
+        // Set message and style based on type
+        feedback.textContent = message;
+
+        const colors = {
+            success: '#10B981',
+            info: '#3B82F6',
+            warning: '#F59E0B',
+            error: '#EF4444'
+        };
+
+        feedback.style.backgroundColor = colors[type] || colors.info;
+        feedback.style.transform = 'translateX(0)';
+
+        // Hide after 3 seconds
+        setTimeout(() => {
+            feedback.style.transform = 'translateX(100%)';
+        }, 3000);
+    }
 
 })(jQuery);

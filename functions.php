@@ -30,6 +30,9 @@ require_once get_template_directory() . '/inc/medspa-customizer.php';
 // Simple Visual Customizer - Clean Admin Bar Implementation
 require_once get_template_directory() . '/inc/visual-customizer-simple.php';
 
+// TEMPORARY: Simple Working Visual Customizer (for immediate functionality)
+require_once get_template_directory() . '/simple-working-customizer.php';
+
 // Visual Customizer Integration - Sprint 2 PVC-004 (Legacy - keeping for compatibility)
 require_once get_template_directory() . '/inc/visual-customizer-integration.php';
 require_once get_template_directory() . '/inc/ajax-handlers.php';
@@ -3215,18 +3218,41 @@ add_action('after_setup_theme', 'medspa_theme_setup');
  * Sprint 2 PVC-007-DT: Enqueue Design Token System Assets
  */
 function preetidreams_enqueue_design_token_system() {
-    // Only load in customizer or when debug mode enabled
-    if (is_customize_preview() || (defined('WP_DEBUG') && WP_DEBUG)) {
+    // Load for admin users or when specifically in customizer/debug mode
+    // CRITICAL FIX: Also load for admin users on frontend for Visual Customizer
+    $should_load = is_admin() ||
+                   is_customize_preview() ||
+                   (defined('WP_DEBUG') && WP_DEBUG) ||
+                   (is_user_logged_in() && current_user_can('manage_options'));
 
-        // Core Systems (existing from Sprint 2)
+    if ($should_load) {
+
+        // Core Design Token Systems
         wp_enqueue_script(
-            'universal-customization-engine',
-            get_template_directory_uri() . '/assets/js/universal-customization-engine.js',
+            'design-token-registry',
+            get_template_directory_uri() . '/assets/js/design-token-registry.js',
             ['jquery'],
             PREETIDREAMS_VERSION,
             true
         );
 
+        wp_enqueue_script(
+            'token-relationship-engine',
+            get_template_directory_uri() . '/assets/js/token-relationship-engine.js',
+            ['design-token-registry'],
+            PREETIDREAMS_VERSION,
+            true
+        );
+
+        wp_enqueue_script(
+            'universal-customization-engine',
+            get_template_directory_uri() . '/assets/js/universal-customization-engine.js',
+            ['token-relationship-engine'],
+            PREETIDREAMS_VERSION,
+            true
+        );
+
+        // Domain-Specific Systems
         wp_enqueue_script(
             'color-domain-system',
             get_template_directory_uri() . '/assets/js/color-domain-system.js',
@@ -3251,44 +3277,42 @@ function preetidreams_enqueue_design_token_system() {
             true
         );
 
-        // Typography Systems
         wp_enqueue_script(
-            'typography-system',
-            get_template_directory_uri() . '/assets/js/typography-system.js',
-            ['typography-domain-system'],
-            PREETIDREAMS_VERSION,
-            true
-        );
-
-        wp_enqueue_script(
-            'component-token-system',
-            get_template_directory_uri() . '/assets/js/component-token-system.js',
+            'spacing-domain-generator',
+            get_template_directory_uri() . '/assets/js/spacing-domain-generator.js',
             ['universal-customization-engine'],
             PREETIDREAMS_VERSION,
             true
         );
 
+        // Enhanced Design Token Customizer Preview (WordPress Customizer integration)
         wp_enqueue_script(
-            'customization-plugin',
-            get_template_directory_uri() . '/assets/js/customization-plugin.js',
-            ['universal-customization-engine'],
+            'design-token-customizer-preview',
+            get_template_directory_uri() . '/assets/js/design-token-customizer-preview.js',
+            ['universal-customization-engine', 'typography-domain-system'],
             PREETIDREAMS_VERSION,
             true
         );
 
+        // CRITICAL: Sidebar Token Bridge for Visual Customizer Integration
         wp_enqueue_script(
-            'example-plugins',
-            get_template_directory_uri() . '/assets/js/example-plugins.js',
-            ['customization-plugin'],
+            'sidebar-token-bridge',
+            get_template_directory_uri() . '/assets/js/sidebar-token-bridge.js',
+            [
+                'jquery',
+                'universal-customization-engine',
+                'typography-domain-system',
+                'spacing-domain-generator'
+            ],
             PREETIDREAMS_VERSION,
             true
         );
 
-        // NEW: Sprint 2 Extension - Visual Customizer Integration (PVC-008-CRITICAL)
+        // CRITICAL: Visual Interface Components for Sidebar Integration
         wp_enqueue_script(
             'sidebar-color-palette-interface',
             get_template_directory_uri() . '/assets/js/sidebar-color-palette-interface.js',
-            ['jquery'],
+            ['sidebar-token-bridge', 'semantic-color-system'],
             PREETIDREAMS_VERSION,
             true
         );
@@ -3296,34 +3320,12 @@ function preetidreams_enqueue_design_token_system() {
         wp_enqueue_script(
             'sidebar-typography-interface',
             get_template_directory_uri() . '/assets/js/sidebar-typography-interface.js',
-            ['jquery'],
+            ['sidebar-token-bridge', 'typography-domain-system'],
             PREETIDREAMS_VERSION,
             true
         );
 
-        wp_enqueue_script(
-            'immediate-preview-integration',
-            get_template_directory_uri() . '/assets/js/immediate-preview-integration.js',
-            ['jquery'],
-            PREETIDREAMS_VERSION,
-            true
-        );
-
-        wp_enqueue_script(
-            'sidebar-token-bridge',
-            get_template_directory_uri() . '/assets/js/sidebar-token-bridge.js',
-            [
-                'jquery',
-                'universal-customization-engine',
-                'sidebar-color-palette-interface',
-                'sidebar-typography-interface',
-                'immediate-preview-integration'
-            ],
-            PREETIDREAMS_VERSION,
-            true
-        );
-
-        // Enqueue Visual Interface CSS
+        // Enhanced Visual Interface Styling
         wp_enqueue_style(
             'sidebar-visual-interfaces',
             get_template_directory_uri() . '/assets/css/sidebar-visual-interfaces.css',
@@ -3331,15 +3333,35 @@ function preetidreams_enqueue_design_token_system() {
             PREETIDREAMS_VERSION
         );
 
-        // Localize script for debugging and configuration
+        // Configuration and debugging
         wp_localize_script('universal-customization-engine', 'designTokenConfig', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('design_token_nonce'),
             'debugMode' => defined('WP_DEBUG') && WP_DEBUG,
             'version' => PREETIDREAMS_VERSION,
             'isCustomizer' => is_customize_preview(),
+            'isAdmin' => is_admin(),
+            'isLoggedInAdmin' => is_user_logged_in() && current_user_can('manage_options'),
+            'sidebarIntegration' => true, // Sprint 2 Extension flag
             'currentTheme' => get_stylesheet()
         ]);
+
+        // Sprint 2 Extension: Bridge Integration Status
+        wp_localize_script('sidebar-token-bridge', 'sidebarBridgeConfig', [
+            'sprintVersion' => 'SPRINT-002-EXT-001',
+            'integrationMode' => 'visual-customizer-sidebar',
+            'wordpressCustomizerDisabled' => false, // Keep for compatibility
+            'visualCustomizerEnabled' => true,
+            'debugOutput' => defined('WP_DEBUG') && WP_DEBUG
+        ]);
+
+        // Debug script loading
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            wp_add_inline_script('sidebar-typography-interface', '
+                console.log("🔧 Typography Interface Script Loaded");
+                console.log("🔧 Window.SidebarTypographyInterface:", typeof window.SidebarTypographyInterface);
+            ');
+        }
     }
 }
 add_action('wp_enqueue_scripts', 'preetidreams_enqueue_design_token_system');

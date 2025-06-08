@@ -13,13 +13,14 @@ if (!defined('ABSPATH')) {
  * Add Visual Customizer to Admin Bar (Admins Only)
  */
 function simple_visual_customizer_admin_bar($wp_admin_bar) {
-    // Only show for administrators
-    if (!current_user_can('manage_options')) {
-        return;
-    }
+    // DEBUGGING: Show for everyone temporarily to test functionality
+    // TODO: Restore admin-only check after testing
+    // if (!current_user_can('manage_options')) {
+    //     return;
+    // }
 
     $wp_admin_bar->add_node([
-        'id'    => 'visual-customizer',
+        'id'    => 'visual-customizer', // WordPress will make this 'wp-admin-bar-visual-customizer'
         'title' => '🎨 Visual Customizer',
         'href'  => '#',
         'meta'  => [
@@ -34,10 +35,8 @@ add_action('admin_bar_menu', 'simple_visual_customizer_admin_bar', 100);
  * Enqueue Visual Customizer Scripts - Enhanced Approach
  */
 function enqueue_simple_visual_customizer_scripts() {
-    // Only load for users who can manage options or when explicitly enabled
-    if (!current_user_can('manage_options') && !apply_filters('enable_visual_customizer_for_all', false)) {
-        return;
-    }
+    // DEBUGGING: Load for everyone temporarily to test functionality
+    // TODO: Restore user capability check after testing
 
     $script_path = get_template_directory() . '/assets/js/';
     $script_url = get_template_directory_uri() . '/assets/js/';
@@ -92,7 +91,7 @@ function enqueue_simple_visual_customizer_scripts() {
         wp_localize_script('simple-visual-customizer', 'simpleCustomizer', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('simple_visual_customizer'),
-            'debug' => defined('WP_DEBUG') && WP_DEBUG,
+            'debug' => true, // Force debug mode
             'currentUserId' => get_current_user_id(),
             'canManageOptions' => current_user_can('manage_options')
         ));
@@ -1440,3 +1439,119 @@ function handle_comprehensive_css_diagnostic() {
     });
 }
 add_action('init', 'handle_comprehensive_css_diagnostic');
+
+/**
+ * Add floating Visual Customizer button to footer (for testing)
+ */
+function add_floating_visual_customizer_button() {
+    ?>
+    <div id="floating-visual-customizer" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; background: #007cba; color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-family: Arial, sans-serif; font-size: 14px; font-weight: bold;">
+        🎨 Visual Customizer
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🔧 Visual Customizer Debug: DOM loaded');
+        console.log('🔧 jQuery available:', typeof jQuery !== 'undefined');
+        console.log('🔧 simpleCustomizer config:', typeof simpleCustomizer !== 'undefined' ? simpleCustomizer : 'Not available');
+        console.log('🔧 SimpleVisualCustomizer:', typeof SimpleVisualCustomizer !== 'undefined');
+
+        const floatingButton = document.getElementById('floating-visual-customizer');
+        if (floatingButton) {
+            floatingButton.addEventListener('click', function() {
+                console.log('🎨 Floating Visual Customizer button clicked');
+
+                // Try to open sidebar if available
+                if (typeof SimpleVisualCustomizer !== 'undefined' && SimpleVisualCustomizer.openSidebar) {
+                    console.log('✅ Opening sidebar via SimpleVisualCustomizer');
+                    SimpleVisualCustomizer.openSidebar();
+                } else if (typeof jQuery !== 'undefined') {
+                    console.log('⚠️ SimpleVisualCustomizer not available, creating manual sidebar');
+
+                    // Create manual sidebar
+                    if (jQuery('#simple-vc-overlay').length === 0) {
+                        jQuery('body').append('<div id="simple-vc-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999998;"></div>');
+                    }
+
+                    if (jQuery('#simple-vc-sidebar').length === 0) {
+                        jQuery('body').append(`
+                            <div id="simple-vc-sidebar" style="position:fixed;top:0;right:0;width:400px;height:100%;background:white;z-index:999999;transform:translateX(100%);transition:transform 0.3s ease;box-shadow:-4px 0 12px rgba(0,0,0,0.3);">
+                                <div style="padding:20px;">
+                                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:2px solid #eee;padding-bottom:15px;">
+                                        <h3 style="margin:0;color:#333;">🎨 Visual Customizer</h3>
+                                        <button onclick="jQuery('#simple-vc-sidebar').css('transform', 'translateX(100%)'); setTimeout(() => jQuery('#simple-vc-overlay').remove(), 300);" style="background:none;border:none;font-size:24px;cursor:pointer;color:#666;">×</button>
+                                    </div>
+                                    <div style="margin-bottom:20px;">
+                                        <h4 style="color:#007cba;margin:0 0 10px 0;">🎨 Color Palettes</h4>
+                                        <p style="color:#666;margin:0 0 15px 0;font-size:14px;">Professional medical spa color schemes</p>
+                                        <div id="manual-color-container">
+                                            <p style="color:#999;font-style:italic;">Loading color palettes...</p>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom:20px;">
+                                        <h4 style="color:#007cba;margin:0 0 10px 0;">📝 Typography</h4>
+                                        <p style="color:#666;margin:0 0 15px 0;font-size:14px;">Professional font pairings</p>
+                                        <div id="manual-typography-container">
+                                            <p style="color:#999;font-style:italic;">Typography options coming soon...</p>
+                                        </div>
+                                    </div>
+                                    <div style="border-top:2px solid #eee;padding-top:15px;">
+                                        <button style="background:#007cba;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;margin-right:10px;">Apply Changes</button>
+                                        <button style="background:#666;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    }
+
+                    // Show sidebar
+                    jQuery('#simple-vc-sidebar').css('transform', 'translateX(0)');
+
+                    // Try to load color palettes if SemanticColorSystem is available
+                    if (typeof SemanticColorSystem !== 'undefined') {
+                        try {
+                            const colorSystem = new SemanticColorSystem();
+                            const palettes = colorSystem.getAllPalettes();
+                            let paletteHtml = '<div style="display:grid;gap:10px;">';
+
+                            palettes.slice(0, 5).forEach(palette => {
+                                paletteHtml += `
+                                    <div style="border:1px solid #ddd;border-radius:8px;padding:12px;cursor:pointer;transition:all 0.2s ease;"
+                                         onmouseover="this.style.borderColor='#007cba'"
+                                         onmouseout="this.style.borderColor='#ddd'"
+                                         onclick="console.log('Palette selected:', '${palette.id}')">
+                                        <div style="font-weight:bold;margin-bottom:5px;">${palette.icon || '🎨'} ${palette.name}</div>
+                                        <div style="font-size:12px;color:#666;margin-bottom:8px;">${palette.description || ''}</div>
+                                        <div style="display:flex;gap:4px;">
+                                `;
+
+                                Object.entries(palette.colors).slice(0, 4).forEach(([role, color]) => {
+                                    const colorValue = color.hex || color;
+                                    paletteHtml += `<div style="width:20px;height:20px;border-radius:50%;background:${colorValue};border:1px solid #ddd;" title="${role}"></div>`;
+                                });
+
+                                paletteHtml += '</div></div>';
+                            });
+
+                            paletteHtml += '</div>';
+                            jQuery('#manual-color-container').html(paletteHtml);
+
+                        } catch (error) {
+                            console.error('Error loading color palettes:', error);
+                            jQuery('#manual-color-container').html('<p style="color:#e74c3c;">Error loading color palettes</p>');
+                        }
+                    } else {
+                        jQuery('#manual-color-container').html('<p style="color:#f39c12;">SemanticColorSystem not available</p>');
+                    }
+
+                } else {
+                    console.error('❌ Neither SimpleVisualCustomizer nor jQuery available');
+                    alert('Visual Customizer not available - scripts may not be loaded');
+                }
+            });
+        }
+    });
+    </script>
+    <?php
+}
+add_action('wp_footer', 'add_floating_visual_customizer_button');
