@@ -1833,7 +1833,8 @@
      */
     function updateApplyButton() {
         const $button = $('#simple-vc-apply');
-        if (currentConfig.activePalette) {
+        // FIXED: Check both palette AND typography state
+        if (currentConfig.activePalette || currentConfig.typographyPairing) {
             $button.prop('disabled', false);
         } else {
             $button.prop('disabled', true);
@@ -3473,7 +3474,313 @@ html body .page-content, html body .page-content[class] {
     };
 
     /**
-     * Improved Typography Interface Loading with Multiple Strategies
+     * CRITICAL FIX: Get typography data by ID
      */
+    function getTypographyData(typographyId) {
+        console.log('📝 Getting typography data for:', typographyId);
+
+        const typographyDatabase = {
+            'medical-professional': {
+                id: 'medical-professional',
+                name: 'Medical Professional',
+                description: 'Clean, trustworthy typography for medical services',
+                headingFont: {
+                    family: 'Inter',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500', '600', '700']
+                },
+                bodyFont: {
+                    family: 'Inter',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500']
+                },
+                googleFonts: ['Inter:wght@400;500;600;700'],
+                cssVariables: {
+                    '--component-font-family-primary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-family-secondary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '500',
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
+                }
+            },
+            'luxury-modern': {
+                id: 'luxury-modern',
+                name: 'Luxury Modern',
+                description: 'Elegant serif for premium spa experiences',
+                headingFont: {
+                    family: 'Playfair Display',
+                    fallback: 'Georgia, serif',
+                    weights: ['400', '500', '600', '700']
+                },
+                bodyFont: {
+                    family: 'Inter',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500']
+                },
+                googleFonts: ['Playfair+Display:wght@400;500;600;700', 'Inter:wght@400;500'],
+                cssVariables: {
+                    '--component-font-family-primary': '"Playfair Display", Georgia, serif',
+                    '--component-font-family-secondary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '500',
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
+                }
+            },
+            'contemporary-clean': {
+                id: 'contemporary-clean',
+                name: 'Contemporary Clean',
+                description: 'Modern sans-serif for contemporary wellness',
+                headingFont: {
+                    family: 'Poppins',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500', '600', '700']
+                },
+                bodyFont: {
+                    family: 'Poppins',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500']
+                },
+                googleFonts: ['Poppins:wght@400;500;600;700'],
+                cssVariables: {
+                    '--component-font-family-primary': '"Poppins", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-family-secondary': '"Poppins", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '500',
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
+                }
+            },
+            'wellness-serif': {
+                id: 'wellness-serif',
+                name: 'Wellness Serif',
+                description: 'Calming serif for wellness and relaxation',
+                headingFont: {
+                    family: 'Crimson Text',
+                    fallback: 'Georgia, serif',
+                    weights: ['400', '600', '700']
+                },
+                bodyFont: {
+                    family: 'Crimson Text',
+                    fallback: 'Georgia, serif',
+                    weights: ['400', '600']
+                },
+                googleFonts: ['Crimson+Text:wght@400;600;700'],
+                cssVariables: {
+                    '--component-font-family-primary': '"Crimson Text", Georgia, serif',
+                    '--component-font-family-secondary': '"Crimson Text", Georgia, serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '600',
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
+                }
+            },
+            'modern-sans': {
+                id: 'modern-sans',
+                name: 'Modern Sans',
+                description: 'Versatile sans-serif for modern practices',
+                headingFont: {
+                    family: 'Montserrat',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500', '600', '700']
+                },
+                bodyFont: {
+                    family: 'Montserrat',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500']
+                },
+                googleFonts: ['Montserrat:wght@400;500;600;700'],
+                cssVariables: {
+                    '--component-font-family-primary': '"Montserrat", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-family-secondary': '"Montserrat", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '500',
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
+                }
+            },
+            'classic-elegant': {
+                id: 'classic-elegant',
+                name: 'Classic Elegant',
+                description: 'Timeless elegance for established practices',
+                headingFont: {
+                    family: 'Cormorant Garamond',
+                    fallback: 'Georgia, serif',
+                    weights: ['400', '500', '600', '700']
+                },
+                bodyFont: {
+                    family: 'Inter',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500']
+                },
+                googleFonts: ['Cormorant+Garamond:wght@400;500;600;700', 'Inter:wght@400;500'],
+                cssVariables: {
+                    '--component-font-family-primary': '"Cormorant Garamond", Georgia, serif',
+                    '--component-font-family-secondary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '500',
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
+                }
+            },
+            'tech-minimal': {
+                id: 'tech-minimal',
+                name: 'Tech Minimal',
+                description: 'Clean, technical typography for modern clinics',
+                headingFont: {
+                    family: 'IBM Plex Sans',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500', '600', '700']
+                },
+                bodyFont: {
+                    family: 'IBM Plex Sans',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500']
+                },
+                googleFonts: ['IBM+Plex+Sans:wght@400;500;600;700'],
+                cssVariables: {
+                    '--component-font-family-primary': '"IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-family-secondary': '"IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '500',
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
+                }
+            },
+            'warm-organic': {
+                id: 'warm-organic',
+                name: 'Warm Organic',
+                description: 'Friendly, approachable typography for wellness',
+                headingFont: {
+                    family: 'Merriweather',
+                    fallback: 'Georgia, serif',
+                    weights: ['400', '700', '900']
+                },
+                bodyFont: {
+                    family: 'Inter',
+                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
+                    weights: ['400', '500']
+                },
+                googleFonts: ['Merriweather:wght@400;700;900', 'Inter:wght@400;500'],
+                cssVariables: {
+                    '--component-font-family-primary': '"Merriweather", Georgia, serif',
+                    '--component-font-family-secondary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+                    '--component-font-weight-normal': '400',
+                    '--component-font-weight-medium': '500',
+                    '--component-font-weight-semibold': '700',
+                    '--component-font-weight-bold': '900'
+                }
+            }
+        };
+
+        const typography = typographyDatabase[typographyId];
+        if (typography) {
+            console.log(`✅ Found typography data for: ${typographyId}`, typography);
+            return typography;
+        } else {
+            console.error(`❌ Typography data not found for: ${typographyId}`);
+            console.log('📋 Available typography options:', Object.keys(typographyDatabase));
+            return null;
+        }
+    }
+
+    /**
+     * CRITICAL FIX: Save typography selection to localStorage
+     */
+    function saveTypographySelectionToLocalStorage(typographyId) {
+        try {
+            localStorage.setItem('preetidreams_selected_typography', typographyId);
+            localStorage.setItem('simple_customizer_typography', typographyId);
+            console.log(`✅ Typography selection saved to localStorage: ${typographyId}`);
+        } catch (error) {
+            console.error('❌ Failed to save typography to localStorage:', error);
+        }
+    }
+
+    /**
+     * CRITICAL FIX: Load and highlight current typography
+     */
+    function loadAndHighlightCurrentTypography() {
+        console.log('📝 Loading and highlighting current typography...');
+
+        // Try to get current typography from multiple sources
+        let currentTypography = null;
+
+        // Method 1: localStorage
+        try {
+            currentTypography = localStorage.getItem('preetidreams_selected_typography') ||
+                               localStorage.getItem('simple_customizer_typography');
+            if (currentTypography) {
+                console.log(`✅ Found typography in localStorage: ${currentTypography}`);
+            }
+        } catch (error) {
+            console.warn('⚠️ localStorage not accessible:', error);
+        }
+
+        // Method 2: AJAX call to server
+        if (!currentTypography && typeof simpleCustomizer !== 'undefined' && simpleCustomizer.ajaxUrl) {
+            $.ajax({
+                url: simpleCustomizer.ajaxUrl,
+                method: 'POST',
+                data: {
+                    action: 'get_current_typography',
+                    nonce: simpleCustomizer.nonce
+                },
+                success: function(response) {
+                    if (response.success && response.data) {
+                        currentTypography = response.data;
+                        console.log(`✅ Found typography from server: ${currentTypography}`);
+                        highlightTypographyCard(currentTypography);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('❌ AJAX Error loading current typography:', error);
+                }
+            });
+        }
+
+        // Method 3: Default fallback
+        if (!currentTypography) {
+            currentTypography = 'medical-professional'; // Default
+            console.log(`✅ Using default typography: ${currentTypography}`);
+        }
+
+        // Highlight the typography card
+        if (currentTypography) {
+            highlightTypographyCard(currentTypography);
+        }
+    }
+
+    /**
+     * CRITICAL FIX: Highlight typography card
+     */
+    function highlightTypographyCard(typographyId) {
+        console.log(`📝 Highlighting typography card: ${typographyId}`);
+
+        // Remove existing highlighting
+        $('.typography-card').css({
+            'border-color': '#ddd',
+            'background-color': 'white'
+        });
+
+        // Highlight the selected card
+        const $targetCard = $(`.typography-card[data-typography="${typographyId}"]`);
+        if ($targetCard.length > 0) {
+            $targetCard.css({
+                'border-color': '#007cba',
+                'background-color': '#f0f8ff'
+            });
+
+            // Update the status
+            const typographyData = getTypographyData(typographyId);
+            if (typographyData) {
+                $('#typography-status').text(`Current: ${typographyData.name}`).css('color', '#28a745');
+                console.log(`✅ Highlighted typography card: ${typographyId}`);
+            }
+        } else {
+            console.warn(`⚠️ Typography card not found: ${typographyId}`);
+        }
+    }
 
 })(jQuery);
