@@ -397,6 +397,37 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // Enqueue Modal Component Styles and Scripts (T6.6 Modal/Dialog System Implementation)
+    wp_enqueue_style(
+        'modal-component-styles',
+        get_template_directory_uri() . '/assets/css/components/modal.css',
+        ['button-component-styles', 'form-component-styles'], // Dependencies on existing components
+        PREETIDREAMS_VERSION,
+        'all'
+    );
+
+    wp_enqueue_script(
+        'modal-component-js',
+        get_template_directory_uri() . '/assets/js/components/modal.js',
+        ['jquery'],
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Localize modal script with WordPress data
+    wp_localize_script('modal-component-js', 'modalAjax', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('modal_ajax_nonce'),
+        'strings' => [
+            'loading' => __('Loading...', 'medspatheme'),
+            'error' => __('An error occurred. Please try again.', 'medspatheme'),
+            'success' => __('Success!', 'medspatheme'),
+            'close' => __('Close', 'medspatheme'),
+            'confirm' => __('Confirm', 'medspatheme'),
+            'cancel' => __('Cancel', 'medspatheme')
+        ]
+    ]);
+
     // Component system styles (if needed for other components)
     if (class_exists('ComponentRegistry')) {
         $registered_components = ComponentRegistry::get_registered_components();

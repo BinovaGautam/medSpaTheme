@@ -521,6 +521,73 @@ class ComponentRegistry {
             ]);
         }
 
+        // Register Modal Components (T6.6 Modal/Dialog System Implementation)
+        self::register('modal', 'ModalComponent', [
+            'priority' => 40,
+            'cacheable' => false, // Modals are dynamic and shouldn't be cached
+            'lazy_load' => true,
+            'accessibility_required' => true,
+            'javascript_required' => true,
+            'css_dependencies' => ['button', 'form'], // Dependencies on existing components
+            'js_dependencies' => [],
+            'performance_critical' => true,
+            'security_level' => 'medium'
+        ]);
+
+        // Register Specialized Modal Components
+        self::register('booking-modal', 'BookingModal', [
+            'priority' => 45,
+            'cacheable' => false,
+            'lazy_load' => true,
+            'accessibility_required' => true,
+            'javascript_required' => true,
+            'css_dependencies' => ['modal', 'form'],
+            'js_dependencies' => ['modal'],
+            'performance_critical' => true,
+            'security_level' => 'high', // Booking forms require high security
+            'requires_nonce' => true,
+            'form_component' => true
+        ]);
+
+        self::register('confirmation-modal', 'ConfirmationModal', [
+            'priority' => 42,
+            'cacheable' => false,
+            'lazy_load' => true,
+            'accessibility_required' => true,
+            'javascript_required' => true,
+            'css_dependencies' => ['modal'],
+            'js_dependencies' => ['modal'],
+            'performance_critical' => false,
+            'security_level' => 'medium',
+            'extends' => 'modal'
+        ]);
+
+        self::register('gallery-modal', 'GalleryModal', [
+            'priority' => 43,
+            'cacheable' => false,
+            'lazy_load' => true,
+            'accessibility_required' => true,
+            'javascript_required' => true,
+            'css_dependencies' => ['modal'],
+            'js_dependencies' => ['modal'],
+            'performance_critical' => true,
+            'security_level' => 'low',
+            'extends' => 'modal'
+        ]);
+
+        self::register('treatment-info-modal', 'TreatmentInfoModal', [
+            'priority' => 44,
+            'cacheable' => true, // Treatment info can be cached
+            'lazy_load' => true,
+            'accessibility_required' => true,
+            'javascript_required' => true,
+            'css_dependencies' => ['modal'],
+            'js_dependencies' => ['modal'],
+            'performance_critical' => false,
+            'security_level' => 'low',
+            'extends' => 'modal'
+        ]);
+
         // Log registration completion
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('ComponentRegistry: Core components registration completed - ' . count(self::$components) . ' components registered');
