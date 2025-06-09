@@ -3654,7 +3654,7 @@ html body .page-content, html body .page-content[class] {
                     fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
                     weights: ['400', '500']
                 },
-                googleFonts: ['Cormorant+Garamond:wght@400;500;600;700', 'Inter:wght@400;500'],
+                googleFonts: ['Cormorant%20Garamond:wght@400;500;600;700', 'Inter:wght@400;500'],
                 cssVariables: {
                     '--component-font-family-primary': '"Cormorant Garamond", Georgia, serif',
                     '--component-font-family-secondary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
@@ -3678,7 +3678,7 @@ html body .page-content, html body .page-content[class] {
                     fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
                     weights: ['400', '500']
                 },
-                googleFonts: ['IBM+Plex+Sans:wght@400;500;600;700'],
+                googleFonts: ['IBM%20Plex%20Sans:wght@400;500;600;700'],
                 cssVariables: {
                     '--component-font-family-primary': '"IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif',
                     '--component-font-family-secondary': '"IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif',
@@ -3695,14 +3695,14 @@ html body .page-content, html body .page-content[class] {
                 headingFont: {
                     family: 'Merriweather',
                     fallback: 'Georgia, serif',
-                    weights: ['400', '700', '900']
+                    weights: ['400', '500', '700', '900']
                 },
                 bodyFont: {
                     family: 'Inter',
                     fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
                     weights: ['400', '500']
                 },
-                googleFonts: ['Merriweather:wght@400;700;900', 'Inter:wght@400;500'],
+                googleFonts: ['Merriweather:wght@400;500;700;900', 'Inter:wght@400;500'],
                 cssVariables: {
                     '--component-font-family-primary': '"Merriweather", Georgia, serif',
                     '--component-font-family-secondary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
