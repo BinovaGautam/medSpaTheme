@@ -263,7 +263,9 @@ class ComponentRegistry {
 
             // Get component controls
             try {
-                $controls = call_user_func([$class, 'get_customizer_controls']);
+                // Create instance to call non-static method
+                $instance = new $class();
+                $controls = $instance->get_customizer_controls();
 
                 foreach ($controls as $control_id => $control_config) {
                     self::register_single_customizer_control(
