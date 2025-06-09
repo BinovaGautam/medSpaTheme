@@ -11,7 +11,26 @@
 
 // Include WordPress
 if (!defined('ABSPATH')) {
-    require_once('../../../wp-config.php');
+    // Try multiple possible paths for WordPress
+    $wp_paths = [
+        '../../../wp-config.php',           // Standard path
+        '../../../../wp-config.php',        // If in subdirectory
+        dirname(__FILE__) . '/../../../wp-config.php',  // Absolute from this file
+        $_SERVER['DOCUMENT_ROOT'] . '/wp-config.php'    // Document root
+    ];
+
+    $wp_loaded = false;
+    foreach ($wp_paths as $path) {
+        if (file_exists($path)) {
+            require_once($path);
+            $wp_loaded = true;
+            break;
+        }
+    }
+
+    if (!$wp_loaded) {
+        die('<h1>❌ WordPress Not Found</h1><p>Unable to locate WordPress installation. Please check paths.</p>');
+    }
 }
 
 echo "<h1>🎨 Typography Diagnostic Test</h1>";
