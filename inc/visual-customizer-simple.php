@@ -119,224 +119,319 @@ add_action('admin_enqueue_scripts', 'enqueue_simple_visual_customizer_scripts');
  * Enhanced AJAX Handler - Apply Changes with Live Preview Integration
  */
 function handle_simple_visual_customizer_apply() {
-    // Security check
-    if (!wp_verify_nonce($_POST['nonce'], 'simple_visual_customizer')) {
-        wp_send_json_error(['message' => 'Security check failed']);
-    }
+    check_ajax_referer('simple_visual_customizer', 'nonce');
 
-    if (!current_user_can('manage_options')) {
+    if (!current_user_can('edit_theme_options')) {
         wp_send_json_error(['message' => 'Insufficient permissions']);
+        return;
     }
 
-    // Get configuration from POST data
-    $config_json = stripslashes($_POST['config'] ?? '{}');
-    $config = json_decode($config_json, true);
-
-    if (json_last_error() !== JSON_ERROR_NONE) {
+    $config = json_decode(stripslashes($_POST['config']), true);
+    if (!$config) {
         wp_send_json_error(['message' => 'Invalid configuration data']);
+        return;
     }
 
-    // Initialize variables
-    $active_palette = null;
-    $active_typography = null;
-    $typography_data = null;
-    $config_saved = false;
-    $palette_saved = false;
-    $typography_saved = false;
-    $typography_data_saved = false;
-    $verify_config = null;
-    $verify_palette = null;
-    $verify_typography = null;
+    // Save configuration globally
+    update_option('preetidreams_visual_customizer_config', $config);
 
-    try {
-        // ENHANCED: Support both palette and typography configurations
-        $active_palette = $config['activePalette'] ?? null;
-        $active_typography = $config['activeTypography'] ?? null;
-        $typography_data = $config['typographyData'] ?? null;
+    $css_generated = false;
+    $typography_css_generated = false;
 
-        // Validate that at least one configuration type is provided
-        if (!$active_palette && !$active_typography) {
-            wp_send_json_error(['message' => 'No active palette or typography specified']);
-        }
+    // Generate color palette CSS file (existing)
+    if (isset($config['activePalette']) && isset($config['paletteData'])) {
+        $active_palette = sanitize_text_field($config['activePalette']);
+        update_option('preetidreams_active_palette', $active_palette);
 
-        // PRODUCTION FIX: Clear any stale options first to prevent second-to-last issue
-        delete_option('preetidreams_visual_customizer_config');
-        if ($active_palette) {
-            delete_option('preetidreams_active_palette');
-        }
-        if ($active_typography) {
-            delete_option('preetidreams_active_typography');
-        }
-
-        // PRODUCTION FIX: Add small delay to ensure DB write completion
-        usleep(50000); // 50ms delay
-
-        // Save configuration to database with timestamp
-        $config['saved_at'] = current_time('mysql');
-        $config['saved_timestamp'] = time();
-
-        $config_saved = update_option('preetidreams_visual_customizer_config', $config);
-
-        // Save active palette if provided
-        $palette_saved = true;
-        if ($active_palette) {
-            $palette_saved = update_option('preetidreams_active_palette', $active_palette);
-            // PRODUCTION FIX: Also save to theme_mods for WordPress Customizer compatibility
-            set_theme_mod('visual_customizer_active_palette', $active_palette);
-        }
-
-        // Save active typography if provided
-        $typography_saved = true;
-        if ($active_typography && $typography_data) {
-            $typography_saved = update_option('preetidreams_active_typography', $active_typography);
-            $typography_data_saved = update_option('preetidreams_typography_data', $typography_data);
-            // Also save to theme_mods for consistency
-            set_theme_mod('visual_customizer_active_typography', $active_typography);
-        }
-
-        // ENHANCED: Save typography in main config as fallback (for CSS output function)
-        if ($active_typography && $typography_data) {
-            $config['activeTypography'] = $active_typography;
-            $config['typographyData'] = $typography_data;
-            // Re-save config with typography data included
-            update_option('preetidreams_visual_customizer_config', $config);
-
-            // Debug logging
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("Visual Customizer: Typography saved - Active: {$active_typography}, Data keys: " . implode(', ', array_keys($typography_data)));
-            }
-        }
-
-        // PRODUCTION FIX: Force database flush to ensure write completion
-        if (function_exists('wp_cache_flush')) {
-            wp_cache_flush();
-        }
-
-        // Verify the save was successful
-        $verify_config = get_option('preetidreams_visual_customizer_config');
-        $verify_palette = $active_palette ? get_option('preetidreams_active_palette') : null;
-        $verify_typography = $active_typography ? get_option('preetidreams_active_typography') : null;
-
-        // Enhanced verification
-        $verification_failed = false;
-        if (!$verify_config) {
-            $verification_failed = true;
-        }
-        if ($active_palette && (!$verify_palette || $verify_palette !== $active_palette)) {
-            $verification_failed = true;
-        }
-        if ($active_typography && (!$verify_typography || $verify_typography !== $active_typography)) {
-            $verification_failed = true;
-        }
-
-        if ($verification_failed) {
-            wp_send_json_error([
-                'message' => 'Database save verification failed',
-                'debug' => [
-                    'config_saved' => $config_saved,
-                    'palette_saved' => $palette_saved,
-                    'typography_saved' => $typography_saved ?? false,
-                    'verify_config' => !empty($verify_config),
-                    'verify_palette' => $verify_palette,
-                    'verify_typography' => $verify_typography,
-                    'expected_palette' => $active_palette,
-                    'expected_typography' => $active_typography
-                ]
-            ]);
-        }
-
-        // PVC-005: Generate CSS file for performance (optional)
         $css_generated = generate_global_css_from_config($config);
+    }
 
-        // Log the change for debugging
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            if ($active_palette) {
-                error_log("Visual Customizer: Applied palette - {$active_palette} at " . current_time('mysql'));
-            }
-            if ($active_typography) {
-                error_log("Visual Customizer: Applied typography - {$active_typography} at " . current_time('mysql'));
-            }
-            error_log("Visual Customizer: Config verified - " . ($verify_config ? 'YES' : 'NO'));
-        }
+    // CRITICAL FIX: Generate typography CSS file (NEW)
+    if (isset($config['typographyPairing']) && isset($config['typographyData'])) {
+        $active_typography = sanitize_text_field($config['typographyPairing']);
+        update_option('preetidreams_active_typography', $active_typography);
 
-        $success_message = 'Visual customizer settings applied globally!';
-        if ($active_palette && $active_typography) {
-            $success_message = 'Visual customizer palette and typography applied globally!';
-        } elseif ($active_typography) {
-            $success_message = 'Typography settings applied globally!';
-        }
+        $typography_css_generated = generate_typography_css_file($config['typographyData']);
+    }
 
-        wp_send_json_success([
-            'message' => $success_message,
-            'config' => $config,
+    if ($css_generated || $typography_css_generated) {
+        $response_data = [
+            'message' => 'Settings applied successfully!',
+            'saved_palette' => $config['activePalette'] ?? null,
+            'saved_typography' => $config['typographyPairing'] ?? null,
             'css_generated' => $css_generated,
-            'timestamp' => current_time('mysql'),
-            'applied_palette' => $active_palette,
-            'applied_typography' => $active_typography,
-            'verification' => [
-                'config_saved' => $config_saved,
-                'palette_saved' => $palette_saved,
-                'typography_saved' => $typography_saved ?? false,
-                'verified_palette' => $verify_palette,
-                'verified_typography' => $verify_typography
-            ],
-            'performance' => [
-                'save_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']
-            ]
-        ]);
+            'typography_css_generated' => $typography_css_generated,
+            'timestamp' => current_time('mysql')
+        ];
 
-    } catch (Exception $e) {
-        wp_send_json_error([
-            'message' => 'Error saving configuration: ' . $e->getMessage(),
-            'debug' => [
-                'active_palette' => $active_palette ?? 'not set',
-                'active_typography' => $active_typography ?? 'not set',
-                'config_keys' => array_keys($config ?? [])
-            ]
-        ]);
+        wp_send_json_success($response_data);
+    } else {
+        wp_send_json_error(['message' => 'Failed to generate CSS files']);
     }
 }
-add_action('wp_ajax_simple_visual_customizer_apply', 'handle_simple_visual_customizer_apply');
 
 /**
- * Enhanced AJAX Handler - Reset Changes
+ * NEW: Generate Typography CSS File (Similar to Color System)
  */
-function handle_simple_visual_customizer_reset() {
-    // Security check
-    if (!wp_verify_nonce($_POST['nonce'], 'simple_visual_customizer')) {
-        wp_send_json_error(['message' => 'Security check failed']);
-    }
-
-    if (!current_user_can('manage_options')) {
-        wp_send_json_error(['message' => 'Insufficient permissions']);
+function generate_typography_css_file($typography_data) {
+    if (!$typography_data || !isset($typography_data['id'])) {
+        error_log('Typography CSS Generation: No typography data provided');
+        return false;
     }
 
     try {
-        // Reset to defaults
-        delete_option('preetidreams_visual_customizer_config');
-        update_option('preetidreams_active_palette', 'medical-clean');
+        // Create upload directory structure
+        $upload_dir = wp_upload_dir();
+        $css_dir = $upload_dir['basedir'] . '/medspatheme/typography/';
 
-        // Clear generated CSS
-        delete_option('preetidreams_generated_css');
-
-        // Clear caching
-        if (function_exists('wp_cache_flush')) {
-            wp_cache_flush();
+        if (!file_exists($css_dir)) {
+            wp_mkdir_p($css_dir);
         }
 
-        wp_send_json_success([
-            'message' => 'Visual customizer settings reset to defaults!',
-            'config' => [],
-            'default_palette' => 'medical-clean'
+        // Generate CSS content
+        $css_content = generate_css_from_typography_data($typography_data);
+
+        if (empty($css_content)) {
+            error_log('Typography CSS Generation: Empty CSS content generated');
+            return false;
+        }
+
+        // Create filename with timestamp for cache busting
+        $timestamp = time();
+        $filename = "typography-{$typography_data['id']}-v{$timestamp}.css";
+        $filepath = $css_dir . $filename;
+
+        // Write CSS file
+        $result = file_put_contents($filepath, $css_content);
+
+        if ($result === false) {
+            error_log('Typography CSS Generation: Failed to write file to ' . $filepath);
+            return false;
+        }
+
+        // Update option with file info (for enqueueing)
+        $file_url = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $filepath);
+
+        update_option('preetidreams_typography_css_file', [
+            'path' => $filepath,
+            'url' => $file_url,
+            'version' => $timestamp,
+            'typography' => $typography_data['id'],
+            'generated_at' => current_time('mysql'),
+            'file_size' => filesize($filepath)
         ]);
 
+        // Cleanup old typography files (keep only latest 3)
+        cleanup_old_typography_files($css_dir);
+
+        error_log('Typography CSS Generation: Successfully generated ' . $filename . ' (' . filesize($filepath) . ' bytes)');
+        return true;
+
     } catch (Exception $e) {
-        wp_send_json_error([
-            'message' => 'Error resetting configuration: ' . $e->getMessage()
-        ]);
+        error_log('Typography CSS Generation Error: ' . $e->getMessage());
+        return false;
     }
 }
-add_action('wp_ajax_simple_visual_customizer_reset', 'handle_simple_visual_customizer_reset');
+
+/**
+ * NEW: Generate CSS from Typography Data
+ */
+function generate_css_from_typography_data($typography_data) {
+    if (!$typography_data || !isset($typography_data['headingFont']) || !isset($typography_data['bodyFont'])) {
+        return '';
+    }
+
+    $heading_family = '"' . $typography_data['headingFont']['family'] . '", ' . $typography_data['headingFont']['fallback'];
+    $body_family = '"' . $typography_data['bodyFont']['family'] . '", ' . $typography_data['bodyFont']['fallback'];
+
+    // Start with CSS variables
+    $css = "/* Typography CSS File - {$typography_data['name']} */\n";
+    $css .= "/* Generated: " . current_time('mysql') . " */\n\n";
+
+    // CSS Custom Properties
+    $css .= ":root {\n";
+    $css .= "    --typography-heading-family: {$heading_family};\n";
+    $css .= "    --typography-body-family: {$body_family};\n";
+    $css .= "    --component-font-family-primary: {$heading_family};\n";
+    $css .= "    --component-font-family-secondary: {$body_family};\n";
+    $css .= "    --font-family-primary: {$heading_family};\n";
+    $css .= "    --font-family-secondary: {$body_family};\n";
+
+    // Font weights
+    if (isset($typography_data['headingFont']['weights'])) {
+        $weights = $typography_data['headingFont']['weights'];
+        $css .= "    --font-weight-normal: " . ($weights[0] ?? '400') . ";\n";
+        $css .= "    --font-weight-medium: " . ($weights[1] ?? '500') . ";\n";
+        $css .= "    --font-weight-semibold: " . ($weights[2] ?? '600') . ";\n";
+        $css .= "    --font-weight-bold: " . ($weights[3] ?? '700') . ";\n";
+    }
+
+    $css .= "}\n\n";
+
+    // Import Google Fonts if available
+    if (isset($typography_data['googleFonts']) && !empty($typography_data['googleFonts'])) {
+        $fonts_query = implode('&family=', $typography_data['googleFonts']);
+        $css .= "@import url('https://fonts.googleapis.com/css2?family={$fonts_query}&display=swap');\n\n";
+    }
+
+    // High specificity typography rules
+    $css .= "/* Typography Rules with High Specificity */\n\n";
+
+    // Heading elements
+    $css .= "html body h1, html body h1[class],\n";
+    $css .= "html body h2, html body h2[class],\n";
+    $css .= "html body h3, html body h3[class],\n";
+    $css .= "html body h4, html body h4[class],\n";
+    $css .= "html body h5, html body h5[class],\n";
+    $css .= "html body h6, html body h6[class],\n";
+    $css .= "html body .heading, html body .heading[class],\n";
+    $css .= "html body .title, html body .title[class],\n";
+    $css .= "html body .site-title, html body .site-title[class],\n";
+    $css .= "html body .hero-title, html body .hero-title[class],\n";
+    $css .= "html body .section-title, html body .section-title[class] {\n";
+    $css .= "    font-family: {$heading_family} !important;\n";
+    $css .= "    transition: font-family 0.3s ease !important;\n";
+    $css .= "}\n\n";
+
+    // Body elements
+    $css .= "html body, html body[class],\n";
+    $css .= "html body p, html body p[class],\n";
+    $css .= "html body div:not([class*='wp-']), html body div[class]:not([class*='wp-']),\n";
+    $css .= "html body span:not([class*='wp-']), html body span[class]:not([class*='wp-']),\n";
+    $css .= "html body a:not([class*='wp-']), html body a[class]:not([class*='wp-']),\n";
+    $css .= "html body li, html body li[class],\n";
+    $css .= "html body td, html body td[class],\n";
+    $css .= "html body th, html body th[class],\n";
+    $css .= "html body .body-text, html body .body-text[class],\n";
+    $css .= "html body .content, html body .content[class],\n";
+    $css .= "html body .description, html body .description[class] {\n";
+    $css .= "    font-family: {$body_family} !important;\n";
+    $css .= "    transition: font-family 0.3s ease !important;\n";
+    $css .= "}\n\n";
+
+    // Navigation and buttons
+    $css .= "html body .nav-menu a, html body .nav-menu[class] a,\n";
+    $css .= "html body .menu-item a, html body .menu-item[class] a,\n";
+    $css .= "html body button, html body button[class],\n";
+    $css .= "html body .btn, html body .btn[class],\n";
+    $css .= "html body input[type=\"submit\"], html body input[type=\"submit\"][class] {\n";
+    $css .= "    font-family: {$heading_family} !important;\n";
+    $css .= "    transition: font-family 0.3s ease !important;\n";
+    $css .= "}\n\n";
+
+    // Medical spa specific elements
+    $css .= "/* Medical Spa Theme Specific */\n";
+    $css .= "html body .professional-header .site-title,\n";
+    $css .= "html body .professional-header[class] .site-title[class],\n";
+    $css .= "html body .professional-header .nav-menu a,\n";
+    $css .= "html body .professional-header[class] .nav-menu[class] a {\n";
+    $css .= "    font-family: {$heading_family} !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body .luxury-footer, html body .luxury-footer[class] {\n";
+    $css .= "    font-family: {$body_family} !important;\n";
+    $css .= "}\n\n";
+
+    // Treatment cards
+    $css .= "html body .treatment-card h3, html body .treatment-card[class] h3,\n";
+    $css .= "html body .treatment-card .treatment-title, html body .treatment-card[class] .treatment-title[class] {\n";
+    $css .= "    font-family: {$heading_family} !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body .treatment-card p, html body .treatment-card[class] p,\n";
+    $css .= "html body .treatment-card .treatment-description, html body .treatment-card[class] .treatment-description[class] {\n";
+    $css .= "    font-family: {$body_family} !important;\n";
+    $css .= "}\n\n";
+
+    // Force override common theme elements
+    $css .= "html body .entry-title, html body .entry-title[class],\n";
+    $css .= "html body .post-title, html body .post-title[class],\n";
+    $css .= "html body .page-title, html body .page-title[class] {\n";
+    $css .= "    font-family: {$heading_family} !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body .entry-content, html body .entry-content[class],\n";
+    $css .= "html body .post-content, html body .post-content[class],\n";
+    $css .= "html body .page-content, html body .page-content[class] {\n";
+    $css .= "    font-family: {$body_family} !important;\n";
+    $css .= "}\n\n";
+
+    return $css;
+}
+
+/**
+ * NEW: Cleanup old typography files
+ */
+function cleanup_old_typography_files($css_dir) {
+    if (!is_dir($css_dir)) {
+        return;
+    }
+
+    $files = glob($css_dir . 'typography-*.css');
+    if (count($files) > 3) {
+        // Sort by modification time (oldest first)
+        usort($files, function($a, $b) {
+            return filemtime($a) - filemtime($b);
+        });
+
+        // Remove all but the latest 3
+        $files_to_remove = array_slice($files, 0, -3);
+        foreach ($files_to_remove as $file) {
+            unlink($file);
+            error_log('Cleanup: Removed old typography file ' . basename($file));
+        }
+    }
+}
+
+/**
+ * NEW: Enqueue typography CSS file
+ */
+function enqueue_typography_css() {
+    $typography_file = get_option('preetidreams_typography_css_file');
+
+    if ($typography_file && isset($typography_file['url']) && file_exists($typography_file['path'])) {
+        wp_enqueue_style(
+            'preetidreams-typography',
+            $typography_file['url'],
+            ['medspatheme-style'],
+            $typography_file['version']
+        );
+
+        error_log('Typography CSS: Enqueued ' . $typography_file['url']);
+    } else {
+        // Fallback to inline typography if file doesn't exist
+        enqueue_inline_typography_fallback();
+    }
+}
+
+/**
+ * NEW: Fallback inline typography
+ */
+function enqueue_inline_typography_fallback() {
+    $active_typography = get_option('preetidreams_active_typography');
+    if ($active_typography) {
+        error_log('Typography CSS: Using inline fallback for ' . $active_typography);
+
+        // You could add basic inline typography here as fallback
+        $basic_css = "/* Typography fallback */";
+        wp_add_inline_style('medspatheme-style', $basic_css);
+    }
+}
+
+// Hook typography CSS enqueuing
+add_action('wp_enqueue_scripts', 'enqueue_typography_css', 15);
+
+/**
+ * NEW: AJAX handler for getting current typography
+ */
+function handle_get_current_typography() {
+    check_ajax_referer('simple_visual_customizer', 'nonce');
+
+    $current_typography = get_option('preetidreams_active_typography', 'medical-professional');
+    wp_send_json_success($current_typography);
+}
+add_action('wp_ajax_get_current_typography', 'handle_get_current_typography');
+add_action('wp_ajax_nopriv_get_current_typography', 'handle_get_current_typography');
 
 /**
  * PVC-005: Output Global Visual Customizer CSS for All Users
@@ -353,19 +448,26 @@ function output_visual_customizer_global_css() {
 
     $has_palette = !empty($config) && isset($config['paletteData']);
 
-    // FIXED: Improved typography detection logic
+    // CRITICAL FIX: Improved typography detection logic
     $has_typography = false;
-    if (!empty($typography_data) && !empty($active_typography)) {
+
+    // FIXED: Load typography from main config (like colors do)
+    if (!empty($config) && isset($config['typographyData']) && isset($config['typographyPairing'])) {
+        $typography_data = $config['typographyData'];  // ← From main config
+        $active_typography = $config['typographyPairing'];
         $has_typography = true;
-    } elseif (!empty($config) && isset($config['typographyData']) && isset($config['activeTypography'])) {
-        // Fallback: get typography from main config if not in separate options
-        $typography_data = $config['typographyData'];
-        $active_typography = $config['activeTypography'];
+
+        // Debug: Log successful typography loading from main config
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("Visual Customizer: Typography loaded from main config - {$active_typography}");
+        }
+    } elseif (!empty($typography_data) && !empty($active_typography)) {
+        // Fallback: separate options (legacy support)
         $has_typography = true;
 
         // Debug: Log fallback usage
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("Visual Customizer: Using typography from main config - {$active_typography}");
+            error_log("Visual Customizer: Using typography from separate options - {$active_typography}");
         }
     }
 
@@ -649,297 +751,6 @@ function generate_global_css_from_config($config) {
     }
 
     return false;
-}
-
-/**
- * Generate CSS from typography data with DESIGN TOKEN SYSTEM
- */
-function generate_css_from_typography_data($typography_data) {
-    if (!is_array($typography_data) || !isset($typography_data['headingFont']) || !isset($typography_data['bodyFont'])) {
-        return '';
-    }
-
-    $heading_family = '"' . $typography_data['headingFont']['family'] . '", ' . $typography_data['headingFont']['fallback'];
-    $body_family = '"' . $typography_data['bodyFont']['family'] . '", ' . $typography_data['bodyFont']['fallback'];
-
-    $heading_weights = $typography_data['headingFont']['weights'] ?? [400, 500, 600, 700];
-    $body_weights = $typography_data['bodyFont']['weights'] ?? [400, 500, 600];
-
-    $css = "/* SERVER-SIDE TYPOGRAPHY TOKENIZATION - {$typography_data['name']} */\n";
-    $css .= "body:root, html:root {\n";
-
-    // Foundation Typography Tokens
-    $css .= "    --typography-heading-family: {$heading_family} !important;\n";
-    $css .= "    --typography-body-family: {$body_family} !important;\n";
-    $css .= "    --typography-heading-weight-normal: " . ($heading_weights[0] ?? 400) . " !important;\n";
-    $css .= "    --typography-heading-weight-medium: " . ($heading_weights[1] ?? 500) . " !important;\n";
-    $css .= "    --typography-heading-weight-bold: " . ($heading_weights[2] ?? 600) . " !important;\n";
-    $css .= "    --typography-body-weight-normal: " . ($body_weights[0] ?? 400) . " !important;\n";
-    $css .= "    --typography-body-weight-medium: " . ($body_weights[1] ?? 500) . " !important;\n";
-
-    // Component Tokens - Typography (for system consistency)
-    $css .= "    --component-font-family-primary: var(--typography-heading-family) !important;\n";
-    $css .= "    --component-font-family-secondary: var(--typography-body-family) !important;\n";
-    $css .= "    --component-font-weight-heading: var(--typography-heading-weight-bold) !important;\n";
-    $css .= "    --component-font-weight-subheading: var(--typography-heading-weight-medium) !important;\n";
-    $css .= "    --component-font-weight-body: var(--typography-body-weight-normal) !important;\n";
-    $css .= "    --component-font-weight-accent: var(--typography-body-weight-medium) !important;\n";
-
-    // Semantic Typography Roles
-    $css .= "    --font-family-primary: var(--typography-heading-family) !important;\n";
-    $css .= "    --font-family-secondary: var(--typography-body-family) !important;\n";
-    $css .= "    --font-weight-heading: var(--typography-heading-weight-bold) !important;\n";
-    $css .= "    --font-weight-subheading: var(--typography-heading-weight-medium) !important;\n";
-    $css .= "    --font-weight-body: var(--typography-body-weight-normal) !important;\n";
-
-    $css .= "}\n\n";
-
-    // HIGH SPECIFICITY APPLICATION RULES - Ensures persistence after reload
-    $css .= "/* HIGH SPECIFICITY TYPOGRAPHY RULES - Server-side enforcement */\n";
-
-    // Headings with maximum specificity
-    $css .= "html body h1, html body h2, html body h3, html body h4, html body h5, html body h6,\n";
-    $css .= "html body .heading[class], html body .title[class], html body .site-title[class],\n";
-    $css .= "html body .hero-title[class], html body .section-title[class] {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "}\n\n";
-
-    // Body text with maximum specificity
-    $css .= "html body, html body p, html body div, html body span, html body a, html body li, html body td, html body th,\n";
-    $css .= "html body .body-text[class], html body .content[class], html body .description[class] {\n";
-    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
-    $css .= "}\n\n";
-
-    // Specific weight applications with high specificity
-    $css .= "html body h1[class], html body .hero-title[class] {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-heading) !important;\n";
-    $css .= "}\n\n";
-
-    $css .= "html body h2[class], html body h3[class], html body .section-title[class] {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-subheading) !important;\n";
-    $css .= "}\n\n";
-
-    $css .= "html body h4[class], html body h5[class], html body h6[class] {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-heading) !important;\n";
-    $css .= "}\n\n";
-
-    $css .= "html body, html body p[class], html body div:not([class*='wp-']), html body span:not([class*='wp-']) {\n";
-    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-body) !important;\n";
-    $css .= "}\n\n";
-
-    // Navigation and UI Elements with server-side enforcement
-    $css .= "html body .nav-menu[class], html body .menu-item[class] a {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-subheading) !important;\n";
-    $css .= "}\n\n";
-
-    $css .= "html body button[class], html body .btn[class], html body input[type=\"submit\"][class] {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-accent) !important;\n";
-    $css .= "}\n\n";
-
-    // Medical Spa Theme Specific Elements
-    $css .= "/* Medical Spa Theme Specific Typography */\n";
-    $css .= "html body .professional-header[class] .site-title[class],\n";
-    $css .= "html body .professional-header[class] .nav-menu[class] a {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-subheading) !important;\n";
-    $css .= "}\n\n";
-
-    $css .= "html body .luxury-footer[class] {\n";
-    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
-    $css .= "}\n\n";
-
-    // Treatment and Content Areas
-    $css .= "html body .treatment-card[class] h3,\n";
-    $css .= "html body .treatment-card[class] .treatment-title[class] {\n";
-    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-heading) !important;\n";
-    $css .= "}\n\n";
-
-    $css .= "html body .treatment-card[class] p,\n";
-    $css .= "html body .treatment-card[class] .treatment-description[class] {\n";
-    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
-    $css .= "    font-weight: var(--component-font-weight-body) !important;\n";
-    $css .= "}\n\n";
-
-    return $css;
-}
-
-/**
- * Medical spa theme integration CSS - SURGICAL FIX: Using ACTUAL theme variables and classes
- */
-function generate_medical_spa_integration_css() {
-    return "
-/* Live Preview System - SURGICAL FIX - Medical Spa Theme Integration */
-
-/* Professional Header - REAL CLASS with ACTUAL VARIABLES */
-.professional-header {
-    background-color: var(--color-primary-navy) !important;
-    background: var(--gradient-primary) !important;
-    transition: background-color 0.3s ease !important;
-}
-
-.professional-header.scrolled {
-    background: rgba(var(--color-primary-navy-rgb), 0.95) !important;
-    background-color: var(--color-primary-navy) !important;
-    backdrop-filter: blur(10px) !important;
-}
-
-/* Navigation Menu - REAL CLASS with ACTUAL VARIABLES */
-.nav-menu .menu-item a,
-.site-title a,
-.logo-text {
-    color: var(--color-neutral-white) !important;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
-}
-
-.nav-menu .menu-item a:hover,
-.nav-menu .menu-item.current-menu-item a {
-    color: var(--color-primary-teal) !important;
-    background: rgba(var(--color-primary-teal-rgb), 0.1) !important;
-}
-
-/* Header Actions and CTA - REAL CLASS with ACTUAL VARIABLES */
-.btn-consultation {
-    background: var(--gradient-accent) !important;
-    border-color: var(--color-secondary-peach) !important;
-    color: var(--color-neutral-white) !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 12px rgba(var(--color-secondary-peach-rgb), 0.3) !important;
-}
-
-.btn-consultation:hover {
-    background: var(--color-primary-teal) !important;
-    border-color: var(--color-primary-teal) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 25px rgba(var(--color-primary-teal-rgb), 0.4) !important;
-}
-
-/* Phone Links - ACTUAL VARIABLES */
-.phone-link,
-.mobile-phone-btn {
-    color: var(--color-primary-teal) !important;
-}
-
-.phone-link:hover,
-.mobile-phone-btn:hover {
-    color: var(--color-primary-navy) !important;
-}
-
-/* Site Branding - ACTUAL VARIABLES */
-.site-title,
-.site-title a {
-    color: var(--color-primary-navy) !important;
-}
-
-.logo-medical-cross {
-    background: var(--gradient-primary) !important;
-    color: var(--color-neutral-white) !important;
-}
-
-/* Mobile Menu Elements - ACTUAL VARIABLES */
-.mobile-consultation-btn {
-    background: var(--gradient-accent) !important;
-    color: var(--color-neutral-white) !important;
-}
-
-.mobile-consultation-btn:hover {
-    background: var(--color-primary-teal) !important;
-}
-
-/* Mobile Navigation - ACTUAL VARIABLES */
-.mobile-nav-list a {
-    color: var(--color-primary-navy) !important;
-}
-
-.mobile-nav-list a:hover,
-.mobile-nav-list .current a {
-    color: var(--color-primary-teal) !important;
-}
-
-/* General Button Styles - ACTUAL VARIABLES */
-button,
-.button,
-input[type='submit'] {
-    background: var(--gradient-accent) !important;
-    color: var(--color-neutral-white) !important;
-    border-color: var(--color-secondary-peach) !important;
-}
-
-button:hover,
-.button:hover,
-input[type='submit']:hover {
-    background: var(--color-primary-teal) !important;
-    border-color: var(--color-primary-teal) !important;
-}
-
-/* Footer Elements - ACTUAL VARIABLES */
-.luxury-footer {
-    background: var(--color-primary-navy) !important;
-    color: var(--color-neutral-white) !important;
-}
-
-.cta-primary {
-    background: var(--gradient-accent) !important;
-    color: var(--color-neutral-white) !important;
-}
-
-.cta-secondary {
-    background: var(--color-primary-teal) !important;
-    color: var(--color-neutral-white) !important;
-}
-
-/* Article and Content Elements - ACTUAL VARIABLES */
-article {
-    background-color: var(--color-neutral-white) !important;
-    border-color: var(--color-primary-teal) !important;
-}
-
-/* Form Elements - ACTUAL VARIABLES */
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: var(--color-primary-teal) !important;
-    box-shadow: 0 0 0 3px rgba(var(--color-primary-teal-rgb), 0.1) !important;
-}
-
-/* Text Colors - ACTUAL VARIABLES */
-.text-primary,
-h1, h2, h3, h4, h5, h6 {
-    color: var(--color-primary-navy) !important;
-}
-
-/* High specificity for global changes - TARGET ACTUAL CLASSES */
-.professional-header,
-.btn-consultation,
-.nav-menu,
-.luxury-footer,
-article,
-button {
-    transition: all 0.3s ease !important;
-}
-
-/* Immediate color variable overrides - SURGICAL FIX */
-:root {
-    /* Ensure variables exist with fallbacks to theme defaults */
-    --color-primary-navy: var(--color-primary-navy, #2c3e50);
-    --color-primary-teal: var(--color-primary-teal, #16a085);
-    --color-secondary-peach: var(--color-secondary-peach, #f39c12);
-    --color-neutral-white: var(--color-neutral-white, #ffffff);
-    --color-soft-cream: var(--color-soft-cream, #fefcf8);
-    --color-charcoal: var(--color-charcoal, #2c2c2c);
-
-    /* RGB versions for transparency effects */
-    --color-primary-navy-rgb: 44, 62, 80;
-    --color-primary-teal-rgb: 22, 160, 133;
-    --color-secondary-peach-rgb: 243, 156, 18;
-}
-    ";
 }
 
 /**
@@ -1678,44 +1489,3 @@ function handle_comprehensive_css_diagnostic() {
     });
 }
 add_action('init', 'handle_comprehensive_css_diagnostic');
-
-/**
- * AJAX handler to get current typography
- */
-function handle_get_current_typography() {
-    // Verify nonce
-    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'simple_visual_customizer_nonce')) {
-        wp_send_json_error('Security check failed');
-        return;
-    }
-
-    // Get current typography from WordPress options
-    $current_typography = get_option('preetidreams_active_typography', '');
-
-    // If no typography is set, try to detect from configuration
-    if (empty($current_typography)) {
-        $config = get_option('preetidreams_visual_customizer_config', '{}');
-        if (!empty($config)) {
-            $config_data = json_decode($config, true);
-            if (isset($config_data['activeTypography'])) {
-                $current_typography = $config_data['activeTypography'];
-            } elseif (isset($config_data['typographyPairing'])) {
-                $current_typography = $config_data['typographyPairing'];
-            }
-        }
-    }
-
-    // If still no typography, try legacy options
-    if (empty($current_typography)) {
-        $current_typography = get_option('medspaa_current_typography', '');
-    }
-
-    // Return the current typography
-    if (!empty($current_typography)) {
-        wp_send_json_success($current_typography);
-    } else {
-        wp_send_json_success('medical-professional'); // Default fallback
-    }
-}
-add_action('wp_ajax_get_current_typography', 'handle_get_current_typography');
-add_action('wp_ajax_nopriv_get_current_typography', 'handle_get_current_typography');
