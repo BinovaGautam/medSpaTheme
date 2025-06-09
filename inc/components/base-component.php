@@ -130,9 +130,10 @@ abstract class BaseComponent {
      * Register WordPress Customizer controls
      */
     protected function register_customizer_controls() {
-        if (is_customize_preview() || is_admin()) {
-            add_action('customize_register', [$this, 'customize_register_callback']);
-        }
+        // DISABLED: Causing conflicts with WordPress Customizer - moved to ComponentRegistry
+        // if (is_customize_preview() || is_admin()) {
+        //     add_action('customize_register', [$this, 'customize_register_callback']);
+        // }
     }
 
     /**

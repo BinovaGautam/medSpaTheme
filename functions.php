@@ -89,6 +89,9 @@ function medspa_components_init() {
 // Include the Visual Customizer Integration
 require_once get_template_directory() . '/inc/visual-customizer-integration.php';
 
+// Include the Simple Visual Customizer (Admin Bar Integration)
+require_once get_template_directory() . '/inc/visual-customizer-simple.php';
+
 /**
  * ============================================================================
  * ESSENTIAL THEME SETUP FUNCTION (RESTORED)

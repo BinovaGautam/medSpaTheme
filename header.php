@@ -78,16 +78,6 @@
 
             <!-- Header Actions -->
             <div class="header-actions">
-                <!-- Phone Number (Desktop Only) -->
-                <?php
-                $phone = preetidreams_get_phone();
-                if ($phone) : ?>
-                    <div class="header-phone desktop-only">
-                        <a href="tel:<?php echo esc_attr($phone); ?>" class="phone-link">
-                            <?php echo esc_html($phone); ?>
-                        </a>
-                    </div>
-                <?php endif; ?>
 
                 <!-- Book Consultation Button -->
                 <div class="header-cta">
