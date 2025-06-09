@@ -8,7 +8,7 @@
  */
 
 // Include WordPress
-require_once('../../../wp-load.php');
+require_once('../../../../wp-load.php');
 
 if (!current_user_can('manage_options')) {
     die('Access denied. Admin privileges required.');
@@ -128,7 +128,7 @@ if (!current_user_can('manage_options')) {
         echo "<h3>Typography CSS Generation Test:</h3>";
 
         // Test the CSS generation function
-        include_once('inc/visual-customizer-simple.php');
+        include_once('../../inc/visual-customizer-simple.php');
         $generated_css = generate_css_from_typography_data($typography_data);
 
         if (!empty($generated_css)) {

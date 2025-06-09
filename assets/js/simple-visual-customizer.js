@@ -14,22 +14,36 @@
 
     /**
      * OPTIMAL UX: Preload typography fonts on page load for instant previews
+     * PERFORMANCE OPTIMIZED: Check if server already loaded fonts
      */
     function preloadTypographyFontsOnPageLoad() {
-        console.log('🚀 Preloading typography fonts for optimal UX...');
+        console.log('🚀 Checking font loading status for optimal UX...');
 
-        // Only preload if user is likely to use customizer (admin users, etc.)
+        // PERFORMANCE FIX: Check if server already loaded the fonts
+        const serverLoadedFonts = document.querySelector('#selected-typography-fonts-css');
+        const serverLoadedPreviewFonts = document.querySelector('#typography-preview-fonts-server-css');
+
+        if (serverLoadedFonts) {
+            console.log('✅ Server already loaded selected typography fonts - no client loading needed');
+        }
+
+        if (serverLoadedPreviewFonts) {
+            console.log('✅ Server already loaded preview fonts for admin user - no client loading needed');
+            return Promise.resolve(); // Fonts already loaded by server
+        }
+
+        // Only preload if user is likely to use customizer AND server didn't load fonts
         if (typeof simpleCustomizer !== 'undefined' && simpleCustomizer.nonce) {
-            console.log('✅ User can access customizer, preloading fonts...');
+            console.log('✅ User can access customizer but server fonts not detected, minimal client preload...');
 
             // Use a timeout to not block page load
             setTimeout(() => {
                 loadGoogleFontsForTypographyPreviews().then(() => {
-                    console.log('✅ Typography fonts preloaded successfully');
+                    console.log('✅ Typography fonts preloaded successfully (client fallback)');
                 }).catch(error => {
                     console.warn('⚠️ Typography fonts preload failed:', error);
                 });
-            }, 1000); // Wait 1 second after page load
+            }, 500); // Reduced timeout since server should handle most cases
         } else {
             console.log('🔍 User cannot access customizer, skipping font preload');
         }
@@ -221,6 +235,7 @@
 
     /**
      * Open sidebar and load interfaces on-demand
+     * PERFORMANCE OPTIMIZED: Rely on server-loaded fonts
      */
     function openSidebar() {
         console.log('🚀 Opening Simple Visual Customizer sidebar...');
@@ -229,8 +244,16 @@
         $('#simple-vc-overlay').fadeIn(200);
         $('#simple-vc-sidebar').addClass('open');
 
-        // CRITICAL FIX: Load Google Fonts for typography previews IMMEDIATELY when sidebar opens
-        loadGoogleFontsForTypographyPreviews();
+        // PERFORMANCE OPTIMIZATION: Check if fonts are already loaded by server
+        const serverLoadedPreviewFonts = document.querySelector('#typography-preview-fonts-server-css');
+
+        if (serverLoadedPreviewFonts) {
+            console.log('✅ Typography fonts already loaded by server - instant preview ready!');
+        } else {
+            console.log('⚠️ Server fonts not detected, loading client-side fonts...');
+            // CRITICAL FIX: Load Google Fonts for typography previews IMMEDIATELY when sidebar opens
+            loadGoogleFontsForTypographyPreviews();
+        }
 
         // Load color palette interface immediately (always works)
         loadColorPaletteInterface();
@@ -2366,9 +2389,26 @@
 
     /**
      * CRITICAL FIX: Load Google Fonts for Typography Previews
+     * PERFORMANCE OPTIMIZED: Instant loading with server-side coordination
      */
     function loadGoogleFontsForTypographyPreviews() {
-        console.log('🔗 Loading Google Fonts for typography previews...');
+        console.log('🔗 Optimizing Google Fonts loading for typography previews...');
+
+        // PERFORMANCE CHECK: If server already loaded preview fonts, use them
+        const serverPreviewFonts = document.querySelector('#typography-preview-fonts-server-css');
+        if (serverPreviewFonts) {
+            console.log('✅ Server already loaded preview fonts - using server fonts for instant previews');
+
+            // Wait for fonts to be ready and return resolved promise
+            if (document.fonts && document.fonts.ready) {
+                return document.fonts.ready.then(() => {
+                    console.log('✅ Server-loaded fonts are ready for previews');
+                    return Promise.resolve();
+                });
+            } else {
+                return Promise.resolve();
+            }
+        }
 
         // All fonts needed for previews with proper encoding
         const previewFonts = [
@@ -2389,7 +2429,7 @@
         const existingPreviewLink = document.querySelector('#typography-preview-fonts');
 
         if (existingPreviewLink && existingPreviewLink.href === googleFontsUrl) {
-            console.log('✅ Typography preview fonts already loaded');
+            console.log('✅ Typography preview fonts already loaded via client');
             return Promise.resolve();
         }
 
@@ -2398,16 +2438,20 @@
             existingPreviewLink.remove();
         }
 
-        // Create new link element for preview fonts
+        // Create new link element for preview fonts with optimizations
         const link = document.createElement('link');
         link.id = 'typography-preview-fonts';
         link.rel = 'stylesheet';
         link.href = googleFontsUrl;
 
+        // PERFORMANCE OPTIMIZATION: Add critical loading attributes
+        link.crossOrigin = 'anonymous';
+        link.fetchPriority = 'high';
+
         // Return promise for better loading management
         return new Promise((resolve, reject) => {
             link.onload = () => {
-                console.log('✅ Typography preview fonts loaded successfully');
+                console.log('✅ Typography preview fonts loaded successfully (client fallback)');
 
                 // Wait for fonts to be ready in the browser
                 if (document.fonts && document.fonts.ready) {
@@ -2418,12 +2462,12 @@
                         setTimeout(() => {
                             const previewElements = document.querySelectorAll('.typography-preview-aa');
                             if (previewElements.length > 0) {
-                                console.log(`🔄 Forcing font update on ${previewElements.length} preview cards`);
+                                console.log(`🔄 Optimizing ${previewElements.length} preview cards`);
                                 previewElements.forEach(el => {
                                     el.style.fontFamily = el.style.fontFamily; // Force redraw
                                 });
                             }
-                        }, 100);
+                        }, 50); // Faster update
 
                         resolve();
                     });
@@ -2432,7 +2476,7 @@
                     setTimeout(() => {
                         console.log('✅ Preview fonts ready (fallback timing)');
                         resolve();
-                    }, 500);
+                    }, 200); // Faster fallback
                 }
             };
 
@@ -2443,11 +2487,11 @@
 
             document.head.appendChild(link);
 
-            // Timeout fallback
+            // Timeout fallback - faster for better UX
             setTimeout(() => {
                 console.warn('⚠️ Typography preview fonts loading timeout, proceeding anyway');
                 resolve();
-            }, 3000);
+            }, 1500); // Reduced from 3000ms to 1500ms
         });
 
         console.log('🔗 Typography preview fonts URL:', googleFontsUrl);
@@ -2594,11 +2638,46 @@
 
     /**
      * Load Google Fonts synchronously and return a Promise
+     * PERFORMANCE OPTIMIZED: Leverage server-side fonts for instant loading
      */
     function loadGoogleFontsForTypographySync(typographyData) {
         return new Promise((resolve, reject) => {
+            console.log('🔗 Optimizing Google Fonts loading for typography application...');
+
+            // PERFORMANCE CHECK: If server already loaded the selected typography fonts, use them
+            const serverSelectedFonts = document.querySelector('#selected-typography-fonts-css');
+            if (serverSelectedFonts) {
+                console.log('✅ Server already loaded selected typography fonts - instant application!');
+
+                // Verify the fonts match what we're trying to apply
+                const serverHref = serverSelectedFonts.href;
+                const needsTheseGoogleFonts = typographyData.googleFonts || [];
+
+                // Check if server fonts include our needed fonts
+                const serverHasNeededFonts = needsTheseGoogleFonts.every(font =>
+                    serverHref.includes(font.replace(/\+/g, ' ').split(':')[0])
+                );
+
+                if (serverHasNeededFonts) {
+                    console.log('✅ Server fonts match needed typography - using server fonts for instant application');
+
+                    // Wait for fonts to be ready and resolve immediately
+                    if (document.fonts && document.fonts.ready) {
+                        document.fonts.ready.then(() => {
+                            console.log('✅ Server typography fonts ready for instant application');
+                            resolve();
+                        });
+                    } else {
+                        resolve(); // Immediate resolution for older browsers
+                    }
+                    return;
+                } else {
+                    console.log('⚠️ Server fonts don\'t match needed typography, loading additional fonts...');
+                }
+            }
+
             if (!typographyData.googleFonts || typographyData.googleFonts.length === 0) {
-                console.log('📝 No Google Fonts to load, proceeding...');
+                console.log('📝 No Google Fonts to load, using system fonts...');
                 resolve();
                 return;
             }
@@ -2606,7 +2685,7 @@
             const fontsQuery = typographyData.googleFonts.join('&family=');
             const googleFontsUrl = `https://fonts.googleapis.com/css2?family=${fontsQuery}&display=swap`;
 
-            console.log('🔗 Loading Google Fonts:', googleFontsUrl);
+            console.log('🔗 Loading Google Fonts for typography application:', googleFontsUrl);
 
             // Check if fonts are already loaded
             const existingLink = document.querySelector('#typography-google-fonts');
@@ -2622,25 +2701,29 @@
                 existingLink.remove();
             }
 
-            // Create new link element
+            // Create new link element with performance optimizations
             const link = document.createElement('link');
             link.id = 'typography-google-fonts';
             link.rel = 'stylesheet';
             link.href = googleFontsUrl;
 
-            // Wait for fonts to load
-            link.onload = () => {
-                console.log('✅ Google Fonts loaded successfully');
+            // PERFORMANCE OPTIMIZATION: Add critical loading attributes
+            link.crossOrigin = 'anonymous';
+            link.fetchPriority = 'high';
 
-                // Additional check: wait for fonts to be ready
+            // Wait for fonts to load with faster timeout
+            link.onload = () => {
+                console.log('✅ Google Fonts loaded successfully for typography');
+
+                // Additional check: wait for fonts to be ready with faster resolution
                 if (document.fonts && document.fonts.ready) {
                     document.fonts.ready.then(() => {
-                        console.log('✅ All fonts ready');
+                        console.log('✅ All fonts ready for typography application');
                         resolve();
                     });
                 } else {
-                    // Fallback delay for older browsers
-                    setTimeout(resolve, 500);
+                    // Fallback delay for older browsers - faster
+                    setTimeout(resolve, 200); // Reduced from 500ms
                 }
             };
 

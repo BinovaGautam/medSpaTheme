@@ -1131,3 +1131,93 @@ body.palette-transition * {
 .simple-vc-btn:hover {
     border-color: var(--color-primary-hover, #642453);
 }
+
+/**
+ * PERFORMANCE OPTIMIZATION: Advanced Font Loading CSS
+ * Industry best practices for instant font rendering
+ */
+
+/* Critical: Ensure font-display swap for all fonts */
+@font-face {
+    font-display: swap;
+}
+
+/* Typography Performance: Preload critical font families */
+.typography-preview-aa,
+.typography-card,
+h1, h2, h3, h4, h5, h6,
+.site-title,
+.nav-menu a,
+.btn, button {
+    /* Ensure immediate text rendering with font-display properties */
+    font-display: swap;
+
+    /* Optimize font rendering */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Prevent font loading delays */
+    font-synthesis: none;
+}
+
+/* Typography Animation Performance */
+.typography-preview-aa {
+    /* Ensure smooth font transitions */
+    transition: font-family 0.1s ease !important; /* Faster transition */
+
+    /* Force GPU acceleration for font rendering */
+    transform: translateZ(0);
+    will-change: font-family;
+}
+
+/* Advanced Font Loading States */
+.typography-loading-state {
+    /* Optimize loading animations */
+    animation: fadeInOptimized 0.2s ease-in-out;
+}
+
+@keyframes fadeInOptimized {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Critical Font Display Optimization */
+.typography-card .typography-preview-aa {
+    /* Ensure instant font preview display */
+    font-display: block; /* Show text immediately even if font not loaded */
+
+    /* Optimize preview card performance */
+    contain: layout style paint;
+}
+
+/* Server-Side Font Loading Optimization Markers */
+#selected-typography-fonts-css,
+#typography-preview-fonts-server-css {
+    /* Mark server-loaded fonts for client detection */
+    --font-loading-source: server;
+}
+
+/* Performance: Reduce layout shifts during font loading */
+.typography-grid .typography-card {
+    /* Prevent layout shifts */
+    min-height: 85px;
+
+    /* Optimize card rendering */
+    contain: layout style;
+}
+
+/* Advanced Typography Application Styles */
+.typography-interface-working {
+    /* Optimize interface rendering */
+    transform: translateZ(0);
+
+    /* Prevent unnecessary repaints */
+    contain: layout style paint;
+}

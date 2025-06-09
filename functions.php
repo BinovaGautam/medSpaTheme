@@ -3364,3 +3364,82 @@ function preetidreams_enqueue_design_token_system() {
 }
 add_action('wp_enqueue_scripts', 'preetidreams_enqueue_design_token_system');
 add_action('customize_preview_init', 'preetidreams_enqueue_design_token_system');
+
+/**
+ * PERFORMANCE OPTIMIZATION: Server-side Google Fonts loading for selected typography
+ * Industry best practice: Load fonts in HTML head for immediate availability
+ */
+function enqueue_selected_typography_fonts() {
+    // Get current typography configuration
+    $config = get_option('preetidreams_visual_customizer_config', []);
+
+    if (!empty($config['typographyData'])) {
+        $typography = $config['typographyData'];
+
+        // Build Google Fonts URL for selected typography
+        if (!empty($typography['googleFonts'])) {
+            $fonts_query = implode('&family=', $typography['googleFonts']);
+            $google_fonts_url = "https://fonts.googleapis.com/css2?family={$fonts_query}&display=swap";
+
+            // Enqueue the selected typography fonts
+            wp_enqueue_style(
+                'selected-typography-fonts',
+                $google_fonts_url,
+                [],
+                null // No version for Google Fonts
+            );
+
+            // Add resource hints for performance
+            add_action('wp_head', function() {
+                echo '<link rel="dns-prefetch" href="//fonts.googleapis.com">' . "\n";
+                echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+            }, 1);
+
+            error_log("✅ Server-side fonts loaded: " . $google_fonts_url);
+        }
+    }
+
+    // Always load preview fonts for customizer interface (for admin users)
+    if (current_user_can('customize')) {
+        $preview_fonts = [
+            'Inter:wght@400;500;600;700',
+            'Playfair+Display:wght@400;500;600;700',
+            'Poppins:wght@400;500;600;700',
+            'Crimson+Text:wght@400;500;600;700',
+            'Montserrat:wght@400;500;600;700',
+            'Cormorant+Garamond:wght@400;500;600;700',
+            'IBM+Plex+Sans:wght@400;500;600;700',
+            'Merriweather:wght@400;500;600;700;900'
+        ];
+
+        $preview_fonts_query = implode('&family=', $preview_fonts);
+        $preview_fonts_url = "https://fonts.googleapis.com/css2?family={$preview_fonts_query}&display=swap";
+
+        wp_enqueue_style(
+            'typography-preview-fonts-server',
+            $preview_fonts_url,
+            [],
+            null
+        );
+
+        error_log("✅ Server-side preview fonts loaded for admin user");
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_selected_typography_fonts', 5); // High priority
+
+/**
+ * PERFORMANCE OPTIMIZATION: Add critical font loading optimizations to head
+ */
+function add_font_loading_optimizations() {
+    echo '<link rel="dns-prefetch" href="//fonts.googleapis.com">' . "\n";
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+
+    // Add font-display CSS for immediate text rendering
+    echo '<style>' . "\n";
+    echo '@font-face { font-display: swap; }' . "\n";
+    echo '</style>' . "\n";
+}
+add_action('wp_head', 'add_font_loading_optimizations', 1);
+
+// Include performance optimizations
+require_once get_template_directory() . '/inc/typography-performance.php';
