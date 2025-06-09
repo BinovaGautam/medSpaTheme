@@ -394,3 +394,59 @@ function medspa_theme_styles() {
     }
 }
 add_action('wp_enqueue_scripts', 'medspa_theme_styles');
+
+/**
+ * Get phone number for theme
+ *
+ * @return string Phone number
+ */
+function preetidreams_get_phone() {
+    // Return default phone number or get from customizer
+    $phone = get_theme_mod('contact_phone', '+1 (555) 123-4567');
+    return $phone;
+}
+
+/**
+ * Get address for theme
+ *
+ * @return string Address
+ */
+function preetidreams_get_address() {
+    // Return default address or get from customizer
+    $address = get_theme_mod('contact_address', '123 Medical Plaza\nBeverly Hills, CA 90210');
+    return $address;
+}
+
+/**
+ * Get hours for theme
+ *
+ * @return string Hours
+ */
+function preetidreams_get_hours() {
+    // Return default hours or get from customizer
+    $hours = get_theme_mod('contact_hours', 'Mon-Fri: 9:00 AM - 6:00 PM\nSat: 10:00 AM - 4:00 PM\nSun: By Appointment');
+    return $hours;
+}
+
+/**
+ * Get email for theme
+ *
+ * @return string Email
+ */
+function preetidreams_get_email() {
+    // Return default email or get from customizer
+    $email = get_theme_mod('contact_email', 'info@preetidreams.com');
+    return $email;
+}
+
+/**
+ * Get social link for theme
+ *
+ * @param string $platform Social platform
+ * @return string Social link
+ */
+function preetidreams_get_social_link($platform) {
+    // Return social link from customizer
+    $link = get_theme_mod('social_' . $platform, '');
+    return $link;
+}

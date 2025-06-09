@@ -355,7 +355,9 @@ class ComponentRegistry {
         add_action('wp_head', function() use ($name, $class) {
             if (method_exists($class, 'get_default_tokens')) {
                 try {
-                    $tokens = call_user_func([$class, 'get_default_tokens']);
+                    // Create instance to call non-static method
+                    $instance = new $class();
+                    $tokens = $instance->get_default_tokens();
 
                     if (!empty($tokens)) {
                         echo "<style id='{$name}-component-tokens'>\n";
