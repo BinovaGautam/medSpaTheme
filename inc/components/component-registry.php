@@ -497,9 +497,33 @@ class ComponentRegistry {
             ]);
         }
 
+        // Form Components (T6.5 Implementation)
+        if (file_exists($component_dir . 'form-component.php')) {
+            require_once $component_dir . 'form-component.php';
+            self::register('form', 'FormComponent', [
+                'priority' => 30,
+                'cacheable' => false, // Forms typically shouldn't be cached
+                'lazy_load' => false,
+                'accessibility_required' => true,
+                'security_required' => true
+            ]);
+        }
+
+        // Specialized Form Components
+        if (file_exists($component_dir . 'forms/consultation-form.php')) {
+            require_once $component_dir . 'forms/consultation-form.php';
+            self::register('consultation-form', 'ConsultationForm', [
+                'priority' => 31,
+                'cacheable' => false,
+                'lazy_load' => false,
+                'accessibility_required' => true,
+                'security_required' => true
+            ]);
+        }
+
         // Log registration completion
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('ComponentRegistry: Core components registration completed');
+            error_log('ComponentRegistry: Core components registration completed - ' . count(self::$components) . ' components registered');
         }
     }
 

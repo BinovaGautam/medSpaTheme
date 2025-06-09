@@ -389,6 +389,14 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // Form component styles (T6.5 Implementation)
+    wp_enqueue_style(
+        'form-component-styles',
+        get_template_directory_uri() . '/assets/css/components/form.css',
+        [],
+        PREETIDREAMS_VERSION
+    );
+
     // Component system styles (if needed for other components)
     if (class_exists('ComponentRegistry')) {
         $registered_components = ComponentRegistry::get_registered_components();
