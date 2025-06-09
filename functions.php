@@ -441,6 +441,15 @@ function medspa_theme_styles() {
         true
     );
 
+    // T6.8.2 Footer Google Maps Integration
+    wp_enqueue_script(
+        'footer-maps-scripts',
+        get_template_directory_uri() . '/assets/js/footer-maps.js',
+        array('jquery'),
+        filemtime(get_template_directory() . '/assets/js/footer-maps.js'),
+        true
+    );
+
     // Localize footer scripts
     wp_localize_script('footer-component-scripts', 'footerSettings', array(
         'ajaxurl' => admin_url('admin-ajax.php'),

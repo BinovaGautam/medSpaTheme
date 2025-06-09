@@ -341,6 +341,10 @@
                                     <div class="icon-bg">📝</div>
                                     <span class="icon-label">Typography</span>
                                 </div>
+                                <div class="launcher-icon" data-section="footer" title="Footer Components">
+                                    <div class="icon-bg">🦶</div>
+                                    <span class="icon-label">Footer</span>
+                                </div>
                                 <div class="launcher-icon" data-section="layout" title="Layout & Spacing">
                                     <div class="icon-bg">📐</div>
                                     <span class="icon-label">Layout</span>
@@ -376,6 +380,374 @@
                                 </div>
                             </div>
 
+                            <!-- Footer Section -->
+                            <div class="customizer-section" id="section-footer">
+                                <div class="section-header">
+                                    <h4>🦶 Footer Components</h4>
+                                    <p>Modern footer design with map integration and cards</p>
+                                </div>
+                                <div id="simple-footer-container" class="simple-footer-container">
+                                    <!-- Footer Customization Interface -->
+                                    <div class="footer-customizer">
+
+                                        <!-- Hero Section Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">🌟 Hero Section</h5>
+                                            <div class="control-item">
+                                                <label>Hero Headline</label>
+                                                <input type="text"
+                                                       data-property="--footer-hero-headline"
+                                                       data-target=".hero-headline"
+                                                       placeholder="Ready to Transform Your Beauty Journey?"
+                                                       class="footer-control">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Hero Subtext</label>
+                                                <textarea data-property="--footer-hero-subtext"
+                                                          data-target=".hero-subtext"
+                                                          placeholder="Experience luxury medical aesthetics..."
+                                                          class="footer-control"></textarea>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Hero Background Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-hero-bg-color"
+                                                       data-target=".footer-hero-cta"
+                                                       value="#1B365D"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Overlay Opacity</label>
+                                                <input type="range"
+                                                       data-property="--footer-hero-overlay-opacity"
+                                                       data-target=".hero-overlay"
+                                                       min="0" max="1" step="0.1" value="0.8"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">0.8</span>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Hero Padding</label>
+                                                <input type="range"
+                                                       data-property="--footer-hero-padding"
+                                                       data-target=".footer-hero-cta"
+                                                       min="32" max="120" step="8" value="64"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">64px</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Map Section Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">🗺️ Map Integration</h5>
+                                            <div class="control-item">
+                                                <label>Enable Map Section</label>
+                                                <input type="checkbox"
+                                                       data-property="--footer-map-enabled"
+                                                       data-target=".footer-map-section"
+                                                       checked
+                                                       class="footer-control toggle-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Map Height</label>
+                                                <input type="range"
+                                                       data-property="--footer-map-height"
+                                                       data-target=".footer-map-section"
+                                                       min="200" max="600" step="50" value="400"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">400px</span>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Overlay Background</label>
+                                                <input type="color"
+                                                       data-property="--footer-map-overlay-bg"
+                                                       data-target=".clinic-info-card"
+                                                       value="#1B365D"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Overlay Border Radius</label>
+                                                <input type="range"
+                                                       data-property="--footer-map-border-radius"
+                                                       data-target=".clinic-info-card"
+                                                       min="0" max="20" step="2" value="12"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">12px</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card Design Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">🎴 Information Cards</h5>
+                                            <div class="control-item">
+                                                <label>Card Background</label>
+                                                <input type="color"
+                                                       data-property="--footer-card-bg"
+                                                       data-target=".info-card"
+                                                       value="#ffffff"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Card Border Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-card-border-color"
+                                                       data-target=".info-card"
+                                                       value="#e5e7eb"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Card Border Radius</label>
+                                                <input type="range"
+                                                       data-property="--footer-card-radius"
+                                                       data-target=".info-card"
+                                                       min="0" max="20" step="2" value="12"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">12px</span>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Card Padding</label>
+                                                <input type="range"
+                                                       data-property="--footer-card-padding"
+                                                       data-target=".info-card"
+                                                       min="12" max="48" step="4" value="24"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">24px</span>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Card Shadow</label>
+                                                <select data-property="--footer-card-shadow"
+                                                        data-target=".info-card"
+                                                        class="footer-control select-input">
+                                                    <option value="none">None</option>
+                                                    <option value="0 1px 3px rgba(0,0,0,0.1)">Small</option>
+                                                    <option value="0 4px 6px rgba(0,0,0,0.1)" selected>Medium</option>
+                                                    <option value="0 10px 15px rgba(0,0,0,0.1)">Large</option>
+                                                    <option value="0 20px 25px rgba(0,0,0,0.1)">Extra Large</option>
+                                                </select>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Cards Grid Gap</label>
+                                                <input type="range"
+                                                       data-property="--footer-card-gap"
+                                                       data-target=".cards-grid"
+                                                       min="8" max="48" step="4" value="24"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">24px</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- CTA Button Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">🎯 CTA Buttons</h5>
+                                            <div class="control-item">
+                                                <label>Primary Button Background</label>
+                                                <input type="color"
+                                                       data-property="--footer-cta-primary-bg"
+                                                       data-target=".cta-primary-modern"
+                                                       value="#D4AF37"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Primary Button Hover</label>
+                                                <input type="color"
+                                                       data-property="--footer-cta-primary-hover"
+                                                       data-target=".cta-primary-modern:hover"
+                                                       value="#E6C547"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Primary Button Text</label>
+                                                <input type="color"
+                                                       data-property="--footer-cta-primary-text"
+                                                       data-target=".cta-primary-modern"
+                                                       value="#ffffff"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Secondary Button Border</label>
+                                                <input type="color"
+                                                       data-property="--footer-cta-secondary-border"
+                                                       data-target=".cta-secondary-modern"
+                                                       value="#D4AF37"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Button Border Radius</label>
+                                                <input type="range"
+                                                       data-property="--footer-cta-radius"
+                                                       data-target=".cta-primary-modern, .cta-secondary-modern"
+                                                       min="0" max="25" step="1" value="12"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">12px</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Typography Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">📝 Typography</h5>
+                                            <div class="control-item">
+                                                <label>Primary Text Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-text-primary"
+                                                       data-target=".footer-component"
+                                                       value="#1f2937"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Secondary Text Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-text-secondary"
+                                                       data-target=".footer-component"
+                                                       value="#6b7280"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Accent Text Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-text-accent"
+                                                       data-target=".footer-component"
+                                                       value="#D4AF37"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Hero Headline Size</label>
+                                                <input type="range"
+                                                       data-property="--footer-hero-headline-size"
+                                                       data-target=".hero-headline"
+                                                       min="24" max="48" step="2" value="36"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">36px</span>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Card Title Size</label>
+                                                <input type="range"
+                                                       data-property="--footer-card-title-size"
+                                                       data-target=".card-title"
+                                                       min="16" max="28" step="1" value="20"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">20px</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Newsletter Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">📧 Newsletter</h5>
+                                            <div class="control-item">
+                                                <label>Newsletter Background</label>
+                                                <input type="color"
+                                                       data-property="--footer-newsletter-bg"
+                                                       data-target=".footer-newsletter-section"
+                                                       value="#f8fafc"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Input Background</label>
+                                                <input type="color"
+                                                       data-property="--footer-newsletter-input-bg"
+                                                       data-target=".newsletter-input"
+                                                       value="#ffffff"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Input Border Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-newsletter-input-border"
+                                                       data-target=".newsletter-input"
+                                                       value="#e5e7eb"
+                                                       class="footer-control color-input">
+                                            </div>
+                                        </div>
+
+                                        <!-- Layout Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">📐 Layout</h5>
+                                            <div class="control-item">
+                                                <label>Container Max Width</label>
+                                                <input type="range"
+                                                       data-property="--footer-container-max-width"
+                                                       data-target=".footer-container"
+                                                       min="960" max="1400" step="20" value="1200"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">1200px</span>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Section Padding</label>
+                                                <input type="range"
+                                                       data-property="--footer-section-padding"
+                                                       data-target=".footer-cards-section, .footer-newsletter-section"
+                                                       min="24" max="80" step="8" value="48"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">48px</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Footer Bottom Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">🔽 Footer Bottom</h5>
+                                            <div class="control-item">
+                                                <label>Bottom Background</label>
+                                                <input type="color"
+                                                       data-property="--footer-bottom-bg"
+                                                       data-target=".footer-bottom"
+                                                       value="#1B365D"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Bottom Text Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-bottom-text-color"
+                                                       data-target=".footer-bottom"
+                                                       value="#ffffff"
+                                                       class="footer-control color-input">
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Link Hover Color</label>
+                                                <input type="color"
+                                                       data-property="--footer-bottom-link-hover"
+                                                       data-target=".footer-menu a:hover"
+                                                       value="#D4AF37"
+                                                       class="footer-control color-input">
+                                            </div>
+                                        </div>
+
+                                        <!-- Animation Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">✨ Animations</h5>
+                                            <div class="control-item">
+                                                <label>Animation Speed</label>
+                                                <input type="range"
+                                                       data-property="--footer-transition-duration"
+                                                       data-target=".footer-component"
+                                                       min="0.1" max="1.0" step="0.1" value="0.3"
+                                                       class="footer-control range-input">
+                                                <span class="range-value">0.3s</span>
+                                            </div>
+                                            <div class="control-item">
+                                                <label>Enable Hover Effects</label>
+                                                <input type="checkbox"
+                                                       data-property="--footer-hover-effects"
+                                                       data-target=".footer-component"
+                                                       checked
+                                                       class="footer-control toggle-input">
+                                            </div>
+                                        </div>
+
+                                        <!-- Live Preview Controls -->
+                                        <div class="control-group">
+                                            <h5 class="group-title">👁️ Preview</h5>
+                                            <div class="control-item">
+                                                <button id="footer-preview-scroll" class="preview-button">
+                                                    📍 Scroll to Footer
+                                                </button>
+                                                <button id="footer-reset-controls" class="reset-button">
+                                                    🔄 Reset All Footer Settings
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Layout Section -->
                             <div class="customizer-section" id="section-layout">
                                 <div class="section-header">
@@ -401,7 +773,7 @@
                                     <div class="coming-soon">
                                         <div class="coming-soon-icon">🎭</div>
                                         <h5>Coming Soon</h5>
-                                        <p>Visual effects customization tools are being developed</p>
+                        <p>Visual effects customization tools are being developed</p>
                                     </div>
                                 </div>
                             </div>
@@ -2220,6 +2592,9 @@
             if (sectionName === 'typography') {
                 console.log('📝 Loading typography interface on demand...');
                 loadTypographyInterface();
+            } else if (sectionName === 'footer') {
+                console.log('🦶 Loading footer interface on demand...');
+                loadFooterInterface();
             }
 
             // Add visual feedback
@@ -4216,6 +4591,227 @@ html body .page-content, html body .page-content[class] {
         setupWorkingTypographyInteractions(container);
 
         console.log('✅ Typography interface rendered successfully');
+    }
+
+    /**
+     * Load Footer Interface with all 50+ controls
+     */
+    function loadFooterInterface() {
+        const container = $('#simple-footer-container');
+
+        // Check if already loaded
+        if (container.find('.footer-customizer').length > 0) {
+            console.log('🦶 Footer interface already loaded, setting up event handlers...');
+            setupFooterEventHandlers();
+            return;
+        }
+
+        console.log('🦶 Footer interface loaded from HTML, setting up event handlers...');
+        setupFooterEventHandlers();
+    }
+
+    /**
+     * Setup Footer Event Handlers for all controls
+     */
+    function setupFooterEventHandlers() {
+        console.log('🦶 Setting up footer control event handlers...');
+
+        // Handle all footer control changes
+        $(document).on('input change', '.footer-control', function() {
+            const $control = $(this);
+            const property = $control.data('property');
+            const target = $control.data('target');
+            let value = $control.val();
+
+            // Handle different input types
+            if ($control.hasClass('range-input')) {
+                const unit = $control.attr('step') && parseFloat($control.attr('step')) < 1 ? 's' : 'px';
+                value = value + unit;
+                $control.siblings('.range-value').text(value);
+            } else if ($control.hasClass('toggle-input')) {
+                value = $control.is(':checked') ? 'block' : 'none';
+                if (property === '--footer-map-enabled') {
+                    $(target).css('display', value);
+                    return;
+                }
+            } else if ($control.hasClass('color-input')) {
+                // Handle color opacity for overlay colors
+                if (property.includes('overlay')) {
+                    const opacity = property.includes('hero') ?
+                        $('.footer-control[data-property="--footer-hero-overlay-opacity"]').val() || 0.8 :
+                        0.9;
+                    value = hexToRgba(value, opacity);
+                }
+            }
+
+            // Apply the change immediately
+            applyFooterStyleChange(property, value, target);
+
+            // Update apply button state
+            updateApplyButton();
+        });
+
+        // Handle text content changes (headline, subtext)
+        $(document).on('input', '.footer-control[data-target*="headline"], .footer-control[data-target*="subtext"]', function() {
+            const $control = $(this);
+            const target = $control.data('target');
+            const value = $control.val();
+
+            if (target && $(target).length > 0) {
+                $(target).text(value);
+            }
+        });
+
+        // Preview scroll button
+        $(document).on('click', '#footer-preview-scroll', function() {
+            $('html, body').animate({
+                scrollTop: $('.footer-component').offset().top - 100
+            }, 500);
+            showMessage('📍 Scrolled to footer preview', 'info');
+        });
+
+        // Reset footer controls
+        $(document).on('click', '#footer-reset-controls', function() {
+            resetFooterControls();
+        });
+
+        console.log('✅ Footer event handlers setup complete');
+    }
+
+    /**
+     * Apply individual footer style changes with real-time preview
+     */
+    function applyFooterStyleChange(property, value, target) {
+        console.log(`🦶 Applying footer style: ${property} = ${value} to ${target}`);
+
+        // Apply to CSS custom property
+        document.documentElement.style.setProperty(property, value);
+
+        // Apply directly to elements for immediate effect
+        if (target && $(target).length > 0) {
+            const $targets = $(target);
+
+            // Map CSS properties to DOM styles
+            const propertyMap = {
+                '--footer-hero-bg-color': 'backgroundColor',
+                '--footer-hero-overlay-opacity': 'opacity',
+                '--footer-map-height': 'height',
+                '--footer-map-overlay-bg': 'backgroundColor',
+                '--footer-map-border-radius': 'borderRadius',
+                '--footer-card-bg': 'backgroundColor',
+                '--footer-card-border-color': 'borderColor',
+                '--footer-card-radius': 'borderRadius',
+                '--footer-card-padding': 'padding',
+                '--footer-card-gap': 'gap',
+                '--footer-cta-primary-bg': 'backgroundColor',
+                '--footer-cta-primary-text': 'color',
+                '--footer-cta-secondary-border': 'borderColor',
+                '--footer-cta-radius': 'borderRadius',
+                '--footer-text-primary': 'color',
+                '--footer-text-secondary': 'color',
+                '--footer-text-accent': 'color',
+                '--footer-hero-headline-size': 'fontSize',
+                '--footer-card-title-size': 'fontSize',
+                '--footer-newsletter-bg': 'backgroundColor',
+                '--footer-newsletter-input-bg': 'backgroundColor',
+                '--footer-newsletter-input-border': 'borderColor',
+                '--footer-container-max-width': 'maxWidth',
+                '--footer-section-padding': 'padding',
+                '--footer-bottom-bg': 'backgroundColor',
+                '--footer-bottom-text-color': 'color',
+                '--footer-transition-duration': 'transitionDuration'
+            };
+
+            const domProperty = propertyMap[property];
+            if (domProperty && value) {
+                $targets.css(domProperty, value);
+            }
+        }
+
+        // Special handling for specific properties
+        if (property === '--footer-card-shadow') {
+            $(target).css('boxShadow', value);
+        } else if (property === '--footer-hero-padding') {
+            $('.footer-hero-cta').css('padding', value + 'px');
+        } else if (property === '--footer-section-padding') {
+            $('.footer-cards-section, .footer-newsletter-section').css('padding', value + 'px 0');
+        }
+
+        // Trigger visual feedback
+        triggerFooterVisualFeedback();
+    }
+
+    /**
+     * Reset all footer controls to defaults
+     */
+    function resetFooterControls() {
+        console.log('🦶 Resetting footer controls to defaults...');
+
+        // Reset all form inputs to their default values
+        $('.footer-control').each(function() {
+            const $control = $(this);
+            const defaultValue = $control.attr('value') || '';
+
+            if ($control.hasClass('toggle-input')) {
+                $control.prop('checked', $control.attr('checked') === 'checked');
+            } else if ($control.hasClass('range-input')) {
+                $control.val(defaultValue);
+                $control.siblings('.range-value').text(defaultValue + ($control.attr('step') && parseFloat($control.attr('step')) < 1 ? 's' : 'px'));
+            } else {
+                $control.val(defaultValue);
+            }
+        });
+
+        // Reset CSS custom properties
+        const footerProperties = [
+            '--footer-hero-bg-color', '--footer-hero-overlay-opacity', '--footer-hero-padding',
+            '--footer-map-height', '--footer-map-overlay-bg', '--footer-map-border-radius',
+            '--footer-card-bg', '--footer-card-border-color', '--footer-card-radius', '--footer-card-padding',
+            '--footer-card-shadow', '--footer-card-gap', '--footer-cta-primary-bg', '--footer-cta-primary-hover',
+            '--footer-cta-primary-text', '--footer-cta-secondary-border', '--footer-cta-radius',
+            '--footer-text-primary', '--footer-text-secondary', '--footer-text-accent',
+            '--footer-hero-headline-size', '--footer-card-title-size', '--footer-newsletter-bg',
+            '--footer-newsletter-input-bg', '--footer-newsletter-input-border', '--footer-container-max-width',
+            '--footer-section-padding', '--footer-bottom-bg', '--footer-bottom-text-color',
+            '--footer-bottom-link-hover', '--footer-transition-duration'
+        ];
+
+        footerProperties.forEach(property => {
+            document.documentElement.style.removeProperty(property);
+        });
+
+        // Reset text content to defaults
+        $('.hero-headline').text('Ready to Transform Your Beauty Journey?');
+        $('.hero-subtext').text('Experience luxury medical aesthetics with Dr. Preeti Sharma in Beverly Hills');
+
+        showMessage('🔄 Footer controls reset to defaults', 'success');
+        triggerFooterVisualFeedback();
+    }
+
+    /**
+     * Trigger visual feedback for footer changes
+     */
+    function triggerFooterVisualFeedback() {
+        // Add temporary class to footer for visual feedback
+        $('.footer-component').addClass('footer-updating');
+
+        setTimeout(() => {
+            $('.footer-component').removeClass('footer-updating');
+        }, 300);
+
+        // Update performance metrics
+        showMessage('✅ Footer updated in real-time', 'success');
+    }
+
+    /**
+     * Convert hex color to rgba with opacity
+     */
+    function hexToRgba(hex, opacity) {
+        const rgb = hexToRgb(hex);
+        if (rgb) {
+            return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacity})`;
+        }
+        return hex;
     }
 
 })(jQuery);

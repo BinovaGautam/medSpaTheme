@@ -1,362 +1,256 @@
-<!-- Tokenization-Aware Medical Spa Footer -->
-<footer class="footer-component footer-luxury footer-layout-columns" role="contentinfo">
-    <div class="footer-container">
+<!-- Modern Medical Spa Footer -->
+<footer class="footer-component footer-modern" role="contentinfo">
 
-        <!-- Consultation CTA Section -->
-        <section class="consultation-invitation">
-            <div class="invitation-content">
-                <h2 class="invitation-headline">
-                    <?php echo esc_html(get_theme_mod('footer_consultation_headline', 'Ready to Begin Your Aesthetic Journey?')); ?>
+    <!-- Hero CTA Section with Background -->
+    <section class="footer-hero-cta" style="background-image: url('<?php echo esc_url(get_theme_mod('footer_hero_background_image', '')); ?>');">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-inner">
+                <h2 class="hero-headline">
+                    <?php echo esc_html(get_theme_mod('footer_hero_headline', 'Ready to Transform Your Beauty Journey?')); ?>
                 </h2>
-                <p class="invitation-subtext">
-                    <?php echo esc_html(get_theme_mod('footer_consultation_subtext', 'Experience the artistry of medical aesthetics with Dr. Preeti Sharma in our luxury clinic')); ?>
+                <p class="hero-subtext">
+                    <?php echo esc_html(get_theme_mod('footer_hero_subtext', 'Experience luxury medical aesthetics with Dr. Preeti Sharma in Beverly Hills')); ?>
                 </p>
 
-                <div class="cta-group" role="group" aria-label="<?php esc_attr_e('Consultation booking options', 'preetidreams'); ?>">
-                    <button class="cta-primary" onclick="window.open('<?php echo esc_url(get_theme_mod('footer_consultation_link', '/contact')); ?>', '_self')">
-                        <span class="cta-icon" aria-hidden="true">📅</span>
-                        <span><?php esc_html_e('Schedule Your In-Clinic Consultation', 'preetidreams'); ?></span>
+                <div class="hero-cta-group">
+                    <button class="cta-primary-modern" onclick="window.open('<?php echo esc_url(get_theme_mod('footer_hero_primary_link', '/contact')); ?>', '_self')">
+                        <span class="cta-icon">📅</span>
+                        <span><?php echo esc_html(get_theme_mod('footer_hero_primary_text', 'Book Your Consultation')); ?></span>
                     </button>
-                    <button class="cta-secondary" onclick="window.open('tel:<?php echo esc_attr(preetidreams_get_phone()); ?>', '_self')">
-                        <span class="cta-icon" aria-hidden="true">📞</span>
-                        <span><?php esc_html_e('Call Our Practice', 'preetidreams'); ?></span>
+                    <button class="cta-secondary-modern" onclick="window.open('tel:<?php echo esc_attr(preetidreams_get_phone()); ?>', '_self')">
+                        <span class="cta-icon">📞</span>
+                        <span><?php echo esc_html(get_theme_mod('footer_hero_secondary_text', 'Call Now')); ?></span>
                     </button>
                 </div>
 
-                <div class="trust-indicators" role="list">
-                    <span class="indicator" role="listitem">
-                        <span aria-hidden="true">🔒</span>
-                        <span><?php esc_html_e('Completely Confidential', 'preetidreams'); ?></span>
-                    </span>
-                    <span class="indicator" role="listitem">
-                        <span aria-hidden="true">✨</span>
-                        <span><?php esc_html_e('Complimentary In-Clinic Consultation', 'preetidreams'); ?></span>
-                    </span>
-                    <span class="indicator" role="listitem">
-                        <span aria-hidden="true">🏥</span>
-                        <span><?php esc_html_e('Board-Certified Excellence', 'preetidreams'); ?></span>
-                    </span>
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <span class="badge-icon">🏥</span>
+                        <span>Board Certified</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="badge-icon">✨</span>
+                        <span>15+ Years Experience</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span class="badge-icon">🔒</span>
+                        <span>HIPAA Compliant</span>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Footer Main Content -->
-        <div class="footer-main">
-            <div class="footer-grid footer-grid-4">
+    <!-- Full-Width Interactive Map Section -->
+    <?php if (get_theme_mod('footer_map_enabled', true)) : ?>
+    <section class="footer-map-section">
+        <div class="map-container">
+            <div class="google-map-wrapper">
+                <iframe
+                    src="<?php echo esc_url(get_theme_mod('footer_map_embed_url', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.2069!2d-118.3974881!3d34.0738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDA0JzI1LjciTiAxMTjCsDIzJzUxLjAiVw!5e0!3m2!1sen!2sus!4v1234567890')); ?>"
+                    width="100%"
+                    height="<?php echo esc_attr(get_theme_mod('footer_map_height', '400')); ?>"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="<?php esc_attr_e('PreetiDreams Medical Spa Location', 'preetidreams'); ?>"
+                    aria-label="<?php esc_attr_e('Interactive map showing clinic location', 'preetidreams'); ?>">
+                </iframe>
+            </div>
 
-                <!-- Contact Information Column -->
-                <div class="footer-column contact-column">
-                    <h3 class="column-title"><?php esc_html_e('Practice Information', 'preetidreams'); ?></h3>
-                    <div class="contact-info">
+            <!-- Map Overlay with Clinic Information -->
+            <div class="map-overlay">
+                <div class="clinic-info-card">
+                    <div class="clinic-marker">
+                        <span class="marker-icon">📍</span>
+                        <div class="clinic-details">
+                            <h3 class="clinic-name"><?php bloginfo('name'); ?></h3>
+                            <p class="clinic-tagline"><?php echo esc_html(get_theme_mod('footer_clinic_tagline', 'Beverly Hills Medical Spa')); ?></p>
+                            <?php $address = preetidreams_get_address(); if ($address) : ?>
+                                <p class="clinic-address"><?php echo esc_html($address); ?></p>
+                            <?php endif; ?>
+                            <a href="<?php echo esc_url(get_theme_mod('footer_directions_link', 'https://maps.google.com')); ?>"
+                               class="directions-btn" target="_blank" rel="noopener noreferrer">
+                                <span>🗺️</span> Get Directions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
 
-                        <?php $address = preetidreams_get_address(); if ($address) : ?>
+    <!-- Information Cards Grid -->
+    <section class="footer-cards-section">
+        <div class="footer-container">
+            <div class="cards-grid">
+
+                <!-- Contact Information Card -->
+                <div class="info-card contact-card">
+                    <div class="card-header">
+                        <div class="card-icon">📞</div>
+                        <h3 class="card-title"><?php esc_html_e('Contact Information', 'preetidreams'); ?></h3>
+                    </div>
+                    <div class="card-content">
+                        <?php $phone = preetidreams_get_phone(); if ($phone) : ?>
                             <div class="contact-item">
-                                <span class="contact-icon" aria-hidden="true">📍</span>
-                                <div class="contact-details">
-                                    <strong><?php echo wp_kses_post(nl2br(esc_html($address))); ?></strong>
-                                    <span><?php echo esc_html(get_theme_mod('footer_address_line2', '')); ?></span>
-                                </div>
+                                <span class="contact-label">Phone:</span>
+                                <a href="tel:<?php echo esc_attr($phone); ?>" class="contact-link">
+                                    <?php echo esc_html($phone); ?>
+                                </a>
                             </div>
                         <?php endif; ?>
 
-                        <?php $phone = preetidreams_get_phone(); if ($phone) : ?>
+                        <?php $email = preetidreams_get_email(); if ($email) : ?>
                             <div class="contact-item">
-                                <span class="contact-icon" aria-hidden="true">📞</span>
-                                <div class="contact-details">
-                                    <strong>
-                                        <a href="tel:<?php echo esc_attr($phone); ?>" class="contact-link">
-                                            <?php echo esc_html($phone); ?>
-                                        </a>
-                                    </strong>
-                                    <span><?php esc_html_e('Direct Practice Line', 'preetidreams'); ?></span>
-                                </div>
+                                <span class="contact-label">Email:</span>
+                                <a href="mailto:<?php echo esc_attr($email); ?>" class="contact-link">
+                                    <?php echo esc_html($email); ?>
+                                </a>
                             </div>
                         <?php endif; ?>
 
                         <?php $hours = preetidreams_get_hours(); if ($hours) : ?>
                             <div class="contact-item">
-                                <span class="contact-icon" aria-hidden="true">🕒</span>
-                                <div class="contact-details">
-                                    <strong><?php esc_html_e('Consultation Hours', 'preetidreams'); ?></strong>
-                                    <span><?php echo wp_kses_post(nl2br(esc_html($hours))); ?></span>
-                                </div>
+                                <span class="contact-label">Hours:</span>
+                                <span class="contact-value"><?php echo wp_kses_post(nl2br(esc_html($hours))); ?></span>
                             </div>
                         <?php endif; ?>
-
                     </div>
                 </div>
 
-                <!-- Medical Credentials Column -->
-                <div class="footer-column credentials-column">
-                    <h3 class="column-title"><?php esc_html_e('Medical Excellence', 'preetidreams'); ?></h3>
-                    <div class="credentials-list">
+                <!-- Services Highlight Card -->
+                <div class="info-card services-card">
+                    <div class="card-header">
+                        <div class="card-icon">✨</div>
+                        <h3 class="card-title"><?php esc_html_e('Popular Treatments', 'preetidreams'); ?></h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="service-item">
+                            <span class="service-name"><?php echo esc_html(get_theme_mod('footer_service_1', 'Botox & Dermal Fillers')); ?></span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name"><?php echo esc_html(get_theme_mod('footer_service_2', 'Laser Skin Resurfacing')); ?></span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name"><?php echo esc_html(get_theme_mod('footer_service_3', 'Chemical Peels')); ?></span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name"><?php echo esc_html(get_theme_mod('footer_service_4', 'Body Contouring')); ?></span>
+                        </div>
+                        <a href="<?php echo esc_url(home_url('/treatments/')); ?>" class="view-all-services">
+                            View All Treatments →
+                        </a>
+                    </div>
+                </div>
 
+                <!-- Credentials & Awards Card -->
+                <div class="info-card credentials-card">
+                    <div class="card-header">
+                        <div class="card-icon">🏆</div>
+                        <h3 class="card-title"><?php esc_html_e('Medical Excellence', 'preetidreams'); ?></h3>
+                    </div>
+                    <div class="card-content">
                         <div class="credential-item">
-                            <span class="credential-icon" aria-hidden="true">🏥</span>
+                            <div class="credential-icon">🏥</div>
                             <div class="credential-details">
                                 <strong><?php echo esc_html(get_theme_mod('footer_board_certification', 'Board-Certified Physician')); ?></strong>
                                 <span><?php echo esc_html(get_theme_mod('footer_certification_details', 'American Board of Dermatology')); ?></span>
                             </div>
                         </div>
-
                         <div class="credential-item">
-                            <span class="credential-icon" aria-hidden="true">⭐</span>
+                            <div class="credential-icon">⭐</div>
                             <div class="credential-details">
                                 <strong><?php echo esc_html(get_theme_mod('footer_experience_years', '15+ Years of Excellence')); ?></strong>
                                 <span><?php echo esc_html(get_theme_mod('footer_expertise_area', 'Aesthetic Medicine Expertise')); ?></span>
                             </div>
                         </div>
-
                         <div class="credential-item">
-                            <span class="credential-icon" aria-hidden="true">🏆</span>
+                            <div class="credential-icon">🏆</div>
                             <div class="credential-details">
                                 <strong><?php echo esc_html(get_theme_mod('footer_recognition', 'Recognition & Awards')); ?></strong>
                                 <span><?php echo esc_html(get_theme_mod('footer_award_details', 'Top Medical Spa - Beverly Hills')); ?></span>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- Clinic Experience Column -->
-                <div class="footer-column">
-                    <h3 class="column-title"><?php esc_html_e('Luxury Clinic Experience', 'preetidreams'); ?></h3>
-                    <div class="clinic-experience">
-
-                        <div class="experience-item">
-                            <span class="experience-icon" aria-hidden="true">🏛️</span>
-                            <div class="experience-details">
-                                <strong><?php echo esc_html(get_theme_mod('footer_private_suites', 'Private Consultation Suites')); ?></strong>
-                                <span><?php echo esc_html(get_theme_mod('footer_suite_description', 'Discrete, comfortable consultation rooms')); ?></span>
-                            </div>
-                        </div>
-
-                        <div class="experience-item">
-                            <span class="experience-icon" aria-hidden="true">🔬</span>
-                            <div class="experience-details">
-                                <strong><?php echo esc_html(get_theme_mod('footer_equipment', 'Advanced Medical Equipment')); ?></strong>
-                                <span><?php echo esc_html(get_theme_mod('footer_equipment_description', 'State-of-the-art diagnostic and treatment tools')); ?></span>
-                            </div>
-                        </div>
-
-                        <div class="experience-item">
-                            <span class="experience-icon" aria-hidden="true">✨</span>
-                            <div class="experience-details">
-                                <strong><?php echo esc_html(get_theme_mod('footer_personalized_planning', 'Personalized Treatment Planning')); ?></strong>
-                                <span><?php echo esc_html(get_theme_mod('footer_planning_description', 'Custom aesthetic plans during your visit')); ?></span>
-                            </div>
-                        </div>
-
+                <!-- Social Media & Reviews Card -->
+                <div class="info-card social-card">
+                    <div class="card-header">
+                        <div class="card-icon">💬</div>
+                        <h3 class="card-title"><?php esc_html_e('Connect & Reviews', 'preetidreams'); ?></h3>
                     </div>
-                </div>
-
-                <!-- Social & Connect Column -->
-                <div class="footer-column social-column">
-                    <h3 class="column-title"><?php esc_html_e('Connect With Us', 'preetidreams'); ?></h3>
-                    <div class="social-professional">
-
-                        <?php $email = preetidreams_get_email(); if ($email) : ?>
-                            <div class="contact-item">
-                                <span class="contact-icon" aria-hidden="true">📧</span>
-                                <div class="contact-details">
-                                    <strong>
-                                        <a href="mailto:<?php echo esc_attr($email); ?>" class="contact-link">
-                                            <?php echo esc_html($email); ?>
-                                        </a>
-                                    </strong>
-                                    <span><?php esc_html_e('Confidential inquiries welcomed', 'preetidreams'); ?></span>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
+                    <div class="card-content">
                         <div class="social-links">
-                            <?php $linkedin = preetidreams_get_social_link('linkedin'); if ($linkedin) : ?>
-                                <a href="<?php echo esc_url($linkedin); ?>" class="social-link" aria-label="<?php esc_attr_e('Professional LinkedIn Profile', 'preetidreams'); ?>" target="_blank" rel="noopener noreferrer">
-                                    <span class="social-icon" aria-hidden="true">💼</span>
-                                    <span><?php esc_html_e('Professional Profile', 'preetidreams'); ?></span>
+                            <?php $facebook = preetidreams_get_social_link('facebook'); if ($facebook) : ?>
+                                <a href="<?php echo esc_url($facebook); ?>" class="social-link facebook" target="_blank" rel="noopener noreferrer">
+                                    <span class="social-icon">📘</span>
+                                    <span>Facebook</span>
                                 </a>
                             <?php endif; ?>
 
-                            <?php if (get_theme_mod('footer_educational_resources_link')) : ?>
-                                <a href="<?php echo esc_url(get_theme_mod('footer_educational_resources_link', '#')); ?>" class="social-link" aria-label="<?php esc_attr_e('Educational Content and Resources', 'preetidreams'); ?>">
-                                    <span class="social-icon" aria-hidden="true">📚</span>
-                                    <span><?php esc_html_e('Educational Resources', 'preetidreams'); ?></span>
+                            <?php $instagram = preetidreams_get_social_link('instagram'); if ($instagram) : ?>
+                                <a href="<?php echo esc_url($instagram); ?>" class="social-link instagram" target="_blank" rel="noopener noreferrer">
+                                    <span class="social-icon">📷</span>
+                                    <span>Instagram</span>
+                                </a>
+                            <?php endif; ?>
+
+                            <?php $linkedin = preetidreams_get_social_link('linkedin'); if ($linkedin) : ?>
+                                <a href="<?php echo esc_url($linkedin); ?>" class="social-link linkedin" target="_blank" rel="noopener noreferrer">
+                                    <span class="social-icon">💼</span>
+                                    <span>LinkedIn</span>
                                 </a>
                             <?php endif; ?>
                         </div>
 
-                        <div class="location-link">
-                            <a href="<?php echo esc_url(get_theme_mod('footer_directions_link', 'https://maps.google.com')); ?>" class="location-cta social-link" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e('Get directions to our clinic', 'preetidreams'); ?>">
-                                <span class="social-icon" aria-hidden="true">📍</span>
-                                <span><?php esc_html_e('Get Directions to Our Clinic', 'preetidreams'); ?></span>
+                        <div class="review-highlight">
+                            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                            <p class="review-text"><?php echo esc_html(get_theme_mod('footer_review_text', '5.0 stars from 200+ verified patients')); ?></p>
+                            <a href="<?php echo esc_url(get_theme_mod('footer_reviews_link', '#reviews')); ?>" class="view-reviews">
+                                Read All Reviews →
                             </a>
                         </div>
-
                     </div>
                 </div>
 
             </div>
         </div>
+    </section>
 
-        <!-- Location Showcase (Optional Section) -->
-        <section class="luxury-location-showcase hidden" role="region" aria-label="<?php esc_attr_e('Clinic Location and Experience', 'preetidreams'); ?>">
-            <div class="location-container">
-
-                <!-- Location Invitation -->
-                <div class="location-invitation">
-                    <h2 class="location-headline">
-                        <?php echo esc_html(get_theme_mod('footer_location_headline', 'Experience Our Luxury Medical Spa')); ?>
-                    </h2>
-                    <p class="location-subtext">
-                        <?php echo esc_html(get_theme_mod('footer_location_description', 'Discover our state-of-the-art facility designed for your comfort and privacy. Schedule your personalized consultation in our sophisticated Beverly Hills location.')); ?>
-                    </p>
+    <!-- Newsletter & Additional Social -->
+    <section class="footer-newsletter-section">
+        <div class="footer-container">
+            <div class="newsletter-content">
+                <div class="newsletter-info">
+                    <h3 class="newsletter-title"><?php echo esc_html(get_theme_mod('footer_newsletter_title', 'Stay Informed About Latest Treatments')); ?></h3>
+                    <p class="newsletter-description"><?php echo esc_html(get_theme_mod('footer_newsletter_description', 'Get exclusive beauty tips, treatment updates, and special offers delivered to your inbox.')); ?></p>
                 </div>
-
-                <!-- Interactive Map & Location Details -->
-                <div class="location-experience">
-
-                    <!-- Premium Map Display -->
-                    <div class="map-showcase">
-                        <div class="map-container" id="luxury-clinic-map">
-
-                            <!-- Enhanced Google Maps Integration -->
-                            <div class="google-map-wrapper">
-                                <iframe
-                                    src="<?php echo esc_url(get_theme_mod('footer_map_embed_url', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.2069!2d-118.3974881!3d34.0738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDA0JzI1LjciTiAxMTjCsDIzJzUxLjAiVw!5e0!3m2!1sen!2sus!4v1234567890')); ?>"
-                                    width="100%"
-                                    height="400"
-                                    style="border:0;"
-                                    allowfullscreen=""
-                                    loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"
-                                    title="<?php esc_attr_e('PreetiDreams Medical Spa Location', 'preetidreams'); ?>"
-                                    aria-label="<?php esc_attr_e('Interactive map showing clinic location', 'preetidreams'); ?>">
-                                </iframe>
-                            </div>
-
-                            <!-- Map Overlay with Luxury Branding -->
-                            <div class="map-overlay">
-                                <div class="clinic-marker">
-                                    <span class="marker-icon" aria-hidden="true">📍</span>
-                                    <div class="marker-details">
-                                        <strong class="clinic-name"><?php bloginfo('name'); ?></strong>
-                                        <span class="clinic-tagline"><?php echo esc_html(get_theme_mod('footer_clinic_tagline', 'Beverly Hills Medical Spa')); ?></span>
-                                    </div>
-                                </div>
-                            </div>
-
+                <div class="newsletter-form">
+                    <form class="newsletter-signup" action="#" method="post">
+                        <div class="form-group">
+                            <input type="email" name="newsletter_email" placeholder="Enter your email address" required class="newsletter-input">
+                            <button type="submit" class="newsletter-submit">
+                                <span>Subscribe</span>
+                                <span class="submit-icon">→</span>
+                            </button>
                         </div>
-                    </div>
-
-                    <!-- Location Experience Details -->
-                    <div class="location-experience-details">
-
-                        <!-- Premium Location Features -->
-                        <div class="location-features">
-                            <h3 class="features-title"><?php esc_html_e('What Makes Our Location Special', 'preetidreams'); ?></h3>
-
-                            <div class="feature-grid">
-                                <div class="feature-item">
-                                    <span class="feature-icon" aria-hidden="true">🏛️</span>
-                                    <div class="feature-content">
-                                        <strong><?php echo esc_html(get_theme_mod('footer_location_feature_1', 'Prime Beverly Hills Address')); ?></strong>
-                                        <span><?php echo esc_html(get_theme_mod('footer_location_feature_1_desc', 'Prestigious Rodeo Drive vicinity')); ?></span>
-                                    </div>
-                                </div>
-
-                                <div class="feature-item">
-                                    <span class="feature-icon" aria-hidden="true">🚗</span>
-                                    <div class="feature-content">
-                                        <strong><?php echo esc_html(get_theme_mod('footer_location_feature_2', 'Valet Parking Available')); ?></strong>
-                                        <span><?php echo esc_html(get_theme_mod('footer_location_feature_2_desc', 'Complimentary for all appointments')); ?></span>
-                                    </div>
-                                </div>
-
-                                <div class="feature-item">
-                                    <span class="feature-icon" aria-hidden="true">🔒</span>
-                                    <div class="feature-content">
-                                        <strong><?php echo esc_html(get_theme_mod('footer_location_feature_3', 'Private Entrance')); ?></strong>
-                                        <span><?php echo esc_html(get_theme_mod('footer_location_feature_3_desc', 'Discrete and confidential access')); ?></span>
-                                    </div>
-                                </div>
-
-                                <div class="feature-item">
-                                    <span class="feature-icon" aria-hidden="true">✨</span>
-                                    <div class="feature-content">
-                                        <strong><?php echo esc_html(get_theme_mod('footer_location_feature_4', 'Luxury Amenities')); ?></strong>
-                                        <span><?php echo esc_html(get_theme_mod('footer_location_feature_4_desc', 'Curated comfort experience')); ?></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Consultation Invitation CTAs -->
-                        <div class="location-consultation-ctas">
-                            <h3 class="cta-title"><?php esc_html_e('Visit Our Clinic', 'preetidreams'); ?></h3>
-
-                            <div class="location-cta-group">
-                                <a href="<?php echo esc_url(get_theme_mod('footer_book_consultation_link', '/contact/#consultation')); ?>"
-                                   class="location-cta-primary"
-                                   aria-label="<?php esc_attr_e('Schedule consultation at our clinic', 'preetidreams'); ?>">
-                                    <span class="cta-icon" aria-hidden="true">📅</span>
-                                    <span><?php esc_html_e('Schedule Clinic Visit', 'preetidreams'); ?></span>
-                                </a>
-
-                                <a href="<?php echo esc_url(get_theme_mod('footer_virtual_tour_link', '#virtual-tour')); ?>"
-                                   class="location-cta-secondary"
-                                   aria-label="<?php esc_attr_e('Take virtual tour of our facilities', 'preetidreams'); ?>">
-                                    <span class="cta-icon" aria-hidden="true">👁️</span>
-                                    <span><?php esc_html_e('Virtual Facility Tour', 'preetidreams'); ?></span>
-                                </a>
-
-                                <a href="<?php echo esc_url(get_theme_mod('footer_directions_link', 'https://maps.google.com')); ?>"
-                                   class="location-cta-tertiary"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   aria-label="<?php esc_attr_e('Get driving directions to clinic', 'preetidreams'); ?>">
-                                    <span class="cta-icon" aria-hidden="true">🗺️</span>
-                                    <span><?php esc_html_e('Get Directions', 'preetidreams'); ?></span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Location Contact Summary -->
-                        <div class="location-contact-summary">
-                            <div class="contact-quick-access">
-                                <?php $address = preetidreams_get_address(); if ($address) : ?>
-                                <div class="quick-contact-item">
-                                    <span class="contact-label"><?php esc_html_e('Address:', 'preetidreams'); ?></span>
-                                    <span class="contact-value"><?php echo esc_html($address); ?></span>
-                                </div>
-                                <?php endif; ?>
-
-                                <?php $phone = preetidreams_get_phone(); if ($phone) : ?>
-                                <div class="quick-contact-item">
-                                    <span class="contact-label"><?php esc_html_e('Direct Line:', 'preetidreams'); ?></span>
-                                    <a href="tel:<?php echo esc_attr($phone); ?>" class="contact-value contact-link">
-                                        <?php echo esc_html($phone); ?>
-                                    </a>
-                                </div>
-                                <?php endif; ?>
-
-                                <?php $hours = preetidreams_get_hours(); if ($hours) : ?>
-                                <div class="quick-contact-item">
-                                    <span class="contact-label"><?php esc_html_e('Hours:', 'preetidreams'); ?></span>
-                                    <span class="contact-value"><?php echo esc_html($hours); ?></span>
-                            </div>
-                        <?php endif; ?>
-                            </div>
-                        </div>
-
-                    </div>
-
+                        <p class="newsletter-privacy">
+                            <small>🔒 Your privacy is protected. Unsubscribe anytime.</small>
+                        </p>
+                    </form>
                 </div>
-
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
+    <!-- Footer Bottom Navigation & Legal -->
+    <section class="footer-bottom">
+        <div class="footer-container">
             <div class="footer-bottom-content">
 
                 <!-- Footer Navigation -->
@@ -388,19 +282,22 @@
                         </a>
                         <?php esc_html_e('Medical Spa. All rights reserved.', 'preetidreams'); ?>
                     </p>
+                    <p class="medical-disclaimer">
+                        <small><?php echo esc_html(get_theme_mod('footer_medical_disclaimer', 'Individual results may vary. Not a guarantee of specific results.')); ?></small>
+                    </p>
                 </div>
 
             </div>
 
             <!-- Back to Top Button -->
-            <button class="back-to-top" aria-label="<?php esc_attr_e('Scroll back to top', 'preetidreams'); ?>" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <span class="icon" aria-hidden="true">↑</span>
+            <button class="back-to-top-modern" aria-label="<?php esc_attr_e('Scroll back to top', 'preetidreams'); ?>" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <span class="back-icon">↑</span>
                 <span class="sr-only"><?php esc_html_e('Back to top', 'preetidreams'); ?></span>
             </button>
 
         </div>
+    </section>
 
-    </div>
 </footer>
 
 <?php wp_footer(); ?>
