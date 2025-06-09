@@ -397,36 +397,67 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
-    // Enqueue Modal Component Styles and Scripts (T6.6 Modal/Dialog System Implementation)
+    // T6.6 Modal System Scripts and Styles
     wp_enqueue_style(
         'modal-component-styles',
         get_template_directory_uri() . '/assets/css/components/modal.css',
-        ['button-component-styles', 'form-component-styles'], // Dependencies on existing components
-        PREETIDREAMS_VERSION,
-        'all'
+        array('design-tokens'),
+        filemtime(get_template_directory() . '/assets/css/components/modal.css')
     );
 
     wp_enqueue_script(
-        'modal-component-js',
+        'modal-component-scripts',
         get_template_directory_uri() . '/assets/js/components/modal.js',
-        ['jquery'],
-        PREETIDREAMS_VERSION,
+        array('jquery', 'wp-util'),
+        filemtime(get_template_directory() . '/assets/js/components/modal.js'),
         true
     );
 
-    // Localize modal script with WordPress data
-    wp_localize_script('modal-component-js', 'modalAjax', [
+    // Localize modal scripts
+    wp_localize_script('modal-component-scripts', 'modalSettings', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('modal_ajax_nonce'),
-        'strings' => [
-            'loading' => __('Loading...', 'medspatheme'),
-            'error' => __('An error occurred. Please try again.', 'medspatheme'),
-            'success' => __('Success!', 'medspatheme'),
-            'close' => __('Close', 'medspatheme'),
-            'confirm' => __('Confirm', 'medspatheme'),
-            'cancel' => __('Cancel', 'medspatheme')
-        ]
-    ]);
+        'nonce' => wp_create_nonce('modal_nonce'),
+        'closeText' => __('Close', 'medspatheme'),
+        'loadingText' => __('Loading...', 'medspatheme'),
+        'errorText' => __('An error occurred. Please try again.', 'medspatheme'),
+        'confirmText' => __('Are you sure?', 'medspatheme'),
+        'cancelText' => __('Cancel', 'medspatheme'),
+        'okText' => __('OK', 'medspatheme')
+    ));
+
+    // T6.8 Footer Component Scripts and Styles
+    wp_enqueue_style(
+        'footer-component-styles',
+        get_template_directory_uri() . '/assets/css/components/footer.css',
+        array('design-tokens'),
+        filemtime(get_template_directory() . '/assets/css/components/footer.css')
+    );
+
+    wp_enqueue_script(
+        'footer-component-scripts',
+        get_template_directory_uri() . '/assets/js/components/footer.js',
+        array('jquery', 'wp-util'),
+        filemtime(get_template_directory() . '/assets/js/components/footer.js'),
+        true
+    );
+
+    // Localize footer scripts
+    wp_localize_script('footer-component-scripts', 'footerSettings', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('footer_nonce'),
+        'backToTopText' => __('Back to top', 'medspatheme'),
+        'phoneCallText' => __('Initiating phone call...', 'medspatheme'),
+        'emailText' => __('Opening email client...', 'medspatheme'),
+        'socialMediaText' => __('Opening social media...', 'medspatheme'),
+        'scrollToTopText' => __('Scrolled to top of page', 'medspatheme'),
+        'loadingText' => __('Loading...', 'medspatheme'),
+        'analytics' => array(
+            'enabled' => true,
+            'trackCTA' => true,
+            'trackSocial' => true,
+            'trackContact' => true
+        )
+    ));
 
     // Component system styles (if needed for other components)
     if (class_exists('ComponentRegistry')) {

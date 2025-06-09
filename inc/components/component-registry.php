@@ -588,6 +588,18 @@ class ComponentRegistry {
             'extends' => 'modal'
         ]);
 
+        // T6.8 Footer Components Implementation
+        self::register('footer', 'FooterComponent', [
+            'priority' => 70,
+            'cacheable' => true,
+            'lazy_load' => false,
+            'accessibility_required' => true,
+            'css_dependencies' => ['components/footer.css'],
+            'js_dependencies' => ['components/footer.js'],
+            'customizer_section' => 'footer_settings',
+            'security_level' => 'low'
+        ]);
+
         // Log registration completion
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('ComponentRegistry: Core components registration completed - ' . count(self::$components) . ' components registered');

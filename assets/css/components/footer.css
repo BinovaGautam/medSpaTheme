@@ -1,0 +1,1020 @@
+/**
+ * Footer Component Styles
+ *
+ * Comprehensive styling for FooterComponent with design token integration,
+ * medical spa specializations, accessibility compliance, and responsive design.
+ *
+ * @package MedSpaTheme
+ * @since 1.0.0
+ * @author CODE-GEN-001
+ * @workflow CODE-GEN-WF-001
+ */
+
+/* ==========================================================================
+   CSS Custom Properties (Design Tokens Integration)
+   ========================================================================== */
+
+:root {
+  /* Footer Background & Layout */
+  --footer-background: var(--color-navy-primary, #1B365D);
+  --footer-background-gradient: linear-gradient(135deg, var(--color-navy-primary, #1B365D) 0%, var(--color-navy-dark, #152B4F) 100%);
+  --footer-padding: var(--spacing-12, 48px) var(--spacing-6, 24px);
+  --footer-margin: 0;
+  --footer-border-top: 1px solid rgba(212, 175, 55, 0.2);
+  --footer-container-max-width: var(--max-width-7xl, 1200px);
+
+  /* Footer Typography */
+  --footer-text-color: var(--color-cream-base, #FDFCFA);
+  --footer-text-size: var(--font-size-sm, 14px);
+  --footer-text-line-height: var(--line-height-relaxed, 1.6);
+  --footer-link-color: var(--color-sage-enhanced, #98BA7F);
+  --footer-link-hover-color: var(--color-gold-enhanced, #E0B83E);
+  --footer-font-family: var(--font-body, 'Inter', sans-serif);
+
+  /* Section Titles */
+  --section-title-color: var(--color-cream-base, #FDFCFA);
+  --section-title-size: var(--font-size-lg, 18px);
+  --section-title-weight: var(--font-weight-semibold, 600);
+  --section-title-margin: 0 0 var(--spacing-4, 16px) 0;
+  --section-title-font-family: var(--font-display, 'Playfair Display', serif);
+
+  /* Consultation CTA Section */
+  --cta-background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(135, 169, 107, 0.05) 100%);
+  --cta-padding: var(--spacing-12, 48px) var(--spacing-6, 24px);
+  --cta-border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  --cta-headline-size: var(--font-size-3xl, 30px);
+  --cta-headline-weight: var(--font-weight-semibold, 600);
+  --cta-subtext-size: var(--font-size-base, 16px);
+  --cta-subtext-opacity: 0.8;
+
+  /* CTA Buttons */
+  --cta-button-primary-bg: linear-gradient(135deg, var(--color-gold-primary, #D4AF37) 0%, #B8941F 100%);
+  --cta-button-primary-color: var(--color-navy-primary, #1B365D);
+  --cta-button-primary-padding: var(--spacing-5, 20px) var(--spacing-8, 32px);
+  --cta-button-primary-radius: var(--border-radius-lg, 12px);
+  --cta-button-primary-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+
+  --cta-button-secondary-bg: transparent;
+  --cta-button-secondary-color: var(--color-sage-enhanced, #98BA7F);
+  --cta-button-secondary-border: 2px solid var(--color-sage-enhanced, #98BA7F);
+  --cta-button-secondary-padding: var(--spacing-4, 16px) var(--spacing-7, 28px);
+
+  /* Footer Columns */
+  --column-gap: var(--spacing-8, 32px);
+  --column-padding: var(--spacing-6, 24px) 0;
+
+  /* Contact Information */
+  --contact-item-margin: 0 0 var(--spacing-4, 16px) 0;
+  --contact-icon-size: var(--font-size-lg, 18px);
+  --contact-icon-color: var(--color-sage-enhanced, #98BA7F);
+
+  /* Social Media */
+  --social-link-padding: var(--spacing-2, 8px) 0;
+  --social-link-gap: var(--spacing-2, 8px);
+  --social-icon-size: var(--font-size-base, 16px);
+
+  /* Footer Navigation */
+  --nav-link-padding: var(--spacing-2, 8px);
+  --nav-link-margin: 0 var(--spacing-4, 16px) 0 0;
+  --nav-gap: var(--spacing-4, 16px);
+
+  /* Copyright Section */
+  --copyright-padding: var(--spacing-6, 24px) 0;
+  --copyright-border-top: 1px solid rgba(212, 175, 55, 0.2);
+  --copyright-text-size: var(--font-size-sm, 14px);
+  --copyright-text-opacity: 0.6;
+
+  /* Back to Top Button */
+  --back-to-top-size: 56px;
+  --back-to-top-bg: var(--color-gold-primary, #D4AF37);
+  --back-to-top-color: var(--color-navy-primary, #1B365D);
+  --back-to-top-radius: 50%;
+  --back-to-top-shadow: 0 4px 20px rgba(27, 54, 93, 0.08);
+  --back-to-top-position: absolute;
+  --back-to-top-top: -28px;
+  --back-to-top-right: var(--spacing-6, 24px);
+
+  /* Transitions */
+  --footer-transition: all var(--transition-duration-default, 0.3s) var(--transition-easing-default, cubic-bezier(0.4, 0, 0.2, 1));
+  --footer-transition-fast: all var(--transition-duration-fast, 0.15s) ease;
+
+  /* Responsive Design */
+  --mobile-padding: var(--spacing-8, 32px) var(--spacing-4, 16px);
+  --mobile-column-gap: var(--spacing-6, 24px);
+  --tablet-max-width: 768px;
+  --desktop-max-width: 1200px;
+}
+
+/* ==========================================================================
+   Footer Base Structure
+   ========================================================================== */
+
+.footer-component {
+  background: var(--footer-background-gradient);
+  color: var(--footer-text-color);
+  font-family: var(--footer-font-family);
+  line-height: var(--footer-text-line-height);
+  font-size: var(--footer-text-size);
+  margin: var(--footer-margin);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-component::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.3) 50%,
+    transparent 100%);
+}
+
+.footer-container {
+  max-width: var(--footer-container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-4, 16px);
+}
+
+/* ==========================================================================
+   Footer Type Variations
+   ========================================================================== */
+
+/* Luxury Footer */
+.footer-luxury {
+  --footer-background-gradient: linear-gradient(135deg, var(--color-navy-primary, #1B365D) 0%, var(--color-navy-deep, #0F1B2F) 100%);
+  --cta-background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(135, 169, 107, 0.08) 100%);
+}
+
+.footer-luxury::before {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.5) 50%,
+    transparent 100%);
+}
+
+/* Medical Footer */
+.footer-medical {
+  --footer-background: var(--color-neutral-800, #374151);
+  --footer-background-gradient: linear-gradient(135deg, var(--color-neutral-800, #374151) 0%, var(--color-neutral-900, #1f2937) 100%);
+  --cta-background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+}
+
+/* Consultation Focused Footer */
+.footer-consultation {
+  --cta-padding: var(--spacing-16, 64px) var(--spacing-6, 24px);
+  --cta-headline-size: var(--font-size-4xl, 36px);
+}
+
+/* Minimal Footer */
+.footer-minimal {
+  --footer-padding: var(--spacing-8, 32px) var(--spacing-6, 24px);
+  --cta-padding: var(--spacing-8, 32px) var(--spacing-6, 24px);
+}
+
+.footer-minimal .consultation-invitation {
+  display: none;
+}
+
+/* ==========================================================================
+   Consultation CTA Section
+   ========================================================================== */
+
+.consultation-invitation {
+  background: var(--cta-background);
+  padding: var(--cta-padding);
+  text-align: center;
+  border-bottom: var(--cta-border-bottom);
+}
+
+.invitation-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.invitation-headline {
+  font-family: var(--section-title-font-family);
+  font-size: var(--cta-headline-size);
+  font-weight: var(--cta-headline-weight);
+  color: var(--footer-text-color);
+  margin-bottom: var(--spacing-4, 16px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.invitation-subtext {
+  font-size: var(--cta-subtext-size);
+  color: var(--footer-text-color);
+  opacity: var(--cta-subtext-opacity);
+  margin-bottom: var(--spacing-8, 32px);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+/* CTA Button Group */
+.cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 16px);
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .cta-group {
+    flex-direction: row;
+    gap: var(--spacing-6, 24px);
+  }
+}
+
+.cta-primary,
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2, 8px);
+  text-decoration: none;
+  border: none;
+  border-radius: var(--cta-button-primary-radius);
+  font-family: var(--footer-font-family);
+  font-size: var(--font-size-base, 16px);
+  font-weight: var(--font-weight-medium, 500);
+  cursor: pointer;
+  transition: var(--footer-transition);
+  min-height: 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-primary {
+  background: var(--cta-button-primary-bg);
+  color: var(--cta-button-primary-color);
+  padding: var(--cta-button-primary-padding);
+  font-weight: var(--font-weight-semibold, 600);
+  box-shadow: var(--cta-button-primary-shadow);
+}
+
+.cta-primary:hover,
+.cta-primary:focus {
+  background: linear-gradient(135deg, var(--color-gold-light, #E8C962) 0%, var(--color-gold-primary, #D4AF37) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.35);
+}
+
+.cta-primary:focus {
+  outline: 3px solid var(--footer-link-color);
+  outline-offset: 2px;
+}
+
+.cta-secondary {
+  background: var(--cta-button-secondary-bg);
+  color: var(--cta-button-secondary-color);
+  border: var(--cta-button-secondary-border);
+  padding: var(--cta-button-secondary-padding);
+}
+
+.cta-secondary:hover,
+.cta-secondary:focus {
+  background: var(--cta-button-secondary-color);
+  color: var(--footer-text-color);
+  transform: scale(1.02);
+}
+
+.cta-secondary:focus {
+  outline: 3px solid var(--footer-link-hover-color);
+  outline-offset: 2px;
+}
+
+.cta-icon {
+  font-size: var(--font-size-lg, 18px);
+  line-height: 1;
+}
+
+/* Screen reader only descriptions */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Footer Main Content
+   ========================================================================== */
+
+.footer-main {
+  padding: var(--footer-padding);
+}
+
+.footer-grid {
+  display: grid;
+  gap: var(--column-gap);
+  align-items: start;
+}
+
+/* Grid Layout Variations */
+.footer-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.footer-grid-2 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .footer-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.footer-grid-3 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .footer-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Layout Type Variations */
+.footer-layout-centered .footer-grid {
+  text-align: center;
+  justify-items: center;
+}
+
+.footer-layout-split .footer-grid-2 {
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-12, 48px);
+}
+
+.footer-layout-split .footer-grid-3 {
+  grid-template-columns: 2fr 1fr;
+}
+
+.footer-layout-stacked .footer-grid {
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8, 32px);
+}
+
+/* ==========================================================================
+   Footer Columns
+   ========================================================================== */
+
+.footer-column {
+  padding: var(--column-padding);
+}
+
+.column-title {
+  font-family: var(--section-title-font-family);
+  font-size: var(--section-title-size);
+  font-weight: var(--section-title-weight);
+  color: var(--section-title-color);
+  margin: var(--section-title-margin);
+  line-height: 1.3;
+}
+
+/* Contact Column */
+.contact-column .contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3, 12px);
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3, 12px);
+  margin: var(--contact-item-margin);
+}
+
+.contact-icon {
+  font-size: var(--contact-icon-size);
+  color: var(--contact-icon-color);
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.contact-details strong {
+  color: var(--footer-text-color);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: 1.3;
+  font-size: var(--font-size-sm, 14px);
+}
+
+.contact-details span {
+  color: var(--footer-text-color);
+  opacity: 0.8;
+  font-size: var(--font-size-sm, 14px);
+  line-height: 1.4;
+}
+
+.contact-link {
+  color: var(--footer-link-color);
+  text-decoration: none;
+  transition: var(--footer-transition-fast);
+  border-radius: var(--border-radius-sm, 4px);
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+
+.contact-link:hover,
+.contact-link:focus {
+  color: var(--footer-link-hover-color);
+  text-decoration: underline;
+}
+
+.contact-link:focus {
+  outline: 2px solid var(--footer-link-hover-color);
+  outline-offset: 2px;
+}
+
+/* Credentials Column */
+.credentials-column .credentials-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 16px);
+}
+
+.credential-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3, 12px);
+}
+
+.credential-icon {
+  font-size: var(--contact-icon-size);
+  color: var(--contact-icon-color);
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.credential-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.credential-details strong {
+  color: var(--footer-text-color);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: 1.3;
+  font-size: var(--font-size-sm, 14px);
+}
+
+.credential-details span {
+  color: var(--footer-text-color);
+  opacity: 0.7;
+  font-size: var(--font-size-xs, 12px);
+  line-height: 1.4;
+}
+
+/* Social Column */
+.social-column .social-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2, 8px);
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--social-link-gap);
+  color: var(--footer-link-color);
+  text-decoration: none;
+  font-size: var(--font-size-sm, 14px);
+  padding: var(--social-link-padding);
+  border-radius: var(--border-radius-sm, 4px);
+  transition: var(--footer-transition-fast);
+  margin: -2px -4px;
+}
+
+.social-link:hover,
+.social-link:focus {
+  color: var(--footer-link-hover-color);
+  transform: translateX(4px);
+}
+
+.social-link:focus {
+  outline: 2px solid var(--footer-link-hover-color);
+  outline-offset: 2px;
+}
+
+.social-icon {
+  font-size: var(--social-icon-size);
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Footer Bottom
+   ========================================================================== */
+
+.footer-bottom {
+  border-top: var(--copyright-border-top);
+  padding: var(--copyright-padding);
+  position: relative;
+}
+
+.footer-bottom-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4, 16px);
+}
+
+@media (min-width: 768px) {
+  .footer-bottom-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* Footer Navigation */
+.footer-nav .footer-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nav-gap);
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .footer-nav .footer-menu {
+    justify-content: flex-start;
+  }
+}
+
+.footer-nav .footer-menu li a {
+  color: var(--footer-text-color);
+  opacity: 0.8;
+  text-decoration: none;
+  font-size: var(--font-size-sm, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  transition: var(--footer-transition-fast);
+  padding: var(--nav-link-padding);
+  border-radius: var(--border-radius-sm, 4px);
+  margin: var(--nav-link-margin);
+}
+
+.footer-nav .footer-menu li a:hover,
+.footer-nav .footer-menu li a:focus {
+  color: var(--footer-link-hover-color);
+  text-decoration: underline;
+  opacity: 1;
+}
+
+.footer-nav .footer-menu li a:focus {
+  outline: 2px solid var(--footer-link-hover-color);
+  outline-offset: 2px;
+}
+
+/* Copyright Section */
+.site-info {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .site-info {
+    text-align: right;
+  }
+}
+
+.site-info p {
+  margin: 0;
+  font-size: var(--copyright-text-size);
+  color: var(--footer-text-color);
+  opacity: var(--copyright-text-opacity);
+  line-height: 1.4;
+}
+
+.brand-link {
+  color: var(--color-gold-primary, #D4AF37);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold, 600);
+  transition: var(--footer-transition-fast);
+}
+
+.brand-link:hover,
+.brand-link:focus {
+  color: var(--footer-link-hover-color);
+  text-decoration: underline;
+}
+
+.brand-link:focus {
+  outline: 2px solid var(--footer-link-hover-color);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm, 4px);
+}
+
+/* ==========================================================================
+   Back to Top Button
+   ========================================================================== */
+
+.back-to-top {
+  position: var(--back-to-top-position);
+  top: var(--back-to-top-top);
+  right: var(--back-to-top-right);
+  width: var(--back-to-top-size);
+  height: var(--back-to-top-size);
+  background: var(--back-to-top-bg);
+  color: var(--back-to-top-color);
+  border: none;
+  border-radius: var(--back-to-top-radius);
+  cursor: pointer;
+  transition: var(--footer-transition);
+  box-shadow: var(--back-to-top-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg, 18px);
+  font-weight: var(--font-weight-semibold, 600);
+  z-index: 10;
+}
+
+.back-to-top:hover {
+  background: var(--color-gold-light, #E8C962);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+}
+
+.back-to-top:focus {
+  outline: 3px solid var(--footer-link-color);
+  outline-offset: 2px;
+}
+
+.back-to-top:active {
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+  .footer-component {
+    font-size: var(--font-size-xs, 12px);
+  }
+
+  .consultation-invitation {
+    padding: var(--mobile-padding);
+    text-align: center;
+  }
+
+  .invitation-headline {
+    font-size: var(--font-size-2xl, 24px);
+  }
+
+  .invitation-subtext {
+    font-size: var(--font-size-sm, 14px);
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+    max-width: 320px;
+    font-size: var(--font-size-sm, 14px);
+    padding: var(--spacing-4, 16px) var(--spacing-6, 24px);
+  }
+
+  .footer-main {
+    padding: var(--mobile-padding);
+  }
+
+  .footer-grid {
+    gap: var(--mobile-column-gap);
+  }
+
+  .footer-bottom {
+    padding: var(--spacing-4, 16px);
+  }
+
+  .footer-nav .footer-menu {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+  }
+
+  .back-to-top {
+    width: 48px;
+    height: 48px;
+    font-size: var(--font-size-base, 16px);
+    right: var(--spacing-4, 16px);
+    top: -24px;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+  .consultation-invitation {
+    padding: var(--spacing-6, 24px) var(--spacing-4, 16px);
+  }
+
+  .invitation-headline {
+    font-size: var(--font-size-xl, 20px);
+    line-height: 1.3;
+  }
+
+  .invitation-subtext {
+    font-size: var(--font-size-xs, 12px);
+    margin-bottom: var(--spacing-6, 24px);
+  }
+
+  .cta-group {
+    gap: var(--spacing-3, 12px);
+  }
+
+  .footer-main {
+    padding: var(--spacing-6, 24px) var(--spacing-4, 16px);
+  }
+
+  .column-title {
+    font-size: var(--font-size-base, 16px);
+  }
+
+  .contact-item,
+  .credential-item {
+    gap: var(--spacing-2, 8px);
+  }
+
+  .contact-icon,
+  .credential-icon {
+    font-size: var(--font-size-base, 16px);
+    width: 1.5rem;
+  }
+
+  .footer-bottom-content {
+    gap: var(--spacing-3, 12px);
+    text-align: center;
+  }
+
+  .site-info {
+    text-align: center;
+  }
+
+  .site-info p {
+    font-size: var(--font-size-xs, 12px);
+  }
+}
+
+/* ==========================================================================
+   Accessibility Features
+   ========================================================================== */
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .footer-component {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .invitation-headline,
+  .column-title {
+    color: #ffffff;
+  }
+
+  .cta-primary {
+    background: #ffff00;
+    color: #000000;
+    border: 2px solid #ffffff;
+  }
+
+  .cta-secondary {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #ffffff;
+  }
+
+  .back-to-top {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #ffffff;
+  }
+
+  .contact-link,
+  .social-link,
+  .footer-nav .footer-menu li a,
+  .brand-link {
+    color: #ffffff !important;
+  }
+
+  .contact-link:hover,
+  .social-link:hover,
+  .footer-nav .footer-menu li a:hover,
+  .brand-link:hover {
+    color: #ffff00 !important;
+  }
+
+  .footer-component *:focus {
+    outline: 4px solid #ffffff !important;
+    outline-offset: 2px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .cta-primary,
+  .cta-secondary,
+  .social-link,
+  .contact-link,
+  .back-to-top,
+  .footer-nav .footer-menu li a,
+  .brand-link {
+    transition: none;
+  }
+
+  .cta-primary:hover,
+  .cta-secondary:hover,
+  .back-to-top:hover {
+    transform: none;
+  }
+
+  .social-link:hover {
+    transform: none;
+  }
+}
+
+/* Focus Management for Keyboard Navigation */
+.footer-component *:focus {
+  outline: 2px solid var(--footer-link-hover-color);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm, 4px);
+}
+
+.footer-component button:focus,
+.footer-component a:focus {
+  outline: 3px solid var(--footer-link-hover-color);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  .footer-component {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  .cta-group,
+  .back-to-top {
+    display: none !important;
+  }
+
+  .contact-link,
+  .social-link,
+  .footer-nav .footer-menu li a,
+  .brand-link {
+    text-decoration: underline !important;
+    color: black !important;
+  }
+
+  .consultation-invitation {
+    background: white !important;
+    border-bottom: 1px solid black !important;
+  }
+
+  .footer-main,
+  .footer-bottom {
+    border-top: 1px solid black !important;
+  }
+}
+
+/* ==========================================================================
+   Performance Optimizations
+   ========================================================================== */
+
+/* GPU Acceleration for Smooth Animations */
+.cta-primary,
+.cta-secondary,
+.back-to-top,
+.social-link,
+.contact-link {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Contain layout shifts */
+.footer-component {
+  contain: layout style paint;
+}
+
+.consultation-invitation,
+.footer-main,
+.footer-bottom {
+  contain: layout style;
+}
+
+/* Optimize repaints */
+.cta-primary:hover,
+.cta-secondary:hover,
+.back-to-top:hover {
+  isolation: isolate;
+}
+
+/* ==========================================================================
+   Component State Management
+   ========================================================================== */
+
+/* Loading State */
+.footer-component.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Enhanced Interaction States */
+.cta-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--cta-button-primary-shadow);
+}
+
+.cta-secondary:active {
+  transform: scale(0.98);
+}
+
+.back-to-top:active {
+  transform: scale(0.95);
+}
+
+/* Hover States for Interactive Elements */
+.contact-item:hover .contact-icon,
+.credential-item:hover .credential-icon {
+  color: var(--footer-link-hover-color);
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.footer-no-cta .consultation-invitation {
+  display: none;
+}
+
+.footer-compact {
+  --footer-padding: var(--spacing-6, 24px) var(--spacing-4, 16px);
+  --cta-padding: var(--spacing-6, 24px) var(--spacing-4, 16px);
+}
+
+.footer-minimal-spacing .footer-column {
+  padding: var(--spacing-3, 12px) 0;
+}
+
+.footer-center-content {
+  text-align: center;
+}
+
+.footer-hide-back-to-top .back-to-top {
+  display: none;
+}
+
+/* ==========================================================================
+   Dark Mode Support (Optional Enhancement)
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --footer-background: var(--color-neutral-900, #111827);
+    --footer-background-gradient: linear-gradient(135deg, var(--color-neutral-900, #111827) 0%, var(--color-neutral-950, #030712) 100%);
+    --footer-text-color: var(--color-neutral-100, #f3f4f6);
+    --footer-link-color: var(--color-blue-400, #60a5fa);
+    --footer-link-hover-color: var(--color-blue-300, #93c5fd);
+  }
+}
