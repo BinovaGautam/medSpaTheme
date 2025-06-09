@@ -442,15 +442,65 @@ class ComponentRegistry {
      * Register core theme components
      */
     public static function register_core_components() {
-        // This will be expanded as we implement each component
-        // Core components will be auto-registered here
+        // Load component files
+        $component_dir = get_template_directory() . '/inc/components/';
 
-        // Future components to register:
-        // - ButtonComponent
-        // - CardComponent
-        // - FormComponent
-        // - NavigationComponent
-        // - SectionComponent
+        // Button Component (already implemented)
+        if (file_exists($component_dir . 'button-component.php')) {
+            require_once $component_dir . 'button-component.php';
+            self::register('button', 'ButtonComponent', [
+                'priority' => 10,
+                'cacheable' => true,
+                'lazy_load' => false,
+                'accessibility_required' => true
+            ]);
+        }
+
+        // Card Components (T6.4 Implementation)
+        if (file_exists($component_dir . 'card-component.php')) {
+            require_once $component_dir . 'card-component.php';
+            self::register('card', 'CardComponent', [
+                'priority' => 20,
+                'cacheable' => true,
+                'lazy_load' => false,
+                'accessibility_required' => true
+            ]);
+        }
+
+        if (file_exists($component_dir . 'treatment-card.php')) {
+            require_once $component_dir . 'treatment-card.php';
+            self::register('treatment-card', 'TreatmentCard', [
+                'priority' => 21,
+                'cacheable' => true,
+                'lazy_load' => false,
+                'accessibility_required' => true
+            ]);
+        }
+
+        if (file_exists($component_dir . 'testimonial-card.php')) {
+            require_once $component_dir . 'testimonial-card.php';
+            self::register('testimonial-card', 'TestimonialCard', [
+                'priority' => 22,
+                'cacheable' => true,
+                'lazy_load' => false,
+                'accessibility_required' => true
+            ]);
+        }
+
+        if (file_exists($component_dir . 'feature-card.php')) {
+            require_once $component_dir . 'feature-card.php';
+            self::register('feature-card', 'FeatureCard', [
+                'priority' => 23,
+                'cacheable' => true,
+                'lazy_load' => false,
+                'accessibility_required' => true
+            ]);
+        }
+
+        // Log registration completion
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('ComponentRegistry: Core components registration completed');
+        }
     }
 
     /**

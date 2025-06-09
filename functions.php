@@ -381,6 +381,14 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // Card component styles (T6.4 Implementation)
+    wp_enqueue_style(
+        'card-component-styles',
+        get_template_directory_uri() . '/assets/css/components/card.css',
+        [],
+        PREETIDREAMS_VERSION
+    );
+
     // Component system styles (if needed for other components)
     if (class_exists('ComponentRegistry')) {
         $registered_components = ComponentRegistry::get_registered_components();
@@ -389,7 +397,8 @@ function medspa_theme_styles() {
             if (isset($component['config']['css_dependencies'])) {
                 foreach ($component['config']['css_dependencies'] as $css_handle) {
                     if (!wp_style_is($css_handle, 'enqueued')) {
-                        // CSS already handled above for button-component-styles
+                        // CSS dependencies are handled above for specific components
+                        // This loop ensures future components can define their own CSS dependencies
                     }
                 }
             }
