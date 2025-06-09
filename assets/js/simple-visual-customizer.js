@@ -1676,8 +1676,9 @@
      * CRITICAL FIX: Apply Changes with Better Persistence
      */
     function applyChanges() {
-        if (!currentConfig.activePalette) {
-            showMessage('Please select a color palette first.', 'error');
+        // FIXED: Check for either palette OR typography
+        if (!currentConfig.activePalette && !currentConfig.typographyPairing) {
+            showMessage('Please select a color palette or typography first.', 'error');
             return;
         }
 
@@ -1689,8 +1690,10 @@
         // PRODUCTION FIX: Add force update attribute to trigger CSS recalculation
         document.body.setAttribute('data-customizer-applying', 'true');
 
-        // PRODUCTION FIX: Save to consolidated localStorage immediately
-        savePaletteToLocalStorage(currentConfig.activePalette, currentConfig);
+        // PRODUCTION FIX: Save to consolidated localStorage immediately (if palette exists)
+        if (currentConfig.activePalette) {
+            savePaletteToLocalStorage(currentConfig.activePalette, currentConfig);
+        }
 
         // ENHANCED: Prepare complete configuration for save
         const saveConfig = {
@@ -1722,7 +1725,26 @@
                 console.log('📡 AJAX Success Response:', response);
 
                 if (response.success) {
-                    showMessage('✅ Settings applied globally! All visitors will now see this theme.', 'success');
+                    // ENHANCED: Show appropriate success message based on what was saved
+                    let successMessage = '✅ Settings applied globally! All visitors will now see this theme.';
+
+                    if (response.data) {
+                        if (response.data.saved_palette && response.data.saved_typography) {
+                            successMessage = '✅ Color palette and typography applied globally!';
+                        } else if (response.data.saved_palette) {
+                            successMessage = '✅ Color palette applied globally!';
+                        } else if (response.data.saved_typography) {
+                            successMessage = '✅ Typography applied globally!';
+                        }
+
+                        // Check typography CSS generation
+                        if (response.data.typography_css_generated) {
+                            console.log('✅ Server confirmed typography CSS file generated');
+                            successMessage += ' Typography CSS file created - changes will persist after refresh!';
+                        }
+                    }
+
+                    showMessage(successMessage, 'success');
 
                     // PRODUCTION FIX: Verify save worked by checking response data
                     if (response.data && response.data.saved_palette) {
@@ -1738,6 +1760,10 @@
                         }
                     }
 
+                    if (response.data && response.data.saved_typography) {
+                        console.log('✅ Server confirmed typography saved:', response.data.saved_typography);
+                    }
+
                     // PRODUCTION FIX: Force CSS recalculation after save
                     setTimeout(() => {
                         document.body.setAttribute('data-customizer-applied', 'true');
@@ -1751,10 +1777,15 @@
                         // Add data attribute for tokenization force update
                         document.body.setAttribute('data-tokenization-force-update', 'true');
 
-                        // Reapply current palette to ensure consistency
+                        // Reapply current settings to ensure consistency
                         if (currentConfig.paletteData) {
                             console.log('🔄 Reapplying palette after global save...');
                             applyColorTokensImmediately(currentConfig.paletteData);
+                        }
+
+                        if (currentConfig.typographyData) {
+                            console.log('🔄 Reapplying typography after global save...');
+                            applyWorkingTypographyWithOverride(currentConfig.typographyData);
                         }
 
                         // Remove force update after animation completes
@@ -2681,37 +2712,46 @@ html body .page-content, html body .page-content[class] {
 
         // Save to WordPress database via AJAX (like color system)
         if (typeof simpleCustomizer !== 'undefined' && simpleCustomizer.ajaxUrl) {
-            const formData = new FormData();
-            formData.append('action', 'simple_visual_customizer_apply');
-            formData.append('nonce', simpleCustomizer.nonce);
-
-            // Create config object with typography data (like color system format)
+            // CRITICAL FIX: Use correct config format that matches server expectations
             const config = {
-                activeTypography: typographyData.id,
-                typographyData: typographyData,
+                typographyPairing: typographyData.id,  // Changed from activeTypography
+                typographyData: typographyData,        // This stays the same
                 timestamp: Date.now(),
                 applied_at: new Date().toISOString()
             };
 
-            formData.append('config', JSON.stringify(config));
+            // Use same format as color palette system
+            $.ajax({
+                url: simpleCustomizer.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'simple_visual_customizer_apply',
+                    nonce: simpleCustomizer.nonce,
+                    config: JSON.stringify(config),
+                    timestamp: Date.now()
+                },
+                timeout: 30000,
+                success: function(response) {
+                    console.log('📡 Typography AJAX Success Response:', response);
 
-            fetch(simpleCustomizer.ajaxUrl, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('✅ Typography saved to WordPress database successfully');
-                    showMessage('Typography settings saved to database!', 'success');
-                } else {
-                    console.error('❌ Failed to save typography to database:', data.data);
-                    showMessage('Error saving typography to database', 'error');
+                    if (response.success) {
+                        console.log('✅ Typography saved to WordPress database successfully');
+                        showMessage('✅ Typography settings saved and CSS file generated!', 'success');
+
+                        // Check if typography CSS was generated
+                        if (response.data && response.data.typography_css_generated) {
+                            console.log('✅ Server confirmed typography CSS file generated');
+                            showMessage('Typography CSS file created - changes will persist after refresh!', 'success');
+                        }
+                    } else {
+                        console.error('❌ Failed to save typography to database:', response.data);
+                        showMessage('Error saving typography to database: ' + (response.data?.message || 'Unknown error'), 'error');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('❌ Typography AJAX error:', { xhr, status, error });
+                    showMessage('Network error saving typography: ' + error, 'error');
                 }
-            })
-            .catch(error => {
-                console.error('❌ AJAX error saving typography:', error);
-                showMessage('Network error saving typography', 'error');
             });
         } else {
             console.warn('⚠️ AJAX not available, typography saved to localStorage only');
