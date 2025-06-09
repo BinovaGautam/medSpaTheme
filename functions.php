@@ -17,6 +17,37 @@ if (!defined('ABSPATH')) {
 define('PREETIDREAMS_VERSION', '1.0.0');
 
 // =============================================================================
+// SPRINT 6: CUSTOMIZABLE COMPONENT ARCHITECTURE SYSTEM
+// =============================================================================
+
+// Load Component Architecture Foundation (T6.1 - Component Base Architecture)
+require_once get_template_directory() . '/inc/components/base-component.php';
+require_once get_template_directory() . '/inc/components/component-registry.php';
+require_once get_template_directory() . '/inc/components/component-factory.php';
+
+// Load demo component for testing (will be replaced with production components)
+require_once get_template_directory() . '/inc/components/demo-button-component.php';
+
+// Initialize Component System
+add_action('after_setup_theme', function() {
+    // Component Registry is auto-initialized
+    // Component Factory helper functions are available globally
+
+    // Enable component performance tracking in debug mode
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        add_action('wp_footer', function() {
+            $metrics = ComponentRegistry::get_performance_metrics();
+            if (!empty($metrics)) {
+                echo "<!-- Component Performance Summary -->\n";
+            }
+        });
+    }
+
+    // Hook for future component auto-registration
+    do_action('medspa_components_init');
+}, 5); // Priority 5 to load before other theme setup
+
+// =============================================================================
 // SPRINT 4: INDUSTRY-STANDARD WORDPRESS CUSTOMIZER ARCHITECTURE
 // =============================================================================
 
