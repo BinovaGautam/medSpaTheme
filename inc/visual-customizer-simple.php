@@ -1489,3 +1489,10 @@ function handle_comprehensive_css_diagnostic() {
     });
 }
 add_action('init', 'handle_comprehensive_css_diagnostic');
+
+/**
+ * CRITICAL FIX: Register AJAX Action Handlers
+ * These were missing, causing 400 errors for typography/color saving
+ */
+add_action('wp_ajax_simple_visual_customizer_apply', 'handle_simple_visual_customizer_apply');
+add_action('wp_ajax_nopriv_simple_visual_customizer_apply', 'handle_simple_visual_customizer_apply');
