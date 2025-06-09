@@ -24,6 +24,7 @@ define('PREETIDREAMS_VERSION', '1.0.0');
 require_once get_template_directory() . '/inc/components/base-component.php';
 require_once get_template_directory() . '/inc/components/component-registry.php';
 require_once get_template_directory() . '/inc/components/component-factory.php';
+require_once get_template_directory() . '/inc/components/component-auto-loader.php';
 
 // Load demo component for testing (will be replaced with production components)
 require_once get_template_directory() . '/inc/components/demo-button-component.php';
@@ -46,6 +47,47 @@ add_action('after_setup_theme', function() {
     // Hook for future component auto-registration
     do_action('medspa_components_init');
 }, 5); // Priority 5 to load before other theme setup
+
+// Component management dashboard
+if (is_admin()) {
+    require_once get_template_directory() . '/inc/admin/component-dashboard.php';
+}
+
+// Initialize component system with auto-discovery
+add_action('after_setup_theme', 'medspa_components_init', 5);
+function medspa_components_init() {
+    // Component system is automatically initialized by the auto-loader
+
+    // Register demo button component for testing
+    if (file_exists(get_template_directory() . '/inc/components/demo-button-component.php')) {
+        require_once get_template_directory() . '/inc/components/demo-button-component.php';
+
+        // Auto-registration will handle this, but we can manually register for immediate availability
+        if (class_exists('ComponentRegistry') && class_exists('DemoButtonComponent')) {
+            ComponentRegistry::register('demo-button', 'DemoButtonComponent', [
+                'priority' => 5,
+                'manual_registration' => true
+            ]);
+        }
+    }
+
+    // Performance monitoring in debug mode
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        add_action('wp_footer', function() {
+            if (class_exists('ComponentRegistry')) {
+                $metrics = ComponentRegistry::get_performance_metrics();
+                if (!empty($metrics)) {
+                    echo "<!-- Component Performance Debug:\n";
+                    foreach ($metrics as $component => $data) {
+                        $avg_time = $data['total_time'] / $data['total_renders'];
+                        echo "  {$component}: " . number_format($avg_time * 1000, 2) . "ms avg ({$data['total_renders']} renders)\n";
+                    }
+                    echo "-->\n";
+                }
+            }
+        });
+    }
+}
 
 // =============================================================================
 // SPRINT 4: INDUSTRY-STANDARD WORDPRESS CUSTOMIZER ARCHITECTURE
