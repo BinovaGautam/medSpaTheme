@@ -200,6 +200,317 @@
     }
   },
 
+  "MANDATORY_WORKFLOW_VALIDATION": {
+    "NEVER_VIOLATE": [
+      "NO completion reports without workflow evidence",
+      "NO file creation without proper agent delegation",
+      "NO sprint completion without quality gate validation",
+      "ALL workflows must produce verification artifacts",
+      "NO status claims without cross-referencing actual deliverables"
+    ],
+    "workflowValidationRequired": {
+      "completionClaims": "CRITICAL - verify agent involvement before accepting completion",
+      "fileCreation": "CRITICAL - verify CODE-GEN-WF-001 or BUG-RESOLUTION-WF-001 delegation",
+      "sprintCompletion": "CRITICAL - verify all quality gates passed through proper workflows",
+      "statusReporting": "CRITICAL - cross-reference reports with actual deliverables",
+      "taskExecution": "CRITICAL - verify proper workflow delegation occurred"
+    },
+    "automatedValidation": {
+      "indexUpdateTriggers": "Automatically update index.json when workflows complete",
+      "completionVerification": "Require workflow artifacts for completion claims",
+      "fileOriginTracking": "Track which agent/workflow created each file",
+      "sprintStatusValidation": "Validate sprint completions against actual deliverables",
+      "workflowCompletionAudits": "Audit all completion claims against workflow evidence"
+    },
+    "enforcementProtocols": {
+      "HALT_ON_BYPASS": "IMMEDIATELY halt all operations when workflow bypass detected",
+      "REQUIRE_EVIDENCE": "Demand workflow evidence before accepting any completion claim",
+      "AUDIT_ALL_CLAIMS": "Cross-reference all status claims with actual workflow outputs",
+      "RETROACTIVE_VALIDATION": "Audit previous completions for workflow compliance"
+    }
+  },
+
+  "CRISIS_PREVENTION_MEASURES": {
+    "NEVER_ALLOW": [
+      "Manual file creation outside designated agents",
+      "Sprint completion reports without workflow validation",
+      "Index.json updates without proper verification",
+      "Task completion claims without agent evidence"
+    ],
+    "preventionMechanisms": {
+      "fileCreationGates": "BLOCK file creation unless through CODE-GEN-WF-001 or BUG-RESOLUTION-WF-001",
+      "completionGates": "BLOCK completion claims unless workflow evidence provided",
+      "statusUpdateGates": "BLOCK status updates unless cross-referenced with deliverables",
+      "reportGenerationGates": "BLOCK report generation unless validation completed"
+    },
+    "auditRequirements": {
+      "dailyWorkflowAudits": "Daily verification of workflow compliance",
+      "completionClaimValidation": "Immediate validation of all completion claims",
+      "fileOriginVerification": "Verify origin of all new files",
+      "sprintStatusCrossCheck": "Cross-check sprint status with actual deliverables"
+    }
+  },
+
+  "SPRINT_ORGANIZATION_REQUIREMENTS": {
+    "NEVER_VIOLATE": [
+      "ALL sprint files MUST be in levCompiler/project_context/tasks/sprints/ directory",
+      "NO sprint files allowed outside designated sprints directory",
+      "ALL sprints MUST be registered in index.json with proper metadata",
+      "EVERY sprint file must have common connection point in index.json"
+    ],
+    "mandatorySprintOrganization": {
+      "sprintLocation": "levCompiler/project_context/tasks/sprints/ ONLY",
+      "indexRegistration": "CRITICAL - ALL sprints must be tracked in index.json",
+      "connectionPoint": "index.json serves as central registry for all sprints",
+      "namingConvention": "sprint-{number}-{descriptive-name}.md format required",
+      "metadataRequirements": "Sprint ID, status, story points, dates required in index.json"
+    },
+    "sprintFileTypes": {
+      "plans": "sprint-{number}-plan.md OR sprint-{number}-{name}.md",
+      "reports": "sprint-{number}-completion-report.md OR sprint-{number}-{type}-report.md",
+      "extensions": "sprint-{number}-extension-{name}.md",
+      "updates": "sprint-{number}-{update-type}.md",
+      "jsonPlans": "sprint_{number}_plan.json (legacy, migrate to markdown)"
+    },
+    "indexConnectivity": {
+      "sprintRegistry": "index.json MUST contain sprintRegistry section",
+      "statusTracking": "Each sprint status tracked with completion percentage",
+      "storyPointTracking": "Planned vs completed story points tracked",
+      "dateTracking": "Start date, end date, actual completion tracked",
+      "filePathMapping": "Direct file path references in index.json"
+    },
+    "organizationEnforcement": {
+      "scanForViolations": "Automatically detect sprint files outside sprints directory",
+      "moveToProperLocation": "Automatically move misplaced sprint files",
+      "updateIndexReferences": "Update index.json when files are moved",
+      "validateConnectivity": "Ensure all sprints have index.json entries"
+    }
+  },
+
+  "SPRINT_WORKFLOW_INTEGRATION": {
+    "NEVER_BYPASS": [
+      "Sprint creation MUST update index.json automatically",
+      "Sprint completion MUST update index.json status",
+      "Sprint file moves MUST update index.json file paths",
+      "All sprint changes MUST trigger index validation"
+    ],
+    "workflowConnections": {
+      "sprintCreation": "TASK-PLANNER-001 creates sprint → updates index.json",
+      "sprintCompletion": "Workflow completion → index.json status update",
+      "sprintModification": "Any sprint file change → index.json sync check",
+      "sprintArchival": "Completed sprints → archive location tracking"
+    },
+    "qualityGates": {
+      "indexSyncValidation": "Verify index.json matches actual sprint files",
+      "connectionValidation": "Verify all sprints have proper index entries",
+      "directoryValidation": "Verify all sprint files in correct directory",
+      "metadataValidation": "Verify complete metadata for each sprint"
+    }
+  },
+
+  "TASK_COMPLETION_LOGGING": {
+    "NEVER_VIOLATE": [
+      "ALL task completions must be logged with implementation evidence",
+      "ALL task implementations must reference actual file locations",
+      "ALL workflow delegations must be documented with agent evidence",
+      "NO task marked complete without verifiable deliverables",
+      "ALL coding tasks must prove CODE-GEN-WF-001 workflow execution",
+      "ALL planning tasks must document proper TASK-PLANNER-001 involvement"
+    ],
+    "mandatoryTaskLogging": {
+      "planningTaskCompletion": {
+        "requiredFields": [
+          "task-id",
+          "completion-timestamp-placeholder",
+          "deliverable-locations",
+          "workflow-evidence",
+          "agent-involvement-proof",
+          "quality-gate-status"
+        ],
+        "evidenceRequirements": [
+          "file-system-verification",
+          "directory-structure-validation",
+          "documentation-completeness-check",
+          "index-registration-confirmation"
+        ],
+        "documentationFormat": {
+          "taskCompletionHeader": "## ✅ TASK COMPLETION: [task-name]",
+          "implementationEvidence": "### 📁 Implementation Evidence:",
+          "fileReferences": "### 📋 File References:",
+          "workflowCompliance": "### 🔄 Workflow Compliance:",
+          "qualityValidation": "### ✅ Quality Validation:"
+        }
+      },
+      "codingTaskCompletion": {
+        "requiredFields": [
+          "task-id",
+          "workflow-id-CODE-GEN-WF-001",
+          "primary-agent-CODE-GEN-001",
+          "supporting-agents-list",
+          "code-deliverables-with-locations",
+          "file-locations-verified",
+          "integration-points-tested",
+          "performance-metrics-recorded"
+        ],
+        "codeEvidenceRequirements": [
+          "actual-file-existence-verification",
+          "code-quality-metrics-documented",
+          "integration-testing-proof-provided",
+          "performance-benchmarks-met",
+          "security-validation-results-recorded"
+        ],
+        "workflowDelegationEvidence": [
+          "CODE-GEN-WF-001-initiation-proof",
+          "workflow-stage-completion-evidence",
+          "quality-gate-passage-documentation",
+          "CODE-REVIEW-001-approval-recorded",
+          "DRY-RUN-001-testing-results-documented",
+          "GATE-KEEP-001-final-approval-confirmed"
+        ]
+      }
+    },
+    "taskManagementWorkflowIntegration": {
+      "completionLoggingLocation": "levCompiler/project_context/tasks/completion_logs/",
+      "sprintCompletionTracking": "levCompiler/project_context/tasks/sprints/sprint-completion-evidence/",
+      "indexRegistration": {
+        "completionLogs": "levCompiler/project_context/tasks/completion_logs/index.json",
+        "sprintEvidence": "levCompiler/project_context/tasks/sprints/sprint-evidence-index.json"
+      },
+      "taskManagementWorkflowUpdates": {
+        "stage7Enhancement": {
+          "name": "post-completion-documentation-and-verification",
+          "mandatorySteps": [
+            "generate-completion-evidence-report",
+            "verify-all-deliverables-exist-in-file-system",
+            "document-file-system-changes-with-locations",
+            "update-sprint-progress-tracking-with-evidence",
+            "register-completion-in-appropriate-index-files",
+            "invoke-VERSION-TRACK-001-with-complete-evidence"
+          ],
+          "evidenceReportStructure": {
+            "taskSummary": "Executive summary with completion percentage and deliverables",
+            "deliverableInventory": "Complete list of files created/modified with full paths",
+            "workflowCompliance": "Evidence of proper workflow execution with agent involvement",
+            "qualityMetrics": "Performance, security, accessibility metrics with benchmark comparison",
+            "integrationValidation": "Testing results and integration proof with existing systems",
+            "versionTrackingHandoff": "VERSION-TRACK-001 involvement documentation with change description"
+          }
+        },
+        "sprintLevelTracking": {
+          "sprintCompletionRequirements": [
+            "all-tasks-have-completion-evidence-reports",
+            "all-deliverables-verified-exist-in-file-system",
+            "all-workflow-delegations-documented-with-evidence",
+            "all-quality-gates-passed-with-documented-evidence",
+            "sprint-goals-achieved-with-measurable-metrics",
+            "VERSION-TRACK-001-involved-in-sprint-completion-handoff"
+          ],
+          "fraudDetectionMeasures": [
+            "cross-reference-claimed-vs-actual-deliverables-in-file-system",
+            "verify-workflow-evidence-trails-exist-in-documentation",
+            "validate-agent-involvement-documentation-against-workflow-specs",
+            "confirm-file-system-implementation-matches-completion-claims",
+            "audit-version-tracking-compliance-against-fundamentals"
+          ]
+        }
+      }
+    },
+    "implementationVerification": {
+      "fileSystemValidation": {
+        "mandatoryChecks": [
+          "verify-claimed-files-actually-exist-at-specified-locations",
+          "validate-directory-structure-compliance-with-organization-rules",
+          "confirm-file-content-matches-task-requirements-and-specifications",
+          "check-integration-with-existing-system-works-properly"
+        ],
+        "evidenceCapture": [
+          "file-location-documentation-with-full-paths",
+          "file-size-and-line-count-recording-for-verification",
+          "code-pattern-verification-against-specifications",
+          "integration-point-validation-with-testing-results"
+        ]
+      },
+      "workflowComplianceValidation": {
+        "requiredEvidence": [
+          "workflow-initiation-documentation-with-timestamps",
+          "agent-involvement-proof-with-role-confirmation",
+          "quality-gate-passage-records-with-pass-fail-status",
+          "review-and-approval-trails-with-agent-signatures",
+          "version-tracking-integration-with-VERSION-TRACK-001-evidence"
+        ],
+        "fraudPrevention": [
+          "no-completion-claims-without-workflow-evidence-documentation",
+          "no-file-creation-claims-without-agent-delegation-proof",
+          "no-quality-claims-without-gate-evidence-documentation",
+          "no-version-updates-without-VERSION-TRACK-001-involvement"
+        ]
+      }
+    },
+    "completionReportingStandards": {
+      "taskCompletionReportTemplate": {
+        "header": "# TASK COMPLETION REPORT: [task-name]",
+        "metadata": {
+          "taskId": "[task-id]",
+          "completionDate": "{CURRENT_DATE}",
+          "workflow": "[workflow-id]",
+          "primaryAgent": "[agent-id]",
+          "storyPoints": "[sp-value]",
+          "sprintAssignment": "[sprint-id]"
+        },
+        "deliverables": {
+          "codeDeliverables": "[list-of-files-with-full-paths-and-line-counts]",
+          "documentationDeliverables": "[documentation-files-with-locations]",
+          "integrationDeliverables": "[integration-points-with-testing-evidence]"
+        },
+        "evidence": {
+          "fileSystemEvidence": "[file-verification-results-with-existence-proof]",
+          "workflowEvidence": "[workflow-execution-proof-with-stage-completion]",
+          "qualityEvidence": "[quality-gate-results-with-pass-fail-documentation]",
+          "integrationEvidence": "[integration-testing-results-with-performance-metrics]"
+        },
+        "metrics": {
+          "performanceMetrics": "[performance-results-with-benchmark-comparison]",
+          "qualityMetrics": "[quality-scores-with-standards-compliance]",
+          "coverageMetrics": "[test-coverage-results-with-percentage]"
+        },
+        "versionTracking": {
+          "versionTrackingAgent": "VERSION-TRACK-001",
+          "changeDescription": "[detailed-change-summary-with-impact]",
+          "commitReference": "[version-reference-with-file-changes]"
+        }
+      },
+      "sprintCompletionReportTemplate": {
+        "header": "# SPRINT COMPLETION REPORT: [sprint-name]",
+        "sprintSummary": {
+          "plannedStoryPoints": "[planned-sp]",
+          "completedStoryPoints": "[completed-sp]",
+          "completionPercentage": "[percentage-with-verification]",
+          "sprintGoals": "[goal-achievement-status-with-evidence]"
+        },
+        "taskCompletionEvidence": {
+          "completedTasks": "[list-with-evidence-links-and-deliverable-verification]",
+          "partiallyCompletedTasks": "[list-with-status-and-blocking-factors]",
+          "blockedTasks": "[list-with-reasons-and-resolution-plans]"
+        },
+        "deliverableInventory": {
+          "codeDeliverables": "[complete-file-listing-with-verification]",
+          "documentationDeliverables": "[documentation-inventory-with-completeness-check]",
+          "integrationDeliverables": "[integration-achievements-with-testing-proof]"
+        },
+        "workflowComplianceReport": {
+          "properlyExecutedWorkflows": "[workflow-evidence-summary-with-completion-proof]",
+          "workflowViolations": "[violation-documentation-with-remediation-plans]",
+          "qualityGateCompliance": "[gate-passage-summary-with-evidence]"
+        },
+        "fraudPreventionAudit": {
+          "fileSystemAudit": "[actual-vs-claimed-deliverables-verification]",
+          "workflowAudit": "[workflow-evidence-verification-results]",
+          "agentInvolvementAudit": "[agent-participation-proof-validation]"
+        }
+      }
+    }
+  },
+
   "emergencyProtocols": {
     "fundamentalsViolation": {
       "immediateAction": "HALT all operations immediately",

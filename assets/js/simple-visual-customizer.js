@@ -154,7 +154,6 @@
                 console.log('🚀 Applying palette via Live Preview System...');
                 livePreviewSystem.applyPalette(palette).then(() => {
                     console.log('✅ Live Preview System: Palette applied successfully');
-                    showMessage('Palette applied! Changes are visible in real-time.', 'success');
                 }).catch(error => {
                     console.error('❌ Live Preview System error:', error);
                     showMessage('Error applying palette: ' + error.message, 'error');
@@ -2176,50 +2175,80 @@
                     <p class="typography-subtitle">Professional font pairings for medical spa</p>
                 </div>
 
-                <div class="typography-grid">
-                    <div class="typography-card" data-typography="medical-professional" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease;">
-                        <div class="typography-preview" style="margin-bottom: 10px;">
-                            <h5 style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; margin: 0 0 5px 0; font-size: 16px; color: #333;">Medical Professional</h5>
-                            <p style="font-family: 'Source Sans Pro', Arial, sans-serif; font-weight: 400; margin: 0; font-size: 14px; color: #666; line-height: 1.4;">Clean, authoritative typography for medical professionals. Inter for headings, Source Sans Pro for body text.</p>
+                <div class="typography-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+
+                    <div class="typography-card" data-typography="medical-professional" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
+                            Aa
                         </div>
-                        <div class="typography-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #888;">
-                            <span class="typography-category">Professional</span>
-                            <span class="typography-fonts">Inter / Source Sans Pro</span>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Medical Professional
                         </div>
                     </div>
 
-                    <div class="typography-card" data-typography="luxury-modern" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease;">
-                        <div class="typography-preview" style="margin-bottom: 10px;">
-                            <h5 style="font-family: 'Playfair Display', Georgia, serif; font-weight: 600; margin: 0 0 5px 0; font-size: 16px; color: #333;">Luxury Modern</h5>
-                            <p style="font-family: 'Lato', Arial, sans-serif; font-weight: 400; margin: 0; font-size: 14px; color: #666; line-height: 1.4;">Elegant and sophisticated typography for luxury spa experiences. Playfair Display for headings, Lato for body text.</p>
+                    <div class="typography-card" data-typography="luxury-modern" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Playfair Display', Georgia, serif;">
+                            Aa
                         </div>
-                        <div class="typography-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #888;">
-                            <span class="typography-category">Luxury</span>
-                            <span class="typography-fonts">Playfair Display / Lato</span>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Luxury Modern
                         </div>
                     </div>
 
-                    <div class="typography-card" data-typography="contemporary-clean" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease;">
-                        <div class="typography-preview" style="margin-bottom: 10px;">
-                            <h5 style="font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600; margin: 0 0 5px 0; font-size: 16px; color: #333;">Contemporary Clean</h5>
-                            <p style="font-family: 'Open Sans', Arial, sans-serif; font-weight: 400; margin: 0; font-size: 14px; color: #666; line-height: 1.4;">Modern and minimal typography for contemporary wellness centers. Poppins for headings, Open Sans for body text.</p>
+                    <div class="typography-card" data-typography="contemporary-clean" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;">
+                            Aa
                         </div>
-                        <div class="typography-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #888;">
-                            <span class="typography-category">Modern</span>
-                            <span class="typography-fonts">Poppins / Open Sans</span>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Contemporary Clean
                         </div>
                     </div>
 
-                    <div class="typography-card" data-typography="wellness-serif" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease;">
-                        <div class="typography-preview" style="margin-bottom: 10px;">
-                            <h5 style="font-family: 'Crimson Text', Georgia, serif; font-weight: 600; margin: 0 0 5px 0; font-size: 16px; color: #333;">Wellness Serif</h5>
-                            <p style="font-family: 'Nunito Sans', Arial, sans-serif; font-weight: 400; margin: 0; font-size: 14px; color: #666; line-height: 1.4;">Warm and approachable typography for wellness and therapy. Crimson Text for headings, Nunito Sans for body text.</p>
+                    <div class="typography-card" data-typography="wellness-serif" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Crimson Text', Georgia, serif;">
+                            Aa
                         </div>
-                        <div class="typography-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #888;">
-                            <span class="typography-category">Wellness</span>
-                            <span class="typography-fonts">Crimson Text / Nunito Sans</span>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Wellness Serif
                         </div>
                     </div>
+
+                    <div class="typography-card" data-typography="modern-sans" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Modern Sans
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="classic-elegant" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Cormorant Garamond', Georgia, serif;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Classic Elegant
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="tech-minimal" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Tech Minimal
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="warm-organic" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Merriweather', Georgia, serif;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Warm Organic
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="typography-actions" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
@@ -2277,8 +2306,8 @@
                 currentConfig.typographyPairing = typographyId;
                 currentConfig.typographyData = typographyData;
 
-                // Apply typography immediately
-                applyWorkingTypography(typographyData);
+                // ENHANCED: Apply typography with server override capability
+                applyWorkingTypographyWithOverride(typographyData);
 
                 // Update status and enable apply button
                 const statusEl = container.find('#typography-status');
@@ -2291,6 +2320,9 @@
                 updateApplyButton();
 
                 showMessage(`Typography "${typographyData.name}" applied!`, 'success');
+
+                // ENHANCED: Save selection for highlighting
+                saveTypographySelectionToLocalStorage(typographyId);
             }
         });
 
@@ -2304,214 +2336,385 @@
         });
 
         console.log('✅ Working typography interactions setup complete');
+
+        // ENHANCED: Load and highlight current typography after setup
+        setTimeout(() => {
+            loadAndHighlightCurrentTypography();
+        }, 500);
     }
 
     /**
-     * Get Typography Data
+     * ENHANCED: Apply typography with server override capability
      */
-    function getTypographyData(typographyId) {
-        const typographyMap = {
-            'medical-professional': {
-                id: 'medical-professional',
-                name: 'Medical Professional',
-                description: 'Clean and authoritative',
-                category: 'Professional',
-                headingFont: {
-                    family: 'Inter',
-                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
-                    weights: [400, 500, 600, 700]
-                },
-                bodyFont: {
-                    family: 'Source Sans Pro',
-                    fallback: 'Arial, sans-serif',
-                    weights: [400, 500, 600]
-                },
-                googleFonts: ['Inter:400,500,600,700', 'Source+Sans+Pro:400,500,600']
-            },
-            'luxury-modern': {
-                id: 'luxury-modern',
-                name: 'Luxury Modern',
-                description: 'Elegant and sophisticated',
-                category: 'Luxury',
-                headingFont: {
-                    family: 'Playfair Display',
-                    fallback: 'Georgia, serif',
-                    weights: [400, 600, 700]
-                },
-                bodyFont: {
-                    family: 'Lato',
-                    fallback: 'Arial, sans-serif',
-                    weights: [400, 500, 600]
-                },
-                googleFonts: ['Playfair+Display:400,600,700', 'Lato:400,500,600']
-            },
-            'contemporary-clean': {
-                id: 'contemporary-clean',
-                name: 'Contemporary Clean',
-                description: 'Modern and minimal',
-                category: 'Modern',
-                headingFont: {
-                    family: 'Poppins',
-                    fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
-                    weights: [400, 500, 600, 700]
-                },
-                bodyFont: {
-                    family: 'Open Sans',
-                    fallback: 'Arial, sans-serif',
-                    weights: [400, 500, 600]
-                },
-                googleFonts: ['Poppins:400,500,600,700', 'Open+Sans:400,500,600']
-            },
-            'wellness-serif': {
-                id: 'wellness-serif',
-                name: 'Wellness Serif',
-                description: 'Warm and approachable',
-                category: 'Wellness',
-                headingFont: {
-                    family: 'Crimson Text',
-                    fallback: 'Georgia, serif',
-                    weights: [400, 600, 700]
-                },
-                bodyFont: {
-                    family: 'Nunito Sans',
-                    fallback: 'Arial, sans-serif',
-                    weights: [400, 500, 600]
-                },
-                googleFonts: ['Crimson+Text:400,600,700', 'Nunito+Sans:400,500,600']
-            }
-        };
-
-        return typographyMap[typographyId] || null;
-    }
-
-    /**
-     * Apply Working Typography
-     */
-    function applyWorkingTypography(typographyData) {
-        console.log('📝 Applying working typography:', typographyData);
+    function applyWorkingTypographyWithOverride(typographyData) {
+        console.log('📝 Applying typography with server override capability:', typographyData);
 
         try {
-            // Load Google Fonts if needed
-            loadGoogleFontsForTypography(typographyData);
+            // Check if server has typography CSS
+            const rootStyle = getComputedStyle(document.documentElement);
+            const serverTypographyFamily = rootStyle.getPropertyValue('--component-font-family-primary').trim();
+            const serverTypographyBodyFamily = rootStyle.getPropertyValue('--component-font-family-secondary').trim();
 
-            // Create typography CSS
-            const css = generateTypographyCSS(typographyData);
+            if (serverTypographyFamily !== '' || serverTypographyBodyFamily !== '') {
+                console.log('🖥️ SERVER TYPOGRAPHY CSS DETECTED');
+                console.log('🖥️ Server heading font:', serverTypographyFamily);
+                console.log('🖥️ Server body font:', serverTypographyBodyFamily);
 
-            // Apply CSS
-            let typographyStyle = document.getElementById('working-typography-styles');
-            if (!typographyStyle) {
-                typographyStyle = document.createElement('style');
-                typographyStyle.id = 'working-typography-styles';
-                document.head.appendChild(typographyStyle);
+                // Check if server typography matches what we're applying
+                const clientHeadingFamily = `"${typographyData.headingFont.family}", ${typographyData.headingFont.fallback}`;
+                const clientBodyFamily = `"${typographyData.bodyFont.family}", ${typographyData.bodyFont.fallback}`;
+
+                if (serverTypographyFamily.includes(typographyData.headingFont.family) &&
+                    serverTypographyBodyFamily.includes(typographyData.bodyFont.family)) {
+                    console.log('✅ Server typography matches client selection - typography is correctly applied');
+                    showMessage('✅ Typography already applied globally!', 'success');
+                    return;
+                } else {
+                    console.log('⚠️ Server typography differs from client selection - will override');
+                    console.log(`    Server heading: ${serverTypographyFamily}`);
+                    console.log(`    Client heading: ${clientHeadingFamily}`);
+                    showMessage('🔄 Overriding server typography with new selection...', 'info');
+                }
             }
 
-            typographyStyle.textContent = css;
+            // ENHANCED: Load Google Fonts FIRST and WAIT for them to load
+            loadGoogleFontsForTypographySync(typographyData).then(() => {
+                console.log('✅ Google Fonts loaded, applying CSS...');
 
-            console.log('✅ Working typography applied successfully');
+                // Apply typography tokens immediately
+                applyTypographyTokensImmediately(typographyData);
+
+                // Generate and apply high-specificity CSS
+                const css = generateEnhancedTypographyCSS(typographyData);
+                applyTypographyCSSWithHighSpecificity(css, typographyData.id);
+
+                // Force browser reflow to ensure fonts apply
+                forceTypographyReflow();
+
+                console.log('✅ Typography applied with server override capability');
+                showMessage(`✅ Typography "${typographyData.name}" applied in real-time!`, 'success');
+
+            }).catch(error => {
+                console.error('❌ Error loading Google Fonts:', error);
+                // Apply anyway with fallback fonts
+                applyTypographyTokensImmediately(typographyData);
+                const css = generateEnhancedTypographyCSS(typographyData);
+                applyTypographyCSSWithHighSpecificity(css, typographyData.id);
+                showMessage(`⚠️ Typography applied with fallback fonts (Google Fonts failed to load)`, 'warning');
+            });
 
         } catch (error) {
-            console.error('❌ Error applying working typography:', error);
+            console.error('❌ Error applying typography with override:', error);
+            showMessage('❌ Error applying typography: ' + error.message, 'error');
         }
     }
 
     /**
-     * Load Google Fonts for Typography
+     * Load Google Fonts synchronously and return a Promise
      */
-    function loadGoogleFontsForTypography(typographyData) {
-        if (!typographyData.googleFonts || typographyData.googleFonts.length === 0) {
-            return;
-        }
+    function loadGoogleFontsForTypographySync(typographyData) {
+        return new Promise((resolve, reject) => {
+            if (!typographyData.googleFonts || typographyData.googleFonts.length === 0) {
+                console.log('📝 No Google Fonts to load, proceeding...');
+                resolve();
+                return;
+            }
 
-        // Check if fonts are already loaded
-        const existingLink = document.querySelector('#typography-google-fonts');
+            const fontsQuery = typographyData.googleFonts.join('&family=');
+            const googleFontsUrl = `https://fonts.googleapis.com/css2?family=${fontsQuery}&display=swap`;
 
-        const fontsQuery = typographyData.googleFonts.join('&family=');
-        const googleFontsUrl = `https://fonts.googleapis.com/css2?family=${fontsQuery}&display=swap`;
+            console.log('🔗 Loading Google Fonts:', googleFontsUrl);
 
-        if (existingLink) {
-            existingLink.href = googleFontsUrl;
-        } else {
+            // Check if fonts are already loaded
+            const existingLink = document.querySelector('#typography-google-fonts');
+
+            if (existingLink && existingLink.href === googleFontsUrl) {
+                console.log('✅ Google Fonts already loaded with correct URL');
+                resolve();
+                return;
+            }
+
+            // Remove existing link if different
+            if (existingLink) {
+                existingLink.remove();
+            }
+
+            // Create new link element
             const link = document.createElement('link');
             link.id = 'typography-google-fonts';
             link.rel = 'stylesheet';
             link.href = googleFontsUrl;
-            document.head.appendChild(link);
-        }
 
-        console.log('🔗 Google Fonts loaded for typography:', typographyData.googleFonts);
+            // Wait for fonts to load
+            link.onload = () => {
+                console.log('✅ Google Fonts loaded successfully');
+
+                // Additional check: wait for fonts to be ready
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(() => {
+                        console.log('✅ All fonts ready');
+                        resolve();
+                    });
+                } else {
+                    // Fallback delay for older browsers
+                    setTimeout(resolve, 500);
+                }
+            };
+
+            link.onerror = () => {
+                console.error('❌ Failed to load Google Fonts');
+                reject(new Error('Google Fonts failed to load'));
+            };
+
+            document.head.appendChild(link);
+
+            // Timeout fallback
+            setTimeout(() => {
+                console.warn('⚠️ Google Fonts loading timeout, proceeding anyway');
+                resolve();
+            }, 3000);
+        });
     }
 
     /**
-     * Generate Typography CSS
+     * Apply typography tokens immediately to CSS variables
      */
-    function generateTypographyCSS(typographyData) {
+    function applyTypographyTokensImmediately(typographyData) {
+        console.log('📝 Applying typography tokens immediately...', typographyData);
+
+        const headingFamily = `"${typographyData.headingFont.family}", ${typographyData.headingFont.fallback}`;
+        const bodyFamily = `"${typographyData.bodyFont.family}", ${typographyData.bodyFont.fallback}`;
+
+        const headingWeights = typographyData.headingFont.weights || [400, 500, 600, 700];
+        const bodyWeights = typographyData.bodyFont.weights || [400, 500, 600];
+
+        // Apply to CSS custom properties
+        const tokens = {
+            // Foundation tokens
+            '--typography-heading-family': headingFamily,
+            '--typography-body-family': bodyFamily,
+            '--typography-heading-weight-normal': headingWeights[0] || 400,
+            '--typography-heading-weight-medium': headingWeights[1] || 500,
+            '--typography-heading-weight-bold': headingWeights[2] || 600,
+            '--typography-body-weight-normal': bodyWeights[0] || 400,
+            '--typography-body-weight-medium': bodyWeights[1] || 500,
+
+            // Component tokens
+            '--component-font-family-primary': headingFamily,
+            '--component-font-family-secondary': bodyFamily,
+            '--component-font-weight-heading': headingWeights[2] || 600,
+            '--component-font-weight-subheading': headingWeights[1] || 500,
+            '--component-font-weight-body': bodyWeights[0] || 400,
+            '--component-font-weight-accent': bodyWeights[1] || 500,
+
+            // Semantic roles
+            '--font-family-primary': headingFamily,
+            '--font-family-secondary': bodyFamily,
+            '--font-weight-heading': headingWeights[2] || 600,
+            '--font-weight-subheading': headingWeights[1] || 500,
+            '--font-weight-body': bodyWeights[0] || 400
+        };
+
+        const documentRoot = document.documentElement;
+        Object.entries(tokens).forEach(([property, value]) => {
+            documentRoot.style.setProperty(property, value);
+            console.log(`📝 Set ${property}: ${value}`);
+        });
+
+        console.log('✅ Typography tokens applied to CSS variables');
+    }
+
+    /**
+     * Generate enhanced typography CSS with maximum specificity
+     */
+    function generateEnhancedTypographyCSS(typographyData) {
         const headingFamily = `"${typographyData.headingFont.family}", ${typographyData.headingFont.fallback}`;
         const bodyFamily = `"${typographyData.bodyFont.family}", ${typographyData.bodyFont.fallback}`;
 
         return `
-/* Working Typography System - ${typographyData.name} */
-:root {
-    --typography-heading-family: ${headingFamily};
-    --typography-body-family: ${bodyFamily};
-    --typography-heading-weight-normal: ${typographyData.headingFont.weights[0] || 400};
-    --typography-heading-weight-medium: ${typographyData.headingFont.weights[1] || 500};
-    --typography-heading-weight-bold: ${typographyData.headingFont.weights[2] || 600};
-    --typography-body-weight-normal: ${typographyData.bodyFont.weights[0] || 400};
-    --typography-body-weight-medium: ${typographyData.bodyFont.weights[1] || 500};
+/* ENHANCED TYPOGRAPHY CSS - ${typographyData.name} - Maximum Specificity */
+
+/* Critical: Override ALL heading elements with maximum specificity */
+html body h1, html body h1[class],
+html body h2, html body h2[class],
+html body h3, html body h3[class],
+html body h4, html body h4[class],
+html body h5, html body h5[class],
+html body h6, html body h6[class],
+html body .heading, html body .heading[class],
+html body .title, html body .title[class],
+html body .site-title, html body .site-title[class],
+html body .hero-title, html body .hero-title[class],
+html body .section-title, html body .section-title[class] {
+    font-family: ${headingFamily} !important;
+    transition: font-family 0.3s ease !important;
 }
 
-/* Apply to headings */
-h1, h2, h3, h4, h5, h6,
-.heading, .title, .site-title,
-.hero-title, .section-title {
-    font-family: var(--typography-heading-family) !important;
+/* Critical: Override ALL body text elements with maximum specificity */
+html body, html body[class],
+html body p, html body p[class],
+html body div:not([class*='wp-']), html body div[class]:not([class*='wp-']),
+html body span:not([class*='wp-']), html body span[class]:not([class*='wp-']),
+html body a:not([class*='wp-']), html body a[class]:not([class*='wp-']),
+html body li, html body li[class],
+html body td, html body td[class],
+html body th, html body th[class],
+html body .body-text, html body .body-text[class],
+html body .content, html body .content[class],
+html body .description, html body .description[class] {
+    font-family: ${bodyFamily} !important;
+    transition: font-family 0.3s ease !important;
 }
 
-/* Apply to body text */
-body, p, div, span, a, li, td, th,
-.body-text, .content, .description {
-    font-family: var(--typography-body-family) !important;
+/* Navigation and buttons with maximum specificity */
+html body .nav-menu a, html body .nav-menu[class] a,
+html body .menu-item a, html body .menu-item[class] a,
+html body button, html body button[class],
+html body .btn, html body .btn[class],
+html body input[type="submit"], html body input[type="submit"][class] {
+    font-family: ${headingFamily} !important;
+    transition: font-family 0.3s ease !important;
 }
 
-/* Specific weight applications */
-h1, .hero-title {
-    font-weight: var(--typography-heading-weight-bold) !important;
+/* Medical spa theme specific elements */
+html body .professional-header .site-title,
+html body .professional-header[class] .site-title[class],
+html body .professional-header .nav-menu a,
+html body .professional-header[class] .nav-menu[class] a {
+    font-family: ${headingFamily} !important;
 }
 
-h2, h3, .section-title {
-    font-weight: var(--typography-heading-weight-medium) !important;
+html body .luxury-footer, html body .luxury-footer[class] {
+    font-family: ${bodyFamily} !important;
 }
 
-h4, h5, h6 {
-    font-weight: var(--typography-heading-weight-normal) !important;
+/* Treatment cards and content areas */
+html body .treatment-card h3, html body .treatment-card[class] h3,
+html body .treatment-card .treatment-title, html body .treatment-card[class] .treatment-title[class] {
+    font-family: ${headingFamily} !important;
 }
 
-body, p, div, span {
-    font-weight: var(--typography-body-weight-normal) !important;
+html body .treatment-card p, html body .treatment-card[class] p,
+html body .treatment-card .treatment-description, html body .treatment-card[class] .treatment-description[class] {
+    font-family: ${bodyFamily} !important;
 }
 
-/* Ensure navigation and buttons use appropriate fonts */
-.nav-menu, .menu-item a {
-    font-family: var(--typography-heading-family) !important;
-    font-weight: var(--typography-heading-weight-medium) !important;
+/* Force override common theme elements */
+html body .entry-title, html body .entry-title[class],
+html body .post-title, html body .post-title[class],
+html body .page-title, html body .page-title[class] {
+    font-family: ${headingFamily} !important;
 }
 
-button, .btn, input[type="submit"] {
-    font-family: var(--typography-heading-family) !important;
-    font-weight: var(--typography-heading-weight-medium) !important;
+html body .entry-content, html body .entry-content[class],
+html body .post-content, html body .post-content[class],
+html body .page-content, html body .page-content[class] {
+    font-family: ${bodyFamily} !important;
 }
         `;
     }
 
     /**
-     * Save Typography to Server
+     * Apply typography CSS with high specificity and unique ID
+     */
+    function applyTypographyCSSWithHighSpecificity(css, typographyId) {
+        console.log('💉 Applying typography CSS with high specificity...');
+
+        // Remove previous typography styles
+        const existingStyle = document.getElementById('enhanced-typography-styles');
+        if (existingStyle) {
+            existingStyle.remove();
+            console.log('🗑️ Removed previous typography styles');
+        }
+
+        // Create new style element
+        const styleElement = document.createElement('style');
+        styleElement.id = 'enhanced-typography-styles';
+        styleElement.setAttribute('data-typography', typographyId);
+        styleElement.textContent = css;
+
+        // Inject with high priority
+        document.head.appendChild(styleElement);
+
+        console.log('💉 Enhanced typography CSS injected');
+        return true;
+    }
+
+    /**
+     * Force typography reflow to ensure fonts apply immediately
+     */
+    function forceTypographyReflow() {
+        console.log('🔄 Forcing typography reflow...');
+
+        // Force reflow on key elements
+        const keySelectors = ['h1', 'h2', 'h3', 'p', 'body', '.site-title', '.nav-menu'];
+
+        keySelectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                if (element) {
+                    // Force style recalculation
+                    const display = element.style.display;
+                    element.style.display = 'none';
+                    element.offsetHeight; // Trigger reflow
+                    element.style.display = display || '';
+                }
+            });
+        });
+
+        // Global reflow trigger
+        document.body.style.fontFamily = document.body.style.fontFamily || '';
+        document.body.offsetHeight; // Trigger reflow
+
+        console.log('✅ Typography reflow completed');
+    }
+
+    /**
+     * Save Typography to Server - ENHANCED with WordPress Database Persistence
      */
     function saveTypographyToServer(typographyData) {
-        // For now, store in localStorage as well
+        console.log('💾 Saving typography to WordPress database:', typographyData);
+
+        // Store in localStorage as backup
         localStorage.setItem('applied_typography', JSON.stringify(typographyData));
 
-        // In the future, this could make an AJAX call to save to WordPress options
-        console.log('💾 Typography saved:', typographyData);
+        // Save to WordPress database via AJAX (like color system)
+        if (typeof simpleCustomizer !== 'undefined' && simpleCustomizer.ajaxUrl) {
+            const formData = new FormData();
+            formData.append('action', 'simple_visual_customizer_apply');
+            formData.append('nonce', simpleCustomizer.nonce);
+
+            // Create config object with typography data (like color system format)
+            const config = {
+                activeTypography: typographyData.id,
+                typographyData: typographyData,
+                timestamp: Date.now(),
+                applied_at: new Date().toISOString()
+            };
+
+            formData.append('config', JSON.stringify(config));
+
+            fetch(simpleCustomizer.ajaxUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('✅ Typography saved to WordPress database successfully');
+                    showMessage('Typography settings saved to database!', 'success');
+                } else {
+                    console.error('❌ Failed to save typography to database:', data.data);
+                    showMessage('Error saving typography to database', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('❌ AJAX error saving typography:', error);
+                showMessage('Network error saving typography', 'error');
+            });
+        } else {
+            console.warn('⚠️ AJAX not available, typography saved to localStorage only');
+        }
     }
 
     /**

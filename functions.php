@@ -30,8 +30,6 @@ require_once get_template_directory() . '/inc/medspa-customizer.php';
 // Simple Visual Customizer - Clean Admin Bar Implementation
 require_once get_template_directory() . '/inc/visual-customizer-simple.php';
 
-// TEMPORARY: Simple Working Visual Customizer (for immediate functionality)
-require_once get_template_directory() . '/simple-working-customizer.php';
 
 // Visual Customizer Integration - Sprint 2 PVC-004 (Legacy - keeping for compatibility)
 require_once get_template_directory() . '/inc/visual-customizer-integration.php';

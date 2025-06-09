@@ -138,21 +138,35 @@ function handle_simple_visual_customizer_apply() {
 
     // Initialize variables
     $active_palette = null;
+    $active_typography = null;
+    $typography_data = null;
     $config_saved = false;
     $palette_saved = false;
+    $typography_saved = false;
+    $typography_data_saved = false;
     $verify_config = null;
     $verify_palette = null;
+    $verify_typography = null;
 
     try {
-        // PRODUCTION FIX: Validate that palette is actually available
+        // ENHANCED: Support both palette and typography configurations
         $active_palette = $config['activePalette'] ?? null;
-        if (!$active_palette) {
-            wp_send_json_error(['message' => 'No active palette specified']);
+        $active_typography = $config['activeTypography'] ?? null;
+        $typography_data = $config['typographyData'] ?? null;
+
+        // Validate that at least one configuration type is provided
+        if (!$active_palette && !$active_typography) {
+            wp_send_json_error(['message' => 'No active palette or typography specified']);
         }
 
         // PRODUCTION FIX: Clear any stale options first to prevent second-to-last issue
         delete_option('preetidreams_visual_customizer_config');
-        delete_option('preetidreams_active_palette');
+        if ($active_palette) {
+            delete_option('preetidreams_active_palette');
+        }
+        if ($active_typography) {
+            delete_option('preetidreams_active_typography');
+        }
 
         // PRODUCTION FIX: Add small delay to ensure DB write completion
         usleep(50000); // 50ms delay
@@ -163,11 +177,35 @@ function handle_simple_visual_customizer_apply() {
 
         $config_saved = update_option('preetidreams_visual_customizer_config', $config);
 
-        // Set active palette for quick access with explicit update
-        $palette_saved = update_option('preetidreams_active_palette', $active_palette);
+        // Save active palette if provided
+        $palette_saved = true;
+        if ($active_palette) {
+            $palette_saved = update_option('preetidreams_active_palette', $active_palette);
+            // PRODUCTION FIX: Also save to theme_mods for WordPress Customizer compatibility
+            set_theme_mod('visual_customizer_active_palette', $active_palette);
+        }
 
-        // PRODUCTION FIX: Also save to theme_mods for WordPress Customizer compatibility
-        set_theme_mod('visual_customizer_active_palette', $active_palette);
+        // Save active typography if provided
+        $typography_saved = true;
+        if ($active_typography && $typography_data) {
+            $typography_saved = update_option('preetidreams_active_typography', $active_typography);
+            $typography_data_saved = update_option('preetidreams_typography_data', $typography_data);
+            // Also save to theme_mods for consistency
+            set_theme_mod('visual_customizer_active_typography', $active_typography);
+        }
+
+        // ENHANCED: Save typography in main config as fallback (for CSS output function)
+        if ($active_typography && $typography_data) {
+            $config['activeTypography'] = $active_typography;
+            $config['typographyData'] = $typography_data;
+            // Re-save config with typography data included
+            update_option('preetidreams_visual_customizer_config', $config);
+
+            // Debug logging
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("Visual Customizer: Typography saved - Active: {$active_typography}, Data keys: " . implode(', ', array_keys($typography_data)));
+            }
+        }
 
         // PRODUCTION FIX: Force database flush to ensure write completion
         if (function_exists('wp_cache_flush')) {
@@ -176,17 +214,33 @@ function handle_simple_visual_customizer_apply() {
 
         // Verify the save was successful
         $verify_config = get_option('preetidreams_visual_customizer_config');
-        $verify_palette = get_option('preetidreams_active_palette');
+        $verify_palette = $active_palette ? get_option('preetidreams_active_palette') : null;
+        $verify_typography = $active_typography ? get_option('preetidreams_active_typography') : null;
 
-        if (!$verify_config || !$verify_palette || $verify_palette !== $active_palette) {
+        // Enhanced verification
+        $verification_failed = false;
+        if (!$verify_config) {
+            $verification_failed = true;
+        }
+        if ($active_palette && (!$verify_palette || $verify_palette !== $active_palette)) {
+            $verification_failed = true;
+        }
+        if ($active_typography && (!$verify_typography || $verify_typography !== $active_typography)) {
+            $verification_failed = true;
+        }
+
+        if ($verification_failed) {
             wp_send_json_error([
                 'message' => 'Database save verification failed',
                 'debug' => [
                     'config_saved' => $config_saved,
                     'palette_saved' => $palette_saved,
+                    'typography_saved' => $typography_saved ?? false,
                     'verify_config' => !empty($verify_config),
                     'verify_palette' => $verify_palette,
-                    'expected_palette' => $active_palette
+                    'verify_typography' => $verify_typography,
+                    'expected_palette' => $active_palette,
+                    'expected_typography' => $active_typography
                 ]
             ]);
         }
@@ -196,21 +250,35 @@ function handle_simple_visual_customizer_apply() {
 
         // Log the change for debugging
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("Visual Customizer PRODUCTION FIX: Applied palette - {$active_palette} at " . current_time('mysql'));
+            if ($active_palette) {
+                error_log("Visual Customizer: Applied palette - {$active_palette} at " . current_time('mysql'));
+            }
+            if ($active_typography) {
+                error_log("Visual Customizer: Applied typography - {$active_typography} at " . current_time('mysql'));
+            }
             error_log("Visual Customizer: Config verified - " . ($verify_config ? 'YES' : 'NO'));
-            error_log("Visual Customizer: Palette verified - {$verify_palette}");
+        }
+
+        $success_message = 'Visual customizer settings applied globally!';
+        if ($active_palette && $active_typography) {
+            $success_message = 'Visual customizer palette and typography applied globally!';
+        } elseif ($active_typography) {
+            $success_message = 'Typography settings applied globally!';
         }
 
         wp_send_json_success([
-            'message' => 'Visual customizer settings applied globally!',
+            'message' => $success_message,
             'config' => $config,
             'css_generated' => $css_generated,
             'timestamp' => current_time('mysql'),
             'applied_palette' => $active_palette,
+            'applied_typography' => $active_typography,
             'verification' => [
                 'config_saved' => $config_saved,
                 'palette_saved' => $palette_saved,
-                'verified_palette' => $verify_palette
+                'typography_saved' => $typography_saved ?? false,
+                'verified_palette' => $verify_palette,
+                'verified_typography' => $verify_typography
             ],
             'performance' => [
                 'save_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']
@@ -222,6 +290,7 @@ function handle_simple_visual_customizer_apply() {
             'message' => 'Error saving configuration: ' . $e->getMessage(),
             'debug' => [
                 'active_palette' => $active_palette ?? 'not set',
+                'active_typography' => $active_typography ?? 'not set',
                 'config_keys' => array_keys($config ?? [])
             ]
         ]);
@@ -271,7 +340,7 @@ add_action('wp_ajax_simple_visual_customizer_reset', 'handle_simple_visual_custo
 
 /**
  * PVC-005: Output Global Visual Customizer CSS for All Users
- * This ensures that applied palettes are visible to all visitors
+ * ENHANCED: Supports both palette and typography configurations
  */
 function output_visual_customizer_global_css() {
     // CONFLICT RESOLUTION: Disable other CSS output functions that interfere
@@ -279,26 +348,77 @@ function output_visual_customizer_global_css() {
 
     // Get saved configuration
     $config = get_option('preetidreams_visual_customizer_config', []);
+    $typography_data = get_option('preetidreams_typography_data', null);
+    $active_typography = get_option('preetidreams_active_typography', null);
 
-    if (empty($config) || !isset($config['paletteData'])) {
-        // Add debug comment when no data is available
-        echo "<!-- Visual Customizer: No palette data available -->\n";
+    $has_palette = !empty($config) && isset($config['paletteData']);
+
+    // FIXED: Improved typography detection logic
+    $has_typography = false;
+    if (!empty($typography_data) && !empty($active_typography)) {
+        $has_typography = true;
+    } elseif (!empty($config) && isset($config['typographyData']) && isset($config['activeTypography'])) {
+        // Fallback: get typography from main config if not in separate options
+        $typography_data = $config['typographyData'];
+        $active_typography = $config['activeTypography'];
+        $has_typography = true;
+
+        // Debug: Log fallback usage
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("Visual Customizer: Using typography from main config - {$active_typography}");
+        }
+    }
+
+    if (!$has_palette && !$has_typography) {
+        echo "<!-- Visual Customizer: No palette or typography data available -->\n";
+
+        // Debug output for troubleshooting
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            echo "<!-- Debug: config keys = " . implode(', ', array_keys($config)) . " -->\n";
+            echo "<!-- Debug: typography_data exists = " . (empty($typography_data) ? 'no' : 'yes') . " -->\n";
+            echo "<!-- Debug: active_typography = " . var_export($active_typography, true) . " -->\n";
+        }
         return;
     }
 
-    // Generate CSS from saved palette
-    $css = generate_css_from_palette_data($config['paletteData']);
+    echo "<style id='visual-customizer-global-css' data-generated='" . current_time('c') . "' data-palette='" . esc_attr($config['activePalette'] ?? 'none') . "' data-typography='" . esc_attr($active_typography ?? 'none') . "'>\n";
+    echo "/* Visual Customizer Global CSS */\n";
 
-    if (!empty($css)) {
-        echo "<style id='visual-customizer-global-css' data-generated='" . current_time('c') . "' data-palette='" . esc_attr($config['activePalette'] ?? 'unknown') . "'>\n";
-        echo "/* Visual Customizer Global CSS - Applied Palette: " . esc_attr($config['activePalette'] ?? 'unknown') . " */\n";
-        echo "/* PURE TOKENIZATION: Semantic component tokens only */\n";
-        echo "/* CSS Length: " . strlen($css) . " characters */\n";
-        echo $css;
-        echo "\n</style>\n";
-    } else {
-        echo "<!-- Visual Customizer: CSS generation failed -->\n";
+    // Generate palette CSS if available
+    if ($has_palette) {
+        $palette_css = generate_css_from_palette_data($config['paletteData']);
+        if (!empty($palette_css)) {
+            echo "/* Applied Palette: " . esc_attr($config['activePalette'] ?? 'unknown') . " */\n";
+            echo "/* PURE TOKENIZATION: Semantic component tokens only */\n";
+            echo $palette_css;
+            echo "\n";
+        }
     }
+
+    // Generate typography CSS if available
+    if ($has_typography) {
+        $typography_css = generate_css_from_typography_data($typography_data);
+        if (!empty($typography_css)) {
+            echo "/* Applied Typography: " . esc_attr($active_typography) . " */\n";
+            echo "/* TYPOGRAPHY TOKENIZATION: Component font tokens */\n";
+            echo $typography_css;
+            echo "\n";
+        } else {
+            // Debug: Typography data structure issue
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                echo "/* Debug: Typography CSS generation failed */\n";
+                echo "/* Typography data structure: " . wp_json_encode($typography_data) . " */\n";
+            }
+        }
+    }
+
+    $total_length = 0;
+    if ($has_palette && isset($palette_css)) $total_length += strlen($palette_css);
+    if ($has_typography && isset($typography_css)) $total_length += strlen($typography_css);
+
+    echo "/* Total CSS Length: " . $total_length . " characters */\n";
+    echo "/* Generated at: " . current_time('c') . " */\n";
+    echo "</style>\n";
 }
 // HIGHEST PRIORITY to override other CSS output functions
 add_action('wp_head', 'output_visual_customizer_global_css', 50);
@@ -529,6 +649,125 @@ function generate_global_css_from_config($config) {
     }
 
     return false;
+}
+
+/**
+ * Generate CSS from typography data with DESIGN TOKEN SYSTEM
+ */
+function generate_css_from_typography_data($typography_data) {
+    if (!is_array($typography_data) || !isset($typography_data['headingFont']) || !isset($typography_data['bodyFont'])) {
+        return '';
+    }
+
+    $heading_family = '"' . $typography_data['headingFont']['family'] . '", ' . $typography_data['headingFont']['fallback'];
+    $body_family = '"' . $typography_data['bodyFont']['family'] . '", ' . $typography_data['bodyFont']['fallback'];
+
+    $heading_weights = $typography_data['headingFont']['weights'] ?? [400, 500, 600, 700];
+    $body_weights = $typography_data['bodyFont']['weights'] ?? [400, 500, 600];
+
+    $css = "/* SERVER-SIDE TYPOGRAPHY TOKENIZATION - {$typography_data['name']} */\n";
+    $css .= "body:root, html:root {\n";
+
+    // Foundation Typography Tokens
+    $css .= "    --typography-heading-family: {$heading_family} !important;\n";
+    $css .= "    --typography-body-family: {$body_family} !important;\n";
+    $css .= "    --typography-heading-weight-normal: " . ($heading_weights[0] ?? 400) . " !important;\n";
+    $css .= "    --typography-heading-weight-medium: " . ($heading_weights[1] ?? 500) . " !important;\n";
+    $css .= "    --typography-heading-weight-bold: " . ($heading_weights[2] ?? 600) . " !important;\n";
+    $css .= "    --typography-body-weight-normal: " . ($body_weights[0] ?? 400) . " !important;\n";
+    $css .= "    --typography-body-weight-medium: " . ($body_weights[1] ?? 500) . " !important;\n";
+
+    // Component Tokens - Typography (for system consistency)
+    $css .= "    --component-font-family-primary: var(--typography-heading-family) !important;\n";
+    $css .= "    --component-font-family-secondary: var(--typography-body-family) !important;\n";
+    $css .= "    --component-font-weight-heading: var(--typography-heading-weight-bold) !important;\n";
+    $css .= "    --component-font-weight-subheading: var(--typography-heading-weight-medium) !important;\n";
+    $css .= "    --component-font-weight-body: var(--typography-body-weight-normal) !important;\n";
+    $css .= "    --component-font-weight-accent: var(--typography-body-weight-medium) !important;\n";
+
+    // Semantic Typography Roles
+    $css .= "    --font-family-primary: var(--typography-heading-family) !important;\n";
+    $css .= "    --font-family-secondary: var(--typography-body-family) !important;\n";
+    $css .= "    --font-weight-heading: var(--typography-heading-weight-bold) !important;\n";
+    $css .= "    --font-weight-subheading: var(--typography-heading-weight-medium) !important;\n";
+    $css .= "    --font-weight-body: var(--typography-body-weight-normal) !important;\n";
+
+    $css .= "}\n\n";
+
+    // HIGH SPECIFICITY APPLICATION RULES - Ensures persistence after reload
+    $css .= "/* HIGH SPECIFICITY TYPOGRAPHY RULES - Server-side enforcement */\n";
+
+    // Headings with maximum specificity
+    $css .= "html body h1, html body h2, html body h3, html body h4, html body h5, html body h6,\n";
+    $css .= "html body .heading[class], html body .title[class], html body .site-title[class],\n";
+    $css .= "html body .hero-title[class], html body .section-title[class] {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "}\n\n";
+
+    // Body text with maximum specificity
+    $css .= "html body, html body p, html body div, html body span, html body a, html body li, html body td, html body th,\n";
+    $css .= "html body .body-text[class], html body .content[class], html body .description[class] {\n";
+    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
+    $css .= "}\n\n";
+
+    // Specific weight applications with high specificity
+    $css .= "html body h1[class], html body .hero-title[class] {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-heading) !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body h2[class], html body h3[class], html body .section-title[class] {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-subheading) !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body h4[class], html body h5[class], html body h6[class] {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-heading) !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body, html body p[class], html body div:not([class*='wp-']), html body span:not([class*='wp-']) {\n";
+    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-body) !important;\n";
+    $css .= "}\n\n";
+
+    // Navigation and UI Elements with server-side enforcement
+    $css .= "html body .nav-menu[class], html body .menu-item[class] a {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-subheading) !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body button[class], html body .btn[class], html body input[type=\"submit\"][class] {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-accent) !important;\n";
+    $css .= "}\n\n";
+
+    // Medical Spa Theme Specific Elements
+    $css .= "/* Medical Spa Theme Specific Typography */\n";
+    $css .= "html body .professional-header[class] .site-title[class],\n";
+    $css .= "html body .professional-header[class] .nav-menu[class] a {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-subheading) !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body .luxury-footer[class] {\n";
+    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
+    $css .= "}\n\n";
+
+    // Treatment and Content Areas
+    $css .= "html body .treatment-card[class] h3,\n";
+    $css .= "html body .treatment-card[class] .treatment-title[class] {\n";
+    $css .= "    font-family: var(--component-font-family-primary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-heading) !important;\n";
+    $css .= "}\n\n";
+
+    $css .= "html body .treatment-card[class] p,\n";
+    $css .= "html body .treatment-card[class] .treatment-description[class] {\n";
+    $css .= "    font-family: var(--component-font-family-secondary) !important;\n";
+    $css .= "    font-weight: var(--component-font-weight-body) !important;\n";
+    $css .= "}\n\n";
+
+    return $css;
 }
 
 /**
@@ -1441,117 +1680,42 @@ function handle_comprehensive_css_diagnostic() {
 add_action('init', 'handle_comprehensive_css_diagnostic');
 
 /**
- * Add floating Visual Customizer button to footer (for testing)
+ * AJAX handler to get current typography
  */
-function add_floating_visual_customizer_button() {
-    ?>
-    <div id="floating-visual-customizer" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; background: #007cba; color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-family: Arial, sans-serif; font-size: 14px; font-weight: bold;">
-        🎨 Visual Customizer
-    </div>
+function handle_get_current_typography() {
+    // Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'simple_visual_customizer_nonce')) {
+        wp_send_json_error('Security check failed');
+        return;
+    }
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('🔧 Visual Customizer Debug: DOM loaded');
-        console.log('🔧 jQuery available:', typeof jQuery !== 'undefined');
-        console.log('🔧 simpleCustomizer config:', typeof simpleCustomizer !== 'undefined' ? simpleCustomizer : 'Not available');
-        console.log('🔧 SimpleVisualCustomizer:', typeof SimpleVisualCustomizer !== 'undefined');
+    // Get current typography from WordPress options
+    $current_typography = get_option('preetidreams_active_typography', '');
 
-        const floatingButton = document.getElementById('floating-visual-customizer');
-        if (floatingButton) {
-            floatingButton.addEventListener('click', function() {
-                console.log('🎨 Floating Visual Customizer button clicked');
-
-                // Try to open sidebar if available
-                if (typeof SimpleVisualCustomizer !== 'undefined' && SimpleVisualCustomizer.openSidebar) {
-                    console.log('✅ Opening sidebar via SimpleVisualCustomizer');
-                    SimpleVisualCustomizer.openSidebar();
-                } else if (typeof jQuery !== 'undefined') {
-                    console.log('⚠️ SimpleVisualCustomizer not available, creating manual sidebar');
-
-                    // Create manual sidebar
-                    if (jQuery('#simple-vc-overlay').length === 0) {
-                        jQuery('body').append('<div id="simple-vc-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999998;"></div>');
-                    }
-
-                    if (jQuery('#simple-vc-sidebar').length === 0) {
-                        jQuery('body').append(`
-                            <div id="simple-vc-sidebar" style="position:fixed;top:0;right:0;width:400px;height:100%;background:white;z-index:999999;transform:translateX(100%);transition:transform 0.3s ease;box-shadow:-4px 0 12px rgba(0,0,0,0.3);">
-                                <div style="padding:20px;">
-                                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:2px solid #eee;padding-bottom:15px;">
-                                        <h3 style="margin:0;color:#333;">🎨 Visual Customizer</h3>
-                                        <button onclick="jQuery('#simple-vc-sidebar').css('transform', 'translateX(100%)'); setTimeout(() => jQuery('#simple-vc-overlay').remove(), 300);" style="background:none;border:none;font-size:24px;cursor:pointer;color:#666;">×</button>
-                                    </div>
-                                    <div style="margin-bottom:20px;">
-                                        <h4 style="color:#007cba;margin:0 0 10px 0;">🎨 Color Palettes</h4>
-                                        <p style="color:#666;margin:0 0 15px 0;font-size:14px;">Professional medical spa color schemes</p>
-                                        <div id="manual-color-container">
-                                            <p style="color:#999;font-style:italic;">Loading color palettes...</p>
-                                        </div>
-                                    </div>
-                                    <div style="margin-bottom:20px;">
-                                        <h4 style="color:#007cba;margin:0 0 10px 0;">📝 Typography</h4>
-                                        <p style="color:#666;margin:0 0 15px 0;font-size:14px;">Professional font pairings</p>
-                                        <div id="manual-typography-container">
-                                            <p style="color:#999;font-style:italic;">Typography options coming soon...</p>
-                                        </div>
-                                    </div>
-                                    <div style="border-top:2px solid #eee;padding-top:15px;">
-                                        <button style="background:#007cba;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;margin-right:10px;">Apply Changes</button>
-                                        <button style="background:#666;color:white;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;">Reset</button>
-                                    </div>
-                                </div>
-                            </div>
-                        `);
-                    }
-
-                    // Show sidebar
-                    jQuery('#simple-vc-sidebar').css('transform', 'translateX(0)');
-
-                    // Try to load color palettes if SemanticColorSystem is available
-                    if (typeof SemanticColorSystem !== 'undefined') {
-                        try {
-                            const colorSystem = new SemanticColorSystem();
-                            const palettes = colorSystem.getAllPalettes();
-                            let paletteHtml = '<div style="display:grid;gap:10px;">';
-
-                            palettes.slice(0, 5).forEach(palette => {
-                                paletteHtml += `
-                                    <div style="border:1px solid #ddd;border-radius:8px;padding:12px;cursor:pointer;transition:all 0.2s ease;"
-                                         onmouseover="this.style.borderColor='#007cba'"
-                                         onmouseout="this.style.borderColor='#ddd'"
-                                         onclick="console.log('Palette selected:', '${palette.id}')">
-                                        <div style="font-weight:bold;margin-bottom:5px;">${palette.icon || '🎨'} ${palette.name}</div>
-                                        <div style="font-size:12px;color:#666;margin-bottom:8px;">${palette.description || ''}</div>
-                                        <div style="display:flex;gap:4px;">
-                                `;
-
-                                Object.entries(palette.colors).slice(0, 4).forEach(([role, color]) => {
-                                    const colorValue = color.hex || color;
-                                    paletteHtml += `<div style="width:20px;height:20px;border-radius:50%;background:${colorValue};border:1px solid #ddd;" title="${role}"></div>`;
-                                });
-
-                                paletteHtml += '</div></div>';
-                            });
-
-                            paletteHtml += '</div>';
-                            jQuery('#manual-color-container').html(paletteHtml);
-
-                        } catch (error) {
-                            console.error('Error loading color palettes:', error);
-                            jQuery('#manual-color-container').html('<p style="color:#e74c3c;">Error loading color palettes</p>');
-                        }
-                    } else {
-                        jQuery('#manual-color-container').html('<p style="color:#f39c12;">SemanticColorSystem not available</p>');
-                    }
-
-                } else {
-                    console.error('❌ Neither SimpleVisualCustomizer nor jQuery available');
-                    alert('Visual Customizer not available - scripts may not be loaded');
-                }
-            });
+    // If no typography is set, try to detect from configuration
+    if (empty($current_typography)) {
+        $config = get_option('preetidreams_visual_customizer_config', '{}');
+        if (!empty($config)) {
+            $config_data = json_decode($config, true);
+            if (isset($config_data['activeTypography'])) {
+                $current_typography = $config_data['activeTypography'];
+            } elseif (isset($config_data['typographyPairing'])) {
+                $current_typography = $config_data['typographyPairing'];
+            }
         }
-    });
-    </script>
-    <?php
+    }
+
+    // If still no typography, try legacy options
+    if (empty($current_typography)) {
+        $current_typography = get_option('medspaa_current_typography', '');
+    }
+
+    // Return the current typography
+    if (!empty($current_typography)) {
+        wp_send_json_success($current_typography);
+    } else {
+        wp_send_json_success('medical-professional'); // Default fallback
+    }
 }
-add_action('wp_footer', 'add_floating_visual_customizer_button');
+add_action('wp_ajax_get_current_typography', 'handle_get_current_typography');
+add_action('wp_ajax_nopriv_get_current_typography', 'handle_get_current_typography');

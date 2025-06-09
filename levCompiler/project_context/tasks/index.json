@@ -4,7 +4,10 @@
     "lastUpdated": "2025-01-20T18:00:00Z",
     "description": "Comprehensive index for task management, sprint planning, and project coordination artifacts",
     "managedBy": "TASK-PLANNER-001",
-    "workflowId": "TASK-MANAGEMENT-WF-001"
+    "workflowId": "TASK-MANAGEMENT-WF-001",
+    "totalSprints": 4,
+    "activeSprints": 1,
+    "completedSprints": 3
   },
 
   "projectOverview": {
@@ -239,7 +242,12 @@
       "satisfactionScore": 0,
       "communicationFrequency": "daily",
       "feedbackResponseTime": "immediate"
-    }
+    },
+    "totalStoryPoints": 181,
+    "completedStoryPoints": 92,
+    "remainingStoryPoints": 89,
+    "averageVelocity": 31,
+    "completionRate": "51%"
   },
 
   "completedWork": {
@@ -559,5 +567,41 @@
         "author": "TASK-PLANNER-001"
       }
     ]
+  },
+
+  "sprintsDirectory": {
+    "sprint-1-foundation": {
+      "file": "levCompiler/project_context/tasks/sprints/sprint-1-foundation.md",
+      "status": "completed",
+      "storyPoints": 34,
+      "completionDate": "2025-05-15"
+    },
+    "sprint-2-extension-visual-integration": {
+      "file": "levCompiler/project_context/tasks/sprints/sprint-2-extension-visual-integration.md",
+      "status": "completed",
+      "storyPoints": 16,
+      "completionDate": "2025-05-28"
+    },
+    "sprint-3-design-system-foundation": {
+      "file": "levCompiler/project_context/tasks/sprints/sprint-3-design-system-foundation.md",
+      "status": "completed",
+      "storyPoints": 42,
+      "completionDate": "2025-06-05"
+    },
+    "sprint-4-industry-standard-customizer-architecture": {
+      "file": "levCompiler/project_context/tasks/sprints/sprint-4-industry-standard-customizer-architecture.md",
+      "status": "active",
+      "storyPoints": 89,
+      "startDate": "2025-06-08",
+      "targetDate": "2025-06-22",
+      "priority": "critical"
+    }
+  },
+
+  "epicBacklog": {
+    "file": "levCompiler/project_context/tasks/epic-backlog.md",
+    "totalEpics": 5,
+    "completedEpics": 3,
+    "activeEpics": 2
   }
 }

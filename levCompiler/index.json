@@ -17,8 +17,88 @@
       "fileOrganization": "ALL files must go to designated project_context locations",
       "agentUsage": "MUST check agent availability before ANY task",
       "workflowCompliance": "MUST use appropriate workflows for all operations",
-      "indexRegistration": "ALL files MUST be registered in appropriate indexes"
+      "indexRegistration": "ALL files MUST be registered in appropriate indexes",
+      "directoryOrganization": "STRICT adherence to industry-standard directory structure MANDATORY"
     }
+  },
+
+  "DIRECTORY_ORGANIZATION_RULES": {
+    "ENFORCEMENT": "ZERO_TOLERANCE",
+    "VIOLATION_RESPONSE": "IMMEDIATE_HALT_AND_CORRECTION",
+    "AUDIT_FREQUENCY": "CONTINUOUS",
+
+    "MANDATORY_STRUCTURE": {
+      "levCompiler/project_context/tasks/": {
+        "index.json": "SINGLE SOURCE OF TRUTH - Master registry for ALL task-related files",
+        "active/": "ONLY currently active tasks and work items",
+        "sprints/": {
+          "active/": "ONLY current sprint files (max 1-2 files)",
+          "completed/": "ONLY completed sprint files",
+          "planning/": "ONLY future sprint planning files"
+        },
+        "reports/": {
+          "sprint-reports/": "ONLY sprint completion and status reports",
+          "analysis/": "ONLY analysis documents and technical assessments",
+          "status-reports/": "ONLY project status and progress reports"
+        },
+        "administration/": "ONLY system management, cleanup, and organization files",
+        "archive/": {
+          "legacy-json/": "ONLY historical JSON files",
+          "deprecated/": "ONLY obsolete files no longer in use"
+        },
+        "templates/": "ONLY reusable templates and patterns"
+      }
+    },
+
+    "STRICT_DO_RULES": [
+      "✅ DO: Place ALL sprint files in appropriate sprints/ subdirectories only",
+      "✅ DO: Register EVERY file in index.json immediately upon creation",
+      "✅ DO: Use industry-standard naming conventions (sprint-{number}-{name}.md)",
+      "✅ DO: Move files to archive/ when no longer active",
+      "✅ DO: Categorize files by TYPE and STATUS, not arbitrary groupings",
+      "✅ DO: Update index.json when ANY file is moved or modified",
+      "✅ DO: Use TASK-MANAGEMENT-WF-001 for ALL task-related operations",
+      "✅ DO: Maintain single source of truth in index.json",
+      "✅ DO: Follow GitLab/GitHub/Atlassian organizational standards",
+      "✅ DO: Keep administration/ for system management only"
+    ],
+
+    "STRICT_DONT_RULES": [
+      "❌ DON'T: Create files outside designated project_context structure",
+      "❌ DON'T: Allow duplicate files in multiple locations",
+      "❌ DON'T: Mix content types in single directories",
+      "❌ DON'T: Create sprint files outside sprints/ directory",
+      "❌ DON'T: Skip index.json registration for ANY file",
+      "❌ DON'T: Use arbitrary or inconsistent naming conventions",
+      "❌ DON'T: Leave orphaned files without proper categorization",
+      "❌ DON'T: Bypass TASK-MANAGEMENT-WF-001 for task operations",
+      "❌ DON'T: Create standalone directories outside structure",
+      "❌ DON'T: Mix active and completed items in same directory"
+    ],
+
+    "VIOLATION_DETECTION": {
+      "automaticScanning": "Continuous monitoring for organizational violations",
+      "duplicateDetection": "Alert on files existing in multiple locations",
+      "orphanDetection": "Alert on files not registered in index.json",
+      "structureValidation": "Validate all files are in correct directories",
+      "namingValidation": "Validate all files follow naming conventions"
+    },
+
+    "ENFORCEMENT_ACTIONS": {
+      "immediateHalt": "STOP all operations when violations detected",
+      "automaticCorrection": "Move files to correct locations when possible",
+      "indexUpdate": "Update index.json to reflect current state",
+      "humanEscalation": "Alert human supervisor for persistent violations",
+      "workflowEnforcement": "Require TASK-MANAGEMENT-WF-001 for corrections"
+    },
+
+    "QUALITY_GATES": [
+      "directoryStructureCompliance",
+      "indexRegistrationComplete",
+      "namingConventionAdherence",
+      "singleSourceOfTruthMaintained",
+      "workflowComplianceVerified"
+    ]
   },
 
   "PRE_TASK_VALIDATION": {
