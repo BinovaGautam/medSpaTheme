@@ -2320,11 +2320,11 @@
             'Inter:wght@400;500;600;700',
             'Playfair+Display:wght@400;500;600;700',
             'Poppins:wght@400;500;600;700',
-            'Crimson+Text:wght@400;600;700',
+            'Crimson+Text:wght@400;500;600;700',
             'Montserrat:wght@400;500;600;700',
             'Cormorant+Garamond:wght@400;500;600;700',
             'IBM+Plex+Sans:wght@400;500;600;700',
-            'Merriweather:wght@400;500;700;900'
+            'Merriweather:wght@400;500;600;700;900'
         ];
 
         const fontsQuery = previewFonts.join('&family=');
@@ -3676,19 +3676,19 @@ html body .page-content, html body .page-content[class] {
                 headingFont: {
                     family: 'Crimson Text',
                     fallback: 'Georgia, serif',
-                    weights: ['400', '600', '700']
+                    weights: ['400', '500', '600', '700']
                 },
                 bodyFont: {
                     family: 'Crimson Text',
                     fallback: 'Georgia, serif',
-                    weights: ['400', '600']
+                    weights: ['400', '500', '600']
                 },
-                googleFonts: ['Crimson+Text:wght@400;600;700'],
+                googleFonts: ['Crimson+Text:wght@400;500;600;700'],
                 cssVariables: {
                     '--component-font-family-primary': '"Crimson Text", Georgia, serif',
                     '--component-font-family-secondary': '"Crimson Text", Georgia, serif',
                     '--component-font-weight-normal': '400',
-                    '--component-font-weight-medium': '600',
+                    '--component-font-weight-medium': '500',
                     '--component-font-weight-semibold': '600',
                     '--component-font-weight-bold': '700'
                 }
@@ -3772,21 +3772,21 @@ html body .page-content, html body .page-content[class] {
                 headingFont: {
                     family: 'Merriweather',
                     fallback: 'Georgia, serif',
-                    weights: ['400', '500', '700', '900']
+                    weights: ['400', '500', '600', '700', '900']
                 },
                 bodyFont: {
                     family: 'Inter',
                     fallback: '-apple-system, BlinkMacSystemFont, sans-serif',
-                    weights: ['400', '500']
+                    weights: ['400', '500', '600']
                 },
-                googleFonts: ['Merriweather:wght@400;500;700;900', 'Inter:wght@400;500'],
+                googleFonts: ['Merriweather:wght@400;500;600;700;900', 'Inter:wght@400;500;600'],
                 cssVariables: {
                     '--component-font-family-primary': '"Merriweather", Georgia, serif',
                     '--component-font-family-secondary': '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
                     '--component-font-weight-normal': '400',
                     '--component-font-weight-medium': '500',
-                    '--component-font-weight-semibold': '700',
-                    '--component-font-weight-bold': '900'
+                    '--component-font-weight-semibold': '600',
+                    '--component-font-weight-bold': '700'
                 }
             }
         };

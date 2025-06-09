@@ -57,9 +57,9 @@ $typography_database = [
     ],
     'wellness-serif' => [
         'name' => 'Wellness Serif',
-        'googleFonts' => ['Crimson+Text:wght@400;600;700'],
-        'headingFont' => ['family' => 'Crimson Text', 'weights' => ['400', '600', '700']],
-        'bodyFont' => ['family' => 'Crimson Text', 'weights' => ['400', '600']]
+        'googleFonts' => ['Crimson+Text:wght@400;500;600;700'],
+        'headingFont' => ['family' => 'Crimson Text', 'weights' => ['400', '500', '600', '700']],
+        'bodyFont' => ['family' => 'Crimson Text', 'weights' => ['400', '500', '600']]
     ],
     'modern-sans' => [
         'name' => 'Modern Sans',
@@ -81,9 +81,9 @@ $typography_database = [
     ],
     'warm-organic' => [
         'name' => 'Warm Organic',
-        'googleFonts' => ['Merriweather:wght@400;500;700;900', 'Inter:wght@400;500'],
-        'headingFont' => ['family' => 'Merriweather', 'weights' => ['400', '500', '700', '900']],
-        'bodyFont' => ['family' => 'Inter', 'weights' => ['400', '500']]
+        'googleFonts' => ['Merriweather:wght@400;500;600;700;900', 'Inter:wght@400;500;600'],
+        'headingFont' => ['family' => 'Merriweather', 'weights' => ['400', '500', '600', '700', '900']],
+        'bodyFont' => ['family' => 'Inter', 'weights' => ['400', '500', '600']]
     ]
 ];
 
@@ -198,16 +198,18 @@ echo "<h3>🔧 Fixes Applied:</h3>";
 echo "<ul>";
 echo "<li>✅ Fixed IBM Plex Sans URL encoding (+ → %20)</li>";
 echo "<li>✅ Fixed Cormorant Garamond URL encoding (+ → %20)</li>";
-echo "<li>✅ Standardized Warm Organic weights (added 500)</li>";
-echo "<li>✅ Ensured consistent weight mapping</li>";
+echo "<li>✅ Standardized Wellness Serif weights (added 500, 600)</li>";
+echo "<li>✅ Standardized Warm Organic weights (added 600)</li>";
+echo "<li>✅ Ensured consistent weight mapping across all typography options</li>";
 echo "</ul>";
 
 echo "<h3>📊 Expected Results:</h3>";
 echo "<ul>";
-echo "<li><strong>Medical Professional, Luxury Modern, Wellness Serif:</strong> Should continue working perfectly</li>";
-echo "<li><strong>Tech Minimal, Classic Elegant:</strong> Should now load properly with fixed URLs</li>";
-echo "<li><strong>Contemporary Clean, Modern Sans:</strong> Should work consistently</li>";
-echo "<li><strong>Warm Organic:</strong> Should have better weight consistency</li>";
+echo "<li><strong>Medical Professional, Luxury Modern, Contemporary Clean, Modern Sans:</strong> Continue working perfectly</li>";
+echo "<li><strong>Tech Minimal, Classic Elegant:</strong> Load properly with fixed URL encoding</li>";
+echo "<li><strong>Wellness Serif:</strong> Now has complete weight set (400, 500, 600, 700)</li>";
+echo "<li><strong>Warm Organic:</strong> Now has complete weight set with improved consistency</li>";
+echo "<li><strong>All Typography Options:</strong> Complete standard weight availability (400, 500, 600, 700)</li>";
 echo "</ul>";
 echo "</div>";
 
