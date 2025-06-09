@@ -13,10 +13,36 @@
     let wpCustomizerBridge = null;
 
     /**
+     * OPTIMAL UX: Preload typography fonts on page load for instant previews
+     */
+    function preloadTypographyFontsOnPageLoad() {
+        console.log('🚀 Preloading typography fonts for optimal UX...');
+
+        // Only preload if user is likely to use customizer (admin users, etc.)
+        if (typeof simpleCustomizer !== 'undefined' && simpleCustomizer.nonce) {
+            console.log('✅ User can access customizer, preloading fonts...');
+
+            // Use a timeout to not block page load
+            setTimeout(() => {
+                loadGoogleFontsForTypographyPreviews().then(() => {
+                    console.log('✅ Typography fonts preloaded successfully');
+                }).catch(error => {
+                    console.warn('⚠️ Typography fonts preload failed:', error);
+                });
+            }, 1000); // Wait 1 second after page load
+        } else {
+            console.log('🔍 User cannot access customizer, skipping font preload');
+        }
+    }
+
+    /**
      * Initialize Simple Visual Customizer - PVC-005 Enhanced
      */
     function initSimpleVisualCustomizer() {
         console.log('🚀 Simple Visual Customizer: Initializing with PVC-005 Live Preview...');
+
+        // OPTIMAL UX: Preload typography fonts for instant previews
+        preloadTypographyFontsOnPageLoad();
 
         // PRODUCTION FIX: Verify critical CSS files are loaded first
         const cssStatus = verifyCriticalCSSFiles();
@@ -202,6 +228,9 @@
         // Show overlay and sidebar
         $('#simple-vc-overlay').fadeIn(200);
         $('#simple-vc-sidebar').addClass('open');
+
+        // CRITICAL FIX: Load Google Fonts for typography previews IMMEDIATELY when sidebar opens
+        loadGoogleFontsForTypographyPreviews();
 
         // Load color palette interface immediately (always works)
         loadColorPaletteInterface();
@@ -2196,8 +2225,34 @@
 
         console.log('📝 Loading typography interface...');
 
-        // CRITICAL FIX: Load Google Fonts for typography previews FIRST
-        loadGoogleFontsForTypographyPreviews();
+        // CRITICAL FIX: Ensure Google Fonts are loaded (they should already be loaded when sidebar opened)
+        const existingPreviewLink = document.querySelector('#typography-preview-fonts');
+        if (!existingPreviewLink) {
+            console.log('⚠️ Google Fonts not loaded yet, loading now...');
+
+            // Show loading state
+            container.html(`
+                <div class="typography-loading-state">
+                    <div class="loading-spinner">🔄</div>
+                    <div class="loading-message">
+                        <h5>Loading Typography Fonts...</h5>
+                        <p>Preparing professional font previews...</p>
+                    </div>
+                </div>
+            `);
+
+            // Load fonts then render interface
+            loadGoogleFontsForTypographyPreviews().then(() => {
+                console.log('✅ Fonts loaded, rendering typography interface...');
+                renderTypographyInterface(container);
+            }).catch(error => {
+                console.error('❌ Font loading failed, rendering interface with fallbacks:', error);
+                renderTypographyInterface(container);
+            });
+        } else {
+            console.log('✅ Google Fonts already loaded for typography previews');
+            renderTypographyInterface(container);
+        }
 
         // IMMEDIATE WORKING SOLUTION: Load functional typography interface right away
         // Instead of waiting for complex dependencies, provide working typography immediately
@@ -2335,7 +2390,7 @@
 
         if (existingPreviewLink && existingPreviewLink.href === googleFontsUrl) {
             console.log('✅ Typography preview fonts already loaded');
-            return;
+            return Promise.resolve();
         }
 
         // Remove existing preview link if different
@@ -2349,22 +2404,51 @@
         link.rel = 'stylesheet';
         link.href = googleFontsUrl;
 
-        link.onload = () => {
-            console.log('✅ Typography preview fonts loaded successfully');
+        // Return promise for better loading management
+        return new Promise((resolve, reject) => {
+            link.onload = () => {
+                console.log('✅ Typography preview fonts loaded successfully');
 
-            // Force font updates on preview cards
+                // Wait for fonts to be ready in the browser
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(() => {
+                        console.log('✅ All preview fonts ready for rendering');
+
+                        // Force font updates on preview cards if they exist
+                        setTimeout(() => {
+                            const previewElements = document.querySelectorAll('.typography-preview-aa');
+                            if (previewElements.length > 0) {
+                                console.log(`🔄 Forcing font update on ${previewElements.length} preview cards`);
+                                previewElements.forEach(el => {
+                                    el.style.fontFamily = el.style.fontFamily; // Force redraw
+                                });
+                            }
+                        }, 100);
+
+                        resolve();
+                    });
+                } else {
+                    // Fallback for older browsers
+                    setTimeout(() => {
+                        console.log('✅ Preview fonts ready (fallback timing)');
+                        resolve();
+                    }, 500);
+                }
+            };
+
+            link.onerror = () => {
+                console.error('❌ Failed to load typography preview fonts');
+                reject(new Error('Google Fonts failed to load'));
+            };
+
+            document.head.appendChild(link);
+
+            // Timeout fallback
             setTimeout(() => {
-                document.querySelectorAll('.typography-preview-aa').forEach(el => {
-                    el.style.fontFamily = el.style.fontFamily; // Force redraw
-                });
-            }, 100);
-        };
-
-        link.onerror = () => {
-            console.error('❌ Failed to load typography preview fonts');
-        };
-
-        document.head.appendChild(link);
+                console.warn('⚠️ Typography preview fonts loading timeout, proceeding anyway');
+                resolve();
+            }, 3000);
+        });
 
         console.log('🔗 Typography preview fonts URL:', googleFontsUrl);
     }
@@ -3940,6 +4024,115 @@ html body .page-content, html body .page-content[class] {
         } else {
             console.warn(`⚠️ Typography card not found: ${typographyId}`);
         }
+    }
+
+    /**
+     * EXTRACTED: Render Typography Interface HTML
+     */
+    function renderTypographyInterface(container) {
+        console.log('📝 Rendering typography interface...');
+
+        const workingTypographyHtml = `
+            <div class="typography-interface-working">
+                <div class="typography-header">
+                    <h4 class="typography-title">📝 Typography Options</h4>
+                    <p class="typography-subtitle">Professional font pairings for medical spa</p>
+                </div>
+
+                <div class="typography-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+
+                    <div class="typography-card" data-typography="medical-professional" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-inter" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Medical Professional
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="luxury-modern" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-playfair" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Playfair Display', Georgia, serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Luxury Modern
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="contemporary-clean" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-poppins" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Contemporary Clean
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="wellness-serif" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-crimson" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Crimson Text', Georgia, serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Wellness Serif
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="modern-sans" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-montserrat" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Modern Sans
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="classic-elegant" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-cormorant" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Cormorant Garamond', Georgia, serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Classic Elegant
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="tech-minimal" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-ibm" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Tech Minimal
+                        </div>
+                    </div>
+
+                    <div class="typography-card" data-typography="warm-organic" style="border: 1px solid #ddd; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease; text-align: center;">
+                        <div class="typography-preview-aa typography-preview-merriweather" style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: 'Merriweather', Georgia, serif !important;">
+                            Aa
+                        </div>
+                        <div class="typography-name" style="font-size: 12px; color: #666; font-weight: 500;">
+                            Warm Organic
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="typography-actions" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
+                    <div class="typography-status" id="typography-status" style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                        Select a typography pairing to apply
+                    </div>
+                    <button class="typography-apply-btn" id="typography-apply-btn" style="background: #007cba; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-size: 13px; opacity: 0.5;" disabled>
+                        Apply Typography
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Load the working interface
+        container.html(workingTypographyHtml);
+
+        // Setup working interactions
+        setupWorkingTypographyInteractions(container);
+
+        console.log('✅ Typography interface rendered successfully');
     }
 
 })(jQuery);
