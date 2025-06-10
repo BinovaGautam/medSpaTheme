@@ -15,7 +15,7 @@
    ========================================================================== */
 
 :root {
-  /* Modern Footer Design Tokens */
+  /* Modern Footer Design Tokens - ENHANCED WITH TYPOGRAPHY INHERITANCE */
   --footer-bg-primary: var(--component-bg-color-primary, var(--color-primary));
   --footer-bg-secondary: var(--component-bg-color-secondary, var(--color-secondary));
   --footer-bg-accent: var(--component-bg-color-accent, var(--color-accent));
@@ -23,24 +23,53 @@
   --footer-text-secondary: var(--component-text-color-secondary, var(--color-text-secondary));
   --footer-text-accent: var(--component-text-color-accent, var(--color-accent));
 
+  /* ENHANCED: Typography Token Inheritance */
+  --footer-font-primary: var(--font-primary, 'Playfair Display', Georgia, serif);
+  --footer-font-secondary: var(--font-secondary, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif);
+  --footer-font-accent: var(--font-accent, 'Crimson Text', Georgia, serif);
+
+  /* ENHANCED: Typography Scale Inheritance */
+  --footer-text-xs: var(--text-xs, clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem));
+  --footer-text-sm: var(--text-sm, clamp(0.875rem, 0.8rem + 0.375vw, 1rem));
+  --footer-text-base: var(--text-base, clamp(1rem, 0.95rem + 0.25vw, 1.125rem));
+  --footer-text-lg: var(--text-lg, clamp(1.125rem, 1.05rem + 0.375vw, 1.25rem));
+  --footer-text-xl: var(--text-xl, clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem));
+  --footer-text-2xl: var(--text-2xl, clamp(1.5rem, 1.35rem + 0.75vw, 2rem));
+  --footer-text-3xl: var(--text-3xl, clamp(2rem, 1.75rem + 1.25vw, 2.75rem));
+
+  /* ENHANCED: Spacing Token Inheritance */
+  --footer-space-xs: var(--space-xs, 0.25rem);
+  --footer-space-sm: var(--space-sm, 0.5rem);
+  --footer-space-md: var(--space-md, 1rem);
+  --footer-space-lg: var(--space-lg, 1.5rem);
+  --footer-space-xl: var(--space-xl, 2rem);
+  --footer-space-2xl: var(--space-2xl, 3rem);
+  --footer-space-3xl: var(--space-3xl, 4rem);
+
+  /* ENHANCED: Color Token Inheritance */
+  --footer-color-primary-forest: var(--color-primary-forest, #2d5a27);
+  --footer-color-primary-sage: var(--color-primary-sage, #87a96b);
+  --footer-color-primary-gold: var(--color-primary-gold, #d4af37);
+  --footer-color-soft-gold: var(--color-primary-soft-gold, #f4e4bc);
+
   /* Hero Section */
   --footer-hero-bg: linear-gradient(135deg, var(--footer-bg-primary) 0%, var(--footer-bg-secondary) 100%);
   --footer-hero-overlay: rgba(var(--color-primary-rgb, 27, 54, 93), 0.8);
   --footer-hero-text: var(--color-text-light, #ffffff);
-  --footer-hero-padding: var(--spacing-8, 4rem) var(--spacing-4, 2rem);
+  --footer-hero-padding: var(--footer-space-3xl) var(--footer-space-xl);
 
   /* Map Section */
   --footer-map-height: 400px;
   --footer-map-overlay-bg: rgba(var(--color-primary-rgb, 27, 54, 93), 0.9);
-  --footer-map-border-radius: var(--border-radius-lg, 12px);
+  --footer-map-border-radius: var(--radius-lg, 12px);
 
   /* Cards */
   --footer-card-bg: var(--color-surface-light, #ffffff);
   --footer-card-border: 1px solid var(--color-border-light, #e5e7eb);
-  --footer-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --footer-card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --footer-card-radius: var(--border-radius-lg, 12px);
-  --footer-card-padding: var(--spacing-6, 1.5rem);
+  --footer-card-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+  --footer-card-shadow-hover: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+  --footer-card-radius: var(--radius-lg, 12px);
+  --footer-card-padding: var(--footer-space-2xl);
 
   /* CTA Buttons */
   --footer-cta-primary-bg: var(--footer-bg-accent);
@@ -53,8 +82,8 @@
   --footer-newsletter-input-bg: var(--color-surface-light, #ffffff);
 
   /* Transitions */
-  --footer-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --footer-transition-fast: all 0.15s ease;
+  --footer-transition: var(--transition-normal, all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+  --footer-transition-fast: var(--transition-fast, all 0.15s ease);
 }
 
 /* ==========================================================================
@@ -64,7 +93,8 @@
 .footer-component {
   background: var(--color-surface-light, #ffffff);
   color: var(--footer-text-primary);
-  font-family: var(--font-family-base, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-family: var(--footer-font-secondary);
+  font-size: var(--footer-text-base);
   line-height: 1.6;
   width: 100%;
   overflow: hidden;
@@ -73,7 +103,7 @@
 .footer-container {
   max-width: var(--container-max-width, 1200px);
   margin: 0 auto;
-  padding: 0 var(--spacing-4, 2rem);
+  padding: 0 var(--footer-space-xl);
 }
 
 /* ==========================================================================
@@ -113,27 +143,31 @@
 }
 
 .hero-headline {
-  font-size: var(--font-size-3xl, 2.25rem);
+  font-family: var(--footer-font-primary);
+  font-size: var(--footer-text-3xl);
   font-weight: var(--font-weight-bold, 700);
-  margin-bottom: var(--spacing-4, 1rem);
+  margin-bottom: var(--footer-space-lg);
   line-height: 1.2;
+  color: var(--footer-hero-text);
 }
 
 .hero-subtext {
-  font-size: var(--font-size-lg, 1.125rem);
-  margin-bottom: var(--spacing-8, 2rem);
+  font-family: var(--footer-font-secondary);
+  font-size: var(--footer-text-lg);
+  margin-bottom: var(--footer-space-3xl);
   opacity: 0.9;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  color: var(--footer-hero-text);
 }
 
 .hero-cta-group {
   display: flex;
-  gap: var(--spacing-4, 1rem);
+  gap: var(--footer-space-lg);
   justify-content: center;
   align-items: center;
-  margin-bottom: var(--spacing-8, 2rem);
+  margin-bottom: var(--footer-space-3xl);
   flex-wrap: wrap;
 }
 
@@ -354,47 +388,50 @@
 }
 
 .card-title {
-  font-size: var(--font-size-lg, 1.125rem);
-  font-weight: var(--font-weight-semibold, 600);
-  color: var(--footer-text-primary);
-  margin: 0;
+  font-family: var(--footer-font-primary);
+  font-size: var(--footer-text-xl);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--footer-color-primary-forest);
+  margin-bottom: var(--footer-space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--footer-space-sm);
 }
 
 .card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  font-family: var(--footer-font-secondary);
+  font-size: var(--footer-text-base);
+  line-height: 1.6;
 }
 
 /* Contact Card */
 .contact-item {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-1, 0.25rem);
-  margin-bottom: var(--spacing-3, 0.75rem);
+  align-items: flex-start;
+  gap: var(--footer-space-sm);
+  margin-bottom: var(--footer-space-md);
 }
 
 .contact-label {
-  font-size: var(--font-size-sm, 0.875rem);
+  font-size: var(--footer-text-sm);
+  color: var(--footer-color-primary-sage);
   font-weight: var(--font-weight-medium, 500);
-  color: var(--footer-text-secondary);
 }
 
 .contact-link {
-  color: var(--footer-text-accent);
+  color: var(--footer-color-primary-forest);
   text-decoration: none;
-  font-weight: var(--font-weight-medium, 500);
   transition: var(--footer-transition-fast);
+  font-weight: var(--font-weight-medium, 500);
 }
 
 .contact-link:hover {
-  color: var(--color-accent-light, #E6C547);
-  text-decoration: underline;
+  color: var(--footer-color-primary-gold);
 }
 
 .contact-value {
   color: var(--footer-text-primary);
-  font-size: var(--font-size-sm, 0.875rem);
+  font-size: var(--footer-text-base);
 }
 
 /* Services Card */
@@ -541,16 +578,20 @@
 }
 
 .newsletter-title {
-  font-size: var(--font-size-2xl, 1.5rem);
+  font-family: var(--footer-font-primary);
+  font-size: var(--footer-text-2xl);
   font-weight: var(--font-weight-bold, 700);
-  color: var(--footer-text-primary);
-  margin-bottom: var(--spacing-2, 0.5rem);
+  color: var(--footer-color-primary-forest);
+  margin-bottom: var(--footer-space-md);
+  text-align: center;
 }
 
 .newsletter-description {
+  font-family: var(--footer-font-secondary);
+  font-size: var(--footer-text-base);
   color: var(--footer-text-secondary);
-  font-size: var(--font-size-base, 1rem);
-  line-height: 1.6;
+  margin-bottom: var(--footer-space-xl);
+  text-align: center;
 }
 
 .newsletter-form {
