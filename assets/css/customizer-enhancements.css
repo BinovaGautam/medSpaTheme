@@ -667,3 +667,6 @@ body::after {
     border-color: var(--color-primary, var(--component-bg-color-primary, #8B4B7A));
     box-shadow: 0 0 0 2px rgba(139, 75, 122, 0.2); /* Use rose-gold as base for box-shadow */
 }
+
+/* REMOVED: Emergency bug fix section that was causing layout conflicts */
+/* The Visual Customizer should use its proper CSS rules for show/hide behavior */

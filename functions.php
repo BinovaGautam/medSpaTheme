@@ -370,14 +370,23 @@ require_once get_template_directory() . '/inc/typography-performance.php';
  * Enqueue theme styles and scripts
  */
 function medspa_theme_styles() {
-    // Main theme stylesheet
-    wp_enqueue_style('preetidreams-style', get_stylesheet_uri(), [], PREETIDREAMS_VERSION);
+    // CRITICAL: Main medical spa theme stylesheet - MUST LOAD FIRST
+    wp_enqueue_style(
+        'medical-spa-theme',
+        get_template_directory_uri() . '/assets/css/medical-spa-theme.css',
+        [],
+        time(), // Force cache refresh
+        'all'
+    );
+
+    // Main theme stylesheet (contains imports and fallbacks)
+    wp_enqueue_style('preetidreams-style', get_stylesheet_uri(), ['medical-spa-theme'], PREETIDREAMS_VERSION);
 
     // Button component styles
     wp_enqueue_style(
         'button-component-styles',
         get_template_directory_uri() . '/assets/css/components/button.css',
-        [],
+        ['medical-spa-theme'],
         PREETIDREAMS_VERSION
     );
 
@@ -385,7 +394,7 @@ function medspa_theme_styles() {
     wp_enqueue_style(
         'card-component-styles',
         get_template_directory_uri() . '/assets/css/components/card.css',
-        [],
+        ['medical-spa-theme'],
         PREETIDREAMS_VERSION
     );
 
@@ -393,7 +402,15 @@ function medspa_theme_styles() {
     wp_enqueue_style(
         'form-component-styles',
         get_template_directory_uri() . '/assets/css/components/form.css',
-        [],
+        ['medical-spa-theme'],
+        PREETIDREAMS_VERSION
+    );
+
+    // CRITICAL: Visual Customizer Enhancement Styles
+    wp_enqueue_style(
+        'customizer-enhancements',
+        get_template_directory_uri() . '/assets/css/customizer-enhancements.css',
+        ['medical-spa-theme'],
         PREETIDREAMS_VERSION
     );
 
@@ -401,7 +418,7 @@ function medspa_theme_styles() {
     wp_enqueue_style(
         'modal-component-styles',
         get_template_directory_uri() . '/assets/css/components/modal.css',
-        array('design-tokens'),
+        array('medical-spa-theme'),
         filemtime(get_template_directory() . '/assets/css/components/modal.css')
     );
 
@@ -429,8 +446,8 @@ function medspa_theme_styles() {
     wp_enqueue_style(
         'footer-component-styles',
         get_template_directory_uri() . '/assets/css/components/footer.css',
-        array('design-tokens'),
-        filemtime(get_template_directory() . '/assets/css/components/footer.css')
+        array('medical-spa-theme'),
+        time() // Force cache refresh
     );
 
     wp_enqueue_script(
@@ -540,4 +557,19 @@ function preetidreams_get_social_link($platform) {
     // Return social link from customizer
     $link = get_theme_mod('social_' . $platform, '');
     return $link;
+}
+
+// Enqueue Footer Maps JavaScript
+wp_enqueue_script(
+    'footer-maps',
+    get_template_directory_uri() . '/assets/js/footer-maps.js',
+    ['google-maps-api'],
+    filemtime(get_template_directory() . '/assets/js/footer-maps.js'),
+    true
+);
+
+// Include DevTools for debugging
+if (current_user_can('manage_options')) {
+    // Layout Stack Debugger Tool
+    require_once get_template_directory() . '/devtools/wp-admin-tools/layout-stack-debugger.php';
 }
