@@ -573,3 +573,34 @@ if (current_user_can('manage_options')) {
     // Layout Stack Debugger Tool
     require_once get_template_directory() . '/devtools/wp-admin-tools/layout-stack-debugger.php';
 }
+
+/**
+ * Enqueue scripts and styles.
+ */
+function medspatheme_scripts() {
+	wp_enqueue_style('medspatheme-style', get_stylesheet_uri(), array(), _S_VERSION);
+	wp_style_add_data('medspatheme-style', 'rtl', 'replace');
+
+	wp_enqueue_script('medspatheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
+
+	if (is_singular() && comments_open() && get_option('comment_registration')) {
+		wp_enqueue_script('comment-reply');
+	}
+
+	// Enqueue footer customizer preview script in customizer
+	if (is_customize_preview()) {
+		wp_enqueue_script(
+			'footer-customizer-preview',
+			get_template_directory_uri() . '/assets/js/footer-customizer-preview.js',
+			array('jquery', 'customize-preview'),
+			wp_get_theme()->get('Version'),
+			true
+		);
+	}
+}
+add_action('wp_enqueue_scripts', 'medspatheme_scripts');
+
+/**
+ * Include footer customizer
+ */
+require get_template_directory() . '/inc/customizer/footer-customizer.php';
