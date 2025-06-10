@@ -278,19 +278,18 @@
 }
 
 /* ====================================================================
-   INFO GRID LUXURY CARD SYSTEM
+   FOOTER INFO GRID LUXURY STYLING
    ==================================================================== */
 
 .footer-info-grid {
+  background: var(--luxury-gradient-primary);
   padding: var(--spacing-4xl) 0;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: var(--luxury-backdrop);
-  -webkit-backdrop-filter: var(--luxury-backdrop);
+  position: relative;
 
   .info-grid-wrapper {
     display: grid;
-    grid-template-columns: repeat(var(--footer-info-grid-columns, 4), 1fr);
-    gap: var(--spacing-2xl);
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: var(--spacing-xl);
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);

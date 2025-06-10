@@ -152,30 +152,27 @@ function render_footer_info_grid() {
                     </nav>
                 </div>
 
-                <!-- Hours Column -->
-                <div class="info-column hours-info" role="region" aria-labelledby="hours-heading">
-                    <h3 id="hours-heading" class="column-title">
+                <!-- Practice Info & Hours Column -->
+                <div class="info-column practice-info" role="region" aria-labelledby="practice-info-heading">
+                    <h3 id="practice-info-heading" class="column-title">
                         <span class="column-icon" aria-hidden="true">⏰</span>
-                        Hours
+                        Practice Info
                     </h3>
                     <div class="column-content">
-                        <div class="hours-list">
-                            <div class="hours-item">
-                                <span class="hours-day">Monday - Friday:</span>
-                                <span class="hours-time"><?php echo get_theme_mod('footer_hours_weekday', '9:00 AM - 6:00 PM'); ?></span>
+                        <div class="practice-info-list">
+                            <div class="practice-info-item">
+                                <span class="practice-info-label">Hours:</span>
+                                <span class="practice-info-value"><?php echo get_theme_mod('footer_hours_weekday', '9:00 AM - 6:00 PM'); ?> - <?php echo get_theme_mod('footer_hours_saturday', '10:00 AM - 4:00 PM'); ?> (Sat)</span>
                             </div>
-                            <div class="hours-item">
-                                <span class="hours-day">Saturday:</span>
-                                <span class="hours-time"><?php echo get_theme_mod('footer_hours_saturday', '10:00 AM - 4:00 PM'); ?></span>
+                            <div class="practice-info-item">
+                                <span class="practice-info-label">Sunday:</span>
+                                <span class="practice-info-value"><?php echo get_theme_mod('footer_hours_sunday', 'By Appointment'); ?></span>
                             </div>
-                            <div class="hours-item">
-                                <span class="hours-day">Sunday:</span>
-                                <span class="hours-time"><?php echo get_theme_mod('footer_hours_sunday', 'By Appointment'); ?></span>
+                            <div class="practice-info-item">
+                                <span class="practice-info-label">Emergency Consultations:</span>
+                                <span class="practice-info-value"><?php echo get_theme_mod('footer_hours_note', '24/7'); ?></span>
                             </div>
                         </div>
-                        <p class="hours-note">
-                            <?php echo get_theme_mod('footer_hours_note', 'Emergency consultations available 24/7'); ?>
-                        </p>
                     </div>
                 </div>
 
