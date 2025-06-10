@@ -16,6 +16,11 @@ if (!defined('ABSPATH')) {
 // Theme version
 define('PREETIDREAMS_VERSION', '1.0.0');
 
+// CRITICAL FIX: Define _S_VERSION constant to prevent undefined constant error
+if (!defined('_S_VERSION')) {
+    define('_S_VERSION', PREETIDREAMS_VERSION);
+}
+
 // =============================================================================
 // SPRINT 6: CUSTOMIZABLE COMPONENT ARCHITECTURE SYSTEM
 // =============================================================================
@@ -485,6 +490,16 @@ function medspa_theme_styles() {
         )
     ));
 
+    // CRITICAL FIX: Moved footer maps script inside the function where it belongs
+    // Footer Maps JavaScript
+    wp_enqueue_script(
+        'footer-maps',
+        get_template_directory_uri() . '/assets/js/footer-maps.js',
+        ['jquery'], // Removed 'google-maps-api' dependency that might not exist
+        PREETIDREAMS_VERSION, // Use defined constant instead of filemtime
+        true
+    );
+
     // Component system styles (if needed for other components)
     if (class_exists('ComponentRegistry')) {
         $registered_components = ComponentRegistry::get_registered_components();
@@ -504,103 +519,85 @@ function medspa_theme_styles() {
 add_action('wp_enqueue_scripts', 'medspa_theme_styles');
 
 /**
+ * CRITICAL FIX: Combined and improved script enqueue function
+ * Removed duplicate function and consolidated functionality
+ */
+function medspatheme_scripts() {
+    // Navigation script
+    if (file_exists(get_template_directory() . '/js/navigation.js')) {
+        wp_enqueue_script('medspatheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), PREETIDREAMS_VERSION, true);
+    }
+
+    // Comment reply script
+    if (is_singular() && comments_open() && get_option('comment_registration')) {
+        wp_enqueue_script('comment-reply');
+    }
+
+    // Enqueue footer customizer preview script in customizer
+    if (is_customize_preview()) {
+        wp_enqueue_script(
+            'footer-customizer-preview',
+            get_template_directory_uri() . '/assets/js/footer-customizer-preview.js',
+            array('jquery', 'customize-preview'),
+            PREETIDREAMS_VERSION,
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'medspatheme_scripts');
+
+/**
  * Get phone number for theme
- *
- * @return string Phone number
  */
 function preetidreams_get_phone() {
-    // Return default phone number or get from customizer
     $phone = get_theme_mod('contact_phone', '+1 (555) 123-4567');
     return $phone;
 }
 
 /**
  * Get address for theme
- *
- * @return string Address
  */
 function preetidreams_get_address() {
-    // Return default address or get from customizer
     $address = get_theme_mod('contact_address', '123 Medical Plaza\nBeverly Hills, CA 90210');
     return $address;
 }
 
 /**
  * Get hours for theme
- *
- * @return string Hours
  */
 function preetidreams_get_hours() {
-    // Return default hours or get from customizer
     $hours = get_theme_mod('contact_hours', 'Mon-Fri: 9:00 AM - 6:00 PM\nSat: 10:00 AM - 4:00 PM\nSun: By Appointment');
     return $hours;
 }
 
 /**
  * Get email for theme
- *
- * @return string Email
  */
 function preetidreams_get_email() {
-    // Return default email or get from customizer
     $email = get_theme_mod('contact_email', 'info@preetidreams.com');
     return $email;
 }
 
 /**
  * Get social link for theme
- *
- * @param string $platform Social platform
- * @return string Social link
  */
 function preetidreams_get_social_link($platform) {
-    // Return social link from customizer
     $link = get_theme_mod('social_' . $platform, '');
     return $link;
 }
 
-// Enqueue Footer Maps JavaScript
-wp_enqueue_script(
-    'footer-maps',
-    get_template_directory_uri() . '/assets/js/footer-maps.js',
-    ['google-maps-api'],
-    filemtime(get_template_directory() . '/assets/js/footer-maps.js'),
-    true
-);
-
-// Include DevTools for debugging
+// CRITICAL FIX: Include DevTools with proper error handling
 if (current_user_can('manage_options')) {
-    // Layout Stack Debugger Tool
-    require_once get_template_directory() . '/devtools/wp-admin-tools/layout-stack-debugger.php';
+    $layout_debugger_path = get_template_directory() . '/devtools/wp-admin-tools/layout-stack-debugger.php';
+    if (file_exists($layout_debugger_path)) {
+        require_once $layout_debugger_path;
+    }
 }
 
 /**
- * Enqueue scripts and styles.
+ * Include footer customizer with error handling
  */
-function medspatheme_scripts() {
-	wp_enqueue_style('medspatheme-style', get_stylesheet_uri(), array(), _S_VERSION);
-	wp_style_add_data('medspatheme-style', 'rtl', 'replace');
-
-	wp_enqueue_script('medspatheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
-
-	if (is_singular() && comments_open() && get_option('comment_registration')) {
-		wp_enqueue_script('comment-reply');
-	}
-
-	// Enqueue footer customizer preview script in customizer
-	if (is_customize_preview()) {
-		wp_enqueue_script(
-			'footer-customizer-preview',
-			get_template_directory_uri() . '/assets/js/footer-customizer-preview.js',
-			array('jquery', 'customize-preview'),
-			wp_get_theme()->get('Version'),
-			true
-		);
-	}
+$footer_customizer_path = get_template_directory() . '/inc/customizer/footer-customizer.php';
+if (file_exists($footer_customizer_path)) {
+    require $footer_customizer_path;
 }
-add_action('wp_enqueue_scripts', 'medspatheme_scripts');
-
-/**
- * Include footer customizer
- */
-require get_template_directory() . '/inc/customizer/footer-customizer.php';
