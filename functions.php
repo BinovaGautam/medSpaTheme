@@ -495,6 +495,15 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // T-FOOTER-007: Newsletter & Social Engagement JavaScript
+    wp_enqueue_script(
+        'footer-newsletter-scripts',
+        get_template_directory_uri() . '/assets/js/footer-newsletter.js',
+        array('jquery', 'footer-component-scripts'),
+        PREETIDREAMS_VERSION,
+        true
+    );
+
     // Localize footer scripts
     wp_localize_script('footer-component-scripts', 'footerSettings', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
@@ -624,3 +633,119 @@ $footer_customizer_path = get_template_directory() . '/inc/customizer/footer-cus
 if (file_exists($footer_customizer_path)) {
     require $footer_customizer_path;
 }
+
+/**
+ * T-FOOTER-007: Newsletter Subscription AJAX Handler
+ * Handle newsletter subscription submissions
+ */
+function footer_newsletter_subscribe_handler() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'footer_nonce')) {
+        wp_send_json_error(array(
+            'message' => 'Security verification failed. Please refresh and try again.'
+        ));
+        return;
+    }
+
+    // Sanitize email
+    $email = sanitize_email($_POST['email']);
+
+    if (!is_email($email)) {
+        wp_send_json_error(array(
+            'message' => 'Please enter a valid email address.'
+        ));
+        return;
+    }
+
+    // Check if email already exists (if using WordPress users or custom table)
+    if (email_exists($email)) {
+        wp_send_json_success(array(
+            'message' => 'You are already subscribed to our newsletter!'
+        ));
+        return;
+    }
+
+    try {
+        // Store subscription (customize based on your newsletter service)
+        $subscription_data = array(
+            'email' => $email,
+            'source' => 'footer',
+            'date_subscribed' => current_time('mysql'),
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'user_agent' => $_SERVER['HTTP_USER_AGENT']
+        );
+
+        // Option 1: Store in WordPress options (simple approach)
+        $existing_subscribers = get_option('footer_newsletter_subscribers', array());
+        if (!in_array($email, $existing_subscribers)) {
+            $existing_subscribers[] = $email;
+            update_option('footer_newsletter_subscribers', $existing_subscribers);
+        }
+
+        // Option 2: Store in custom database table (commented out - implement if needed)
+        /*
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'newsletter_subscribers';
+
+        $result = $wpdb->insert(
+            $table_name,
+            $subscription_data,
+            array('%s', '%s', '%s', '%s', '%s')
+        );
+        */
+
+        // Option 3: Integrate with external newsletter service (MailChimp, ConvertKit, etc.)
+        // Add your integration code here
+
+        // Send confirmation email (optional)
+        $subject = 'Welcome to ' . get_bloginfo('name') . ' Newsletter';
+        $message = 'Thank you for subscribing to our newsletter! We\'ll keep you updated with the latest news and exclusive offers.';
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+        wp_mail($email, $subject, $message, $headers);
+
+        // Success response
+        wp_send_json_success(array(
+            'message' => 'Thank you for subscribing! Please check your email for confirmation.'
+        ));
+
+    } catch (Exception $e) {
+        wp_send_json_error(array(
+            'message' => 'Subscription failed. Please try again later.'
+        ));
+    }
+}
+
+// Register AJAX handlers
+add_action('wp_ajax_footer_newsletter_subscribe', 'footer_newsletter_subscribe_handler');
+add_action('wp_ajax_nopriv_footer_newsletter_subscribe', 'footer_newsletter_subscribe_handler');
+
+/**
+ * Create newsletter subscribers table (run once)
+ * Uncomment and run if you want to use database storage
+ */
+/*
+function create_newsletter_subscribers_table() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'newsletter_subscribers';
+
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        id int(11) NOT NULL AUTO_INCREMENT,
+        email varchar(255) NOT NULL,
+        source varchar(50) DEFAULT 'footer',
+        date_subscribed datetime DEFAULT CURRENT_TIMESTAMP,
+        ip_address varchar(45),
+        user_agent text,
+        status varchar(20) DEFAULT 'active',
+        PRIMARY KEY (id),
+        UNIQUE KEY email (email)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+}
+// register_activation_hook(__FILE__, 'create_newsletter_subscribers_table');
+*/
