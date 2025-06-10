@@ -2,8 +2,8 @@
 /**
  * Modal Component Demo Template
  *
- * Comprehensive demonstration of modal components including
- * basic modals, specialized types, and interactive features.
+ * Comprehensive demonstration of all modal/dialog components including
+ * booking modals, treatment info modals, confirmation modals, and gallery modals.
  *
  * @package MedSpaTheme
  * @since 1.0.0
@@ -16,852 +16,927 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Initialize modal components
-$modal_component = new ModalComponent();
-$booking_modal = new BookingModal();
+// Load modal component
+require_once get_template_directory() . '/inc/components/modal-component.php';
 
 ?>
 
-<div class="modal-demo-container">
+<div class="component-demo-container">
     <div class="demo-header">
-        <h1 class="demo-title">Modal/Dialog System Demo</h1>
-        <p class="demo-description">
-            Interactive demonstration of the modal component system including basic modals,
-            specialized medical spa modals, and accessibility features.
-        </p>
-
-        <div class="demo-metrics">
-            <div class="metric-item">
-                <span class="metric-label">Performance Target:</span>
-                <span class="metric-value">&lt;50ms open time</span>
-            </div>
-            <div class="metric-item">
-                <span class="metric-label">Accessibility:</span>
-                <span class="metric-value">WCAG 2.1 AA</span>
-            </div>
-            <div class="metric-item">
-                <span class="metric-label">Animation:</span>
-                <span class="metric-value">60fps smooth</span>
-            </div>
-        </div>
+        <h1>Modal Component System Demo</h1>
+        <p>Comprehensive demonstration of modal/dialog components with medical spa specializations, accessibility compliance, and interactive functionality.</p>
     </div>
 
-    <div class="demo-sections">
+    <!-- Modal Triggers Section -->
+    <section class="demo-section">
+        <h2>Modal Types & Triggers</h2>
+        <p>Click the buttons below to test different modal types and configurations.</p>
 
-        <!-- Basic Modal Examples -->
-        <section class="demo-section">
-            <h2 class="section-title">Basic Modal Components</h2>
-            <p class="section-description">Standard modal variations with different sizes and positions.</p>
+        <div class="demo-grid">
+            <!-- Basic Modal Triggers -->
+            <div class="demo-group">
+                <h3>Basic Modal Types</h3>
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary" data-modal-trigger="modal-demo-basic">
+                        Basic Modal
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-modal-trigger="modal-demo-confirmation">
+                        Confirmation Modal
+                    </button>
+                    <button type="button" class="btn btn-info" data-modal-trigger="modal-demo-alert">
+                        Alert Modal
+                    </button>
+                </div>
+            </div>
 
+            <!-- Size Variations -->
             <div class="demo-group">
                 <h3>Modal Sizes</h3>
                 <div class="button-group">
-                    <button class="button button-primary" data-modal-target="demo-modal-small">
+                    <button type="button" class="btn btn-outline" data-modal-trigger="modal-demo-small">
                         Small Modal
                     </button>
-                    <button class="button button-primary" data-modal-target="demo-modal-medium">
+                    <button type="button" class="btn btn-outline" data-modal-trigger="modal-demo-medium">
                         Medium Modal
                     </button>
-                    <button class="button button-primary" data-modal-target="demo-modal-large">
+                    <button type="button" class="btn btn-outline" data-modal-trigger="modal-demo-large">
                         Large Modal
                     </button>
-                    <button class="button button-primary" data-modal-target="demo-modal-fullscreen">
+                    <button type="button" class="btn btn-outline" data-modal-trigger="modal-demo-fullscreen">
                         Fullscreen Modal
                     </button>
                 </div>
             </div>
 
+            <!-- Medical Spa Specializations -->
             <div class="demo-group">
-                <h3>Modal Positions</h3>
+                <h3>Medical Spa Modals</h3>
                 <div class="button-group">
-                    <button class="button button-secondary" data-modal-target="demo-modal-center">
-                        Center
+                    <button type="button" class="btn btn-primary" data-modal-trigger="modal-demo-booking">
+                        📅 Book Consultation
                     </button>
-                    <button class="button button-secondary" data-modal-target="demo-modal-top">
-                        Top
+                    <button type="button" class="btn btn-secondary" data-modal-trigger="modal-demo-treatment-info">
+                        💉 Treatment Information
                     </button>
-                    <button class="button button-secondary" data-modal-target="demo-modal-bottom">
-                        Bottom
+                    <button type="button" class="btn btn-info" data-modal-trigger="modal-demo-gallery">
+                        🖼️ Before/After Gallery
                     </button>
-                    <button class="button button-secondary" data-modal-target="demo-modal-left">
-                        Left
-                    </button>
-                    <button class="button button-secondary" data-modal-target="demo-modal-right">
-                        Right
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Medical Spa Specialized Modals -->
-        <section class="demo-section">
-            <h2 class="section-title">Medical Spa Specialized Modals</h2>
-            <p class="section-description">Purpose-built modals for medical spa functionality.</p>
-
-            <div class="demo-group">
-                <h3>Consultation Booking</h3>
-                <button class="button button-primary button-large" data-modal-target="demo-booking-modal">
-                    <span class="button-icon">📅</span>
-                    Book Consultation
-                </button>
-                <p class="demo-note">
-                    Complete booking form with medical history, treatment selection, and appointment scheduling.
-                </p>
-            </div>
-
-            <div class="demo-group">
-                <h3>Treatment Information</h3>
-                <div class="treatment-buttons">
-                    <button class="button button-outline" data-modal-target="demo-treatment-botox">
-                        Botox Information
-                    </button>
-                    <button class="button button-outline" data-modal-target="demo-treatment-fillers">
-                        Dermal Fillers
-                    </button>
-                    <button class="button button-outline" data-modal-target="demo-treatment-laser">
-                        Laser Resurfacing
+                    <button type="button" class="btn btn-success" data-modal-trigger="modal-demo-consent">
+                        📋 Consent Form
                     </button>
                 </div>
             </div>
 
+            <!-- Animation Types -->
             <div class="demo-group">
-                <h3>Before/After Gallery</h3>
-                <button class="button button-secondary" id="demo-gallery-trigger">
-                    <span class="button-icon">🖼️</span>
-                    View Gallery
-                </button>
-                <p class="demo-note">
-                    Image gallery with navigation, zoom, and treatment categorization.
-                </p>
-            </div>
-        </section>
-
-        <!-- Interactive Features -->
-        <section class="demo-section">
-            <h2 class="section-title">Interactive Features</h2>
-            <p class="section-description">Advanced modal functionality and user interactions.</p>
-
-            <div class="demo-group">
-                <h3>Confirmation Dialogs</h3>
+                <h3>Animation Styles</h3>
                 <div class="button-group">
-                    <button class="button button-danger" id="demo-delete-confirmation">
-                        Delete Item
+                    <button type="button" class="btn btn-outline" data-modal-trigger="modal-demo-fade">
+                        Fade Animation
                     </button>
-                    <button class="button button-warning" id="demo-cancel-appointment">
-                        Cancel Appointment
+                    <button type="button" class="btn btn-outline" data-modal-trigger="modal-demo-scale">
+                        Scale Animation
                     </button>
-                    <button class="button button-info" id="demo-save-confirmation">
-                        Save Changes
+                    <button type="button" class="btn btn-outline" data-modal-trigger="modal-demo-slide">
+                        Slide Animation
                     </button>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="demo-group">
-                <h3>Dynamic Content</h3>
-                <button class="button button-secondary" id="demo-dynamic-content">
-                    Load Dynamic Content
-                </button>
-                <p class="demo-note">
-                    Modal with content loaded via AJAX with loading states.
-                </p>
+    <!-- Modal Configuration Section -->
+    <section class="demo-section">
+        <h2>Modal Configuration Options</h2>
+        <div class="demo-grid">
+            <div class="config-group">
+                <h3>Accessibility Features</h3>
+                <ul>
+                    <li>✅ Keyboard navigation (Tab, Shift+Tab, Escape)</li>
+                    <li>✅ Focus trapping within modal</li>
+                    <li>✅ Screen reader announcements</li>
+                    <li>✅ ARIA labels and descriptions</li>
+                    <li>✅ High contrast mode support</li>
+                    <li>✅ Reduced motion preference respect</li>
+                </ul>
             </div>
 
-            <div class="demo-group">
-                <h3>Nested Modals</h3>
-                <button class="button button-secondary" data-modal-target="demo-modal-nested-parent">
-                    Open Nested Modal
-                </button>
-                <p class="demo-note">
-                    Demonstrates modal stacking and focus management.
-                </p>
+            <div class="config-group">
+                <h3>Interaction Options</h3>
+                <ul>
+                    <li>🖱️ Close on backdrop click</li>
+                    <li>⌨️ Close on Escape key</li>
+                    <li>❌ Close button in header</li>
+                    <li>🔄 Focus restoration</li>
+                    <li>📱 Touch-friendly mobile design</li>
+                    <li>⚡ Smooth animations</li>
+                </ul>
             </div>
-        </section>
 
-        <!-- Accessibility Testing -->
-        <section class="demo-section">
-            <h2 class="section-title">Accessibility Features</h2>
-            <p class="section-description">WCAG 2.1 AA compliance testing and keyboard navigation.</p>
+            <div class="config-group">
+                <h3>Medical Spa Features</h3>
+                <ul>
+                    <li>🏥 HIPAA compliance ready</li>
+                    <li>📅 Appointment booking integration</li>
+                    <li>💉 Treatment information display</li>
+                    <li>🖼️ Before/after gallery with zoom</li>
+                    <li>📋 Consent form management</li>
+                    <li>🔒 Secure form submissions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-            <div class="demo-group">
-                <h3>Keyboard Navigation Test</h3>
-                <button class="button button-outline" data-modal-target="demo-accessibility-modal">
-                    Test Keyboard Navigation
-                </button>
-                <div class="accessibility-notes">
-                    <ul>
-                        <li><kbd>Tab</kbd> - Navigate forward through focusable elements</li>
-                        <li><kbd>Shift + Tab</kbd> - Navigate backward</li>
-                        <li><kbd>Escape</kbd> - Close modal</li>
-                        <li><kbd>Enter/Space</kbd> - Activate buttons</li>
-                    </ul>
+    <!-- JavaScript API Section -->
+    <section class="demo-section">
+        <h2>JavaScript API Demonstration</h2>
+        <div class="demo-grid">
+            <div class="api-group">
+                <h3>Programmatic Control</h3>
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary" onclick="MedSpaModal.open('modal-demo-basic')">
+                        Open via API
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="MedSpaModal.closeAll()">
+                        Close All Modals
+                    </button>
+                    <button type="button" class="btn btn-info" onclick="checkModalStatus()">
+                        Check Modal Status
+                    </button>
+                </div>
+                <div id="api-output" class="api-output">
+                    <p>Click buttons above to see API responses...</p>
                 </div>
             </div>
 
-            <div class="demo-group">
-                <h3>Screen Reader Test</h3>
-                <button class="button button-outline" data-modal-target="demo-screenreader-modal">
-                    Test Screen Reader Support
-                </button>
-                <p class="demo-note">
-                    Modal with comprehensive ARIA labels and live regions.
-                </p>
-            </div>
-        </section>
-
-        <!-- Performance Testing -->
-        <section class="demo-section">
-            <h2 class="section-title">Performance Testing</h2>
-            <p class="section-description">Animation performance and load testing capabilities.</p>
-
-            <div class="demo-group">
-                <h3>Animation Performance</h3>
-                <button class="button button-secondary" id="demo-animation-test">
-                    Test Animation Performance
-                </button>
-                <div id="performance-results" class="performance-results" style="display: none;">
-                    <div class="metric">
-                        <span class="metric-name">Open Time:</span>
-                        <span class="metric-value" id="open-time">-</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-name">Close Time:</span>
-                        <span class="metric-value" id="close-time">-</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-name">Frame Rate:</span>
-                        <span class="metric-value" id="frame-rate">-</span>
-                    </div>
+            <div class="api-group">
+                <h3>Callback Demonstration</h3>
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary" onclick="openModalWithCallbacks()">
+                        Modal with Callbacks
+                    </button>
+                </div>
+                <div id="callback-output" class="api-output">
+                    <p>Callback events will appear here...</p>
                 </div>
             </div>
-
-            <div class="demo-group">
-                <h3>Multiple Modal Test</h3>
-                <button class="button button-secondary" id="demo-multiple-modals">
-                    Open 5 Modals
-                </button>
-                <p class="demo-note">
-                    Tests memory usage and performance with multiple modal instances.
-                </p>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
 </div>
 
 <!-- Modal Definitions -->
+
+<!-- Basic Modal -->
 <?php
-// Generate basic modal variations
-$modal_variations = [
-    'small' => ['size' => 'small', 'title' => 'Small Modal', 'content' => 'This is a small modal example with minimal content.'],
-    'medium' => ['size' => 'medium', 'title' => 'Medium Modal', 'content' => 'This is a medium-sized modal with moderate content. It demonstrates the default modal size and styling.'],
-    'large' => ['size' => 'large', 'title' => 'Large Modal', 'content' => 'This is a large modal with extensive content. It provides more space for complex forms, detailed information, or rich media content. Large modals are ideal for comprehensive interfaces that require more screen real estate.'],
-    'fullscreen' => ['size' => 'fullscreen', 'title' => 'Fullscreen Modal', 'content' => 'This fullscreen modal takes up the entire viewport. It\'s perfect for immersive experiences, complex workflows, or when you need maximum available space.']
-];
-
-foreach ($modal_variations as $key => $config) {
-    echo $modal_component->render([
-        'modal_id' => "demo-modal-{$key}",
-        'modal_size' => $config['size'],
-        'title' => $config['title'],
-        'content' => $config['content'],
-        'footer_content' => '<button type="button" class="button button-secondary" data-modal-close>Close</button>'
-    ]);
-}
-
-// Generate position variations
-$position_variations = [
-    'center' => ['position' => 'center', 'title' => 'Center Position'],
-    'top' => ['position' => 'top', 'title' => 'Top Position'],
-    'bottom' => ['position' => 'bottom', 'title' => 'Bottom Position'],
-    'left' => ['position' => 'left', 'title' => 'Left Position'],
-    'right' => ['position' => 'right', 'title' => 'Right Position']
-];
-
-foreach ($position_variations as $key => $config) {
-    echo $modal_component->render([
-        'modal_id' => "demo-modal-{$key}",
-        'modal_position' => $config['position'],
-        'title' => $config['title'],
-        'content' => "This modal is positioned at the {$config['position']} of the viewport.",
-        'footer_content' => '<button type="button" class="button button-secondary" data-modal-close">Close</button>'
-    ]);
-}
-
-// Booking Modal
-echo $booking_modal->render([
-    'modal_id' => 'demo-booking-modal',
-    'treatment_type' => 'consultation'
-]);
-
-// Treatment Information Modals
-$treatments = [
-    'botox' => [
-        'title' => 'Botox Treatment Information',
-        'content' => '
-            <div class="treatment-info">
-                <div class="treatment-overview">
-                    <h4>What is Botox?</h4>
-                    <p>Botox is a purified protein that temporarily relaxes facial muscles to reduce the appearance of fine lines and wrinkles.</p>
-                </div>
-                <div class="treatment-benefits">
-                    <h4>Benefits</h4>
-                    <ul>
-                        <li>Reduces forehead lines and crow\'s feet</li>
-                        <li>Minimally invasive procedure</li>
-                        <li>Quick treatment (15-30 minutes)</li>
-                        <li>No downtime required</li>
-                    </ul>
-                </div>
-                <div class="treatment-process">
-                    <h4>Treatment Process</h4>
-                    <ol>
-                        <li>Consultation and assessment</li>
-                        <li>Marking of injection sites</li>
-                        <li>Application of topical anesthetic (if needed)</li>
-                        <li>Precise injections using fine needles</li>
-                        <li>Post-treatment care instructions</li>
-                    </ol>
-                </div>
-                <div class="treatment-results">
-                    <h4>Expected Results</h4>
-                    <p>Results typically appear within 3-7 days and last 3-4 months. Most patients see a significant reduction in targeted wrinkles.</p>
-                </div>
-            </div>
-        '
-    ],
-    'fillers' => [
-        'title' => 'Dermal Fillers Information',
-        'content' => '
-            <div class="treatment-info">
-                <div class="treatment-overview">
-                    <h4>What are Dermal Fillers?</h4>
-                    <p>Dermal fillers are injectable gels that restore volume, smooth wrinkles, and enhance facial contours.</p>
-                </div>
-                <div class="treatment-types">
-                    <h4>Types Available</h4>
-                    <ul>
-                        <li>Hyaluronic Acid Fillers (Juvederm, Restylane)</li>
-                        <li>Calcium Hydroxylapatite (Radiesse)</li>
-                        <li>Poly-L-lactic Acid (Sculptra)</li>
-                    </ul>
-                </div>
-                <div class="treatment-areas">
-                    <h4>Treatment Areas</h4>
-                    <ul>
-                        <li>Nasolabial folds (smile lines)</li>
-                        <li>Marionette lines</li>
-                        <li>Lip enhancement</li>
-                        <li>Cheek augmentation</li>
-                        <li>Under-eye hollows</li>
-                    </ul>
-                </div>
-            </div>
-        '
-    ],
-    'laser' => [
-        'title' => 'Laser Resurfacing Information',
-        'content' => '
-            <div class="treatment-info">
-                <div class="treatment-overview">
-                    <h4>What is Laser Resurfacing?</h4>
-                    <p>Laser resurfacing uses focused light energy to improve skin texture, reduce wrinkles, and address various skin concerns.</p>
-                </div>
-                <div class="laser-types">
-                    <h4>Types of Laser Treatments</h4>
-                    <ul>
-                        <li>Fractional CO2 Laser</li>
-                        <li>Erbium Laser</li>
-                        <li>IPL (Intense Pulsed Light)</li>
-                        <li>Nd:YAG Laser</li>
-                    </ul>
-                </div>
-                <div class="treatment-conditions">
-                    <h4>Conditions Treated</h4>
-                    <ul>
-                        <li>Fine lines and wrinkles</li>
-                        <li>Age spots and sun damage</li>
-                        <li>Acne scars</li>
-                        <li>Uneven skin tone</li>
-                        <li>Large pores</li>
-                    </ul>
-                </div>
-            </div>
-        '
-    ]
-];
-
-foreach ($treatments as $key => $treatment) {
-    echo $modal_component->render([
-        'modal_id' => "demo-treatment-{$key}",
-        'modal_type' => 'treatment',
-        'modal_class' => 'modal-treatment-info',
-        'modal_size' => 'large',
-        'title' => $treatment['title'],
-        'content' => $treatment['content'],
-        'footer_content' => '
-            <button type="button" class="button button-primary" data-modal-target="demo-booking-modal">
-                Book Consultation
-            </button>
-            <button type="button" class="button button-secondary" data-modal-close>
-                Close
-            </button>
-        '
-    ]);
-}
-
-// Accessibility Test Modal
-echo $modal_component->render([
-    'modal_id' => 'demo-accessibility-modal',
-    'title' => 'Accessibility Test Modal',
+$basic_modal = new ModalComponent();
+echo $basic_modal->render([
+    'modal_id' => 'modal-demo-basic',
+    'modal_type' => 'default',
+    'modal_size' => 'medium',
+    'title' => 'Basic Modal Example',
     'content' => '
-        <div class="accessibility-test-content">
-            <p>This modal demonstrates keyboard navigation and screen reader support:</p>
-            <div class="form-group">
-                <label for="test-input-1">First Input:</label>
-                <input type="text" id="test-input-1" placeholder="Tab to this field">
-            </div>
-            <div class="form-group">
-                <label for="test-select">Select Option:</label>
-                <select id="test-select">
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="test-textarea">Text Area:</label>
-                <textarea id="test-textarea" rows="3" placeholder="Focus will cycle through all elements"></textarea>
-            </div>
-            <div class="checkbox-group">
-                <label>
-                    <input type="checkbox"> Test checkbox
-                </label>
-            </div>
-        </div>
+        <p>This is a basic modal with default styling and behavior. It demonstrates the fundamental modal functionality including:</p>
+        <ul>
+            <li>Backdrop overlay with blur effect</li>
+            <li>Centered positioning</li>
+            <li>Smooth scale animation</li>
+            <li>Keyboard accessibility</li>
+            <li>Focus management</li>
+        </ul>
+        <p>You can close this modal by clicking the X button, pressing Escape, or clicking outside the modal area.</p>
     ',
-    'footer_content' => '
-        <button type="button" class="button button-primary">Save</button>
-        <button type="button" class="button button-secondary" data-modal-close>Cancel</button>
-    '
+    'show_header' => true,
+    'show_footer' => false,
+    'show_close_button' => true,
+    'close_on_backdrop' => true,
+    'close_on_escape' => true
 ]);
+?>
 
-// Screen Reader Test Modal
-echo $modal_component->render([
-    'modal_id' => 'demo-screenreader-modal',
-    'title' => 'Screen Reader Support Test',
-    'aria_label' => 'Screen reader test dialog',
-    'content' => '
-        <div class="screenreader-test-content">
-            <div role="alert" class="sr-announcement">
-                This modal demonstrates screen reader announcements and ARIA support.
-            </div>
-            <p>Screen reader users will hear:</p>
-            <ul>
-                <li>Modal opening and closing announcements</li>
-                <li>Proper heading structure</li>
-                <li>Form labels and descriptions</li>
-                <li>Button roles and states</li>
-            </ul>
-            <div aria-live="polite" id="status-region">
-                Status updates will be announced here.
-            </div>
-        </div>
-    ',
-    'footer_content' => '
-        <button type="button" class="button button-primary" onclick="document.getElementById(\'status-region\').textContent = \'Button activated successfully\'">
-            Test Status Update
-        </button>
-        <button type="button" class="button button-secondary" data-modal-close>Close</button>
-    '
-]);
-
-// Nested Modal Parent
-echo $modal_component->render([
-    'modal_id' => 'demo-modal-nested-parent',
-    'title' => 'Parent Modal',
-    'content' => '
-        <p>This is the parent modal. Click the button below to open a child modal:</p>
-        <div class="nested-demo-content">
-            <p>Parent modal content remains accessible in the background.</p>
-        </div>
-    ',
-    'footer_content' => '
-        <button type="button" class="button button-primary" data-modal-target="demo-modal-nested-child">
-            Open Child Modal
-        </button>
-        <button type="button" class="button button-secondary" data-modal-close>Close Parent</button>
-    '
-]);
-
-// Nested Modal Child
-echo $modal_component->render([
-    'modal_id' => 'demo-modal-nested-child',
+<!-- Confirmation Modal -->
+<?php
+$confirmation_modal = new ModalComponent();
+echo $confirmation_modal->render([
+    'modal_id' => 'modal-demo-confirmation',
+    'modal_type' => 'confirmation',
     'modal_size' => 'small',
-    'title' => 'Child Modal',
+    'title' => 'Confirm Your Action',
     'content' => '
-        <p>This is a child modal opened from the parent modal.</p>
-        <p>Focus management ensures proper keyboard navigation between nested modals.</p>
+        <p>Are you sure you want to proceed with this action? This change cannot be undone.</p>
+        <p><strong>Warning:</strong> This is a demonstration confirmation modal showing how user confirmations should be handled in medical spa applications.</p>
     ',
-    'footer_content' => '
-        <button type="button" class="button button-secondary" data-modal-close>Close Child</button>
+    'show_header' => true,
+    'show_footer' => true,
+    'show_close_button' => true
+]);
+?>
+
+<!-- Alert Modal -->
+<?php
+$alert_modal = new ModalComponent();
+echo $alert_modal->render([
+    'modal_id' => 'modal-demo-alert',
+    'modal_type' => 'alert',
+    'modal_size' => 'small',
+    'title' => 'Important Notice',
+    'content' => '
+        <p><strong>Alert:</strong> This is an important message that requires your attention.</p>
+        <p>Alert modals are used for critical information, error messages, or important notifications that users must acknowledge.</p>
+    ',
+    'show_header' => true,
+    'show_footer' => true,
+    'show_close_button' => true,
+    'close_on_backdrop' => false,
+    'close_on_escape' => true
+]);
+?>
+
+<!-- Size Variation Modals -->
+<?php
+// Small Modal
+$small_modal = new ModalComponent();
+echo $small_modal->render([
+    'modal_id' => 'modal-demo-small',
+    'modal_size' => 'small',
+    'title' => 'Small Modal',
+    'content' => '<p>This is a small modal perfect for quick confirmations, alerts, or simple forms.</p>'
+]);
+
+// Medium Modal
+$medium_modal = new ModalComponent();
+echo $medium_modal->render([
+    'modal_id' => 'modal-demo-medium',
+    'modal_size' => 'medium',
+    'title' => 'Medium Modal',
+    'content' => '<p>This is a medium modal suitable for most content types including forms, detailed information, and moderate amounts of text.</p>'
+]);
+
+// Large Modal
+$large_modal = new ModalComponent();
+echo $large_modal->render([
+    'modal_id' => 'modal-demo-large',
+    'modal_size' => 'large',
+    'title' => 'Large Modal',
+    'content' => '
+        <p>This is a large modal designed for extensive content, complex forms, or detailed information displays.</p>
+        <div class="content-sections">
+            <h4>Section 1: Treatment Overview</h4>
+            <p>Large modals are perfect for displaying comprehensive treatment information, including procedures, benefits, risks, and recovery information.</p>
+
+            <h4>Section 2: Before and After</h4>
+            <p>They can accommodate multiple images, detailed descriptions, and comparison content.</p>
+
+            <h4>Section 3: Pricing Information</h4>
+            <p>Complete pricing breakdowns, package options, and financing information can be displayed clearly.</p>
+        </div>
+    '
+]);
+
+// Fullscreen Modal
+$fullscreen_modal = new ModalComponent();
+echo $fullscreen_modal->render([
+    'modal_id' => 'modal-demo-fullscreen',
+    'modal_size' => 'fullscreen',
+    'title' => 'Fullscreen Modal',
+    'content' => '
+        <div class="fullscreen-content">
+            <h3>Fullscreen Experience</h3>
+            <p>Fullscreen modals provide an immersive experience perfect for:</p>
+            <ul>
+                <li>Image galleries and virtual tours</li>
+                <li>Video consultations</li>
+                <li>Comprehensive forms and questionnaires</li>
+                <li>Educational content and presentations</li>
+            </ul>
+            <div class="fullscreen-demo-content">
+                <h4>Virtual Spa Tour</h4>
+                <p>This space could contain a virtual tour of your medical spa facilities, allowing potential clients to explore your environment before their visit.</p>
+            </div>
+        </div>
     '
 ]);
 ?>
 
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    // Gallery Modal Demo
-    document.getElementById('demo-gallery-trigger').addEventListener('click', function() {
-        const galleryImages = [
-            {
-                src: 'https://via.placeholder.com/800x600/4f46e5/ffffff?text=Before+Treatment',
-                alt: 'Before treatment image',
-                caption: 'Before Treatment - Patient showing signs of aging'
-            },
-            {
-                src: 'https://via.placeholder.com/800x600/059669/ffffff?text=After+Treatment',
-                alt: 'After treatment image',
-                caption: 'After Treatment - Visible improvement in skin texture'
-            },
-            {
-                src: 'https://via.placeholder.com/800x600/dc2626/ffffff?text=Treatment+Process',
-                alt: 'Treatment process image',
-                caption: 'During Treatment - Professional application'
-            }
-        ];
+<!-- Medical Spa Specialized Modals -->
 
-        if (window.GalleryModal) {
-            window.GalleryModal.create(galleryImages, 0);
-        }
-    });
+<!-- Booking Modal -->
+<?php
+$booking_modal = new ModalComponent();
+echo $booking_modal->render([
+    'modal_id' => 'modal-demo-booking',
+    'modal_type' => 'form',
+    'modal_size' => 'large',
+    'title' => 'Book Your Consultation',
+    'medical_context' => true,
+    'treatment_related' => true,
+    'content' => '
+        <div class="booking-form-container">
+            <div class="booking-intro">
+                <p>Ready to start your aesthetic journey? Book a personalized consultation with our expert practitioners.</p>
+            </div>
 
-    // Confirmation Modal Demos
-    document.getElementById('demo-delete-confirmation').addEventListener('click', function() {
-        if (window.ConfirmationModal) {
-            window.ConfirmationModal.create({
-                title: 'Delete Item',
-                message: 'Are you sure you want to delete this item? This action cannot be undone.',
-                confirmText: 'Delete',
-                cancelText: 'Cancel',
-                confirmAction: function() {
-                    alert('Item deleted successfully!');
-                }
-            });
-        }
-    });
-
-    document.getElementById('demo-cancel-appointment').addEventListener('click', function() {
-        if (window.ConfirmationModal) {
-            window.ConfirmationModal.create({
-                title: 'Cancel Appointment',
-                message: 'Are you sure you want to cancel your appointment? You may be charged a cancellation fee.',
-                confirmText: 'Yes, Cancel',
-                cancelText: 'Keep Appointment',
-                confirmAction: function() {
-                    alert('Appointment cancelled.');
-                }
-            });
-        }
-    });
-
-    document.getElementById('demo-save-confirmation').addEventListener('click', function() {
-        if (window.ConfirmationModal) {
-            window.ConfirmationModal.create({
-                title: 'Save Changes',
-                message: 'Do you want to save your changes before leaving?',
-                confirmText: 'Save',
-                cancelText: 'Don\'t Save',
-                confirmAction: function() {
-                    alert('Changes saved successfully!');
-                }
-            });
-        }
-    });
-
-    // Dynamic Content Modal
-    document.getElementById('demo-dynamic-content').addEventListener('click', function() {
-        if (window.modalManager) {
-            const modalId = window.modalManager.createModal({
-                title: 'Loading Content...',
-                content: '<div class="loading-spinner">Loading...</div>',
-                size: 'medium'
-            });
-
-            // Simulate AJAX load
-            setTimeout(() => {
-                const modal = document.getElementById(modalId);
-                const body = modal.querySelector('.modal-body');
-                body.innerHTML = `
-                    <h4>Dynamic Content Loaded</h4>
-                    <p>This content was loaded dynamically after the modal opened.</p>
-                    <div class="dynamic-data">
-                        <ul>
-                            <li>Load time: 2 seconds</li>
-                            <li>Content type: HTML</li>
-                            <li>Status: Success</li>
-                        </ul>
+            <form class="consultation-booking-form" method="post" action="#" data-form-type="consultation">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="booking-first-name">First Name *</label>
+                        <input type="text" id="booking-first-name" name="first_name" required>
                     </div>
-                `;
+                    <div class="form-group">
+                        <label for="booking-last-name">Last Name *</label>
+                        <input type="text" id="booking-last-name" name="last_name" required>
+                    </div>
+                </div>
 
-                const title = modal.querySelector('.modal-title');
-                if (title) {
-                    title.textContent = 'Dynamic Content';
-                }
-            }, 2000);
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="booking-email">Email Address *</label>
+                        <input type="email" id="booking-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-phone">Phone Number *</label>
+                        <input type="tel" id="booking-phone" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-treatment">Treatment Interest</label>
+                    <select id="booking-treatment" name="treatment_interest">
+                        <option value="">Select a treatment...</option>
+                        <option value="botox">Botox Injections</option>
+                        <option value="dermal-fillers">Dermal Fillers</option>
+                        <option value="laser-hair-removal">Laser Hair Removal</option>
+                        <option value="chemical-peel">Chemical Peels</option>
+                        <option value="microneedling">Microneedling</option>
+                        <option value="consultation">General Consultation</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-concerns">Areas of Concern</label>
+                    <textarea id="booking-concerns" name="concerns" rows="3" placeholder="Tell us about your aesthetic goals and any specific concerns..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="booking-preferred-date">Preferred Date</label>
+                        <input type="date" id="booking-preferred-date" name="preferred_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-preferred-time">Preferred Time</label>
+                        <select id="booking-preferred-time" name="preferred_time">
+                            <option value="">Select time...</option>
+                            <option value="morning">Morning (9 AM - 12 PM)</option>
+                            <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
+                            <option value="evening">Evening (4 PM - 7 PM)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="terms_accepted" required>
+                        I acknowledge that I have read and agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Request Consultation</button>
+                    <button type="button" class="btn btn-secondary" data-modal-close="modal-demo-booking">Cancel</button>
+                </div>
+            </form>
+        </div>
+    ',
+    'show_header' => true,
+    'show_footer' => false,
+    'custom_classes' => ['modal-booking'],
+    'aria_label' => 'Consultation booking form'
+]);
+?>
+
+<!-- Treatment Info Modal -->
+<?php
+$treatment_modal = new ModalComponent();
+echo $treatment_modal->render([
+    'modal_id' => 'modal-demo-treatment-info',
+    'modal_type' => 'default',
+    'modal_size' => 'large',
+    'title' => 'Botox Injectable Treatment',
+    'medical_context' => true,
+    'treatment_related' => true,
+    'content' => '
+        <div class="treatment-info-container">
+            <div class="treatment-overview">
+                <div class="treatment-image">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&h=400&fit=crop" alt="Botox treatment procedure" />
+                </div>
+                <div class="treatment-details">
+                    <div class="treatment-meta">
+                        <span class="treatment-category">Anti-Aging</span>
+                        <span class="treatment-duration">30-45 minutes</span>
+                        <span class="treatment-price">Starting at $350</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="treatment-content">
+                <div class="treatment-section">
+                    <h4>Overview</h4>
+                    <p>Botox is a popular cosmetic treatment that temporarily reduces the appearance of facial wrinkles and fine lines. Our experienced practitioners use FDA-approved Botox to help you achieve natural-looking results.</p>
+                </div>
+
+                <div class="treatment-section">
+                    <h4>Benefits</h4>
+                    <ul>
+                        <li>Reduces fine lines and wrinkles</li>
+                        <li>Prevents new wrinkles from forming</li>
+                        <li>Quick, minimally invasive procedure</li>
+                        <li>No downtime required</li>
+                        <li>Natural-looking results</li>
+                        <li>FDA-approved treatment</li>
+                    </ul>
+                </div>
+
+                <div class="treatment-section">
+                    <h4>Treatment Process</h4>
+                    <ol>
+                        <li><strong>Consultation:</strong> Discuss your goals and assess treatment areas</li>
+                        <li><strong>Preparation:</strong> Clean and mark injection sites</li>
+                        <li><strong>Injection:</strong> Precise placement of Botox units</li>
+                        <li><strong>Recovery:</strong> Immediate return to normal activities</li>
+                    </ol>
+                </div>
+
+                <div class="treatment-section">
+                    <h4>Expected Results</h4>
+                    <p>Results typically become visible within 3-7 days, with full effects appearing within 2 weeks. The treatment lasts 3-4 months, after which touch-up treatments can maintain your results.</p>
+                </div>
+
+                <div class="treatment-section">
+                    <h4>Safety Information</h4>
+                    <p>Botox is considered very safe when administered by qualified professionals. Minor side effects may include temporary redness or slight swelling at injection sites.</p>
+                </div>
+            </div>
+
+            <div class="treatment-actions">
+                <button type="button" class="btn btn-primary" onclick="MedSpaModal.close(\'modal-demo-treatment-info\'); MedSpaModal.open(\'modal-demo-booking\');">
+                    Book This Treatment
+                </button>
+                <button type="button" class="btn btn-secondary" data-modal-trigger="modal-demo-gallery">
+                    View Before & After
+                </button>
+            </div>
+        </div>
+    ',
+    'show_header' => true,
+    'show_footer' => false,
+    'custom_classes' => ['modal-treatment-info'],
+    'data_attributes' => ['treatment-id' => 'botox-injectable']
+]);
+?>
+
+<!-- Gallery Modal -->
+<?php
+$gallery_modal = new ModalComponent();
+echo $gallery_modal->render([
+    'modal_id' => 'modal-demo-gallery',
+    'modal_type' => 'gallery',
+    'modal_size' => 'fullscreen',
+    'title' => 'Before & After Gallery',
+    'content' => '
+        <div class="gallery-container">
+            <div class="gallery-controls">
+                <button type="button" class="gallery-prev" aria-label="Previous image">‹</button>
+                <button type="button" class="gallery-next" aria-label="Next image">›</button>
+                <div class="gallery-counter">1 / 4</div>
+            </div>
+
+            <div class="gallery-main">
+                <div class="before-after-container">
+                    <div class="before-image">
+                        <h4>Before</h4>
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=400&fit=crop" alt="Before treatment" />
+                    </div>
+                    <div class="after-image">
+                        <h4>After</h4>
+                        <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=400&h=400&fit=crop" alt="After treatment" />
+                    </div>
+                </div>
+
+                <div class="gallery-info">
+                    <h3>Botox Forehead Treatment</h3>
+                    <p>Results after 2 weeks, showing significant reduction in forehead lines and wrinkles.</p>
+                    <div class="gallery-meta">
+                        <span>Treatment: Botox Injectable</span>
+                        <span>Units Used: 20</span>
+                        <span>Age: 42</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-thumbnails">
+                <button class="thumbnail active" data-image="1">
+                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=100&h=100&fit=crop" alt="Thumbnail 1" />
+                </button>
+                <button class="thumbnail" data-image="2">
+                    <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=100&h=100&fit=crop" alt="Thumbnail 2" />
+                </button>
+                <button class="thumbnail" data-image="3">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=100&h=100&fit=crop" alt="Thumbnail 3" />
+                </button>
+                <button class="thumbnail" data-image="4">
+                    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=100&h=100&fit=crop" alt="Thumbnail 4" />
+                </button>
+            </div>
+        </div>
+    ',
+    'show_header' => false,
+    'show_footer' => false,
+    'show_close_button' => true,
+    'custom_classes' => ['modal-gallery'],
+    'close_on_backdrop' => true
+]);
+?>
+
+<!-- Animation Demonstration Modals -->
+<?php
+// Fade Animation Modal
+$fade_modal = new ModalComponent();
+echo $fade_modal->render([
+    'modal_id' => 'modal-demo-fade',
+    'animation_type' => 'fade',
+    'title' => 'Fade Animation',
+    'content' => '<p>This modal uses a fade animation effect. The modal gradually appears and disappears with opacity transitions.</p>',
+    'custom_classes' => ['modal-animation-fade']
+]);
+
+// Scale Animation Modal
+$scale_modal = new ModalComponent();
+echo $scale_modal->render([
+    'modal_id' => 'modal-demo-scale',
+    'animation_type' => 'scale',
+    'title' => 'Scale Animation',
+    'content' => '<p>This modal uses a scale animation effect. The modal grows from 90% to 100% size when opening.</p>',
+    'custom_classes' => ['modal-animation-scale']
+]);
+
+// Slide Animation Modal
+$slide_modal = new ModalComponent();
+echo $slide_modal->render([
+    'modal_id' => 'modal-demo-slide',
+    'animation_type' => 'slide',
+    'title' => 'Slide Animation',
+    'content' => '<p>This modal uses a slide animation effect. The modal slides down from above when opening.</p>',
+    'custom_classes' => ['modal-animation-slide']
+]);
+?>
+
+<!-- Consent Modal -->
+<?php
+$consent_modal = new ModalComponent();
+echo $consent_modal->render([
+    'modal_id' => 'modal-demo-consent',
+    'modal_type' => 'form',
+    'modal_size' => 'large',
+    'title' => 'Treatment Consent Form',
+    'medical_context' => true,
+    'hipaa_compliant' => true,
+    'content' => '
+        <div class="consent-form-container">
+            <div class="consent-notice">
+                <p><strong>Important:</strong> Please read and acknowledge the following information before proceeding with your treatment.</p>
+            </div>
+
+            <form class="consent-form" method="post" action="#">
+                <div class="consent-section">
+                    <h4>Treatment Understanding</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="understanding" required>
+                        I understand the nature of the proposed treatment and have had all my questions answered.
+                    </label>
+                </div>
+
+                <div class="consent-section">
+                    <h4>Risks and Complications</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="risks" required>
+                        I understand the potential risks and complications associated with this treatment.
+                    </label>
+                </div>
+
+                <div class="consent-section">
+                    <h4>Alternative Treatments</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="alternatives" required>
+                        I have been informed about alternative treatment options.
+                    </label>
+                </div>
+
+                <div class="consent-section">
+                    <h4>Photography Consent</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="photography">
+                        I consent to before and after photographs being taken for medical records and potential marketing use.
+                    </label>
+                </div>
+
+                <div class="consent-section">
+                    <h4>HIPAA Privacy</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="hipaa" required>
+                        I acknowledge receipt of the HIPAA Privacy Notice and consent to treatment.
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-signature">Digital Signature (Type your full name)</label>
+                    <input type="text" id="patient-signature" name="patient_signature" placeholder="Type your full legal name" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit Consent</button>
+                    <button type="button" class="btn btn-secondary" data-modal-close="modal-demo-consent">Cancel</button>
+                </div>
+            </form>
+        </div>
+    ',
+    'show_header' => true,
+    'show_footer' => false,
+    'custom_classes' => ['modal-consent'],
+    'close_on_backdrop' => false,
+    'close_on_escape' => false,
+    'persistent' => true
+]);
+?>
+
+<!-- Footer Modal Adds (to prevent backdrop clicks from closing modals) -->
+<?php
+// Add backdrop elements for each modal
+$modal_ids = [
+    'modal-demo-basic', 'modal-demo-confirmation', 'modal-demo-alert',
+    'modal-demo-small', 'modal-demo-medium', 'modal-demo-large', 'modal-demo-fullscreen',
+    'modal-demo-booking', 'modal-demo-treatment-info', 'modal-demo-gallery', 'modal-demo-consent',
+    'modal-demo-fade', 'modal-demo-scale', 'modal-demo-slide'
+];
+
+foreach ($modal_ids as $modal_id) {
+    echo '<div class="modal-backdrop modal-backdrop-clickable" data-modal-backdrop="' . esc_attr($modal_id) . '"></div>';
+}
+?>
+
+<script>
+// Demo JavaScript functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // API demonstration functions
+    window.checkModalStatus = function() {
+        const output = document.getElementById('api-output');
+        const openModals = [];
+
+        // Check each modal
+        ['modal-demo-basic', 'modal-demo-confirmation', 'modal-demo-booking'].forEach(modalId => {
+            if (window.MedSpaModal && window.MedSpaModal.isOpen(modalId)) {
+                openModals.push(modalId);
+            }
+        });
+
+        if (openModals.length > 0) {
+            output.innerHTML = '<p><strong>Open modals:</strong> ' + openModals.join(', ') + '</p>';
+        } else {
+            output.innerHTML = '<p><strong>Status:</strong> No modals are currently open</p>';
         }
-    });
+    };
 
-    // Performance Testing
-    document.getElementById('demo-animation-test').addEventListener('click', function() {
-        const resultsDiv = document.getElementById('performance-results');
-        resultsDiv.style.display = 'block';
+    window.openModalWithCallbacks = function() {
+        const output = document.getElementById('callback-output');
+        output.innerHTML = '<p>Setting up callbacks...</p>';
 
-        let frameCount = 0;
-        let startTime;
-        let openTime, closeTime;
-
-        // Performance monitoring
-        function countFrames() {
-            frameCount++;
-            requestAnimationFrame(countFrames);
-        }
-        countFrames();
-
-        // Test modal performance
+        // Set callbacks for the basic modal
         if (window.modalManager) {
-            startTime = performance.now();
-
-            const modalId = window.modalManager.createModal({
-                title: 'Performance Test Modal',
-                content: 'Testing animation performance...',
-                size: 'medium'
+            window.modalManager.setCallback('modal-demo-basic', 'onOpen', function(config) {
+                output.innerHTML += '<p>✅ <strong>onOpen:</strong> Modal ' + config.id + ' opened</p>';
             });
 
-            // Measure open time
-            setTimeout(() => {
-                openTime = performance.now() - startTime;
-                document.getElementById('open-time').textContent = openTime.toFixed(2) + 'ms';
+            window.modalManager.setCallback('modal-demo-basic', 'onClose', function(config) {
+                output.innerHTML += '<p>❌ <strong>onClose:</strong> Modal ' + config.id + ' closed</p>';
+            });
+        }
 
-                // Close and measure close time
-                setTimeout(() => {
-                    const closeStart = performance.now();
-                    window.modalManager.closeModal(modalId);
+        // Open the modal
+        window.MedSpaModal.open('modal-demo-basic');
+    };
 
-                    setTimeout(() => {
-                        closeTime = performance.now() - closeStart;
-                        document.getElementById('close-time').textContent = closeTime.toFixed(2) + 'ms';
+    // Gallery modal navigation (demo functionality)
+    let currentGalleryImage = 1;
+    const totalGalleryImages = 4;
 
-                        // Calculate frame rate
-                        const frameRate = Math.round(frameCount / ((performance.now() - startTime) / 1000));
-                        document.getElementById('frame-rate').textContent = frameRate + ' fps';
-                    }, 300);
-                }, 1000);
-            }, 300);
+    function updateGalleryImage(imageIndex) {
+        const counter = document.querySelector('.gallery-counter');
+        if (counter) {
+            counter.textContent = imageIndex + ' / ' + totalGalleryImages;
+        }
+
+        // Update active thumbnail
+        document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === imageIndex - 1);
+        });
+    }
+
+    // Gallery controls
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('gallery-prev')) {
+            currentGalleryImage = currentGalleryImage > 1 ? currentGalleryImage - 1 : totalGalleryImages;
+            updateGalleryImage(currentGalleryImage);
+        }
+
+        if (event.target.classList.contains('gallery-next')) {
+            currentGalleryImage = currentGalleryImage < totalGalleryImages ? currentGalleryImage + 1 : 1;
+            updateGalleryImage(currentGalleryImage);
+        }
+
+        if (event.target.closest('.thumbnail')) {
+            const imageIndex = parseInt(event.target.closest('.thumbnail').dataset.image);
+            currentGalleryImage = imageIndex;
+            updateGalleryImage(currentGalleryImage);
         }
     });
 
-    // Multiple Modals Test
-    document.getElementById('demo-multiple-modals').addEventListener('click', function() {
-        if (window.modalManager) {
-            for (let i = 1; i <= 5; i++) {
-                setTimeout(() => {
-                    window.modalManager.createModal({
-                        title: `Modal ${i}`,
-                        content: `This is modal number ${i} of 5. Testing multiple modal performance.`,
-                        size: 'small',
-                        position: i % 2 === 0 ? 'left' : 'right'
-                    });
-                }, i * 200);
-            }
+    // Form submission demo
+    document.addEventListener('submit', function(event) {
+        if (event.target.closest('.modal-container')) {
+            event.preventDefault();
+            alert('Form submission demo - In a real application, this would submit to your server.');
         }
     });
+
+    console.log('Modal demo functionality initialized');
 });
 </script>
 
 <style>
-.modal-demo-container {
+/* Demo-specific styles */
+.component-demo-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: var(--spacing-8);
+    padding: 2rem;
 }
 
 .demo-header {
     text-align: center;
-    margin-bottom: var(--spacing-12);
-}
-
-.demo-title {
-    font-size: 2.5rem;
-    color: var(--color-primary-700);
-    margin-bottom: var(--spacing-4);
-}
-
-.demo-description {
-    font-size: 1.125rem;
-    color: var(--color-text-secondary);
-    max-width: 600px;
-    margin: 0 auto var(--spacing-8);
-}
-
-.demo-metrics {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-6);
-    flex-wrap: wrap;
-}
-
-.metric-item {
-    padding: var(--spacing-3) var(--spacing-4);
-    background: var(--color-surface-secondary);
-    border-radius: var(--border-radius-md);
-    font-size: 0.875rem;
-}
-
-.metric-label {
-    font-weight: 600;
-    color: var(--color-text-tertiary);
-}
-
-.metric-value {
-    color: var(--color-primary-600);
-    font-weight: 700;
-}
-
-.demo-sections {
-    display: grid;
-    gap: var(--spacing-12);
+    margin-bottom: 3rem;
 }
 
 .demo-section {
-    padding: var(--spacing-8);
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.demo-group, .config-group, .api-group {
     background: white;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-}
-
-.section-title {
-    color: var(--color-primary-700);
-    margin-bottom: var(--spacing-4);
-    border-bottom: 2px solid var(--color-primary-100);
-    padding-bottom: var(--spacing-2);
-}
-
-.section-description {
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-6);
-}
-
-.demo-group {
-    margin-bottom: var(--spacing-8);
-}
-
-.demo-group:last-child {
-    margin-bottom: 0;
-}
-
-.demo-group h3 {
-    color: var(--color-text-primary);
-    margin-bottom: var(--spacing-4);
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .button-group {
     display: flex;
-    gap: var(--spacing-3);
     flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
 }
 
-.treatment-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-3);
-}
-
-.demo-note {
-    margin-top: var(--spacing-3);
+.api-output {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f3f4f6;
+    border-radius: 4px;
+    border-left: 4px solid #3b82f6;
+    font-family: monospace;
     font-size: 0.875rem;
-    color: var(--color-text-tertiary);
-    font-style: italic;
 }
 
-.accessibility-notes ul {
-    list-style: none;
+/* Modal content styling */
+.booking-form-container .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.treatment-info-container .treatment-overview {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.treatment-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.treatment-meta span {
+    padding: 0.25rem 0.75rem;
+    background: #e5e7eb;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.treatment-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+.gallery-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.gallery-controls {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gallery-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.before-after-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.before-after-container img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.gallery-thumbnails {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.thumbnail {
+    border: 2px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: none;
     padding: 0;
+    cursor: pointer;
 }
 
-.accessibility-notes li {
-    margin-bottom: var(--spacing-2);
-    padding: var(--spacing-2);
-    background: var(--color-surface-secondary);
-    border-radius: var(--border-radius-sm);
+.thumbnail.active {
+    border-color: #3b82f6;
 }
 
-.accessibility-notes kbd {
-    background: var(--color-text-primary);
-    color: white;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 0.75rem;
-    font-weight: 600;
+.thumbnail img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
 }
 
-.performance-results {
-    margin-top: var(--spacing-4);
-    padding: var(--spacing-4);
-    background: var(--color-surface-secondary);
-    border-radius: var(--border-radius-md);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--spacing-3);
-}
-
-.metric {
-    text-align: center;
-}
-
-.metric-name {
-    display: block;
-    font-size: 0.875rem;
-    color: var(--color-text-tertiary);
-    margin-bottom: var(--spacing-1);
-}
-
-.metric-value {
-    display: block;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-primary-600);
-}
-
-.treatment-info h4 {
-    color: var(--color-primary-600);
-    margin-top: var(--spacing-6);
-    margin-bottom: var(--spacing-3);
-}
-
-.treatment-info h4:first-child {
-    margin-top: 0;
-}
-
-.treatment-info ul,
-.treatment-info ol {
-    margin-bottom: var(--spacing-4);
-}
-
+/* Mobile responsive */
 @media (max-width: 768px) {
-    .demo-metrics {
+    .booking-form-container .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .treatment-info-container .treatment-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .before-after-container {
+        grid-template-columns: 1fr;
+    }
+
+    .treatment-actions {
         flex-direction: column;
-        align-items: center;
-    }
-
-    .button-group {
-        justify-content: center;
-    }
-
-    .treatment-buttons {
-        grid-template-columns: 1fr;
-    }
-
-    .performance-results {
-        grid-template-columns: 1fr;
     }
 }
 </style>

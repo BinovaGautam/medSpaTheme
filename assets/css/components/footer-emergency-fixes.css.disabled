@@ -1,0 +1,218 @@
+/**
+ * EMERGENCY FOOTER CSS OVERRIDE FIXES
+ * Critical: Resolving CSS conflicts and specificity issues
+ * Priority: URGENT - Footer tokenization system broken
+ */
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: Base Theme Footer Conflicts
+   ========================================================================== */
+
+/* Override hardcoded base theme footer styles with highest specificity */
+body .site-footer.luxury-footer,
+html body .site-footer.luxury-footer {
+  /* Neutralize hardcoded background */
+  background-color: var(--footer-background-primary, var(--color-primary)) !important;
+  background: var(--footer-background-primary, var(--color-primary)) !important;
+
+  /* Override hardcoded text color */
+  color: var(--footer-text-primary, var(--color-text-on-primary)) !important;
+
+  /* Override hardcoded padding */
+  padding: var(--footer-padding-vertical, var(--spacing-2xl)) var(--footer-padding-horizontal, var(--spacing-lg)) !important;
+
+  /* Override hardcoded margin */
+  margin-top: var(--footer-margin-top, var(--spacing-3xl)) !important;
+}
+
+/* Force token system activation for all footer elements */
+body .site-footer.luxury-footer *,
+html body .site-footer.luxury-footer * {
+  /* Reset any inherited hardcoded styles */
+  color: inherit !important;
+}
+
+/* Specific overrides for footer links that are hardcoded in style.css */
+body .site-footer.luxury-footer a,
+html body .site-footer.luxury-footer a {
+  color: var(--footer-link-color, var(--color-accent)) !important;
+  text-decoration: none !important;
+}
+
+body .site-footer.luxury-footer a:hover,
+html body .site-footer.luxury-footer a:hover {
+  color: var(--footer-link-hover-color, var(--color-accent-light)) !important;
+}
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: CSS Class Consistency
+   ========================================================================== */
+
+/* Ensure .footer-component styles also apply to .site-footer.luxury-footer */
+.site-footer.luxury-footer {
+  /* Copy critical properties from .footer-component */
+  font-family: var(--footer-font-secondary, var(--font-family-primary));
+  line-height: var(--footer-line-height-base, var(--line-height-body));
+  position: relative;
+  z-index: var(--footer-z-index, var(--z-index-base));
+}
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: Token System Enforcement
+   ========================================================================== */
+
+/* Force tokenized properties to override any conflicting CSS */
+.site-footer.luxury-footer {
+  /* Typography tokens */
+  --footer-text-color: var(--color-text-on-primary) !important;
+  --footer-link-color: var(--color-accent) !important;
+  --footer-link-hover-color: var(--color-accent-light) !important;
+
+  /* Background tokens */
+  --footer-bg-primary: var(--color-primary) !important;
+  --footer-bg-secondary: var(--color-secondary) !important;
+
+  /* Spacing tokens */
+  --footer-padding: var(--spacing-2xl) var(--spacing-lg) !important;
+  --footer-margin: var(--spacing-3xl) 0 0 0 !important;
+}
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: Visual Customizer Integration
+   ========================================================================== */
+
+/* Ensure visual customizer changes are applied with high specificity */
+body[data-customizer-active] .site-footer.luxury-footer,
+html body[data-customizer-active] .site-footer.luxury-footer {
+  background: var(--component-bg-color-primary, var(--footer-bg-primary)) !important;
+  color: var(--component-text-color-primary, var(--footer-text-color)) !important;
+}
+
+/* Visual customizer tokenized elements */
+body .site-footer.luxury-footer [data-tokenized],
+html body .site-footer.luxury-footer [data-tokenized] {
+  background-color: var(--component-bg-color-primary) !important;
+  color: var(--component-text-color-primary) !important;
+  border-color: var(--component-border-color-primary) !important;
+}
+
+body .site-footer.luxury-footer [data-tokenized="secondary"],
+html body .site-footer.luxury-footer [data-tokenized="secondary"] {
+  background-color: var(--component-bg-color-secondary) !important;
+  color: var(--component-text-color-secondary) !important;
+  border-color: var(--component-border-color-secondary) !important;
+}
+
+body .site-footer.luxury-footer [data-tokenized="accent"],
+html body .site-footer.luxury-footer [data-tokenized="accent"] {
+  background-color: var(--component-bg-color-accent) !important;
+  color: var(--component-text-color-accent) !important;
+  border-color: var(--component-border-color-accent) !important;
+}
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: Footer Sections
+   ========================================================================== */
+
+/* Hero Section Override */
+body .site-footer.luxury-footer .footer-hero-section,
+html body .site-footer.luxury-footer .footer-hero-section {
+  background: var(--footer-hero-bg, linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)) !important;
+  color: var(--footer-hero-text, var(--color-text-on-primary)) !important;
+}
+
+/* Info Grid Override */
+body .site-footer.luxury-footer .info-column,
+html body .site-footer.luxury-footer .info-column {
+  background: var(--footer-card-bg, var(--color-surface-light)) !important;
+  color: var(--footer-text-primary, var(--color-text-primary)) !important;
+  border: var(--footer-card-border, 1px solid var(--color-border-light)) !important;
+}
+
+/* Newsletter Section Override */
+body .site-footer.luxury-footer .footer-newsletter-section,
+html body .site-footer.luxury-footer .footer-newsletter-section {
+  background: var(--footer-newsletter-bg, var(--color-surface-secondary)) !important;
+}
+
+/* Legal Section Override */
+body .site-footer.luxury-footer .footer-legal-section,
+html body .site-footer.luxury-footer .footer-legal-section {
+  background: var(--footer-legal-background, var(--color-surface-dark)) !important;
+  color: var(--footer-legal-text, var(--color-text-on-dark)) !important;
+}
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: Button and Interactive Elements
+   ========================================================================== */
+
+/* CTA Button Overrides */
+body .site-footer.luxury-footer .footer-cta-primary,
+html body .site-footer.luxury-footer .footer-cta-primary {
+  background: var(--footer-cta-primary-bg, var(--color-accent)) !important;
+  color: var(--footer-cta-primary-color, var(--color-text-on-accent)) !important;
+  border: var(--footer-cta-primary-border, 2px solid var(--color-accent)) !important;
+}
+
+body .site-footer.luxury-footer .footer-cta-secondary,
+html body .site-footer.luxury-footer .footer-cta-secondary {
+  background: var(--footer-cta-secondary-bg, transparent) !important;
+  color: var(--footer-cta-secondary-color, var(--color-accent)) !important;
+  border: var(--footer-cta-secondary-border, 2px solid var(--color-accent)) !important;
+}
+
+/* Social Links Override */
+body .site-footer.luxury-footer .social-link,
+html body .site-footer.luxury-footer .social-link {
+  color: var(--footer-link-color, var(--color-accent)) !important;
+}
+
+body .site-footer.luxury-footer .social-link:hover,
+html body .site-footer.luxury-footer .social-link:hover {
+  color: var(--footer-link-hover-color, var(--color-accent-light)) !important;
+}
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: Accessibility & Focus States
+   ========================================================================== */
+
+/* Focus States Override */
+body .site-footer.luxury-footer *:focus,
+html body .site-footer.luxury-footer *:focus {
+  outline: 2px solid var(--footer-focus-outline-color, var(--color-focus-ring)) !important;
+  outline-offset: 2px !important;
+}
+
+/* High Contrast Override */
+@media (prefers-contrast: high) {
+  body .site-footer.luxury-footer,
+  html body .site-footer.luxury-footer {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+  }
+
+  body .site-footer.luxury-footer *:focus,
+  html body .site-footer.luxury-footer *:focus {
+    outline: 4px solid #ffffff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* ==========================================================================
+   EMERGENCY OVERRIDE: Debug Information
+   ========================================================================== */
+
+/* Development mode CSS conflict detection */
+body.wp-debug .site-footer.luxury-footer::before {
+  content: "⚠️ EMERGENCY CSS FIXES ACTIVE";
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #ff0000;
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 12px;
+  z-index: 9999;
+  font-family: monospace;
+}

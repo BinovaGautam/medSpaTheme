@@ -2,8 +2,8 @@
 /**
  * Modal Component Base Class
  *
- * Extends BaseComponent with modal-specific functionality including
- * backdrop management, keyboard navigation, accessibility compliance, and animation system.
+ * Provides comprehensive modal/dialog functionality with accessibility compliance,
+ * animation support, and seamless integration with the design token system.
  *
  * @package MedSpaTheme
  * @since 1.0.0
@@ -19,34 +19,38 @@ if (!defined('ABSPATH')) {
 /**
  * ModalComponent Class
  *
- * Base class for all modal components with comprehensive functionality
- * for accessibility, keyboard navigation, and medical spa specializations.
+ * Base class for all modal/dialog components with WCAG 2.1 AA compliance,
+ * smooth animations, and comprehensive interaction management.
  */
 class ModalComponent extends BaseComponent {
-
-    /**
-     * Available modal types
-     * @var array
-     */
-    protected $modal_types = ['basic', 'confirmation', 'form', 'gallery', 'info', 'booking', 'treatment'];
 
     /**
      * Available modal sizes
      * @var array
      */
-    protected $sizes = ['small', 'medium', 'large', 'fullscreen'];
+    protected $modal_sizes = ['small', 'medium', 'large', 'fullscreen'];
 
     /**
      * Available modal positions
      * @var array
      */
-    protected $positions = ['center', 'top', 'bottom', 'left', 'right'];
+    protected $modal_positions = ['center', 'top', 'bottom'];
 
     /**
-     * Modal content data
+     * Available modal types
      * @var array
      */
-    protected $modal_content = [];
+    protected $modal_types = ['default', 'confirmation', 'alert', 'form', 'gallery'];
+
+    /**
+     * Animation configurations
+     * @var array
+     */
+    protected $animations = [
+        'fade' => ['enter' => 'fadeIn', 'exit' => 'fadeOut'],
+        'scale' => ['enter' => 'scaleIn', 'exit' => 'scaleOut'],
+        'slide' => ['enter' => 'slideDown', 'exit' => 'slideUp']
+    ];
 
     /**
      * Modal state management
@@ -54,21 +58,8 @@ class ModalComponent extends BaseComponent {
      */
     protected $modal_state = [
         'is_open' => false,
-        'has_backdrop' => true,
-        'close_on_backdrop' => true,
-        'close_on_escape' => true,
-        'trap_focus' => true
-    ];
-
-    /**
-     * Animation settings
-     * @var array
-     */
-    protected $animation_config = [
-        'duration' => 300,
-        'easing' => 'cubic-bezier(0.4, 0, 0.2, 1)',
-        'scale_enter' => 0.9,
-        'scale_exit' => 0.95
+        'trigger_element' => null,
+        'focus_restore_element' => null
     ];
 
     /**
@@ -83,38 +74,37 @@ class ModalComponent extends BaseComponent {
         // Validate and sanitize inputs
         $config = $this->sanitize_config($config);
 
-        // Generate modal attributes
-        $modal_attributes = $this->generate_modal_attributes($config);
+        // Generate modal structure
+        $modal_html = '';
 
-        // Generate modal content
-        $modal_content = $this->generate_modal_content($config);
+        // Modal backdrop
+        $modal_html .= $this->render_modal_backdrop($config);
 
-        // Render complete modal HTML
-        $html = $this->render_modal_html($modal_attributes, $modal_content, $config);
+        // Modal container
+        $modal_html .= $this->render_modal_container($config);
 
-        return $this->validate_performance($html);
+        return $this->validate_performance($modal_html);
     }
 
     /**
-     * Get WordPress Customizer controls for modals
+     * Get WordPress Customizer controls
      *
      * @return array Customizer controls configuration
      */
     public function get_customizer_controls() {
         return [
-            // Modal backdrop styling
+            // Modal Container Styling
             'backdrop_color' => [
                 'type' => 'color',
                 'label' => 'Modal Backdrop Color',
-                'description' => 'Background overlay color for modals',
-                'default' => 'rgba(0, 0, 0, 0.6)',
-                'sanitize_callback' => 'sanitize_text_field'
+                'description' => 'Color overlay behind modal',
+                'default' => 'rgba(0, 0, 0, 0.6)'
             ],
 
             'backdrop_blur' => [
                 'type' => 'range',
-                'label' => 'Backdrop Blur Amount',
-                'description' => 'Blur effect strength for modal backdrop',
+                'label' => 'Backdrop Blur Effect',
+                'description' => 'Blur strength for backdrop',
                 'default' => '4',
                 'input_attrs' => [
                     'min' => '0',
@@ -124,19 +114,17 @@ class ModalComponent extends BaseComponent {
                 'sanitize_callback' => 'absint'
             ],
 
-            // Modal container styling
-            'container_background_color' => [
+            'container_background' => [
                 'type' => 'color',
                 'label' => 'Modal Background Color',
-                'description' => 'Background color for modal container',
-                'default' => '#ffffff',
-                'sanitize_callback' => 'sanitize_hex_color'
+                'description' => 'Modal container background',
+                'default' => '#ffffff'
             ],
 
             'container_border_radius' => [
                 'type' => 'range',
                 'label' => 'Modal Border Radius',
-                'description' => 'Roundness of modal container corners',
+                'description' => 'Roundness of modal corners',
                 'default' => '12',
                 'input_attrs' => [
                     'min' => '0',
@@ -146,23 +134,10 @@ class ModalComponent extends BaseComponent {
                 'sanitize_callback' => 'absint'
             ],
 
-            'container_padding' => [
-                'type' => 'range',
-                'label' => 'Modal Padding',
-                'description' => 'Internal spacing within modal container',
-                'default' => '32',
-                'input_attrs' => [
-                    'min' => '16',
-                    'max' => '64',
-                    'step' => '4'
-                ],
-                'sanitize_callback' => 'absint'
-            ],
-
             'container_shadow' => [
                 'type' => 'select',
                 'label' => 'Modal Shadow',
-                'description' => 'Shadow effect for modal container',
+                'description' => 'Drop shadow intensity',
                 'default' => 'large',
                 'choices' => [
                     'none' => 'No Shadow',
@@ -174,51 +149,37 @@ class ModalComponent extends BaseComponent {
                 'sanitize_callback' => 'sanitize_text_field'
             ],
 
-            // Modal sizing
-            'small_width' => [
+            'container_padding' => [
                 'type' => 'range',
-                'label' => 'Small Modal Width',
-                'description' => 'Width for small modal size',
-                'default' => '400',
+                'label' => 'Modal Content Padding',
+                'description' => 'Internal padding for modal content',
+                'default' => '32',
                 'input_attrs' => [
-                    'min' => '300',
-                    'max' => '500',
-                    'step' => '10'
+                    'min' => '16',
+                    'max' => '64',
+                    'step' => '4'
                 ],
                 'sanitize_callback' => 'absint'
             ],
 
-            'medium_width' => [
-                'type' => 'range',
-                'label' => 'Medium Modal Width',
-                'description' => 'Width for medium modal size',
-                'default' => '600',
-                'input_attrs' => [
-                    'min' => '500',
-                    'max' => '800',
-                    'step' => '25'
+            // Animation Settings
+            'animation_type' => [
+                'type' => 'select',
+                'label' => 'Modal Animation',
+                'description' => 'Modal entrance/exit animation',
+                'default' => 'scale',
+                'choices' => [
+                    'fade' => 'Fade In/Out',
+                    'scale' => 'Scale In/Out',
+                    'slide' => 'Slide In/Out'
                 ],
-                'sanitize_callback' => 'absint'
+                'sanitize_callback' => 'sanitize_text_field'
             ],
 
-            'large_width' => [
-                'type' => 'range',
-                'label' => 'Large Modal Width',
-                'description' => 'Width for large modal size',
-                'default' => '900',
-                'input_attrs' => [
-                    'min' => '700',
-                    'max' => '1200',
-                    'step' => '50'
-                ],
-                'sanitize_callback' => 'absint'
-            ],
-
-            // Animation settings
             'animation_duration' => [
                 'type' => 'range',
                 'label' => 'Animation Duration',
-                'description' => 'Speed of modal open/close animations',
+                'description' => 'Speed of modal animations (milliseconds)',
                 'default' => '300',
                 'input_attrs' => [
                     'min' => '100',
@@ -228,83 +189,75 @@ class ModalComponent extends BaseComponent {
                 'sanitize_callback' => 'absint'
             ],
 
-            'animation_easing' => [
-                'type' => 'select',
-                'label' => 'Animation Easing',
-                'description' => 'Easing function for modal animations',
-                'default' => 'ease-out',
-                'choices' => [
-                    'ease' => 'Ease',
-                    'ease-in' => 'Ease In',
-                    'ease-out' => 'Ease Out',
-                    'ease-in-out' => 'Ease In Out',
-                    'cubic-bezier' => 'Custom (Cubic Bezier)'
-                ],
-                'sanitize_callback' => 'sanitize_text_field'
-            ],
-
-            // Modal header styling
-            'header_background_color' => [
+            // Header Styling
+            'header_background' => [
                 'type' => 'color',
-                'label' => 'Header Background Color',
-                'description' => 'Background color for modal header',
-                'default' => '#f9fafb',
-                'sanitize_callback' => 'sanitize_hex_color'
-            ],
-
-            'header_text_color' => [
-                'type' => 'color',
-                'label' => 'Header Text Color',
-                'description' => 'Text color for modal header',
-                'default' => '#111827',
-                'sanitize_callback' => 'sanitize_hex_color'
+                'label' => 'Modal Header Background',
+                'description' => 'Header section background color',
+                'default' => '#f8fafc'
             ],
 
             'header_border_color' => [
                 'type' => 'color',
                 'label' => 'Header Border Color',
-                'description' => 'Border color for modal header',
-                'default' => '#e5e7eb',
-                'sanitize_callback' => 'sanitize_hex_color'
+                'description' => 'Color of header bottom border',
+                'default' => '#e2e8f0'
             ],
 
-            // Close button styling
+            'title_font_size' => [
+                'type' => 'range',
+                'label' => 'Modal Title Font Size',
+                'description' => 'Size of modal title text',
+                'default' => '24',
+                'input_attrs' => [
+                    'min' => '18',
+                    'max' => '36',
+                    'step' => '2'
+                ],
+                'sanitize_callback' => 'absint'
+            ],
+
+            'title_font_weight' => [
+                'type' => 'select',
+                'label' => 'Title Font Weight',
+                'description' => 'Weight of modal title text',
+                'default' => '600',
+                'choices' => [
+                    '400' => 'Normal (400)',
+                    '500' => 'Medium (500)',
+                    '600' => 'Semi Bold (600)',
+                    '700' => 'Bold (700)',
+                    '800' => 'Extra Bold (800)'
+                ],
+                'sanitize_callback' => 'sanitize_text_field'
+            ],
+
+            // Close Button Styling
             'close_button_color' => [
                 'type' => 'color',
                 'label' => 'Close Button Color',
-                'description' => 'Color for modal close button',
-                'default' => '#6b7280',
-                'sanitize_callback' => 'sanitize_hex_color'
+                'description' => 'Color of the close button',
+                'default' => '#64748b'
             ],
 
             'close_button_hover_color' => [
                 'type' => 'color',
                 'label' => 'Close Button Hover Color',
-                'description' => 'Hover color for modal close button',
-                'default' => '#374151',
-                'sanitize_callback' => 'sanitize_hex_color'
+                'description' => 'Close button color on hover',
+                'default' => '#334155'
             ],
 
-            // Behavior settings
-            'close_on_backdrop' => [
-                'type' => 'checkbox',
-                'label' => 'Close on Backdrop Click',
-                'description' => 'Allow closing modal by clicking backdrop',
-                'default' => true
-            ],
-
-            'close_on_escape' => [
-                'type' => 'checkbox',
-                'label' => 'Close on Escape Key',
-                'description' => 'Allow closing modal with Escape key',
-                'default' => true
-            ],
-
-            'trap_focus' => [
-                'type' => 'checkbox',
-                'label' => 'Focus Trapping',
-                'description' => 'Trap keyboard focus within modal',
-                'default' => true
+            'close_button_size' => [
+                'type' => 'range',
+                'label' => 'Close Button Size',
+                'description' => 'Size of the close button',
+                'default' => '24',
+                'input_attrs' => [
+                    'min' => '16',
+                    'max' => '40',
+                    'step' => '2'
+                ],
+                'sanitize_callback' => 'absint'
             ]
         ];
     }
@@ -316,66 +269,64 @@ class ModalComponent extends BaseComponent {
      */
     public function get_default_tokens() {
         return [
-            // Modal backdrop
+            // Backdrop styling
             'backdrop_color' => 'rgba(0, 0, 0, 0.6)',
             'backdrop_blur' => '4px',
-            'backdrop_z_index' => '1000',
+            'backdrop_z_index' => '9998',
 
-            // Modal container
-            'container_background' => 'var(--color-surface-primary, #ffffff)',
-            'container_border' => 'var(--border-subtle, 1px solid #e5e7eb)',
-            'container_border_radius' => 'var(--border-radius-lg, 12px)',
-            'container_shadow' => 'var(--shadow-2xl, 0 25px 50px -12px rgba(0, 0, 0, 0.25))',
-            'container_padding' => 'var(--spacing-8, 32px)',
-            'container_max_width' => '90vw',
+            // Container styling
+            'container_background' => '#ffffff',
+            'container_border_radius' => '12px',
+            'container_shadow' => '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            'container_border' => '1px solid #e2e8f0',
+            'container_padding' => '32px',
+            'container_max_width' => '600px',
             'container_max_height' => '90vh',
+            'container_z_index' => '9999',
 
-            // Modal sizing
-            'small_width' => '400px',
-            'medium_width' => '600px',
-            'large_width' => '900px',
-            'fullscreen_width' => '100vw',
-            'fullscreen_height' => '100vh',
+            // Animation settings
+            'animation_duration' => '300ms',
+            'animation_timing' => 'cubic-bezier(0.4, 0, 0.2, 1)',
+            'animation_scale_enter' => '0.9',
+            'animation_scale_exit' => '0.95',
 
-            // Modal animation
-            'transition_duration' => 'var(--transition-duration-default, 0.3s)',
-            'animation_easing' => 'cubic-bezier(0.4, 0, 0.2, 1)',
-            'scale_enter' => '0.9',
-            'scale_exit' => '0.95',
-            'opacity_enter' => '0',
-            'opacity_exit' => '1',
+            // Header styling
+            'header_background' => '#f8fafc',
+            'header_border_bottom' => '1px solid #e2e8f0',
+            'header_padding' => '24px',
+            'title_font_size' => '24px',
+            'title_font_weight' => '600',
+            'title_line_height' => '1.2',
+            'title_color' => '#1e293b',
 
-            // Modal header
-            'header_background' => 'var(--color-surface-secondary, #f9fafb)',
-            'header_border' => 'var(--border-subtle, 1px solid #e5e7eb)',
-            'header_padding' => 'var(--spacing-6, 24px)',
-            'header_text_color' => 'var(--color-text-primary, #111827)',
-            'header_font_size' => 'var(--font-size-lg, 18px)',
-            'header_font_weight' => 'var(--font-weight-semibold, 600)',
-
-            // Modal content
-            'content_padding' => 'var(--spacing-6, 24px)',
-            'content_max_height' => '70vh',
+            // Content styling
+            'content_padding' => '32px',
+            'content_max_height' => '60vh',
             'content_overflow' => 'auto',
-            'content_text_color' => 'var(--color-text-primary, #111827)',
 
-            // Modal footer
-            'footer_background' => 'var(--color-surface-tertiary, #f3f4f6)',
-            'footer_border' => 'var(--border-subtle, 1px solid #e5e7eb)',
-            'footer_padding' => 'var(--spacing-6, 24px)',
-            'footer_text_align' => 'right',
+            // Footer styling
+            'footer_background' => '#f8fafc',
+            'footer_border_top' => '1px solid #e2e8f0',
+            'footer_padding' => '24px',
 
-            // Close button
+            // Close button styling
             'close_button_size' => '24px',
-            'close_button_color' => 'var(--color-text-tertiary, #6b7280)',
-            'close_button_hover_color' => 'var(--color-text-secondary, #374151)',
-            'close_button_focus_color' => 'var(--color-primary-500, #3b82f6)',
+            'close_button_color' => '#64748b',
+            'close_button_hover_color' => '#334155',
+            'close_button_background' => 'transparent',
+            'close_button_hover_background' => '#f1f5f9',
+            'close_button_border_radius' => '6px',
+            'close_button_padding' => '8px',
 
-            // Responsive breakpoints
-            'mobile_padding' => 'var(--spacing-4, 16px)',
-            'mobile_border_radius' => 'var(--border-radius-md, 8px)',
-            'tablet_max_width' => '85vw',
-            'desktop_max_width' => '80vw'
+            // Focus styling
+            'focus_outline_color' => '#3b82f6',
+            'focus_outline_width' => '3px',
+            'focus_outline_offset' => '2px',
+
+            // Medical spa specific
+            'medical_accent_color' => '#059669',
+            'medical_secondary_color' => '#0d9488',
+            'medical_background' => '#ecfdf5'
         ];
     }
 
@@ -387,134 +338,58 @@ class ModalComponent extends BaseComponent {
     public function get_defaults() {
         return [
             // Modal identification
-            'modal_id' => '',
-            'modal_class' => '',
-            'modal_type' => 'basic',
+            'modal_id' => 'modal-' . uniqid(),
+            'modal_type' => 'default',
             'modal_size' => 'medium',
             'modal_position' => 'center',
 
-            // Modal content
+            // Content configuration
             'title' => '',
             'content' => '',
-            'footer_content' => '',
-            'close_button_text' => '×',
+            'show_header' => true,
+            'show_footer' => false,
+            'show_close_button' => true,
 
-            // Modal behavior
-            'is_open' => false,
-            'has_backdrop' => true,
+            // Behavior configuration
             'close_on_backdrop' => true,
             'close_on_escape' => true,
             'trap_focus' => true,
-            'auto_close_delay' => 0,
+            'restore_focus' => true,
+            'auto_open' => false,
+            'persistent' => false,
 
-            // Animation settings
-            'animation_enabled' => true,
+            // Animation configuration
+            'animation_type' => 'scale',
             'animation_duration' => 300,
             'animation_easing' => 'cubic-bezier(0.4, 0, 0.2, 1)',
+
+            // Trigger configuration
+            'trigger_selector' => '',
+            'trigger_event' => 'click',
+
+            // Callback functions
+            'on_open' => null,
+            'on_close' => null,
+            'on_confirm' => null,
+            'on_cancel' => null,
 
             // Accessibility
             'aria_label' => '',
             'aria_describedby' => '',
+            'aria_labelledby' => '',
             'role' => 'dialog',
-            'focus_on_open' => true,
-            'restore_focus' => true,
 
-            // JavaScript settings
-            'auto_init' => true,
-            'trigger_selector' => '',
-            'close_callback' => '',
-            'open_callback' => '',
+            // Medical spa specific
+            'medical_context' => false,
+            'treatment_related' => false,
+            'hipaa_compliant' => false,
 
             // Custom attributes
-            'custom_attributes' => []
+            'custom_classes' => [],
+            'custom_attributes' => [],
+            'data_attributes' => []
         ];
     }
-
-    /**
-     * Render modal component with configuration
-     *
-     * @param array $args Component arguments
-     * @return string Modal HTML
-     */
-    public function render_modal($args = []) {
-        $config = wp_parse_args($args, $this->get_defaults());
-        return $this->render($config);
-    }
-
-    /**
-     * Create specialized booking modal
-     *
-     * @param array $args Booking modal arguments
-     * @return string Modal HTML
-     */
-    public function create_booking_modal($args = []) {
-        $booking_config = array_merge($args, [
-            'modal_type' => 'booking',
-            'modal_class' => 'modal-booking',
-            'modal_size' => 'large',
-            'title' => $args['title'] ?? 'Book Consultation',
-            'aria_label' => 'Consultation booking modal'
-        ]);
-
-        return $this->render_modal($booking_config);
-    }
-
-    /**
-     * Create specialized confirmation modal
-     *
-     * @param array $args Confirmation modal arguments
-     * @return string Modal HTML
-     */
-    public function create_confirmation_modal($args = []) {
-        $confirmation_config = array_merge($args, [
-            'modal_type' => 'confirmation',
-            'modal_class' => 'modal-confirmation',
-            'modal_size' => 'small',
-            'title' => $args['title'] ?? 'Confirm Action',
-            'aria_label' => 'Confirmation dialog'
-        ]);
-
-        return $this->render_modal($confirmation_config);
-    }
-
-    /**
-     * Create specialized gallery modal
-     *
-     * @param array $args Gallery modal arguments
-     * @return string Modal HTML
-     */
-    public function create_gallery_modal($args = []) {
-        $gallery_config = array_merge($args, [
-            'modal_type' => 'gallery',
-            'modal_class' => 'modal-gallery',
-            'modal_size' => 'fullscreen',
-            'has_backdrop' => true,
-            'close_on_backdrop' => true,
-            'aria_label' => 'Image gallery modal'
-        ]);
-
-        return $this->render_modal($gallery_config);
-    }
-
-    /**
-     * Create specialized treatment info modal
-     *
-     * @param array $args Treatment info modal arguments
-     * @return string Modal HTML
-     */
-    public function create_treatment_info_modal($args = []) {
-        $treatment_config = array_merge($args, [
-            'modal_type' => 'treatment',
-            'modal_class' => 'modal-treatment-info',
-            'modal_size' => 'large',
-            'title' => $args['title'] ?? 'Treatment Information',
-            'aria_label' => 'Treatment information modal'
-        ]);
-
-        return $this->render_modal($treatment_config);
-    }
-
-    // Private helper methods
 
     /**
      * Sanitize modal configuration
@@ -523,135 +398,192 @@ class ModalComponent extends BaseComponent {
      * @return array Sanitized configuration
      */
     protected function sanitize_config($config) {
-        // Sanitize basic modal settings
-        $config['modal_id'] = sanitize_text_field($config['modal_id']);
-        $config['modal_class'] = sanitize_text_field($config['modal_class']);
-        $config['modal_type'] = in_array($config['modal_type'], $this->modal_types)
-            ? $config['modal_type'] : 'basic';
-        $config['modal_size'] = in_array($config['modal_size'], $this->sizes)
-            ? $config['modal_size'] : 'medium';
-        $config['modal_position'] = in_array($config['modal_position'], $this->positions)
-            ? $config['modal_position'] : 'center';
-
-        // Sanitize content
+        // Sanitize basic fields
+        $config['modal_id'] = sanitize_html_class($config['modal_id']);
+        $config['modal_type'] = sanitize_text_field($config['modal_type']);
+        $config['modal_size'] = sanitize_text_field($config['modal_size']);
+        $config['modal_position'] = sanitize_text_field($config['modal_position']);
         $config['title'] = sanitize_text_field($config['title']);
-        $config['content'] = wp_kses_post($config['content']);
-        $config['footer_content'] = wp_kses_post($config['footer_content']);
-        $config['close_button_text'] = sanitize_text_field($config['close_button_text']);
+        $config['animation_type'] = sanitize_text_field($config['animation_type']);
 
-        // Sanitize accessibility
+        // Sanitize content (allow some HTML)
+        $allowed_html = [
+            'p' => [],
+            'br' => [],
+            'strong' => [],
+            'em' => [],
+            'span' => ['class' => []],
+            'div' => ['class' => []],
+            'ul' => ['class' => []],
+            'ol' => ['class' => []],
+            'li' => ['class' => []],
+            'a' => ['href' => [], 'class' => [], 'target' => []],
+            'img' => ['src' => [], 'alt' => [], 'class' => [], 'width' => [], 'height' => []]
+        ];
+        $config['content'] = wp_kses($config['content'], $allowed_html);
+
+        // Validate modal size
+        if (!in_array($config['modal_size'], $this->modal_sizes)) {
+            $config['modal_size'] = 'medium';
+        }
+
+        // Validate modal position
+        if (!in_array($config['modal_position'], $this->modal_positions)) {
+            $config['modal_position'] = 'center';
+        }
+
+        // Validate animation type
+        if (!array_key_exists($config['animation_type'], $this->animations)) {
+            $config['animation_type'] = 'scale';
+        }
+
+        // Sanitize boolean values
+        $boolean_fields = [
+            'show_header', 'show_footer', 'show_close_button',
+            'close_on_backdrop', 'close_on_escape', 'trap_focus',
+            'restore_focus', 'auto_open', 'persistent',
+            'medical_context', 'treatment_related', 'hipaa_compliant'
+        ];
+
+        foreach ($boolean_fields as $field) {
+            $config[$field] = (bool) $config[$field];
+        }
+
+        // Sanitize numeric values
+        $config['animation_duration'] = absint($config['animation_duration']);
+        if ($config['animation_duration'] < 100) {
+            $config['animation_duration'] = 300;
+        }
+
+        // Sanitize arrays
+        if (is_array($config['custom_classes'])) {
+            $config['custom_classes'] = array_map('sanitize_html_class', $config['custom_classes']);
+        }
+
+        // Sanitize accessibility attributes
         $config['aria_label'] = sanitize_text_field($config['aria_label']);
         $config['aria_describedby'] = sanitize_text_field($config['aria_describedby']);
+        $config['aria_labelledby'] = sanitize_text_field($config['aria_labelledby']);
         $config['role'] = sanitize_text_field($config['role']);
 
         return $config;
     }
 
     /**
-     * Generate modal HTML attributes
+     * Render modal backdrop
      *
      * @param array $config Modal configuration
-     * @return array Modal attributes
+     * @return string Backdrop HTML
      */
-    protected function generate_modal_attributes($config) {
-        $attributes = [
-            'id' => $config['modal_id'] ?: 'modal-' . uniqid(),
-            'class' => $this->get_modal_classes($config),
-            'role' => $config['role'],
-            'aria-modal' => 'true',
-            'aria-hidden' => $config['is_open'] ? 'false' : 'true',
-            'tabindex' => '-1'
+    protected function render_modal_backdrop($config) {
+        $backdrop_classes = ['modal-backdrop'];
+        if ($config['close_on_backdrop']) {
+            $backdrop_classes[] = 'modal-backdrop-clickable';
+        }
+
+        $backdrop_attrs = [
+            'class' => implode(' ', $backdrop_classes),
+            'data-modal-backdrop' => $config['modal_id'],
+            'aria-hidden' => 'true'
         ];
 
-        // Add ARIA labels
+        return sprintf(
+            '<div %s></div>',
+            $this->build_attributes($backdrop_attrs)
+        );
+    }
+
+    /**
+     * Render modal container
+     *
+     * @param array $config Modal configuration
+     * @return string Modal container HTML
+     */
+    protected function render_modal_container($config) {
+        $container_classes = [
+            'modal-container',
+            'modal-' . $config['modal_type'],
+            'modal-size-' . $config['modal_size'],
+            'modal-position-' . $config['modal_position'],
+            'modal-animation-' . $config['animation_type']
+        ];
+
+        // Add custom classes
+        if (!empty($config['custom_classes'])) {
+            $container_classes = array_merge($container_classes, $config['custom_classes']);
+        }
+
+        // Add medical spa classes
+        if ($config['medical_context']) {
+            $container_classes[] = 'modal-medical-context';
+        }
+
+        if ($config['treatment_related']) {
+            $container_classes[] = 'modal-treatment-related';
+        }
+
+        $container_attrs = [
+            'id' => $config['modal_id'],
+            'class' => implode(' ', $container_classes),
+            'role' => $config['role'],
+            'aria-modal' => 'true',
+            'aria-hidden' => 'true',
+            'tabindex' => '-1',
+            'data-modal-type' => $config['modal_type'],
+            'data-animation-duration' => $config['animation_duration']
+        ];
+
+        // Add accessibility attributes
         if (!empty($config['aria_label'])) {
-            $attributes['aria-label'] = $config['aria_label'];
+            $container_attrs['aria-label'] = $config['aria_label'];
+        }
+
+        if (!empty($config['aria_labelledby'])) {
+            $container_attrs['aria-labelledby'] = $config['aria_labelledby'];
         }
 
         if (!empty($config['aria_describedby'])) {
-            $attributes['aria-describedby'] = $config['aria_describedby'];
-        }
-
-        // Add data attributes for JavaScript
-        $attributes['data-modal-type'] = $config['modal_type'];
-        $attributes['data-modal-size'] = $config['modal_size'];
-        $attributes['data-modal-position'] = $config['modal_position'];
-        $attributes['data-close-on-backdrop'] = $config['close_on_backdrop'] ? 'true' : 'false';
-        $attributes['data-close-on-escape'] = $config['close_on_escape'] ? 'true' : 'false';
-        $attributes['data-trap-focus'] = $config['trap_focus'] ? 'true' : 'false';
-
-        // Add animation data
-        if ($config['animation_enabled']) {
-            $attributes['data-animation-duration'] = $config['animation_duration'];
-            $attributes['data-animation-easing'] = $config['animation_easing'];
+            $container_attrs['aria-describedby'] = $config['aria_describedby'];
         }
 
         // Add custom attributes
         if (!empty($config['custom_attributes'])) {
-            $attributes = array_merge($attributes, $config['custom_attributes']);
+            $container_attrs = array_merge($container_attrs, $config['custom_attributes']);
         }
 
-        return $attributes;
-    }
-
-    /**
-     * Get modal CSS classes
-     *
-     * @param array $config Modal configuration
-     * @return string CSS classes
-     */
-    protected function get_modal_classes($config) {
-        $classes = ['modal-component'];
-
-        // Add type class
-        $classes[] = 'modal-' . $config['modal_type'];
-
-        // Add size class
-        $classes[] = 'modal-size-' . $config['modal_size'];
-
-        // Add position class
-        $classes[] = 'modal-position-' . $config['modal_position'];
-
-        // Add state classes
-        if ($config['is_open']) {
-            $classes[] = 'modal-open';
+        // Add data attributes
+        if (!empty($config['data_attributes'])) {
+            foreach ($config['data_attributes'] as $key => $value) {
+                $container_attrs['data-' . $key] = $value;
+            }
         }
 
-        if ($config['has_backdrop']) {
-            $classes[] = 'modal-has-backdrop';
-        }
+        // Build modal content
+        $modal_content = '';
 
-        // Add custom class
-        if (!empty($config['modal_class'])) {
-            $classes[] = $config['modal_class'];
-        }
-
-        return implode(' ', $classes);
-    }
-
-    /**
-     * Generate modal content
-     *
-     * @param array $config Modal configuration
-     * @return string Modal content HTML
-     */
-    protected function generate_modal_content($config) {
-        $content = '';
+        // Modal dialog wrapper
+        $modal_content .= '<div class="modal-dialog" role="document">';
 
         // Modal header
-        if (!empty($config['title']) || $config['close_button_text']) {
-            $content .= $this->render_modal_header($config);
+        if ($config['show_header']) {
+            $modal_content .= $this->render_modal_header($config);
         }
 
         // Modal body
-        $content .= $this->render_modal_body($config);
+        $modal_content .= $this->render_modal_body($config);
 
         // Modal footer
-        if (!empty($config['footer_content'])) {
-            $content .= $this->render_modal_footer($config);
+        if ($config['show_footer']) {
+            $modal_content .= $this->render_modal_footer($config);
         }
 
-        return $content;
+        $modal_content .= '</div>'; // Close modal-dialog
+
+        return sprintf(
+            '<div %s>%s</div>',
+            $this->build_attributes($container_attrs),
+            $modal_content
+        );
     }
 
     /**
@@ -661,46 +593,51 @@ class ModalComponent extends BaseComponent {
      * @return string Header HTML
      */
     protected function render_modal_header($config) {
-        $header = '<div class="modal-header">';
+        $header_html = '<div class="modal-header">';
 
+        // Modal title
         if (!empty($config['title'])) {
-            $header .= sprintf(
-                '<h2 class="modal-title" id="%s-title">%s</h2>',
-                esc_attr($config['modal_id']),
+            $title_id = $config['modal_id'] . '-title';
+            $header_html .= sprintf(
+                '<h3 class="modal-title" id="%s">%s</h3>',
+                esc_attr($title_id),
                 esc_html($config['title'])
             );
+
+            // Update aria-labelledby if not set
+            if (empty($config['aria_labelledby'])) {
+                $config['aria_labelledby'] = $title_id;
+            }
         }
 
-        if ($config['close_button_text']) {
-            $header .= sprintf(
-                '<button type="button" class="modal-close" aria-label="Close modal" data-modal-close>%s</button>',
-                esc_html($config['close_button_text'])
-            );
+        // Close button
+        if ($config['show_close_button']) {
+            $header_html .= $this->render_close_button($config);
         }
 
-        $header .= '</div>';
+        $header_html .= '</div>';
 
-        return $header;
+        return $header_html;
     }
 
     /**
-     * Render modal body
+     * Render modal body/content
      *
      * @param array $config Modal configuration
      * @return string Body HTML
      */
     protected function render_modal_body($config) {
-        $body = '<div class="modal-body"';
+        $body_html = '<div class="modal-body">';
 
-        if (!empty($config['title'])) {
-            $body .= ' aria-labelledby="' . esc_attr($config['modal_id']) . '-title"';
+        if (!empty($config['content'])) {
+            $body_html .= '<div class="modal-content-wrapper">';
+            $body_html .= $config['content'];
+            $body_html .= '</div>';
         }
 
-        $body .= '>';
-        $body .= $config['content'];
-        $body .= '</div>';
+        $body_html .= '</div>';
 
-        return $body;
+        return $body_html;
     }
 
     /**
@@ -710,61 +647,104 @@ class ModalComponent extends BaseComponent {
      * @return string Footer HTML
      */
     protected function render_modal_footer($config) {
-        return '<div class="modal-footer">' . $config['footer_content'] . '</div>';
+        $footer_html = '<div class="modal-footer">';
+
+        // Add footer content hook for specialized modals
+        $footer_content = apply_filters('modal_footer_content', '', $config);
+        $footer_html .= $footer_content;
+
+        $footer_html .= '</div>';
+
+        return $footer_html;
     }
 
     /**
-     * Render complete modal HTML
+     * Render close button
      *
-     * @param array $modal_attributes Modal attributes
-     * @param string $modal_content Modal content
      * @param array $config Modal configuration
-     * @return string Complete modal HTML
+     * @return string Close button HTML
      */
-    protected function render_modal_html($modal_attributes, $modal_content, $config) {
-        $attributes_string = '';
-        foreach ($modal_attributes as $key => $value) {
-            $attributes_string .= sprintf(' %s="%s"', esc_attr($key), esc_attr($value));
-        }
+    protected function render_close_button($config) {
+        $close_button_attrs = [
+            'type' => 'button',
+            'class' => 'modal-close-button',
+            'data-modal-close' => $config['modal_id'],
+            'aria-label' => 'Close modal'
+        ];
 
-        $html = '<div' . $attributes_string . '>';
-
-        // Add backdrop if enabled
-        if ($config['has_backdrop']) {
-            $html .= '<div class="modal-backdrop" data-modal-backdrop></div>';
-        }
-
-        // Add modal dialog container
-        $html .= '<div class="modal-dialog" role="document">';
-        $html .= '<div class="modal-content">';
-        $html .= $modal_content;
-        $html .= '</div>';
-        $html .= '</div>';
-
-        $html .= '</div>';
-
-        return $html;
+        return sprintf(
+            '<button %s>
+                <svg class="modal-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>',
+            $this->build_attributes($close_button_attrs)
+        );
     }
 
     /**
-     * Generate JavaScript initialization code
+     * Build HTML attributes string
      *
-     * @param array $config Modal configuration
-     * @return string JavaScript code
+     * @param array $attributes Attributes array
+     * @return string Attributes string
      */
-    public function get_modal_script($config) {
-        if (!$config['auto_init']) {
-            return '';
+    protected function build_attributes($attributes) {
+        $attr_strings = [];
+
+        foreach ($attributes as $key => $value) {
+            if ($value === null || $value === false) {
+                continue;
+            }
+
+            if ($value === true || $value === '') {
+                $attr_strings[] = esc_attr($key);
+            } else {
+                $attr_strings[] = sprintf('%s="%s"', esc_attr($key), esc_attr($value));
+            }
         }
 
-        $script = '<script type="text/javascript">';
-        $script .= 'document.addEventListener("DOMContentLoaded", function() {';
-        $script .= 'if (typeof ModalManager !== "undefined") {';
-        $script .= sprintf('ModalManager.init("%s");', esc_js($config['modal_id']));
-        $script .= '}';
-        $script .= '});';
-        $script .= '</script>';
+        return implode(' ', $attr_strings);
+    }
 
-        return $script;
+    /**
+     * Get accessibility configuration
+     *
+     * @return array Accessibility configuration
+     */
+    protected function get_accessibility_config() {
+        return [
+            'aria_live' => 'polite',
+            'aria_atomic' => true,
+            'keyboard_navigation' => true,
+            'focus_trap' => true,
+            'skip_links' => true,
+            'high_contrast' => true,
+            'reduced_motion' => true,
+            'screen_reader_support' => true
+        ];
+    }
+
+    /**
+     * Get component-specific tokens from customizer
+     *
+     * @return array Component tokens
+     */
+    protected function get_component_specific_tokens() {
+        $customizer_values = [];
+
+        // Get modal customizer values
+        $modal_controls = $this->get_customizer_controls();
+
+        foreach ($modal_controls as $control_id => $control_config) {
+            $setting_id = $this->component_name . '_' . $control_id;
+            $value = get_theme_mod($setting_id, $control_config['default'] ?? '');
+
+            if (!empty($value)) {
+                $customizer_values['modal_' . $control_id] = $value;
+            }
+        }
+
+        return $customizer_values;
     }
 }

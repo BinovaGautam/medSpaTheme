@@ -11,7 +11,7 @@
  * @package MedSpaTheme
  */
 
-// Enqueue the tokenized CSS files
+// Restore essential CSS files for proper footer functionality
 wp_enqueue_style('footer-tokens', get_template_directory_uri() . '/assets/css/tokens/footer-tokens.css', array(), wp_get_theme()->get('Version'));
 wp_enqueue_style('footer-tokenized', get_template_directory_uri() . '/assets/css/components/footer-tokenized.css', array('footer-tokens'), wp_get_theme()->get('Version'));
 ?>

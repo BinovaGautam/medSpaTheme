@@ -24,7 +24,7 @@ function render_footer_hero_section() {
             <div class="footer-hero-content">
                 <header class="footer-hero-header">
                     <h2 id="footer-hero-heading" class="footer-hero-title">
-                        <?php echo get_theme_mod('footer_hero_title', 'Ready to Transform Your Wellness Journey?'); ?>
+                        <?php echo get_theme_mod('footer_hero_title', 'Ready to Transform Your Wellness Journey 123?'); ?>
                     </h2>
                     <p class="footer-hero-subtitle">
                         <?php echo get_theme_mod('footer_hero_subtitle', 'Experience luxury medical spa treatments with personalized care and proven results'); ?>

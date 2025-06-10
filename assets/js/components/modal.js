@@ -1,8 +1,8 @@
 /**
  * Modal Component JavaScript
  *
- * Interactive functionality for modal components including focus management,
- * keyboard navigation, accessibility compliance, and animation coordination.
+ * Comprehensive modal interaction system with accessibility compliance,
+ * keyboard navigation, focus management, and medical spa specializations.
  *
  * @package MedSpaTheme
  * @since 1.0.0
@@ -14,31 +14,27 @@
     'use strict';
 
     /**
-     * ModalManager - Main modal management class
+     * ModalManager Class
+     * Handles all modal functionality and interactions
      */
     class ModalManager {
         constructor() {
-            this.activeModal = null;
-            this.previouslyFocusedElement = null;
+            this.modals = new Map();
+            this.activeModals = [];
+            this.originalFocus = null;
             this.isAnimating = false;
-            this.scrollPosition = 0;
-            this.modalStack = [];
-
-            // Configuration
             this.config = {
+                bodyScrollLockClass: 'modal-scroll-lock',
                 animationDuration: 300,
-                backdrop: {
-                    closeOnClick: true,
-                    blur: true
-                },
-                keyboard: {
-                    closeOnEscape: true,
-                    trapFocus: true
-                },
-                accessibility: {
-                    announceStateChanges: true,
-                    restoreFocus: true
-                }
+                focusableSelectors: [
+                    'button:not([disabled])',
+                    'input:not([disabled])',
+                    'select:not([disabled])',
+                    'textarea:not([disabled])',
+                    'a[href]',
+                    '[tabindex]:not([tabindex="-1"])',
+                    '[contenteditable="true"]'
+                ].join(', ')
             };
 
             this.init();
@@ -48,782 +44,819 @@
          * Initialize modal manager
          */
         init() {
-            this.bindGlobalEvents();
-            this.setupKeyboardNavigation();
-            this.setupAccessibilityFeatures();
+            this.bindEvents();
+            this.setupAccessibility();
+            this.discoverModals();
 
-            // Auto-initialize existing modals
-            this.initializeModals();
-
-            console.log('ModalManager initialized');
+            // Performance optimization
+            this.throttledResize = this.throttle(this.handleResize.bind(this), 250);
+            window.addEventListener('resize', this.throttledResize);
         }
 
         /**
-         * Initialize all existing modals on page
+         * Bind global event listeners
          */
-        initializeModals() {
-            const modals = document.querySelectorAll('.modal-component');
-            modals.forEach(modal => {
-                this.setupModal(modal);
-            });
-        }
-
-        /**
-         * Setup individual modal
-         */
-        setupModal(modalElement) {
-            if (modalElement.getAttribute('data-modal-initialized')) {
-                return;
-            }
-
-            const modalId = modalElement.id || 'modal-' + Math.random().toString(36).substr(2, 9);
-            modalElement.id = modalId;
-            modalElement.setAttribute('data-modal-initialized', 'true');
-
-            // Setup modal configuration from data attributes
-            const modalConfig = this.getModalConfig(modalElement);
-            modalElement.modalConfig = modalConfig;
-
-            // Setup event listeners
-            this.setupModalEvents(modalElement);
-
-            // Setup triggers
-            this.setupModalTriggers(modalElement);
-
-            console.log(`Modal ${modalId} initialized`);
-        }
-
-        /**
-         * Get modal configuration from data attributes
-         */
-        getModalConfig(modalElement) {
-            return {
-                id: modalElement.id,
-                type: modalElement.getAttribute('data-modal-type') || 'basic',
-                size: modalElement.getAttribute('data-modal-size') || 'medium',
-                position: modalElement.getAttribute('data-modal-position') || 'center',
-                closeOnBackdrop: modalElement.getAttribute('data-close-on-backdrop') !== 'false',
-                closeOnEscape: modalElement.getAttribute('data-close-on-escape') !== 'false',
-                trapFocus: modalElement.getAttribute('data-trap-focus') !== 'false',
-                animationDuration: parseInt(modalElement.getAttribute('data-animation-duration')) || this.config.animationDuration,
-                animationEasing: modalElement.getAttribute('data-animation-easing') || 'cubic-bezier(0.4, 0, 0.2, 1)'
-            };
-        }
-
-        /**
-         * Setup event listeners for modal
-         */
-        setupModalEvents(modalElement) {
-            const closeButtons = modalElement.querySelectorAll('[data-modal-close]');
-            const backdrop = modalElement.querySelector('.modal-backdrop');
-
-            // Close button events
-            closeButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.closeModal(modalElement.id);
-                });
-            });
-
-            // Backdrop click events
-            if (backdrop && modalElement.modalConfig.closeOnBackdrop) {
-                backdrop.addEventListener('click', (e) => {
-                    if (e.target === backdrop) {
-                        this.closeModal(modalElement.id);
-                    }
-                });
-            }
-
-            // Prevent dialog content clicks from closing modal
-            const modalDialog = modalElement.querySelector('.modal-dialog');
-            if (modalDialog) {
-                modalDialog.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                });
-            }
-        }
-
-        /**
-         * Setup modal triggers
-         */
-        setupModalTriggers(modalElement) {
-            const modalId = modalElement.id;
-            const triggers = document.querySelectorAll(`[data-modal-target="${modalId}"]`);
-
-            triggers.forEach(trigger => {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
+        bindEvents() {
+            // Delegate click events for modal triggers
+            document.addEventListener('click', (event) => {
+                const trigger = event.target.closest('[data-modal-trigger]');
+                if (trigger) {
+                    event.preventDefault();
+                    const modalId = trigger.getAttribute('data-modal-trigger');
                     this.openModal(modalId);
-                });
+                }
+
+                // Handle close button clicks
+                const closeButton = event.target.closest('[data-modal-close]');
+                if (closeButton) {
+                    event.preventDefault();
+                    const modalId = closeButton.getAttribute('data-modal-close');
+                    this.closeModal(modalId);
+                }
+
+                // Handle backdrop clicks
+                const backdrop = event.target.closest('.modal-backdrop-clickable');
+                if (backdrop && event.target === backdrop) {
+                    const modalId = backdrop.getAttribute('data-modal-backdrop');
+                    this.closeModal(modalId);
+                }
             });
-        }
 
-        /**
-         * Open modal by ID
-         */
-        openModal(modalId, options = {}) {
-            const modalElement = document.getElementById(modalId);
-            if (!modalElement) {
-                console.error(`Modal with ID "${modalId}" not found`);
-                return false;
-            }
+            // Global keyboard handling
+            document.addEventListener('keydown', (event) => {
+                if (this.activeModals.length === 0) return;
 
-            if (this.isAnimating) {
-                return false;
-            }
+                const activeModal = this.getActiveModal();
+                if (!activeModal) return;
 
-            // If modal is already open, don't open again
-            if (modalElement.classList.contains('modal-open')) {
-                return false;
-            }
+                switch (event.key) {
+                    case 'Escape':
+                        if (activeModal.config.closeOnEscape) {
+                            event.preventDefault();
+                            this.closeModal(activeModal.id);
+                        }
+                        break;
 
-            // Store currently focused element for restoration
-            this.previouslyFocusedElement = document.activeElement;
-
-            // Add to modal stack
-            this.modalStack.push(modalElement);
-            this.activeModal = modalElement;
-
-            // Prevent body scroll
-            this.preventBodyScroll();
-
-            // Show modal
-            this.showModal(modalElement, options);
-
-            // Setup focus management
-            this.setupFocusManagement(modalElement);
-
-            // Announce to screen readers
-            this.announceModalState(modalElement, 'opened');
-
-            // Trigger custom event
-            this.triggerEvent(modalElement, 'modal:opened');
-
-            console.log(`Modal ${modalId} opened`);
-            return true;
-        }
-
-        /**
-         * Close modal by ID
-         */
-        closeModal(modalId, options = {}) {
-            const modalElement = modalId ? document.getElementById(modalId) : this.activeModal;
-            if (!modalElement) {
-                return false;
-            }
-
-            if (this.isAnimating) {
-                return false;
-            }
-
-            // Hide modal
-            this.hideModal(modalElement, options);
-
-            // Remove from modal stack
-            this.modalStack = this.modalStack.filter(modal => modal !== modalElement);
-            this.activeModal = this.modalStack[this.modalStack.length - 1] || null;
-
-            // Restore body scroll if no modals open
-            if (this.modalStack.length === 0) {
-                this.restoreBodyScroll();
-            }
-
-            // Restore focus
-            this.restoreFocus();
-
-            // Announce to screen readers
-            this.announceModalState(modalElement, 'closed');
-
-            // Trigger custom event
-            this.triggerEvent(modalElement, 'modal:closed');
-
-            console.log(`Modal ${modalElement.id} closed`);
-            return true;
-        }
-
-        /**
-         * Show modal with animation
-         */
-        showModal(modalElement, options = {}) {
-            this.isAnimating = true;
-
-            // Set initial state
-            modalElement.style.display = 'flex';
-            modalElement.setAttribute('aria-hidden', 'false');
-
-            // Force reflow
-            modalElement.offsetHeight;
-
-            // Add open class for CSS animation
-            modalElement.classList.add('modal-open');
-
-            // Animation complete
-            setTimeout(() => {
-                this.isAnimating = false;
-                this.focusModal(modalElement);
-            }, modalElement.modalConfig.animationDuration);
-        }
-
-        /**
-         * Hide modal with animation
-         */
-        hideModal(modalElement, options = {}) {
-            this.isAnimating = true;
-
-            // Remove open class for CSS animation
-            modalElement.classList.remove('modal-open');
-
-            // Animation complete
-            setTimeout(() => {
-                modalElement.style.display = 'none';
-                modalElement.setAttribute('aria-hidden', 'true');
-                this.isAnimating = false;
-            }, modalElement.modalConfig.animationDuration);
-        }
-
-        /**
-         * Setup focus management for modal
-         */
-        setupFocusManagement(modalElement) {
-            if (!modalElement.modalConfig.trapFocus) {
-                return;
-            }
-
-            const focusableElements = this.getFocusableElements(modalElement);
-
-            if (focusableElements.length === 0) {
-                return;
-            }
-
-            const firstFocusable = focusableElements[0];
-            const lastFocusable = focusableElements[focusableElements.length - 1];
-
-            // Focus trap handler
-            const handleFocusTrap = (e) => {
-                if (e.key !== 'Tab') {
-                    return;
+                    case 'Tab':
+                        if (activeModal.config.trapFocus) {
+                            this.handleTabKeyPress(event, activeModal);
+                        }
+                        break;
                 }
+            });
 
-                if (e.shiftKey) {
-                    // Shift + Tab
-                    if (document.activeElement === firstFocusable) {
-                        e.preventDefault();
-                        lastFocusable.focus();
-                    }
-                } else {
-                    // Tab
-                    if (document.activeElement === lastFocusable) {
-                        e.preventDefault();
-                        firstFocusable.focus();
-                    }
-                }
-            };
-
-            modalElement.addEventListener('keydown', handleFocusTrap);
-
-            // Store handler for cleanup
-            modalElement._focusTrapHandler = handleFocusTrap;
-        }
-
-        /**
-         * Focus modal element
-         */
-        focusModal(modalElement) {
-            const focusableElements = this.getFocusableElements(modalElement);
-
-            if (focusableElements.length > 0) {
-                focusableElements[0].focus();
-            } else {
-                modalElement.focus();
-            }
-        }
-
-        /**
-         * Get focusable elements within modal
-         */
-        getFocusableElements(modalElement) {
-            const focusableSelectors = [
-                'button:not([disabled])',
-                'input:not([disabled])',
-                'select:not([disabled])',
-                'textarea:not([disabled])',
-                'a[href]',
-                '[tabindex]:not([tabindex="-1"])',
-                '[contenteditable]'
-            ].join(', ');
-
-            return Array.from(modalElement.querySelectorAll(focusableSelectors))
-                .filter(el => this.isElementVisible(el));
-        }
-
-        /**
-         * Check if element is visible
-         */
-        isElementVisible(element) {
-            const style = window.getComputedStyle(element);
-            return style.display !== 'none' &&
-                   style.visibility !== 'hidden' &&
-                   style.opacity !== '0';
-        }
-
-        /**
-         * Restore focus to previously focused element
-         */
-        restoreFocus() {
-            if (this.previouslyFocusedElement && this.config.accessibility.restoreFocus) {
-                this.previouslyFocusedElement.focus();
-                this.previouslyFocusedElement = null;
-            }
-        }
-
-        /**
-         * Prevent body scroll
-         */
-        preventBodyScroll() {
-            this.scrollPosition = window.pageYOffset;
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${this.scrollPosition}px`;
-            document.body.style.width = '100%';
-        }
-
-        /**
-         * Restore body scroll
-         */
-        restoreBodyScroll() {
-            document.body.style.removeProperty('overflow');
-            document.body.style.removeProperty('position');
-            document.body.style.removeProperty('top');
-            document.body.style.removeProperty('width');
-            window.scrollTo(0, this.scrollPosition);
-        }
-
-        /**
-         * Setup global keyboard navigation
-         */
-        setupKeyboardNavigation() {
-            document.addEventListener('keydown', (e) => {
-                if (!this.activeModal) {
-                    return;
-                }
-
-                // Escape key
-                if (e.key === 'Escape' && this.activeModal.modalConfig.closeOnEscape) {
-                    e.preventDefault();
-                    this.closeModal(this.activeModal.id);
-                }
+            // Handle page unload
+            window.addEventListener('beforeunload', () => {
+                this.closeAllModals();
             });
         }
 
         /**
          * Setup accessibility features
          */
-        setupAccessibilityFeatures() {
+        setupAccessibility() {
             // Create live region for announcements
             if (!document.getElementById('modal-live-region')) {
                 const liveRegion = document.createElement('div');
                 liveRegion.id = 'modal-live-region';
                 liveRegion.setAttribute('aria-live', 'polite');
                 liveRegion.setAttribute('aria-atomic', 'true');
-                liveRegion.className = 'sr-only';
+                liveRegion.style.cssText = `
+                    position: absolute;
+                    left: -10000px;
+                    width: 1px;
+                    height: 1px;
+                    overflow: hidden;
+                `;
                 document.body.appendChild(liveRegion);
             }
         }
 
         /**
-         * Announce modal state to screen readers
+         * Discover and register all modals on the page
          */
-        announceModalState(modalElement, state) {
-            if (!this.config.accessibility.announceStateChanges) {
-                return;
-            }
-
-            const liveRegion = document.getElementById('modal-live-region');
-            if (!liveRegion) {
-                return;
-            }
-
-            const modalTitle = modalElement.querySelector('.modal-title');
-            const title = modalTitle ? modalTitle.textContent : 'Modal';
-            const message = `${title} dialog ${state}`;
-
-            liveRegion.textContent = message;
-        }
-
-        /**
-         * Bind global events
-         */
-        bindGlobalEvents() {
-            // Handle dynamic modal creation
-            document.addEventListener('DOMContentLoaded', () => {
-                this.initializeModals();
-            });
-
-            // Handle window resize
-            window.addEventListener('resize', this.debounce(() => {
-                if (this.activeModal) {
-                    this.adjustModalPosition(this.activeModal);
-                }
-            }, 250));
-
-            // Handle page visibility change
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden && this.activeModal) {
-                    // Page is hidden, pause any animations
-                    this.pauseAnimations();
-                } else if (!document.hidden && this.activeModal) {
-                    // Page is visible, resume animations
-                    this.resumeAnimations();
-                }
+        discoverModals() {
+            const modalElements = document.querySelectorAll('.modal-container');
+            modalElements.forEach(modal => {
+                this.registerModal(modal);
             });
         }
 
         /**
-         * Adjust modal position on resize
+         * Register a modal element
+         * @param {HTMLElement} modalElement - Modal container element
          */
-        adjustModalPosition(modalElement) {
-            // Implementation for responsive positioning
-            const dialog = modalElement.querySelector('.modal-dialog');
-            if (!dialog) return;
+        registerModal(modalElement) {
+            const modalId = modalElement.id;
+            if (!modalId) {
+                console.warn('Modal element found without ID:', modalElement);
+                return;
+            }
 
-            const windowHeight = window.innerHeight;
-            const dialogHeight = dialog.offsetHeight;
+            const config = {
+                id: modalId,
+                element: modalElement,
+                dialog: modalElement.querySelector('.modal-dialog'),
+                closeButton: modalElement.querySelector('.modal-close-button'),
+                backdrop: document.querySelector(`[data-modal-backdrop="${modalId}"]`),
+                closeOnEscape: modalElement.getAttribute('data-close-on-escape') !== 'false',
+                closeOnBackdrop: modalElement.getAttribute('data-close-on-backdrop') !== 'false',
+                trapFocus: modalElement.getAttribute('data-trap-focus') !== 'false',
+                restoreFocus: modalElement.getAttribute('data-restore-focus') !== 'false',
+                animationDuration: parseInt(modalElement.getAttribute('data-animation-duration')) || this.config.animationDuration,
+                callbacks: {
+                    onOpen: null,
+                    onClose: null,
+                    onConfirm: null,
+                    onCancel: null
+                }
+            };
 
-            if (dialogHeight > windowHeight * 0.9) {
-                modalElement.classList.add('modal-scroll-inside');
+            this.modals.set(modalId, config);
+            this.initializeModalElement(config);
+        }
+
+        /**
+         * Initialize modal element properties
+         * @param {Object} config - Modal configuration
+         */
+        initializeModalElement(config) {
+            // Ensure proper ARIA attributes
+            config.element.setAttribute('aria-hidden', 'true');
+            config.element.setAttribute('aria-modal', 'true');
+            config.element.setAttribute('role', 'dialog');
+
+            // Set initial state
+            config.element.style.display = 'none';
+
+            // Setup backdrop if it exists
+            if (config.backdrop) {
+                config.backdrop.style.display = 'none';
+            }
+        }
+
+        /**
+         * Open a modal
+         * @param {string} modalId - Modal ID to open
+         * @param {Object} options - Additional options
+         */
+        openModal(modalId, options = {}) {
+            if (this.isAnimating) return;
+
+            const config = this.modals.get(modalId);
+            if (!config) {
+                console.error(`Modal with ID '${modalId}' not found`);
+                return;
+            }
+
+            // Store original focus
+            if (this.activeModals.length === 0) {
+                this.originalFocus = document.activeElement;
+            }
+
+            // Add to active modals stack
+            this.activeModals.push(config);
+
+            // Lock body scroll
+            this.lockBodyScroll();
+
+            // Show modal
+            this.showModalElement(config);
+
+            // Handle focus
+            this.setInitialFocus(config);
+
+            // Announce to screen readers
+            this.announceModalState('opened', config);
+
+            // Call onOpen callback
+            if (config.callbacks.onOpen) {
+                config.callbacks.onOpen(config);
+            }
+
+            // Trigger custom event
+            this.triggerEvent('modalOpened', { modalId, config });
+        }
+
+        /**
+         * Close a modal
+         * @param {string} modalId - Modal ID to close
+         * @param {Object} options - Additional options
+         */
+        closeModal(modalId, options = {}) {
+            if (this.isAnimating) return;
+
+            const config = this.modals.get(modalId);
+            if (!config) return;
+
+            const modalIndex = this.activeModals.findIndex(m => m.id === modalId);
+            if (modalIndex === -1) return;
+
+            // Remove from active modals stack
+            this.activeModals.splice(modalIndex, 1);
+
+            // Hide modal
+            this.hideModalElement(config);
+
+            // Restore focus if this was the last modal
+            if (this.activeModals.length === 0) {
+                this.unlockBodyScroll();
+                this.restoreFocus(config);
             } else {
-                modalElement.classList.remove('modal-scroll-inside');
+                // Focus the next modal in stack
+                const nextModal = this.getActiveModal();
+                if (nextModal) {
+                    this.setInitialFocus(nextModal);
+                }
+            }
+
+            // Announce to screen readers
+            this.announceModalState('closed', config);
+
+            // Call onClose callback
+            if (config.callbacks.onClose) {
+                config.callbacks.onClose(config);
+            }
+
+            // Trigger custom event
+            this.triggerEvent('modalClosed', { modalId, config });
+        }
+
+        /**
+         * Close all open modals
+         */
+        closeAllModals() {
+            const modalsToClose = [...this.activeModals];
+            modalsToClose.forEach(config => {
+                this.closeModal(config.id);
+            });
+        }
+
+        /**
+         * Show modal element with animation
+         * @param {Object} config - Modal configuration
+         */
+        showModalElement(config) {
+            this.isAnimating = true;
+
+            // Show backdrop first
+            if (config.backdrop) {
+                config.backdrop.style.display = 'block';
+                requestAnimationFrame(() => {
+                    config.backdrop.classList.add('modal-backdrop-visible');
+                });
+            }
+
+            // Show modal
+            config.element.style.display = 'flex';
+            config.element.setAttribute('aria-hidden', 'false');
+
+            requestAnimationFrame(() => {
+                config.element.classList.add('modal-open');
+                config.element.classList.add('modal-opening');
+
+                // End animation
+                setTimeout(() => {
+                    config.element.classList.remove('modal-opening');
+                    this.isAnimating = false;
+                }, config.animationDuration);
+            });
+        }
+
+        /**
+         * Hide modal element with animation
+         * @param {Object} config - Modal configuration
+         */
+        hideModalElement(config) {
+            this.isAnimating = true;
+
+            config.element.classList.add('modal-closing');
+            config.element.classList.remove('modal-open');
+
+            // Hide backdrop
+            if (config.backdrop) {
+                config.backdrop.classList.remove('modal-backdrop-visible');
+            }
+
+            setTimeout(() => {
+                config.element.style.display = 'none';
+                config.element.setAttribute('aria-hidden', 'true');
+                config.element.classList.remove('modal-closing');
+
+                if (config.backdrop) {
+                    config.backdrop.style.display = 'none';
+                }
+
+                this.isAnimating = false;
+            }, config.animationDuration);
+        }
+
+        /**
+         * Set initial focus in modal
+         * @param {Object} config - Modal configuration
+         */
+        setInitialFocus(config) {
+            // Try to focus the first focusable element
+            const focusableElements = this.getFocusableElements(config.element);
+
+            if (focusableElements.length > 0) {
+                // Focus first input or first focusable element
+                const firstInput = focusableElements.find(el =>
+                    el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT'
+                );
+
+                if (firstInput) {
+                    firstInput.focus();
+                } else {
+                    focusableElements[0].focus();
+                }
+            } else {
+                // Fallback: focus the modal itself
+                config.element.focus();
             }
         }
 
         /**
-         * Pause animations
+         * Restore focus to original element
+         * @param {Object} config - Modal configuration
          */
-        pauseAnimations() {
-            if (this.activeModal) {
-                this.activeModal.style.animationPlayState = 'paused';
+        restoreFocus(config) {
+            if (config.restoreFocus && this.originalFocus) {
+                // Ensure the element is still in the DOM and focusable
+                if (document.contains(this.originalFocus)) {
+                    this.originalFocus.focus();
+                }
+            }
+            this.originalFocus = null;
+        }
+
+        /**
+         * Handle Tab key press for focus trapping
+         * @param {KeyboardEvent} event - Keyboard event
+         * @param {Object} config - Modal configuration
+         */
+        handleTabKeyPress(event, config) {
+            const focusableElements = this.getFocusableElements(config.element);
+
+            if (focusableElements.length === 0) {
+                event.preventDefault();
+                return;
+            }
+
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (event.shiftKey) {
+                // Shift + Tab: moving backwards
+                if (document.activeElement === firstElement) {
+                    event.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                // Tab: moving forwards
+                if (document.activeElement === lastElement) {
+                    event.preventDefault();
+                    firstElement.focus();
+                }
             }
         }
 
         /**
-         * Resume animations
+         * Get focusable elements within a container
+         * @param {HTMLElement} container - Container element
+         * @returns {HTMLElement[]} Array of focusable elements
          */
-        resumeAnimations() {
-            if (this.activeModal) {
-                this.activeModal.style.animationPlayState = 'running';
+        getFocusableElements(container) {
+            const elements = container.querySelectorAll(this.config.focusableSelectors);
+            return Array.from(elements).filter(element => {
+                return element.offsetWidth > 0 || element.offsetHeight > 0 || element.getClientRects().length > 0;
+            });
+        }
+
+        /**
+         * Lock body scroll
+         */
+        lockBodyScroll() {
+            if (!document.body.classList.contains(this.config.bodyScrollLockClass)) {
+                // Store current scroll position
+                this.scrollPosition = window.pageYOffset;
+
+                // Apply scroll lock
+                document.body.classList.add(this.config.bodyScrollLockClass);
+                document.body.style.top = `-${this.scrollPosition}px`;
             }
+        }
+
+        /**
+         * Unlock body scroll
+         */
+        unlockBodyScroll() {
+            if (document.body.classList.contains(this.config.bodyScrollLockClass)) {
+                document.body.classList.remove(this.config.bodyScrollLockClass);
+                document.body.style.top = '';
+
+                // Restore scroll position
+                if (this.scrollPosition !== undefined) {
+                    window.scrollTo(0, this.scrollPosition);
+                    this.scrollPosition = undefined;
+                }
+            }
+        }
+
+        /**
+         * Get currently active modal
+         * @returns {Object|null} Active modal config or null
+         */
+        getActiveModal() {
+            return this.activeModals.length > 0 ? this.activeModals[this.activeModals.length - 1] : null;
+        }
+
+        /**
+         * Announce modal state to screen readers
+         * @param {string} action - Action performed (opened/closed)
+         * @param {Object} config - Modal configuration
+         */
+        announceModalState(action, config) {
+            const liveRegion = document.getElementById('modal-live-region');
+            if (liveRegion) {
+                const title = config.element.querySelector('.modal-title')?.textContent || 'Modal';
+                liveRegion.textContent = `${title} dialog ${action}`;
+
+                // Clear after announcement
+                setTimeout(() => {
+                    liveRegion.textContent = '';
+                }, 1000);
+            }
+        }
+
+        /**
+         * Handle window resize
+         */
+        handleResize() {
+            // Recalculate modal positions if needed
+            this.activeModals.forEach(config => {
+                // Custom resize handling can be added here
+            });
+        }
+
+        /**
+         * Set modal callback
+         * @param {string} modalId - Modal ID
+         * @param {string} callbackType - Callback type (onOpen, onClose, etc.)
+         * @param {Function} callback - Callback function
+         */
+        setCallback(modalId, callbackType, callback) {
+            const config = this.modals.get(modalId);
+            if (config && config.callbacks.hasOwnProperty(callbackType)) {
+                config.callbacks[callbackType] = callback;
+            }
+        }
+
+        /**
+         * Check if modal is open
+         * @param {string} modalId - Modal ID
+         * @returns {boolean} True if modal is open
+         */
+        isOpen(modalId) {
+            return this.activeModals.some(config => config.id === modalId);
         }
 
         /**
          * Trigger custom event
+         * @param {string} eventName - Event name
+         * @param {Object} detail - Event detail
          */
-        triggerEvent(element, eventName, detail = {}) {
+        triggerEvent(eventName, detail) {
             const event = new CustomEvent(eventName, {
-                detail: detail,
+                detail,
                 bubbles: true,
                 cancelable: true
             });
-            element.dispatchEvent(event);
+            document.dispatchEvent(event);
         }
 
         /**
-         * Debounce utility function
+         * Throttle function calls
+         * @param {Function} func - Function to throttle
+         * @param {number} limit - Throttle limit in milliseconds
+         * @returns {Function} Throttled function
          */
-        debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
+        throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
             };
         }
 
         /**
-         * Public API methods
+         * Destroy modal manager
          */
+        destroy() {
+            this.closeAllModals();
+            window.removeEventListener('resize', this.throttledResize);
 
-        /**
-         * Create and open a new modal
-         */
-        createModal(config) {
-            const modalId = config.id || 'modal-' + Math.random().toString(36).substr(2, 9);
-
-            const modalHtml = this.generateModalHTML(modalId, config);
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-            const modalElement = document.getElementById(modalId);
-            this.setupModal(modalElement);
-
-            if (config.autoOpen !== false) {
-                this.openModal(modalId);
+            // Remove live region
+            const liveRegion = document.getElementById('modal-live-region');
+            if (liveRegion) {
+                liveRegion.remove();
             }
 
-            return modalId;
-        }
-
-        /**
-         * Generate modal HTML
-         */
-        generateModalHTML(modalId, config) {
-            const {
-                title = '',
-                content = '',
-                footer = '',
-                size = 'medium',
-                type = 'basic',
-                position = 'center',
-                closeButton = true
-            } = config;
-
-            return `
-                <div id="${modalId}"
-                     class="modal-component modal-${type} modal-size-${size} modal-position-${position}"
-                     role="dialog"
-                     aria-modal="true"
-                     aria-hidden="true"
-                     tabindex="-1">
-                    <div class="modal-backdrop" data-modal-backdrop></div>
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            ${title || closeButton ? `
-                                <div class="modal-header">
-                                    ${title ? `<h2 class="modal-title">${title}</h2>` : ''}
-                                    ${closeButton ? '<button type="button" class="modal-close" aria-label="Close modal" data-modal-close>×</button>' : ''}
-                                </div>
-                            ` : ''}
-                            <div class="modal-body">
-                                ${content}
-                            </div>
-                            ${footer ? `
-                                <div class="modal-footer">
-                                    ${footer}
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        /**
-         * Destroy modal
-         */
-        destroyModal(modalId) {
-            const modalElement = document.getElementById(modalId);
-            if (!modalElement) {
-                return false;
-            }
-
-            // Close if open
-            if (modalElement.classList.contains('modal-open')) {
-                this.closeModal(modalId);
-            }
-
-            // Remove event listeners
-            if (modalElement._focusTrapHandler) {
-                modalElement.removeEventListener('keydown', modalElement._focusTrapHandler);
-            }
-
-            // Remove from DOM
-            modalElement.remove();
-
-            return true;
-        }
-
-        /**
-         * Get active modal
-         */
-        getActiveModal() {
-            return this.activeModal;
-        }
-
-        /**
-         * Check if any modal is open
-         */
-        isModalOpen() {
-            return this.activeModal !== null;
-        }
-
-        /**
-         * Close all modals
-         */
-        closeAllModals() {
-            while (this.modalStack.length > 0) {
-                const modal = this.modalStack[this.modalStack.length - 1];
-                this.closeModal(modal.id);
-            }
+            // Clear modals
+            this.modals.clear();
+            this.activeModals = [];
         }
     }
 
     /**
-     * Specialized Modal Types
+     * Medical Spa Modal Extensions
+     * Specialized functionality for medical spa modals
      */
-
-    /**
-     * Confirmation Modal Helper
-     */
-    class ConfirmationModal {
-        static create(options = {}) {
-            const {
-                title = 'Confirm Action',
-                message = 'Are you sure you want to continue?',
-                confirmText = 'Confirm',
-                cancelText = 'Cancel',
-                confirmAction = null,
-                cancelAction = null,
-                type = 'warning'
-            } = options;
-
-            const modalId = `confirmation-${Date.now()}`;
-
-            const config = {
-                id: modalId,
-                title: title,
-                size: 'small',
-                type: 'confirmation',
-                content: `<p>${message}</p>`,
-                footer: `
-                    <button type="button" class="button button-secondary" data-modal-close>
-                        ${cancelText}
-                    </button>
-                    <button type="button" class="button button-primary" id="${modalId}-confirm">
-                        ${confirmText}
-                    </button>
-                `,
-                closeButton: true
-            };
-
-            const createdModalId = window.modalManager.createModal(config);
-
-            // Setup action handlers
-            const confirmButton = document.getElementById(`${modalId}-confirm`);
-            if (confirmButton) {
-                confirmButton.addEventListener('click', () => {
-                    if (confirmAction) {
-                        confirmAction();
-                    }
-                    window.modalManager.closeModal(createdModalId);
-                });
-            }
-
-            return createdModalId;
+    class MedicalSpaModalExtensions {
+        constructor(modalManager) {
+            this.modalManager = modalManager;
+            this.init();
         }
-    }
 
-    /**
-     * Gallery Modal Helper
-     */
-    class GalleryModal {
-        static create(images = [], startIndex = 0) {
-            const modalId = `gallery-${Date.now()}`;
-
-            let currentIndex = startIndex;
-            const totalImages = images.length;
-
-            const generateImageHTML = (index) => {
-                const image = images[index];
-                return `
-                    <div class="gallery-modal-content">
-                        <img src="${image.src}" alt="${image.alt || ''}"
-                             class="gallery-modal-image"
-                             style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                        ${image.caption ? `<div class="gallery-modal-caption">${image.caption}</div>` : ''}
-                        <div class="gallery-modal-counter">${index + 1} / ${totalImages}</div>
-                        ${totalImages > 1 ? `
-                            <button type="button" class="gallery-modal-prev" aria-label="Previous image">‹</button>
-                            <button type="button" class="gallery-modal-next" aria-label="Next image">›</button>
-                        ` : ''}
-                    </div>
-                `;
-            };
-
-            const config = {
-                id: modalId,
-                size: 'fullscreen',
-                type: 'gallery',
-                content: generateImageHTML(currentIndex),
-                closeButton: true
-            };
-
-            const createdModalId = window.modalManager.createModal(config);
-
-            // Setup navigation if multiple images
-            if (totalImages > 1) {
-                const modal = document.getElementById(createdModalId);
-
-                const updateImage = (newIndex) => {
-                    currentIndex = newIndex;
-                    const body = modal.querySelector('.modal-body');
-                    body.innerHTML = generateImageHTML(currentIndex);
-                    setupNavigation();
-                };
-
-                const setupNavigation = () => {
-                    const prevBtn = modal.querySelector('.gallery-modal-prev');
-                    const nextBtn = modal.querySelector('.gallery-modal-next');
-
-                    if (prevBtn) {
-                        prevBtn.addEventListener('click', () => {
-                            updateImage(currentIndex > 0 ? currentIndex - 1 : totalImages - 1);
-                        });
-                    }
-
-                    if (nextBtn) {
-                        nextBtn.addEventListener('click', () => {
-                            updateImage(currentIndex < totalImages - 1 ? currentIndex + 1 : 0);
-                        });
-                    }
-                };
-
-                setupNavigation();
-
-                // Keyboard navigation
-                modal.addEventListener('keydown', (e) => {
-                    if (e.key === 'ArrowLeft') {
-                        updateImage(currentIndex > 0 ? currentIndex - 1 : totalImages - 1);
-                    } else if (e.key === 'ArrowRight') {
-                        updateImage(currentIndex < totalImages - 1 ? currentIndex + 1 : 0);
-                    }
-                });
-            }
-
-            return createdModalId;
+        init() {
+            this.setupBookingModal();
+            this.setupTreatmentInfoModal();
+            this.setupGalleryModal();
+            this.setupConsentModals();
         }
-    }
 
-    // Initialize global modal manager
-    window.modalManager = new ModalManager();
+        /**
+         * Setup booking modal functionality
+         */
+        setupBookingModal() {
+            document.addEventListener('modalOpened', (event) => {
+                const { modalId, config } = event.detail;
 
-    // Expose helper classes
-    window.ConfirmationModal = ConfirmationModal;
-    window.GalleryModal = GalleryModal;
-
-    // jQuery integration if available
-    if (typeof $ !== 'undefined') {
-        $.fn.modal = function(action, options) {
-            return this.each(function() {
-                const modalId = this.id;
-
-                switch (action) {
-                    case 'open':
-                        window.modalManager.openModal(modalId, options);
-                        break;
-                    case 'close':
-                        window.modalManager.closeModal(modalId, options);
-                        break;
-                    case 'destroy':
-                        window.modalManager.destroyModal(modalId);
-                        break;
-                    default:
-                        console.error('Invalid modal action:', action);
+                if (config.element.classList.contains('modal-booking')) {
+                    this.initializeBookingForm(config);
                 }
             });
-        };
+        }
+
+        /**
+         * Initialize booking form in modal
+         * @param {Object} config - Modal configuration
+         */
+        initializeBookingForm(config) {
+            const form = config.element.querySelector('form');
+            if (!form) return;
+
+            // Setup form validation
+            this.setupFormValidation(form);
+
+            // Setup date/time picker integration
+            this.setupDateTimePicker(form);
+
+            // Setup treatment selection
+            this.setupTreatmentSelection(form);
+        }
+
+        /**
+         * Setup treatment info modal
+         */
+        setupTreatmentInfoModal() {
+            document.addEventListener('modalOpened', (event) => {
+                const { modalId, config } = event.detail;
+
+                if (config.element.classList.contains('modal-treatment-info')) {
+                    this.loadTreatmentInfo(config);
+                }
+            });
+        }
+
+        /**
+         * Load treatment information
+         * @param {Object} config - Modal configuration
+         */
+        loadTreatmentInfo(config) {
+            // Load treatment data if needed
+            const treatmentId = config.element.getAttribute('data-treatment-id');
+            if (treatmentId) {
+                this.fetchTreatmentData(treatmentId, config);
+            }
+        }
+
+        /**
+         * Setup gallery modal functionality
+         */
+        setupGalleryModal() {
+            document.addEventListener('modalOpened', (event) => {
+                const { modalId, config } = event.detail;
+
+                if (config.element.classList.contains('modal-gallery')) {
+                    this.initializeGallery(config);
+                }
+            });
+        }
+
+        /**
+         * Initialize gallery functionality
+         * @param {Object} config - Modal configuration
+         */
+        initializeGallery(config) {
+            // Setup image navigation
+            this.setupImageNavigation(config);
+
+            // Setup zoom functionality
+            this.setupImageZoom(config);
+
+            // Setup keyboard navigation
+            this.setupGalleryKeyboard(config);
+        }
+
+        /**
+         * Setup consent modals for HIPAA compliance
+         */
+        setupConsentModals() {
+            // Implementation for consent management
+            document.addEventListener('modalOpened', (event) => {
+                const { modalId, config } = event.detail;
+
+                if (config.element.classList.contains('modal-consent')) {
+                    this.handleConsentModal(config);
+                }
+            });
+        }
+
+        /**
+         * Setup form validation
+         * @param {HTMLElement} form - Form element
+         */
+        setupFormValidation(form) {
+            // Basic form validation implementation
+            form.addEventListener('submit', (event) => {
+                if (!this.validateForm(form)) {
+                    event.preventDefault();
+                }
+            });
+        }
+
+        /**
+         * Validate form
+         * @param {HTMLElement} form - Form element
+         * @returns {boolean} True if form is valid
+         */
+        validateForm(form) {
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    this.showFieldError(field, 'This field is required');
+                    isValid = false;
+                } else {
+                    this.clearFieldError(field);
+                }
+            });
+
+            return isValid;
+        }
+
+        /**
+         * Show field error
+         * @param {HTMLElement} field - Field element
+         * @param {string} message - Error message
+         */
+        showFieldError(field, message) {
+            field.classList.add('field-error');
+
+            let errorElement = field.parentNode.querySelector('.field-error-message');
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'field-error-message';
+                field.parentNode.appendChild(errorElement);
+            }
+
+            errorElement.textContent = message;
+        }
+
+        /**
+         * Clear field error
+         * @param {HTMLElement} field - Field element
+         */
+        clearFieldError(field) {
+            field.classList.remove('field-error');
+
+            const errorElement = field.parentNode.querySelector('.field-error-message');
+            if (errorElement) {
+                errorElement.remove();
+            }
+        }
+
+        /**
+         * Setup date/time picker (placeholder)
+         * @param {HTMLElement} form - Form element
+         */
+        setupDateTimePicker(form) {
+            // Integration with date/time picker library would go here
+        }
+
+        /**
+         * Setup treatment selection (placeholder)
+         * @param {HTMLElement} form - Form element
+         */
+        setupTreatmentSelection(form) {
+            // Treatment selection logic would go here
+        }
+
+        /**
+         * Fetch treatment data (placeholder)
+         * @param {string} treatmentId - Treatment ID
+         * @param {Object} config - Modal configuration
+         */
+        fetchTreatmentData(treatmentId, config) {
+            // AJAX request to fetch treatment data would go here
+        }
+
+        /**
+         * Setup image navigation (placeholder)
+         * @param {Object} config - Modal configuration
+         */
+        setupImageNavigation(config) {
+            // Image navigation logic would go here
+        }
+
+        /**
+         * Setup image zoom (placeholder)
+         * @param {Object} config - Modal configuration
+         */
+        setupImageZoom(config) {
+            // Image zoom logic would go here
+        }
+
+        /**
+         * Setup gallery keyboard navigation (placeholder)
+         * @param {Object} config - Modal configuration
+         */
+        setupGalleryKeyboard(config) {
+            // Gallery keyboard navigation would go here
+        }
+
+        /**
+         * Handle consent modal (placeholder)
+         * @param {Object} config - Modal configuration
+         */
+        handleConsentModal(config) {
+            // Consent handling logic would go here
+        }
     }
 
-    console.log('Modal system loaded successfully');
+    /**
+     * Initialize modal system when DOM is ready
+     */
+    function initializeModalSystem() {
+        if (window.modalManager) {
+            console.warn('Modal system already initialized');
+            return;
+        }
+
+        // Create global modal manager instance
+        window.modalManager = new ModalManager();
+
+        // Initialize medical spa extensions
+        window.medicalSpaModals = new MedicalSpaModalExtensions(window.modalManager);
+
+        // Add CSS for scroll lock
+        if (!document.getElementById('modal-scroll-lock-styles')) {
+            const style = document.createElement('style');
+            style.id = 'modal-scroll-lock-styles';
+            style.textContent = `
+                .modal-scroll-lock {
+                    position: fixed;
+                    width: 100%;
+                    overflow: hidden;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        console.log('Modal system initialized successfully');
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeModalSystem);
+    } else {
+        initializeModalSystem();
+    }
+
+    // Global API exposure
+    window.MedSpaModal = {
+        open: (modalId, options) => window.modalManager?.openModal(modalId, options),
+        close: (modalId, options) => window.modalManager?.closeModal(modalId, options),
+        closeAll: () => window.modalManager?.closeAllModals(),
+        isOpen: (modalId) => window.modalManager?.isOpen(modalId),
+        setCallback: (modalId, type, callback) => window.modalManager?.setCallback(modalId, type, callback)
+    };
 
 })();

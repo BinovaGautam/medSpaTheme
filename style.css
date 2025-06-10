@@ -181,7 +181,7 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
 }
 
-/* Footer */
+/* Footer - Basic fallback styles */
 .site-footer {
     background-color: #2d5a27;
     color: white;
@@ -196,6 +196,12 @@ input:focus, textarea:focus, select:focus {
 .site-footer a:hover {
     color: white;
 }
+
+/* Note: Advanced footer styles handled by tokenized footer system in:
+   - assets/css/components/footer-tokenized.css
+   - assets/css/components/footer-luxury.css
+   These basic styles provide fallback until conflicts are resolved.
+*/
 
 /* Widgets */
 .widget {
