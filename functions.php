@@ -472,6 +472,21 @@ function medspa_theme_styles() {
         true
     );
 
+    // T-FOOTER-005: Luxury Visual Design Implementation
+    wp_enqueue_style(
+        'footer-luxury-styles',
+        get_template_directory_uri() . '/assets/css/components/footer-luxury.css',
+        array('footer-component-styles', 'footer-tokenized'),
+        PREETIDREAMS_VERSION
+    );
+
+    wp_enqueue_style(
+        'footer-interactions-styles',
+        get_template_directory_uri() . '/assets/css/animations/footer-interactions.css',
+        array('footer-luxury-styles'),
+        PREETIDREAMS_VERSION
+    );
+
     // Localize footer scripts
     wp_localize_script('footer-component-scripts', 'footerSettings', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
