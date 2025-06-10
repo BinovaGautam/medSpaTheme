@@ -4,12 +4,16 @@
  *
  * Contains the closing of the #content div and all content after.
  * Updated for Luxury Medical Spa Footer Implementation
- * Sprint: SPRINT-FOOTER-IMPL-001 | Task: T-FOOTER-001
+ * Sprint: SPRINT-FOOTER-IMPL-001 | Task: T-FOOTER-002 (CSS Tokenization Integration)
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
  * @package MedSpaTheme
  */
+
+// Enqueue the tokenized CSS files
+wp_enqueue_style('footer-tokens', get_template_directory_uri() . '/assets/css/tokens/footer-tokens.css', array(), wp_get_theme()->get('Version'));
+wp_enqueue_style('footer-tokenized', get_template_directory_uri() . '/assets/css/components/footer-tokenized.css', array('footer-tokens'), wp_get_theme()->get('Version'));
 ?>
 
 	</div><!-- #content -->
