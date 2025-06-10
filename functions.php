@@ -487,6 +487,14 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // T-FOOTER-006: Responsive Design Implementation
+    wp_enqueue_style(
+        'footer-responsive-styles',
+        get_template_directory_uri() . '/assets/css/responsive/footer-responsive.css',
+        array('footer-luxury-styles', 'footer-interactions-styles'),
+        PREETIDREAMS_VERSION
+    );
+
     // Localize footer scripts
     wp_localize_script('footer-component-scripts', 'footerSettings', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
