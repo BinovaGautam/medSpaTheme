@@ -1,10 +1,10 @@
 {
   "agentRegistry": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "lastUpdated": "{CURRENT_DATE}",
-    "totalAgents": 14,
-    "activeAgents": 14,
-    "systemArchitecture": "intelligent-routing-with-human-supervision"
+    "totalAgents": 16,
+    "activeAgents": 16,
+    "systemArchitecture": "intelligent-routing-with-human-supervision-and-real-time-improvement"
   },
 
   "coreAgents": {
@@ -176,6 +176,33 @@
       "confidenceThreshold": 0.95,
       "humanSupervisionRequired": true,
       "location": "levCompiler/.control/agents/workflow_creation_agent.json"
+    }
+  },
+
+  "specializedMonitoringAgents": {
+    "designSystemMonitorAgent": {
+      "agentId": "DESIGN-SYSTEM-MONITOR-001",
+      "status": "active",
+      "role": "compliance-monitor-and-orchestrator",
+      "priority": 1,
+      "description": "Continuous monitoring agent for design system compliance with severity-based correction orchestration and real-time workflow/agent improvement",
+      "specialization": "design-system-compliance-monitoring",
+      "confidenceThreshold": 0.95,
+      "humanSupervisionRequired": false,
+      "realTimeMonitoring": true,
+      "location": "levCompiler/.control/agents/design_system_monitor_agent.json"
+    },
+
+    "workflowAgentAnalyzer": {
+      "agentId": "WORKFLOW-AGENT-ANALYZER-001",
+      "status": "active",
+      "role": "performance-analyzer-and-optimizer",
+      "priority": 2,
+      "description": "Advanced analysis agent for diagnosing workflow and agent performance issues with real-time improvement recommendations",
+      "specialization": "workflow-agent-performance-analysis-and-improvement",
+      "confidenceThreshold": 0.90,
+      "humanSupervisionRequired": true,
+      "location": "levCompiler/.control/agents/workflow_agent_analyzer.json"
     }
   },
 

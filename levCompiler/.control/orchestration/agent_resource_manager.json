@@ -1,0 +1,172 @@
+{
+  "agentResourceManager": {
+    "managerId": "AGENT-RESOURCE-MANAGER-001",
+    "version": "1.0.0",
+    "description": "Advanced resource management system for agent scaling, queuing, and reservation",
+    "status": "active",
+    "created": "{CURRENT_TIMESTAMP}"
+  },
+
+  "resourceAllocation": {
+    "agentInstanceScaling": {
+      "scalingRules": {
+        "CODE-REVIEW-001": {
+          "baseInstances": 1,
+          "maxInstances": 5,
+          "scaleUpTrigger": "queue-depth > 3",
+          "scaleDownTrigger": "idle-time > 15-minutes"
+        },
+        "DRY-RUN-001": {
+          "baseInstances": 1,
+          "maxInstances": 4,
+          "scaleUpTrigger": "queue-depth > 2",
+          "scaleDownTrigger": "idle-time > 20-minutes"
+        },
+        "CODE-GEN-001": {
+          "baseInstances": 1,
+          "maxInstances": 3,
+          "scaleUpTrigger": "queue-depth > 2",
+          "scaleDownTrigger": "idle-time > 30-minutes"
+        },
+        "GATE-KEEP-001": {
+          "baseInstances": 1,
+          "maxInstances": 2,
+          "scaleUpTrigger": "queue-depth > 1",
+          "scaleDownTrigger": "idle-time > 10-minutes"
+        }
+      },
+      "totalResourceLimits": {
+        "maxConcurrentWorkflows": 8,
+        "maxTotalAgentInstances": 25,
+        "reservedInstancesForCritical": 5
+      }
+    },
+
+    "taskPriorityQueue": {
+      "queueLevels": {
+        "CRITICAL": {
+          "priority": 1,
+          "maxConcurrentTasks": 2,
+          "resourceReservation": "guaranteed",
+          "tasks": ["T7.1.1", "T7.2.1"]
+        },
+        "HIGH": {
+          "priority": 2,
+          "maxConcurrentTasks": 3,
+          "resourceReservation": "preferred",
+          "tasks": ["T7.1.2", "T7.2.2", "T7.3.1"]
+        },
+        "MEDIUM": {
+          "priority": 3,
+          "maxConcurrentTasks": 4,
+          "resourceReservation": "best-effort",
+          "tasks": ["T7.1.3", "T7.3.2", "T7.2.3"]
+        },
+        "LOW": {
+          "priority": 4,
+          "maxConcurrentTasks": 5,
+          "resourceReservation": "opportunistic",
+          "tasks": ["T7.3.3", "T7.4.1", "T7.4.2", "T7.4.3"]
+        }
+      },
+
+      "queueManagement": {
+        "schedulingAlgorithm": "priority-based-with-starvation-prevention",
+        "starvationPreventionTimeout": "2 hours",
+        "resourcePreemption": {
+          "enabled": true,
+          "preemptionRules": [
+            "CRITICAL can preempt MEDIUM and LOW",
+            "HIGH can preempt LOW only",
+            "No preemption within same priority level"
+          ]
+        }
+      }
+    },
+
+    "resourceReservationSystem": {
+      "criticalTaskReservation": {
+        "T7.1.1": {
+          "reservedAgents": {
+            "CODE-GEN-001": "dedicated-instance-1",
+            "CODE-REVIEW-001": "dedicated-instance-1",
+            "DRY-RUN-001": "dedicated-instance-1",
+            "GATE-KEEP-001": "dedicated-instance-1"
+          },
+          "reservationDuration": "estimated-task-duration + 25%",
+          "fallbackStrategy": "scale-up-if-reservation-unavailable"
+        },
+        "T7.2.1": {
+          "reservedAgents": {
+            "DESIGN-SYSTEM-MONITOR-001": "dedicated-monitoring",
+            "HUMAN-INTERACTION-AGENT": "escalation-reserved"
+          },
+          "reservationDuration": "estimated-task-duration + 25%",
+          "fallbackStrategy": "queue-with-high-priority"
+        }
+      },
+
+      "dynamicReservation": {
+        "enabled": true,
+        "reservationWindowMinutes": 30,
+        "adaptiveReservationEnabled": true,
+        "resourceContingencyPercentage": 20
+      }
+    }
+  },
+
+  "workflowCoordination": {
+    "concurrencyControl": {
+      "CODE-GEN-WF-001": {
+        "maxConcurrentInstances": 5,
+        "queueingStrategy": "priority-based",
+        "resourceGuarantee": "critical-tasks-guaranteed"
+      },
+      "DESIGN-SYSTEM-COMPLIANCE-WF-001": {
+        "maxConcurrentInstances": 3,
+        "coordinationWith": "CODE-GEN-WF-001",
+        "precedenceRules": "compliance-validation-after-code-generation"
+      }
+    },
+
+    "coordinationProtocols": {
+      "workflowStateSharing": "enabled",
+      "conflictDetection": "proactive",
+      "resourceConflictResolution": "priority-based-arbitration"
+    }
+  },
+
+  "monitoringAndOptimization": {
+    "performanceMetrics": {
+      "queueDepthTracking": "real-time",
+      "resourceUtilizationMonitoring": "continuous",
+      "scalingEventLogging": "detailed",
+      "preemptionEventTracking": "comprehensive"
+    },
+
+    "adaptiveOptimization": {
+      "learningEnabled": true,
+      "optimizationCycles": "hourly-during-active-sprint",
+      "performanceBaseline": "established-from-first-week",
+      "adaptationStrategy": "conservative-optimization-prefer-stability"
+    }
+  },
+
+  "integrationPoints": {
+    "workflowOrchestrator": {
+      "resourceRequestInterface": "standardized-resource-request-protocol",
+      "scalingNotificationEndpoint": "orchestrator-scaling-webhook",
+      "queueStatusReporting": "real-time-queue-status-feed"
+    },
+
+    "qualityGateSystem": {
+      "resourceValidationIntegration": "pre-execution-resource-verification",
+      "qualityGateResourceReservation": "gate-specific-resource-allocation"
+    },
+
+    "humanInteractionAgent": {
+      "escalationResourceManagement": "priority-escalation-resource-allocation",
+      "humanApprovalQueueing": "coordinated-human-interaction-queuing"
+    }
+  }
+}

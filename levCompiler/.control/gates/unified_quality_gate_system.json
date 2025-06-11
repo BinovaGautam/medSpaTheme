@@ -1,0 +1,193 @@
+{
+  "unifiedQualityGateSystem": {
+    "systemId": "UNIFIED-QUALITY-GATE-001",
+    "version": "1.0.0",
+    "description": "Unified quality gate system with hierarchical validation and consistent escalation paths",
+    "ultimateAuthority": "DESIGN-SYSTEM-MONITOR-001",
+    "status": "active",
+    "created": "{CURRENT_TIMESTAMP}"
+  },
+
+  "qualityHierarchy": {
+    "level1UltimateAuthority": {
+      "gatekeeper": "DESIGN-SYSTEM-MONITOR-001",
+      "scope": "design-system-compliance-validation",
+      "authority": "ultimate-veto-power",
+      "canOverride": ["all-lower-level-gates"],
+      "escalationPath": "HUMAN-INTERACTION-AGENT",
+      "thresholds": {
+        "CRITICAL": "immediate-halt-and-human-escalation",
+        "HIGH": "mandatory-correction-within-24hrs",
+        "MEDIUM": "sprint-integration-correction",
+        "LOW": "backlog-tracking"
+      }
+    },
+
+    "level2PrimaryQuality": {
+      "gatekeeper": "GATE-KEEP-001",
+      "scope": "comprehensive-code-quality-validation",
+      "authority": "blocking-approval-power",
+      "subordinateTo": "DESIGN-SYSTEM-MONITOR-001",
+      "escalationPath": "DESIGN-SYSTEM-MONITOR-001",
+      "thresholds": {
+        "qualityStandardsSatisfied": 0.90,
+        "securityValidated": 0.95,
+        "performanceAcceptable": 0.85
+      }
+    },
+
+    "level3SpecializedQuality": {
+      "gatekeepers": ["CODE-REVIEW-001", "DRY-RUN-001"],
+      "scope": "specialized-technical-validation",
+      "authority": "recommendation-and-blocking",
+      "subordinateTo": "GATE-KEEP-001",
+      "escalationPath": "GATE-KEEP-001",
+      "thresholds": {
+        "codeReviewApproval": 0.85,
+        "testingCompletion": 0.90,
+        "noCriticalIssues": 1.0
+      }
+    },
+
+    "level4WorkflowQuality": {
+      "gatekeepers": ["CODE-GEN-WF-001-internal-gates"],
+      "scope": "workflow-internal-validation",
+      "authority": "workflow-progression-control",
+      "subordinateTo": "CODE-REVIEW-001 and DRY-RUN-001",
+      "escalationPath": "specialized-quality-gates",
+      "thresholds": {
+        "confidenceThreshold": 0.70,
+        "outputCompleteness": 0.95,
+        "handoffReadiness": 0.90
+      }
+    }
+  },
+
+  "sequentialValidationFlow": {
+    "stage1WorkflowInternalValidation": {
+      "gates": ["CODE-GEN-WF-001-internal-quality-gates"],
+      "purpose": "ensure-workflow-internal-quality",
+      "passingCriteria": "all-internal-gates-passed",
+      "failureAction": "retry-within-workflow",
+      "nextStage": "stage2SpecializedValidation"
+    },
+
+    "stage2SpecializedValidation": {
+      "gates": ["CODE-REVIEW-001-approval", "DRY-RUN-001-testing"],
+      "purpose": "specialized-technical-validation",
+      "executionMode": "parallel",
+      "passingCriteria": "both-specialized-gates-passed",
+      "failureAction": "return-to-code-implementation",
+      "nextStage": "stage3PrimaryQualityValidation"
+    },
+
+    "stage3PrimaryQualityValidation": {
+      "gates": ["GATE-KEEP-001-comprehensive-approval"],
+      "purpose": "comprehensive-quality-and-final-approval",
+      "passingCriteria": "comprehensive-approval-achieved",
+      "failureAction": "escalate-to-design-system-monitor",
+      "nextStage": "stage4UltimateAuthorityValidation"
+    },
+
+    "stage4UltimateAuthorityValidation": {
+      "gates": ["DESIGN-SYSTEM-MONITOR-001-compliance-check"],
+      "purpose": "ultimate-design-system-compliance-validation",
+      "authority": "final-veto-power",
+      "passingCriteria": "zero-design-system-violations",
+      "failureAction": "severity-based-correction-orchestration",
+      "nextStage": "validation-complete"
+    }
+  },
+
+  "escalationPathUnification": {
+    "allQualityFailures": {
+      "primaryEscalation": "HUMAN-INTERACTION-AGENT",
+      "escalationCoordination": "unified-human-supervision-queue",
+      "contextAggregation": "combine-related-quality-issues",
+      "decisionCoordination": "single-unified-human-decision"
+    },
+
+    "severityBasedEscalation": {
+      "CRITICAL": {
+        "action": "immediate-human-escalation",
+        "authority": "DESIGN-SYSTEM-MONITOR-001",
+        "bypassLowerGates": true,
+        "requiresImmediateAction": true
+      },
+      "HIGH": {
+        "action": "priority-human-escalation",
+        "authority": "GATE-KEEP-001-with-monitor-notification",
+        "timeline": "within-4-hours",
+        "requiresPlannedAction": true
+      },
+      "MEDIUM": {
+        "action": "standard-escalation-queue",
+        "authority": "appropriate-level-gatekeeper",
+        "timeline": "within-24-hours",
+        "requiresScheduledAction": true
+      },
+      "LOW": {
+        "action": "backlog-escalation",
+        "authority": "workflow-level-resolution",
+        "timeline": "next-sprint-planning",
+        "requiresDocumentedAction": true
+      }
+    }
+  },
+
+  "coordinationProtocols": {
+    "gateCoordination": {
+      "crossGateCoordination": "enabled",
+      "conflictResolution": "hierarchy-based-authority",
+      "informationFlow": "bottom-up-with-override-capability",
+      "decisionAggregation": "authoritative-hierarchy-based"
+    },
+
+    "workflowIntegration": {
+      "CODE-GEN-WF-001": {
+        "integrationMode": "embedded-quality-gates",
+        "coordinationPoints": ["parallel-review-testing", "final-approval"],
+        "escalationIntegration": "unified-escalation-path"
+      },
+      "DESIGN-SYSTEM-COMPLIANCE-WF-001": {
+        "integrationMode": "authority-integration",
+        "coordinationPoints": ["all-7-stages"],
+        "monitoringIntegration": "continuous-with-staged-validation"
+      }
+    }
+  },
+
+  "performanceOptimization": {
+    "parallelValidation": {
+      "enabledWherePossible": true,
+      "parallelizationRules": [
+        "CODE-REVIEW-001 and DRY-RUN-001 can run in parallel",
+        "workflow-internal-gates can run in parallel",
+        "DESIGN-SYSTEM-MONITOR-001 runs after all others complete"
+      ]
+    },
+
+    "fastTrackValidation": {
+      "lowRiskChanges": {
+        "criteria": "minor-changes-with-no-design-impact",
+        "fastTrackPath": "skip-to-final-authority-validation",
+        "authorityRequired": "DESIGN-SYSTEM-MONITOR-001-approval"
+      }
+    }
+  },
+
+  "monitoringAndReporting": {
+    "qualityMetrics": {
+      "gatePassageRates": "track-per-gate-and-level",
+      "escalationFrequency": "track-by-severity-and-gate",
+      "validationTiming": "track-sequential-flow-performance",
+      "authorityOverrideTracking": "track-hierarchy-usage-patterns"
+    },
+
+    "systemHealth": {
+      "gateSystemHealth": "continuous-gate-availability-monitoring",
+      "hierarchyIntegrityCheck": "validate-authority-chain-integrity",
+      "escalationPathHealth": "ensure-escalation-paths-functional"
+    }
+  }
+}

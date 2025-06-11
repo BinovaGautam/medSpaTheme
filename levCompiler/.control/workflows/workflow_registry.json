@@ -1,9 +1,9 @@
 {
   "workflowRegistry": {
-    "version": "1.0.0",
-    "totalWorkflows": 9,
-    "activeWorkflows": 9,
-    "systemArchitecture": "hierarchical-workflow-orchestration"
+    "version": "1.1.0",
+    "totalWorkflows": 10,
+    "activeWorkflows": 10,
+    "systemArchitecture": "hierarchical-workflow-orchestration-with-compliance-monitoring"
   },
 
   "workflowHierarchy": {
@@ -173,6 +173,33 @@
           "documentationRequirement": "comprehensive-web-index-and-readme"
         },
         "delegatedFrom": ["BUG-RESOLUTION-WF-001"]
+      },
+
+      "designSystemComplianceWorkflow": {
+        "workflowId": "DESIGN-SYSTEM-COMPLIANCE-WF-001",
+        "name": "design-system-compliance-workflow",
+        "type": "continuous-compliance-monitoring-and-improvement",
+        "description": "Comprehensive design system compliance workflow with severity assessment, corrective action orchestration, and continuous improvement",
+        "priority": 1,
+        "status": "active",
+        "triggerPatterns": ["compliance violation", "design system violation", "hardcoded values detected", "token system violation", "semantic system breach"],
+        "parentWorkflow": "continuous-monitoring",
+        "location": "levCompiler/.control/workflows/design_system_compliance_workflow.json",
+        "primaryAgent": "DESIGN-SYSTEM-MONITOR-001",
+        "supportingAgents": ["WORKFLOW-AGENT-ANALYZER-001", "VERSION-TRACK-001"],
+        "monitoringType": "real-time-continuous",
+        "severityBasedActions": {
+          "critical": "immediate-redo-loop-initiation",
+          "high": "priority-correction-scheduling",
+          "medium": "sprint-integration-scheduling",
+          "low": "backlog-addition-with-prioritization"
+        },
+        "improvementCapabilities": {
+          "realTimeWorkflowUpdates": true,
+          "realTimeAgentUpdates": true,
+          "gitLikeVersionTracking": true,
+          "rollbackCapabilities": true
+        }
       }
     }
   },
