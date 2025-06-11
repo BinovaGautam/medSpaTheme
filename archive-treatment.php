@@ -16,9 +16,9 @@
             <!-- Treatment Filters -->
             <div class="treatment-filters">
                 <!-- This container will be populated by JavaScript -->
-                <div class="filter-loading-placeholder" style="padding: 2rem; text-align: center; background: #f8f9fa; border-radius: 8px; margin-bottom: 2rem; border: 2px dashed #d4af37;">
-                    <p style="color: #2d5a27; font-weight: 600;">🔍 Treatment Filter Loading...</p>
-                    <p style="font-size: 0.9rem; color: #87a96b;">If this message persists, JavaScript may not be loading properly.</p>
+                <div class="filter-loading-placeholder loading-container">
+                    <p class="loading-primary-text">🔍 Treatment Filter Loading...</p>
+                    <p class="loading-secondary-text">If this message persists, JavaScript may not be loading properly.</p>
                 </div>
             </div>
 
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show error message to user in debug mode
         const filterContainer = document.querySelector('.treatment-filters');
         if (filterContainer && window.location.hostname.includes('localhost')) {
-            filterContainer.innerHTML = '<div style="padding: 1rem; background: #f8d7da; color: #721c24; border-radius: 4px; border: 1px solid #f5c6cb;"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded. Check console for details.</div>';
+            filterContainer.innerHTML = '<div class="debug-message error-message"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded. Check console for details.</div>';
         }
     }
 

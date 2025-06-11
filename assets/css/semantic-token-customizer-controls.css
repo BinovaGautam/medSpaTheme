@@ -1,0 +1,389 @@
+/**
+ * T7.3.3 Semantic Token Customizer Controls Styles
+ * Enhanced styling for WordPress Customizer semantic token controls
+ *
+ * @package MedSpaTheme
+ * @version 4.1.0 - Sprint 7 T7.3.3 Implementation
+ * @author CODE-GEN-001
+ * @workflow CODE-GEN-WF-001
+ */
+
+/* =============================================================================
+   SEMANTIC TOKEN CUSTOMIZER PANEL
+   ============================================================================= */
+
+#accordion-panel-semantic_token_system {
+    border-left: 4px solid var(--color-accent, #d4af37);
+}
+
+#accordion-panel-semantic_token_system .panel-title {
+    font-weight: 600;
+    color: var(--color-primary, #2d5a27);
+}
+
+/* =============================================================================
+   PALETTE PREVIEW CONTAINER
+   ============================================================================= */
+
+.semantic-palette-preview-container {
+    margin-top: 12px;
+    padding: 16px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.semantic-palette-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* =============================================================================
+   PALETTE ITEMS
+   ============================================================================= */
+
+.semantic-palette-item {
+    padding: 12px;
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.semantic-palette-item:hover {
+    border-color: var(--color-accent, #d4af37);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.semantic-palette-item:focus {
+    outline: 2px solid var(--color-accent, #d4af37);
+    outline-offset: 2px;
+}
+
+.semantic-palette-item.selected {
+    border-color: var(--color-primary, #2d5a27);
+    background: #f0f8f0;
+    box-shadow: 0 0 0 2px rgba(45, 90, 39, 0.2);
+}
+
+.semantic-palette-item.updating {
+    animation: paletteUpdate 0.3s ease;
+}
+
+@keyframes paletteUpdate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* =============================================================================
+   PALETTE CONTENT
+   ============================================================================= */
+
+.palette-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-text-primary, #0f172a);
+    margin-bottom: 8px;
+}
+
+.palette-swatches {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.color-swatch.primary {
+    border-color: rgba(45, 90, 39, 0.3);
+}
+
+.color-swatch.secondary {
+    border-color: rgba(139, 75, 122, 0.3);
+}
+
+.color-swatch.accent {
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.palette-description {
+    font-size: 12px;
+    color: var(--color-text-secondary, #475569);
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+/* =============================================================================
+   PERFORMANCE INDICATORS
+   ============================================================================= */
+
+.performance-indicator {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.performance-indicator.good {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.performance-indicator.warning {
+    background: #f59e0b;
+    color: #000000;
+}
+
+.performance-indicator.danger {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+/* =============================================================================
+   COLOR OVERRIDE CONTROLS
+   ============================================================================= */
+
+.customize-control-color .color-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    transition: all 0.2s ease;
+}
+
+.customize-control-color .color-preview.primary {
+    border-color: rgba(45, 90, 39, 0.3);
+}
+
+.customize-control-color .color-preview.accent {
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* =============================================================================
+   ACCESSIBILITY WARNINGS
+   ============================================================================= */
+
+.accessibility-warning {
+    padding: 8px 12px;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    color: #856404;
+    font-size: 12px;
+    margin-top: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.accessibility-warning .warning-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* =============================================================================
+   BUTTON STYLE PREVIEW
+   ============================================================================= */
+
+.button-style-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.preview-button {
+    padding: 8px 16px;
+    background: var(--color-primary, #2d5a27);
+    color: #ffffff;
+    border: none;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+.preview-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.preview-button.active {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--color-accent, #d4af37);
+}
+
+.preview-button.default {
+    border-radius: 6px;
+}
+
+.preview-button.rounded {
+    border-radius: 8px;
+}
+
+.preview-button.sharp {
+    border-radius: 2px;
+}
+
+.preview-button.pill {
+    border-radius: 50px;
+}
+
+/* =============================================================================
+   PERFORMANCE METRICS
+   ============================================================================= */
+
+.performance-metrics {
+    margin-top: 12px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.performance-metrics .metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 12px;
+}
+
+.performance-metrics .metric:last-child {
+    margin-bottom: 0;
+}
+
+.performance-metrics .label {
+    color: var(--color-text-secondary, #475569);
+    font-weight: 500;
+}
+
+.performance-metrics .value {
+    color: var(--color-text-primary, #0f172a);
+    font-weight: 600;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+/* =============================================================================
+   SEMANTIC TOKEN SECTIONS
+   ============================================================================= */
+
+#customize-control-semantic_color_palette .customize-control-title,
+#customize-control-semantic_primary_override .customize-control-title,
+#customize-control-semantic_accent_override .customize-control-title,
+#customize-control-semantic_button_style .customize-control-title {
+    font-weight: 600;
+    color: var(--color-primary, #2d5a27);
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+@media (max-width: 782px) {
+    .semantic-palette-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .button-style-preview {
+        flex-direction: column;
+    }
+
+    .preview-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .performance-metrics .metric {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+}
+
+/* =============================================================================
+   CUSTOMIZER PANEL ENHANCEMENTS
+   ============================================================================= */
+
+#accordion-panel-semantic_token_system .panel-meta {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 12px;
+    margin-top: 12px;
+}
+
+#accordion-panel-semantic_token_system .panel-meta .customize-help-toggle {
+    color: var(--color-accent, #d4af37);
+}
+
+/* =============================================================================
+   LOADING STATES
+   ============================================================================= */
+
+.semantic-token-loading {
+    position: relative;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.semantic-token-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid #e2e8f0;
+    border-top-color: var(--color-accent, #d4af37);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* =============================================================================
+   ENHANCED FOCUS STATES
+   ============================================================================= */
+
+.semantic-palette-item:focus,
+.preview-button:focus {
+    outline: 2px solid var(--color-accent, #d4af37);
+    outline-offset: 2px;
+}
+
+/* =============================================================================
+   THEME INTEGRATION
+   ============================================================================= */
+
+.wp-core-ui .customize-control .semantic-palette-item.selected {
+    border-color: var(--color-primary, #2d5a27);
+}
+
+.wp-core-ui .customize-control .preview-button.active {
+    box-shadow: 0 0 0 2px var(--color-accent, #d4af37);
+}

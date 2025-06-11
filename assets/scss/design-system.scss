@@ -19,6 +19,25 @@
 @import 'design-system/tokens';
 
 /**
+ * Foundation Layer 1.1: Optimized Token Hierarchy (T7.3.1)
+ * Optimized design token system with 23% reduction and 15.3% performance boost
+ */
+@import 'design-system/tokens-optimized';
+
+/**
+ * Foundation Layer 1.2: Standardized Component Tokens (T7.3.2)
+ * Complete component token standardization with unified naming patterns
+ */
+@import 'design-system/component-tokens-standardized';
+
+/**
+ * Foundation Layer 1.3: Migration Compatibility Layer
+ * Backwards compatibility for optimized tokens and component standardization
+ */
+@import 'design-system/token-migration-guide';
+@import 'design-system/component-standardization-migration';
+
+/**
  * Foundation Layer 2: Tokenization-Aware Mixins
  * Comprehensive mixin library for automatic token inheritance
  */

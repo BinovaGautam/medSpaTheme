@@ -46,8 +46,8 @@ Tags: medical-spa, luxury, healthcare, accessibility, hipaa-conscious, responsiv
 body {
     font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
-    color: #2c3e50;
-    background-color: #ffffff;
+    color: var(--color-text-primary, #2c3e50);
+    background-color: var(--color-surface-primary, #ffffff);
     margin: 0;
     padding: 0;
 }
@@ -61,7 +61,7 @@ body {
 
 /* Header */
 .site-header {
-    background-color: #fff;
+    background-color: var(--color-surface-primary, #ffffff);
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 1rem 0;
 }
@@ -70,7 +70,7 @@ body {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 2rem;
     font-weight: 600;
-    color: #2d5a27;
+    color: var(--color-primary, #2d5a27);
     text-decoration: none;
     margin: 0;
 }
@@ -81,7 +81,7 @@ body {
 }
 
 .site-description {
-    color: #8B4B7A;
+    color: var(--color-secondary, #8B4B7A);
     margin: 0.5rem 0 0 0;
     font-style: italic;
 }
@@ -97,14 +97,14 @@ nav ul {
 }
 
 nav a {
-    color: #2d5a27;
+    color: var(--color-primary, #2d5a27);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 nav a:hover {
-    color: #d4af37;
+    color: var(--color-accent, #d4af37);
 }
 
 /* Main content */
@@ -115,7 +115,7 @@ main {
 
 /* Article styles */
 article {
-    background: white;
+    background: var(--color-surface-primary, #ffffff);
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 8px;
@@ -124,7 +124,7 @@ article {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', Georgia, serif;
-    color: #2d5a27;
+    color: var(--color-primary, #2d5a27);
     margin-top: 0;
     margin-bottom: 1rem;
     line-height: 1.2;
@@ -140,18 +140,18 @@ p {
 
 /* Links */
 a {
-    color: #2d5a27;
+    color: var(--color-primary, #2d5a27);
     transition: color 0.2s ease;
 }
 
 a:hover {
-    color: #d4af37;
+    color: var(--color-accent, #d4af37);
 }
 
 /* Buttons */
 .button, button, input[type="submit"] {
-    background: linear-gradient(135deg, #d4af37 0%, #f4e4bc 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-accent, #d4af37) 0%, var(--color-accent-light, #f4e4bc) 100%);
+    color: var(--color-text-inverse, #ffffff);
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 6px;
@@ -173,7 +173,7 @@ a:hover {
 input, textarea, select {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border, #ddd);
     border-radius: 6px;
     font-size: 1rem;
     margin-bottom: 1rem;
@@ -182,20 +182,20 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
     outline: none;
-    border-color: #d4af37;
-    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
+    border-color: var(--color-accent, #d4af37);
+    box-shadow: 0 0 0 2px var(--color-accent-light, rgba(212, 175, 55, 0.1));
 }
 
 /* Footer - Basic fallback styles */
 .site-footer {
-    background-color: #2d5a27;
-    color: white;
+    background-color: var(--color-primary, #2d5a27);
+    color: var(--color-text-inverse, #ffffff);
     padding: 2rem 0;
     margin-top: 4rem;
 }
 
 .site-footer a {
-    color: #d4af37;
+    color: var(--color-accent, #d4af37);
 }
 
 .site-footer a:hover {
@@ -214,7 +214,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .widget-title {
-    color: #d4af37;
+    color: var(--color-accent, #d4af37);
     margin-bottom: 1rem;
     font-size: 1.2rem;
     font-family: 'Playfair Display', serif;
@@ -237,8 +237,8 @@ input:focus, textarea:focus, select:focus {
     position: absolute;
     top: -9999px;
     left: -9999px;
-    background: #2d5a27;
-    color: white;
+    background: var(--color-primary, #2d5a27);
+    color: var(--color-text-inverse, #ffffff);
     padding: 0.5rem 1rem;
     text-decoration: none;
     border-radius: 0 0 4px 4px;
@@ -252,8 +252,59 @@ input:focus, textarea:focus, select:focus {
 }
 
 *:focus {
-    outline: 2px solid #d4af37;
+    outline: 2px solid var(--color-accent, #d4af37);
     outline-offset: 2px;
+}
+
+/* Loading Container Styles */
+.loading-container {
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-surface-secondary, #f8f9fa) 0%, var(--color-surface-tertiary, #e9ecef) 100%);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 2px dashed var(--color-accent, #d4af37);
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--color-surface-tertiary, #f3f3f3);
+    border-top: 3px solid var(--color-accent, #d4af37);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.loading-primary-text {
+    color: var(--color-primary, #2d5a27);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.loading-secondary-text {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary, #87a96b);
+    margin: 0;
+}
+
+/* Debug Message Styles */
+.debug-message {
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-warning, #f5c6cb);
+}
+
+.debug-message.error-message {
+    background: var(--color-error-light, #f8d7da);
+    color: var(--color-error-dark, #721c24);
+    border-color: var(--color-error, #f5c6cb);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {

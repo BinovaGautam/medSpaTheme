@@ -80,11 +80,11 @@
             <!-- Treatment Filters for Homepage -->
             <div class="treatment-filters">
                 <!-- This container will be populated by JavaScript -->
-                <div class="filter-loading-placeholder" style="padding: 2rem; text-align: center; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; margin-bottom: 2rem; border: 2px dashed #d4af37;">
+                <div class="filter-loading-placeholder loading-container">
                     <div class="loading-content">
-                        <div class="loading-spinner" style="display: inline-block; width: 24px; height: 24px; border: 3px solid #f3f3f3; border-top: 3px solid #d4af37; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
-                        <p style="color: #2d5a27; font-weight: 600; margin-bottom: 0.5rem;">🔍 Treatment Filter Loading...</p>
-                        <p style="font-size: 0.9rem; color: #87a96b; margin: 0;">Enhancing your browsing experience...</p>
+                        <div class="loading-spinner"></div>
+                        <p class="loading-primary-text">🔍 Treatment Filter Loading...</p>
+                        <p class="loading-secondary-text">Enhancing your browsing experience...</p>
                     </div>
                 </div>
             </div>
@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show error message to user in debug mode
         const filterContainer = document.querySelector('.treatment-filters');
         if (filterContainer && window.location.hostname.includes('localhost')) {
-            filterContainer.innerHTML = '<div style="padding: 1rem; background: #f8d7da; color: #721c24; border-radius: 4px; border: 1px solid #f5c6cb;"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded on homepage. Check console for details.</div>';
+                            filterContainer.innerHTML = '<div class="debug-message error-message"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded on homepage. Check console for details.</div>';
         }
     }
 

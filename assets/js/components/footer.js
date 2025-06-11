@@ -337,7 +337,7 @@
 
             // Add visible focus indicators
             element.addEventListener('focus', (e) => {
-                e.target.style.outline = '2px solid #3b82f6';
+                e.target.style.outline = '2px solid var(--color-focus, #3b82f6)';
                 e.target.style.outlineOffset = '2px';
             });
 
