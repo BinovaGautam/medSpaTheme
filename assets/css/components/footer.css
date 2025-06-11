@@ -278,8 +278,8 @@
    ============================================================================= */
 
 .footer-bottom {
-    background-color: var(--footer-bottom-background, #2d5a27);
-    color: var(--footer-bottom-text, #d1fae5);
+    background-color: var(--footer-bottom-background, #1B365D);
+    color: var(--footer-bottom-text, #ffffff);
     padding: var(--spacing-6, 24px) 0;
 }
 
@@ -293,7 +293,7 @@
 
 .footer-copyright {
     font-size: var(--font-size-sm, 14px);
-    color: var(--footer-bottom-text, #d1fae5);
+    color: var(--footer-bottom-text, #ffffff);
 }
 
 .footer-legal-list {
@@ -307,7 +307,7 @@
 }
 
 .footer-legal-list a {
-    color: var(--footer-bottom-text, #d1fae5);
+    color: var(--footer-bottom-text, #ffffff);
     text-decoration: none;
     font-size: var(--font-size-sm, 14px);
     transition: color var(--transition-base, 0.2s ease);
@@ -328,8 +328,8 @@
 
 .privacy-control-btn {
     background: transparent;
-    border: 1px solid var(--border-color-light, rgba(209, 250, 229, 0.3));
-    color: var(--footer-bottom-text, #d1fae5);
+    border: 1px solid var(--border-color-light, rgba(255, 255, 255, 0.3));
+    color: var(--footer-bottom-text, #ffffff);
     padding: var(--spacing-2, 8px) var(--spacing-3, 12px);
     border-radius: var(--border-radius-md, 8px);
     font-size: var(--font-size-xs, 12px);
@@ -341,7 +341,7 @@
 }
 
 .privacy-control-btn:hover {
-    background-color: rgba(212, 175, 55, 0.1);
+    background-color: rgba(212, 175, 55, 0.15);
     border-color: var(--accent-color, #d4af37);
     color: var(--accent-color, #d4af37);
 }

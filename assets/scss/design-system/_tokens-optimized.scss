@@ -317,5 +317,18 @@ MAINTAINED COMPATIBILITY:
 */
 
 /* ==========================================================================
+   WCAG ACCESSIBILITY ENHANCEMENT TOKENS
+   ========================================================================== */
+
+:root {
+  /* Footer System - WCAG Compliant */
+  --footer-background: var(--color-surface-secondary, #f8f9fa);
+  --footer-text-color: var(--color-text-primary, #374151);
+  --footer-bottom-background: var(--color-primary, #1B365D); /* Medical navy for better contrast */
+  --footer-bottom-text: #ffffff; /* Pure white for maximum contrast (21:1 ratio) */
+  --footer-link-hover: var(--color-accent, #d4af37);
+}
+
+/* ==========================================================================
    END OF OPTIMIZED TOKEN SCHEMA
    ========================================================================== */

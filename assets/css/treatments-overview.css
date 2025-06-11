@@ -333,6 +333,7 @@
 /* Artistic Categories Grid */
 .artistry-categories-grid {
     display: grid;
+    grid-template-columns: 1fr; /* Mobile-first: single column */
     gap: var(--space-xl);
     margin-top: var(--space-2xl);
 }
@@ -526,7 +527,15 @@
     transform: translateX(4px);
 }
 
-/* Desktop Category Grid */
+/* Tablet Grid Layout */
+@media (min-width: 768px) {
+    .artistry-categories-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablet */
+        gap: var(--space-lg);
+    }
+}
+
+/* Desktop Grid Layout */
 @media (min-width: 1024px) {
     .treatment-artistry-discovery {
         padding: var(--space-4xl) 0;
@@ -541,7 +550,7 @@
     }
 
     .artistry-categories-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* Keep 2 columns for better readability */
         gap: var(--space-2xl);
         margin-top: var(--space-3xl);
     }
