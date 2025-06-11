@@ -394,11 +394,20 @@ require_once get_template_directory() . '/inc/typography-performance.php';
  * Enqueue theme styles and scripts
  */
 function medspa_theme_styles() {
+    // CRITICAL: Design System Foundation CSS - HIGHEST PRIORITY
+    wp_enqueue_style(
+        'design-system-foundation',
+        get_template_directory_uri() . '/assets/css/design-system-compiled.css',
+        array(), // No dependencies - must load first
+        wp_get_theme()->get('Version'),
+        'all'
+    );
+
     // Main theme styles
     wp_enqueue_style(
         'medical-spa-theme',
         get_stylesheet_uri(),
-        array(),
+        array('design-system-foundation'), // Depends on design system
         PREETIDREAMS_VERSION
     );
 
