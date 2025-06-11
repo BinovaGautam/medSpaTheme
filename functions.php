@@ -486,6 +486,14 @@ function medspa_theme_styles() {
             }
         }
     }
+
+    // Enqueue accessibility compliance CSS
+    wp_enqueue_style(
+        'medspatheme-accessibility-wcag',
+        get_template_directory_uri() . '/assets/css/accessibility-wcag-compliance.css',
+        array('medspatheme-style'),
+        wp_get_theme()->get('Version')
+    );
 }
 add_action('wp_enqueue_scripts', 'medspa_theme_styles');
 

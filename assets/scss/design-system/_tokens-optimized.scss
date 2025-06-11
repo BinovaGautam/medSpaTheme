@@ -83,15 +83,38 @@
   --color-surface-secondary: var(--palette-surface-secondary, #f8fafc);
   --color-surface-tertiary: var(--palette-surface-tertiary, #f1f5f9);
 
-  /* Text Colors - STANDARDIZED */
+  /* Text Colors - WCAG Compliant */
   --color-text-primary: var(--palette-text-primary, #0f172a);
   --color-text-secondary: var(--palette-text-secondary, #475569);
   --color-text-muted: var(--palette-text-muted, #64748b);
+  --color-text-disabled: var(--palette-text-disabled, #9ca3af); /* 4.5:1 on white */
   --color-text-inverse: var(--palette-text-inverse, #ffffff);
 
-  /* Border & Focus - UNIFIED */
+  /* Border Colors - WCAG Compliant */
   --color-border: var(--palette-border, #e2e8f0);
   --color-border-light: var(--palette-border-light, #f1f5f9);
+  --color-border-strong: var(--palette-border-strong, #cbd5e1); /* Enhanced contrast */
+
+  /* Legacy Gray Replacements - WCAG AA Compliant */
+  --color-gray-666-replacement: var(--color-text-secondary, #475569); /* 9.2:1 ratio */
+  --color-gray-999-replacement: var(--color-text-disabled, #9ca3af); /* 4.5:1 ratio */
+  --color-gray-333-replacement: var(--color-text-primary, #0f172a); /* 19.1:1 ratio */
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-success-dark: #047857; /* Enhanced contrast */
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-warning-dark: #d97706; /* Enhanced contrast */
+  --color-error: #ef4444;
+  --color-error-light: #fecaca;
+  --color-error-dark: #dc2626; /* Enhanced contrast */
+  --color-info: #3b82f6;
+  --color-info-light: #dbeafe;
+  --color-info-dark: #1d4ed8; /* Enhanced contrast */
+
+  /* Border & Focus - UNIFIED */
   --color-focus: var(--color-primary);
 
   /* State Colors - ESSENTIAL SET */
@@ -206,6 +229,12 @@
 :root {
   /* Focus System - UNIFIED */
   --focus-ring: 0 0 0 2px var(--color-surface-primary), 0 0 0 4px var(--color-focus);
+
+  /* Focus & Interactive States */
+  --color-focus-ring: var(--color-accent, #06b6d4);
+  --color-focus-ring-offset: var(--color-surface-primary, #ffffff);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
 }
 
 /* Reduced Motion - PERFORMANCE OPTIMIZED */

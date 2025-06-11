@@ -256,6 +256,7 @@
 /* Disabled Button */
 .medspa-button--disabled,
 .medspa-button:disabled {
+    color: var(--color-text-muted, #64748b);
     cursor: not-allowed;
     opacity: 0.6;
     transform: none !important;
@@ -415,7 +416,7 @@
     .medspa-button::after {
         content: " (" attr(href) ")";
         font-size: 0.8em;
-        color: #666;
+        color: var(--color-text-muted, #64748b);
     }
 
     .medspa-button:not([href])::after {

@@ -342,27 +342,27 @@ input:focus, textarea:focus, select:focus {
 
 .wp-caption-text {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--color-text-muted, #64748b);
     text-align: center;
     padding: 0.5rem;
 }
 
 /* Admin notices */
 .notice {
-    background: #f0f9ff;
-    border-left: 4px solid #0ea5e9;
+    background: var(--color-info-light, #dbeafe);
+    border-left: 4px solid var(--color-info, #3b82f6);
     padding: 1rem;
     margin: 1rem 0;
 }
 
 .notice-warning {
-    background: #fffbeb;
-    border-left-color: #f59e0b;
+    background: var(--color-warning-light, #fef3c7);
+    border-left-color: var(--color-warning, #f59e0b);
 }
 
 .notice-error {
-    background: #fef2f2;
-    border-left-color: #ef4444;
+    background: var(--color-error-light, #fecaca);
+    border-left-color: var(--color-error, #ef4444);
 }
 
 /* Enhanced Medical Spa Components (Fallback) */

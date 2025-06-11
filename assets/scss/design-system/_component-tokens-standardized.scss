@@ -31,8 +31,8 @@
   --btn-border-radius-lg: var(--radius-lg);
   --btn-font-weight: var(--font-weight-medium);
   --btn-font-size: var(--text-base);
-  --btn-font-size-sm: var(--text-sm);
-  --btn-font-size-lg: var(--text-lg);
+  --btn-font-size-sm: var(--font-size-sm, 0.875rem);
+  --btn-font-size-lg: var(--font-size-lg, 1.125rem);
   --btn-transition: var(--transition-base);
   --btn-shadow: none;
   --btn-shadow-hover: var(--shadow-sm);
@@ -69,12 +69,12 @@
   --form-input-bg: var(--color-surface-primary);
   --form-input-bg-focus: var(--color-surface-primary);
   --form-input-bg-disabled: var(--color-surface-secondary);
-  --form-input-font-size: var(--text-base);
-  --form-input-font-size-sm: var(--text-sm);
-  --form-input-font-size-lg: var(--text-lg);
+  --form-input-font-size: var(--font-size-base, 1rem);
+  --form-input-font-size-sm: var(--font-size-sm, 0.875rem);
+  --form-input-font-size-lg: var(--font-size-lg, 1.125rem);
   --form-input-transition: var(--transition-base);
   --form-label-font-weight: var(--font-weight-medium);
-  --form-label-font-size: var(--text-sm);
+  --form-label-font-size: var(--font-size-sm, 0.875rem);
   --form-label-color: var(--color-text-secondary);
 
   /* Navigation Components - STANDARDIZED (nav- prefix) */
@@ -173,10 +173,43 @@
   --badge-padding-y-lg: var(--space-xs);
   --badge-border-radius: var(--radius-sm);
   --badge-border-radius-full: var(--radius-full);
-  --badge-font-size: var(--text-xs);
-  --badge-font-size-sm: 10px;
-  --badge-font-size-lg: var(--text-sm);
+  --badge-font-size: var(--font-size-sm, 0.875rem);
+  --badge-font-size-sm: var(--font-size-xs, 0.75rem);
+  --badge-font-size-lg: var(--font-size-sm, 0.875rem);
   --badge-font-weight: var(--font-weight-medium);
+
+  /* Typography - WCAG Compliant Font Sizes */
+  --font-size-xs: 0.75rem; /* 12px - Minimum for UI elements */
+  --font-size-sm: 0.875rem; /* 14px - Small text, acceptable */
+  --font-size-base: 1rem; /* 16px - Standard body text */
+  --font-size-lg: 1.125rem; /* 18px - Large text */
+  --font-size-xl: 1.25rem; /* 20px - Headings */
+  --font-size-2xl: 1.5rem; /* 24px - Large headings */
+  --font-size-3xl: 1.875rem; /* 30px - Hero text */
+
+  /* WCAG Minimum Font Sizes - NO SMALLER THAN THESE */
+  --font-size-minimum: 0.75rem; /* 12px - Absolute minimum */
+  --font-size-ui-minimum: 0.875rem; /* 14px - UI elements minimum */
+  --font-size-content-minimum: 1rem; /* 16px - Content minimum */
+
+  /* Button Typography - WCAG Compliant */
+  --btn-font-size-sm: var(--font-size-sm, 0.875rem); /* 14px minimum */
+  --btn-font-size-md: var(--font-size-base, 1rem); /* 16px standard */
+  --btn-font-size-lg: var(--font-size-lg, 1.125rem); /* 18px large */
+
+  /* Form Typography - WCAG Compliant */
+  --form-label-font-size: var(--font-size-sm, 0.875rem); /* 14px minimum */
+  --form-input-font-size: var(--font-size-base, 1rem); /* 16px to prevent zoom */
+  --form-helper-font-size: var(--font-size-sm, 0.875rem); /* 14px minimum */
+  --form-error-font-size: var(--font-size-sm, 0.875rem); /* 14px minimum */
+
+  /* Navigation Typography - WCAG Compliant */
+  --nav-font-size: var(--font-size-base, 1rem); /* 16px standard */
+  --nav-submenu-font-size: var(--font-size-sm, 0.875rem); /* 14px minimum */
+
+  /* Badge/Tag Typography - WCAG Compliant */
+  --badge-font-size-sm: var(--font-size-xs, 0.75rem); /* 12px minimum */
+  --badge-font-size-md: var(--font-size-sm, 0.875rem); /* 14px standard */
 }
 
 /* ==========================================================================
