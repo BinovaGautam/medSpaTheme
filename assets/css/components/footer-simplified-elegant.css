@@ -1,10 +1,10 @@
 /*
- * Simplified Elegant Footer Design
+ * Simplified Elegant Footer Design - Enhanced Visual Polish
  * Sprint: SPRINT-6-EXT | Task: T6.8-EXT-3 (Revised)
  *
  * Simple, elegant footer without hero section
  * Flat colors with luxury medical spa palette
- * Proper contrast and clean aesthetics
+ * Enhanced visual polish while maintaining simplicity
  *
  * @package MedSpaTheme
  * @since 1.0.0
@@ -32,6 +32,11 @@
   --footer-bg-secondary: #245020;
   --footer-bg-light: #87a96b;
   --footer-bg-accent: #d4af37;
+
+  /* Enhanced Visual Elements */
+  --footer-border-subtle: rgba(255, 255, 255, 0.1);
+  --footer-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --footer-shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 /* ====================================================================
@@ -39,10 +44,23 @@
    ==================================================================== */
 
 .site-footer.simplified-elegant {
-  background: var(--footer-bg-primary);
+  background: linear-gradient(135deg, var(--footer-bg-primary) 0%, var(--footer-bg-secondary) 100%);
   color: var(--footer-text-primary);
   font-family: 'Inter', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
+  position: relative;
+  overflow: hidden;
+}
+
+.site-footer.simplified-elegant::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--footer-medical-gold), transparent);
+  opacity: 0.6;
 }
 
 /* ====================================================================
@@ -52,7 +70,8 @@
 .footer-info-grid {
   background: var(--footer-bg-primary);
   padding: 4rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--footer-border-subtle);
+  position: relative;
 }
 
 .info-grid-wrapper.simplified-grid {
@@ -64,9 +83,37 @@
   gap: 4rem;
 }
 
-/* Contact Info Column */
-.info-column.contact-info {
-  background: transparent;
+/* Enhanced Column Styling */
+.info-column {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid var(--footer-border-subtle);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-column::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--footer-medical-gold), var(--footer-soft-gold));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.info-column:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+  box-shadow: var(--footer-shadow-soft);
+}
+
+.info-column:hover::before {
+  opacity: 1;
 }
 
 .column-title {
@@ -77,31 +124,56 @@
   margin-bottom: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 0.5rem;
 }
 
+.column-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--footer-medical-gold);
+  border-radius: 1px;
+}
+
+/* Contact Info Styling */
 .contact-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
-  padding: 0.5rem 0;
-  transition: color 0.3s ease;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .contact-item:hover {
-  color: var(--footer-text-accent);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateX(4px);
 }
 
 .contact-icon {
   font-size: 1.125rem;
   color: var(--footer-medical-gold);
-  min-width: 20px;
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 6px;
 }
 
 .contact-link {
   color: var(--footer-text-secondary);
   text-decoration: none;
   transition: color 0.3s ease;
+  font-weight: 500;
 }
 
 .contact-link:hover {
@@ -112,9 +184,10 @@
   color: var(--footer-text-secondary);
   font-style: normal;
   line-height: 1.5;
+  font-weight: 500;
 }
 
-/* Services Column */
+/* Services Column Enhanced */
 .services-list {
   list-style: none;
   padding: 0;
@@ -122,96 +195,73 @@
 }
 
 .service-item {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .service-link {
   color: var(--footer-text-secondary);
   text-decoration: none;
-  padding: 0.25rem 0;
+  padding: 0.75rem;
   display: block;
   transition: all 0.3s ease;
-  border-left: 2px solid transparent;
-  padding-left: 0.75rem;
+  border-left: 3px solid transparent;
+  border-radius: 0 8px 8px 0;
+  background: rgba(255, 255, 255, 0.03);
+  font-weight: 500;
 }
 
 .service-link:hover {
   color: var(--footer-text-accent);
   border-left-color: var(--footer-medical-gold);
-  padding-left: 1rem;
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateX(8px);
 }
 
-/* Hours Column */
+/* Hours Column Enhanced */
 .hours-list {
   margin: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 1rem;
 }
 
 .hours-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
-  padding: 0.375rem 0;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--footer-border-subtle);
+}
+
+.hours-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .hours-day {
   color: var(--footer-text-secondary);
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .hours-time {
   color: var(--footer-text-accent);
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .hours-note {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: rgba(212, 175, 55, 0.1);
-  border-left: 3px solid var(--footer-medical-gold);
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
   font-size: 0.875rem;
-  color: var(--footer-text-muted);
-  font-style: italic;
-}
-
-/* About/Doctor Column */
-.doctor-profile {
-  text-align: center;
-}
-
-.doctor-image {
-  margin-bottom: 1rem;
-}
-
-.doctor-photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 3px solid var(--footer-medical-gold);
-  object-fit: cover;
-  margin: 0 auto;
-  display: block;
-}
-
-.doctor-name {
-  font-size: 1.125rem;
-  font-weight: 600;
   color: var(--footer-text-accent);
-  margin-bottom: 0.25rem;
-}
-
-.doctor-credentials {
-  font-size: 0.875rem;
-  color: var(--footer-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.75rem;
-}
-
-.doctor-bio {
-  font-size: 0.875rem;
-  color: var(--footer-text-secondary);
-  line-height: 1.5;
+  font-style: italic;
+  text-align: center;
+  font-weight: 500;
 }
 
 /* ====================================================================
@@ -225,17 +275,49 @@
   overflow: hidden;
 }
 
-.clinic-info-overlay {
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.interactive-map {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1e3c1e 0%, #2d5a27 50%, #3a6b35 100%);
+  position: relative;
+}
+
+.map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--footer-text-muted);
+  font-style: italic;
+}
+
+.map-overlay-info {
   position: absolute;
   top: 2rem;
   right: 2rem;
+  z-index: 10;
+}
+
+.clinic-info-card {
   background: rgba(45, 90, 39, 0.95);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 2rem;
-  max-width: 300px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 320px;
+  box-shadow: var(--footer-shadow-elevated);
+  transition: all 0.3s ease;
+}
+
+.clinic-info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .clinic-name {
@@ -250,30 +332,31 @@
   color: var(--footer-text-secondary);
   margin-bottom: 1.5rem;
   font-style: italic;
+  font-size: 0.95rem;
 }
 
-.clinic-address {
-  color: var(--footer-text-secondary);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
-.directions-btn {
+.map-directions-btn {
   background: var(--footer-medical-gold);
   color: var(--footer-bg-primary);
-  border: none;
+  border: 2px solid var(--footer-medical-gold);
   padding: 0.75rem 1.5rem;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.directions-btn:hover {
-  background: #b8941f;
+.map-directions-btn:hover {
+  background: transparent;
+  color: var(--footer-medical-gold);
   transform: translateY(-2px);
 }
 
@@ -283,8 +366,9 @@
 
 .footer-newsletter-section {
   background: var(--footer-bg-light);
-  padding: 3rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--footer-border-subtle);
+  position: relative;
 }
 
 .newsletter-wrapper {
@@ -306,10 +390,11 @@
   color: var(--footer-text-secondary);
   margin-bottom: 2rem;
   font-size: 1.125rem;
+  font-weight: 500;
 }
 
 .newsletter-form {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .form-group {
@@ -317,14 +402,18 @@
   gap: 1rem;
   max-width: 500px;
   margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.5rem;
+  border: 1px solid var(--footer-border-subtle);
 }
 
 .newsletter-input {
   flex: 1;
-  padding: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
   color: var(--footer-text-primary);
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -332,8 +421,7 @@
 
 .newsletter-input:focus {
   outline: none;
-  border-color: var(--footer-medical-gold);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .newsletter-input::placeholder {
@@ -345,20 +433,29 @@
   color: var(--footer-bg-primary);
   border: none;
   padding: 1rem 2rem;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .newsletter-submit:hover {
   background: #b8941f;
   transform: translateY(-2px);
+  box-shadow: var(--footer-shadow-soft);
 }
 
-/* Social Media Links */
+.newsletter-privacy {
+  color: var(--footer-text-muted);
+  font-size: 0.8rem;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+/* Social Media Links Enhanced */
 .social-media-links {
   margin-top: 2rem;
 }
@@ -366,9 +463,10 @@
 .social-title {
   color: var(--footer-text-primary);
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-size: 0.95rem;
 }
 
 .social-icons {
@@ -382,29 +480,27 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
+  border: 1px solid var(--footer-border-subtle);
+  border-radius: 10px;
   color: var(--footer-text-secondary);
   text-decoration: none;
   transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .social-link:hover {
   background: rgba(212, 175, 55, 0.2);
   border-color: var(--footer-medical-gold);
   color: var(--footer-text-accent);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: var(--footer-shadow-soft);
 }
 
 .social-icon {
   font-size: 1.25rem;
-}
-
-.social-text {
-  font-size: 0.875rem;
-  font-weight: 500;
 }
 
 /* ====================================================================
@@ -413,7 +509,7 @@
 
 .footer-legal-section {
   background: var(--footer-bg-secondary);
-  padding: 2rem 0;
+  padding: 2.5rem 0;
 }
 
 .footer-legal-wrapper {
@@ -423,7 +519,7 @@
 }
 
 .footer-legal-nav {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .legal-links {
@@ -440,45 +536,51 @@
   color: var(--footer-text-secondary);
   text-decoration: none;
   font-size: 0.875rem;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
   position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
 }
 
 .legal-link:hover {
   color: var(--footer-text-accent);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .legal-link::after {
   content: '';
   position: absolute;
-  bottom: -2px;
-  left: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
-  height: 1px;
+  height: 2px;
   background: var(--footer-medical-gold);
   transition: width 0.3s ease;
 }
 
 .legal-link:hover::after {
-  width: 100%;
+  width: 60%;
 }
 
 .footer-copyright {
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1.5rem;
+  border-top: 1px solid var(--footer-border-subtle);
+  padding-top: 2rem;
 }
 
 .copyright-text {
   color: var(--footer-text-muted);
   font-size: 0.875rem;
   margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 .licensing-text {
   color: var(--footer-text-accent);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -494,10 +596,14 @@
     padding: 0 1.5rem;
   }
 
-  .clinic-info-overlay {
+  .info-column {
+    padding: 1.5rem;
+  }
+
+  .clinic-info-card {
     top: 1rem;
     right: 1rem;
-    max-width: 250px;
+    max-width: 280px;
     padding: 1.5rem;
   }
 }
@@ -505,7 +611,7 @@
 @media (max-width: 768px) {
   .info-grid-wrapper.simplified-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 0 1rem;
   }
 
@@ -515,6 +621,7 @@
 
   .form-group {
     flex-direction: column;
+    padding: 1rem;
   }
 
   .newsletter-input,
@@ -522,7 +629,7 @@
     width: 100%;
   }
 
-  .clinic-info-overlay {
+  .clinic-info-card {
     position: relative;
     top: auto;
     right: auto;
@@ -544,6 +651,7 @@
     flex-direction: column;
     text-align: center;
     min-width: 80px;
+    padding: 1rem;
   }
 }
 
@@ -559,5 +667,9 @@
 
   .column-title {
     font-size: 1.125rem;
+  }
+
+  .info-column {
+    padding: 1.25rem;
   }
 }
