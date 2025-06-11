@@ -1,0 +1,430 @@
+/*
+ * Footer Visual Polish & Typography Enhancement
+ * Sprint: SPRINT-6-EXT | Task: T6.8-EXT-3
+ *
+ * Sophisticated visual polish with enhanced typography,
+ * refined visual effects, and luxury medical spa aesthetics
+ *
+ * @package MedSpaTheme
+ * @since 1.0.0
+ */
+
+/* ====================================================================
+   ENHANCED TYPOGRAPHY SYSTEM
+   ==================================================================== */
+
+/* Typography Hierarchy Refinement */
+.footer-hero-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-rendering: optimizeLegibility;
+
+  /* Enhanced luxury text treatment */
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(212, 175, 55, 0.9) 25%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(212, 175, 55, 0.9) 75%,
+    rgba(255, 255, 255, 0.95) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+  animation: luxuryTextShimmer 4s ease-in-out infinite;
+
+  /* Enhanced text shadow for depth */
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(27, 54, 93, 0.2),
+    0 8px 16px rgba(212, 175, 55, 0.1);
+}
+
+.footer-hero-subtitle {
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Column Title Enhancement */
+.column-title {
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 1.125rem;
+  line-height: 1.3;
+
+  /* Enhanced gold accent */
+  color: rgba(212, 175, 55, 0.95);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(212, 175, 55, 0.2);
+}
+
+/* Content Typography */
+.column-content,
+.contact-link,
+.service-link {
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
+  color: rgba(255, 255, 255, 0.9);
+  text-rendering: optimizeLegibility;
+}
+
+/* Newsletter Typography */
+.newsletter-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-rendering: optimizeLegibility;
+
+  /* Refined gold treatment */
+  color: rgba(212, 175, 55, 0.95);
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(212, 175, 55, 0.2);
+}
+
+.newsletter-subtitle {
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ====================================================================
+   ENHANCED VISUAL EFFECTS
+   ==================================================================== */
+
+/* Luxury Card Enhancements */
+.info-column {
+  /* Enhanced backdrop with subtle texture */
+  background:
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      rgba(255, 255, 255, 0.08) 100%),
+    radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+
+  /* Enhanced border with subtle gradient */
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+
+  /* Enhanced shadow system */
+  box-shadow:
+    0 4px 16px rgba(27, 54, 93, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  /* Smooth transitions */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.info-column::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+    rgba(212, 175, 55, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(212, 175, 55, 0.2) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(212, 175, 55, 0.3) 100%);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: source-out;
+  pointer-events: none;
+}
+
+.info-column:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow:
+    0 8px 32px rgba(27, 54, 93, 0.25),
+    0 16px 64px rgba(0, 0, 0, 0.15),
+    0 0 24px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Button Enhancement */
+.footer-cta-primary {
+  /* Enhanced gradient with depth */
+  background: linear-gradient(135deg,
+    rgba(212, 175, 55, 0.95) 0%,
+    rgba(212, 175, 55, 1) 25%,
+    rgba(184, 134, 11, 1) 50%,
+    rgba(212, 175, 55, 1) 75%,
+    rgba(212, 175, 55, 0.95) 100%);
+  background-size: 200% 100%;
+
+  /* Enhanced text styling */
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  /* Enhanced shadow system */
+  box-shadow:
+    0 4px 16px rgba(212, 175, 55, 0.3),
+    0 8px 32px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(255, 243, 205, 0.3),
+    inset 0 -1px 0 rgba(184, 134, 11, 0.3);
+
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-cta-primary:hover {
+  background-position: 100% 0;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 8px 24px rgba(212, 175, 55, 0.4),
+    0 16px 48px rgba(212, 175, 55, 0.3),
+    0 0 32px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 243, 205, 0.4);
+}
+
+.footer-cta-secondary {
+  /* Enhanced glass effect */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+
+  /* Enhanced border */
+  border: 1px solid rgba(212, 175, 55, 0.4);
+
+  /* Typography enhancement */
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  /* Enhanced shadow */
+  box-shadow:
+    0 4px 16px rgba(27, 54, 93, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-cta-secondary:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.7);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(27, 54, 93, 0.15),
+    0 0 24px rgba(212, 175, 55, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ====================================================================
+   ENHANCED INTERACTIVE ELEMENTS
+   ==================================================================== */
+
+/* Contact Items Polish */
+.contact-item {
+  border-radius: var(--luxury-radius-small);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.1) 50%,
+    transparent 100%);
+  transition: left 0.4s ease;
+}
+
+.contact-item:hover::before {
+  left: 100%;
+}
+
+.contact-item:hover {
+  background: linear-gradient(135deg,
+    rgba(212, 175, 55, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 100%);
+  transform: translateX(8px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+
+/* Service Links Enhancement */
+.service-link {
+  position: relative;
+  border-radius: var(--luxury-radius-small);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.service-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    rgba(212, 175, 55, 0.8) 0%,
+    rgba(212, 175, 55, 1) 50%,
+    rgba(212, 175, 55, 0.8) 100%);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-link:hover::after {
+  width: 100%;
+}
+
+.service-link:hover {
+  background: linear-gradient(135deg,
+    rgba(212, 175, 55, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 100%);
+  transform: translateX(12px) scale(1.02);
+  color: rgba(212, 175, 55, 0.95);
+}
+
+/* ====================================================================
+   ENHANCED ACCESSIBILITY & CONTRAST
+   ==================================================================== */
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .footer-hero-title {
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .column-title,
+  .newsletter-title {
+    color: rgba(212, 175, 55, 1);
+  }
+
+  .info-column {
+    border-color: rgba(212, 175, 55, 0.5);
+  }
+}
+
+/* Focus States for Accessibility */
+.footer-cta-primary:focus,
+.footer-cta-secondary:focus,
+.contact-link:focus,
+.service-link:focus {
+  outline: 2px solid rgba(212, 175, 55, 0.8);
+  outline-offset: 2px;
+  box-shadow:
+    0 0 0 4px rgba(212, 175, 55, 0.2),
+    0 4px 16px rgba(27, 54, 93, 0.15);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .info-column,
+  .contact-item,
+  .service-link,
+  .footer-cta-primary,
+  .footer-cta-secondary {
+    transition: none;
+  }
+
+  .footer-hero-title {
+    animation: none;
+  }
+
+  .info-column:hover {
+    transform: none;
+  }
+}
+
+/* ====================================================================
+   LUXURY ANIMATION KEYFRAMES
+   ==================================================================== */
+
+@keyframes luxuryTextShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow:
+      0 4px 16px rgba(27, 54, 93, 0.15),
+      0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 4px 16px rgba(27, 54, 93, 0.15),
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      0 0 24px rgba(212, 175, 55, 0.1);
+  }
+}
+
+/* ====================================================================
+   RESPONSIVE TYPOGRAPHY OPTIMIZATION
+   ==================================================================== */
+
+@media (max-width: 768px) {
+  .footer-hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .footer-hero-subtitle {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .column-title {
+    font-size: 1rem;
+    letter-spacing: 0.015em;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-hero-title {
+    font-size: clamp(1.75rem, 10vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  .newsletter-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    line-height: 1.3;
+  }
+}
+
+@media (min-width: 1200px) {
+  .footer-hero-title {
+    font-size: clamp(3.5rem, 5vw, 4.5rem);
+    letter-spacing: -0.025em;
+  }
+
+  .footer-hero-subtitle {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+  }
+}

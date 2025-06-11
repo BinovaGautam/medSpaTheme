@@ -550,6 +550,22 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // T6.8-EXT-3: Visual Polish & Typography Enhancement
+    wp_enqueue_style(
+        'footer-visual-polish',
+        get_template_directory_uri() . '/assets/css/components/footer-visual-polish.css',
+        array('footer-enhanced-spacing'),
+        PREETIDREAMS_VERSION
+    );
+
+    // T6.8-EXT-3: Advanced Microinteractions
+    wp_enqueue_style(
+        'footer-microinteractions',
+        get_template_directory_uri() . '/assets/css/components/footer-microinteractions.css',
+        array('footer-visual-polish'),
+        PREETIDREAMS_VERSION
+    );
+
     // T-FOOTER-007: Newsletter & Social Engagement JavaScript
     wp_enqueue_script(
         'footer-newsletter-scripts',
