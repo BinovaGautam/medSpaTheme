@@ -491,7 +491,7 @@ function medspa_theme_styles() {
     wp_enqueue_style(
         'medspatheme-accessibility-wcag',
         get_template_directory_uri() . '/assets/css/accessibility-wcag-compliance.css',
-        array('medspatheme-style'),
+        array('medical-spa-theme'),
         wp_get_theme()->get('Version')
     );
 }

@@ -724,7 +724,7 @@
 
 .simple-vc-sidebar .palette-description {
     font-size: 11px !important;
-    color: #666 !important;
+    color: var(--color-text-muted, #64748b) !important; /* WCAG AA compliant */
     margin: 0 0 8px 0 !important;
     line-height: 1.3 !important;
 }
@@ -767,17 +767,17 @@
     font-size: 11px !important;
     padding: 4px 8px !important;
     border-radius: 4px !important;
-    border: 1px solid #ddd !important;
-    background: white !important;
+    border: 1px solid var(--color-border, #e2e8f0) !important;
+    background: var(--color-surface-primary, #ffffff) !important;
     cursor: pointer !important;
     flex-shrink: 0 !important;
     transition: all 0.2s ease !important;
 }
 
 .simple-vc-sidebar .category-filter-btn.active {
-    background: #8B4B7A !important;
-    color: white !important;
-    border-color: #642453 !important;
+    background: var(--color-primary, #8B4B7A) !important;
+    color: var(--color-text-inverse, #ffffff) !important;
+    border-color: var(--color-primary-dark, #642453) !important;
 }
 
 /* Search Input */
@@ -788,9 +788,9 @@
 .simple-vc-sidebar .palette-search {
     width: 100% !important;
     padding: 6px 8px !important;
-    border: 1px solid #ddd !important;
+    border: 1px solid var(--color-border, #e2e8f0) !important;
     border-radius: 4px !important;
-    font-size: 12px !important;
+    font-size: var(--font-size-sm, 14px) !important; /* WCAG compliant size */
     box-sizing: border-box !important;
 }
 
@@ -814,15 +814,15 @@
 }
 
 .simple-vc-sidebar .preview-controls button[data-action="toggle-preview"] {
-    background: #f0f0f0 !important;
-    border: 1px solid #ddd !important;
-    color: #333 !important;
+    background: var(--color-surface-secondary, #f8f9fa) !important;
+    border: 1px solid var(--color-border, #e2e8f0) !important;
+    color: var(--color-text-primary, #0f172a) !important; /* WCAG AAA compliant */
 }
 
 .simple-vc-sidebar .preview-controls button[data-action="apply-palette"] {
-    background: #8B4B7A !important;
-    border: 1px solid #642453 !important;
-    color: white !important;
+    background: var(--color-primary, #8B4B7A) !important;
+    border: 1px solid var(--color-primary-dark, #642453) !important;
+    color: var(--color-text-inverse, #ffffff) !important;
 }
 
 .simple-vc-sidebar .preview-controls button:disabled {
