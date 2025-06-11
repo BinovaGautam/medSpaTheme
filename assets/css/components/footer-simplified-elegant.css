@@ -46,7 +46,7 @@
 }
 
 /* ====================================================================
-   SECTION 1: FOUR-COLUMN INFORMATION GRID
+   SECTION 1: SIMPLIFIED THREE-COLUMN INFORMATION GRID
    ==================================================================== */
 
 .footer-info-grid {
@@ -55,13 +55,13 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.info-grid-wrapper {
+.info-grid-wrapper.simplified-grid {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr 1fr;
-  gap: 3rem;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 4rem;
 }
 
 /* Contact Info Column */
@@ -106,6 +106,12 @@
 
 .contact-link:hover {
   color: var(--footer-text-accent);
+}
+
+.contact-address {
+  color: var(--footer-text-secondary);
+  font-style: normal;
+  line-height: 1.5;
 }
 
 /* Services Column */
@@ -482,7 +488,7 @@
    ==================================================================== */
 
 @media (max-width: 1024px) {
-  .info-grid-wrapper {
+  .info-grid-wrapper.simplified-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     padding: 0 1.5rem;
@@ -497,7 +503,7 @@
 }
 
 @media (max-width: 768px) {
-  .info-grid-wrapper {
+  .info-grid-wrapper.simplified-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
     padding: 0 1rem;
@@ -543,7 +549,7 @@
 
 @media (max-width: 480px) {
   .newsletter-wrapper,
-  .info-grid-wrapper {
+  .info-grid-wrapper.simplified-grid {
     padding: 0 1rem;
   }
 

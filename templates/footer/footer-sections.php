@@ -68,132 +68,85 @@ function render_footer_hero_section() {
 }
 
 /**
- * Section 2: Four-Column Information Grid
+ * Section 2: Simplified Information Grid
  */
 function render_footer_info_grid() {
     ?>
     <section class="footer-info-grid" aria-label="Contact Information and Services">
         <div class="container">
-            <div class="info-grid-wrapper">
+            <div class="info-grid-wrapper simplified-grid">
 
                 <!-- Contact Information Column -->
                 <div class="info-column contact-info" role="region" aria-labelledby="contact-heading">
-                    <h3 id="contact-heading" class="column-title">
-                        <span class="column-icon" aria-hidden="true">📍</span>
-                        Contact Info
-                    </h3>
+                    <h3 id="contact-heading" class="column-title">Contact Info</h3>
                     <div class="column-content">
                         <div class="contact-item">
                             <span class="contact-icon" aria-hidden="true">📞</span>
                             <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', get_theme_mod('footer_phone', '(310) 555-0123')); ?>"
                                class="contact-link">
-                                <span class="contact-label">Call Now:</span>
-                                <span class="contact-value"><?php echo get_theme_mod('footer_phone', '(310) 555-0123'); ?></span>
+                                <?php echo get_theme_mod('footer_phone', '(310) 555-0123'); ?>
                             </a>
                         </div>
                         <div class="contact-item">
                             <span class="contact-icon" aria-hidden="true">📧</span>
                             <a href="mailto:<?php echo get_theme_mod('footer_email', 'info@medspaa.com'); ?>"
                                class="contact-link">
-                                <span class="contact-label">Email:</span>
-                                <span class="contact-value"><?php echo get_theme_mod('footer_email', 'info@medspaa.com'); ?></span>
+                                <?php echo get_theme_mod('footer_email', 'info@medspaa.com'); ?>
                             </a>
                         </div>
                         <div class="contact-item">
                             <span class="contact-icon" aria-hidden="true">📍</span>
                             <address class="contact-address">
-                                <span class="contact-label">Address:</span>
-                                <span class="contact-value"><?php echo get_theme_mod('footer_address', '123 Beverly Drive, Beverly Hills, CA 90210'); ?></span>
+                                <?php echo get_theme_mod('footer_address', '123 Beverly Drive, Beverly Hills, CA 90210'); ?>
                             </address>
-                        </div>
-                        <div class="contact-item">
-                            <span class="contact-icon" aria-hidden="true">🗺️</span>
-                            <a href="<?php echo get_theme_mod('footer_directions_url', 'https://maps.google.com'); ?>"
-                               class="contact-link" target="_blank" rel="noopener">
-                                <span class="contact-label">Get Directions</span>
-                            </a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Services Column -->
                 <div class="info-column services-info" role="region" aria-labelledby="services-heading">
-                    <h3 id="services-heading" class="column-title">
-                        <span class="column-icon" aria-hidden="true">🏥</span>
-                        Our Services
-                    </h3>
+                    <h3 id="services-heading" class="column-title">Services</h3>
                     <nav class="column-content" aria-label="Medical Spa Services">
                         <ul class="services-list">
                             <li class="service-item">
                                 <a href="<?php echo get_theme_mod('footer_service_1_url', '/treatments/facials/'); ?>" class="service-link">
-                                    <span class="service-icon" aria-hidden="true">✨</span>
                                     <?php echo get_theme_mod('footer_service_1', 'Luxury Facials'); ?>
                                 </a>
                             </li>
                             <li class="service-item">
                                 <a href="<?php echo get_theme_mod('footer_service_2_url', '/treatments/botox/'); ?>" class="service-link">
-                                    <span class="service-icon" aria-hidden="true">💉</span>
                                     <?php echo get_theme_mod('footer_service_2', 'Botox & Fillers'); ?>
                                 </a>
                             </li>
                             <li class="service-item">
                                 <a href="<?php echo get_theme_mod('footer_service_3_url', '/treatments/laser/'); ?>" class="service-link">
-                                    <span class="service-icon" aria-hidden="true">🌟</span>
                                     <?php echo get_theme_mod('footer_service_3', 'Laser Treatments'); ?>
-                                </a>
-                            </li>
-                            <li class="service-item">
-                                <a href="<?php echo get_theme_mod('footer_service_4_url', '/treatments/massage/'); ?>" class="service-link">
-                                    <span class="service-icon" aria-hidden="true">💆</span>
-                                    <?php echo get_theme_mod('footer_service_4', 'Therapeutic Massage'); ?>
                                 </a>
                             </li>
                         </ul>
                     </nav>
                 </div>
 
-                <!-- Practice Info & Hours Column -->
-                <div class="info-column practice-info" role="region" aria-labelledby="practice-info-heading">
-                    <h3 id="practice-info-heading" class="column-title">
-                        <span class="column-icon" aria-hidden="true">⏰</span>
-                        Practice Info
-                    </h3>
+                <!-- Hours Column -->
+                <div class="info-column hours-info" role="region" aria-labelledby="hours-heading">
+                    <h3 id="hours-heading" class="column-title">Hours</h3>
                     <div class="column-content">
-                        <div class="practice-info-list">
-                            <div class="practice-info-item">
-                                <span class="practice-info-label">Hours:</span>
-                                <span class="practice-info-value"><?php echo get_theme_mod('footer_hours_weekday', '9:00 AM - 6:00 PM'); ?> - <?php echo get_theme_mod('footer_hours_saturday', '10:00 AM - 4:00 PM'); ?> (Sat)</span>
+                        <div class="hours-list">
+                            <div class="hours-item">
+                                <span class="hours-day">Mon-Fri</span>
+                                <span class="hours-time"><?php echo get_theme_mod('footer_hours_weekday', '9:00 AM - 6:00 PM'); ?></span>
                             </div>
-                            <div class="practice-info-item">
-                                <span class="practice-info-label">Sunday:</span>
-                                <span class="practice-info-value"><?php echo get_theme_mod('footer_hours_sunday', 'By Appointment'); ?></span>
+                            <div class="hours-item">
+                                <span class="hours-day">Saturday</span>
+                                <span class="hours-time"><?php echo get_theme_mod('footer_hours_saturday', '10:00 AM - 4:00 PM'); ?></span>
                             </div>
-                            <div class="practice-info-item">
-                                <span class="practice-info-label">Emergency Consultations:</span>
-                                <span class="practice-info-value"><?php echo get_theme_mod('footer_hours_note', '24/7'); ?></span>
+                            <div class="hours-item">
+                                <span class="hours-day">Sunday</span>
+                                <span class="hours-time"><?php echo get_theme_mod('footer_hours_sunday', 'By Appointment'); ?></span>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- About/Doctor Column -->
-                <div class="info-column about-info" role="region" aria-labelledby="about-heading">
-                    <h3 id="about-heading" class="column-title">
-                        <span class="column-icon" aria-hidden="true">👨‍⚕️</span>
-                        About Us
-                    </h3>
-                    <div class="column-content">
-                        <div class="doctor-profile">
-                            <div class="doctor-image">
-                                <img src="<?php echo get_theme_mod('footer_doctor_image', get_template_directory_uri() . '/assets/images/default-doctor.jpg'); ?>"
-                                     alt="<?php echo get_theme_mod('footer_doctor_name', 'Dr. Preeti Sharma'); ?>"
-                                     class="doctor-photo" loading="lazy">
-                            </div>
-                            <div class="doctor-info">
-                                <h4 class="doctor-name"><?php echo get_theme_mod('footer_doctor_name', 'Dr. Preeti Sharma'); ?></h4>
-                                <p class="doctor-credentials"><?php echo get_theme_mod('footer_doctor_credentials', 'Board Certified Physician'); ?></p>
-                                <p class="doctor-bio"><?php echo get_theme_mod('footer_doctor_bio', 'Specializing in luxury medical spa treatments with over 15 years of experience.'); ?></p>
-                            </div>
+                        <div class="hours-note">
+                            <?php echo get_theme_mod('footer_hours_note', 'Emergency consultations available 24/7'); ?>
                         </div>
                     </div>
                 </div>

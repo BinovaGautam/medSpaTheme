@@ -95,7 +95,8 @@ function medspa_components_init() {
  * Based on systematic analysis: Only 1 of 5 footer sections showing (20% completion)
  * This fix restores missing 80% of footer functionality immediately.
  */
-add_filter('theme_mod_footer_enable_hero', '__return_true', 999);
+// DISABLED: Hero section force-enable (user requested removal)
+// add_filter('theme_mod_footer_enable_hero', '__return_true', 999);
 add_filter('theme_mod_footer_enable_map', '__return_true', 999);
 add_filter('theme_mod_footer_enable_newsletter', '__return_true', 999);
 
