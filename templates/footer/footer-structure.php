@@ -3,7 +3,7 @@
  * Footer Structure Template
  *
  * Provides the structural foundation for the luxury medical spa footer
- * Sprint: SPRINT-FOOTER-IMPL-001 | Task: T-FOOTER-004 (Google Maps Integration)
+ * Sprint: SPRINT-6-EXT | Task: T6.8-EXT-3 (Revised) - Simplified Elegant Design
  *
  * @package MedSpaTheme
  * @since 1.0.0
@@ -20,25 +20,25 @@ require_once get_template_directory() . '/templates/footer/footer-sections.php';
 
 <div class="footer-structure-wrapper">
 
-    <!-- Section 1: Hero Call-to-Action Section -->
-    <?php if (get_theme_mod('footer_enable_hero', true)) : ?>
+    <!-- Section 1: Hero Call-to-Action Section - DISABLED for Simplified Design -->
+    <?php if (get_theme_mod('footer_enable_hero', false)) : ?>
         <?php render_footer_hero_section(); ?>
     <?php endif; ?>
 
-    <!-- Section 2: Four-Column Information Grid -->
+    <!-- Section 1: Four-Column Information Grid -->
     <?php render_footer_info_grid(); ?>
 
-    <!-- Section 3: Interactive Google Maps Integration -->
+    <!-- Section 2: Interactive Google Maps Integration -->
     <?php if (get_theme_mod('footer_enable_map', true)) : ?>
         <?php get_template_part('templates/footer/footer-map'); ?>
     <?php endif; ?>
 
-    <!-- Section 4: Newsletter & Social Engagement -->
+    <!-- Section 3: Newsletter & Social Engagement -->
     <?php if (get_theme_mod('footer_enable_newsletter', true)) : ?>
         <?php render_footer_newsletter_section(); ?>
     <?php endif; ?>
 
-    <!-- Section 5: Footer Navigation & Legal -->
+    <!-- Section 4: Footer Navigation & Legal -->
     <?php render_footer_legal_section(); ?>
 
 </div><!-- .footer-structure-wrapper -->

@@ -1,0 +1,557 @@
+/*
+ * Simplified Elegant Footer Design
+ * Sprint: SPRINT-6-EXT | Task: T6.8-EXT-3 (Revised)
+ *
+ * Simple, elegant footer without hero section
+ * Flat colors with luxury medical spa palette
+ * Proper contrast and clean aesthetics
+ *
+ * @package MedSpaTheme
+ * @since 1.0.0
+ */
+
+/* ====================================================================
+   SIMPLIFIED COLOR PALETTE
+   ==================================================================== */
+
+:root {
+  /* Luxury Medical Spa Palette - Flat Colors */
+  --footer-forest-green: #2d5a27;
+  --footer-sage-green: #87a96b;
+  --footer-medical-gold: #d4af37;
+  --footer-soft-gold: #f4e4bc;
+
+  /* Contrast-Optimized Text Colors */
+  --footer-text-primary: #ffffff;
+  --footer-text-secondary: rgba(255, 255, 255, 0.9);
+  --footer-text-muted: rgba(255, 255, 255, 0.7);
+  --footer-text-accent: #f4e4bc;
+
+  /* Background Variations */
+  --footer-bg-primary: #2d5a27;
+  --footer-bg-secondary: #245020;
+  --footer-bg-light: #87a96b;
+  --footer-bg-accent: #d4af37;
+}
+
+/* ====================================================================
+   MAIN FOOTER CONTAINER
+   ==================================================================== */
+
+.site-footer.simplified-elegant {
+  background: var(--footer-bg-primary);
+  color: var(--footer-text-primary);
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+}
+
+/* ====================================================================
+   SECTION 1: FOUR-COLUMN INFORMATION GRID
+   ==================================================================== */
+
+.footer-info-grid {
+  background: var(--footer-bg-primary);
+  padding: 4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-grid-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 3rem;
+}
+
+/* Contact Info Column */
+.info-column.contact-info {
+  background: transparent;
+}
+
+.column-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--footer-text-accent);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.contact-item:hover {
+  color: var(--footer-text-accent);
+}
+
+.contact-icon {
+  font-size: 1.125rem;
+  color: var(--footer-medical-gold);
+  min-width: 20px;
+}
+
+.contact-link {
+  color: var(--footer-text-secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--footer-text-accent);
+}
+
+/* Services Column */
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service-item {
+  margin-bottom: 0.75rem;
+}
+
+.service-link {
+  color: var(--footer-text-secondary);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  display: block;
+  transition: all 0.3s ease;
+  border-left: 2px solid transparent;
+  padding-left: 0.75rem;
+}
+
+.service-link:hover {
+  color: var(--footer-text-accent);
+  border-left-color: var(--footer-medical-gold);
+  padding-left: 1rem;
+}
+
+/* Hours Column */
+.hours-list {
+  margin: 0;
+}
+
+.hours-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 0.375rem 0;
+}
+
+.hours-day {
+  color: var(--footer-text-secondary);
+  font-weight: 500;
+}
+
+.hours-time {
+  color: var(--footer-text-accent);
+  font-weight: 600;
+}
+
+.hours-note {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-left: 3px solid var(--footer-medical-gold);
+  font-size: 0.875rem;
+  color: var(--footer-text-muted);
+  font-style: italic;
+}
+
+/* About/Doctor Column */
+.doctor-profile {
+  text-align: center;
+}
+
+.doctor-image {
+  margin-bottom: 1rem;
+}
+
+.doctor-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--footer-medical-gold);
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+
+.doctor-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--footer-text-accent);
+  margin-bottom: 0.25rem;
+}
+
+.doctor-credentials {
+  font-size: 0.875rem;
+  color: var(--footer-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.doctor-bio {
+  font-size: 0.875rem;
+  color: var(--footer-text-secondary);
+  line-height: 1.5;
+}
+
+/* ====================================================================
+   SECTION 2: INTERACTIVE MAP SECTION
+   ==================================================================== */
+
+.footer-map-section {
+  background: var(--footer-bg-secondary);
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.clinic-info-overlay {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(45, 90, 39, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.clinic-name {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--footer-text-accent);
+  margin-bottom: 0.5rem;
+}
+
+.clinic-tagline {
+  color: var(--footer-text-secondary);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.clinic-address {
+  color: var(--footer-text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.directions-btn {
+  background: var(--footer-medical-gold);
+  color: var(--footer-bg-primary);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.directions-btn:hover {
+  background: #b8941f;
+  transform: translateY(-2px);
+}
+
+/* ====================================================================
+   SECTION 3: NEWSLETTER & SOCIAL ENGAGEMENT
+   ==================================================================== */
+
+.footer-newsletter-section {
+  background: var(--footer-bg-light);
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.newsletter-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.newsletter-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--footer-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.newsletter-subtitle {
+  color: var(--footer-text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+}
+
+.newsletter-form {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--footer-text-primary);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--footer-medical-gold);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.newsletter-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-submit {
+  background: var(--footer-medical-gold);
+  color: var(--footer-bg-primary);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newsletter-submit:hover {
+  background: #b8941f;
+  transform: translateY(-2px);
+}
+
+/* Social Media Links */
+.social-media-links {
+  margin-top: 2rem;
+}
+
+.social-title {
+  color: var(--footer-text-primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: var(--footer-text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--footer-medical-gold);
+  color: var(--footer-text-accent);
+  transform: translateY(-2px);
+}
+
+.social-icon {
+  font-size: 1.25rem;
+}
+
+.social-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ====================================================================
+   SECTION 4: FOOTER NAVIGATION & LEGAL
+   ==================================================================== */
+
+.footer-legal-section {
+  background: var(--footer-bg-secondary);
+  padding: 2rem 0;
+}
+
+.footer-legal-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-legal-nav {
+  margin-bottom: 1.5rem;
+}
+
+.legal-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legal-link {
+  color: var(--footer-text-secondary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.legal-link:hover {
+  color: var(--footer-text-accent);
+}
+
+.legal-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--footer-medical-gold);
+  transition: width 0.3s ease;
+}
+
+.legal-link:hover::after {
+  width: 100%;
+}
+
+.footer-copyright {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+}
+
+.copyright-text {
+  color: var(--footer-text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.licensing-text {
+  color: var(--footer-text-accent);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ====================================================================
+   RESPONSIVE DESIGN
+   ==================================================================== */
+
+@media (max-width: 1024px) {
+  .info-grid-wrapper {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 0 1.5rem;
+  }
+
+  .clinic-info-overlay {
+    top: 1rem;
+    right: 1rem;
+    max-width: 250px;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-grid-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .footer-info-grid {
+    padding: 3rem 0;
+  }
+
+  .form-group {
+    flex-direction: column;
+  }
+
+  .newsletter-input,
+  .newsletter-submit {
+    width: 100%;
+  }
+
+  .clinic-info-overlay {
+    position: relative;
+    top: auto;
+    right: auto;
+    max-width: none;
+    margin: 1rem;
+  }
+
+  .legal-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+
+  .social-link {
+    flex-direction: column;
+    text-align: center;
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-wrapper,
+  .info-grid-wrapper {
+    padding: 0 1rem;
+  }
+
+  .newsletter-title {
+    font-size: 1.5rem;
+  }
+
+  .column-title {
+    font-size: 1.125rem;
+  }
+}
