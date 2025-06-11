@@ -139,6 +139,26 @@ function medspa_theme_setup() {
 add_action('after_setup_theme', 'medspa_theme_setup');
 
 /**
+ * CRITICAL: Header body class function for spacing fix
+ * Determines header transparency and content spacing based on page type
+ */
+function add_header_body_classes($classes) {
+    // Check if this is the homepage with hero section
+    if (is_front_page() || is_home()) {
+        // Homepage should have transparent header
+        $classes[] = 'transparent-header';
+        $classes[] = 'has-hero-section';
+    } else {
+        // All other pages should have solid header with proper spacing
+        $classes[] = 'solid-header';
+        $classes[] = 'no-hero-section';
+    }
+
+    return $classes;
+}
+add_filter('body_class', 'add_header_body_classes');
+
+/**
  * Sprint 2 PVC-007-DT: Enqueue Design Token System Assets
  */
 function preetidreams_enqueue_design_token_system() {
@@ -398,10 +418,27 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // Header fix styles - CRITICAL: Content spacing to prevent hiding behind fixed header
+    wp_enqueue_style(
+        'header-fix-styles',
+        get_template_directory_uri() . '/assets/css/header-fix.css',
+        array('medical-spa-theme'),
+        PREETIDREAMS_VERSION
+    );
+
     wp_enqueue_script(
         'hero-component-scripts',
         get_template_directory_uri() . '/assets/js/components/hero.js',
         array('jquery', 'wp-util'),
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Header scroll transparency script
+    wp_enqueue_script(
+        'header-scroll-transparency',
+        get_template_directory_uri() . '/assets/js/header-scroll-transparency.js',
+        array(),
         PREETIDREAMS_VERSION,
         true
     );
