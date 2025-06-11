@@ -86,34 +86,6 @@ function medspa_components_init() {
 }
 
 /**
- * 🚨 EMERGENCY FIX: Force-Enable Missing Footer Sections
- *
- * FOOTER-RESTORE-001: WordPress Customizer database settings may be overriding
- * code defaults. These filters ensure all footer sections render regardless
- * of database settings.
- *
- * Based on systematic analysis: Only 1 of 5 footer sections showing (20% completion)
- * This fix restores missing 80% of footer functionality immediately.
- */
-// DISABLED: Hero section force-enable (user requested removal)
-// add_filter('theme_mod_footer_enable_hero', '__return_true', 999);
-add_filter('theme_mod_footer_enable_map', '__return_true', 999);
-add_filter('theme_mod_footer_enable_newsletter', '__return_true', 999);
-
-// Add debug information for footer section rendering
-if (defined('WP_DEBUG') && WP_DEBUG) {
-    add_action('wp_footer', function() {
-        if (current_user_can('manage_options')) {
-            echo "<!-- Footer Section Debug Info -->\n";
-            echo "<!-- Hero Enabled: " . (get_theme_mod('footer_enable_hero', true) ? 'TRUE' : 'FALSE') . " -->\n";
-            echo "<!-- Map Enabled: " . (get_theme_mod('footer_enable_map', true) ? 'TRUE' : 'FALSE') . " -->\n";
-            echo "<!-- Newsletter Enabled: " . (get_theme_mod('footer_enable_newsletter', true) ? 'TRUE' : 'FALSE') . " -->\n";
-            echo "<!-- Footer Restore Fix: ACTIVE -->\n";
-        }
-    });
-}
-
-/**
  * ============================================================================
  * VISUAL CUSTOMIZER INTEGRATION
  * ============================================================================
@@ -162,7 +134,6 @@ function medspa_theme_setup() {
     // Register navigation menus
     register_nav_menus(array(
         'primary' => esc_html__('Primary Menu', 'preetidreams'),
-        'footer' => esc_html__('Footer Menu', 'preetidreams'),
     ));
 }
 add_action('after_setup_theme', 'medspa_theme_setup');
@@ -403,71 +374,39 @@ require_once get_template_directory() . '/inc/typography-performance.php';
  * Enqueue theme styles and scripts
  */
 function medspa_theme_styles() {
-    // CRITICAL: Main medical spa theme stylesheet - MUST LOAD FIRST
+    // Main theme styles
     wp_enqueue_style(
         'medical-spa-theme',
-        get_template_directory_uri() . '/assets/css/medical-spa-theme.css',
-        [],
-        time(), // Force cache refresh
-        'all'
-    );
-
-    // Main theme stylesheet (contains imports and fallbacks)
-    wp_enqueue_style('preetidreams-style', get_stylesheet_uri(), ['medical-spa-theme'], PREETIDREAMS_VERSION);
-
-    // Button component styles
-    wp_enqueue_style(
-        'button-component-styles',
-        get_template_directory_uri() . '/assets/css/components/button.css',
-        ['medical-spa-theme'],
+        get_stylesheet_uri(),
+        array(),
         PREETIDREAMS_VERSION
     );
 
-    // Card component styles (T6.4 Implementation)
+    // Component styles
     wp_enqueue_style(
-        'card-component-styles',
-        get_template_directory_uri() . '/assets/css/components/card.css',
-        ['medical-spa-theme'],
+        'component-system-styles',
+        get_template_directory_uri() . '/assets/css/components/components.css',
+        array('medical-spa-theme'),
         PREETIDREAMS_VERSION
     );
 
-    // Form component styles (T6.5 Implementation)
+    // Hero component
     wp_enqueue_style(
-        'form-component-styles',
-        get_template_directory_uri() . '/assets/css/components/form.css',
-        ['medical-spa-theme'],
+        'hero-component-styles',
+        get_template_directory_uri() . '/assets/css/components/hero.css',
+        array('medical-spa-theme'),
         PREETIDREAMS_VERSION
     );
 
-    // CRITICAL: Visual Customizer Enhancement Styles
-    wp_enqueue_style(
-        'customizer-enhancements',
-        get_template_directory_uri() . '/assets/css/customizer-enhancements.css',
-        ['medical-spa-theme'],
-        PREETIDREAMS_VERSION
+    wp_enqueue_script(
+        'hero-component-scripts',
+        get_template_directory_uri() . '/assets/js/components/hero.js',
+        array('jquery', 'wp-util'),
+        PREETIDREAMS_VERSION,
+        true
     );
 
-    // 🚨 URGENT: Hero Contrast Fixes for WCAG 2.1 AA Compliance
-    wp_enqueue_style(
-        'hero-contrast-fixes',
-        get_template_directory_uri() . '/assets/css/components/hero-contrast-fixes.css',
-        ['medical-spa-theme'],
-        time(), // Force cache refresh for urgent fix
-        'all'
-    );
-
-    // 🚨 DISABLED: Footer Emergency CSS (was causing destruction)
-    /*
-    wp_enqueue_style(
-        'footer-emergency-fixes',
-        get_template_directory_uri() . '/assets/css/components/footer-emergency-fixes.css',
-        ['medical-spa-theme', 'footer-component-styles', 'footer-luxury-styles'],
-        time(), // Force cache refresh for critical fix
-        'all'
-    );
-    */
-
-    // T6.6 Modal System Scripts and Styles
+    // Modal component
     wp_enqueue_style(
         'modal-component-styles',
         get_template_directory_uri() . '/assets/css/components/modal.css',
@@ -494,115 +433,6 @@ function medspa_theme_styles() {
         'cancelText' => __('Cancel', 'medspatheme'),
         'okText' => __('OK', 'medspatheme')
     ));
-
-    // T6.8 Footer Component Scripts and Styles
-    wp_enqueue_style(
-        'footer-component-styles',
-        get_template_directory_uri() . '/assets/css/components/footer.css',
-        array('medical-spa-theme'),
-        time() // Force cache refresh
-    );
-
-    wp_enqueue_script(
-        'footer-component-scripts',
-        get_template_directory_uri() . '/assets/js/components/footer.js',
-        array('jquery', 'wp-util'),
-        filemtime(get_template_directory() . '/assets/js/components/footer.js'),
-        true
-    );
-
-    // T6.8.2 Footer Google Maps Integration
-    wp_enqueue_script(
-        'footer-maps-scripts',
-        get_template_directory_uri() . '/assets/js/footer-maps.js',
-        array('jquery'),
-        filemtime(get_template_directory() . '/assets/js/footer-maps.js'),
-        true
-    );
-
-    // T-FOOTER-005: Luxury Visual Design Implementation
-    wp_enqueue_style(
-        'footer-luxury-styles',
-        get_template_directory_uri() . '/assets/css/components/footer-luxury.css',
-        array('footer-component-styles', 'footer-tokenized'),
-        PREETIDREAMS_VERSION
-    );
-
-    wp_enqueue_style(
-        'footer-interactions-styles',
-        get_template_directory_uri() . '/assets/css/animations/footer-interactions.css',
-        array('footer-luxury-styles'),
-        PREETIDREAMS_VERSION
-    );
-
-    // T-FOOTER-006: Responsive Design Implementation
-    wp_enqueue_style(
-        'footer-responsive-styles',
-        get_template_directory_uri() . '/assets/css/responsive/footer-responsive.css',
-        array('footer-luxury-styles', 'footer-interactions-styles'),
-        PREETIDREAMS_VERSION
-    );
-
-    // T6.8-EXT-2: Enhanced Spacing Implementation
-    wp_enqueue_style(
-        'footer-enhanced-spacing',
-        get_template_directory_uri() . '/assets/css/components/footer-enhanced-spacing.css',
-        array('footer-luxury-styles'),
-        PREETIDREAMS_VERSION
-    );
-
-    // T6.8-EXT-3: Visual Polish & Typography Enhancement
-    wp_enqueue_style(
-        'footer-visual-polish',
-        get_template_directory_uri() . '/assets/css/components/footer-visual-polish.css',
-        array('footer-enhanced-spacing'),
-        PREETIDREAMS_VERSION
-    );
-
-    // T6.8-EXT-3: Advanced Microinteractions
-    wp_enqueue_style(
-        'footer-microinteractions',
-        get_template_directory_uri() . '/assets/css/components/footer-microinteractions.css',
-        array('footer-visual-polish'),
-        PREETIDREAMS_VERSION
-    );
-
-    // T-FOOTER-007: Newsletter & Social Engagement JavaScript
-    wp_enqueue_script(
-        'footer-newsletter-scripts',
-        get_template_directory_uri() . '/assets/js/footer-newsletter.js',
-        array('jquery', 'footer-component-scripts'),
-        PREETIDREAMS_VERSION,
-        true
-    );
-
-    // Localize footer scripts
-    wp_localize_script('footer-component-scripts', 'footerSettings', array(
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('footer_nonce'),
-        'backToTopText' => __('Back to top', 'medspatheme'),
-        'phoneCallText' => __('Initiating phone call...', 'medspatheme'),
-        'emailText' => __('Opening email client...', 'medspatheme'),
-        'socialMediaText' => __('Opening social media...', 'medspatheme'),
-        'scrollToTopText' => __('Scrolled to top of page', 'medspatheme'),
-        'loadingText' => __('Loading...', 'medspatheme'),
-        'analytics' => array(
-            'enabled' => true,
-            'trackCTA' => true,
-            'trackSocial' => true,
-            'trackContact' => true
-        )
-    ));
-
-    // CRITICAL FIX: Moved footer maps script inside the function where it belongs
-    // Footer Maps JavaScript
-    wp_enqueue_script(
-        'footer-maps',
-        get_template_directory_uri() . '/assets/js/footer-maps.js',
-        ['jquery'], // Removed 'google-maps-api' dependency that might not exist
-        PREETIDREAMS_VERSION, // Use defined constant instead of filemtime
-        true
-    );
 
     // Component system styles (if needed for other components)
     if (class_exists('ComponentRegistry')) {
@@ -635,17 +465,6 @@ function medspatheme_scripts() {
     // Comment reply script
     if (is_singular() && comments_open() && get_option('comment_registration')) {
         wp_enqueue_script('comment-reply');
-    }
-
-    // Enqueue footer customizer preview script in customizer
-    if (is_customize_preview()) {
-        wp_enqueue_script(
-            'footer-customizer-preview',
-            get_template_directory_uri() . '/assets/js/footer-customizer-preview.js',
-            array('jquery', 'customize-preview'),
-            PREETIDREAMS_VERSION,
-            true
-        );
     }
 }
 add_action('wp_enqueue_scripts', 'medspatheme_scripts');
@@ -696,134 +515,4 @@ if (current_user_can('manage_options')) {
     if (file_exists($layout_debugger_path)) {
         require_once $layout_debugger_path;
     }
-
-    // BUG-RESOLVER-001: Footer Debug Tool for systematic issue resolution
-    $footer_debug_path = get_template_directory() . '/devtools/wp-admin-tools/footer-debug-tool.php';
-    if (file_exists($footer_debug_path)) {
-        require_once $footer_debug_path;
-    }
 }
-
-/**
- * Include footer customizer with error handling
- */
-$footer_customizer_path = get_template_directory() . '/inc/customizer/footer-customizer.php';
-if (file_exists($footer_customizer_path)) {
-    require $footer_customizer_path;
-}
-
-/**
- * T-FOOTER-007: Newsletter Subscription AJAX Handler
- * Handle newsletter subscription submissions
- */
-function footer_newsletter_subscribe_handler() {
-    // Verify nonce
-    if (!wp_verify_nonce($_POST['nonce'], 'footer_nonce')) {
-        wp_send_json_error(array(
-            'message' => 'Security verification failed. Please refresh and try again.'
-        ));
-        return;
-    }
-
-    // Sanitize email
-    $email = sanitize_email($_POST['email']);
-
-    if (!is_email($email)) {
-        wp_send_json_error(array(
-            'message' => 'Please enter a valid email address.'
-        ));
-        return;
-    }
-
-    // Check if email already exists (if using WordPress users or custom table)
-    if (email_exists($email)) {
-        wp_send_json_success(array(
-            'message' => 'You are already subscribed to our newsletter!'
-        ));
-        return;
-    }
-
-    try {
-        // Store subscription (customize based on your newsletter service)
-        $subscription_data = array(
-            'email' => $email,
-            'source' => 'footer',
-            'date_subscribed' => current_time('mysql'),
-            'ip_address' => $_SERVER['REMOTE_ADDR'],
-            'user_agent' => $_SERVER['HTTP_USER_AGENT']
-        );
-
-        // Option 1: Store in WordPress options (simple approach)
-        $existing_subscribers = get_option('footer_newsletter_subscribers', array());
-        if (!in_array($email, $existing_subscribers)) {
-            $existing_subscribers[] = $email;
-            update_option('footer_newsletter_subscribers', $existing_subscribers);
-        }
-
-        // Option 2: Store in custom database table (commented out - implement if needed)
-        /*
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'newsletter_subscribers';
-
-        $result = $wpdb->insert(
-            $table_name,
-            $subscription_data,
-            array('%s', '%s', '%s', '%s', '%s')
-        );
-        */
-
-        // Option 3: Integrate with external newsletter service (MailChimp, ConvertKit, etc.)
-        // Add your integration code here
-
-        // Send confirmation email (optional)
-        $subject = 'Welcome to ' . get_bloginfo('name') . ' Newsletter';
-        $message = 'Thank you for subscribing to our newsletter! We\'ll keep you updated with the latest news and exclusive offers.';
-        $headers = array('Content-Type: text/html; charset=UTF-8');
-
-        wp_mail($email, $subject, $message, $headers);
-
-        // Success response
-        wp_send_json_success(array(
-            'message' => 'Thank you for subscribing! Please check your email for confirmation.'
-        ));
-
-    } catch (Exception $e) {
-        wp_send_json_error(array(
-            'message' => 'Subscription failed. Please try again later.'
-        ));
-    }
-}
-
-// Register AJAX handlers
-add_action('wp_ajax_footer_newsletter_subscribe', 'footer_newsletter_subscribe_handler');
-add_action('wp_ajax_nopriv_footer_newsletter_subscribe', 'footer_newsletter_subscribe_handler');
-
-/**
- * Create newsletter subscribers table (run once)
- * Uncomment and run if you want to use database storage
- */
-/*
-function create_newsletter_subscribers_table() {
-    global $wpdb;
-
-    $table_name = $wpdb->prefix . 'newsletter_subscribers';
-
-    $charset_collate = $wpdb->get_charset_collate();
-
-    $sql = "CREATE TABLE $table_name (
-        id int(11) NOT NULL AUTO_INCREMENT,
-        email varchar(255) NOT NULL,
-        source varchar(50) DEFAULT 'footer',
-        date_subscribed datetime DEFAULT CURRENT_TIMESTAMP,
-        ip_address varchar(45),
-        user_agent text,
-        status varchar(20) DEFAULT 'active',
-        PRIMARY KEY (id),
-        UNIQUE KEY email (email)
-    ) $charset_collate;";
-
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    dbDelta($sql);
-}
-// register_activation_hook(__FILE__, 'create_newsletter_subscribers_table');
-*/
