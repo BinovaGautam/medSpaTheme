@@ -61,6 +61,13 @@
   /* Backdrop Effects */
   --luxury-backdrop: blur(10px) saturate(150%);
   --luxury-backdrop-strong: blur(20px) saturate(180%);
+
+  /* Enhanced Spacing System - Luxury Redesign */
+  --luxury-spacing-section: 4rem;     /* Generous section padding */
+  --luxury-spacing-content: 2.5rem;   /* Optimal content spacing */
+  --luxury-spacing-element: 1.5rem;   /* Harmonious element margins */
+  --luxury-spacing-compact: 1rem;     /* Compact spacing for fine details */
+  --luxury-spacing-micro: 0.5rem;     /* Micro spacing for precision */
 }
 
 /* ====================================================================
