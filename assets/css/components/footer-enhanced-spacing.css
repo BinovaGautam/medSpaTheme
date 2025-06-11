@@ -1,0 +1,186 @@
+/*
+ * Footer Enhanced Spacing System
+ * Sprint: SPRINT-6-EXT | Task: T6.8-EXT-2
+ *
+ * Implementation of luxury spacing system with generous padding,
+ * optimal content spacing, and harmonious element margins
+ *
+ * @package MedSpaTheme
+ * @since 1.0.0
+ */
+
+/* ====================================================================
+   ENHANCED SPACING OVERRIDES
+   ==================================================================== */
+
+/* Hero Section Enhanced Spacing */
+.footer-hero-section {
+  padding: var(--luxury-spacing-section) 0; /* 4rem generous section padding */
+}
+
+.footer-hero-content {
+  padding: 0 var(--luxury-spacing-content); /* 2.5rem optimal content spacing */
+}
+
+.footer-hero-title {
+  margin-bottom: var(--luxury-spacing-element); /* 1.5rem harmonious element margin */
+}
+
+.footer-hero-subtitle {
+  margin-bottom: var(--luxury-spacing-content); /* 2.5rem optimal content spacing */
+}
+
+.footer-hero-actions {
+  gap: var(--luxury-spacing-element); /* 1.5rem harmonious gap */
+  margin-bottom: var(--luxury-spacing-content); /* 2.5rem optimal margin */
+}
+
+.footer-hero-badges {
+  gap: var(--luxury-spacing-element); /* 1.5rem harmonious gap */
+}
+
+/* Info Grid Enhanced Spacing */
+.footer-info-grid {
+  padding: var(--luxury-spacing-section) 0; /* 4rem generous section padding */
+}
+
+.info-grid-wrapper {
+  gap: var(--luxury-spacing-content); /* 2.5rem optimal grid gap */
+  padding: 0 var(--luxury-spacing-element); /* 1.5rem horizontal padding */
+}
+
+.info-column {
+  padding: var(--luxury-spacing-content); /* 2.5rem optimal content padding */
+}
+
+.column-title {
+  margin-bottom: var(--luxury-spacing-element); /* 1.5rem harmonious title margin */
+}
+
+/* Contact Info Enhanced Spacing */
+.contact-item {
+  margin-bottom: var(--luxury-spacing-element); /* 1.5rem harmonious element margin */
+  padding: var(--luxury-spacing-compact); /* 1rem compact padding */
+}
+
+/* Services List Enhanced Spacing */
+.service-item {
+  margin-bottom: var(--luxury-spacing-compact); /* 1rem compact spacing */
+}
+
+.service-link {
+  padding: var(--luxury-spacing-compact); /* 1rem compact padding */
+}
+
+/* Hours List Enhanced Spacing */
+.hours-item {
+  margin-bottom: var(--luxury-spacing-compact); /* 1rem compact spacing */
+  padding: var(--luxury-spacing-compact); /* 1rem compact padding */
+}
+
+.hours-note {
+  margin-top: var(--luxury-spacing-element); /* 1.5rem harmonious top margin */
+  padding: var(--luxury-spacing-compact); /* 1rem compact padding */
+}
+
+/* Doctor Profile Enhanced Spacing */
+.doctor-image {
+  margin-bottom: var(--luxury-spacing-element); /* 1.5rem harmonious margin */
+}
+
+/* Newsletter Section Enhanced Spacing */
+.footer-newsletter-section {
+  padding: var(--luxury-spacing-section) 0; /* 4rem generous section padding */
+}
+
+.newsletter-wrapper {
+  padding: var(--luxury-spacing-content); /* 2.5rem optimal content padding */
+  margin: 0 var(--luxury-spacing-element); /* 1.5rem horizontal margin */
+}
+
+.newsletter-title {
+  margin-bottom: var(--luxury-spacing-compact); /* 1rem compact margin */
+}
+
+.newsletter-subtitle {
+  margin-bottom: var(--luxury-spacing-element); /* 1.5rem harmonious margin */
+}
+
+.newsletter-form {
+  margin-bottom: var(--luxury-spacing-element); /* 1.5rem harmonious margin */
+}
+
+/* Social Media Enhanced Spacing */
+.social-icons {
+  gap: var(--luxury-spacing-compact); /* 1rem compact gap */
+}
+
+.social-link {
+  padding: var(--luxury-spacing-compact); /* 1rem compact padding */
+}
+
+/* Legal Section Enhanced Spacing */
+.footer-legal-section {
+  padding: var(--luxury-spacing-element) 0; /* 1.5rem harmonious section padding */
+}
+
+.legal-links {
+  gap: var(--luxury-spacing-content); /* 2.5rem optimal gap */
+}
+
+/* Map Section Enhanced Spacing */
+.clinic-info-overlay .overlay-content {
+  padding: var(--luxury-spacing-content); /* 2.5rem optimal content padding */
+}
+
+/* ====================================================================
+   RESPONSIVE ENHANCED SPACING
+   ==================================================================== */
+
+@media (max-width: 768px) {
+  /* Mobile: Reduce spacing proportionally */
+  .footer-hero-section,
+  .footer-info-grid,
+  .footer-newsletter-section {
+    padding: calc(var(--luxury-spacing-section) * 0.75) 0; /* 3rem on mobile */
+  }
+
+  .footer-hero-content,
+  .newsletter-wrapper,
+  .info-column {
+    padding: calc(var(--luxury-spacing-content) * 0.8) calc(var(--luxury-spacing-element) * 0.8); /* Proportional mobile padding */
+  }
+
+  .info-grid-wrapper {
+    gap: calc(var(--luxury-spacing-content) * 0.8); /* Proportional mobile gap */
+    padding: 0 calc(var(--luxury-spacing-element) * 0.8); /* Proportional mobile padding */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Small Mobile: Further spacing reduction */
+  .footer-hero-section,
+  .footer-info-grid,
+  .footer-newsletter-section {
+    padding: calc(var(--luxury-spacing-section) * 0.5) 0; /* 2rem on small mobile */
+  }
+
+  .footer-hero-content,
+  .newsletter-wrapper,
+  .info-column {
+    padding: calc(var(--luxury-spacing-content) * 0.6) calc(var(--luxury-spacing-element) * 0.6); /* Compact mobile padding */
+  }
+}
+
+@media (min-width: 1200px) {
+  /* Large Desktop: Enhanced spacing */
+  .footer-hero-section,
+  .footer-info-grid,
+  .footer-newsletter-section {
+    padding: calc(var(--luxury-spacing-section) * 1.25) 0; /* 5rem on large desktop */
+  }
+
+  .info-grid-wrapper {
+    gap: calc(var(--luxury-spacing-content) * 1.2); /* Enhanced large desktop gap */
+  }
+}

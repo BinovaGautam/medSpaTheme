@@ -542,6 +542,14 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // T6.8-EXT-2: Enhanced Spacing Implementation
+    wp_enqueue_style(
+        'footer-enhanced-spacing',
+        get_template_directory_uri() . '/assets/css/components/footer-enhanced-spacing.css',
+        array('footer-luxury-styles'),
+        PREETIDREAMS_VERSION
+    );
+
     // T-FOOTER-007: Newsletter & Social Engagement JavaScript
     wp_enqueue_script(
         'footer-newsletter-scripts',
