@@ -30,6 +30,11 @@ Tags: medical-spa, luxury, healthcare, accessibility, hipaa-conscious, responsiv
 @import url('./assets/css/medical-spa-theme.css');
 
 /* =============================================================================
+   FOOTER COMPONENT IMPORT
+   ============================================================================= */
+@import url('./assets/css/components/footer.css');
+
+/* =============================================================================
    WordPress Theme Fallback Styles (Legacy Support)
    ============================================================================= */
 

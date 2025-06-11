@@ -499,6 +499,15 @@ function medspatheme_scripts() {
         wp_enqueue_script('medspatheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), PREETIDREAMS_VERSION, true);
     }
 
+    // Footer component JavaScript
+    wp_enqueue_script(
+        'footer-component',
+        get_template_directory_uri() . '/assets/js/components/footer.js',
+        array('jquery'),
+        PREETIDREAMS_VERSION,
+        true
+    );
+
     // Comment reply script
     if (is_singular() && comments_open() && get_option('comment_registration')) {
         wp_enqueue_script('comment-reply');
