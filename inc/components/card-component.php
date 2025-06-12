@@ -467,12 +467,22 @@ class CardComponent extends BaseComponent {
     protected function generate_card_attributes($config) {
         $attributes = [];
 
-        // Accessibility attributes
-        $accessibility_attrs = $this->get_accessibility_attributes([
+        // Accessibility attributes (get_accessibility_attributes returns a string, not array)
+        $accessibility_attrs_string = $this->get_accessibility_attributes([
             'role' => $config['role'],
             'aria-label' => $config['aria_label'] ?: ($config['title'] ? 'Card: ' . $config['title'] : 'Content card'),
             'tabindex' => '0'
         ]);
+
+        // Parse the accessibility string into array format for merging
+        $accessibility_attrs = [];
+        if (!empty($accessibility_attrs_string)) {
+            // Extract attributes from string format like ' role="region" aria-label="Card title"'
+            preg_match_all('/(\w+(?:-\w+)*)="([^"]*)"/', $accessibility_attrs_string, $matches, PREG_SET_ORDER);
+            foreach ($matches as $match) {
+                $accessibility_attrs[$match[1]] = $match[2];
+            }
+        }
 
         $attributes = array_merge($attributes, $accessibility_attrs);
 
