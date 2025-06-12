@@ -218,10 +218,47 @@ get_header(); ?>
                 </div>
 
                 <!-- Regenerative PRP (Microneedling) - T7.2.4 -->
-                <div class="treatment-placeholder grid-item" role="listitem">
-                    <h3 class="treatment-title">Regenerative PRP</h3>
-                    <p class="treatment-description">Microneedling with PRP</p>
-                    <!-- TreatmentCard integration point -->
+                <div class="treatment-card treatment-card--regenerative-prp grid-item" role="listitem">
+                    <div class="treatment-card__image-container">
+                        <img class="treatment-card__image"
+                             src="<?php echo get_template_directory_uri(); ?>/assets/images/treatments/regenerative-prp-placeholder.jpg"
+                             alt="Regenerative PRP Treatment - Microneedling with PRP"
+                             loading="lazy">
+                        <div class="treatment-card__overlay">
+                            <span class="treatment-card__category">Regenerative PRP</span>
+                        </div>
+                    </div>
+                    <div class="treatment-card__content">
+                        <h3 class="treatment-card__title">Regenerative PRP</h3>
+                        <p class="treatment-card__subtitle">Microneedling with PRP</p>
+                        <p class="treatment-card__description">
+                            Harness your body's natural healing power with our regenerative PRP treatment.
+                            This advanced microneedling therapy uses your own platelet-rich plasma to
+                            stimulate collagen production and accelerate skin renewal for remarkable results.
+                        </p>
+                        <div class="treatment-card__features">
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">🧬</span>
+                                <span class="treatment-feature__text">Collagen Boost</span>
+                            </div>
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">🌿</span>
+                                <span class="treatment-feature__text">Natural Healing</span>
+                            </div>
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">✨</span>
+                                <span class="treatment-feature__text">Skin Renewal</span>
+                            </div>
+                        </div>
+                        <div class="treatment-card__cta">
+                            <button class="btn btn--primary treatment-card__button" type="button" aria-label="Learn more about Regenerative PRP treatments">
+                                Learn More
+                            </button>
+                            <button class="btn btn--secondary treatment-card__button" type="button" aria-label="Book consultation for Regenerative PRP">
+                                Book Consultation
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Wellness Infusions (IV Vitamins) - T7.2.5 -->
