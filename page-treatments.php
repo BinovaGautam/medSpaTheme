@@ -24,23 +24,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
 
 get_header(); ?>
 
-<!-- DEBUG OUTPUT (visible only in debug mode) -->
-<?php if (defined('WP_DEBUG') && WP_DEBUG && current_user_can('manage_options')): ?>
-<div style="background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
-    <strong>COMPONENT DEBUG STATUS:</strong><br>
-    ButtonComponent: <?php echo class_exists('ButtonComponent') ? '✅ LOADED' : '❌ MISSING'; ?><br>
-    TreatmentCard: <?php echo class_exists('TreatmentCard') ? '✅ LOADED' : '❌ MISSING'; ?><br>
-    FeatureCard: <?php echo class_exists('FeatureCard') ? '✅ LOADED' : '❌ MISSING'; ?><br>
-    CardComponent: <?php echo class_exists('CardComponent') ? '✅ LOADED' : '❌ MISSING'; ?><br>
-    ComponentRegistry: <?php echo class_exists('ComponentRegistry') ? '✅ LOADED' : '❌ MISSING'; ?><br>
-    <?php if (class_exists('ComponentRegistry')): ?>
-        Registered Components: <?php
-        $registered = ComponentRegistry::get_registered_components();
-        echo !empty($registered) ? count($registered) . ' components' : 'None';
-        ?>
-    <?php endif; ?>
-</div>
-<?php endif; ?>
+
 
 <main id="main" class="treatments-luxury-main" role="main">
 
@@ -156,6 +140,8 @@ get_header(); ?>
             </div>
         </div>
     </section>
+
+
 
     <!-- Artistic Category Discovery Section using TreatmentCard -->
     <section id="treatment-artistry" class="treatment-artistry-discovery" aria-labelledby="artistry-title">
@@ -497,7 +483,7 @@ get_header(); ?>
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    /* overflow: hidden; - REMOVED: This was preventing page scrolling */
 }
 
 .hero-parallax-container {
