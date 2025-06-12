@@ -2,9 +2,9 @@
   "designsIndex": {
     "version": "1.0.0",
     "lastUpdated": "{CURRENT_DATE}",
-    "totalDesigns": 3,
-    "activeDesigns": 3,
-    "designCategories": ["ui-ux", "visual-systems", "components"]
+    "totalDesigns": 4,
+    "activeDesigns": 4,
+    "designCategories": ["ui-ux", "visual-systems", "components", "page-designs"]
   },
 
   "activeDesigns": {
@@ -62,6 +62,111 @@
         "accessibility-compliance",
         "responsive-color-layouts"
       ]
+    },
+
+    "treatmentsOverviewPageDesign": {
+      "designId": "TREATMENTS-OVERVIEW-UI-001",
+      "status": "active",
+      "category": "page-designs",
+      "priority": 1,
+      "description": "Complete treatments overview page redesign with all 9 core services, luxury medical spa aesthetic, and WCAG AAA accessibility",
+      "specialization": "medical-spa-page-design",
+      "location": "levCompiler/project_context/designs/TREATMENTS_OVERVIEW_PAGE_DESIGN.md",
+      "lastModified": "{CURRENT_DATE}",
+      "designPhase": "concept-created",
+      "implementationReady": false,
+      "agent": "UI-UX-DESIGN-001",
+      "workflow": "UI-UX-CREATION-WF-001",
+      "features": [
+        "9-core-services-integration",
+        "mobile-first-responsive-design",
+        "wcag-aaa-accessibility-compliance",
+        "conversion-optimization-strategy",
+        "luxury-medical-spa-branding",
+        "before-after-gallery-integration",
+        "consultation-booking-optimization",
+        "doctor-credibility-showcase"
+      ],
+      "services": [
+        "botox-fillers",
+        "hydrafacial",
+        "dermaplanning",
+        "microneedling-prp",
+        "iv-vitamins",
+        "permanent-makeup",
+        "laser-hair-reduction",
+        "carbon-peel-laser",
+        "emscult-muscle-builder"
+      ],
+      "nextStage": "stakeholder-review"
+    },
+
+    "treatmentsPageDesignSystemIntegration": {
+      "designId": "TREATMENTS-INTEGRATION-001",
+      "status": "active",
+      "category": "page-designs",
+      "priority": 1,
+      "description": "Complete design system integration mapping for treatments overview page with existing Sage WordPress components and design tokens",
+      "specialization": "component-integration-planning",
+      "location": "levCompiler/project_context/designs/TREATMENTS_PAGE_DESIGN_SYSTEM_INTEGRATION.md",
+      "lastModified": "{CURRENT_DATE}",
+      "designPhase": "integration-complete",
+      "implementationReady": true,
+      "agent": "UI-UX-DESIGN-001",
+      "workflow": "UI-UX-CREATION-WF-001",
+      "features": [
+        "component-architecture-mapping",
+        "design-token-integration-plan",
+        "responsive-implementation-strategy",
+        "accessibility-compliance-preservation",
+        "visual-customizer-compatibility",
+        "performance-optimization-plan",
+        "conversion-tracking-integration"
+      ],
+      "componentMapping": {
+        "heroSection": "ButtonComponent",
+        "treatmentCards": "TreatmentCard",
+        "doctorProfile": "CardComponent",
+        "testimonials": "TestimonialCard",
+        "trustSignals": "FeatureCard",
+        "consultationBooking": "FormComponent"
+      },
+      "tokenCompliance": "100%",
+      "nextStage": "implementation-planning"
+    },
+
+    "treatmentsOverviewVisualDesignSemantic": {
+      "designId": "TREATMENTS-VISUAL-SEMANTIC-001",
+      "status": "active",
+      "category": "page-designs",
+      "priority": 1,
+      "description": "Complete semantic tokenized visual design for treatments overview page with mobile and desktop UI specifications using zero hardcoded values",
+      "specialization": "semantic-tokenized-visual-design",
+      "location": "levCompiler/project_context/designs/TREATMENTS_OVERVIEW_VISUAL_DESIGN_SEMANTIC.md",
+      "lastModified": "{CURRENT_DATE}",
+      "designPhase": "visual-design-complete",
+      "implementationReady": true,
+      "agent": "UI-UX-DESIGN-001",
+      "workflow": "UI-UX-CREATION-WF-001",
+      "complianceStatus": "DESIGN-SYSTEM-COMPLIANCE-WF-001-VALIDATED",
+      "features": [
+        "zero-hardcoded-values-policy",
+        "semantic-token-specifications",
+        "mobile-desktop-visual-designs",
+        "wcag-aaa-accessibility-compliance",
+        "responsive-token-specifications",
+        "component-token-mapping",
+        "design-system-integration-ready"
+      ],
+      "semanticTokenCompliance": {
+        "colors": "100%-semantic-tokens",
+        "typography": "100%-semantic-tokens",
+        "spacing": "100%-semantic-tokens",
+        "borders": "100%-semantic-tokens",
+        "shadows": "100%-semantic-tokens",
+        "transitions": "100%-semantic-tokens"
+      },
+      "nextStage": "implementation-ready"
     }
   },
 

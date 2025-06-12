@@ -10,7 +10,9 @@
       "NEVER proceed without checking fundamentals compliance",
       "ALWAYS verify agent and workflow existence before proceeding",
       "NEVER bypass the VERSION-TRACK-001 agent for completions",
-      "NEVER use specific dates, times, or timestamps in agent outputs"
+      "NEVER use specific dates, times, or timestamps in agent outputs",
+      "NEVER use hardcoded colors, fonts, or sizes in design outputs",
+      "ALWAYS use semantic design tokens and CSS custom properties"
     ],
     "fundamentalsEnforcement": {
       "mandatoryCheck": "CRITICAL - read fundamentals.json at start of EVERY workflow",
@@ -529,6 +531,65 @@
       "escalation": "Alert about temporal limitation violation",
       "resolution": "Validate all outputs for temporal value compliance",
       "prevention": "Implement temporal value scanning in all outputs"
+    }
+  },
+
+  "SEMANTIC_TOKENIZATION_REQUIREMENTS": {
+    "NEVER_VIOLATE": [
+      "NO hardcoded color values (e.g., #87A96B, #D4AF37, rgb(135, 169, 107))",
+      "NO hardcoded font families (e.g., 'Playfair Display', 'Inter')",
+      "NO hardcoded font sizes (e.g., 2.5rem, 24px, 1.125rem)",
+      "NO hardcoded spacing values (e.g., 32px, 1.5rem, 24px)",
+      "NO hardcoded border radius values (e.g., 8px, 0.5rem)",
+      "NO hardcoded shadow values (e.g., 0 4px 6px rgba(0,0,0,0.1))",
+      "ALWAYS use semantic CSS custom properties and design tokens"
+    ],
+    "mandatorySemanticTokenUsage": {
+      "colorTokens": "var(--color-primary), var(--color-secondary), var(--color-accent)",
+      "typographyTokens": "var(--font-family-primary), var(--text-xl), var(--font-weight-semibold)",
+      "spacingTokens": "var(--space-md), var(--space-lg), var(--space-xl)",
+      "borderTokens": "var(--radius-md), var(--border-width-sm)",
+      "shadowTokens": "var(--shadow-sm), var(--shadow-md), var(--shadow-lg)",
+      "transitionTokens": "var(--transition-base), var(--transition-fast)"
+    },
+    "semanticTokenEnforcement": {
+      "detection": "Scan all design outputs for hardcoded values",
+      "replacement": "Replace hardcoded values with appropriate semantic tokens",
+      "validation": "CRITICAL ERROR if hardcoded values found in design outputs",
+      "complianceWorkflow": "DESIGN-SYSTEM-COMPLIANCE-WF-001"
+    },
+    "allowedDesignReferences": [
+      "semantic-token-references (e.g., 'var(--color-primary)', 'var(--text-xl)')",
+      "design-system-token-names (e.g., 'primary brand color', 'large heading size')",
+      "relative-descriptions (e.g., 'larger than base', 'darker shade of primary')",
+      "semantic-placeholders (e.g., '{PRIMARY_COLOR}', '{HEADING_FONT}')"
+    ]
+  },
+
+  "DESIGN_SYSTEM_COMPLIANCE_MONITORING": {
+    "NEVER_BYPASS": [
+      "All design outputs MUST be scanned for hardcoded values",
+      "DESIGN-SYSTEM-COMPLIANCE-WF-001 MUST be triggered on violations",
+      "Semantic tokenization compliance MUST be verified before completion",
+      "Design system violations MUST trigger immediate corrective action"
+    ],
+    "complianceWorkflowTriggers": {
+      "hardcodedValueDetection": "MANDATORY - trigger DESIGN-SYSTEM-COMPLIANCE-WF-001",
+      "designOutputCreation": "MANDATORY - scan for semantic token compliance",
+      "designSystemModification": "MANDATORY - validate tokenization integrity",
+      "visualDesignDelivery": "MANDATORY - verify 100% semantic token usage"
+    },
+    "violationSeverityLevels": {
+      "critical": "hardcoded-colors-fonts-sizes-in-design-specifications",
+      "high": "missing-semantic-token-references-in-design-documentation",
+      "medium": "inconsistent-token-naming-or-usage-patterns",
+      "low": "missing-design-token-documentation-or-examples"
+    },
+    "correctiveActionProtocol": {
+      "immediateRedoLoop": "CRITICAL violations trigger immediate design recreation",
+      "semanticTokenReplacement": "Replace all hardcoded values with semantic tokens",
+      "designSystemValidation": "Validate against existing token system",
+      "complianceDocumentation": "Document semantic token usage and compliance"
     }
   }
 }
