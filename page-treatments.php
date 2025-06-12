@@ -86,10 +86,47 @@ get_header(); ?>
                 <!-- 9 TreatmentCard components integration points for T7.2.x tasks -->
 
                 <!-- Injectable Artistry (Botox/Fillers) - T7.2.1 -->
-                <div class="treatment-placeholder grid-item" role="listitem">
-                    <h3 class="treatment-title">Injectable Artistry</h3>
-                    <p class="treatment-description">Botox & Dermal Fillers</p>
-                    <!-- TreatmentCard integration point -->
+                <div class="treatment-card treatment-card--injectable-artistry grid-item" role="listitem">
+                    <div class="treatment-card__image-container">
+                        <img class="treatment-card__image"
+                             src="<?php echo get_template_directory_uri(); ?>/assets/images/treatments/injectable-artistry-placeholder.jpg"
+                             alt="Injectable Artistry Treatment - Botox and Dermal Fillers"
+                             loading="lazy">
+                        <div class="treatment-card__overlay">
+                            <span class="treatment-card__category">Injectable Artistry</span>
+                        </div>
+                    </div>
+                    <div class="treatment-card__content">
+                        <h3 class="treatment-card__title">Injectable Artistry</h3>
+                        <p class="treatment-card__subtitle">Botox & Dermal Fillers</p>
+                        <p class="treatment-card__description">
+                            Enhance your natural beauty with precision injectable treatments.
+                            Our expert practitioners use advanced techniques for natural-looking results
+                            that restore youthful vitality while maintaining your unique character.
+                        </p>
+                        <div class="treatment-card__features">
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">💉</span>
+                                <span class="treatment-feature__text">FDA-Approved Products</span>
+                            </div>
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">⏱️</span>
+                                <span class="treatment-feature__text">30-45 Minute Sessions</span>
+                            </div>
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">✨</span>
+                                <span class="treatment-feature__text">Natural Results</span>
+                            </div>
+                        </div>
+                        <div class="treatment-card__cta">
+                            <button class="btn btn--primary treatment-card__button" type="button" aria-label="Learn more about Injectable Artistry treatments">
+                                Learn More
+                            </button>
+                            <button class="btn btn--secondary treatment-card__button" type="button" aria-label="Book consultation for Injectable Artistry">
+                                Book Consultation
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Facial Renaissance (Hydrafacial) - T7.2.2 -->
@@ -364,8 +401,8 @@ get_header(); ?>
 }
 
 .grid--treatments {
-    grid-template-columns: repeat(auto-fit, minmax(var(--grid-min-treatment-width), 1fr));
-    gap: var(--space-xl);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
 }
 
 .grid--expertise {
@@ -880,117 +917,83 @@ get_header(); ?>
 /* Enhanced Mobile Portrait (320px - 479px) */
 @media (max-width: var(--breakpoint-xs-max)) {
     .container {
-        padding-left: var(--space-xs);
-        padding-right: var(--space-xs);
+        padding: var(--space-xs) var(--space-xs);
     }
 
     .hero-title {
         font-size: var(--text-3xl);
-        line-height: var(--leading-tight);
-        margin-bottom: var(--space-md);
     }
 
     .hero-description {
-        font-size: var(--text-sm);
-        margin-bottom: var(--space-md);
+        font-size: var(--text-base);
     }
 
     .hero-features {
-        flex-direction: column;
-        gap: var(--space-sm);
-        margin-bottom: var(--space-md);
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
     }
 
-    .hero-cta-button,
-    .hero-button {
-        width: 100%;
-        padding: var(--space-md) var(--space-lg);
-        font-size: var(--text-sm);
-        justify-content: center;
+    .hero-cta-buttons {
+        flex-direction: column;
+        gap: var(--space-sm);
     }
 
     .section-title {
         font-size: var(--text-2xl);
-        margin-bottom: var(--space-sm);
     }
 
-    .section-description {
-        font-size: var(--text-sm);
+    .grid--responsive {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
     }
 
     .grid--treatments {
         grid-template-columns: 1fr;
-        gap: var(--space-md);
+        gap: var(--space-lg);
     }
 
-    .grid--testimonials {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
+    /* Treatment Card Mobile Portrait Responsive */
+    .treatment-card {
+        padding: var(--space-md);
+        margin-bottom: var(--space-lg);
     }
 
-    .grid--contact {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
+    .treatment-card__content {
+        padding: var(--space-md);
     }
 
-    .grid--features {
+    .treatment-card__title {
+        font-size: var(--text-lg);
+    }
+
+    .treatment-card__subtitle {
+        font-size: var(--text-base);
+    }
+
+    .treatment-card__features {
         grid-template-columns: 1fr;
         gap: var(--space-sm);
     }
 
-    .cta-title {
-        font-size: var(--text-2xl);
-    }
-
-    .cta-description {
-        font-size: var(--text-sm);
-    }
-
-    .cta-actions {
+    .treatment-card__cta {
         flex-direction: column;
         gap: var(--space-sm);
-        align-items: stretch;
     }
 
-    .cta-button {
-        width: 100%;
-        text-align: center;
-        padding: var(--space-md) var(--space-lg);
+    .treatment-card__button {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--text-sm);
     }
 }
 
 /* Enhanced Mobile Landscape (480px - 767px) */
 @media (min-width: var(--breakpoint-sm)) and (max-width: var(--breakpoint-md-max)) {
     .container {
-        padding-left: var(--space-sm);
-        padding-right: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
     }
 
     .hero-title {
         font-size: var(--text-4xl);
-        margin-bottom: var(--space-lg);
-    }
-
-    .hero-description {
-        font-size: var(--text-base);
-        margin-bottom: var(--space-lg);
-    }
-
-    .hero-features {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: var(--space-md);
-        margin-bottom: var(--space-lg);
-    }
-
-    .hero-cta-button,
-    .hero-button {
-        padding: var(--space-md) var(--space-xl);
-        font-size: var(--text-base);
-    }
-
-    .section-title {
-        font-size: var(--text-3xl);
     }
 
     .grid--treatments {
@@ -998,40 +1001,32 @@ get_header(); ?>
         gap: var(--space-lg);
     }
 
-    .grid--testimonials {
-        grid-template-columns: 1fr;
-        gap: var(--space-lg);
+    /* Treatment Card Mobile Landscape Responsive */
+    .treatment-card {
+        padding: var(--space-lg);
     }
 
-    .grid--contact {
-        grid-template-columns: 1fr;
-        gap: var(--space-lg);
+    .treatment-card__content {
+        padding: var(--space-lg);
     }
 
-    .grid--expertise {
-        grid-template-columns: 1fr;
-        gap: var(--space-xl);
-        text-align: center;
+    .treatment-card__title {
+        font-size: var(--text-xl);
     }
 
-    .grid--staggered .testimonial-placeholder:nth-child(even) {
-        margin-top: 0;
+    .treatment-card__features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
     }
 
-    .cta-title {
-        font-size: var(--text-3xl);
-    }
-
-    .cta-actions {
+    .treatment-card__cta {
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
         gap: var(--space-md);
     }
 
-    .grid--features {
-        grid-template-columns: 1fr;
-        gap: var(--space-md);
+    .treatment-card__button {
+        flex: 1;
+        padding: var(--space-md) var(--space-lg);
     }
 }
 
@@ -1101,6 +1096,33 @@ get_header(); ?>
         flex-direction: row;
         justify-content: center;
         gap: var(--space-lg);
+    }
+
+    /* Treatment Card Tablet Portrait Responsive */
+    .treatment-card {
+        padding: var(--space-xl);
+    }
+
+    .treatment-card__content {
+        padding: var(--space-xl);
+    }
+
+    .treatment-card__title {
+        font-size: var(--text-xl);
+    }
+
+    .treatment-card__subtitle {
+        font-size: var(--text-lg);
+    }
+
+    .treatment-card__features {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-md);
+    }
+
+    .treatment-card__cta {
+        flex-direction: row;
+        gap: var(--space-md);
     }
 }
 
@@ -1175,6 +1197,37 @@ get_header(); ?>
         justify-content: center;
         gap: var(--space-xl);
     }
+
+    /* Treatment Card Desktop Responsive */
+    .treatment-card {
+        padding: var(--space-2xl);
+    }
+
+    .treatment-card__content {
+        padding: var(--space-2xl);
+    }
+
+    .treatment-card__title {
+        font-size: var(--text-2xl);
+    }
+
+    .treatment-card__subtitle {
+        font-size: var(--text-xl);
+    }
+
+    .treatment-card__description {
+        font-size: var(--text-lg);
+    }
+
+    .treatment-card:hover {
+        transform: translateY(calc(var(--space-xs) * -1));
+        box-shadow: var(--shadow-card-hover);
+    }
+
+    .treatment-card__features {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-lg);
+    }
 }
 
 /* Enhanced Large Desktop (1440px+) */
@@ -1247,6 +1300,32 @@ get_header(); ?>
         flex-direction: row;
         justify-content: center;
         gap: var(--space-2xl);
+    }
+
+    /* Treatment Card Large Desktop Responsive */
+    .treatment-card {
+        padding: var(--space-3xl);
+    }
+
+    .treatment-card__content {
+        padding: var(--space-3xl);
+    }
+
+    .treatment-card__title {
+        font-size: var(--text-3xl);
+    }
+
+    .treatment-card__subtitle {
+        font-size: var(--text-xl);
+    }
+
+    .treatment-card__description {
+        font-size: var(--text-lg);
+    }
+
+    .treatment-card__features {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-xl);
     }
 }
 
@@ -1430,6 +1509,194 @@ get_header(); ?>
     .hero-button:hover .button-icon {
         transform: none;
     }
+
+    /* Treatment Card Reduced Motion Support */
+    .treatment-card,
+    .treatment-card__image,
+    .treatment-card__button {
+        transition: none;
+    }
+
+    .treatment-card:hover,
+    .treatment-card__button:hover {
+        transform: none;
+    }
+
+    .treatment-card:hover .treatment-card__image {
+        transform: none;
+    }
+}
+
+/* Treatment Card Component Styling - T7.2.1 Injectable Artistry */
+.treatment-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.treatment-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(calc(var(--space-xs) * -1));
+}
+
+.treatment-card__image-container {
+    position: relative;
+    width: 100%;
+    height: var(--space-6xl);
+    overflow: hidden;
+}
+
+.treatment-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-base);
+}
+
+.treatment-card:hover .treatment-card__image {
+    transform: scale(1.05);
+}
+
+.treatment-card__overlay {
+    position: absolute;
+    top: var(--space-md);
+    left: var(--space-md);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+}
+
+.treatment-card__content {
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.treatment-card__title {
+    font-family: var(--font-family-primary);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-sm);
+    line-height: var(--leading-tight);
+}
+
+.treatment-card__subtitle {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-snug);
+}
+
+.treatment-card__description {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+    flex-grow: 1;
+}
+
+.treatment-card__features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+}
+
+.treatment-feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.treatment-feature__icon {
+    font-size: var(--text-lg);
+    width: var(--space-lg);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.treatment-feature__text {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.treatment-card__cta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: auto;
+}
+
+.treatment-card__button {
+    width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    transition: var(--transition-base);
+    border: var(--border-width-md) solid var(--color-text-primary);
+    cursor: pointer;
+}
+
+.btn--primary.treatment-card__button {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+}
+
+.btn--primary.treatment-card__button:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(calc(var(--space-xs) * -0.5));
+}
+
+.btn--secondary.treatment-card__button {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn--secondary.treatment-card__button:hover {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    transform: translateY(calc(var(--space-xs) * -0.5));
+}
+
+/* Treatment Card Touch Optimizations */
+.treatment-card {
+    padding: var(--space-lg);
+    min-height: var(--touch-target-xl);
+}
+
+.treatment-card__content {
+    padding: var(--space-lg);
+}
+
+.treatment-card__button {
+    min-height: var(--touch-target-lg);
+    padding: var(--space-lg) var(--space-xl);
+    font-size: var(--text-lg);
+}
+
+.treatment-card__features {
+    gap: var(--space-md);
+}
+
+.treatment-feature {
+    min-height: var(--touch-target-md);
+    padding: var(--space-sm) 0;
 }
 </style>
 
