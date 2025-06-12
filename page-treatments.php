@@ -12,7 +12,35 @@
  * - Design token inheritance from design-system-compiled.css
  */
 
+// DEBUG: Component loading status
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log('=== TREATMENTS PAGE DEBUG ===');
+    error_log('ButtonComponent exists: ' . (class_exists('ButtonComponent') ? 'YES' : 'NO'));
+    error_log('TreatmentCard exists: ' . (class_exists('TreatmentCard') ? 'YES' : 'NO'));
+    error_log('FeatureCard exists: ' . (class_exists('FeatureCard') ? 'YES' : 'NO'));
+    error_log('CardComponent exists: ' . (class_exists('CardComponent') ? 'YES' : 'NO'));
+    error_log('ComponentRegistry exists: ' . (class_exists('ComponentRegistry') ? 'YES' : 'NO'));
+}
+
 get_header(); ?>
+
+<!-- DEBUG OUTPUT (visible only in debug mode) -->
+<?php if (defined('WP_DEBUG') && WP_DEBUG && current_user_can('manage_options')): ?>
+<div style="background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc; font-family: monospace; font-size: 12px;">
+    <strong>COMPONENT DEBUG STATUS:</strong><br>
+    ButtonComponent: <?php echo class_exists('ButtonComponent') ? '✅ LOADED' : '❌ MISSING'; ?><br>
+    TreatmentCard: <?php echo class_exists('TreatmentCard') ? '✅ LOADED' : '❌ MISSING'; ?><br>
+    FeatureCard: <?php echo class_exists('FeatureCard') ? '✅ LOADED' : '❌ MISSING'; ?><br>
+    CardComponent: <?php echo class_exists('CardComponent') ? '✅ LOADED' : '❌ MISSING'; ?><br>
+    ComponentRegistry: <?php echo class_exists('ComponentRegistry') ? '✅ LOADED' : '❌ MISSING'; ?><br>
+    <?php if (class_exists('ComponentRegistry')): ?>
+        Registered Components: <?php
+        $registered = ComponentRegistry::get_registered_components();
+        echo !empty($registered) ? count($registered) . ' components' : 'None';
+        ?>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
 
 <main id="main" class="treatments-luxury-main" role="main">
 
@@ -49,17 +77,36 @@ get_header(); ?>
                             <?php
                             // Use semantic ButtonComponent for hero CTA
                             if (class_exists('ButtonComponent')) {
-                                $button_component = new ButtonComponent();
-                                echo $button_component->render([
-                                    'text' => 'Discover Your Journey',
-                                    'url' => '#treatment-artistry',
-                                    'variant' => 'primary',
-                                    'size' => 'large',
-                                    'icon' => '✨',
-                                    'icon_position' => 'right',
-                                    'aria_label' => 'Discover our treatment artistry',
-                                    'css_class' => 'hero-discovery-btn'
-                                ]);
+                                try {
+                                    $button_component = new ButtonComponent();
+                                    $button_output = $button_component->render([
+                                        'text' => 'Discover Your Journey',
+                                        'url' => '#treatment-artistry',
+                                        'variant' => 'primary',
+                                        'size' => 'large',
+                                        'icon' => '✨',
+                                        'icon_position' => 'right',
+                                        'aria_label' => 'Discover our treatment artistry',
+                                        'css_class' => 'hero-discovery-btn'
+                                    ]);
+                                    echo $button_output;
+
+                                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                                        error_log('ButtonComponent rendered successfully: ' . strlen($button_output) . ' characters');
+                                    }
+                                } catch (Exception $e) {
+                                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                                        error_log('ButtonComponent error: ' . $e->getMessage());
+                                    }
+                                    // Fallback button
+                                    echo '<a href="#treatment-artistry" class="btn btn-primary hero-discovery-btn">Discover Your Journey ✨</a>';
+                                }
+                            } else {
+                                if (defined('WP_DEBUG') && WP_DEBUG) {
+                                    error_log('ButtonComponent class not found');
+                                }
+                                // Fallback button
+                                echo '<a href="#treatment-artistry" class="btn btn-primary hero-discovery-btn">Discover Your Journey ✨</a>';
                             }
                             ?>
                         </div>
@@ -128,7 +175,12 @@ get_header(); ?>
 
                 <?php
                 if (class_exists('TreatmentCard')) {
-                    $treatment_card = new TreatmentCard();
+                    try {
+                        $treatment_card = new TreatmentCard();
+
+                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                            error_log('TreatmentCard instantiated successfully');
+                        }
 
                     $treatment_categories = [
                         [
@@ -254,10 +306,43 @@ get_header(); ?>
                     ];
 
                     foreach ($treatment_categories as $treatment) {
-                        echo '<div class="treatment-category-wrapper">';
-                        echo $treatment_card->render($treatment);
-                        echo '</div>';
+                        try {
+                            echo '<div class="treatment-category-wrapper">';
+                            $treatment_output = $treatment_card->render($treatment);
+                            echo $treatment_output;
+                            echo '</div>';
+
+                            if (defined('WP_DEBUG') && WP_DEBUG) {
+                                error_log('TreatmentCard rendered successfully: ' . strlen($treatment_output) . ' characters');
+                            }
+                        } catch (Exception $e) {
+                            if (defined('WP_DEBUG') && WP_DEBUG) {
+                                error_log('TreatmentCard render error: ' . $e->getMessage());
+                            }
+                            // Fallback treatment card
+                            echo '<div class="treatment-category-wrapper">';
+                            echo '<div class="fallback-treatment-card">';
+                            echo '<h3>' . esc_html($treatment['title']) . '</h3>';
+                            echo '<p>' . esc_html($treatment['content']) . '</p>';
+                            echo '<a href="#consultation-invitation" class="btn btn-primary">Learn More</a>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
                     }
+
+                    } catch (Exception $e) {
+                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                            error_log('TreatmentCard instantiation error: ' . $e->getMessage());
+                        }
+                        // Fallback message
+                        echo '<div class="component-error">Treatment cards are temporarily unavailable. Please contact us directly.</div>';
+                    }
+                } else {
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('TreatmentCard class not found');
+                    }
+                    // Fallback message
+                    echo '<div class="component-error">Treatment information is loading...</div>';
                 }
                 ?>
 

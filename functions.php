@@ -30,7 +30,16 @@ require_once get_template_directory() . '/inc/components/base-component.php';
 require_once get_template_directory() . '/inc/components/component-registry.php';
 require_once get_template_directory() . '/inc/components/component-factory.php';
 require_once get_template_directory() . '/inc/components/component-auto-loader.php';
+
+// Load Core Components (Sprint 6 Implementation)
 require_once get_template_directory() . '/inc/components/button-component.php';
+require_once get_template_directory() . '/inc/components/card-component.php';
+require_once get_template_directory() . '/inc/components/treatment-card.php';
+require_once get_template_directory() . '/inc/components/testimonial-card.php';
+require_once get_template_directory() . '/inc/components/feature-card.php';
+require_once get_template_directory() . '/inc/components/form-component.php';
+require_once get_template_directory() . '/inc/components/modal-component.php';
+require_once get_template_directory() . '/inc/components/accordion-component.php';
 
 // Load demo component for testing (will be replaced with production components)
 require_once get_template_directory() . '/inc/components/demo-button-component.php';
@@ -60,29 +69,44 @@ if (is_admin()) {
 }
 
 // Initialize component system with auto-discovery
-add_action('after_setup_theme', 'medspa_components_init', 5);
+add_action('after_setup_theme', 'medspa_components_init', 10);
 function medspa_components_init() {
-    // Component system is automatically initialized by the auto-loader
-
-    // Register demo button component for testing
-    if (!ComponentRegistry::is_registered('demo-button')) {
-        require_once get_template_directory() . '/inc/components/demo-button-component.php';
+    // Ensure ComponentRegistry is available
+    if (!class_exists('ComponentRegistry')) {
+        return;
     }
 
-    // Register button component
-    if (!ComponentRegistry::is_registered('button')) {
-        ComponentRegistry::register('button', 'ButtonComponent', [
-            'auto_discovered' => true,
-            'priority' => 10,
-            'css_dependencies' => ['button-component-styles'],
-            'customizer_section' => 'buttons'
-        ]);
+    // Register core components
+    $components = [
+        'button' => 'ButtonComponent',
+        'card' => 'CardComponent',
+        'treatment-card' => 'TreatmentCard',
+        'testimonial-card' => 'TestimonialCard',
+        'feature-card' => 'FeatureCard',
+        'form' => 'FormComponent',
+        'modal' => 'ModalComponent',
+        'accordion' => 'AccordionComponent',
+        'demo-button' => 'DemoButtonComponent'
+    ];
+
+    foreach ($components as $component_id => $component_class) {
+        if (class_exists($component_class) && !ComponentRegistry::is_registered($component_id)) {
+            ComponentRegistry::register($component_id, $component_class, [
+                'auto_discovered' => true,
+                'priority' => 10,
+                'cacheable' => true,
+                'accessibility_required' => true
+            ]);
+        }
     }
 
-    // Auto-discover and register all components
+    // Auto-discover and register any additional components
     if (class_exists('ComponentAutoLoader')) {
         ComponentAutoLoader::discover_and_register_components();
     }
+
+    // Trigger component initialization hook
+    do_action('medspa_components_registered');
 }
 
 /**
