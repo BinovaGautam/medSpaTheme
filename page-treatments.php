@@ -174,10 +174,47 @@ get_header(); ?>
                 </div>
 
                 <!-- Precision Dermaplanning - T7.2.3 -->
-                <div class="treatment-placeholder grid-item" role="listitem">
-                    <h3 class="treatment-title">Precision Dermaplanning</h3>
-                    <p class="treatment-description">Advanced Skin Resurfacing</p>
-                    <!-- TreatmentCard integration point -->
+                <div class="treatment-card treatment-card--precision-dermaplanning grid-item" role="listitem">
+                    <div class="treatment-card__image-container">
+                        <img class="treatment-card__image"
+                             src="<?php echo get_template_directory_uri(); ?>/assets/images/treatments/precision-dermaplanning-placeholder.jpg"
+                             alt="Precision Dermaplanning Treatment - Advanced Skin Resurfacing"
+                             loading="lazy">
+                        <div class="treatment-card__overlay">
+                            <span class="treatment-card__category">Precision Dermaplanning</span>
+                        </div>
+                    </div>
+                    <div class="treatment-card__content">
+                        <h3 class="treatment-card__title">Precision Dermaplanning</h3>
+                        <p class="treatment-card__subtitle">Advanced Skin Resurfacing</p>
+                        <p class="treatment-card__description">
+                            Reveal smoother, brighter skin with our precision dermaplanning treatment.
+                            This gentle exfoliation technique removes dead skin cells and fine facial hair,
+                            leaving your complexion radiant and perfectly smooth.
+                        </p>
+                        <div class="treatment-card__features">
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">✨</span>
+                                <span class="treatment-feature__text">Smooth Texture</span>
+                            </div>
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">🌟</span>
+                                <span class="treatment-feature__text">Brighter Skin</span>
+                            </div>
+                            <div class="treatment-feature">
+                                <span class="treatment-feature__icon" aria-hidden="true">💎</span>
+                                <span class="treatment-feature__text">Gentle Exfoliation</span>
+                            </div>
+                        </div>
+                        <div class="treatment-card__cta">
+                            <button class="btn btn--primary treatment-card__button" type="button" aria-label="Learn more about Precision Dermaplanning treatments">
+                                Learn More
+                            </button>
+                            <button class="btn btn--secondary treatment-card__button" type="button" aria-label="Book consultation for Precision Dermaplanning">
+                                Book Consultation
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Regenerative PRP (Microneedling) - T7.2.4 -->
