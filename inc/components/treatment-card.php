@@ -3,6 +3,7 @@
  * Treatment Card Component
  *
  * Specialized card component for displaying medical spa treatments
+ * following semantic design system and WCAG AAA compliance
  *
  * @package MedSpaTheme
  * @since 1.0.0
@@ -19,50 +20,45 @@ if (!defined('ABSPATH')) {
  * TreatmentCard Class
  *
  * Extends CardComponent to provide specialized functionality
- * for displaying medical spa treatments with pricing, duration,
- * benefits, and booking CTAs.
+ * for displaying medical spa treatments with semantic tokens
+ * and accessibility features.
  */
 class TreatmentCard extends CardComponent {
-
     /**
-     * Get component default configuration for treatments
+     * Get component default configuration
      *
      * @return array Default configuration
      */
     public function get_defaults() {
-        return array_merge(parent::get_defaults(), [
-            // Treatment-specific content
-            'duration' => '',
-            'price' => '',
-            'price_from' => false,
+        return [
+            'id' => '',
+            'title' => '',
+            'icon' => '',
+            'description' => '',
             'benefits' => [],
-            'features' => [],
-            'suitability' => '',
-
-            // Treatment actions
-            'cta_text' => 'Learn More',
-            'cta_url' => '#',
-            'book_text' => 'Book Consultation',
-            'book_url' => '#consultation',
-            'phone_booking' => '',
-
-            // Treatment meta information
-            'category' => '',
-            'popularity' => '', // popular, trending, new
-            'pain_level' => '', // minimal, mild, moderate
-            'downtime' => '',
-            'results_timeline' => '',
-
-            // Pricing display
-            'show_price_range' => false,
-            'price_details' => '',
-            'financing_available' => false,
-
-            // Visual customization
-            'show_badge' => true,
-            'badge_text' => '',
-            'highlight_popular' => true
-        ]);
+            'duration' => '',
+            'cta' => [
+                'primary' => [
+                    'text' => 'Book Now',
+                    'url' => '#'
+                ],
+                'secondary' => [
+                    'text' => 'Learn More',
+                    'url' => '#'
+                ]
+            ],
+            'schema' => [
+                '@type' => 'MedicalProcedure',
+                'name' => '',
+                'description' => '',
+                'bodyLocation' => '',
+                'procedureType' => ''
+            ],
+            'image' => [
+                'src' => '',
+                'alt' => ''
+            ]
+        ];
     }
 
     /**
@@ -73,463 +69,269 @@ class TreatmentCard extends CardComponent {
      */
     public function render($args = []) {
         $config = wp_parse_args($args, $this->get_defaults());
+        $config = $this->sanitize_config($config);
 
-        // Sanitize treatment-specific fields
-        $config = $this->sanitize_treatment_config($config);
+        ob_start();
+        ?>
+        <article class="treatment-card" id="treatment-<?php echo esc_attr($config['id']); ?>"
+                <?php if (!empty($config['schema'])) : ?>
+                    itemscope itemtype="https://schema.org/<?php echo esc_attr($config['schema']['@type']); ?>"
+                <?php endif; ?>>
 
-        // Add treatment-specific classes
-        $config['custom_classes'] = array_merge(
-            $config['custom_classes'] ?? [],
-            ['treatment-card']
-        );
+            <header class="treatment-card__header">
+                <?php if ($config['icon']) : ?>
+                    <span class="treatment-card__icon" aria-hidden="true"><?php echo $config['icon']; ?></span>
+                <?php endif; ?>
 
-        // Add popular/trending badge classes
-        if (!empty($config['popularity'])) {
-            $config['custom_classes'][] = 'treatment-' . $config['popularity'];
-        }
+                <h3 class="treatment-card__title" <?php if (!empty($config['schema'])) echo 'itemprop="name"'; ?>>
+                    <?php echo esc_html($config['title']); ?>
+                </h3>
+            </header>
 
-        // Override meta with treatment-specific information
-        $config['meta'] = $this->generate_treatment_meta($config);
+            <div class="treatment-card__description" <?php if (!empty($config['schema'])) echo 'itemprop="description"'; ?>>
+                <?php echo esc_html($config['description']); ?>
+            </div>
 
-        // Override actions with treatment-specific CTAs
-        $config['actions'] = $this->generate_treatment_actions($config);
+            <?php if (!empty($config['benefits'])) : ?>
+                <ul class="treatment-card__benefits">
+                    <?php foreach ($config['benefits'] as $benefit) : ?>
+                        <li class="treatment-card__benefit"><?php echo esc_html($benefit); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
 
-        // Add treatment badge if enabled
-        if ($config['show_badge'] && !empty($config['badge_text'])) {
-            $config['badge'] = $config['badge_text'];
-        }
+            <div class="treatment-card__meta">
+                <?php if ($config['duration']) : ?>
+                    <div class="treatment-card__duration">
+                        <span class="treatment-card__duration-icon" aria-hidden="true">⏱</span>
+                        <span class="treatment-card__duration-text"><?php echo esc_html($config['duration']); ?></span>
+                    </div>
+                <?php endif; ?>
 
-        return parent::render($config);
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                <?php if ($config['cta']['primary']) : ?>
+                    <a href="<?php echo esc_url($config['cta']['primary']['url']); ?>"
+                       class="treatment-card__button treatment-card__button--primary">
+                        <?php echo esc_html($config['cta']['primary']['text']); ?>
+                    </a>
+                <?php endif; ?>
+
+                <?php if ($config['cta']['secondary']) : ?>
+                    <a href="<?php echo esc_url($config['cta']['secondary']['url']); ?>"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        <?php echo esc_html($config['cta']['secondary']['text']); ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+
+            <?php if (!empty($config['schema'])) : ?>
+                <script type="application/ld+json">
+                    <?php echo wp_json_encode($config['schema']); ?>
+                </script>
+            <?php endif; ?>
+        </article>
+        <?php
+        return ob_get_clean();
     }
 
     /**
-     * Sanitize treatment-specific configuration
+     * Sanitize configuration
      *
      * @param array $config Configuration to sanitize
      * @return array Sanitized configuration
      */
-    protected function sanitize_treatment_config($config) {
-        // Sanitize treatment fields
+    protected function sanitize_config($config) {
+        $config['id'] = sanitize_title($config['id']);
+        $config['title'] = sanitize_text_field($config['title']);
+        $config['icon'] = sanitize_text_field($config['icon']);
+        $config['description'] = sanitize_text_field($config['description']);
         $config['duration'] = sanitize_text_field($config['duration']);
-        $config['price'] = sanitize_text_field($config['price']);
-        $config['suitability'] = sanitize_text_field($config['suitability']);
-        $config['category'] = sanitize_text_field($config['category']);
-        $config['popularity'] = sanitize_text_field($config['popularity']);
-        $config['pain_level'] = sanitize_text_field($config['pain_level']);
-        $config['downtime'] = sanitize_text_field($config['downtime']);
-        $config['results_timeline'] = sanitize_text_field($config['results_timeline']);
-        $config['price_details'] = sanitize_text_field($config['price_details']);
-        $config['badge_text'] = sanitize_text_field($config['badge_text']);
 
-        // Sanitize URLs
-        $config['cta_url'] = esc_url($config['cta_url']);
-        $config['book_url'] = esc_url($config['book_url']);
-
-        // Sanitize CTA text
-        $config['cta_text'] = sanitize_text_field($config['cta_text']);
-        $config['book_text'] = sanitize_text_field($config['book_text']);
-
-        // Sanitize phone
-        $config['phone_booking'] = sanitize_text_field($config['phone_booking']);
-
-        // Sanitize arrays
         if (is_array($config['benefits'])) {
             $config['benefits'] = array_map('sanitize_text_field', $config['benefits']);
         }
 
-        if (is_array($config['features'])) {
-            $config['features'] = array_map('sanitize_text_field', $config['features']);
+        if (is_array($config['cta'])) {
+            foreach (['primary', 'secondary'] as $type) {
+                if (isset($config['cta'][$type])) {
+                    $config['cta'][$type]['text'] = sanitize_text_field($config['cta'][$type]['text']);
+                    $config['cta'][$type]['url'] = esc_url_raw($config['cta'][$type]['url']);
+                }
+            }
+        }
+
+        if (is_array($config['schema'])) {
+            $config['schema'] = array_map('sanitize_text_field', $config['schema']);
+        }
+
+        if (is_array($config['image'])) {
+            $config['image']['src'] = esc_url_raw($config['image']['src']);
+            $config['image']['alt'] = sanitize_text_field($config['image']['alt']);
         }
 
         return $config;
     }
 
     /**
-     * Generate treatment-specific meta information
+     * Render a grid of treatment cards
      *
-     * @param array $config Component configuration
-     * @return array Meta information
+     * @param array $treatments Array of treatment data
+     * @param array $args Additional arguments
+     * @return string HTML output
      */
-    protected function generate_treatment_meta($config) {
-        $meta_items = [];
+    public static function render_grid($treatments, $args = []) {
+        $output = '<div class="treatments-grid">';
 
-        // Duration
-        if (!empty($config['duration'])) {
-            $meta_items[] = '⏱️ ' . $config['duration'];
+        foreach ($treatments as $treatment) {
+            $card = new self();
+            $output .= $card->render($treatment);
         }
 
-        // Price
-        if (!empty($config['price'])) {
-            $price_text = $config['price_from'] ? 'From ' . $config['price'] : $config['price'];
-            $meta_items[] = '💰 ' . $price_text;
-        }
+        $output .= '</div>';
 
-        // Pain level
-        if (!empty($config['pain_level'])) {
-            $pain_icons = [
-                'minimal' => '😌',
-                'mild' => '😐',
-                'moderate' => '😬'
-            ];
-            $icon = $pain_icons[$config['pain_level']] ?? '😐';
-            $meta_items[] = $icon . ' ' . ucfirst($config['pain_level']) . ' discomfort';
-        }
-
-        // Downtime
-        if (!empty($config['downtime'])) {
-            $meta_items[] = '🏠 ' . $config['downtime'] . ' downtime';
-        }
-
-        // Results timeline
-        if (!empty($config['results_timeline'])) {
-            $meta_items[] = '📈 Results in ' . $config['results_timeline'];
-        }
-
-        return $meta_items;
+        return $output;
     }
 
     /**
-     * Generate treatment-specific action buttons
+     * Get default design tokens for treatment cards
      *
-     * @param array $config Component configuration
-     * @return array Action buttons
-     */
-    protected function generate_treatment_actions($config) {
-        $actions = [];
-
-        // Primary CTA (Learn More)
-        if (!empty($config['cta_text']) && !empty($config['cta_url'])) {
-            $actions[] = [
-                'text' => $config['cta_text'],
-                'url' => $config['cta_url'],
-                'variant' => 'primary',
-                'target' => '_self'
-            ];
-        }
-
-        // Booking CTA
-        if (!empty($config['book_text']) && !empty($config['book_url'])) {
-            $actions[] = [
-                'text' => $config['book_text'],
-                'url' => $config['book_url'],
-                'variant' => 'secondary',
-                'target' => '_self'
-            ];
-        }
-
-        // Phone booking (if provided)
-        if (!empty($config['phone_booking'])) {
-            $actions[] = [
-                'text' => '📞 Call Now',
-                'url' => 'tel:' . $config['phone_booking'],
-                'variant' => 'outline',
-                'target' => '_self'
-            ];
-        }
-
-        return $actions;
-    }
-
-    /**
-     * Override card content generation to include treatment-specific sections
-     *
-     * @param array $config Component configuration
-     * @return string Card content HTML
-     */
-    protected function generate_card_content($config) {
-        $content_parts = [];
-
-        // Add treatment badge if enabled
-        if ($config['show_badge'] && !empty($config['badge_text'])) {
-            $content_parts['badge'] = $this->render_treatment_badge($config);
-        }
-
-        // Card image with overlay for popular treatments
-        if (!empty($config['image'])) {
-            $content_parts['image'] = $this->render_treatment_image($config);
-        }
-
-        // Card header (title + category)
-        if (!empty($config['title']) || !empty($config['category'])) {
-            $content_parts['header'] = $this->render_treatment_header($config);
-        }
-
-        // Treatment benefits section
-        if (!empty($config['benefits'])) {
-            $content_parts['benefits'] = $this->render_treatment_benefits($config);
-        }
-
-        // Card content (description)
-        if (!empty($config['content'])) {
-            $content_parts['content'] = $this->render_card_content_section($config);
-        }
-
-        // Treatment features section
-        if (!empty($config['features'])) {
-            $content_parts['features'] = $this->render_treatment_features($config);
-        }
-
-        // Treatment meta information
-        if (!empty($config['meta'])) {
-            $content_parts['meta'] = $this->render_treatment_meta_section($config);
-        }
-
-        // Price section with details
-        if (!empty($config['price'])) {
-            $content_parts['pricing'] = $this->render_treatment_pricing($config);
-        }
-
-        // Card actions
-        if (!empty($config['actions'])) {
-            $content_parts['actions'] = $this->render_card_actions($config);
-        }
-
-        return implode('', $content_parts);
-    }
-
-    /**
-     * Render treatment badge
-     *
-     * @param array $config Component configuration
-     * @return string Badge HTML
-     */
-    protected function render_treatment_badge($config) {
-        $badge_class = 'treatment-badge';
-
-        if (!empty($config['popularity'])) {
-            $badge_class .= ' badge-' . $config['popularity'];
-        }
-
-        return sprintf(
-            '<div class="%s">%s</div>',
-            esc_attr($badge_class),
-            esc_html($config['badge_text'])
-        );
-    }
-
-    /**
-     * Render treatment image with potential overlay
-     *
-     * @param array $config Component configuration
-     * @return string Image HTML
-     */
-    protected function render_treatment_image($config) {
-        $image_html = parent::render_card_image($config);
-
-        // Add popular overlay if treatment is popular
-        if ($config['highlight_popular'] && $config['popularity'] === 'popular') {
-            $overlay = '<div class="treatment-popular-overlay">⭐ Most Popular</div>';
-            $image_html = str_replace('</div>', $overlay . '</div>', $image_html);
-        }
-
-        return $image_html;
-    }
-
-    /**
-     * Render treatment header with category
-     *
-     * @param array $config Component configuration
-     * @return string Header HTML
-     */
-    protected function render_treatment_header($config) {
-        $header_content = '';
-
-        // Category
-        if (!empty($config['category'])) {
-            $header_content .= sprintf(
-                '<div class="treatment-category">%s</div>',
-                esc_html($config['category'])
-            );
-        }
-
-        // Title
-        if (!empty($config['title'])) {
-            $title_tag = !empty($config['link_url']) && !$config['link_entire_card'] ? 'a' : 'h3';
-            $title_attrs = '';
-
-            if ($title_tag === 'a') {
-                $title_attrs = sprintf(' href="%s" target="%s"',
-                    esc_url($config['link_url']),
-                    esc_attr($config['link_target'])
-                );
-            }
-
-            $header_content .= sprintf(
-                '<%s class="card-title treatment-title"%s>%s</%s>',
-                $title_tag,
-                $title_attrs,
-                esc_html($config['title']),
-                $title_tag
-            );
-        }
-
-        return $header_content ? '<div class="card-header treatment-header">' . $header_content . '</div>' : '';
-    }
-
-    /**
-     * Render treatment benefits list
-     *
-     * @param array $config Component configuration
-     * @return string Benefits HTML
-     */
-    protected function render_treatment_benefits($config) {
-        if (empty($config['benefits']) || !is_array($config['benefits'])) {
-            return '';
-        }
-
-        $benefit_items = [];
-        foreach ($config['benefits'] as $benefit) {
-            $benefit_items[] = sprintf(
-                '<li class="treatment-benefit-item">✓ %s</li>',
-                esc_html($benefit)
-            );
-        }
-
-        return sprintf(
-            '<div class="treatment-benefits"><h4>Key Benefits:</h4><ul class="treatment-benefits-list">%s</ul></div>',
-            implode('', $benefit_items)
-        );
-    }
-
-    /**
-     * Render treatment features list
-     *
-     * @param array $config Component configuration
-     * @return string Features HTML
-     */
-    protected function render_treatment_features($config) {
-        if (empty($config['features']) || !is_array($config['features'])) {
-            return '';
-        }
-
-        $feature_items = [];
-        foreach ($config['features'] as $feature) {
-            $feature_items[] = sprintf(
-                '<span class="treatment-feature-item">%s</span>',
-                esc_html($feature)
-            );
-        }
-
-        return sprintf(
-            '<div class="treatment-features">%s</div>',
-            implode(' • ', $feature_items)
-        );
-    }
-
-    /**
-     * Render treatment meta information section
-     *
-     * @param array $config Component configuration
-     * @return string Meta section HTML
-     */
-    protected function render_treatment_meta_section($config) {
-        if (empty($config['meta']) || !is_array($config['meta'])) {
-            return '';
-        }
-
-        $meta_items = [];
-        foreach ($config['meta'] as $meta_item) {
-            $meta_items[] = sprintf(
-                '<div class="treatment-meta-item">%s</div>',
-                esc_html($meta_item)
-            );
-        }
-
-        return sprintf(
-            '<div class="treatment-meta">%s</div>',
-            implode('', $meta_items)
-        );
-    }
-
-    /**
-     * Render treatment pricing section with details
-     *
-     * @param array $config Component configuration
-     * @return string Pricing HTML
-     */
-    protected function render_treatment_pricing($config) {
-        $pricing_content = '';
-
-        // Main price
-        $price_text = $config['price_from'] ? 'From ' . $config['price'] : $config['price'];
-        $pricing_content .= sprintf(
-            '<div class="treatment-price">%s</div>',
-            esc_html($price_text)
-        );
-
-        // Price details
-        if (!empty($config['price_details'])) {
-            $pricing_content .= sprintf(
-                '<div class="treatment-price-details">%s</div>',
-                esc_html($config['price_details'])
-            );
-        }
-
-        // Financing note
-        if ($config['financing_available']) {
-            $pricing_content .= '<div class="treatment-financing">💳 Financing Available</div>';
-        }
-
-        return sprintf(
-            '<div class="treatment-pricing">%s</div>',
-            $pricing_content
-        );
-    }
-
-    /**
-     * Get additional design tokens for treatment cards
-     *
-     * @return array Additional design tokens
+     * @return array Default design tokens
      */
     public function get_default_tokens() {
         return array_merge(parent::get_default_tokens(), [
-            // Treatment-specific tokens
-            'badge_background_color' => '#f59e0b',
-            'badge_text_color' => '#ffffff',
-            'badge_border_radius' => '16px',
-            'badge_padding' => '4px 12px',
-            'badge_font_size' => '12px',
-            'badge_font_weight' => '600',
+            'card' => [
+                'background' => 'var(--color-surface)',
+                'padding' => 'var(--space-xl)',
+                'border-radius' => 'var(--radius-lg)',
+                'box-shadow' => 'var(--shadow-md)',
+                'transition' => 'var(--transition-base)',
+            ],
+            'header' => [
+                'margin-bottom' => 'var(--space-md)',
+                'gap' => 'var(--space-sm)',
+            ],
+            'icon' => [
+                'font-size' => 'var(--text-2xl)',
+                'line-height' => '1',
+            ],
+            'title' => [
+                'font-family' => 'var(--font-family-primary)',
+                'font-size' => 'var(--text-2xl)',
+                'font-weight' => 'var(--font-weight-semibold)',
+                'color' => 'var(--color-text-primary)',
+                'line-height' => 'var(--leading-tight)',
+            ],
+            'description' => [
+                'font-family' => 'var(--font-family-secondary)',
+                'font-size' => 'var(--text-base)',
+                'color' => 'var(--color-text-secondary)',
+                'line-height' => 'var(--leading-normal)',
+                'margin-bottom' => 'var(--space-lg)',
+            ],
+            'benefits' => [
+                'margin-bottom' => 'var(--space-lg)',
+                'gap' => 'var(--space-sm)',
+                'item' => [
+                    'font-family' => 'var(--font-family-secondary)',
+                    'font-size' => 'var(--text-sm)',
+                    'color' => 'var(--color-text-secondary)',
+                    'gap' => 'var(--space-xs)',
+                ],
+                'icon' => [
+                    'color' => 'var(--color-accent)',
+                    'font-weight' => 'var(--font-weight-bold)',
+                ],
+            ],
+            'meta' => [
+                'margin-bottom' => 'var(--space-lg)',
+                'padding-top' => 'var(--space-md)',
+                'border-top' => '1px solid var(--color-border)',
+            ],
+            'duration' => [
+                'font-family' => 'var(--font-family-secondary)',
+                'font-size' => 'var(--text-sm)',
+                'color' => 'var(--color-text-secondary)',
+                'gap' => 'var(--space-xs)',
+            ],
+            'consultation' => [
+                'font-family' => 'var(--font-family-secondary)',
+                'font-size' => 'var(--text-sm)',
+                'font-weight' => 'var(--font-weight-medium)',
+                'color' => 'var(--color-accent)',
+                'gap' => 'var(--space-xs)',
+            ],
+            'actions' => [
+                'gap' => 'var(--space-sm)',
+                'margin-top' => 'auto',
+            ],
+            'button' => [
+                'padding' => 'var(--space-sm) var(--space-md)',
+                'border-radius' => 'var(--radius-md)',
+                'font-family' => 'var(--font-family-secondary)',
+                'font-weight' => 'var(--font-weight-medium)',
+                'transition' => 'var(--transition-base)',
+                'min-height' => 'var(--touch-target-min)',
+                'primary' => [
+                    'background' => 'var(--color-interactive-primary)',
+                    'color' => 'var(--color-text-inverse)',
+                    'hover' => [
+                        'background' => 'var(--color-interactive-hover)',
+                    ],
+                ],
+                'secondary' => [
+                    'background' => 'transparent',
+                    'color' => 'var(--color-interactive-secondary)',
+                    'border' => '1px solid var(--color-interactive-secondary)',
+                    'hover' => [
+                        'background' => 'var(--color-interactive-hover)',
+                        'color' => 'var(--color-text-inverse)',
+                        'border-color' => 'var(--color-interactive-hover)',
+                    ],
+                ],
+            ],
+        ]);
+    }
 
-            // Category styling
-            'category_color' => '#6b7280',
-            'category_font_size' => '14px',
-            'category_font_weight' => '500',
-            'category_margin_bottom' => '4px',
+    /**
+     * Get component specific tokens
+     *
+     * @return array Component specific tokens
+     */
+    protected function get_component_specific_tokens() {
+        return [
+            'treatment-card' => [
+                'icon-size' => 'var(--text-2xl)',
+                'benefit-icon-color' => 'var(--color-accent)',
+                'meta-border-color' => 'var(--color-border)',
+                'consultation-color' => 'var(--color-accent)',
+                'consultation-font-size' => 'var(--text-sm)',
+            ],
+        ];
+    }
 
-            // Benefits styling
-            'benefits_title_color' => '#374151',
-            'benefits_title_font_size' => '16px',
-            'benefits_title_font_weight' => '600',
-            'benefits_item_color' => '#10b981',
-            'benefits_item_font_size' => '14px',
-
-            // Features styling
-            'features_color' => '#6b7280',
-            'features_font_size' => '14px',
-            'features_separator_color' => '#d1d5db',
-
-            // Meta styling
-            'meta_item_background' => '#f3f4f6',
-            'meta_item_padding' => '6px 12px',
-            'meta_item_border_radius' => '12px',
-            'meta_item_font_size' => '13px',
-            'meta_item_margin' => '4px',
-
-            // Pricing styling
-            'price_color' => '#059669',
-            'price_font_size' => '24px',
-            'price_font_weight' => '700',
-            'price_details_color' => '#6b7280',
-            'price_details_font_size' => '12px',
-            'financing_color' => '#3b82f6',
-            'financing_font_size' => '13px',
-
-            // Popular overlay
-            'popular_overlay_background' => 'linear-gradient(45deg, #f59e0b, #d97706)',
-            'popular_overlay_color' => '#ffffff',
-            'popular_overlay_font_size' => '12px',
-            'popular_overlay_font_weight' => '600'
+    /**
+     * Get accessibility configuration
+     *
+     * @return array Accessibility configuration
+     */
+    protected function get_accessibility_config() {
+        return array_merge(parent::get_accessibility_config(), [
+            'aria-labels' => [
+                'duration' => __('Treatment duration', 'medspa'),
+                'consultation' => __('Consultation required', 'medspa'),
+                'benefits' => __('Treatment benefits', 'medspa'),
+            ],
+            'roles' => [
+                'article' => 'article',
+                'list' => 'list',
+                'listitem' => 'listitem',
+            ],
         ]);
     }
 }

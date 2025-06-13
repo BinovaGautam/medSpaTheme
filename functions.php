@@ -162,6 +162,14 @@ function medspa_theme_setup() {
 }
 add_action('after_setup_theme', 'medspa_theme_setup');
 
+// Load and initialize treatment post type
+require_once get_template_directory() . '/inc/post-types/treatment.php';
+require_once get_template_directory() . '/inc/data/treatments-adapter.php';
+require_once get_template_directory() . '/inc/data/treatments.php';
+add_action('init', ['TreatmentPostType', 'register']);
+add_action('add_meta_boxes', ['TreatmentPostType', 'register_meta_boxes']);
+add_action('save_post_treatment', ['TreatmentPostType', 'save_details']);
+
 /**
  * CRITICAL: Header body class function for spacing fix
  * Determines header transparency and content spacing based on page type

@@ -91,130 +91,92 @@
 
             <div class="treatments-showcase treatment-grid modern-grid">
                 <?php
-                // Get all treatments for filtering (not just featured)
-                $all_treatments = get_posts([
-                    'post_type' => 'treatment',
-                    'posts_per_page' => 12, // Show more treatments for filtering
-                    'orderby' => 'menu_order',
-                    'order' => 'ASC'
-                ]);
+                // Use our TreatmentsDataStore to get all treatment data
+                if (class_exists('TreatmentsDataStore')) {
+                    $all_treatments = TreatmentsDataStore::get_treatments();
 
-                if ($all_treatments) :
-                    foreach ($all_treatments as $treatment) : setup_postdata($treatment);
-                        // Get treatment metadata for filtering
-                        $categories = get_the_terms($treatment->ID, 'treatment_category');
-                        $primary_category = $categories && !is_wp_error($categories) ? $categories[0]->slug : '';
-                        $duration = get_post_meta($treatment->ID, 'treatment_duration', true);
-                        $duration_minutes = get_post_meta($treatment->ID, 'treatment_duration_minutes', true);
-                        $price_range = get_post_meta($treatment->ID, 'treatment_price_range', true);
-                        $price = get_post_meta($treatment->ID, 'treatment_price', true);
-                        $popularity = get_post_meta($treatment->ID, 'treatment_popularity', true);
-                        $featured = get_post_meta($treatment->ID, 'treatment_featured', true);
-                    ?>
-
-                        <div class="treatment-showcase-item treatment-card modern-card"
-                             data-category="<?php echo esc_attr($primary_category); ?>"
-                             data-duration="<?php echo esc_attr($duration); ?>"
-                             data-duration-minutes="<?php echo esc_attr($duration_minutes ?: '30'); ?>"
-                             data-price-range="<?php echo esc_attr($price_range); ?>"
-                             data-price="<?php echo esc_attr($price ?: '0'); ?>"
-                             data-popularity="<?php echo esc_attr($popularity ?: ($featured ? '5' : '1')); ?>">
-
-                            <div class="treatment-image">
-                                <?php if (has_post_thumbnail($treatment->ID)) : ?>
-                                    <a href="<?php echo get_permalink($treatment->ID); ?>">
-                                        <?php echo get_the_post_thumbnail($treatment->ID, 'treatment-card', ['alt' => get_the_title($treatment->ID)]); ?>
-                                    </a>
-                                <?php else : ?>
-                                    <!-- Placeholder image -->
-                                    <a href="<?php echo get_permalink($treatment->ID); ?>" class="treatment-placeholder">
-                                        <div class="placeholder-bg">
-                                            <div class="placeholder-icon">💉</div>
-                                        </div>
-                                    </a>
-                                <?php endif; ?>
-
-                                <!-- Treatment Category Badge -->
-                                <?php if ($categories && !is_wp_error($categories)) : ?>
-                                    <span class="treatment-category"><?php echo esc_html($categories[0]->name); ?></span>
-                                <?php endif; ?>
-
-                                <?php if ($featured) : ?>
-                                    <span class="treatment-badge popular">
-                                        <span class="icon">⭐</span>
-                                        <?php esc_html_e('Popular', 'preetidreams'); ?>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="treatment-content">
-                                <header class="treatment-header">
-                                    <h3 class="treatment-name treatment-title">
-                                        <a href="<?php echo get_permalink($treatment->ID); ?>">
-                                            <?php echo get_the_title($treatment->ID); ?>
-                                        </a>
-                                    </h3>
-
-                                    <div class="treatment-meta">
-                                        <?php if ($duration) : ?>
-                                            <span class="meta-item treatment-duration">
-                                                <span class="icon">⏱️</span>
-                                                <?php echo esc_html($duration); ?>
-                                            </span>
-                                        <?php endif; ?>
-
-                                        <?php if ($price_range) : ?>
-                                            <span class="meta-item treatment-price">
-                                                <span class="icon">💰</span>
-                                                <?php echo esc_html($price_range); ?>
-                                            </span>
-                                        <?php endif; ?>
-                                    </div>
-                                </header>
-
-                                <div class="treatment-description">
-                                    <?php
-                                    if (has_excerpt($treatment->ID)) {
-                                        echo get_the_excerpt($treatment->ID);
-                                    } else {
-                                        echo wp_trim_words(get_the_content(null, false, $treatment->ID), 20, '...');
-                                    }
-                                    ?>
-                                </div>
-
-                                <div class="treatment-actions">
-                                    <a href="<?php echo get_permalink($treatment->ID); ?>" class="btn btn-primary btn-treatment">
-                                        <?php esc_html_e('Learn More', 'preetidreams'); ?>
-                                    </a>
-
-                                    <a href="#consultation" class="btn btn-secondary consultation-link btn-treatment"
-                                       data-treatment="<?php echo esc_attr(get_the_title($treatment->ID)); ?>">
-                                        <?php esc_html_e('Book Consultation', 'preetidreams'); ?>
-                                    </a>
-                                </div>
-                            </div>
+                    if ($all_treatments) :
+                        foreach ($all_treatments as $treatment_data) :
+                            // Render the treatment card using our component
+                            if (class_exists('TreatmentCard')) {
+                                $card = new TreatmentCard($treatment_data);
+                                echo $card->render();
+                            }
+                        endforeach;
+                    else : ?>
+                        <div class="no-treatments-message">
+                            <p><?php esc_html_e('No treatments found.', 'preetidreams'); ?></p>
                         </div>
+                    <?php endif;
+                } else {
+                    // Fallback to WordPress posts if TreatmentsDataStore is not available
+                    $all_treatments = get_posts([
+                        'post_type' => 'treatment',
+                        'posts_per_page' => 12,
+                        'orderby' => 'menu_order',
+                        'order' => 'ASC'
+                    ]);
 
-                    <?php endforeach;
-                    wp_reset_postdata();
-                else : ?>
-                    <!-- Enhanced fallback content for no treatments -->
-                    <div class="no-treatments-message modern-placeholder">
-                        <div class="placeholder-content">
-                            <div class="placeholder-icon">🏥</div>
-                            <h3><?php esc_html_e('Sample Treatments Available', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('Our medical spa offers a comprehensive range of aesthetic treatments. Contact us to learn about our available services or activate sample treatment data to see our interactive showcase.', 'preetidreams'); ?></p>
-                            <div class="placeholder-actions">
-                                <a href="<?php echo admin_url('themes.php?page=preetidreams-setup'); ?>" class="btn btn-primary">
-                                    <?php esc_html_e('Activate Sample Data', 'preetidreams'); ?>
-                                </a>
-                                <a href="#consultation" class="btn btn-secondary">
-                                    <?php esc_html_e('Contact Us', 'preetidreams'); ?>
-                                </a>
-                            </div>
+                    if ($all_treatments) :
+                        foreach ($all_treatments as $treatment) : setup_postdata($treatment);
+                            // Get treatment metadata
+                            $treatment_data = [
+                                'id' => $treatment->ID,
+                                'title' => get_the_title($treatment->ID),
+                                'description' => get_the_excerpt($treatment->ID),
+                                'duration' => get_post_meta($treatment->ID, '_treatment_duration', true),
+                                'price' => [
+                                    'from' => get_post_meta($treatment->ID, '_treatment_price_from', true),
+                                    'amount' => get_post_meta($treatment->ID, '_treatment_price', true),
+                                    'currency' => 'USD'
+                                ],
+                                'cta' => [
+                                    'primary' => [
+                                        'text' => __('Learn More', 'preetidreams'),
+                                        'url' => get_permalink($treatment->ID)
+                                    ],
+                                    'secondary' => [
+                                        'text' => __('Book Consultation', 'preetidreams'),
+                                        'url' => '#consultation'
+                                    ]
+                                ]
+                            ];
+
+                            // Get treatment categories
+                            $categories = get_the_terms($treatment->ID, 'treatment_category');
+                            if ($categories && !is_wp_error($categories)) {
+                                $treatment_data['category'] = $categories[0]->name;
+                            }
+
+                            // Get treatment features
+                            $features = get_the_terms($treatment->ID, 'treatment_feature');
+                            if ($features && !is_wp_error($features)) {
+                                $treatment_data['features'] = array_map(function($feature) {
+                                    return $feature->name;
+                                }, $features);
+                            }
+
+                            // Get treatment benefits
+                            $benefits = get_the_terms($treatment->ID, 'treatment_benefit');
+                            if ($benefits && !is_wp_error($benefits)) {
+                                $treatment_data['benefits'] = array_map(function($benefit) {
+                                    return $benefit->name;
+                                }, $benefits);
+                            }
+
+                            // Render the treatment card using our component
+                            if (class_exists('TreatmentCard')) {
+                                $card = new TreatmentCard($treatment_data);
+                                echo $card->render();
+                            }
+                        endforeach;
+                        wp_reset_postdata();
+                    else : ?>
+                        <div class="no-treatments-message">
+                            <p><?php esc_html_e('No treatments found.', 'preetidreams'); ?></p>
                         </div>
-                    </div>
-                <?php endif; ?>
+                    <?php endif;
+                } ?>
             </div>
 
             <div class="section-cta text-center">

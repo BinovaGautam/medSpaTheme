@@ -354,7 +354,8 @@ abstract class BaseComponent {
         $css_vars = [];
 
         foreach ($this->design_tokens as $token_name => $token_value) {
-            if (!empty($token_value) && !str_starts_with($token_value, 'var(')) {
+            // Ensure token_value is a string before checking
+            if (!empty($token_value) && is_string($token_value) && !str_starts_with($token_value, 'var(')) {
                 $css_vars["--{$this->component_name}-{$token_name}"] = $token_value;
             }
         }
