@@ -7,5 +7,42 @@
     "version": "1.0.0",
     "structure": "levCompiler-ai-orchestration-framework",
     "lastUpdated": "2024-01-15"
+  },
+  "project_name": "MedSpa Theme",
+  "version": "3.1.0",
+  "last_updated": "2024-12-19",
+  "components": [
+    {
+      "name": "treatment-cards",
+      "type": "component",
+      "status": "active",
+      "files": [
+        "inc/components/treatment-card.php",
+        "assets/css/components/treatment-card.css",
+        "assets/css/components/treatment-card-semantic-compliant.css"
+      ]
+    },
+    {
+      "name": "treatments-adapter",
+      "type": "pattern",
+      "status": "active",
+      "files": [
+        "inc/data/treatments-adapter.php",
+        "inc/data/treatments.php"
+      ]
+    }
+  ],
+  "documentation": [
+    {
+      "name": "adapter-pattern-guide",
+      "path": "documentation/adapter-pattern-guide.md",
+      "type": "architecture",
+      "status": "active"
+    }
+  ],
+  "compliance": {
+    "fundamentals": "in_progress",
+    "semantic_tokens": "in_progress",
+    "design_system": "in_progress"
   }
 }

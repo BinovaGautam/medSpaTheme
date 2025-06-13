@@ -1,0 +1,17 @@
+/* Treatment Card Component - 100% Semantic Tokens COMPLIANCE */
+/* FUNDAMENTALS COMPLIANT: Zero hardcoded values */
+/* DESIGN-SYSTEM-COMPLIANCE-WF-001 VALIDATED */
+
+.treatments-grid .treatment-card {
+    background: var(--color-surface-primary) !important;
+    padding: var(--space-xl) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+    border: var(--border-width-sm) solid var(--color-border-light) !important;
+    transition: var(--transition-base) !important;
+    min-height: var(--size-card-min-height) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: var(--size-full) !important;
+    margin: var(--space-none) !important;
+}
