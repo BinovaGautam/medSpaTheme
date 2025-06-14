@@ -1,8 +1,8 @@
 {
   "workflowRegistry": {
-    "version": "1.1.0",
-    "totalWorkflows": 10,
-    "activeWorkflows": 10,
+    "version": "1.3.0",
+    "totalWorkflows": 12,
+    "activeWorkflows": 12,
     "systemArchitecture": "hierarchical-workflow-orchestration-with-compliance-monitoring"
   },
 
@@ -199,6 +199,65 @@
           "realTimeAgentUpdates": true,
           "gitLikeVersionTracking": true,
           "rollbackCapabilities": true
+        }
+      },
+
+      "visualDesignComplianceWorkflow": {
+        "workflowId": "VISUAL-DESIGN-COMPLIANCE-WF-001",
+        "name": "visual-design-compliance-workflow",
+        "type": "specialized-compliance-validation",
+        "description": "Comprehensive workflow for automated visual compliance analysis between UI/UX design specifications and actual implementation with semantic token validation",
+        "priority": 2,
+        "status": "active",
+        "triggerPatterns": ["visual compliance check", "design validation", "implementation review", "compliance analysis", "design token validation", "visual audit", "screenshot comparison", "design system compliance", "semantic token check", "ui ux validation"],
+        "parentWorkflow": "ui-ux-creation-workflow",
+        "location": "levCompiler/.control/workflows/visual_design_compliance_workflow.json",
+        "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+        "supportingAgents": ["TASK-PLANNER-001", "VERSION-TRACK-001"],
+        "tempScreenshotManagement": {
+          "enabled": true,
+          "maxFiles": 100,
+          "location": "levCompiler/temp/screenshots/",
+          "autoCleanup": true
+        },
+        "integrationPoints": {
+          "visualValidationTool": "levCompiler/tools/visual-validation/",
+          "uiUxDesignWorkflow": "levCompiler/project_context/designs/",
+          "taskManagementWorkflow": "levCompiler/project_context/tasks/"
+        },
+        "qualityGates": {
+          "semanticTokenCompliance": 1.0,
+          "visualAccuracy": 0.90,
+          "accessibilityCompliance": 1.0,
+          "responsiveDesignQuality": 0.95,
+          "brandConsistency": 0.95
+        }
+      },
+
+      "manualVisualComparisonWorkflow": {
+        "workflowId": "MANUAL-VISUAL-COMPARISON-WF-001",
+        "name": "manual-visual-comparison-orchestrator-workflow",
+        "type": "orchestrator-manual-trigger",
+        "description": "High-level orchestrator workflow for manual visual comparison that intelligently delegates to visual compliance system with automatic task context integration",
+        "priority": 1,
+        "status": "active",
+        "triggerPatterns": ["manual visual comparison", "compare implementation", "visual validation check", "design compliance review", "implementation vs design", "manual comparison workflow"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/manual_visual_comparison_workflow.json",
+        "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+        "supportingAgents": ["TASK-PLANNER-001", "VERSION-TRACK-001"],
+        "delegatedWorkflow": "VISUAL-DESIGN-COMPLIANCE-WF-001",
+        "executionDirectoryIntegration": {
+          "enabled": true,
+          "outputLocation": "levCompiler/project_context/tasks/execution/",
+          "reportFormat": "visual-comparison-[pageName]-[timestamp].md",
+          "assetLinking": "relative-paths-to-temp-screenshots"
+        },
+        "automationPropagation": {
+          "enabled": true,
+          "immediateActions": ["critical-violations", "semantic-token-violations"],
+          "scheduledActions": ["design-system-updates", "quality-gate-integration"],
+          "continuousActions": ["progress-monitoring", "learning-loop"]
         }
       }
     }

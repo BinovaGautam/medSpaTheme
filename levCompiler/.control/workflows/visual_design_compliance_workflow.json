@@ -1,0 +1,144 @@
+{
+  "visualDesignComplianceWorkflow": {
+    "workflowId": "VISUAL-DESIGN-COMPLIANCE-WF-001",
+    "name": "visual-design-compliance-workflow",
+    "version": "1.0.0",
+    "description": "Comprehensive workflow for automated visual compliance analysis between UI/UX design specifications and actual implementation with semantic token validation",
+    "type": "specialized-compliance-validation",
+    "priority": 2,
+    "status": "active",
+    "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+    "humanSupervisionRequired": false
+  },
+
+  "objectives": {
+    "primary": "Automate visual compliance validation between design specifications and implementation using screenshot analysis and semantic token verification",
+    "secondary": "Generate comprehensive compliance reports with actionable recommendations for design-implementation alignment",
+    "tertiary": "Integrate compliance validation into existing development workflows and quality gates",
+    "organizational": "Enforce STRICT semantic token compliance and prevent hardcoded design values"
+  },
+
+  "triggerPatterns": [
+    "visual compliance check",
+    "design validation",
+    "implementation review",
+    "compliance analysis",
+    "design token validation",
+    "visual audit",
+    "screenshot comparison",
+    "design system compliance",
+    "semantic token check",
+    "ui ux validation"
+  ],
+
+  "workflowStages": {
+    "stage1ContextGathering": {
+      "name": "context-gathering-and-validation-setup",
+      "description": "Gather design specifications, task context, and establish validation baseline",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "supportingAgents": ["TASK-PLANNER-001"],
+      "estimatedDuration": "10-15 minutes",
+      "activities": [
+        "design-specification-parsing-from-markdown",
+        "task-management-context-retrieval",
+        "implementation-url-validation-and-accessibility-check",
+        "semantic-token-mapping-and-baseline-establishment",
+        "compliance-criteria-definition-and-success-metrics"
+      ]
+    },
+    "stage2VisualCapture": {
+      "name": "visual-capture-and-multi-viewport-analysis",
+      "description": "Capture comprehensive screenshots across all viewports and interactive states using visual validation tool",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "toolIntegration": "levCompiler/tools/visual-validation/",
+      "tempScreenshotSystem": "levCompiler/temp/screenshots/",
+      "estimatedDuration": "15-20 minutes",
+      "activities": [
+        "multi-viewport-screenshot-capture-desktop-tablet-mobile",
+        "responsive-design-state-capture-across-breakpoints",
+        "interactive-element-state-capture-hover-focus-active",
+        "temp-screenshot-management-with-auto-cleanup"
+      ]
+    },
+    "stage3SemanticTokenValidation": {
+      "name": "semantic-token-compliance-and-hardcoded-value-detection",
+      "description": "Validate 100% semantic token usage and detect any hardcoded design values",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "estimatedDuration": "20-25 minutes",
+      "activities": [
+        "semantic-token-usage-analysis-across-all-design-elements",
+        "hardcoded-value-detection-colors-fonts-spacing-shadows",
+        "design-token-mapping-verification-against-specifications"
+      ]
+    },
+    "stage4ComplianceReporting": {
+      "name": "comprehensive-compliance-report-generation",
+      "description": "Generate comprehensive compliance report with prioritized recommendations",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "supportingAgents": ["TASK-PLANNER-001"],
+      "estimatedDuration": "15-20 minutes",
+      "activities": [
+        "overall-compliance-score-calculation-with-weighted-metrics",
+        "actionable-recommendation-generation-with-specific-instructions",
+        "visual-comparison-asset-compilation-and-annotation",
+        "task-management-integration-and-next-step-planning"
+      ]
+    }
+  },
+
+  "integrationPoints": {
+    "uiUxCreationWorkflow": {
+      "description": "Integration with UI/UX design creation workflow for design specification access",
+      "trigger": "design-specification-update-or-implementation-completion",
+      "agents": ["UI-UX-DESIGN-001", "VISUAL-COMPLIANCE-ANALYZER-001"],
+      "dataFlow": "levCompiler/project_context/designs/ → compliance analysis"
+    },
+    "taskManagementWorkflow": {
+      "description": "Integration with task management workflow for context and status updates",
+      "trigger": "task-completion-or-sprint-milestone",
+      "agents": ["TASK-PLANNER-001", "VISUAL-COMPLIANCE-ANALYZER-001"],
+      "dataFlow": "levCompiler/project_context/tasks/ ↔ compliance status"
+    },
+    "visualValidationTool": {
+      "description": "Integration with existing visual validation tool for screenshot capture",
+      "trigger": "visual-capture-requirement",
+      "toolPath": "levCompiler/tools/visual-validation/",
+      "tempSystem": "levCompiler/temp/screenshots/",
+      "dataFlow": "screenshot capture → temp storage → compliance analysis"
+    }
+  },
+
+  "tempScreenshotManagement": {
+    "location": "levCompiler/temp/screenshots/",
+    "maxFiles": 100,
+    "cleanupStrategy": "auto-delete-oldest",
+    "fileNamingPattern": "compliance_{timestamp}_{viewport}_{hash}.png",
+    "retentionPolicy": "automatic-cleanup-when-exceeding-max-files"
+  },
+
+  "qualityGates": {
+    "semanticTokenCompliance": {
+      "description": "100% semantic token usage with zero hardcoded values",
+      "threshold": 1.0,
+      "validation": "semantic-token-usage-scan"
+    },
+    "visualAccuracy": {
+      "description": "Visual implementation matches design specifications within acceptable tolerance",
+      "threshold": 0.90,
+      "validation": "pixel-level-comparison-analysis"
+    }
+  },
+
+  "MANDATORY_COMPLIANCE_ENFORCEMENT": {
+    "ENFORCEMENT_LEVEL": "ZERO_TOLERANCE_FOR_SEMANTIC_TOKEN_VIOLATIONS",
+    "VIOLATION_RESPONSE": "IMMEDIATE_WORKFLOW_HALT_AND_CORRECTION_REQUIREMENT",
+    "SEMANTIC_TOKEN_ENFORCEMENT": {
+      "ZERO_HARDCODED_VALUES": {
+        "colors": "NO hardcoded color values (hex, rgb, hsl) - MUST use var(--color-*)",
+        "fonts": "NO hardcoded font families - MUST use var(--font-family-*)",
+        "sizes": "NO hardcoded font sizes - MUST use var(--text-*) or var(--font-size-*)",
+        "spacing": "NO hardcoded margins/padding - MUST use var(--space-*)"
+      }
+    }
+  }
+}

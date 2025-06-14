@@ -1,0 +1,251 @@
+{
+  "manualVisualComparisonWorkflow": {
+    "workflowId": "MANUAL-VISUAL-COMPARISON-WF-001",
+    "name": "manual-visual-comparison-orchestrator-workflow",
+    "version": "1.0.0",
+    "description": "High-level orchestrator workflow for manual visual comparison that intelligently delegates to visual compliance system with automatic task context integration",
+    "type": "orchestrator-manual-trigger",
+    "priority": 1,
+    "status": "active",
+    "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+    "humanSupervisionRequired": false
+  },
+
+  "objectives": {
+    "primary": "Provide manual trigger interface for visual comparison with intelligent context detection and comprehensive analysis output",
+    "secondary": "Automatically resolve design specifications from current task context when not explicitly provided",
+    "tertiary": "Generate comprehensive analysis reports in execution directory with linked images for immediate task integration",
+    "automation": "Enable 100% automated web development workflow integration with visual validation checkpoints"
+  },
+
+  "triggerInterface": {
+    "manualTriggerPatterns": [
+      "manual visual comparison",
+      "compare implementation",
+      "visual validation check",
+      "design compliance review",
+      "implementation vs design",
+      "manual comparison workflow"
+    ],
+    "requiredInputs": {
+      "pageName": "Human-readable page identifier (e.g. 'treatments', 'home', 'about')",
+      "url": "Full URL to validate (e.g. 'http://medspaa.local/treatments/')"
+    },
+    "optionalInputs": {
+      "referenceDesignFile": "Path to reference design file - if not provided, auto-detected from task context",
+      "taskContext": "Specific task ID - if not provided, uses current sprint context",
+      "outputMode": "standard|comprehensive|sprint-integration (default: comprehensive)"
+    }
+  },
+
+  "intelligentContextResolution": {
+    "taskContextDetection": {
+      "currentSprintAnalysis": "Analyze levCompiler/project_context/tasks/execution/ for current sprint context",
+      "pageNameMapping": "Map provided page name to relevant task delegation files",
+      "designFileAutoDetection": "Auto-detect relevant design specifications from project_context/designs/",
+      "executionLogIntegration": "Parse sprint execution logs for current implementation status"
+    },
+    "designSpecificationResolution": {
+      "primaryLookup": "levCompiler/project_context/designs/[pageName]-design.md",
+      "fallbackLookup": "levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+      "taskDelegationParsing": "Extract design references from task delegation files",
+      "semanticTokenMapping": "Map page to relevant semantic token requirements"
+    },
+    "contextEnrichment": {
+      "sprintGoalAlignment": "Align visual validation with current sprint objectives",
+      "taskProgressIntegration": "Factor in current task completion status",
+      "qualityGateMapping": "Map to relevant quality gates for the current implementation phase"
+    }
+  },
+
+  "workflowStages": {
+    "stage1ContextAnalysisAndResolution": {
+      "name": "intelligent-context-analysis-and-design-resolution",
+      "description": "Analyze current task context, resolve design specifications, and prepare validation parameters",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "estimatedDuration": "5-10 minutes",
+      "activities": [
+        "parse-current-sprint-execution-context",
+        "map-page-name-to-task-delegation-files",
+        "auto-detect-relevant-design-specifications",
+        "resolve-semantic-token-requirements",
+        "prepare-validation-parameters-for-delegation"
+      ],
+      "inputs": [
+        "manual-trigger-parameters",
+        "current-sprint-execution-directory",
+        "project-context-designs-directory",
+        "task-delegation-files"
+      ],
+      "outputs": [
+        "resolved-design-specifications",
+        "task-context-integration-plan",
+        "validation-parameters-for-delegation",
+        "sprint-alignment-analysis"
+      ]
+    },
+
+    "stage2ValidationDelegation": {
+      "name": "delegate-to-visual-compliance-workflow",
+      "description": "Delegate comprehensive visual validation to VISUAL-DESIGN-COMPLIANCE-WF-001 with enriched context",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "delegatedWorkflow": "VISUAL-DESIGN-COMPLIANCE-WF-001",
+      "estimatedDuration": "60-90 minutes",
+      "activities": [
+        "prepare-enriched-validation-context",
+        "delegate-to-visual-compliance-workflow",
+        "monitor-delegation-progress",
+        "collect-comprehensive-validation-results",
+        "prepare-results-for-execution-integration"
+      ],
+      "delegationParameters": {
+        "enhancedTaskContext": "Current sprint and task context",
+        "resolvedDesignSpecs": "Auto-detected or provided design specifications",
+        "qualityGateMapping": "Relevant quality gates for current implementation phase",
+        "outputFormatting": "Execution directory compatible formatting"
+      }
+    },
+
+    "stage3ExecutionDirectoryIntegration": {
+      "name": "generate-execution-directory-analysis-report",
+      "description": "Generate comprehensive analysis report in execution directory with linked images and actionable improvements",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "estimatedDuration": "10-15 minutes",
+      "activities": [
+        "format-comprehensive-analysis-for-execution-directory",
+        "link-screenshot-assets-with-relative-paths",
+        "generate-actionable-improvement-recommendations",
+        "integrate-with-current-sprint-execution-log",
+        "prepare-next-action-automation-triggers"
+      ],
+      "outputStructure": {
+        "reportLocation": "levCompiler/project_context/tasks/execution/",
+        "reportNaming": "visual-comparison-[pageName]-[timestamp].md",
+        "assetLinking": "Relative paths to temp screenshots and validation assets",
+        "integrationPoints": "Links to sprint execution log and task delegation files"
+      }
+    },
+
+    "stage4AutomationPropagation": {
+      "name": "automation-workflow-propagation",
+      "description": "Trigger follow-up automation workflows based on compliance findings",
+      "primaryAgent": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "supportingAgents": ["TASK-PLANNER-001", "CODE-GEN-001"],
+      "estimatedDuration": "5-10 minutes",
+      "activities": [
+        "analyze-compliance-findings-for-automation-triggers",
+        "determine-required-corrective-actions",
+        "prepare-automated-improvement-workflow-triggers",
+        "update-sprint-execution-status",
+        "schedule-follow-up-validation-checkpoints"
+      ],
+      "automationTriggers": {
+        "criticalViolations": "Immediate automated correction workflow initiation",
+        "designSystemDrift": "Automated design system update workflow",
+        "implementationGaps": "Automated code generation workflow for corrections",
+        "qualityGateFailures": "Automated re-implementation workflow delegation"
+      }
+    }
+  },
+
+  "executionDirectoryIntegration": {
+    "reportStructure": {
+      "filename": "visual-comparison-[pageName]-[YYYY-MM-DD-HH-mm].md",
+      "location": "levCompiler/project_context/tasks/execution/",
+      "format": "Markdown with embedded image links and actionable sections"
+    },
+    "contentStructure": {
+      "executiveSummary": "High-level compliance status and critical findings",
+      "visualAssets": "Linked screenshots with annotations and comparisons",
+      "complianceAnalysis": "Detailed semantic token and design system compliance analysis",
+      "improvementPlan": "Prioritized, actionable improvement recommendations",
+      "automationTriggers": "Next automation workflow triggers and parameters",
+      "sprintIntegration": "Integration with current sprint goals and task status"
+    },
+    "assetManagement": {
+      "screenshotLinking": "Relative paths to temp screenshots for immediate access",
+      "annotationGeneration": "Automated annotations highlighting compliance issues",
+      "comparisonVisualization": "Side-by-side comparisons with design specifications",
+      "progressTracking": "Visual progress tracking against sprint milestones"
+    }
+  },
+
+  "automationPropagationStrategy": {
+    "immediateActions": {
+      "criticalViolations": {
+        "trigger": "IMMEDIATE_CORRECTION_WORKFLOW",
+        "delegation": "CODE-GEN-WF-001",
+        "parameters": "Specific corrections required based on compliance analysis",
+        "timeline": "Within 1 hour of detection"
+      },
+      "semanticTokenViolations": {
+        "trigger": "SEMANTIC_TOKEN_CORRECTION_WORKFLOW",
+        "delegation": "DESIGN-SYSTEM-COMPLIANCE-WF-001",
+        "parameters": "Hardcoded values to be replaced with semantic tokens",
+        "timeline": "Within 2 hours of detection"
+      }
+    },
+    "scheduledActions": {
+      "designSystemUpdates": {
+        "trigger": "DESIGN_SYSTEM_UPDATE_WORKFLOW",
+        "delegation": "UI-UX-CREATION-WF-001",
+        "parameters": "Design system inconsistencies requiring design team input",
+        "timeline": "Next sprint planning cycle"
+      },
+      "qualityGateIntegration": {
+        "trigger": "QUALITY_GATE_UPDATE_WORKFLOW",
+        "delegation": "TASK-MANAGEMENT-WF-001",
+        "parameters": "Quality gate adjustments based on compliance findings",
+        "timeline": "End of current sprint"
+      }
+    },
+    "continuousActions": {
+      "progressMonitoring": {
+        "trigger": "CONTINUOUS_VALIDATION_MONITORING",
+        "delegation": "DESIGN-SYSTEM-COMPLIANCE-WF-001",
+        "parameters": "Ongoing compliance monitoring and trend analysis",
+        "timeline": "Daily automated checks"
+      },
+      "learningLoop": {
+        "trigger": "WORKFLOW_IMPROVEMENT_LEARNING",
+        "delegation": "WORKFLOW-AGENT-ANALYZER-001",
+        "parameters": "Workflow optimization based on validation patterns",
+        "timeline": "Weekly analysis and optimization"
+      }
+    }
+  },
+
+  "cliInterface": {
+    "primaryCommand": "manual-visual-comparison",
+    "parameters": {
+      "required": ["--page-name", "--url"],
+      "optional": ["--reference-design", "--task-context", "--output-mode", "--auto-propagate"]
+    },
+    "examples": [
+      "manual-visual-comparison --page-name treatments --url http://medspaa.local/treatments/",
+      "manual-visual-comparison --page-name treatments --url http://medspaa.local/treatments/ --reference-design path/to/design.png",
+      "manual-visual-comparison --page-name home --url http://medspaa.local/ --task-context t7-1-1 --output-mode comprehensive"
+    ]
+  },
+
+  "100PercentAutomationIntegration": {
+    "triggerPoints": {
+      "taskCompletion": "Automatic visual validation before task marked as complete",
+      "codeCommit": "Pre-commit visual validation with automatic correction workflows",
+      "sprintMilestones": "Automated sprint-level visual compliance audits",
+      "deploymentGates": "Pre-deployment visual validation with blocking capabilities"
+    },
+    "feedbackLoops": {
+      "realTimeCorrection": "Immediate automated corrections for detected violations",
+      "designSystemEvolution": "Automated design system updates based on validation patterns",
+      "workflowOptimization": "Continuous workflow improvement based on validation efficiency",
+      "predictiveValidation": "Predictive validation based on implementation patterns"
+    },
+    "scalabilityFeatures": {
+      "batchValidation": "Automated validation across multiple pages and viewports",
+      "crossBrowserValidation": "Automated cross-browser compliance validation",
+      "performanceIntegration": "Integration with performance testing for holistic validation",
+      "accessibilityIntegration": "Comprehensive accessibility validation as part of visual compliance"
+    }
+  }
+}

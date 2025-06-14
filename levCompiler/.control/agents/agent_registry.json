@@ -1,9 +1,9 @@
 {
   "agentRegistry": {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "lastUpdated": "{CURRENT_DATE}",
-    "totalAgents": 16,
-    "activeAgents": 16,
+    "totalAgents": 17,
+    "activeAgents": 17,
     "systemArchitecture": "intelligent-routing-with-human-supervision-and-real-time-improvement"
   },
 
@@ -191,6 +191,19 @@
       "humanSupervisionRequired": false,
       "realTimeMonitoring": true,
       "location": "levCompiler/.control/agents/design_system_monitor_agent.json"
+    },
+
+    "visualComplianceAnalyzerAgent": {
+      "agentId": "VISUAL-COMPLIANCE-ANALYZER-001",
+      "status": "active",
+      "role": "visual-compliance-analyzer",
+      "priority": 2,
+      "description": "Specialized agent for analyzing visual compliance between UI/UX design specifications and actual implementation through automated screenshot comparison and semantic token validation",
+      "specialization": "visual-design-compliance-analysis",
+      "confidenceThreshold": 0.90,
+      "humanSupervisionRequired": false,
+      "realTimeMonitoring": false,
+      "location": "levCompiler/.control/agents/visual_compliance_analyzer_agent.json"
     },
 
     "workflowAgentAnalyzer": {

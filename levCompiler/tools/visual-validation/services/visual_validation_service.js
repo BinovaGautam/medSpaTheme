@@ -6,13 +6,16 @@ const sharp = require('sharp');
 const fs = require('fs').promises;
 const path = require('path');
 const OpenAI = require('openai');
+const fetch = require('node-fetch');
+const TempScreenshotManager = require('../utils/temp_screenshot_manager');
 
 class VisualValidationService {
   constructor(config) {
     this.config = config;
-    this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    this.openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
     this.browsers = new Map();
     this.validationResults = new Map();
+    this.tempScreenshotManager = config?.tempScreenshotManager || new TempScreenshotManager();
   }
 
   /**
@@ -137,12 +140,23 @@ class VisualValidationService {
         await fs.mkdir(path.dirname(filepath), { recursive: true });
         await fs.writeFile(filepath, screenshotBuffer);
 
+        // Also save to temp storage for easy access
+        const tempResult = await this.tempScreenshotManager.processAndStoreScreenshot(
+          screenshotBuffer,
+          { viewport: viewport.name, url, validationId, timestamp: Date.now() }
+        );
+
         screenshots[viewport.name] = {
           filepath,
           buffer: screenshotBuffer,
           viewport,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          tempScreenshot: tempResult.success ? tempResult.tempScreenshot : null
         };
+
+        if (tempResult.success) {
+          console.log(`📁 Temp screenshot: ${tempResult.tempScreenshot.url}`);
+        }
 
         await context.close();
       }
@@ -379,6 +393,11 @@ class VisualValidationService {
    */
   async performAIAnalysis(screenshots, targetAssets, comparisonResults) {
     console.log('🤖 Performing AI-powered visual analysis...');
+
+    if (!this.openai) {
+      console.log('⚠️ OpenAI API key not available - skipping AI analysis');
+      return this.generateFallbackAnalysisForAll(screenshots, comparisonResults);
+    }
 
     const aiAnalysis = {};
 
@@ -652,12 +671,70 @@ class VisualValidationService {
     this.browsers.clear();
   }
 
-  // Additional helper methods would be implemented here...
-  async checkServerHealth(url) { /* ... */ }
-  async startDevelopmentServer(projectPath) { /* ... */ }
-  async waitForServerReady(url) { /* ... */ }
+  // Additional helper methods
+  async checkServerHealth(url) {
+    try {
+      const response = await fetch(url, { method: 'HEAD', timeout: 5000 });
+      return response.ok;
+    } catch (error) {
+      console.log(`URL ${url} is not accessible:`, error.message);
+      return false;
+    }
+  }
+
+  async startDevelopmentServer(projectPath) {
+    // For now, throw an error since server detection is not implemented
+    throw new Error('Development server auto-start not implemented. Please provide a running server URL.');
+  }
+
+  async waitForServerReady(url) {
+    console.log(`Waiting for server to be ready at ${url}...`);
+    // Simple implementation - just check if accessible
+    const maxAttempts = 30;
+    for (let i = 0; i < maxAttempts; i++) {
+      if (await this.checkServerHealth(url)) {
+        console.log('✅ Server is ready');
+        return;
+      }
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    throw new Error(`Server at ${url} did not become ready within 30 seconds`);
+  }
   async compareWithPixelmatch(actualBuffer, expectedBuffer) { /* ... */ }
-  async generateFallbackAnalysis(comparisonResult) { /* ... */ }
+  async generateFallbackAnalysisForAll(screenshots, comparisonResults) {
+    const analysis = {};
+    for (const [viewportName, screenshot] of Object.entries(screenshots)) {
+      analysis[viewportName] = await this.generateFallbackAnalysis(comparisonResults[viewportName] || {});
+    }
+    return analysis;
+  }
+
+  async generateFallbackAnalysis(comparisonResult) {
+    const similarity = comparisonResult.similarity || 0;
+
+    return {
+      layout_check: {
+        score: similarity,
+        recommendations: similarity < 0.85 ? ['Visual differences detected - manual review recommended'] : ['Layout appears consistent'],
+        details: 'Basic similarity analysis without AI vision'
+      },
+      color_scheme: {
+        score: similarity,
+        recommendations: similarity < 0.8 ? ['Color differences may be present'] : ['Color scheme appears consistent'],
+        details: 'Pixel-level comparison analysis'
+      },
+      typography: {
+        score: similarity,
+        recommendations: similarity < 0.9 ? ['Text rendering differences possible'] : ['Typography appears consistent'],
+        details: 'Basic visual comparison'
+      },
+      responsive_behavior: {
+        score: similarity,
+        recommendations: ['Manual testing recommended for responsive behavior validation'],
+        details: 'Automated responsive testing not available without AI analysis'
+      }
+    };
+  }
 }
 
 module.exports = VisualValidationService;
