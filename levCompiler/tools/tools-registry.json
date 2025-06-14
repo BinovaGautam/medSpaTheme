@@ -1,0 +1,84 @@
+{
+  "tools_registry": {
+    "registry_version": "1.0.0",
+    "last_updated": "{CURRENT_TIMESTAMP}",
+    "tools": {
+      "visual-validation": {
+        "tool_id": "VISUAL-VALIDATION-TOOL-001",
+        "name": "Visual Validation Tool",
+        "version": "1.0.0",
+        "category": "validation",
+        "description": "Automated screenshot capture and visual comparison tool",
+        "path": "levCompiler/tools/visual-validation/",
+        "main_entry": "services/visual_validation_service.js",
+        "cli_entry": "cli/visual-validate.js",
+        "package_file": "package.json",
+        "dependencies": {
+          "playwright": "^1.40.0",
+          "puppeteer": "^21.0.0",
+          "resemblejs": "^4.1.0",
+          "openai": "^4.20.0"
+        },
+        "integration_points": {
+          "agents": [
+            "VISUAL-VALID-001"
+          ],
+          "workflows": [
+            "VISUAL-VALIDATION-WF-001"
+          ],
+          "triggers": [
+            "visual_development_completion",
+            "code_generation_completion"
+          ]
+        },
+        "commands": {
+          "validate": "node cli/visual-validate.js validate",
+          "watch": "node cli/visual-validate.js watch",
+          "config": "node cli/visual-validate.js config",
+          "status": "node cli/visual-validate.js status"
+        },
+        "status": "active",
+        "installation_status": "installed",
+        "last_used": "2025-06-14T17:37:05.440Z"
+      }
+    },
+    "categories": {
+      "validation": {
+        "description": "Tools for validating code, designs, and functionality",
+        "tools": [
+          "visual-validation"
+        ]
+      },
+      "development": {
+        "description": "Tools for development workflow automation",
+        "tools": []
+      },
+      "analysis": {
+        "description": "Tools for code and project analysis",
+        "tools": []
+      },
+      "deployment": {
+        "description": "Tools for deployment and distribution",
+        "tools": []
+      },
+      "testing": {
+        "description": "Tools for automated testing",
+        "tools": []
+      }
+    },
+    "global_configuration": {
+      "default_package_manager": "yarn",
+      "fallback_package_manager": "npm",
+      "tools_installation_path": "levCompiler/tools/",
+      "shared_dependencies_path": "levCompiler/tools/shared/",
+      "logs_path": "levCompiler/tools/logs/",
+      "temp_path": "levCompiler/tools/temp/"
+    },
+    "management": {
+      "auto_update": false,
+      "dependency_sharing": true,
+      "isolated_environments": true,
+      "version_tracking_required": true
+    }
+  }
+}

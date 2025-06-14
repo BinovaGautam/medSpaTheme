@@ -1,0 +1,26 @@
+{
+  "name": "@levcompiler/tools-manager",
+  "version": "1.0.0",
+  "description": "Tool management system for levCompiler",
+  "main": "manage-tools.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node manage-tools.js",
+    "test": "echo \"No tests yet\"",
+    "validate": "node manage-tools.js validate"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "chalk": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "tool-management",
+    "levcompiler"
+  ],
+  "author": "levCompiler Team",
+  "license": "MIT",
+  "packageManager": "yarn@1.22.21"
+}

@@ -1,0 +1,206 @@
+{
+  "workflow_id": "VISUAL-VALID-WF-001",
+  "name": "Visual Validation Workflow",
+  "description": "Automated visual validation with screenshot capture and comparison",
+  "version": "1.0.0",
+  "category": "validation",
+  "triggers": [
+    "visual_development_completion",
+    "code_generation_completion",
+    "manual_visual_validation_request"
+  ],
+  "phases": [
+    {
+      "id": "setup",
+      "name": "Setup Validation Environment",
+      "agents": ["VISUAL-VALID-001", "TECH-STACK-001"],
+      "steps": [
+        {
+          "id": "detect_server",
+          "description": "Detect running development server or start one",
+          "action": "server_detection_and_startup",
+          "timeout": 60000,
+          "quality_gates": ["server_accessibility"]
+        },
+        {
+          "id": "prepare_target_assets",
+          "description": "Load and prepare target design assets for comparison",
+          "action": "load_design_assets",
+          "inputs": ["target_design_files", "design_specifications"],
+          "timeout": 30000
+        }
+      ]
+    },
+    {
+      "id": "capture",
+      "name": "Screenshot Capture",
+      "agents": ["VISUAL-VALID-001"],
+      "steps": [
+        {
+          "id": "multi_viewport_capture",
+          "description": "Capture screenshots across all configured viewports",
+          "action": "automated_screenshot_capture",
+          "parallel": true,
+          "viewports": ["desktop", "tablet", "mobile"],
+          "timeout": 90000,
+          "quality_gates": ["screenshot_capture_success"]
+        },
+        {
+          "id": "element_specific_capture",
+          "description": "Capture specific UI components for detailed analysis",
+          "action": "component_screenshot_capture",
+          "selectors": ["header", "main", "footer", ".primary-button", ".form-container"],
+          "timeout": 60000
+        }
+      ]
+    },
+    {
+      "id": "comparison",
+      "name": "Visual Comparison Analysis",
+      "agents": ["VISUAL-VALID-001"],
+      "steps": [
+        {
+          "id": "pixel_comparison",
+          "description": "Perform pixel-level comparison with target designs",
+          "action": "pixel_comparison_analysis",
+          "method": "resemblejs",
+          "parallel": true,
+          "timeout": 120000,
+          "quality_gates": ["visual_similarity_check"]
+        },
+        {
+          "id": "layout_analysis",
+          "description": "Analyze layout structure and positioning",
+          "action": "layout_structure_analysis",
+          "focus_areas": ["spacing", "alignment", "proportions", "hierarchy"],
+          "timeout": 90000
+        },
+        {
+          "id": "responsive_validation",
+          "description": "Validate responsive behavior across viewports",
+          "action": "responsive_compliance_check",
+          "quality_gates": ["responsive_compliance"],
+          "timeout": 120000
+        }
+      ]
+    },
+    {
+      "id": "ai_analysis",
+      "name": "AI-Powered Visual Analysis",
+      "agents": ["VISUAL-VALID-001"],
+      "steps": [
+        {
+          "id": "vision_ai_comparison",
+          "description": "Use AI vision models to analyze visual differences",
+          "action": "ai_visual_analysis",
+          "model": "gpt-4-vision-preview",
+          "analysis_types": ["layout_check", "color_scheme", "typography", "responsive_behavior"],
+          "timeout": 180000
+        },
+        {
+          "id": "design_compliance_check",
+          "description": "Check compliance with design system guidelines",
+          "action": "design_system_compliance",
+          "reference_files": ["design_system.json", "brand_guidelines.json"],
+          "timeout": 120000
+        }
+      ]
+    },
+    {
+      "id": "feedback_generation",
+      "name": "Generate Feedback and Recommendations",
+      "agents": ["VISUAL-VALID-001", "HUMAN-INTERACT-001"],
+      "steps": [
+        {
+          "id": "compile_results",
+          "description": "Compile all validation results and generate comprehensive report",
+          "action": "validation_report_generation",
+          "include_assets": ["comparison_images", "diff_highlights", "analysis_charts"],
+          "timeout": 60000
+        },
+        {
+          "id": "generate_recommendations",
+          "description": "Generate specific recommendations for improvements",
+          "action": "improvement_recommendations",
+          "prioritization": "impact_based",
+          "timeout": 90000
+        },
+        {
+          "id": "chat_integration",
+          "description": "Send results to chat with visual assets for review",
+          "action": "chat_integration_delivery",
+          "assets": ["screenshots", "comparison_diffs", "analysis_report"],
+          "format": "interactive_report",
+          "timeout": 30000
+        }
+      ]
+    }
+  ],
+  "decision_points": [
+    {
+      "id": "validation_outcome",
+      "condition": "visual_similarity >= 0.85 AND responsive_compliance >= 0.90",
+      "on_success": "approve_and_complete",
+      "on_failure": "generate_improvement_plan"
+    },
+    {
+      "id": "auto_fix_capability",
+      "condition": "identified_issues.auto_fixable == true",
+      "on_success": "trigger_auto_fix_workflow",
+      "on_failure": "request_human_intervention"
+    }
+  ],
+  "outputs": [
+    {
+      "type": "validation_report",
+      "format": "json",
+      "location": "validation_results/"
+    },
+    {
+      "type": "comparison_images",
+      "format": "png",
+      "location": "validation_results/screenshots/"
+    },
+    {
+      "type": "chat_message",
+      "format": "markdown_with_images",
+      "destination": "active_chat_session"
+    }
+  ],
+  "integration_points": [
+    {
+      "workflow": "visual_development_workflow",
+      "trigger": "on_completion",
+      "condition": "auto_validation_enabled"
+    },
+    {
+      "workflow": "code_generation_workflow",
+      "trigger": "on_completion",
+      "condition": "visual_components_generated"
+    }
+  ],
+  "configuration": {
+    "auto_trigger": true,
+    "parallel_execution": true,
+    "max_retries": 3,
+    "timeout_total": 900000,
+    "quality_threshold": 0.85
+  },
+  "error_handling": [
+    {
+      "error_type": "server_not_accessible",
+      "action": "attempt_server_restart",
+      "escalation": "TECH-STACK-001"
+    },
+    {
+      "error_type": "screenshot_capture_failure",
+      "action": "retry_with_fallback_engine",
+      "max_retries": 3
+    },
+    {
+      "error_type": "comparison_analysis_failure",
+      "action": "escalate_to_human_review",
+      "include_raw_data": true
+    }
+  ]
+}

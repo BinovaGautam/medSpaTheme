@@ -87,13 +87,18 @@
       "logs": "levCompiler/project_context/logs/",
       "archive": "levCompiler/project_context/archive/",
       "agents": "levCompiler/.control/agents/",
-      "workflows": "levCompiler/.control/workflows/"
+      "workflows": "levCompiler/.control/workflows/",
+      "tools": "levCompiler/tools/",
+      "tool_configs": "levCompiler/tools/*/config/",
+      "tool_services": "levCompiler/tools/*/services/",
+      "tool_cli": "levCompiler/tools/*/cli/"
     },
     "indexRegistrationRequired": {
       "designs": "levCompiler/project_context/designs/index.json",
       "workflows": "levCompiler/.control/workflows/workflow_registry.json",
       "agents": "levCompiler/.control/agents/agent_registry.json",
-      "tasks": "levCompiler/project_context/tasks/index.json"
+      "tasks": "levCompiler/project_context/tasks/index.json",
+      "tools": "levCompiler/tools/tools-registry.json"
     },
     "agentUsageEnforcement": {
       "ui-ux-designs": "MUST use UI-UX-DESIGN-001 agent",
@@ -531,6 +536,61 @@
       "escalation": "Alert about temporal limitation violation",
       "resolution": "Validate all outputs for temporal value compliance",
       "prevention": "Implement temporal value scanning in all outputs"
+    }
+  },
+
+  "TOOLS_ORGANIZATION_REQUIREMENTS": {
+    "NEVER_VIOLATE": [
+      "ALL tools must be in levCompiler/tools/ directory structure",
+      "NO tools allowed in root levCompiler directory",
+      "NO package.json or node_modules allowed in root levCompiler directory",
+      "EACH tool must have its own subdirectory with standard structure",
+      "ALL tools must be registered in tools-registry.json",
+      "EACH tool must have isolated dependencies in tool-specific package.json",
+      "ALL node_modules must be ignored in .gitignore everywhere"
+    ],
+    "mandatoryToolsStructure": {
+      "toolDirectory": "levCompiler/tools/{tool-name}/",
+      "requiredSubdirectories": ["services/", "cli/", "config/", "utils/"],
+      "requiredFiles": ["package.json", "README.md"],
+      "optionalDirectories": ["tests/", "docs/", "examples/"],
+      "isolatedDependencies": "Each tool manages its own node_modules"
+    },
+    "toolsRegistry": {
+      "registryLocation": "levCompiler/tools/tools-registry.json",
+      "mandatoryRegistration": "ALL tools must be registered with complete metadata",
+      "registrationFields": ["tool_id", "name", "version", "category", "path", "integration_points"],
+      "statusTracking": "installation_status, last_used, status fields required"
+    },
+    "toolsCategories": {
+      "validation": "Tools for validating code, designs, and functionality",
+      "development": "Tools for development workflow automation",
+      "analysis": "Tools for code and project analysis",
+      "deployment": "Tools for deployment and distribution",
+      "testing": "Tools for automated testing",
+      "utilities": "General utility tools and helpers"
+    },
+    "toolsIntegration": {
+      "agentIntegration": "Tools can be used by agents through registry lookup",
+      "workflowIntegration": "Tools can be triggered by workflow completion events",
+      "cliIntegration": "Tools provide CLI interfaces for direct usage",
+      "versionTracking": "All tool changes must involve VERSION-TRACK-001"
+    },
+    "toolsManagement": {
+      "packageManager": "Use yarn as primary, npm as fallback",
+      "dependencyIsolation": "Each tool has isolated dependencies",
+      "sharedUtilities": "Common utilities in levCompiler/tools/shared/",
+      "logsDirectory": "Tool logs in levCompiler/tools/logs/",
+      "tempDirectory": "Temporary files in levCompiler/tools/temp/"
+    },
+    "violations": {
+      "toolsInRoot": "CRITICAL ERROR - move tools to tools/ directory",
+      "packageJsonInRoot": "CRITICAL ERROR - remove package.json from root levCompiler",
+      "nodeModulesInRoot": "CRITICAL ERROR - remove node_modules from root levCompiler",
+      "missingRegistry": "CRITICAL ERROR - register tool in tools-registry.json",
+      "improperStructure": "CRITICAL ERROR - follow mandatory tool structure",
+      "dependencySharing": "CRITICAL ERROR - isolate tool dependencies",
+      "gitignoreViolation": "CRITICAL ERROR - ensure .gitignore covers all node_modules"
     }
   },
 

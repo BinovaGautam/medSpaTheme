@@ -1,0 +1,62 @@
+{
+  "name": "@levcompiler/visual-validation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Automated visual validation tool for web applications",
+  "main": "services/visual_validation_service.js",
+  "bin": {
+    "visual-validate": "./cli/visual-validate.js"
+  },
+  "scripts": {
+    "install-browsers": "yarn playwright install chromium || npx playwright install chromium",
+    "validate": "node cli/visual-validate.js",
+    "test": "jest",
+    "dev": "nodemon services/visual_validation_service.js",
+    "setup": "yarn install && yarn install-browsers",
+    "setup-npm": "npm install && npm run install-browsers"
+  },
+  "packageManager": "yarn@1.22.21",
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "puppeteer": "^21.0.0",
+    "pixelmatch": "^5.3.0",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.32.0",
+    "jimp": "^0.22.0",
+    "openai": "^4.20.0",
+    "commander": "^11.0.0",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1",
+    "inquirer": "^8.2.6",
+    "express": "^4.18.0",
+    "detect-port": "^1.5.0",
+    "wait-on": "^7.0.0",
+    "cross-spawn": "^7.0.0",
+    "glob": "^10.3.0",
+    "mime-types": "^2.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "nodemon": "^3.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "visual-testing",
+    "screenshot-automation",
+    "web-development",
+    "ai-validation",
+    "levcompiler-tool"
+  ],
+  "author": "levCompiler Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "levCompiler/tools/visual-validation"
+  },
+  "peerDependencies": {
+    "@levcompiler/core": "^1.0.0"
+  }
+}

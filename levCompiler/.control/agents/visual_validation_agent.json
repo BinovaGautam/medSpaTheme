@@ -1,0 +1,102 @@
+{
+  "agent_id": "VISUAL-VALID-001",
+  "name": "Visual Validation Agent",
+  "description": "Automated screenshot capture and visual comparison agent for web applications",
+  "version": "1.0.0",
+  "type": "production",
+  "capabilities": [
+    "automated_screenshot_capture",
+    "visual_comparison",
+    "layout_analysis",
+    "responsive_testing",
+    "visual_regression_detection",
+    "design_compliance_checking"
+  ],
+  "configuration": {
+    "screenshot_service": {
+      "engine": "playwright",
+      "viewports": [
+        {"name": "desktop", "width": 1920, "height": 1080},
+        {"name": "tablet", "width": 768, "height": 1024},
+        {"name": "mobile", "width": 375, "height": 667}
+      ],
+      "capture_options": {
+        "full_page": true,
+        "wait_for_network_idle": true,
+        "animations": "disabled",
+        "timeout": 30000
+      }
+    },
+    "comparison_engine": {
+      "primary": "resemblejs",
+      "fallback": "pixelmatch",
+      "thresholds": {
+        "identical": 0.95,
+        "acceptable": 0.85,
+        "needs_review": 0.70,
+        "major_differences": 0.50
+      }
+    },
+    "ai_analysis": {
+      "vision_model": "gpt-4-vision-preview",
+      "analysis_prompts": {
+        "layout_check": "Analyze the layout and compare it to the target design. Focus on positioning, spacing, and alignment.",
+        "color_scheme": "Check if the color scheme matches the target design specifications.",
+        "typography": "Verify font sizes, families, and text formatting match the design.",
+        "responsive_behavior": "Evaluate how the design adapts across different screen sizes."
+      }
+    },
+    "integration": {
+      "dev_server_ports": [3000, 3001, 4200, 5173, 8080],
+      "build_output_dirs": ["dist", "build", "public"],
+      "supported_frameworks": ["react", "vue", "angular", "next", "nuxt", "svelte"]
+    }
+  },
+  "quality_gates": [
+    {
+      "name": "screenshot_capture_success",
+      "threshold": 1.0,
+      "description": "Screenshot must be successfully captured"
+    },
+    {
+      "name": "visual_similarity_check",
+      "threshold": 0.85,
+      "description": "Visual similarity must meet minimum threshold"
+    },
+    {
+      "name": "responsive_compliance",
+      "threshold": 0.90,
+      "description": "Responsive design must work across all viewports"
+    }
+  ],
+  "escalation_paths": [
+    {
+      "condition": "screenshot_capture_failure",
+      "action": "retry_with_different_engine",
+      "max_retries": 3
+    },
+    {
+      "condition": "visual_similarity_below_threshold",
+      "action": "request_human_review",
+      "include_comparison_images": true
+    },
+    {
+      "condition": "server_not_accessible",
+      "action": "escalate_to_tech_stack_manager",
+      "include_logs": true
+    }
+  ],
+  "dependencies": [
+    "TECH-STACK-001",
+    "CODE-GEN-001",
+    "HUMAN-INTERACT-001"
+  ],
+  "tools": [
+    "playwright",
+    "puppeteer",
+    "resemblejs",
+    "pixelmatch",
+    "sharp",
+    "jimp"
+  ]
+}
