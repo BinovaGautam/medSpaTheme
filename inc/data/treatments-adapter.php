@@ -490,14 +490,17 @@ class TreatmentsAdapter {
      * Initialize the appropriate data source
      */
     private function initialize_data_source() {
-        // Priority order: CMS -> Hardcoded
-        $cms_source = new CMSTreatmentDataSource();
+        // TEMPORARY FIX: Force hardcoded data source to ensure flyer alignment
+        // Priority order: Hardcoded (forced) -> CMS (disabled temporarily)
+        $this->data_source = new HardcodedTreatmentDataSource();
 
-        if ($cms_source->is_available() && $this->has_cms_data()) {
-            $this->data_source = $cms_source;
-        } else {
-            $this->data_source = new HardcodedTreatmentDataSource();
-        }
+        // Original logic (commented out temporarily):
+        // $cms_source = new CMSTreatmentDataSource();
+        // if ($cms_source->is_available() && $this->has_cms_data()) {
+        //     $this->data_source = $cms_source;
+        // } else {
+        //     $this->data_source = new HardcodedTreatmentDataSource();
+        // }
     }
 
     /**

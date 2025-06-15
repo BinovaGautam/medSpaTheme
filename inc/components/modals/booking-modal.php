@@ -28,15 +28,15 @@ class BookingModal extends ModalComponent {
      * @var array
      */
     protected $treatment_types = [
-        'botox' => 'Botox Treatment',
-        'dermal_fillers' => 'Dermal Fillers',
-        'chemical_peels' => 'Chemical Peels',
-        'microneedling' => 'Microneedling',
-        'laser_resurfacing' => 'Laser Resurfacing',
-        'ipl_photofacial' => 'IPL Photofacial',
-        'coolsculpting' => 'CoolSculpting',
-        'hydrafacial' => 'HydraFacial',
-        'prp_facial' => 'PRP Facial',
+        'injectable-artistry' => 'Botox / Fillers',
+        'facial-renaissance' => 'HydraFacial',
+        'precision-dermaplanning' => 'Dermaplanning',
+        'regenerative-prp' => 'Microneedling PRP',
+        'wellness-infusions' => 'IV Vitamins',
+        'artistry-enhancement' => 'Permanent Makeup',
+        'laser-precision' => 'Laser Hair Reduction',
+        'carbon-rejuvenation' => 'Carbon Peel Laser',
+        'body-sculpting' => 'EMSCULPT Muscle Builder',
         'consultation' => 'Initial Consultation'
     ];
 

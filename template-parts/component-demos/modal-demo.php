@@ -360,14 +360,17 @@ echo $booking_modal->render([
 
                 <div class="form-group">
                     <label for="booking-treatment">Treatment Interest</label>
-                    <select id="booking-treatment" name="treatment_interest">
+                    <select name="treatment" id="treatment" required>
                         <option value="">Select a treatment...</option>
-                        <option value="botox">Botox Injections</option>
-                        <option value="dermal-fillers">Dermal Fillers</option>
-                        <option value="laser-hair-removal">Laser Hair Removal</option>
-                        <option value="chemical-peel">Chemical Peels</option>
-                        <option value="microneedling">Microneedling</option>
-                        <option value="consultation">General Consultation</option>
+                        <option value="injectable-artistry">Botox / Fillers</option>
+                        <option value="facial-renaissance">HydraFacial</option>
+                        <option value="precision-dermaplanning">Dermaplanning</option>
+                        <option value="regenerative-prp">Microneedling PRP</option>
+                        <option value="wellness-infusions">IV Vitamins</option>
+                        <option value="artistry-enhancement">Permanent Makeup</option>
+                        <option value="laser-precision">Laser Hair Reduction</option>
+                        <option value="carbon-rejuvenation">Carbon Peel Laser</option>
+                        <option value="body-sculpting">EMSCULPT Muscle Builder</option>
                     </select>
                 </div>
 

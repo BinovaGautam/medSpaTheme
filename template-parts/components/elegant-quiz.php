@@ -23,7 +23,17 @@ $defaults = array(
     'subtitle'     => __('Answer a few questions to get personalized recommendations', 'medspa-theme'),
     'css_class'    => '',
     'show_progress' => false,
-    'treatments'   => null,
+    'treatments'   => [
+        array('value' => 'injectable-artistry', 'text' => __('Botox / Fillers', 'medspa-theme'), 'icon' => '��'),
+        array('value' => 'facial-renaissance', 'text' => __('HydraFacial', 'medspa-theme'), 'icon' => '🌊'),
+        array('value' => 'precision-dermaplanning', 'text' => __('Dermaplanning', 'medspa-theme'), 'icon' => '✨'),
+        array('value' => 'regenerative-prp', 'text' => __('Microneedling PRP', 'medspa-theme'), 'icon' => '🩸'),
+        array('value' => 'wellness-infusions', 'text' => __('IV Vitamins', 'medspa-theme'), 'icon' => '💊'),
+        array('value' => 'artistry-enhancement', 'text' => __('Permanent Makeup', 'medspa-theme'), 'icon' => '💄'),
+        array('value' => 'laser-precision', 'text' => __('Laser Hair Reduction', 'medspa-theme'), 'icon' => '🔥'),
+        array('value' => 'carbon-rejuvenation', 'text' => __('Carbon Peel Laser', 'medspa-theme'), 'icon' => '🌟'),
+        array('value' => 'body-sculpting', 'text' => __('EMSCULPT Muscle Builder', 'medspa-theme'), 'icon' => '💪'),
+    ],
     'quiz_id'      => 'elegant-quiz-' . uniqid(),
 );
 
@@ -31,21 +41,6 @@ $args = wp_parse_args($args ?? array(), $defaults);
 
 // Generate secure nonce for this quiz instance
 $quiz_nonce = wp_create_nonce('elegant_quiz_' . $args['quiz_id']);
-
-// Get treatment options
-$treatment_options = $args['treatments'] ?: array(
-    array('value' => 'botox', 'text' => __('Botox & Xeomin', 'medspa-theme'), 'icon' => '💉'),
-    array('value' => 'dermal-fillers', 'text' => __('Dermal Fillers', 'medspa-theme'), 'icon' => '💋'),
-    array('value' => 'laser-hair-removal', 'text' => __('Laser Hair Removal', 'medspa-theme'), 'icon' => '💎'),
-    array('value' => 'coolsculpting', 'text' => __('CoolSculpting', 'medspa-theme'), 'icon' => '❄️'),
-    array('value' => 'clear-brilliant', 'text' => __('Clear & Brilliant', 'medspa-theme'), 'icon' => '💎'),
-    array('value' => 'ipl-photofacials', 'text' => __('IPL Photofacials', 'medspa-theme'), 'icon' => '✨'),
-    array('value' => 'skin-rejuvenation', 'text' => __('Skin Rejuvenation', 'medspa-theme'), 'icon' => '🌟'),
-    array('value' => 'tattoo-removal', 'text' => __('Tattoo Removal', 'medspa-theme'), 'icon' => '🎨'),
-    array('value' => 'thermage', 'text' => __('Thermage', 'medspa-theme'), 'icon' => '⚡'),
-    array('value' => 'hydrafacial', 'text' => __('HydraFacial', 'medspa-theme'), 'icon' => '💧'),
-    array('value' => 'potenza-rf', 'text' => __('Potenza RF Microneedling', 'medspa-theme'), 'icon' => '🔬'),
-);
 
 // Component CSS classes
 $component_classes = array(
@@ -94,7 +89,7 @@ $component_class_string = implode(' ', array_map('sanitize_html_class', $compone
                  aria-live="polite">
             <h4 class="quiz-question"><?php esc_html_e('What are you interested in?', 'medspa-theme'); ?></h4>
             <div class="quiz-grid" role="group" aria-label="<?php esc_attr_e('Treatment options', 'medspa-theme'); ?>">
-                <?php foreach ($treatment_options as $treatment) :
+                <?php foreach ($args['treatments'] as $treatment) :
                     $is_wide = strlen($treatment['text']) > 20;
                     $pill_classes = array('quiz-pill');
                     if ($is_wide) $pill_classes[] = 'quiz-pill-wide';

@@ -298,26 +298,18 @@ class ConsultationForm extends FormComponent {
      * @return array Available treatments
      */
     protected function get_available_treatments() {
-        return [
-            '' => 'Select a treatment...',
-            'chemical_peel' => 'Chemical Peel',
-            'microneedling' => 'Microneedling',
-            'hydrafacial' => 'HydraFacial',
-            'laser_resurfacing' => 'Laser Resurfacing',
-            'botox' => 'Botox/Dysport',
-            'dermal_fillers' => 'Dermal Fillers',
-            'ipl_photofacial' => 'IPL Photofacial',
-            'laser_hair_removal' => 'Laser Hair Removal',
-            'coolsculpting' => 'CoolSculpting',
-            'thread_lift' => 'Thread Lift',
-            'prp_therapy' => 'PRP Therapy',
-            'acne_treatment' => 'Acne Treatment',
-            'scar_treatment' => 'Scar Treatment',
-            'anti_aging' => 'Anti-Aging Treatment',
-            'skin_tightening' => 'Skin Tightening',
-            'pigmentation' => 'Pigmentation Treatment',
-            'consultation_only' => 'General Consultation Only'
+        $treatment_options = [
+            'injectable-artistry' => 'Botox / Fillers',
+            'facial-renaissance' => 'HydraFacial',
+            'precision-dermaplanning' => 'Dermaplanning',
+            'regenerative-prp' => 'Microneedling PRP',
+            'wellness-infusions' => 'IV Vitamins',
+            'artistry-enhancement' => 'Permanent Makeup',
+            'laser-precision' => 'Laser Hair Reduction',
+            'carbon-rejuvenation' => 'Carbon Peel Laser',
+            'body-sculpting' => 'EMSCULPT Muscle Builder',
         ];
+        return $treatment_options;
     }
 
     /**
