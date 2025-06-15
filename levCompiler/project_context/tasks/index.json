@@ -1,14 +1,14 @@
 {
   "taskManagementIndex": {
-    "version": "1.9.0",
+    "version": "2.0.0",
     "lastUpdated": "{CURRENT_TIMESTAMP}",
     "description": "Comprehensive index for task management, sprint planning, and project coordination artifacts",
     "managedBy": "TASK-PLANNER-001",
     "workflowId": "TASK-MANAGEMENT-WF-001",
-    "totalSprints": 7,
+    "totalSprints": 8,
     "activeSprints": 1,
     "completedSprints": 6,
-    "plannedSprints": 0
+    "plannedSprints": 1
   },
 
   "projectOverview": {
@@ -97,12 +97,12 @@
   },
 
   "sprints": {
-    "totalSprints": 7,
-    "currentSprint": "SPRINT-007-ACTIVE",
-    "completedSprints": 6,
+    "totalSprints": 8,
+    "currentSprint": "SPRINT-008-ACTIVE",
+    "completedSprints": 7,
     "activeSprints": 1,
     "plannedSprints": 0,
-    "sprintHistory": ["SPRINT-001", "SPRINT-002", "SPRINT-003", "SPRINT-004", "SPRINT-005", "SPRINT-006"],
+    "sprintHistory": ["SPRINT-001", "SPRINT-002", "SPRINT-003", "SPRINT-004", "SPRINT-005", "SPRINT-006", "SPRINT-007"],
     "sprintPlans": "levCompiler/project_context/tasks/sprints/",
     "sprintReports": "levCompiler/project_context/tasks/reports/sprints/",
     "sprintExtensions": {
@@ -266,16 +266,34 @@
       },
       "SPRINT-007": {
         "title": "Design System Semantic Migration",
-        "status": "active-ready-to-start",
-        "progress": "0%",
-        "completedStoryPoints": 0,
+        "status": "completed",
+        "progress": "100%",
+        "completedStoryPoints": 63,
         "totalStoryPoints": 63,
         "totalTasks": 12,
         "priority": "CRITICAL",
-        "nextActiveTask": "T7.1.1-CORE-CSS-SEMANTIC-MIGRATION",
-        "criticalPath": "core-css → component-integration → automation → documentation",
-        "riskLevel": "medium-high",
+        "completedDate": "{CURRENT_DATE}",
         "description": "Consolidate all design systems into semantic token architecture as single source of truth"
+      },
+      "SPRINT-008": {
+        "title": "Treatments Page Comprehensive Fixes",
+        "status": "active",
+        "progress": "38.2%",
+        "completedStoryPoints": 13,
+        "totalStoryPoints": 34,
+        "totalTasks": 6,
+        "priority": "HIGH",
+        "startDate": "{CURRENT_DATE}",
+        "estimatedEndDate": "{DATE_RELATIVE: +7_days}",
+        "filePath": "levCompiler/project_context/tasks/sprints/active/sprint-7-treatments-page-fixes.md",
+        "nextActiveTask": "T7.3-VISUAL-DESIGN-CONSISTENCY-FIXES",
+        "criticalPath": "text-alignment → content-structure → visual-consistency → responsive-design",
+        "riskLevel": "low",
+        "description": "Fix all identified issues from treatments page visual analysis and UI validation",
+        "completedTasks": ["T7.1-CRITICAL-TEXT-ALIGNMENT-FIXES", "T7.2-CONTENT-STRUCTURE-ALIGNMENT"],
+        "activeTasks": ["T7.3-VISUAL-DESIGN-CONSISTENCY-FIXES"],
+        "blockedTasks": ["T7.4-RESPONSIVE-DESIGN-ENHANCEMENTS"],
+        "backlogTasks": ["T7.5-ACCESSIBILITY-COMPLIANCE-AUDIT", "T7.6-PERFORMANCE-OPTIMIZATION"]
       }
     },
     "currentSprintDetails": {

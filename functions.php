@@ -467,6 +467,16 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
+    // CRITICAL PRIORITY FIX: Text alignment fixes for treatments page
+    if (is_page_template('page-treatments.php') || is_page('treatments')) {
+        wp_enqueue_style(
+            'treatments-alignment-fixes',
+            get_template_directory_uri() . '/assets/css/treatments-alignment-fixes.css',
+            array('medical-spa-theme'),
+            PREETIDREAMS_VERSION . '-alignment-fix'
+        );
+    }
+
     wp_enqueue_script(
         'hero-component-scripts',
         get_template_directory_uri() . '/assets/js/components/hero.js',

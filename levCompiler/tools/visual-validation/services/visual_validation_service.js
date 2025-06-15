@@ -8,6 +8,7 @@ const path = require('path');
 const OpenAI = require('openai');
 const fetch = require('node-fetch');
 const TempScreenshotManager = require('../utils/temp_screenshot_manager');
+const ComprehensiveUIAnalyzer = require('./comprehensive_ui_analyzer');
 
 class VisualValidationService {
   constructor(config) {
@@ -16,6 +17,7 @@ class VisualValidationService {
     this.browsers = new Map();
     this.validationResults = new Map();
     this.tempScreenshotManager = config?.tempScreenshotManager || new TempScreenshotManager();
+    this.comprehensiveUIAnalyzer = new ComprehensiveUIAnalyzer(config);
   }
 
   /**
@@ -389,28 +391,67 @@ class VisualValidationService {
   }
 
   /**
-   * AI-powered visual analysis
+   * Comprehensive UI analysis using semantic design tokens
    */
   async performAIAnalysis(screenshots, targetAssets, comparisonResults) {
-    console.log('🤖 Performing AI-powered visual analysis...');
+    console.log('🤖 Performing comprehensive UI analysis...');
 
-    if (!this.openai) {
-      console.log('⚠️ OpenAI API key not available - skipping AI analysis');
-      return this.generateFallbackAnalysisForAll(screenshots, comparisonResults);
-    }
+    const comprehensiveAnalysis = {};
 
-    const aiAnalysis = {};
-
+    // First, run comprehensive UI analysis for each viewport
     for (const [viewportName, screenshot] of Object.entries(screenshots)) {
       try {
-        const base64Image = screenshot.buffer.toString('base64');
+        console.log(`🔍 Running comprehensive UI analysis for ${viewportName}...`);
 
-        const analysisPrompts = this.config.ai_analysis.analysis_prompts;
-        const analysis = {};
+        // Use the comprehensive UI analyzer
+        const uiAnalysis = await this.comprehensiveUIAnalyzer.analyzeScreenshot(
+          screenshot.filepath,
+          viewportName
+        );
 
-        // Perform different types of analysis
-        for (const [analysisType, prompt] of Object.entries(analysisPrompts)) {
-          console.log(`🔬 Running ${analysisType} analysis for ${viewportName}...`);
+        comprehensiveAnalysis[viewportName] = uiAnalysis;
+
+      } catch (error) {
+        console.error(`Comprehensive UI analysis failed for ${viewportName}:`, error);
+        comprehensiveAnalysis[viewportName] = {
+          error: error.message,
+          fallback_analysis: await this.generateFallbackAnalysis(comparisonResults[viewportName])
+        };
+      }
+    }
+
+    // If OpenAI is available, enhance with AI vision analysis
+    if (this.openai) {
+      console.log('🔬 Enhancing with AI vision analysis...');
+
+      for (const [viewportName, screenshot] of Object.entries(screenshots)) {
+        try {
+          const base64Image = screenshot.buffer.toString('base64');
+
+          // Enhanced AI prompt focusing on semantic design tokens
+          const enhancedPrompt = `
+            Analyze this ${viewportName} screenshot for design quality and semantic design token compliance:
+
+            1. **Semantic Token Compliance**: Check if the design appears to use consistent design tokens for:
+               - Colors (should use semantic color variables, not hardcoded values)
+               - Typography (consistent font families, sizes, weights)
+               - Spacing (consistent margins, padding, gaps)
+               - Border radius and shadows
+
+            2. **Design Language Consistency**: Evaluate:
+               - Visual hierarchy and information architecture
+               - Component consistency across the interface
+               - Accessibility compliance (contrast, touch targets, text size)
+               - Responsive design implementation
+
+            3. **UI Quality Assessment**: Analyze:
+               - Alignment and spacing issues
+               - Color harmony and brand consistency
+               - Content structure and organization
+               - Overall professional appearance
+
+            Provide specific, actionable feedback focusing on design system compliance and semantic token usage.
+          `;
 
           const response = await this.openai.chat.completions.create({
             model: "gpt-4-vision-preview",
@@ -420,7 +461,7 @@ class VisualValidationService {
                 content: [
                   {
                     type: "text",
-                    text: `${prompt}\n\nProvide a detailed analysis in JSON format with scores (0-1) and specific recommendations.`
+                    text: `${enhancedPrompt}\n\nProvide analysis in JSON format with scores (0-1) and specific recommendations focusing on semantic design token compliance.`
                   },
                   {
                     type: "image_url",
@@ -431,32 +472,36 @@ class VisualValidationService {
                 ]
               }
             ],
-            max_tokens: 1000
+            max_tokens: 1500
           });
 
           try {
-            analysis[analysisType] = JSON.parse(response.choices[0].message.content);
+            const aiEnhancement = JSON.parse(response.choices[0].message.content);
+
+            // Merge AI enhancement with comprehensive analysis
+            if (comprehensiveAnalysis[viewportName]) {
+              comprehensiveAnalysis[viewportName].ai_enhancement = aiEnhancement;
+
+              // Update overall score with AI insights
+              const aiScore = aiEnhancement.overall_score || 0.5;
+              const currentScore = comprehensiveAnalysis[viewportName].overall_score || 0.5;
+              comprehensiveAnalysis[viewportName].overall_score = (currentScore + aiScore) / 2;
+            }
+
           } catch (parseError) {
-            analysis[analysisType] = {
-              raw_response: response.choices[0].message.content,
-              score: 0.5,
-              recommendations: ["AI analysis parsing failed"]
-            };
+            console.log(`⚠️ AI enhancement parsing failed for ${viewportName}, using comprehensive analysis only`);
           }
+
+        } catch (error) {
+          console.log(`⚠️ AI enhancement failed for ${viewportName}:`, error.message);
+          // Continue with comprehensive analysis only
         }
-
-        aiAnalysis[viewportName] = analysis;
-
-      } catch (error) {
-        console.error(`AI analysis failed for ${viewportName}:`, error);
-        aiAnalysis[viewportName] = {
-          error: error.message,
-          fallback_analysis: await this.generateFallbackAnalysis(comparisonResults[viewportName])
-        };
       }
+    } else {
+      console.log('⚠️ OpenAI API key not available - using comprehensive UI analysis only');
     }
 
-    return aiAnalysis;
+    return comprehensiveAnalysis;
   }
 
   /**

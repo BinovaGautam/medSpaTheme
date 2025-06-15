@@ -9,8 +9,8 @@
     "lastUpdated": "2024-01-15"
   },
   "project_name": "MedSpa Theme",
-  "version": "3.1.0",
-  "last_updated": "2024-12-19",
+  "version": "3.2.0",
+  "last_updated": "{CURRENT_DATE}",
   "components": [
     {
       "name": "treatment-cards",
@@ -38,6 +38,16 @@
       "path": "documentation/adapter-pattern-guide.md",
       "type": "architecture",
       "status": "active"
+    }
+  ],
+  "analysis": [
+    {
+      "name": "flyer-services-analysis",
+      "path": "analysis/flyer-services-analysis.md",
+      "type": "service_alignment",
+      "status": "active",
+      "created": "{CURRENT_DATE}",
+      "purpose": "Compare flyer services with current implementation for brand consistency"
     }
   ],
   "compliance": {

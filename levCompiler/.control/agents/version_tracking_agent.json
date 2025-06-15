@@ -527,6 +527,123 @@
     "commitMessageTemplate": "{TYPE}({SCOPE}): {DESCRIPTION}",
     "commitMessageAlternative": "{TYPE}: {DESCRIPTION} - {SCOPE}",
     "commitMessageSimple": "{TYPE}: {DESCRIPTION}",
+    "gitignoreManagement": {
+      "temporaryFilePatterns": [
+        "temp/",
+        "*/temp/",
+        "**/temp/",
+        "validation_results/",
+        "*/validation_results/",
+        "**/validation_results/",
+        "screenshots/",
+        "*/screenshots/",
+        "**/screenshots/",
+        "*.tmp",
+        "*.temp",
+        "*_temp_*",
+        "temp_*",
+        "*_screenshot_*"
+      ],
+      "developmentArtifacts": [
+        "devtools/temp/",
+        "devtools/screenshots/",
+        "tools/temp/",
+        "tools/screenshots/",
+        "tools/validation/",
+        "levCompiler/tools/temp/",
+        "levCompiler/tools/validation/",
+        "**/node_modules/",
+        "*.log",
+        "logs/",
+        "*/logs/",
+        "**/logs/",
+        ".cache/",
+        "*/.cache/",
+        "**/.cache/"
+      ],
+      "wordpressThemeExclusions": [
+        "wp-config.php",
+        "wp-content/uploads/",
+        "wp-content/cache/",
+        "wp-content/backup-db/",
+        "wp-content/advanced-cache.php",
+        "wp-content/wp-cache-config.php",
+        "wp-content/blogs.dir/"
+      ],
+      "buildAndDependencyExclusions": [
+        "node_modules/",
+        "vendor/",
+        "dist/",
+        "build/",
+        ".env*",
+        "npm-debug.log*",
+        "yarn-debug.log*",
+        "yarn-error.log*"
+      ],
+      "ideAndOsExclusions": [
+        ".vscode/",
+        ".idea/",
+        "*.swp",
+        "*.swo",
+        "*~",
+        ".DS_Store",
+        ".DS_Store?",
+        "._*",
+        ".Spotlight-V100",
+        ".Trashes",
+        "ehthumbs.db",
+        "Thumbs.db"
+      ]
+    },
+    "projectCleanupRules": {
+      "wordpressThemeCompliance": {
+        "allowedRootDirectories": [
+          "inc/",
+          "assets/",
+          "templates/",
+          "template-parts/",
+          "levCompiler/",
+          ".git/"
+        ],
+        "allowedRootFiles": [
+          "functions.php",
+          "style.css",
+          "index.php",
+          "theme.json",
+          "screenshot.png",
+          "*.php",
+          "package.json",
+          "yarn.lock",
+          "composer.json",
+          "composer.lock",
+          "vite.config.js",
+          "tailwind.config.js",
+          ".editorconfig",
+          ".gitignore",
+          "README.md"
+        ],
+        "prohibitedRootItems": [
+          "validation_results/",
+          "temp/",
+          "tools/",
+          "tests/",
+          "devtools/",
+          "docs/",
+          "rules/",
+          "resources/",
+          "public/",
+          "app/",
+          "baseRequirements/"
+        ]
+      },
+      "fundamentalsComplianceEnforcement": {
+        "toolsOrganization": "ALL tools must be in levCompiler/tools/ directory",
+        "validationResults": "ALL validation results must be in levCompiler/tools/validation/",
+        "temporaryFiles": "ALL temp files must be in levCompiler/tools/temp/",
+        "documentation": "ALL docs must be in levCompiler/project_context/",
+        "projectStructure": "WordPress theme files only in root directory"
+      }
+    },
     "commitMessageGeneration": {
       "rules": [
         "MUST use single-line commit messages for shell safety",

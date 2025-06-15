@@ -55,13 +55,15 @@ class HardcodedTreatmentDataSource implements TreatmentDataSourceInterface {
 
     /**
      * Raw treatment data (simulating database structure)
+     * UPDATED: Aligned with TREATMENTS_OVERVIEW_PAGE_DESIGN.md specifications
+     * Total Services: 9 (as per design document)
      */
     private static function get_raw_data(): array {
         return [
             [
                 'id' => 'injectable-artistry',
-                'post_title' => 'Injectable Artistry',
-                'post_content' => '✨ Smooth wrinkles & restore volume with precision artistry. Experience natural-looking results with FDA-approved treatments.',
+                'post_title' => 'Botox / Fillers',
+                'post_content' => '💉 Smooth wrinkles & restore volume with precision artistry. Experience natural-looking results with FDA-approved Botox and dermal fillers.',
                 'post_excerpt' => 'Premium injectable treatments for natural facial enhancement',
                 'post_status' => 'publish',
                 'meta_fields' => [
@@ -87,21 +89,21 @@ class HardcodedTreatmentDataSource implements TreatmentDataSourceInterface {
             ],
             [
                 'id' => 'facial-renaissance',
-                'post_title' => 'Facial Renaissance',
-                'post_content' => '💧 Advanced hydrafacial treatment & renewal for radiant, rejuvenated skin. Experience deep cleansing and instant glow.',
-                'post_excerpt' => 'Advanced hydrafacial treatment for skin rejuvenation',
+                'post_title' => 'HydraFacial',
+                'post_content' => '🌊 Deep cleanse & hydrate for radiant skin with our advanced HydraFacial treatment. Experience instant glow and skin renewal.',
+                'post_excerpt' => 'Advanced HydraFacial treatment for skin rejuvenation',
                 'post_status' => 'publish',
                 'meta_fields' => [
                     '_treatment_icon' => '🌊',
                     '_treatment_category' => 'facial',
                     '_treatment_duration' => '60 minutes',
-                    '_treatment_benefits' => ['Deep cleansing', 'Skin rejuvenation', 'Instant glow', 'Customized treatment'],
+                    '_treatment_benefits' => ['Deep cleansing', 'Instant hydration', 'Immediate glow', 'Customized treatment'],
                     '_treatment_cta_primary_text' => 'Book Now',
                     '_treatment_cta_primary_url' => '/book-appointment/?treatment=facial-renaissance',
                     '_treatment_cta_secondary_text' => 'Learn More',
                     '_treatment_cta_secondary_url' => '/treatments/facial-renaissance/',
                     '_treatment_featured_image' => get_template_directory_uri() . '/assets/images/treatments/facial-renaissance.jpg',
-                    '_treatment_featured_image_alt' => 'Medical spa facial treatment procedure',
+                    '_treatment_featured_image_alt' => 'Medical spa HydraFacial treatment procedure',
                     '_treatment_schema_type' => 'MedicalProcedure',
                     '_treatment_schema_body_location' => 'Face',
                     '_treatment_schema_procedure_type' => 'Cosmetic procedure'
@@ -114,8 +116,8 @@ class HardcodedTreatmentDataSource implements TreatmentDataSourceInterface {
             ],
             [
                 'id' => 'precision-dermaplanning',
-                'post_title' => 'Precision Dermaplanning',
-                'post_content' => '🪶 Gentle exfoliation for luminous skin. Achieve smooth texture and enhanced product absorption.',
+                'post_title' => 'Dermaplanning',
+                'post_content' => '✨ Gentle exfoliation for smooth, glowing skin. Achieve luminous texture and enhanced product absorption with professional dermaplanning.',
                 'post_excerpt' => 'Professional dermaplanning for smooth, radiant skin',
                 'post_status' => 'publish',
                 'meta_fields' => [
@@ -141,36 +143,36 @@ class HardcodedTreatmentDataSource implements TreatmentDataSourceInterface {
             ],
             [
                 'id' => 'regenerative-prp',
-                'post_title' => 'Regenerative PRP',
-                'post_content' => '🔬 Stimulate natural collagen & cellular renewal. Experience the power of your body\'s own healing factors.',
-                'post_excerpt' => 'Advanced PRP treatments for natural regeneration',
+                'post_title' => 'Microneedling PRP',
+                'post_content' => '🩸 Stimulate natural collagen production with microneedling PRP therapy. Experience the power of your body\'s own healing factors.',
+                'post_excerpt' => 'Advanced microneedling PRP treatments for natural regeneration',
                 'post_status' => 'publish',
                 'meta_fields' => [
                     '_treatment_icon' => '🩸',
                     '_treatment_category' => 'regenerative',
                     '_treatment_duration' => '60 minutes',
-                    '_treatment_benefits' => ['Natural healing', 'Long-lasting results', 'Multiple applications', 'Progressive improvement'],
+                    '_treatment_benefits' => ['Natural healing', 'Collagen stimulation', 'Multiple applications', 'Progressive improvement'],
                     '_treatment_cta_primary_text' => 'Book Now',
                     '_treatment_cta_primary_url' => '/book-appointment/?treatment=regenerative-prp',
                     '_treatment_cta_secondary_text' => 'Learn More',
                     '_treatment_cta_secondary_url' => '/treatments/regenerative-prp/',
                     '_treatment_featured_image' => get_template_directory_uri() . '/assets/images/treatments/regenerative-prp.jpg',
-                    '_treatment_featured_image_alt' => 'Medical spa PRP treatment procedure',
+                    '_treatment_featured_image_alt' => 'Medical spa microneedling PRP treatment procedure',
                     '_treatment_schema_type' => 'MedicalProcedure',
-                    '_treatment_schema_body_location' => 'Multiple',
+                    '_treatment_schema_body_location' => 'Face',
                     '_treatment_schema_procedure_type' => 'Regenerative procedure'
                 ],
                 'taxonomies' => [
                     'treatment_category' => ['regenerative'],
                     'treatment_feature' => ['natural-healing', 'progressive'],
-                    'treatment_benefit' => ['long-lasting', 'multiple-applications']
+                    'treatment_benefit' => ['collagen-stimulation', 'multiple-applications']
                 ]
             ],
             [
                 'id' => 'wellness-infusions',
-                'post_title' => 'Wellness Infusions',
-                'post_content' => '⚡ Boost vitality & energy from within with our premium IV therapy treatments. Experience enhanced wellness, improved immunity, and renewed energy levels.',
-                'post_excerpt' => 'Premium IV therapy for enhanced wellness and vitality',
+                'post_title' => 'IV Vitamins',
+                'post_content' => '💊 Boost wellness & energy from within with our premium IV vitamin therapy treatments. Experience enhanced vitality and improved immunity.',
+                'post_excerpt' => 'Premium IV vitamin therapy for enhanced wellness and vitality',
                 'post_status' => 'publish',
                 'meta_fields' => [
                     '_treatment_icon' => '💊',
@@ -182,7 +184,7 @@ class HardcodedTreatmentDataSource implements TreatmentDataSourceInterface {
                     '_treatment_cta_secondary_text' => 'Learn More',
                     '_treatment_cta_secondary_url' => '/treatments/wellness-infusions/',
                     '_treatment_featured_image' => get_template_directory_uri() . '/assets/images/treatments/wellness-infusions.jpg',
-                    '_treatment_featured_image_alt' => 'Medical spa IV therapy treatment',
+                    '_treatment_featured_image_alt' => 'Medical spa IV vitamin therapy treatment',
                     '_treatment_schema_type' => 'MedicalProcedure',
                     '_treatment_schema_body_location' => 'Systemic',
                     '_treatment_schema_procedure_type' => 'Wellness procedure'
@@ -195,75 +197,75 @@ class HardcodedTreatmentDataSource implements TreatmentDataSourceInterface {
             ],
             [
                 'id' => 'artistry-enhancement',
-                'post_title' => 'Artistry Enhancement',
-                'post_content' => '🎨 Sculpt & define with precision enhancement techniques. Achieve balanced, natural-looking facial harmony.',
-                'post_excerpt' => 'Advanced enhancement techniques for facial harmony',
+                'post_title' => 'Permanent Makeup',
+                'post_content' => '💄 Wake up beautiful every day with our permanent makeup artistry. Achieve perfectly defined brows, lips, and eyes with precision enhancement techniques.',
+                'post_excerpt' => 'Professional permanent makeup and cosmetic tattooing services',
                 'post_status' => 'publish',
                 'meta_fields' => [
-                    '_treatment_icon' => '🎨',
+                    '_treatment_icon' => '💄',
                     '_treatment_category' => 'artistry',
-                    '_treatment_duration' => '90 minutes',
-                    '_treatment_benefits' => ['Facial harmony', 'Precision sculpting', 'Natural enhancement', 'Customized approach'],
+                    '_treatment_duration' => '90-120 minutes',
+                    '_treatment_benefits' => ['Permanent results', 'Time-saving beauty', 'Natural enhancement', 'Customized approach'],
                     '_treatment_cta_primary_text' => 'Book Now',
                     '_treatment_cta_primary_url' => '/book-appointment/?treatment=artistry-enhancement',
                     '_treatment_cta_secondary_text' => 'Learn More',
                     '_treatment_cta_secondary_url' => '/treatments/artistry-enhancement/',
                     '_treatment_featured_image' => get_template_directory_uri() . '/assets/images/treatments/artistry-enhancement.jpg',
-                    '_treatment_featured_image_alt' => 'Medical spa enhancement treatment',
+                    '_treatment_featured_image_alt' => 'Medical spa permanent makeup treatment',
                     '_treatment_schema_type' => 'MedicalProcedure',
                     '_treatment_schema_body_location' => 'Face',
-                    '_treatment_schema_procedure_type' => 'Enhancement procedure'
+                    '_treatment_schema_procedure_type' => 'Cosmetic tattooing procedure'
                 ],
                 'taxonomies' => [
                     'treatment_category' => ['artistry'],
-                    'treatment_feature' => ['precision-sculpting', 'customized'],
-                    'treatment_benefit' => ['facial-harmony', 'natural-enhancement']
+                    'treatment_feature' => ['permanent-results', 'customized'],
+                    'treatment_benefit' => ['time-saving', 'natural-enhancement']
                 ]
             ],
             [
                 'id' => 'laser-precision',
-                'post_title' => 'Laser Precision',
-                'post_content' => '⚡ Advanced laser technology for skin resurfacing & rejuvenation. Experience precise, controlled treatment for optimal results.',
-                'post_excerpt' => 'Advanced laser treatments for skin resurfacing',
+                'post_title' => 'Laser Hair Reduction',
+                'post_content' => '🔥 Permanent hair removal technology with advanced laser systems. Experience precise, controlled treatment for smooth, hair-free skin.',
+                'post_excerpt' => 'Advanced laser hair removal treatments for permanent results',
                 'post_status' => 'publish',
                 'meta_fields' => [
-                    '_treatment_icon' => '⚡',
+                    '_treatment_icon' => '🔥',
                     '_treatment_category' => 'laser',
-                    '_treatment_duration' => '60 minutes',
-                    '_treatment_benefits' => ['Skin resurfacing', 'Controlled treatment', 'Advanced technology', 'Optimal results'],
+                    '_treatment_duration' => '30-90 minutes',
+                    '_treatment_benefits' => ['Permanent hair removal', 'Advanced technology', 'Precise treatment', 'All skin types'],
                     '_treatment_cta_primary_text' => 'Book Now',
                     '_treatment_cta_primary_url' => '/book-appointment/?treatment=laser-precision',
                     '_treatment_cta_secondary_text' => 'Learn More',
                     '_treatment_cta_secondary_url' => '/treatments/laser-precision/',
                     '_treatment_featured_image' => get_template_directory_uri() . '/assets/images/treatments/laser-precision.jpg',
-                    '_treatment_featured_image_alt' => 'Medical spa laser treatment',
+                    '_treatment_featured_image_alt' => 'Medical spa laser hair removal treatment',
                     '_treatment_schema_type' => 'MedicalProcedure',
-                    '_treatment_schema_body_location' => 'Face',
+                    '_treatment_schema_body_location' => 'Multiple',
                     '_treatment_schema_procedure_type' => 'Laser procedure'
                 ],
                 'taxonomies' => [
                     'treatment_category' => ['laser'],
-                    'treatment_feature' => ['advanced-technology', 'controlled'],
-                    'treatment_benefit' => ['skin-resurfacing', 'optimal-results']
+                    'treatment_feature' => ['advanced-technology', 'permanent-results'],
+                    'treatment_benefit' => ['hair-removal', 'all-skin-types']
                 ]
             ],
             [
                 'id' => 'carbon-rejuvenation',
-                'post_title' => 'Carbon Rejuvenation',
-                'post_content' => '🌟 Revolutionary carbon laser treatment for deep pore cleansing & skin renewal. Experience immediate glow and refined texture.',
-                'post_excerpt' => 'Revolutionary carbon laser for deep cleansing and renewal',
+                'post_title' => 'Carbon Peel Laser',
+                'post_content' => '🌟 Resurface & rejuvenate your skin with revolutionary carbon peel laser treatment. Experience deep pore cleansing and immediate glow.',
+                'post_excerpt' => 'Revolutionary carbon peel laser for skin resurfacing and renewal',
                 'post_status' => 'publish',
                 'meta_fields' => [
                     '_treatment_icon' => '🌟',
                     '_treatment_category' => 'carbon',
                     '_treatment_duration' => '45 minutes',
-                    '_treatment_benefits' => ['Deep pore cleansing', 'Immediate glow', 'Refined texture', 'Revolutionary technology'],
+                    '_treatment_benefits' => ['Deep pore cleansing', 'Immediate glow', 'Skin resurfacing', 'Revolutionary technology'],
                     '_treatment_cta_primary_text' => 'Book Now',
                     '_treatment_cta_primary_url' => '/book-appointment/?treatment=carbon-rejuvenation',
                     '_treatment_cta_secondary_text' => 'Learn More',
                     '_treatment_cta_secondary_url' => '/treatments/carbon-rejuvenation/',
                     '_treatment_featured_image' => get_template_directory_uri() . '/assets/images/treatments/carbon-rejuvenation.jpg',
-                    '_treatment_featured_image_alt' => 'Medical spa carbon laser treatment',
+                    '_treatment_featured_image_alt' => 'Medical spa carbon peel laser treatment',
                     '_treatment_schema_type' => 'MedicalProcedure',
                     '_treatment_schema_body_location' => 'Face',
                     '_treatment_schema_procedure_type' => 'Carbon laser procedure'
@@ -271,34 +273,34 @@ class HardcodedTreatmentDataSource implements TreatmentDataSourceInterface {
                 'taxonomies' => [
                     'treatment_category' => ['carbon'],
                     'treatment_feature' => ['revolutionary-technology', 'immediate-results'],
-                    'treatment_benefit' => ['deep-cleansing', 'refined-texture']
+                    'treatment_benefit' => ['deep-cleansing', 'skin-resurfacing']
                 ]
             ],
             [
                 'id' => 'body-sculpting',
-                'post_title' => 'Body Sculpting',
-                'post_content' => '💪 Non-invasive body contouring & fat reduction. Achieve your ideal silhouette with advanced sculpting technology.',
-                'post_excerpt' => 'Non-invasive body contouring and fat reduction',
+                'post_title' => 'EMSCULPT Muscle Builder',
+                'post_content' => '💪 Build & tone muscles without exercise using EMSCULPT muscle building technology. Achieve your ideal silhouette with advanced body contouring.',
+                'post_excerpt' => 'EMSCULPT muscle building and non-invasive body contouring',
                 'post_status' => 'publish',
                 'meta_fields' => [
                     '_treatment_icon' => '💪',
                     '_treatment_category' => 'body',
-                    '_treatment_duration' => '60 minutes',
-                    '_treatment_benefits' => ['Non-invasive', 'Fat reduction', 'Body contouring', 'Advanced technology'],
+                    '_treatment_duration' => '30 minutes',
+                    '_treatment_benefits' => ['Muscle building', 'Fat reduction', 'No exercise required', 'Advanced technology'],
                     '_treatment_cta_primary_text' => 'Book Now',
                     '_treatment_cta_primary_url' => '/book-appointment/?treatment=body-sculpting',
                     '_treatment_cta_secondary_text' => 'Learn More',
                     '_treatment_cta_secondary_url' => '/treatments/body-sculpting/',
                     '_treatment_featured_image' => get_template_directory_uri() . '/assets/images/treatments/body-sculpting.jpg',
-                    '_treatment_featured_image_alt' => 'Medical spa body sculpting treatment',
+                    '_treatment_featured_image_alt' => 'Medical spa EMSCULPT body sculpting treatment',
                     '_treatment_schema_type' => 'MedicalProcedure',
                     '_treatment_schema_body_location' => 'Body',
                     '_treatment_schema_procedure_type' => 'Body contouring procedure'
                 ],
                 'taxonomies' => [
                     'treatment_category' => ['body'],
-                    'treatment_feature' => ['non-invasive', 'advanced-technology'],
-                    'treatment_benefit' => ['fat-reduction', 'body-contouring']
+                    'treatment_feature' => ['muscle-building', 'advanced-technology'],
+                    'treatment_benefit' => ['fat-reduction', 'no-exercise']
                 ]
             ]
         ];
