@@ -2,8 +2,8 @@
   "designsIndex": {
     "version": "1.0.0",
     "lastUpdated": "{CURRENT_DATE}",
-    "totalDesigns": 4,
-    "activeDesigns": 4,
+    "totalDesigns": 5,
+    "activeDesigns": 5,
     "designCategories": ["ui-ux", "visual-systems", "components", "page-designs"]
   },
 
@@ -167,6 +167,54 @@
         "transitions": "100%-semantic-tokens"
       },
       "nextStage": "implementation-ready"
+    },
+
+    "singleTreatmentPageDesign": {
+      "designId": "SINGLE-TREATMENT-001",
+      "status": "active",
+      "category": "page-designs",
+      "priority": 1,
+      "description": "Premium single treatment page design optimized for consultation bookings and treatment education, based on A New Dawn Wellness Center layout structure",
+      "specialization": "single-treatment-page-design",
+      "location": "levCompiler/project_context/designs/SINGLE_TREATMENT_PAGE_DESIGN.md",
+      "lastModified": "{CURRENT_DATE}",
+      "designPhase": "concept-created",
+      "implementationReady": false,
+      "agent": "UI-UX-DESIGN-001",
+      "workflow": "UI-UX-CREATION-WF-001",
+      "referenceAnalysis": "A New Dawn Wellness Center - Botox & Dysport page",
+      "features": [
+        "hero-section-with-breadcrumbs",
+        "treatment-quick-info-bar",
+        "tabbed-content-navigation",
+        "comprehensive-treatment-overview",
+        "step-by-step-process-visualization",
+        "before-after-gallery-integration",
+        "expandable-faq-section",
+        "pricing-and-booking-section",
+        "related-treatments-recommendations",
+        "mobile-first-responsive-design",
+        "wcag-aaa-accessibility-compliance",
+        "conversion-optimization-strategy",
+        "semantic-design-token-usage"
+      ],
+      "layoutSections": [
+        "hero-with-breadcrumbs",
+        "treatment-quick-info",
+        "tabbed-navigation",
+        "treatment-overview",
+        "process-steps",
+        "results-gallery",
+        "faq-accordion",
+        "pricing-booking",
+        "related-treatments"
+      ],
+      "conversionOptimization": {
+        "primaryCTAs": ["book-consultation", "call-now", "view-pricing"],
+        "trustSignals": ["before-after-gallery", "testimonials", "credentials", "process-transparency"],
+        "userJourney": ["awareness", "interest", "consideration", "action"]
+      },
+      "nextStage": "stakeholder-review"
     }
   },
 

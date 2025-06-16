@@ -5,10 +5,10 @@
     "description": "Comprehensive index for task management, sprint planning, and project coordination artifacts",
     "managedBy": "TASK-PLANNER-001",
     "workflowId": "TASK-MANAGEMENT-WF-001",
-    "totalSprints": 8,
+    "totalSprints": 10,
     "activeSprints": 1,
-    "completedSprints": 6,
-    "plannedSprints": 1
+    "completedSprints": 7,
+    "plannedSprints": 2
   },
 
   "projectOverview": {
@@ -97,12 +97,12 @@
   },
 
   "sprints": {
-    "totalSprints": 8,
+    "totalSprints": 10,
     "currentSprint": "SPRINT-008-ACTIVE",
-    "completedSprints": 7,
+    "completedSprints": 6,
     "activeSprints": 1,
-    "plannedSprints": 0,
-    "sprintHistory": ["SPRINT-001", "SPRINT-002", "SPRINT-003", "SPRINT-004", "SPRINT-005", "SPRINT-006", "SPRINT-007"],
+    "plannedSprints": 2,
+    "sprintHistory": ["SPRINT-001", "SPRINT-002", "SPRINT-003", "SPRINT-004", "SPRINT-005", "SPRINT-006"],
     "sprintPlans": "levCompiler/project_context/tasks/sprints/",
     "sprintReports": "levCompiler/project_context/tasks/reports/sprints/",
     "sprintExtensions": {
@@ -276,24 +276,76 @@
         "description": "Consolidate all design systems into semantic token architecture as single source of truth"
       },
       "SPRINT-008": {
-        "title": "Treatments Page Comprehensive Fixes",
+        "title": "Single Treatment Page Implementation",
         "status": "active",
-        "progress": "38.2%",
-        "completedStoryPoints": 13,
-        "totalStoryPoints": 34,
-        "totalTasks": 6,
+        "progress": "0%",
+        "completedStoryPoints": 0,
+        "totalStoryPoints": 47,
+        "totalTasks": 11,
         "priority": "HIGH",
         "startDate": "{CURRENT_DATE}",
-        "estimatedEndDate": "{DATE_RELATIVE: +7_days}",
-        "filePath": "levCompiler/project_context/tasks/sprints/active/sprint-7-treatments-page-fixes.md",
-        "nextActiveTask": "T7.3-VISUAL-DESIGN-CONSISTENCY-FIXES",
-        "criticalPath": "text-alignment → content-structure → visual-consistency → responsive-design",
-        "riskLevel": "low",
-        "description": "Fix all identified issues from treatments page visual analysis and UI validation",
-        "completedTasks": ["T7.1-CRITICAL-TEXT-ALIGNMENT-FIXES", "T7.2-CONTENT-STRUCTURE-ALIGNMENT"],
-        "activeTasks": ["T7.3-VISUAL-DESIGN-CONSISTENCY-FIXES"],
-        "blockedTasks": ["T7.4-RESPONSIVE-DESIGN-ENHANCEMENTS"],
-        "backlogTasks": ["T7.5-ACCESSIBILITY-COMPLIANCE-AUDIT", "T7.6-PERFORMANCE-OPTIMIZATION"]
+        "estimatedEndDate": "{DATE_RELATIVE: +21_days}",
+        "filePath": "levCompiler/project_context/tasks/sprints/active/sprint-8-single-treatment-page.md",
+        "nextActiveTask": "T8.1.1-Template-Structure-Foundation",
+        "criticalPath": "template-foundation → content-sections → cms-integration → testing",
+        "riskLevel": "medium",
+        "description": "Complete implementation of premium single treatment page design with CMS integration, optional pricing section, and demo data migration for Botox/Fillers treatment",
+        "activeTasks": ["T8.1.1-Template-Structure-Foundation"],
+        "plannedTasks": ["T8.1.2-Content-Sections-Implementation", "T8.1.3-Conditional-Pricing-Booking-Integration", "T8.1.4-Related-Treatments-Navigation", "T8.1.5-Performance-SEO-Optimization", "T8.2.1-ACF-Field-Groups-Creation", "T8.2.2-Demo-Data-Creation-Botox-Fillers", "T8.2.3-Content-Migration-Template-Documentation", "T8.3.1-Functionality-Testing", "T8.3.2-Responsive-Accessibility-Testing", "T8.3.3-Performance-SEO-Validation"],
+        "epics": ["E8.1-Single-Treatment-Page-Template-System", "E8.2-CMS-Data-Structure-Migration", "E8.3-Quality-Assurance-Testing"],
+        "features": [
+          "optional-pricing-section-cms-controlled",
+          "comprehensive-cms-data-structure",
+          "demo-data-migration-botox-fillers",
+          "responsive-design-mobile-first",
+          "wcag-aaa-accessibility-compliance",
+          "semantic-design-token-usage"
+        ]
+      },
+      "SPRINT-009": {
+        "title": "Remaining Treatments Data Migration",
+        "status": "planned",
+        "progress": "0%",
+        "completedStoryPoints": 0,
+        "totalStoryPoints": 35,
+        "totalTasks": 9,
+        "priority": "MEDIUM",
+        "estimatedStartDate": "{DATE_RELATIVE: +22_days}",
+        "estimatedEndDate": "{DATE_RELATIVE: +35_days}",
+        "description": "Complete CMS data migration for remaining 8 treatments with content optimization and SEO enhancement",
+        "dependencies": ["SPRINT-008-completion"],
+        "plannedTasks": [
+          "HydraFacial-content-migration",
+          "Dermaplanning-content-migration",
+          "Microneedling-PRP-content-migration",
+          "IV-Vitamins-content-migration",
+          "Permanent-Makeup-content-migration",
+          "Laser-Hair-Reduction-content-migration",
+          "Carbon-Peel-Laser-content-migration",
+          "EMSCULPT-Muscle-Builder-content-migration",
+          "Content-optimization-SEO-enhancement"
+        ]
+      },
+      "SPRINT-010": {
+        "title": "Integration & Optimization",
+        "status": "planned",
+        "progress": "0%",
+        "completedStoryPoints": 0,
+        "totalStoryPoints": 25,
+        "totalTasks": 6,
+        "priority": "MEDIUM",
+        "estimatedStartDate": "{DATE_RELATIVE: +36_days}",
+        "estimatedEndDate": "{DATE_RELATIVE: +49_days}",
+        "description": "Complete integration with existing site and performance optimization",
+        "dependencies": ["SPRINT-009-completion"],
+        "plannedTasks": [
+          "site-integration-testing",
+          "performance-optimization",
+          "cross-page-navigation-enhancement",
+          "seo-optimization-final",
+          "user-acceptance-testing",
+          "production-deployment-preparation"
+        ]
       }
     },
     "currentSprintDetails": {

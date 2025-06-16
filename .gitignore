@@ -42,16 +42,9 @@ build/
 ehthumbs.db
 Thumbs.db
 
-# Temporary files and validation results (anywhere in project)
-temp/
-*/temp/
-**/temp/
-validation_results/
-*/validation_results/
-**/validation_results/
-screenshots/
-*/screenshots/
-**/screenshots/
+# Temporary files and validation results
+levCompiler/tools/temp/
+levCompiler/tools/validation/
 
 # Development tools and testing artifacts
 devtools/temp/
@@ -59,11 +52,10 @@ devtools/screenshots/
 tools/temp/
 tools/screenshots/
 tools/validation/
-levCompiler/tools/temp/
-levCompiler/tools/validation/
 
-# Node modules everywhere
+# Node modules and dependencies
 **/node_modules/
+levCompiler/tools/*/node_modules/
 
 # Log files
 *.log
