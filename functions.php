@@ -477,6 +477,24 @@ function medspa_theme_styles() {
         );
     }
 
+    // Single Treatment Page Styles (Sprint 8 - T8.1.1)
+    if (is_singular('treatment')) {
+        wp_enqueue_style(
+            'treatment-page-styles',
+            get_template_directory_uri() . '/assets/css/treatment-page.css',
+            array('medical-spa-theme'),
+            PREETIDREAMS_VERSION
+        );
+
+        // Enhanced Booking Integration Styles (T8.1.3)
+        wp_enqueue_style(
+            'booking-integration-styles',
+            get_template_directory_uri() . '/assets/css/components/booking.css',
+            array('treatment-page-styles'),
+            PREETIDREAMS_VERSION
+        );
+    }
+
     wp_enqueue_script(
         'hero-component-scripts',
         get_template_directory_uri() . '/assets/js/components/hero.js',
@@ -567,6 +585,42 @@ function medspatheme_scripts() {
         true
     );
 
+    // Single Treatment Page JavaScript (Sprint 8 - T8.1.1)
+    if (is_singular('treatment')) {
+        wp_enqueue_script(
+            'treatment-tabs',
+            get_template_directory_uri() . '/assets/js/treatment-tabs.js',
+            array(),
+            PREETIDREAMS_VERSION,
+            true
+        );
+
+        // Enhanced Booking Integration JavaScript (T8.1.3)
+        wp_enqueue_script(
+            'booking-integration',
+            get_template_directory_uri() . '/assets/js/booking-integration.js',
+            array('jquery', 'wp-util'),
+            PREETIDREAMS_VERSION,
+            true
+        );
+
+        // Localize booking script with AJAX data
+        wp_localize_script('booking-integration', 'bookingAjax', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('treatment_booking_nonce'),
+            'messages' => array(
+                'loading' => __('Processing your booking...', 'medspatheme'),
+                'success' => __('Booking submitted successfully!', 'medspatheme'),
+                'error' => __('An error occurred. Please try again.', 'medspatheme'),
+                'validation_error' => __('Please correct the errors below.', 'medspatheme'),
+                'slot_unavailable' => __('This time slot is no longer available.', 'medspatheme'),
+                'select_date' => __('Please select a date first.', 'medspatheme'),
+                'select_time' => __('Please select a time slot.', 'medspatheme'),
+                'confirm_booking' => __('Are you sure you want to confirm this booking?', 'medspatheme')
+            )
+        ));
+    }
+
     // Comment reply script
     if (is_singular() && comments_open() && get_option('comment_registration')) {
         wp_enqueue_script('comment-reply');
@@ -621,3 +675,30 @@ if (current_user_can('manage_options')) {
         require_once $layout_debugger_path;
     }
 }
+
+// Flush rewrite rules on theme activation to ensure treatment URLs work
+function medspatheme_flush_rewrite_rules() {
+    // Make sure the treatment post type is registered
+    if (class_exists('TreatmentPostType')) {
+        TreatmentPostType::register();
+    }
+
+    // Flush rewrite rules
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'medspatheme_flush_rewrite_rules');
+
+// Also flush on init if needed (for development)
+function medspatheme_maybe_flush_rewrite_rules() {
+    if (get_option('medspatheme_rewrite_rules_flushed') !== '1') {
+        flush_rewrite_rules();
+        update_option('medspatheme_rewrite_rules_flushed', '1');
+    }
+}
+add_action('init', 'medspatheme_maybe_flush_rewrite_rules', 999);
+
+// Include sample treatment data for testing
+require_once get_template_directory() . '/inc/data/create-sample-treatment.php';
+
+// Include AJAX handlers for enhanced booking system
+require_once get_template_directory() . '/inc/ajax/booking-handler.php';

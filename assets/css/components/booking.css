@@ -1,0 +1,636 @@
+/**
+ * Treatment Booking Styles - Enhanced Integration
+ *
+ * @package MedSpaTheme
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Booking Container
+   ========================================================================== */
+
+.treatment-booking {
+    padding: var(--spacing-xl) 0;
+    background: var(--color-background-primary);
+}
+
+.treatment-booking__header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.treatment-booking__heading {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.treatment-booking__description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--spacing-lg);
+}
+
+/* ==========================================================================
+   Booking Summary
+   ========================================================================== */
+
+.treatment-booking__summary {
+    max-width: 500px;
+    margin: 0 auto var(--spacing-lg);
+}
+
+.booking-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+}
+
+.summary-icon {
+    font-size: var(--font-size-lg);
+    flex-shrink: 0;
+}
+
+.summary-text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================================
+   Booking Steps
+   ========================================================================== */
+
+.treatment-booking__form-section {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.booking-step {
+    margin-bottom: var(--spacing-xl);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Date & Time Selection
+   ========================================================================== */
+
+.datetime-selection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.date-picker-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.date-label,
+.time-label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.date-picker {
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-border-primary);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-base);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    transition: all var(--transition-base);
+}
+
+.date-picker:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
+}
+
+.time-slots-container {
+    margin-top: var(--spacing-lg);
+}
+
+.time-slots-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+}
+
+.time-period {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.period-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid var(--color-border-secondary);
+}
+
+.time-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.time-slot-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border-primary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.time-slot-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-alpha-10);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.time-slot-btn:active {
+    transform: translateY(0);
+}
+
+.time-slot-btn.active {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.time-slot-btn.unavailable {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--color-background-tertiary);
+    color: var(--color-text-tertiary);
+}
+
+.time-slot-btn.unavailable:hover {
+    transform: none;
+    border-color: var(--color-border-primary);
+    background: var(--color-background-tertiary);
+}
+
+/* ==========================================================================
+   Progress Indicator
+   ========================================================================== */
+
+.booking-progress {
+    position: sticky;
+    top: var(--spacing-lg);
+    background: var(--color-background-primary);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl);
+    z-index: 10;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-border-secondary);
+    z-index: 1;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    position: relative;
+    z-index: 2;
+    background: var(--color-background-primary);
+    padding: 0 var(--spacing-sm);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    border: 2px solid var(--color-border-primary);
+    transition: all var(--transition-base);
+}
+
+.step-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.progress-step.active .step-number {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-alpha-20);
+}
+
+.progress-step.active .step-label {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--color-border-secondary);
+    border-radius: var(--border-radius-full);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: var(--border-radius-full);
+    transition: width 0.5s ease-in-out;
+}
+
+/* ==========================================================================
+   Confirmation Step
+   ========================================================================== */
+
+.booking-confirmation {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.confirmation-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg);
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--color-border-secondary);
+}
+
+.confirmation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--color-border-tertiary);
+    font-size: var(--font-size-base);
+}
+
+.confirmation-item:last-child {
+    border-bottom: none;
+}
+
+.confirmation-item strong {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Alternative Booking Options
+   ========================================================================== */
+
+.treatment-booking__alternative {
+    max-width: 600px;
+    margin: var(--spacing-xl) auto 0;
+    text-align: center;
+}
+
+.treatment-booking__divider {
+    position: relative;
+    margin: var(--spacing-xl) 0;
+}
+
+.treatment-booking__divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-border-secondary);
+}
+
+.treatment-booking__divider-text {
+    background: var(--color-background-primary);
+    padding: 0 var(--spacing-md);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.treatment-booking__contact-options {
+    padding: var(--spacing-lg);
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    border: 2px solid var(--color-border-secondary);
+}
+
+.treatment-booking__contact-heading {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.treatment-booking__contact-text {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.treatment-booking__contact-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Footer Section
+   ========================================================================== */
+
+.treatment-booking__footer {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 2px solid var(--color-border-secondary);
+}
+
+.treatment-booking__guarantee {
+    margin-bottom: var(--spacing-lg);
+}
+
+.treatment-booking__policies {
+    background: var(--color-background-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+}
+
+.policies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.policy-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--color-background-primary);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--color-border-tertiary);
+}
+
+.policy-icon {
+    font-size: var(--font-size-lg);
+    flex-shrink: 0;
+}
+
+.policy-text {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   Disabled Booking State
+   ========================================================================== */
+
+.treatment-booking__disabled {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.treatment-booking__consultation-card {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .treatment-booking {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .treatment-booking__heading {
+        font-size: var(--font-size-xl);
+    }
+
+    .treatment-booking__description {
+        font-size: var(--font-size-base);
+    }
+
+    .booking-summary {
+        gap: var(--spacing-xs);
+    }
+
+    .summary-item {
+        padding: var(--spacing-xs);
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-xs);
+    }
+
+    .time-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: var(--spacing-xs);
+    }
+
+    .time-slot-btn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-xs);
+    }
+
+    .booking-progress {
+        position: static;
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .progress-steps {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        font-size: var(--font-size-xs);
+    }
+
+    .step-label {
+        font-size: var(--font-size-2xs);
+    }
+
+    .confirmation-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+        text-align: left;
+    }
+
+    .confirmation-actions {
+        flex-direction: column;
+    }
+
+    .treatment-booking__contact-actions {
+        flex-direction: column;
+    }
+
+    .policies-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .policy-item {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .treatment-booking__form-section {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .datetime-selection {
+        gap: var(--spacing-md);
+    }
+
+    .time-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .progress-step {
+        padding: 0 var(--spacing-xs);
+    }
+
+    .step-label {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   High Contrast Mode
+   ========================================================================== */
+
+@media (prefers-contrast: high) {
+    .time-slot-btn {
+        border-width: 3px;
+    }
+
+    .time-slot-btn.active {
+        border-width: 3px;
+        box-shadow: 0 0 0 2px var(--color-background-primary), 0 0 0 4px var(--color-primary);
+    }
+
+    .progress-step.active .step-number {
+        box-shadow: 0 0 0 2px var(--color-background-primary), 0 0 0 6px var(--color-primary);
+    }
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .booking-step,
+    .time-slot-btn,
+    .progress-fill,
+    .step-number,
+    .step-label {
+        animation: none;
+        transition: none;
+    }
+
+    .time-slot-btn:hover {
+        transform: none;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .treatment-booking {
+        background: white;
+        color: black;
+    }
+
+    .booking-progress,
+    .treatment-booking__alternative,
+    .treatment-booking__contact-actions {
+        display: none;
+    }
+
+    .confirmation-details {
+        border: 2px solid black;
+        background: white;
+    }
+}
