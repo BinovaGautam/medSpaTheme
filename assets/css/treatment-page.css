@@ -522,3 +522,411 @@
         transform: none;
     }
 }
+
+/* Related Treatments Section */
+.related-treatments {
+    padding: var(--spacing-section-large) 0;
+    background: var(--color-background-subtle);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.related-treatments__header {
+    text-align: center;
+    margin-bottom: var(--spacing-large);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.related-treatments__heading {
+    font-size: var(--font-size-heading-2);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-small);
+    line-height: var(--line-height-tight);
+}
+
+.related-treatments__description {
+    font-size: var(--font-size-body-large);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+.related-treatments__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-large);
+    margin-bottom: var(--spacing-xl);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 var(--spacing-medium);
+}
+
+/* Treatment Card Enhancements for Related Section */
+.related-treatments .treatment-card {
+    transition: all var(--transition-smooth);
+    transform: translateY(0);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border-light);
+    background: var(--color-background-primary);
+    border-radius: var(--border-radius-large);
+    overflow: hidden;
+    position: relative;
+}
+
+.related-treatments .treatment-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-primary-light);
+}
+
+.related-treatments .treatment-card:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Card Image Hover Effects */
+.related-treatments .treatment-card__image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/10;
+}
+
+.related-treatments .treatment-card__image img {
+    transition: transform var(--transition-smooth);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.related-treatments .treatment-card:hover .treatment-card__image img {
+    transform: scale(1.05);
+}
+
+/* Card Content Styling */
+.related-treatments .treatment-card__content {
+    padding: var(--spacing-large);
+}
+
+.related-treatments .treatment-card__title {
+    font-size: var(--font-size-heading-4);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-small);
+    line-height: var(--line-height-tight);
+}
+
+.related-treatments .treatment-card__description {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-medium);
+}
+
+.related-treatments .treatment-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-small);
+    margin-bottom: var(--spacing-medium);
+    font-size: var(--font-size-small);
+    color: var(--color-text-tertiary);
+}
+
+.related-treatments .treatment-card__icon {
+    font-size: var(--font-size-large);
+    margin-right: var(--spacing-xs);
+}
+
+/* Card Actions */
+.related-treatments .treatment-card__actions {
+    display: flex;
+    gap: var(--spacing-small);
+    margin-top: auto;
+}
+
+.related-treatments .treatment-card__cta {
+    flex: 1;
+    text-align: center;
+    padding: var(--spacing-small) var(--spacing-medium);
+    border-radius: var(--border-radius-medium);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-small);
+    line-height: 1.4;
+}
+
+.related-treatments .treatment-card__cta--primary {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    border: 2px solid var(--color-primary);
+}
+
+.related-treatments .treatment-card__cta--primary:hover {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.related-treatments .treatment-card__cta--secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.related-treatments .treatment-card__cta--secondary:hover {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    transform: translateY(-1px);
+}
+
+/* View All Actions */
+.related-treatments__actions {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.related-treatments__view-all {
+    position: relative;
+    overflow: hidden;
+}
+
+.related-treatments__view-all::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left var(--transition-smooth);
+}
+
+.related-treatments__view-all:hover::before {
+    left: 100%;
+}
+
+/* Empty State */
+.related-treatments__empty {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-medium);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.related-treatments__empty-content {
+    background: var(--color-background-primary);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-large);
+    border: 2px dashed var(--color-border-light);
+}
+
+.related-treatments__empty-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--spacing-medium);
+    opacity: 0.6;
+}
+
+.related-treatments__empty-heading {
+    font-size: var(--font-size-heading-3);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-small);
+}
+
+.related-treatments__empty-text {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-large);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .related-treatments {
+        padding: var(--spacing-section-medium) 0;
+    }
+
+    .related-treatments__grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-medium);
+        padding: 0 var(--spacing-small);
+    }
+
+    .related-treatments__header {
+        margin-bottom: var(--spacing-medium);
+        padding: 0 var(--spacing-small);
+    }
+
+    .related-treatments__heading {
+        font-size: var(--font-size-heading-3);
+    }
+
+    .related-treatments .treatment-card__actions {
+        flex-direction: column;
+    }
+
+    .related-treatments .treatment-card__cta {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .related-treatments__grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-small);
+    }
+
+    .related-treatments .treatment-card__content {
+        padding: var(--spacing-medium);
+    }
+
+    .related-treatments__empty-content {
+        padding: var(--spacing-large);
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .related-treatments .treatment-card {
+        border: 2px solid var(--color-text-primary);
+    }
+
+    .related-treatments .treatment-card:hover {
+        border-color: var(--color-primary);
+        background: var(--color-background-subtle);
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .related-treatments .treatment-card,
+    .related-treatments .treatment-card__image img,
+    .related-treatments .treatment-card__cta,
+    .related-treatments__view-all::before {
+        transition: none;
+    }
+
+    .related-treatments .treatment-card:hover {
+        transform: none;
+    }
+
+    .related-treatments .treatment-card:hover .treatment-card__image img {
+        transform: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .related-treatments {
+        background: white;
+        border-top: 1px solid #000;
+    }
+
+    .related-treatments .treatment-card {
+        box-shadow: none;
+        border: 1px solid #000;
+        break-inside: avoid;
+        margin-bottom: var(--spacing-medium);
+    }
+
+    .related-treatments .treatment-card__actions {
+        display: none;
+    }
+
+    .related-treatments__actions {
+        display: none;
+    }
+}
+
+/* Loading State */
+.related-treatments--loading .treatment-card {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.related-treatments--loading .treatment-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Focus Management */
+.related-treatments .treatment-card:focus-within .treatment-card__cta--primary {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Accessibility Enhancements */
+.related-treatments .treatment-card[aria-expanded="true"] {
+    z-index: 1;
+}
+
+.related-treatments .treatment-card__title {
+    scroll-margin-top: var(--spacing-large);
+}
+
+/* Animation Delays for Staggered Effect */
+.related-treatments .treatment-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.related-treatments .treatment-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.related-treatments .treatment-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.related-treatments .treatment-card {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+/* Disable animations on reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .related-treatments .treatment-card {
+        animation: none;
+        opacity: 1;
+    }
+}

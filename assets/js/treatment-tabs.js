@@ -266,3 +266,365 @@
     });
 
 })();
+
+/**
+ * Related Treatments Enhancement
+ * Handles animations, lazy loading, and interactions for related treatments section
+ */
+class RelatedTreatmentsManager {
+    constructor() {
+        this.container = document.querySelector('.related-treatments');
+        this.cards = document.querySelectorAll('.related-treatments .treatment-card');
+        this.viewAllButton = document.querySelector('.related-treatments__view-all');
+
+        if (this.container) {
+            this.init();
+        }
+    }
+
+    init() {
+        this.setupIntersectionObserver();
+        this.setupLazyLoading();
+        this.setupCardInteractions();
+        this.setupAccessibility();
+        this.setupAnalytics();
+    }
+
+    /**
+     * Setup intersection observer for staggered animations
+     */
+    setupIntersectionObserver() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add staggered delay for animation
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-in');
+                    }, index * 100);
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        this.cards.forEach(card => {
+            observer.observe(card);
+        });
+    }
+
+    /**
+     * Setup lazy loading for treatment card images
+     */
+    setupLazyLoading() {
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const src = img.dataset.src;
+
+                    if (src) {
+                        img.src = src;
+                        img.removeAttribute('data-src');
+                        img.classList.add('loaded');
+                    }
+
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        const lazyImages = this.container.querySelectorAll('img[data-src]');
+        lazyImages.forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
+    /**
+     * Setup card interactions and hover effects
+     */
+    setupCardInteractions() {
+        this.cards.forEach(card => {
+            // Enhanced hover effects
+            card.addEventListener('mouseenter', (e) => {
+                this.handleCardHover(e.currentTarget, true);
+            });
+
+            card.addEventListener('mouseleave', (e) => {
+                this.handleCardHover(e.currentTarget, false);
+            });
+
+            // Click tracking for analytics
+            const ctaButtons = card.querySelectorAll('.treatment-card__cta');
+            ctaButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    this.trackCTAClick(e.currentTarget, card);
+                });
+            });
+
+            // Keyboard navigation enhancement
+            card.addEventListener('keydown', (e) => {
+                this.handleCardKeydown(e, card);
+            });
+        });
+    }
+
+    /**
+     * Handle card hover effects
+     */
+    handleCardHover(card, isHovering) {
+        const image = card.querySelector('.treatment-card__image img');
+        const title = card.querySelector('.treatment-card__title');
+
+        if (isHovering) {
+            // Add hover class for additional styling
+            card.classList.add('is-hovered');
+
+            // Announce to screen readers
+            if (title) {
+                title.setAttribute('aria-live', 'polite');
+            }
+        } else {
+            card.classList.remove('is-hovered');
+
+            if (title) {
+                title.removeAttribute('aria-live');
+            }
+        }
+    }
+
+    /**
+     * Handle keyboard navigation for cards
+     */
+    handleCardKeydown(e, card) {
+        const focusableElements = card.querySelectorAll(
+            'a, button, [tabindex]:not([tabindex="-1"])'
+        );
+
+        if (e.key === 'Enter' || e.key === ' ') {
+            const firstCTA = card.querySelector('.treatment-card__cta--primary');
+            if (firstCTA && e.target === card) {
+                e.preventDefault();
+                firstCTA.click();
+            }
+        }
+
+        // Arrow key navigation within card
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            const currentIndex = Array.from(focusableElements).indexOf(e.target);
+            let nextIndex;
+
+            if (e.key === 'ArrowRight') {
+                nextIndex = (currentIndex + 1) % focusableElements.length;
+            } else {
+                nextIndex = currentIndex === 0 ? focusableElements.length - 1 : currentIndex - 1;
+            }
+
+            focusableElements[nextIndex]?.focus();
+            e.preventDefault();
+        }
+    }
+
+    /**
+     * Setup accessibility enhancements
+     */
+    setupAccessibility() {
+        // Add ARIA labels and descriptions
+        this.cards.forEach((card, index) => {
+            const title = card.querySelector('.treatment-card__title');
+            const description = card.querySelector('.treatment-card__description');
+
+            if (title) {
+                const titleId = `related-treatment-title-${index}`;
+                title.id = titleId;
+                card.setAttribute('aria-labelledby', titleId);
+            }
+
+            if (description) {
+                const descId = `related-treatment-desc-${index}`;
+                description.id = descId;
+                card.setAttribute('aria-describedby', descId);
+            }
+
+            // Make cards focusable
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'article');
+        });
+
+        // Announce section to screen readers
+        if (this.container) {
+            this.container.setAttribute('aria-label', 'Related treatments you might be interested in');
+        }
+    }
+
+    /**
+     * Setup analytics tracking
+     */
+    setupAnalytics() {
+        // Track section visibility
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.trackEvent('related_treatments_viewed', {
+                        section: 'related-treatments',
+                        cards_count: this.cards.length
+                    });
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sectionObserver.observe(this.container);
+
+        // Track view all button
+        if (this.viewAllButton) {
+            this.viewAllButton.addEventListener('click', () => {
+                this.trackEvent('view_all_treatments_clicked', {
+                    source: 'related-treatments-section'
+                });
+            });
+        }
+    }
+
+    /**
+     * Track CTA button clicks
+     */
+    trackCTAClick(button, card) {
+        const treatmentTitle = card.querySelector('.treatment-card__title')?.textContent;
+        const ctaType = button.classList.contains('treatment-card__cta--primary') ? 'primary' : 'secondary';
+        const ctaText = button.textContent.trim();
+
+        this.trackEvent('related_treatment_cta_clicked', {
+            treatment_name: treatmentTitle,
+            cta_type: ctaType,
+            cta_text: ctaText,
+            card_position: Array.from(this.cards).indexOf(card) + 1
+        });
+    }
+
+    /**
+     * Generic event tracking
+     */
+    trackEvent(eventName, properties = {}) {
+        // Google Analytics 4
+        if (typeof gtag !== 'undefined') {
+            gtag('event', eventName, properties);
+        }
+
+        // Facebook Pixel
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'CustomEvent', {
+                event_name: eventName,
+                ...properties
+            });
+        }
+
+        // Console log for debugging
+        if (window.location.hostname === 'localhost' || window.location.hostname.includes('local')) {
+            console.log('Analytics Event:', eventName, properties);
+        }
+    }
+
+    /**
+     * Handle loading states
+     */
+    setLoadingState(isLoading) {
+        if (isLoading) {
+            this.container.classList.add('related-treatments--loading');
+        } else {
+            this.container.classList.remove('related-treatments--loading');
+        }
+    }
+
+    /**
+     * Refresh related treatments (for dynamic loading)
+     */
+    async refreshTreatments(treatmentId) {
+        this.setLoadingState(true);
+
+        try {
+            const response = await fetch(`${window.ajaxurl}?action=get_related_treatments&treatment_id=${treatmentId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                this.updateTreatmentsHTML(data.html);
+            }
+        } catch (error) {
+            console.error('Error refreshing related treatments:', error);
+        } finally {
+            this.setLoadingState(false);
+        }
+    }
+
+    /**
+     * Update treatments HTML
+     */
+    updateTreatmentsHTML(html) {
+        const grid = this.container.querySelector('.related-treatments__grid');
+        if (grid) {
+            grid.innerHTML = html;
+            // Reinitialize for new cards
+            this.cards = document.querySelectorAll('.related-treatments .treatment-card');
+            this.setupCardInteractions();
+            this.setupAccessibility();
+        }
+    }
+}
+
+/**
+ * Related Treatments Fallback for older browsers
+ */
+class RelatedTreatmentsFallback {
+    constructor() {
+        this.container = document.querySelector('.related-treatments');
+        this.cards = document.querySelectorAll('.related-treatments .treatment-card');
+
+        if (this.container && !window.IntersectionObserver) {
+            this.init();
+        }
+    }
+
+    init() {
+        // Simple fade-in for cards
+        this.cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+
+        // Basic click tracking
+        this.cards.forEach(card => {
+            const ctaButtons = card.querySelectorAll('.treatment-card__cta');
+            ctaButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    console.log('Treatment CTA clicked:', button.textContent);
+                });
+            });
+        });
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize related treatments manager
+    if (window.IntersectionObserver) {
+        new RelatedTreatmentsManager();
+    } else {
+        new RelatedTreatmentsFallback();
+    }
+});
+
+// Export for module usage
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { RelatedTreatmentsManager, RelatedTreatmentsFallback };
+}

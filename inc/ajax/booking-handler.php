@@ -572,3 +572,159 @@ function get_available_time_slots_ajax() {
 
 add_action('wp_ajax_get_available_time_slots', 'get_available_time_slots_ajax');
 add_action('wp_ajax_nopriv_get_available_time_slots', 'get_available_time_slots_ajax');
+
+/**
+ * AJAX Handler for Related Treatments
+ * Dynamically loads related treatments based on current treatment
+ */
+add_action('wp_ajax_get_related_treatments', 'handle_get_related_treatments');
+add_action('wp_ajax_nopriv_get_related_treatments', 'handle_get_related_treatments');
+
+function handle_get_related_treatments() {
+    // Verify request
+    if (!isset($_GET['treatment_id'])) {
+        wp_send_json_error('Treatment ID is required');
+        return;
+    }
+
+    $treatment_id = intval($_GET['treatment_id']);
+
+    if (!$treatment_id || get_post_type($treatment_id) !== 'treatment') {
+        wp_send_json_error('Invalid treatment ID');
+        return;
+    }
+
+    try {
+        // Get related treatments
+        $related_treatments = get_related_treatments($treatment_id, 3);
+
+        if (empty($related_treatments)) {
+            wp_send_json_success([
+                'html' => '<div class="related-treatments__empty"><p>No related treatments found.</p></div>',
+                'count' => 0
+            ]);
+            return;
+        }
+
+        // Generate HTML for related treatments
+        ob_start();
+        foreach ($related_treatments as $treatment) {
+            echo ComponentRegistry::render('treatment-card', $treatment);
+        }
+        $html = ob_get_clean();
+
+        wp_send_json_success([
+            'html' => $html,
+            'count' => count($related_treatments),
+            'treatments' => $related_treatments
+        ]);
+
+    } catch (Exception $e) {
+        error_log('Related treatments AJAX error: ' . $e->getMessage());
+        wp_send_json_error('Failed to load related treatments');
+    }
+}
+
+/**
+ * Get related treatments for a given treatment
+ *
+ * @param int $treatment_id Current treatment ID
+ * @param int $limit Number of treatments to return
+ * @return array Array of treatment data
+ */
+function get_related_treatments($treatment_id, $limit = 3) {
+    $related_treatments = [];
+
+    // Get current treatment categories
+    $treatment_categories = get_the_terms($treatment_id, 'treatment_category');
+
+    if ($treatment_categories && !is_wp_error($treatment_categories)) {
+        $category_ids = wp_list_pluck($treatment_categories, 'term_id');
+
+        // Query for related treatments in same category
+        $related_query = new WP_Query([
+            'post_type' => 'treatment',
+            'posts_per_page' => $limit,
+            'post__not_in' => [$treatment_id],
+            'tax_query' => [
+                [
+                    'taxonomy' => 'treatment_category',
+                    'field' => 'term_id',
+                    'terms' => $category_ids,
+                    'operator' => 'IN'
+                ]
+            ],
+            'meta_key' => 'treatment_featured',
+            'orderby' => 'meta_value_num',
+            'order' => 'DESC'
+        ]);
+
+        if ($related_query->have_posts()) {
+            while ($related_query->have_posts()) {
+                $related_query->the_post();
+                $related_treatments[] = format_treatment_data(get_the_ID());
+            }
+            wp_reset_postdata();
+        }
+    }
+
+    // If no related treatments found, get popular treatments
+    if (empty($related_treatments)) {
+        $popular_query = new WP_Query([
+            'post_type' => 'treatment',
+            'posts_per_page' => $limit,
+            'post__not_in' => [$treatment_id],
+            'meta_key' => 'treatment_popularity_score',
+            'orderby' => 'meta_value_num',
+            'order' => 'DESC'
+        ]);
+
+        if ($popular_query->have_posts()) {
+            while ($popular_query->have_posts()) {
+                $popular_query->the_post();
+                $related_treatments[] = format_treatment_data(get_the_ID());
+            }
+            wp_reset_postdata();
+        }
+    }
+
+    return $related_treatments;
+}
+
+/**
+ * Format treatment data for consistent output
+ *
+ * @param int $treatment_id Treatment post ID
+ * @return array Formatted treatment data
+ */
+function format_treatment_data($treatment_id) {
+    return [
+        'id' => $treatment_id,
+        'title' => get_the_title($treatment_id),
+        'description' => get_field('treatment_short_description', $treatment_id) ?: wp_trim_words(get_post_field('post_excerpt', $treatment_id), 20),
+        'duration' => get_field('treatment_duration', $treatment_id) ?: '',
+        'icon' => get_field('treatment_icon', $treatment_id) ?: '✨',
+        'benefits' => array_slice(get_field('treatment_benefits', $treatment_id) ?: [], 0, 3),
+        'image' => [
+            'src' => get_the_post_thumbnail_url($treatment_id, 'medium') ?: '',
+            'alt' => get_the_title($treatment_id) . ' treatment'
+        ],
+        'cta' => [
+            'primary' => [
+                'text' => 'Learn More',
+                'url' => get_permalink($treatment_id)
+            ],
+            'secondary' => [
+                'text' => 'Book Now',
+                'url' => '#booking'
+            ]
+        ],
+        'schema' => [
+            '@type' => 'MedicalProcedure',
+            'name' => get_the_title($treatment_id),
+            'description' => get_field('treatment_short_description', $treatment_id) ?: wp_trim_words(get_post_field('post_excerpt', $treatment_id), 20),
+            'bodyLocation' => get_field('treatment_body_location', $treatment_id) ?: '',
+            'procedureType' => get_field('treatment_type', $treatment_id) ?: 'Cosmetic'
+        ]
+    ];
+}
