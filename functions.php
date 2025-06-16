@@ -702,3 +702,17 @@ require_once get_template_directory() . '/inc/data/create-sample-treatment.php';
 
 // Include AJAX handlers for enhanced booking system
 require_once get_template_directory() . '/inc/ajax/booking-handler.php';
+
+// Enqueue treatment-specific assets
+if (is_singular('treatment')) {
+    wp_enqueue_style('treatment-page-css', get_template_directory_uri() . '/assets/css/treatment-page.css', [], '1.0.0');
+    wp_enqueue_script('treatment-tabs-js', get_template_directory_uri() . '/assets/js/treatment-tabs.js', ['jquery'], '1.0.0', true);
+    wp_enqueue_script('performance-optimizer-js', get_template_directory_uri() . '/assets/js/performance-optimizer.js', [], '1.0.0', true);
+
+    // Localize script for AJAX
+    wp_localize_script('treatment-tabs-js', 'treatmentAjax', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('treatment_ajax_nonce'),
+        'themeUrl' => get_template_directory_uri()
+    ]);
+}

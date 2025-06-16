@@ -6,7 +6,116 @@
  * @since 1.0.0
  */
 
-get_header(); ?>
+get_header();
+
+// Get treatment data
+$treatment_id = get_the_ID();
+$treatment_title = get_the_title();
+$treatment_description = get_field('treatment_short_description') ?: wp_trim_words(get_the_excerpt(), 30);
+$treatment_duration = get_field('treatment_duration') ?: '';
+$treatment_type = get_field('treatment_type') ?: 'Cosmetic Treatment';
+$treatment_benefits = get_field('treatment_benefits') ?: [];
+$treatment_process = get_field('treatment_process') ?: [];
+$treatment_faqs = get_field('treatment_faqs') ?: [];
+
+// SEO and Schema Data
+$schema_data = [
+    '@context' => 'https://schema.org',
+    '@type' => 'MedicalProcedure',
+    'name' => $treatment_title,
+    'description' => $treatment_description,
+    'procedureType' => $treatment_type,
+    'bodyLocation' => get_field('treatment_body_location') ?: '',
+    'preparation' => get_field('treatment_preparation') ?: '',
+    'followup' => get_field('treatment_aftercare') ?: '',
+    'howPerformed' => get_field('treatment_how_performed') ?: '',
+    'provider' => [
+        '@type' => 'MedicalOrganization',
+        'name' => get_bloginfo('name'),
+        'url' => home_url(),
+        'telephone' => get_theme_mod('contact_phone', ''),
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => get_theme_mod('contact_address', ''),
+            'addressLocality' => get_theme_mod('contact_city', ''),
+            'addressRegion' => get_theme_mod('contact_state', ''),
+            'postalCode' => get_theme_mod('contact_zip', ''),
+            'addressCountry' => 'US'
+        ]
+    ]
+];
+
+// Add duration if available
+if ($treatment_duration) {
+    $schema_data['duration'] = $treatment_duration;
+}
+
+// Add benefits as medical indications
+if (!empty($treatment_benefits)) {
+    $schema_data['indication'] = $treatment_benefits;
+}
+
+// Add FAQ schema if available
+if (!empty($treatment_faqs)) {
+    $faq_schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => []
+    ];
+
+    foreach ($treatment_faqs as $faq) {
+        if (isset($faq['question']) && isset($faq['answer'])) {
+            $faq_schema['mainEntity'][] = [
+                '@type' => 'Question',
+                'name' => $faq['question'],
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => $faq['answer']
+                ]
+            ];
+        }
+    }
+}
+?>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+<?php echo json_encode($schema_data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+</script>
+
+<?php if (isset($faq_schema)): ?>
+<script type="application/ld+json">
+<?php echo json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+</script>
+<?php endif; ?>
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="<?php echo esc_attr($treatment_title . ' - ' . get_bloginfo('name')); ?>">
+<meta property="og:description" content="<?php echo esc_attr($treatment_description); ?>">
+<meta property="og:type" content="website">
+<meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>">
+<meta property="og:site_name" content="<?php echo esc_attr(get_bloginfo('name')); ?>">
+
+<?php if (has_post_thumbnail()): ?>
+<meta property="og:image" content="<?php echo esc_url(get_the_post_thumbnail_url($treatment_id, 'large')); ?>">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="<?php echo esc_attr($treatment_title . ' treatment'); ?>">
+<?php endif; ?>
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?php echo esc_attr($treatment_title . ' - ' . get_bloginfo('name')); ?>">
+<meta name="twitter:description" content="<?php echo esc_attr($treatment_description); ?>">
+<?php if (has_post_thumbnail()): ?>
+<meta name="twitter:image" content="<?php echo esc_url(get_the_post_thumbnail_url($treatment_id, 'large')); ?>">
+<meta name="twitter:image:alt" content="<?php echo esc_attr($treatment_title . ' treatment'); ?>">
+<?php endif; ?>
+
+<!-- Additional SEO Meta Tags -->
+<meta name="description" content="<?php echo esc_attr($treatment_description); ?>">
+<meta name="keywords" content="<?php echo esc_attr($treatment_type . ', ' . implode(', ', array_slice($treatment_benefits, 0, 5))); ?>">
+<link rel="canonical" href="<?php echo esc_url(get_permalink()); ?>">
 
 <main id="primary" class="site-main treatment-page">
     <?php while (have_posts()) : the_post(); ?>

@@ -18,6 +18,9 @@
     color: var(--color-text-primary);
     font-family: var(--font-family-primary);
     line-height: var(--line-height-base);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* ==========================================================================
@@ -929,4 +932,290 @@
         animation: none;
         opacity: 1;
     }
+}
+
+/* Performance Optimizations */
+
+/* Critical Above-the-Fold Styles */
+.treatment-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Font Loading Optimization */
+.fonts-loading {
+  visibility: hidden;
+}
+
+.fonts-loaded {
+  visibility: visible;
+}
+
+/* Lazy Loading Styles */
+img[data-src] {
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+}
+
+img.lazy-loaded {
+  opacity: 1;
+}
+
+img.lazy-error {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+/* Background Image Lazy Loading */
+[data-bg] {
+  background-image: none !important;
+  background-color: var(--color-background-subtle);
+}
+
+[data-bg].lazy-loaded {
+  background-color: transparent;
+}
+
+/* Video Lazy Loading */
+video[data-src] {
+  background-color: var(--color-background-subtle);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f0f0"/><polygon points="40,30 70,50 40,70" fill="%23ccc"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60px 60px;
+}
+
+video.lazy-loaded {
+  background-image: none;
+}
+
+/* Loading Skeleton Animations */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--color-background-subtle) 25%,
+    var(--color-background-primary) 50%,
+    var(--color-background-subtle) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Reduce Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--color-background-subtle);
+  }
+
+  img[data-src],
+  img.lazy-loaded {
+    transition: none;
+  }
+}
+
+/* Critical Resource Preloading Indicators */
+.resource-loading {
+  position: relative;
+}
+
+.resource-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--color-primary),
+    transparent
+  );
+  animation: loading-bar 2s infinite;
+}
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Performance-Optimized Animations */
+.animate-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* GPU Acceleration for Smooth Animations */
+.treatment-card,
+.treatment-tabs__tab,
+.treatment-panel {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize Repaints and Reflows */
+.treatment-tabs__tab {
+  contain: layout style paint;
+}
+
+.treatment-panel {
+  contain: layout style;
+}
+
+/* Critical Path CSS - Above the Fold */
+.treatment-hero {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  background-attachment: scroll; /* Better performance than fixed */
+}
+
+.treatment-info-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Optimize Layout Shifts */
+.treatment-card__image {
+  aspect-ratio: 16/10;
+  background-color: var(--color-background-subtle);
+}
+
+.treatment-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Intersection Observer Fallback */
+.no-intersection-observer img[data-src] {
+  opacity: 1;
+}
+
+/* Print Optimizations */
+@media print {
+  .treatment-tabs,
+  .related-treatments__actions,
+  .treatment-panel[hidden] {
+    display: none !important;
+  }
+
+  .treatment-panel {
+    display: block !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+/* High DPI Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .treatment-card__image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Container Query Support (Future-proofing) */
+@supports (container-type: inline-size) {
+  .treatment-content {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 768px) {
+    .treatment-tabs {
+      flex-direction: column;
+    }
+  }
+}
+
+/* Focus Visible for Better Accessibility */
+@supports selector(:focus-visible) {
+  .treatment-tabs__tab:focus {
+    outline: none;
+  }
+
+  .treatment-tabs__tab:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Optimize for Touch Devices */
+@media (hover: none) and (pointer: coarse) {
+  .treatment-card:hover {
+    transform: none;
+  }
+
+  .treatment-tabs__tab {
+    min-height: 44px; /* Minimum touch target size */
+  }
+}
+
+/* Dark Mode Optimizations */
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.1) 25%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 75%
+    );
+  }
+
+  img.lazy-error {
+    filter: grayscale(100%) brightness(0.8);
+  }
+}
+
+/* Performance Monitoring Styles */
+.performance-metrics {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+  z-index: 9999;
+  display: none;
+}
+
+.performance-metrics.show {
+  display: block;
+}
+
+/* Development Mode Only */
+body.development .performance-metrics {
+  display: block;
 }
