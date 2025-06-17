@@ -303,6 +303,10 @@
   z-index: 3;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
+  min-height: var(--space-4xl);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-quiz-wrapper {
@@ -310,6 +314,25 @@
   margin: 0 auto;
   padding: var(--space-2xl) var(--space-md);
   width: 100%;
+  min-height: var(--space-4xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DEBUG: Temporary border to see if quiz container is there */
+.hero-quiz-container {
+  border: 2px solid red !important;
+}
+
+.hero-quiz-wrapper {
+  border: 2px solid blue !important;
+}
+
+.elegant-quiz {
+  border: 2px solid green !important;
+  min-height: 200px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* TABLET RESPONSIVE DESIGN */
@@ -557,6 +580,9 @@
   background: transparent;
   width: 100%;
   max-width: none;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .hero-quiz-container .elegant-quiz .quiz-header {
