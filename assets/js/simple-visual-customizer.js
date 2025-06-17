@@ -240,8 +240,8 @@
     function openSidebar() {
         console.log('🚀 Opening Simple Visual Customizer sidebar...');
 
-        // Show overlay and sidebar
-        $('#simple-vc-overlay').fadeIn(200);
+        // Show overlay and sidebar with proper CSS classes
+        $('#simple-vc-overlay').addClass('show active').fadeIn(200);
         $('#simple-vc-sidebar').addClass('open');
 
         // PERFORMANCE OPTIMIZATION: Check if fonts are already loaded by server
@@ -281,7 +281,7 @@
      */
     function closeSidebar() {
         $('#simple-vc-sidebar').removeClass('open');
-        $('#simple-vc-overlay').fadeOut(200);
+        $('#simple-vc-overlay').removeClass('show active').fadeOut(200);
 
         // Disable live preview mode
         if (livePreviewSystem) {

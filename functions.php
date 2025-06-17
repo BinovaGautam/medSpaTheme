@@ -480,11 +480,38 @@ function medspa_theme_styles() {
         'all'
     );
 
+    // Semantic Tokens CSS - Core semantic token definitions
+    wp_enqueue_style(
+        'semantic-tokens',
+        get_template_directory_uri() . '/assets/css/semantic-tokens.css',
+        array('design-system-foundation'),
+        PREETIDREAMS_VERSION,
+        'all'
+    );
+
+    // Semantic Design Tokens CSS - Extended token system
+    wp_enqueue_style(
+        'semantic-design-tokens',
+        get_template_directory_uri() . '/assets/css/semantic-design-tokens.css',
+        array('semantic-tokens'),
+        PREETIDREAMS_VERSION,
+        'all'
+    );
+
+    // Semantic Components CSS - All component styling with semantic tokens
+    wp_enqueue_style(
+        'semantic-components',
+        get_template_directory_uri() . '/assets/css/semantic-components.css',
+        array('semantic-design-tokens'),
+        PREETIDREAMS_VERSION,
+        'all'
+    );
+
     // Main theme styles
     wp_enqueue_style(
         'medical-spa-theme',
         get_stylesheet_uri(),
-        array('design-system-foundation'), // Depends on design system
+        array('semantic-components'), // Depends on semantic components
         PREETIDREAMS_VERSION
     );
 
@@ -608,6 +635,15 @@ function medspatheme_scripts() {
         'treatment-filter-component',
         get_template_directory_uri() . '/assets/js/components/treatment-filter.js',
         array('jquery'),
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Header functionality JavaScript - Mobile menu and interactions
+    wp_enqueue_script(
+        'header-functionality',
+        get_template_directory_uri() . '/assets/js/header-functionality.js',
+        array(),
         PREETIDREAMS_VERSION,
         true
     );
