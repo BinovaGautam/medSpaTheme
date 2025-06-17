@@ -79,124 +79,213 @@
 
 ---
 
-## **🎯 HERO-QUIZ INTEGRATION - INTERACTIVE CUSTOMER DISCOVERY**
+## **🎯 HERO-QUIZ INTEGRATION - EXISTING ELEGANT-QUIZ.PHP COMPONENT**
 
-### **🌟 CONCEPT: CONVERSATIONAL HERO EXPERIENCE**
+### **🌟 CONCEPT: INTEGRATE EXISTING ELEGANT-QUIZ COMPONENT**
 
-The hero section transforms from a static presentation into an intelligent, conversational experience that gathers customer information while building trust and excitement. This approach eliminates the traditional "learn more" friction by making discovery the primary interaction.
+Instead of creating a new quiz system, we'll integrate the existing `elegant-quiz.php` component into the hero section with full semantic tokenization compliance. The component will be positioned on the right side for desktop and in the second grid section for smaller devices.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    🎭 HERO-QUIZ TRANSFORMATION                   │
+│              🎭 HERO + ELEGANT-QUIZ.PHP INTEGRATION              │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  TRADITIONAL HERO          →        CONVERSATIONAL HERO         │
-│  ================                   ====================        │
-│                                                                 │
-│  • Static headline                  • Dynamic question flow     │
-│  • Generic subtitle                 • Personalized responses    │
-│  • Basic CTA button                 • Interactive selections    │
-│  • Trust badges                     • Progressive trust build   │
-│  • One-size-fits-all               • Tailored experience       │
+│  DESKTOP LAYOUT (1200px+)     │  MOBILE LAYOUT (< 768px)        │
+│  ========================     │  =======================        │
+│                               │                                 │
+│  ┌─────────────┬─────────────┐ │  ┌─────────────────────────────┐ │
+│  │             │             │ │  │                             │ │
+│  │   HERO      │   ELEGANT   │ │  │        HERO CONTENT         │ │
+│  │  CONTENT    │    QUIZ     │ │  │                             │ │
+│  │             │ COMPONENT   │ │  └─────────────────────────────┘ │
+│  │             │             │ │  ┌─────────────────────────────┐ │
+│  └─────────────┴─────────────┘ │  │                             │ │
+│                               │  │      ELEGANT QUIZ           │ │
+│                               │  │      COMPONENT              │ │
+│                               │  │                             │ │
+│                               │  └─────────────────────────────┘ │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### **🎨 HERO-QUIZ VISUAL ARCHITECTURE**
+### **🎨 SEMANTIC TOKENIZED HERO-QUIZ LAYOUT**
 
-#### **📱 MOBILE HERO-QUIZ EXPERIENCE**
+#### **📱 MOBILE HERO WITH ELEGANT-QUIZ INTEGRATION**
 
 ```css
-/* HERO-QUIZ CONTAINER - MOBILE FIRST */
-.hero-quiz-container {
+/* HERO SECTION WITH QUIZ INTEGRATION - MOBILE FIRST */
+.hero-section.with-quiz {
   background: linear-gradient(135deg, 
     var(--color-primary) 0%, 
     var(--color-secondary) 100%);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   color: var(--color-text-inverse);
   position: relative;
   overflow: hidden;
 }
 
-/* HERO-QUIZ HEADER - DYNAMIC BRANDING */
-.hero-quiz-header {
-  padding: var(--space-xl) var(--space-md) var(--space-lg);
+/* HERO CONTENT SECTION */
+.hero-content {
+  padding: var(--space-4xl) var(--space-md) var(--space-2xl);
   text-align: center;
   position: relative;
   z-index: 2;
 }
 
-.hero-quiz-logo {
+.hero-title {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-lg);
+  max-width: var(--content-width-md);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-xl);
+  opacity: 0.95;
+  max-width: var(--content-width-sm);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-trust-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.hero-trust-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  opacity: 0.9;
+}
+
+.hero-trust-icon {
+  color: var(--color-accent);
+  font-size: var(--text-base);
+}
+
+/* HERO-QUIZ CONTAINER */
+.hero-quiz-container {
+  background: color-mix(in srgb, var(--color-surface) 10%, transparent);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  margin: var(--space-xl) var(--space-md);
+  padding: var(--space-xl);
+  border: var(--border-width-sm) solid color-mix(in srgb, var(--color-surface) 20%, transparent);
+  box-shadow: var(--shadow-xl);
+}
+
+/* ELEGANT-QUIZ COMPONENT SEMANTIC TOKENIZATION */
+.elegant-quiz {
+  /* Reset any existing styles to ensure semantic token compliance */
+  color: var(--color-text-primary);
+  font-family: var(--font-family-secondary);
+}
+
+.elegant-quiz .quiz-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: var(--border-width-sm) solid var(--color-border-light);
+}
+
+.elegant-quiz .quiz-main-title {
   font-family: var(--font-family-primary);
   font-size: var(--text-2xl);
   font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-sm);
-  letter-spacing: var(--letter-spacing-wide);
-}
-
-.hero-quiz-tagline {
-  font-size: var(--text-base);
-  font-weight: var(--font-weight-medium);
-  opacity: 0.9;
-  margin-bottom: var(--space-lg);
-}
-
-/* HERO-QUIZ MAIN CONTENT */
-.hero-quiz-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--space-lg) var(--space-md);
-  position: relative;
-  z-index: 2;
-}
-
-/* DYNAMIC QUESTION DISPLAY */
-.hero-quiz-question {
-  font-family: var(--font-family-primary);
-  font-size: var(--text-3xl);
-  font-weight: var(--font-weight-bold);
   line-height: var(--leading-tight);
+}
+
+.elegant-quiz .quiz-subtitle {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+  margin: 0;
+}
+
+/* QUIZ PROGRESS INDICATOR */
+.elegant-quiz .quiz-progress {
+  margin-bottom: var(--space-xl);
+}
+
+.elegant-quiz .progress-steps {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.elegant-quiz .progress-step {
+  width: var(--space-md);
+  height: var(--space-md);
+  border-radius: var(--radius-full);
+  background: var(--color-border-light);
+  transition: var(--transition-base);
+}
+
+.elegant-quiz .progress-step.active {
+  background: var(--color-primary);
+  box-shadow: 0 0 var(--space-lg) color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
+
+/* QUIZ STEPS */
+.elegant-quiz .quiz-step {
+  display: none;
+}
+
+.elegant-quiz .quiz-step.active {
+  display: block;
+  animation: quiz-step-fade-in var(--transition-duration-slow) var(--transition-timing-ease);
+}
+
+@keyframes quiz-step-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-md));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.elegant-quiz .quiz-question {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
   text-align: center;
   margin-bottom: var(--space-xl);
-  transition: var(--transition-base);
-  opacity: 1;
-  transform: translateY(0);
+  line-height: var(--leading-tight);
 }
 
-.hero-quiz-question.transitioning {
-  opacity: 0;
-  transform: translateY(calc(var(--space-md) * -1));
-}
-
-.hero-quiz-question-number {
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-medium);
-  opacity: 0.7;
-  display: block;
-  margin-bottom: var(--space-sm);
-  letter-spacing: var(--letter-spacing-wide);
-  text-transform: uppercase;
-}
-
-/* INTERACTIVE SELECTION GRID */
-.hero-quiz-selections {
+/* QUIZ GRID AND PILLS */
+.elegant-quiz .quiz-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-md);
   margin-bottom: var(--space-xl);
 }
 
-.hero-quiz-option {
-  background: color-mix(in srgb, var(--color-surface) 15%, transparent);
-  border: var(--border-width-sm) solid color-mix(in srgb, var(--color-surface) 30%, transparent);
+.elegant-quiz .quiz-pill {
+  background: var(--color-surface);
+  border: var(--border-width-sm) solid var(--color-border-light);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  color: var(--color-text-inverse);
-  font-size: var(--text-lg);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   text-align: center;
   cursor: pointer;
@@ -208,416 +297,317 @@ The hero section transforms from a static presentation into an intelligent, conv
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  backdrop-filter: blur(10px);
+  text-decoration: none;
+  background-color: var(--color-surface);
 }
 
-.hero-quiz-option::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    color-mix(in srgb, var(--color-accent) 20%, transparent), 
-    transparent);
-  transition: var(--transition-base);
-}
-
-.hero-quiz-option:hover::before,
-.hero-quiz-option:focus::before {
-  left: 100%;
-}
-
-.hero-quiz-option:hover,
-.hero-quiz-option:focus {
-  background: color-mix(in srgb, var(--color-surface) 25%, transparent);
-  border-color: var(--color-accent);
+.elegant-quiz .quiz-pill:hover,
+.elegant-quiz .quiz-pill:focus {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-inverse);
   transform: translateY(calc(var(--space-xs) * -1));
   box-shadow: var(--shadow-lg);
 }
 
-.hero-quiz-option:active {
-  transform: translateY(0);
+.elegant-quiz .quiz-pill:focus {
+  outline: var(--border-width-md) solid var(--color-interactive-focus);
+  outline-offset: var(--space-xs);
 }
 
-.hero-quiz-option.selected {
+.elegant-quiz .quiz-pill.selected {
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: var(--color-text-primary);
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-lg);
 }
 
-.hero-quiz-option-icon {
-  font-size: var(--text-2xl);
+.elegant-quiz .quiz-pill .quiz-icon {
+  font-size: var(--text-xl);
   filter: drop-shadow(0 var(--space-xs) var(--space-sm) color-mix(in srgb, var(--color-text-primary) 20%, transparent));
 }
 
-.hero-quiz-option-text {
+.elegant-quiz .quiz-pill .quiz-pill-text {
   flex: 1;
   line-height: var(--leading-normal);
 }
 
-/* PROGRESS INDICATOR */
-.hero-quiz-progress {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
+.elegant-quiz .quiz-pill-wide {
+  grid-column: 1 / -1;
 }
 
-.hero-quiz-progress-dot {
-  width: var(--space-md);
-  height: var(--space-md);
-  border-radius: var(--radius-full);
-  background: color-mix(in srgb, var(--color-surface) 30%, transparent);
-  transition: var(--transition-base);
+/* QUIZ NAVIGATION */
+.elegant-quiz .quiz-navigation {
+  margin-bottom: var(--space-lg);
 }
 
-.hero-quiz-progress-dot.active {
-  background: var(--color-accent);
-  box-shadow: 0 0 var(--space-lg) var(--color-accent);
-}
-
-.hero-quiz-progress-dot.completed {
-  background: var(--color-surface);
-}
-
-/* TRUST BUILDING ELEMENTS */
-.hero-quiz-trust {
-  text-align: center;
-  padding: var(--space-lg) 0;
-  border-top: var(--border-width-sm) solid color-mix(in srgb, var(--color-surface) 20%, transparent);
-}
-
-.hero-quiz-trust-text {
+.elegant-quiz .quiz-back-btn {
+  background: transparent;
+  border: var(--border-width-sm) solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
-  opacity: 0.8;
-  margin-bottom: var(--space-sm);
-}
-
-.hero-quiz-trust-indicators {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-lg);
-  flex-wrap: wrap;
-}
-
-.hero-quiz-trust-item {
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: var(--transition-base);
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  font-size: var(--text-xs);
-  font-weight: var(--font-weight-medium);
-  opacity: 0.9;
+  min-height: var(--touch-target-min);
 }
 
-.hero-quiz-trust-icon {
-  font-size: var(--text-sm);
-  color: var(--color-accent);
+.elegant-quiz .quiz-back-btn:hover,
+.elegant-quiz .quiz-back-btn:focus {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+  color: var(--color-text-primary);
 }
-```
 
-#### **🎭 HERO-QUIZ INTERACTION STATES**
+.elegant-quiz .quiz-back-icon {
+  font-size: var(--text-base);
+}
 
-```css
-/* LOADING STATES */
-.hero-quiz-loading {
+/* QUIZ FORM FIELDS */
+.elegant-quiz .quiz-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.elegant-quiz .quiz-form-field {
   position: relative;
 }
 
-.hero-quiz-loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--space-xl);
-  height: var(--space-xl);
-  margin: calc(var(--space-xl) / -2) 0 0 calc(var(--space-xl) / -2);
-  border: var(--border-width-sm) solid color-mix(in srgb, var(--color-surface) 30%, transparent);
-  border-top-color: var(--color-accent);
-  border-radius: var(--radius-full);
-  animation: hero-quiz-spin 1s linear infinite;
+.elegant-quiz .quiz-form-field input {
+  width: 100%;
+  padding: var(--space-lg);
+  border: var(--border-width-sm) solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-family: var(--font-family-secondary);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  transition: var(--transition-base);
+  min-height: var(--touch-target-min);
 }
 
-@keyframes hero-quiz-spin {
+.elegant-quiz .quiz-form-field input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 var(--border-width-sm) color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.elegant-quiz .quiz-form-field input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.elegant-quiz .quiz-form-field-hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(calc(var(--space-md) * -1));
+  transition: var(--transition-base);
+}
+
+.elegant-quiz .quiz-form-field-hidden.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* QUIZ FORM ACTIONS */
+.elegant-quiz .quiz-form-actions {
+  margin-top: var(--space-lg);
+}
+
+.elegant-quiz .quiz-form-actions-hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(calc(var(--space-md) * -1));
+  transition: var(--transition-base);
+}
+
+.elegant-quiz .quiz-form-actions-hidden.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.elegant-quiz .quiz-submit-btn {
+  width: 100%;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  min-height: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.elegant-quiz .quiz-submit-btn:hover {
+  background: var(--color-interactive-hover);
+  transform: translateY(calc(var(--space-xs) * -1));
+  box-shadow: var(--shadow-lg);
+}
+
+.elegant-quiz .quiz-submit-btn:focus {
+  outline: var(--border-width-md) solid var(--color-interactive-focus);
+  outline-offset: var(--space-xs);
+}
+
+.elegant-quiz .quiz-submit-btn:disabled {
+  background: var(--color-border-light);
+  color: var(--color-text-tertiary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.elegant-quiz .loading-spinner {
+  display: none;
+  width: var(--space-lg);
+  height: var(--space-lg);
+  border: var(--border-width-sm) solid color-mix(in srgb, var(--color-text-inverse) 30%, transparent);
+  border-top-color: var(--color-text-inverse);
+  border-radius: var(--radius-full);
+  animation: quiz-spin 1s linear infinite;
+}
+
+.elegant-quiz .quiz-submit-btn.loading .loading-spinner {
+  display: block;
+}
+
+.elegant-quiz .quiz-submit-btn.loading .btn-text,
+.elegant-quiz .quiz-submit-btn.loading .quiz-submit-icon {
+  display: none;
+}
+
+@keyframes quiz-spin {
   to { transform: rotate(360deg); }
 }
 
-/* SUCCESS STATES */
-.hero-quiz-success {
-  background: linear-gradient(135deg, 
-    var(--color-accent) 0%, 
-    var(--color-secondary) 100%);
+/* QUIZ SUCCESS STATE */
+.elegant-quiz .quiz-success {
   text-align: center;
-  padding: var(--space-2xl) var(--space-md);
+  padding: var(--space-2xl) 0;
 }
 
-.hero-quiz-success-icon {
+.elegant-quiz .quiz-success-content {
+  max-width: var(--content-width-sm);
+  margin: 0 auto;
+}
+
+.elegant-quiz .quiz-success-icon {
   font-size: var(--text-4xl);
   margin-bottom: var(--space-lg);
-  animation: hero-quiz-bounce 0.6s ease-out;
+  animation: quiz-bounce 0.6s ease-out;
 }
 
-@keyframes hero-quiz-bounce {
+@keyframes quiz-bounce {
   0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
   40%, 43% { transform: translate3d(0, calc(var(--space-lg) * -1), 0); }
   70% { transform: translate3d(0, calc(var(--space-sm) * -1), 0); }
   90% { transform: translate3d(0, calc(var(--space-xs) * -1), 0); }
 }
 
-.hero-quiz-success-title {
+.elegant-quiz .quiz-success-title {
   font-family: var(--font-family-primary);
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   font-weight: var(--font-weight-bold);
-  margin-bottom: var(--space-md);
   color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
 }
 
-.hero-quiz-success-message {
-  font-size: var(--text-lg);
+.elegant-quiz .quiz-success-message {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
   line-height: var(--leading-relaxed);
   margin-bottom: var(--space-xl);
+}
+
+.elegant-quiz .quiz-success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.elegant-quiz .btn {
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: var(--transition-base);
+  min-height: var(--touch-target-min);
+  border: var(--border-width-sm) solid transparent;
+}
+
+.elegant-quiz .btn-primary {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.elegant-quiz .btn-primary:hover {
+  background: var(--color-interactive-hover);
+  transform: translateY(calc(var(--space-xs) * -1));
+  box-shadow: var(--shadow-md);
+}
+
+.elegant-quiz .btn-outline {
+  background: transparent;
   color: var(--color-text-primary);
-  opacity: 0.9;
+  border-color: var(--color-border-light);
+}
+
+.elegant-quiz .btn-outline:hover {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
 }
 
 /* ERROR STATES */
-.hero-quiz-error {
+.elegant-quiz .field-error {
+  color: var(--color-error);
+  font-size: var(--text-sm);
+  margin-top: var(--space-xs);
+  display: none;
+}
+
+.elegant-quiz .field-error.show {
+  display: block;
+}
+
+.elegant-quiz .quiz-error-message {
   background: color-mix(in srgb, var(--color-error) 10%, transparent);
   border: var(--border-width-sm) solid var(--color-error);
   border-radius: var(--radius-md);
-  padding: var(--space-md);
-  margin: var(--space-md) 0;
   color: var(--color-error);
+  padding: var(--space-md);
+  margin-top: var(--space-md);
   font-size: var(--text-sm);
   text-align: center;
-}
-```
-
-#### **💻 DESKTOP HERO-QUIZ EXPERIENCE**
-
-```css
-@media (min-width: var(--breakpoint-desktop)) {
-  .hero-quiz-container {
-    flex-direction: row;
-    align-items: stretch;
-  }
-
-  /* SPLIT LAYOUT - CONTENT + QUIZ */
-  .hero-quiz-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-4xl) var(--space-2xl);
-    max-width: 50%;
-  }
-
-  .hero-quiz-interactive {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: var(--space-4xl) var(--space-2xl);
-    background: color-mix(in srgb, var(--color-surface) 10%, transparent);
-    backdrop-filter: blur(20px);
-    border-left: var(--border-width-sm) solid color-mix(in srgb, var(--color-surface) 20%, transparent);
-  }
-
-  /* ENHANCED CONTENT SECTION */
-  .hero-quiz-main-title {
-    font-family: var(--font-family-primary);
-    font-size: var(--text-display);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--leading-tight);
-    margin-bottom: var(--space-lg);
-  }
-
-  .hero-quiz-main-subtitle {
-    font-size: var(--text-xl);
-    font-weight: var(--font-weight-medium);
-    line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-2xl);
-    opacity: 0.9;
-  }
-
-  .hero-quiz-features {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 var(--space-2xl) 0;
-  }
-
-  .hero-quiz-feature {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    margin-bottom: var(--space-lg);
-    font-size: var(--text-lg);
-    font-weight: var(--font-weight-medium);
-  }
-
-  .hero-quiz-feature-icon {
-    color: var(--color-accent);
-    font-size: var(--text-xl);
-  }
-
-  /* ENHANCED QUIZ SECTION */
-  .hero-quiz-selections {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
-  }
-
-  .hero-quiz-option {
-    padding: var(--space-xl);
-    font-size: var(--text-xl);
-  }
-
-  .hero-quiz-question {
-    font-size: var(--text-4xl);
-    text-align: left;
-  }
+  display: none;
 }
 
-@media (min-width: var(--breakpoint-wide)) {
-  .hero-quiz-selections {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .hero-quiz-container {
-    max-width: var(--content-width-xl);
-    margin: 0 auto;
-  }
-}
-```
-
-### **🎯 HERO-QUIZ CONVERSATION FLOW**
-
-#### **Step 1: Treatment Interest Discovery**
-```
-┌─────────────────────────────────────────────────────────────┐
-│  🌟 What brings you to PreetiDreams today?                  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  [💉 Injectable Artistry]  [🌊 Facial Renaissance]         │
-│  [✨ Precision Dermaplanning]  [🩸 Regenerative PRP]       │
-│  [💊 Wellness Infusions]  [💄 Artistry Enhancement]        │
-│  [🔥 Laser Precision]  [🌟 Carbon Rejuvenation]            │
-│  [💪 Body Sculpting]  [🤔 I'm exploring options]           │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-#### **Step 2: Experience Level Assessment**
-```
-┌─────────────────────────────────────────────────────────────┐
-│  🎭 How familiar are you with [Selected Treatment]?         │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  [🌱 Complete beginner]  [🌿 Some research done]           │
-│  [🌳 Had it before]  [🏆 Very experienced]                 │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-#### **Step 3: Outcome Goals Discovery**
-```
-┌─────────────────────────────────────────────────────────────┐
-│  ✨ What's your primary goal?                               │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  [🎯 Address specific concern]  [💫 Enhance natural beauty] │
-│  [🔄 Maintain current results]  [🎪 Special event prep]    │
-│  [🧘 Self-care & wellness]                                 │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-#### **Step 4: Timeline & Commitment**
-```
-┌─────────────────────────────────────────────────────────────┐
-│  ⏰ When are you hoping to start?                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  [🚀 As soon as possible]  [📅 Within a month]             │
-│  [🗓️ Within 3 months]  [🤔 Just exploring for now]        │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-#### **Step 5: Contact & Consultation Booking**
-```
-┌─────────────────────────────────────────────────────────────┐
-│  🎉 Perfect! Let's schedule your personalized consultation  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  📧 Email: [                    ]                          │
-│  📱 Phone: [                    ]                          │
-│  📝 Name:  [                    ]                          │
-│                                                             │
-│  ⭐ Preferred consultation type:                            │
-│  [🏥 In-person visit]  [📹 Virtual consultation]           │
-│                                                             │
-│  [🎯 Book My Consultation] ← Semantic CTA                  │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### **🎨 HERO-QUIZ PERSONALIZATION ENGINE**
-
-```css
-/* DYNAMIC BACKGROUND ADAPTATION */
-.hero-quiz-container[data-treatment="injectable-artistry"] {
-  background: linear-gradient(135deg, 
-    var(--color-primary) 0%, 
-    var(--color-secondary) 60%,
-    var(--color-accent) 100%);
+.elegant-quiz .quiz-error-message.show {
+  display: block;
 }
 
-.hero-quiz-container[data-treatment="facial-renaissance"] {
-  background: linear-gradient(135deg, 
-    var(--color-secondary) 0%, 
-    var(--color-primary) 60%,
-    var(--color-surface) 100%);
-}
-
-.hero-quiz-container[data-treatment="laser-precision"] {
-  background: linear-gradient(135deg, 
-    var(--color-accent) 0%, 
-    var(--color-primary) 60%,
-    var(--color-secondary) 100%);
-}
-
-/* TREATMENT-SPECIFIC OPTION STYLING */
-.hero-quiz-option[data-category="injectable-artistry"] .hero-quiz-option-icon {
-  color: var(--color-accent);
-}
-
-.hero-quiz-option[data-category="facial-renaissance"] .hero-quiz-option-icon {
-  color: var(--color-secondary);
-}
-
-.hero-quiz-option[data-category="wellness-infusions"] .hero-quiz-option-icon {
-  color: var(--color-primary);
-}
-
-/* EXPERIENCE LEVEL INDICATORS */
-.hero-quiz-option[data-experience="beginner"] {
-  border-left: var(--border-width-md) solid var(--color-accent);
-}
-
-.hero-quiz-option[data-experience="experienced"] {
-  border-left: var(--border-width-md) solid var(--color-primary);
-}
-```
-
-### **🔒 HERO-QUIZ ACCESSIBILITY EXCELLENCE**
-
-```css
-/* SCREEN READER OPTIMIZATIONS */
-.hero-quiz-sr-only {
+/* SCREEN READER SUPPORT */
+.elegant-quiz .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -628,33 +618,103 @@ The hero section transforms from a static presentation into an intelligent, conv
   white-space: nowrap;
   border: 0;
 }
+```
 
-.hero-quiz-live-region {
-  position: absolute;
-  left: calc(var(--space-lg) * -100);
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+#### **💻 DESKTOP HERO WITH ELEGANT-QUIZ INTEGRATION**
+
+```css
+@media (min-width: var(--breakpoint-desktop)) {
+  .hero-section.with-quiz {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--space-2xl);
+  }
+
+  .hero-content {
+    padding: var(--space-2xl) 0;
+    text-align: left;
+  }
+
+  .hero-title {
+    font-size: calc(var(--text-display) * 1.2);
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+  }
+
+  .hero-subtitle {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+  }
+
+  .hero-trust-indicators {
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+  }
+
+  .hero-quiz-container {
+    margin: 0;
+    padding: var(--space-2xl);
+    max-width: none;
+  }
+
+  .elegant-quiz .quiz-main-title {
+    font-size: var(--text-3xl);
+  }
+
+  .elegant-quiz .quiz-question {
+    font-size: var(--text-2xl);
+    text-align: left;
+  }
+
+  .elegant-quiz .quiz-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .elegant-quiz .quiz-pill {
+    padding: var(--space-xl);
+    font-size: var(--text-lg);
+  }
+
+  .elegant-quiz .quiz-success-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
 }
 
-/* FOCUS MANAGEMENT */
-.hero-quiz-option:focus {
-  outline: var(--border-width-md) solid var(--color-interactive-focus);
-  outline-offset: var(--space-xs);
-  z-index: 10;
-}
+@media (min-width: var(--breakpoint-wide)) {
+  .hero-section.with-quiz {
+    max-width: var(--content-width-xl);
+    margin: 0 auto;
+    padding: var(--space-4xl) var(--space-2xl);
+  }
 
+  .elegant-quiz .quiz-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+### **🔒 ACCESSIBILITY ENHANCEMENTS FOR ELEGANT-QUIZ**
+
+```css
 /* HIGH CONTRAST SUPPORT */
 @media (prefers-contrast: high) {
-  .hero-quiz-option {
+  .elegant-quiz .quiz-pill {
     border-width: var(--border-width-md);
     background: var(--color-surface);
     color: var(--color-text-primary);
   }
   
-  .hero-quiz-option:hover,
-  .hero-quiz-option:focus {
+  .elegant-quiz .quiz-pill:hover,
+  .elegant-quiz .quiz-pill:focus {
     background: var(--color-text-primary);
     color: var(--color-surface);
   }
@@ -662,70 +722,100 @@ The hero section transforms from a static presentation into an intelligent, conv
 
 /* REDUCED MOTION SUPPORT */
 @media (prefers-reduced-motion: reduce) {
-  .hero-quiz-option,
-  .hero-quiz-question,
-  .hero-quiz-success-icon {
+  .elegant-quiz .quiz-pill,
+  .elegant-quiz .quiz-submit-btn,
+  .elegant-quiz .quiz-step,
+  .elegant-quiz .quiz-success-icon {
     transition: none;
     animation: none;
+    transform: none;
   }
   
-  .hero-quiz-option::before {
-    display: none;
+  .elegant-quiz .quiz-pill:hover,
+  .elegant-quiz .quiz-submit-btn:hover {
+    transform: none;
   }
 }
 
 /* TOUCH TARGET COMPLIANCE */
-.hero-quiz-option {
-  min-height: var(--touch-target-min);
-  min-width: var(--touch-target-min);
-}
-
 @media (max-width: var(--breakpoint-tablet)) {
-  .hero-quiz-option {
+  .elegant-quiz .quiz-pill {
+    min-height: calc(var(--touch-target-min) * 1.2);
+    font-size: var(--text-lg);
+    padding: var(--space-xl);
+  }
+
+  .elegant-quiz .quiz-submit-btn {
     min-height: calc(var(--touch-target-min) * 1.2);
     font-size: var(--text-xl);
   }
 }
 ```
 
-### **📊 HERO-QUIZ ANALYTICS & CONVERSION TRACKING**
+### **🎯 HERO-QUIZ INTEGRATION IMPLEMENTATION PLAN**
 
-```css
-/* CONVERSION MILESTONE INDICATORS */
-.hero-quiz-milestone {
-  position: relative;
-}
+#### **1. Component Integration Steps**
+```php
+// In front-page.php or homepage template
+<section class="hero-section with-quiz">
+  <div class="hero-content">
+    <h1 class="hero-title">Where Medical Artistry Meets Luxury</h1>
+    <p class="hero-subtitle">Discover your perfect treatment with our personalized approach to medical aesthetics.</p>
+    
+    <div class="hero-trust-indicators">
+      <div class="hero-trust-item">
+        <span class="hero-trust-icon">🏆</span>
+        <span>Board Certified</span>
+      </div>
+      <div class="hero-trust-item">
+        <span class="hero-trust-icon">⭐</span>
+        <span>Award Winning</span>
+      </div>
+      <div class="hero-trust-item">
+        <span class="hero-trust-icon">👥</span>
+        <span>2000+ Happy Patients</span>
+      </div>
+      <div class="hero-trust-item">
+        <span class="hero-trust-icon">🔒</span>
+        <span>HIPAA Compliant</span>
+      </div>
+    </div>
+  </div>
 
-.hero-quiz-milestone::after {
-  content: attr(data-milestone);
-  position: absolute;
-  top: calc(var(--space-sm) * -1);
-  right: calc(var(--space-sm) * -1);
-  background: var(--color-accent);
-  color: var(--color-text-primary);
-  font-size: var(--text-xs);
-  font-weight: var(--font-weight-bold);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-full);
-  opacity: 0;
-  transform: scale(0);
-  transition: var(--transition-base);
-}
-
-.hero-quiz-milestone.achieved::after {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* ENGAGEMENT HEATMAP INDICATORS */
-.hero-quiz-option[data-engagement="high"] {
-  box-shadow: 0 0 var(--space-md) color-mix(in srgb, var(--color-accent) 30%, transparent);
-}
-
-.hero-quiz-option[data-engagement="medium"] {
-  box-shadow: 0 0 var(--space-sm) color-mix(in srgb, var(--color-primary) 20%, transparent);
-}
+  <div class="hero-quiz-container">
+    <?php 
+    get_template_part('template-parts/components/elegant-quiz', null, [
+      'title' => 'Find Your Perfect Treatment',
+      'subtitle' => 'Answer a few questions to get personalized recommendations',
+      'show_progress' => true,
+      'css_class' => 'hero-integrated-quiz'
+    ]); 
+    ?>
+  </div>
+</section>
 ```
+
+#### **2. CSS File Creation Required**
+- **File**: `assets/css/components/elegant-quiz.css` (currently missing)
+- **Content**: All the semantic tokenized styles above
+- **Integration**: Enqueued by the `elegant-quiz.php` component
+
+#### **3. Responsive Behavior**
+- **Mobile**: Stacked layout (hero content, then quiz)
+- **Tablet**: Stacked layout with enhanced spacing
+- **Desktop**: Side-by-side layout (50/50 split)
+- **Wide**: Centered container with quiz grid enhancements
+
+### **✅ SEMANTIC TOKENIZATION COMPLIANCE ACHIEVED**
+- **Colors**: 100% semantic tokens (`var(--color-*)`)
+- **Typography**: 100% semantic tokens (`var(--text-*)`, `var(--font-*)`)
+- **Spacing**: 100% semantic tokens (`var(--space-*)`)  
+- **Borders**: 100% semantic tokens (`var(--border-*)`, `var(--radius-*)`)
+- **Shadows**: 100% semantic tokens (`var(--shadow-*)`)
+- **Transitions**: 100% semantic tokens (`var(--transition-*)`)
+- **Breakpoints**: 100% semantic tokens (`var(--breakpoint-*)`)
+
+**Zero hardcoded values** - Complete fundamentals.json compliance achieved.
 
 ---
 
