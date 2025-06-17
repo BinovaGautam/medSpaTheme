@@ -23,7 +23,8 @@ program
   .option('-u, --url <url>', 'Target URL (if server is already running)')
   .option('-d, --design <path>', 'Path to target design file(s)')
   .option('-p, --project <path>', 'Project root directory', process.cwd())
-  .option('-o, --output <path>', 'Output directory for results', './validation_results')
+      // FIXED: Following fundamentals.json TOOLS_ORGANIZATION_REQUIREMENTS
+    .option('-o, --output <path>', 'Output directory for results', './levCompiler/tools/visual-validation/results')
   .option('--auto', 'Run in automatic mode without prompts')
   .option('--viewports <list>', 'Comma-separated list of viewports to test', 'desktop,tablet,mobile')
   .option('--threshold <number>', 'Minimum similarity threshold (0-1)', '0.85')
@@ -238,7 +239,8 @@ async function sendToChat(report) {
     // For now, we'll create a chat-ready message
     const chatMessage = formatChatMessage(report);
 
-    const chatPath = path.join(process.cwd(), 'validation_results', `chat_message_${report.validation_id}.md`);
+    // FIXED: Following fundamentals.json TOOLS_ORGANIZATION_REQUIREMENTS
+    const chatPath = path.join(process.cwd(), 'levCompiler/tools/visual-validation/results', `chat_message_${report.validation_id}.md`);
     await fs.writeFile(chatPath, chatMessage);
 
     spinner.succeed(`Chat message prepared: ${chatPath}`);
@@ -336,7 +338,8 @@ async function performHealthChecks() {
 
   // Check output directory
   try {
-    await fs.mkdir('./validation_results', { recursive: true });
+    // FIXED: Following fundamentals.json TOOLS_ORGANIZATION_REQUIREMENTS
+    await fs.mkdir('./levCompiler/tools/visual-validation/results', { recursive: true });
     checks.push({
       name: 'Output Directory',
       status: 'ok',

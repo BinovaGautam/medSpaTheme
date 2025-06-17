@@ -1,11 +1,14 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { getTempScreenshotConfig } = require('../config/directory_paths');
 
 class TempScreenshotManager {
   constructor(config = {}) {
-    this.tempDir = config.tempDir || path.join(process.cwd(), 'temp', 'screenshots');
-    this.maxFiles = config.maxFiles || 100;
-    this.filePrefix = config.filePrefix || 'temp_screenshot_';
+    // FIXED: Using centralized directory configuration per fundamentals.json
+    const defaultConfig = getTempScreenshotConfig();
+    this.tempDir = config.tempDir || defaultConfig.tempDir;
+    this.maxFiles = config.maxFiles || defaultConfig.maxFiles;
+    this.filePrefix = config.filePrefix || defaultConfig.filePrefix;
     this.cleanupEnabled = config.cleanupEnabled !== false;
 
     // Ensure temp directory exists

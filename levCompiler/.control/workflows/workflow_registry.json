@@ -1,8 +1,8 @@
 {
   "workflowRegistry": {
     "version": "1.3.0",
-    "totalWorkflows": 12,
-    "activeWorkflows": 12,
+    "totalWorkflows": 13,
+    "activeWorkflows": 13,
     "systemArchitecture": "hierarchical-workflow-orchestration-with-compliance-monitoring"
   },
 
@@ -197,8 +197,31 @@
         "improvementCapabilities": {
           "realTimeWorkflowUpdates": true,
           "realTimeAgentUpdates": true,
-          "gitLikeVersionTracking": true,
-          "rollbackCapabilities": true
+          "gitLikeVersionTracking": true
+        }
+      },
+
+      "cssSemanticCleanupWorkflow": {
+        "workflowId": "CSS-SEMANTIC-CLEANUP-WF-001",
+        "name": "css-semantic-cleanup-workflow",
+        "type": "critical-cleanup-and-regeneration",
+        "description": "Comprehensive workflow for cleaning up hardcoded CSS violations and establishing semantic token system as single source of truth",
+        "priority": 1,
+        "status": "active",
+        "triggerPatterns": ["hardcoded css cleanup", "semantic css cleanup", "css violations", "clean css files", "semantic tokenization cleanup"],
+        "parentWorkflow": "base-input-output-workflow",
+        "location": "levCompiler/.control/workflows/css_semantic_cleanup_workflow.json",
+        "primaryAgent": "CSS-SEMANTIC-GEN-001",
+        "supportingAgents": ["VERSION-TRACK-001"],
+        "automaticTriggers": [
+          "hardcoded-value-detection",
+          "duplicate-css-files",
+          "conflicting-token-systems"
+        ],
+        "complianceEnforcement": {
+          "zeroToleranceHardcodedValues": true,
+          "twoFileArchitectureEnforcement": true,
+          "semanticTokenComplianceRequired": true
         }
       },
 

@@ -1,0 +1,241 @@
+/**
+ * Semantic Design Tokens - Core Foundation
+ * Generated from PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md
+ * VERSION: 2.0.0
+ * COMPLIANCE: FUNDAMENTALS.JSON SEMANTIC_TOKENIZATION_REQUIREMENTS
+ *
+ * ⚠️  CRITICAL: This file contains ZERO hardcoded values
+ * ✅ 100% semantic token compliance enforced
+ * 🔒 Single source of truth: semantic-color-system.js
+ */
+
+:root {
+  /* =================================================================
+     COLOR SYSTEM - Semantic Role-Based Tokens
+     Source: PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md palette system
+     ================================================================= */
+
+  /* Primary Brand Foundation */
+  --color-primary: var(--palette-primary);
+  --color-primary-light: var(--palette-primary-light);
+  --color-primary-dark: var(--palette-primary-dark);
+  --color-primary-hover: var(--palette-primary-hover);
+  --color-primary-focus: var(--palette-primary-focus);
+
+  /* Secondary Supporting Brand */
+  --color-secondary: var(--palette-secondary);
+  --color-secondary-light: var(--palette-secondary-light);
+  --color-secondary-dark: var(--palette-secondary-dark);
+  --color-secondary-hover: var(--palette-secondary-hover);
+  --color-secondary-focus: var(--palette-secondary-focus);
+
+  /* Accent Special Elements */
+  --color-accent: var(--palette-accent);
+  --color-accent-light: var(--palette-accent-light);
+  --color-accent-dark: var(--palette-accent-dark);
+  --color-accent-hover: var(--palette-accent-hover);
+  --color-accent-focus: var(--palette-accent-focus);
+
+  /* Surface Container Colors */
+  --color-surface: var(--palette-surface);
+  --color-surface-secondary: var(--palette-surface-secondary);
+  --color-surface-tertiary: var(--palette-surface-tertiary);
+  --color-surface-hover: var(--palette-surface-hover);
+  --color-surface-focus: var(--palette-surface-focus);
+
+  /* Background Foundation */
+  --color-background: var(--palette-background);
+  --color-background-secondary: var(--palette-background-secondary);
+  --color-background-tertiary: var(--palette-background-tertiary);
+
+  /* =================================================================
+     TEXT HIERARCHY - WCAG Compliant Contrast System
+     Auto-calculated optimal contrasts from semantic-color-system.js
+     ================================================================= */
+
+  /* Primary Text (AAA: 7:1+ contrast) */
+  --color-text-primary: var(--text-primary-optimal);
+  --color-text-primary-inverse: var(--text-primary-inverse);
+
+  /* Secondary Text (AA: 4.5:1+ contrast) */
+  --color-text-secondary: var(--text-secondary-optimal);
+  --color-text-secondary-inverse: var(--text-secondary-inverse);
+
+  /* Muted Text (AA: 3:1+ contrast for large text) */
+  --color-text-muted: var(--text-muted-optimal);
+  --color-text-muted-inverse: var(--text-muted-inverse);
+
+  /* Disabled Text */
+  --color-text-disabled: var(--text-disabled-optimal);
+
+  /* =================================================================
+     TYPOGRAPHY SYSTEM - Professional Medical Spa Fonts
+     Source: PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md typography section
+     ================================================================= */
+
+  /* Primary Font Family (Headings) */
+  --font-family-primary: var(--typography-heading-family);
+  --font-family-secondary: var(--typography-body-family);
+
+  /* Font Weight Scale */
+  --font-weight-light: var(--typography-weight-light);
+  --font-weight-regular: var(--typography-weight-regular);
+  --font-weight-medium: var(--typography-weight-medium);
+  --font-weight-semibold: var(--typography-weight-semibold);
+  --font-weight-bold: var(--typography-weight-bold);
+
+  /* Font Size Scale */
+  --text-display: var(--typography-size-display);
+  --text-xl: var(--typography-size-xl);
+  --text-lg: var(--typography-size-lg);
+  --text-base: var(--typography-size-base);
+  --text-sm: var(--typography-size-sm);
+  --text-xs: var(--typography-size-xs);
+
+  /* Line Height Scale */
+  --line-height-tight: var(--typography-leading-tight);
+  --line-height-normal: var(--typography-leading-normal);
+  --line-height-relaxed: var(--typography-leading-relaxed);
+
+  /* =================================================================
+     SPACING SYSTEM - Consistent Scale
+     Follows 8px base grid system with semantic naming
+     ================================================================= */
+
+  --space-xs: var(--spacing-xs);    /* 4px */
+  --space-sm: var(--spacing-sm);     /* 8px */
+  --space-md: var(--spacing-md);       /* 16px */
+  --space-lg: var(--spacing-lg);     /* 24px */
+  --space-xl: var(--spacing-xl);       /* 32px */
+  --space-2xl: var(--spacing-2xl);     /* 48px */
+  --space-3xl: var(--spacing-3xl);     /* 64px */
+  --space-4xl: var(--spacing-4xl);     /* 96px */
+
+  /* =================================================================
+     BORDER & RADIUS SYSTEM
+     Consistent border widths and radius values
+     ================================================================= */
+
+  --border-width-sm: var(--border-sm);
+  --border-width-md: var(--border-md);
+  --border-width-lg: var(--border-lg);
+
+  --radius-sm: var(--border-radius-sm);   /* 4px */
+  --radius-md: var(--border-radius-md);    /* 8px */
+  --radius-lg: var(--border-radius-lg);      /* 16px */
+  --radius-xl: var(--border-radius-xl);    /* 24px */
+  --radius-full: var(--border-radius-full);
+
+  /* =================================================================
+     SHADOW SYSTEM - Professional Depth
+     Subtle shadows for medical spa aesthetics
+     ================================================================= */
+
+  --shadow-sm: var(--shadow-small);
+  --shadow-md: var(--shadow-medium);
+  --shadow-lg: var(--shadow-large);
+  --shadow-xl: var(--shadow-extra-large);
+
+  /* =================================================================
+     TRANSITION SYSTEM - Smooth Interactions
+     Consistent timing for professional feel
+     ================================================================= */
+
+  --transition-fast: var(--timing-fast);
+  --transition-base: var(--timing-base);
+  --transition-slow: var(--timing-slow);
+
+  /* =================================================================
+     LAYOUT SYSTEM - Content Organization
+     Maximum widths and responsive breakpoints
+     ================================================================= */
+
+  --content-width-sm: var(--layout-width-sm);
+  --content-width-md: var(--layout-width-md);
+  --content-width-lg: var(--layout-width-lg);
+  --content-width-xl: var(--layout-width-xl);
+  --content-width-2xl: var(--layout-width-2xl);
+
+  /* =================================================================
+     ACCESSIBILITY TOKENS - Touch Targets & Focus
+     WCAG compliance for interactive elements
+     ================================================================= */
+
+  --touch-target-min: var(--accessibility-touch-min);
+  --focus-ring-width: var(--accessibility-focus-width);
+  --focus-ring-offset: var(--accessibility-focus-offset);
+  --focus-ring-color: var(--accessibility-focus-color);
+
+  /* =================================================================
+     COMPONENT-SPECIFIC SEMANTIC TOKENS
+     Generated from semantic-color-system.js integration
+     ================================================================= */
+
+  /* Button System */
+  --component-button-primary-bg: var(--color-primary);
+  --component-button-primary-text: var(--color-text-primary-inverse);
+  --component-button-primary-hover: var(--color-primary-hover);
+
+  --component-button-secondary-bg: var(--color-secondary);
+  --component-button-secondary-text: var(--color-text-primary-inverse);
+  --component-button-secondary-hover: var(--color-secondary-hover);
+
+  --component-button-accent-bg: var(--color-accent);
+  --component-button-accent-text: var(--color-text-primary);
+  --component-button-accent-hover: var(--color-accent-hover);
+
+  /* Card System */
+  --component-card-bg: var(--color-surface);
+  --component-card-text: var(--color-text-primary);
+  --component-card-border: var(--color-surface-tertiary);
+  --component-card-hover: var(--color-surface-hover);
+
+  /* Input System */
+  --component-input-bg: var(--color-background);
+  --component-input-text: var(--color-text-primary);
+  --component-input-border: var(--color-surface-tertiary);
+  --component-input-focus: var(--color-primary);
+
+  /* Navigation System */
+  --component-nav-bg: var(--color-background);
+  --component-nav-text: var(--color-text-primary);
+  --component-nav-hover: var(--color-surface);
+  --component-nav-active: var(--color-primary);
+}
+
+/**
+ * DARK MODE SUPPORT (Optional Enhancement)
+ * Semantic tokens automatically adapt when dark mode variables provided
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--palette-dark-background);
+    --color-surface: var(--palette-dark-surface);
+    --color-text-primary: var(--palette-dark-text-primary);
+    --color-text-secondary: var(--palette-dark-text-secondary);
+  }
+}
+
+/**
+ * HIGH CONTRAST MODE SUPPORT
+ * Enhanced accessibility for visually impaired users
+ */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text-primary: var(--high-contrast-text-primary);
+    --color-background: var(--high-contrast-background);
+    --border-width-md: var(--high-contrast-border-width);
+  }
+}
+
+/**
+ * REDUCED MOTION SUPPORT
+ * Respect user motion preferences for accessibility
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: var(--reduced-motion-transition);
+    --transition-base: var(--reduced-motion-transition);
+    --transition-slow: var(--reduced-motion-transition);
+  }
+}

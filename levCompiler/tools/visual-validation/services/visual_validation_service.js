@@ -9,10 +9,13 @@ const OpenAI = require('openai');
 const fetch = require('node-fetch');
 const TempScreenshotManager = require('../utils/temp_screenshot_manager');
 const ComprehensiveUIAnalyzer = require('./comprehensive_ui_analyzer');
+const { getVisualValidationConfig } = require('../config/directory_paths');
 
 class VisualValidationService {
   constructor(config) {
     this.config = config;
+    // FIXED: Using centralized directory configuration per fundamentals.json
+    this.directoryConfig = getVisualValidationConfig();
     this.openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
     this.browsers = new Map();
     this.validationResults = new Map();
@@ -137,7 +140,8 @@ class VisualValidationService {
         });
 
         const filename = `${validationId}_${viewport.name}_${Date.now()}.png`;
-        const filepath = path.join(process.cwd(), 'validation_results', 'screenshots', filename);
+        // FIXED: Using centralized directory configuration per fundamentals.json
+        const filepath = path.join(this.directoryConfig.directories.screenshots, filename);
 
         await fs.mkdir(path.dirname(filepath), { recursive: true });
         await fs.writeFile(filepath, screenshotBuffer);
@@ -201,7 +205,8 @@ class VisualValidationService {
         });
 
         const filename = `${validationId}_${viewport.name}_fallback_${Date.now()}.png`;
-        const filepath = path.join(process.cwd(), 'validation_results', 'screenshots', filename);
+        // FIXED: Using centralized directory configuration per fundamentals.json
+        const filepath = path.join(this.directoryConfig.directories.screenshots, filename);
 
         await fs.mkdir(path.dirname(filepath), { recursive: true });
         await fs.writeFile(filepath, screenshotBuffer);
@@ -255,15 +260,31 @@ class VisualValidationService {
           };
         }
       } else {
-        // Single design file
-        const buffer = await fs.readFile(targetDesignPath);
-        const filename = path.parse(targetDesignPath).name;
+        // Check if it's a markdown design specification file
+        if (targetDesignPath.endsWith('.md')) {
+          console.log('📄 Design specification is a markdown file - using for semantic analysis only');
+          const content = await fs.readFile(targetDesignPath, 'utf-8');
 
-        targetAssets[filename] = {
-          filepath: targetDesignPath,
-          buffer,
-          type: 'reference_design'
-        };
+          targetAssets['design_specification'] = {
+            filepath: targetDesignPath,
+            content,
+            type: 'design_specification',
+            format: 'markdown'
+          };
+
+          // For now, we'll skip pixel comparison and focus on semantic analysis
+          return targetAssets;
+        } else {
+          // Single image design file
+          const buffer = await fs.readFile(targetDesignPath);
+          const filename = path.parse(targetDesignPath).name;
+
+          targetAssets[filename] = {
+            filepath: targetDesignPath,
+            buffer,
+            type: 'reference_design'
+          };
+        }
       }
 
       return targetAssets;
@@ -281,6 +302,26 @@ class VisualValidationService {
 
     const comparisonResults = {};
 
+    // Check if we have a design specification instead of image assets
+    const hasDesignSpec = targetAssets['design_specification'] && targetAssets['design_specification'].format === 'markdown';
+
+    if (hasDesignSpec) {
+      console.log('📄 Using design specification for semantic analysis instead of pixel comparison');
+
+      for (const [viewportName, screenshot] of Object.entries(screenshots)) {
+        comparisonResults[viewportName] = {
+          comparison_type: 'semantic_analysis',
+          design_specification: targetAssets['design_specification'].filepath,
+          screenshot_path: screenshot.filepath,
+          analysis_timestamp: new Date().toISOString(),
+          similarity: null, // Will be determined by semantic analysis
+          note: 'Pixel comparison skipped - using design specification for semantic compliance analysis'
+        };
+      }
+
+      return comparisonResults;
+    }
+
     for (const [viewportName, screenshot] of Object.entries(screenshots)) {
       comparisonResults[viewportName] = {};
 
@@ -289,40 +330,40 @@ class VisualValidationService {
                          targetAssets['desktop'] ||
                          Object.values(targetAssets)[0];
 
-      if (!targetAsset) {
-        console.warn(`⚠️ No target design found for ${viewportName}`);
+      if (!targetAsset || !targetAsset.buffer) {
+        console.warn(`⚠️ No image target design found for ${viewportName}`);
+        comparisonResults[viewportName] = {
+          comparison_type: 'visual_analysis_only',
+          screenshot_path: screenshot.filepath,
+          analysis_timestamp: new Date().toISOString(),
+          similarity: null,
+          note: 'No image reference provided - visual analysis only'
+        };
         continue;
       }
 
       try {
-        // Primary comparison with ResembleJS
-        const resembleResult = await this.compareWithPixelmatch(
+        // Primary comparison with Pixelmatch
+        const pixelmatchResult = await this.compareWithPixelmatch(
           screenshot.buffer,
           targetAsset.buffer
         );
 
-        // Fallback comparison with Pixelmatch if needed
-        let pixelmatchResult = null;
-        if (resembleResult.similarity < 0.7) {
-          pixelmatchResult = await this.compareWithPixelmatch(
-            screenshot.buffer,
-            targetAsset.buffer
-          );
-        }
-
         comparisonResults[viewportName] = {
-          resemble: resembleResult,
+          comparison_type: 'pixel_comparison',
           pixelmatch: pixelmatchResult,
-          primary_similarity: resembleResult.similarity,
-          diff_image_path: resembleResult.diffImagePath,
+          primary_similarity: pixelmatchResult.similarity,
+          diff_image_path: pixelmatchResult.diffImagePath,
           analysis_timestamp: new Date().toISOString()
         };
 
       } catch (error) {
         console.error(`Comparison failed for ${viewportName}:`, error);
         comparisonResults[viewportName] = {
+          comparison_type: 'failed',
           error: error.message,
-          similarity: 0
+          similarity: 0,
+          analysis_timestamp: new Date().toISOString()
         };
       }
     }
@@ -362,10 +403,9 @@ class VisualValidationService {
       const similarity = 1 - (misMatchPercentage / 100);
 
       // Save diff image
+      // FIXED: Using centralized directory configuration per fundamentals.json
       const diffImagePath = path.join(
-        process.cwd(),
-        'validation_results',
-        'comparisons',
+        this.directoryConfig.directories.comparisons,
         `diff_${Date.now()}.png`
       );
 
@@ -550,9 +590,9 @@ class VisualValidationService {
     };
 
     // Save report
+    // FIXED: Using centralized directory configuration per fundamentals.json
     const reportPath = path.join(
-      process.cwd(),
-      'validation_results',
+      this.directoryConfig.directories.reports,
       `validation_report_${validationId}.json`
     );
     await fs.mkdir(path.dirname(reportPath), { recursive: true });

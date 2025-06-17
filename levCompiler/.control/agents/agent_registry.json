@@ -2,8 +2,8 @@
   "agentRegistry": {
     "version": "1.2.0",
     "lastUpdated": "{CURRENT_DATE}",
-    "totalAgents": 17,
-    "activeAgents": 17,
+    "totalAgents": 18,
+    "activeAgents": 18,
     "systemArchitecture": "intelligent-routing-with-human-supervision-and-real-time-improvement"
   },
 
@@ -78,6 +78,18 @@
       "confidenceThreshold": 0.85,
       "humanSupervisionRequired": false,
       "location": "levCompiler/.control/agents/garbage_cleanup_agent.json"
+    },
+
+    "cssSemanticGeneratorAgent": {
+      "agentId": "CSS-SEMANTIC-GEN-001",
+      "status": "active",
+      "role": "semantic-css-enforcer",
+      "priority": 1,
+      "description": "Specialized agent for generating semantic tokenized CSS that strictly enforces zero hardcoded values",
+      "specialization": "semantic-css-generation-and-cleanup",
+      "confidenceThreshold": 0.95,
+      "humanSupervisionRequired": false,
+      "location": "levCompiler/.control/agents/css_semantic_generator_agent.json"
     },
 
     "visualAnnotationAgent": {

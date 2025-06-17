@@ -63,6 +63,24 @@
       "MUST prefix component CSS with component-specific classes",
       "MUST use !important sparingly and only when absolutely necessary"
     ],
+    "semanticTokenizationEnforcement": [
+      "MANDATORY scan for existing hardcoded values before generating any CSS",
+      "ZERO TOLERANCE for hardcoded colors, fonts, spacing, shadows in any output",
+      "AUTOMATIC rejection of any CSS containing #hex, rgb(), or hardcoded px values",
+      "MUST validate 100% semantic token compliance before code generation",
+      "MUST delete conflicting CSS files with hardcoded values automatically",
+      "MUST ensure ONLY semantic-tokens.css and semantic-components.css exist",
+      "MUST verify semantic-color-system.js integration before CSS generation",
+      "MUST reference PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md as single source of truth"
+    ],
+    "duplicacyPrevention": [
+      "MANDATORY scan for duplicate CSS files before generation",
+      "MUST identify and delete conflicting token systems",
+      "MUST prevent regeneration of deleted hardcoded files",
+      "MUST maintain single source of truth for design tokens",
+      "MUST check project history for previous similar implementations",
+      "MUST validate no contradictory approaches exist in codebase"
+    ],
     "security": [
       "MUST sanitize all inputs",
       "MUST avoid hardcoded secrets or credentials",
@@ -87,6 +105,54 @@
   },
 
   "criticalWatchPoints": {
+    "hardcodedValueViolations": {
+      "priority": "critical",
+      "triggers": [
+        "#[0-9A-Fa-f]{3,6} in CSS output",
+        "rgb\\([0-9, ]+\\) in CSS output",
+        "rgba\\([0-9, ,\\.]+\\) in CSS output",
+        "hardcoded px values for spacing/fonts",
+        "hardcoded font family names",
+        "hardcoded shadow values"
+      ],
+      "action": "immediate-rejection-and-escalation",
+      "confidence": 1.0
+    },
+    "duplicateCSSFiles": {
+      "priority": "critical",
+      "triggers": [
+        "multiple-token-systems-detected",
+        "conflicting-css-approaches",
+        "hardcoded-and-semantic-mixed",
+        "design-system-compiled.css-exists",
+        "medical-spa-theme.css-exists",
+        "more-than-2-css-files-in-assets"
+      ],
+      "action": "delete-conflicting-files-and-regenerate",
+      "confidence": 0.98
+    },
+    "semanticTokenSystemViolations": {
+      "priority": "critical",
+      "triggers": [
+        "css-generation-without-semantic-color-system-integration",
+        "bypassing-PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
+        "generating-css-outside-semantic-token-system",
+        "missing-semantic-token-validation"
+      ],
+      "action": "halt-generation-and-enforce-compliance",
+      "confidence": 1.0
+    },
+    "contradictoryImplementations": {
+      "priority": "high",
+      "triggers": [
+        "multiple-design-systems-detected",
+        "conflicting-color-token-definitions",
+        "mixed-hardcoded-semantic-approaches",
+        "legacy-css-files-present"
+      ],
+      "action": "cleanup-and-establish-single-source-of-truth",
+      "confidence": 0.95
+    },
     "securityVulnerabilities": {
       "priority": "critical",
       "triggers": ["sql-injection", "xss-vulnerability", "auth-bypass", "hardcoded-secrets"],
@@ -400,5 +466,46 @@
     "styleAdaptation": "Adapt to project-specific coding styles",
     "performanceOptimization": "Learn optimal patterns for performance",
     "securityHardening": "Improve security implementation over time"
+  },
+
+  "preGenerationValidation": {
+    "mandatoryChecks": [
+      "scan-existing-css-files-for-hardcoded-values",
+      "identify-duplicate-or-conflicting-css-approaches",
+      "verify-semantic-color-system-js-integration",
+      "validate-PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN-md-as-source",
+      "check-for-contradictory-token-systems",
+      "ensure-max-2-css-files-policy"
+    ],
+    "cleanupActions": [
+      "delete-all-css-files-with-hardcoded-values",
+      "remove-conflicting-token-system-files",
+      "clear-legacy-design-system-implementations",
+      "establish-semantic-token-system-as-single-source"
+    ],
+    "validationGates": [
+      "zero-hardcoded-values-in-existing-files",
+      "semantic-color-system-js-properly-integrated",
+      "PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN-md-accessible",
+      "no-conflicting-css-approaches-detected",
+      "project-clean-of-legacy-implementations"
+    ]
+  },
+
+  "postGenerationValidation": {
+    "mandatoryChecks": [
+      "scan-generated-css-for-hardcoded-values",
+      "verify-semantic-token-compliance",
+      "validate-integration-with-semantic-color-system-js",
+      "ensure-no-duplicate-files-created",
+      "confirm-semantic-tokens-css-and-semantic-components-css-only"
+    ],
+    "rejectionCriteria": [
+      "any-hardcoded-hex-rgb-values-detected",
+      "hardcoded-font-spacing-shadow-values-present",
+      "css-files-beyond-allowed-2-file-limit",
+      "missing-semantic-token-references",
+      "conflicting-with-existing-semantic-system"
+    ]
   }
 }

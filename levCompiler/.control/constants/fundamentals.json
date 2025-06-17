@@ -4,6 +4,38 @@
   "capabilities": ["code-generation", "pattern-recognition", "logical-reasoning"],
   "limitations": ["temporal-reasoning", "persistent-state", "real-time-context", "date-time-generation", "timestamp-creation"],
 
+  "CONVENTIONS_SINGLE_SOURCE_OF_TRUTH": {
+    "NEVER_VIOLATE": [
+      "ALL conventions MUST follow levCompiler/project_context/documentation/SYSTEM_CONVENTIONS.md",
+      "SYSTEM_CONVENTIONS.md is the authoritative source for all standards",
+      "NO conflicting conventions allowed outside SYSTEM_CONVENTIONS.md",
+      "ALL agents and workflows MUST adhere to conventions without exception",
+      "Updates to conventions MUST be made in SYSTEM_CONVENTIONS.md first"
+    ],
+    "conventionsLocation": "levCompiler/project_context/documentation/SYSTEM_CONVENTIONS.md",
+    "mandatoryCompliance": {
+      "fileOrganization": "CRITICAL - follow project structure standards",
+      "namingConventions": "CRITICAL - follow all naming standards",
+      "designSystemConventions": "CRITICAL - zero tolerance hardcoded values",
+      "workflowConventions": "CRITICAL - proper agent delegation required",
+      "versionControlConventions": "CRITICAL - semantic commit messages and VERSION-TRACK-001 usage",
+      "documentationConventions": "CRITICAL - proper document structure and metadata"
+    },
+    "conventionsEnforcement": {
+      "preActionValidation": "Check SYSTEM_CONVENTIONS.md compliance before any action",
+      "violationDetection": "Scan for convention violations continuously",
+      "automaticCorrection": "Apply convention-compliant corrections when possible",
+      "escalationRequired": "Human intervention for convention conflicts",
+      "preventionMeasures": "Block actions that violate established conventions"
+    },
+    "systemIntegrity": {
+      "singleSourceTruth": "SYSTEM_CONVENTIONS.md overrides all other convention sources",
+      "conflictResolution": "SYSTEM_CONVENTIONS.md takes precedence in all conflicts",
+      "propagationRequired": "Changes in SYSTEM_CONVENTIONS.md must propagate to other components",
+      "versionTracking": "All convention changes must involve VERSION-TRACK-001"
+    }
+  },
+
   "INVIOLABLE_SYSTEM_RULES": {
     "NEVER_VIOLATE_THESE_FUNDAMENTALS": [
       "ALWAYS read and follow fundamentals.json before ANY action",
@@ -610,7 +642,10 @@
       "NO hardcoded spacing values (e.g., 32px, 1.5rem, 24px)",
       "NO hardcoded border radius values (e.g., 8px, 0.5rem)",
       "NO hardcoded shadow values (e.g., 0 4px 6px rgba(0,0,0,0.1))",
-      "ALWAYS use semantic CSS custom properties and design tokens"
+      "ALWAYS use semantic CSS custom properties and design tokens",
+      "ZERO TOLERANCE for hardcoded values in any CSS generation",
+      "MANDATORY semantic token validation before any CSS output",
+      "AUTOMATIC rejection of any CSS containing hardcoded values"
     ],
     "mandatorySemanticTokenUsage": {
       "colorTokens": "var(--color-primary), var(--color-secondary), var(--color-accent)",
@@ -624,7 +659,9 @@
       "detection": "Scan all design outputs for hardcoded values",
       "replacement": "Replace hardcoded values with appropriate semantic tokens",
       "validation": "CRITICAL ERROR if hardcoded values found in design outputs",
-      "complianceWorkflow": "DESIGN-SYSTEM-COMPLIANCE-WF-001"
+      "complianceWorkflow": "DESIGN-SYSTEM-COMPLIANCE-WF-001",
+      "automaticRejection": "REJECT any code containing hardcoded values immediately",
+      "zeroTolerance": "NO exceptions, NO bypass, NO hardcoded values EVER"
     },
     "allowedDesignReferences": [
       "semantic-token-references (e.g., 'var(--color-primary)', 'var(--text-xl)')",
@@ -632,6 +669,71 @@
       "relative-descriptions (e.g., 'larger than base', 'darker shade of primary')",
       "semantic-placeholders (e.g., '{PRIMARY_COLOR}', '{HEADING_FONT}')"
     ]
+  },
+
+  "CSS_GENERATION_GOVERNANCE": {
+    "NEVER_VIOLATE": [
+      "ONLY generate CSS through semantic-color-system.js and PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
+      "MAXIMUM 2 CSS files allowed: semantic-tokens.css and semantic-components.css",
+      "NO duplicate CSS files with different token systems",
+      "NO mixing of hardcoded values with semantic tokens",
+      "MANDATORY deletion of old CSS files when new config applied",
+      "ZERO exceptions to semantic tokenization requirements"
+    ],
+    "cssFileStructure": {
+      "allowedFiles": ["semantic-tokens.css", "semantic-components.css"],
+      "forbiddenPatterns": ["*-tokenized.css", "*-luxury.css", "design-system-compiled.css", "medical-spa-theme.css"],
+      "generationTrigger": "PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md config changes only",
+      "replacementPolicy": "DELETE all existing CSS, generate new semantic files"
+    },
+    "duplicateFileDetection": {
+      "scanForDuplicates": "MANDATORY before any CSS generation",
+      "deleteConflictingFiles": "AUTOMATIC deletion of files with hardcoded values",
+      "preventRegeneration": "BLOCK generation if duplicates detected",
+      "cleanupRequired": "CLEAN project before any new generation"
+    }
+  },
+
+  "GARBAGE_CODE_PREVENTION": {
+    "NEVER_ALLOW": [
+      "Hardcoded color, font, spacing, or shadow values in ANY file",
+      "Duplicate CSS files with contradictory token systems",
+      "Mixed semantic and hardcoded approaches in same project",
+      "CSS files outside semantic token system",
+      "Any CSS generation without semantic token validation",
+      "Files with conflicting design approaches",
+      "Incomplete cleanup of legacy hardcoded files"
+    ],
+    "automaticRejection": {
+      "hardcodedValueScan": "SCAN every CSS output for hardcoded values",
+      "duplicateFileDetection": "DETECT duplicate/conflicting CSS approaches",
+      "tokenSystemValidation": "VALIDATE 100% semantic token compliance",
+      "legacyFileRemoval": "REMOVE all legacy hardcoded CSS files",
+      "contradictionDetection": "DETECT contradictory design systems"
+    },
+    "preventionMechanisms": {
+      "preGenerationScan": "SCAN existing files before generating new ones",
+      "postGenerationValidation": "VALIDATE semantic compliance after generation",
+      "conflictResolution": "DELETE conflicting files automatically",
+      "systemIntegrityCheck": "VERIFY single source of truth for design tokens"
+    }
+  },
+
+  "MANDATORY_CLEANUP_PROTOCOL": {
+    "NEVER_BYPASS": [
+      "SCAN and DELETE all CSS files with hardcoded values",
+      "VERIFY semantic-color-system.js integration before CSS generation",
+      "ENSURE PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md drives all CSS generation",
+      "REMOVE contradictory project_context files",
+      "ESTABLISH single source of truth for design system"
+    ],
+    "cleanupSequence": {
+      "phase1Detection": "SCAN entire project for hardcoded value violations",
+      "phase2Removal": "DELETE all files containing hardcoded values",
+      "phase3Validation": "VERIFY semantic token system integrity",
+      "phase4Generation": "GENERATE new semantic CSS from config only",
+      "phase5Verification": "VERIFY zero hardcoded values in final output"
+    }
   },
 
   "DESIGN_SYSTEM_COMPLIANCE_MONITORING": {

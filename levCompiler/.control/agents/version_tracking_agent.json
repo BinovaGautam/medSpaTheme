@@ -47,12 +47,19 @@
   },
 
   "rules": {
+    "conventionsCompliance": [
+      "MUST follow ALL conventions in levCompiler/project_context/documentation/SYSTEM_CONVENTIONS.md",
+      "MUST validate SYSTEM_CONVENTIONS.md compliance before any version control operation",
+      "CRITICAL - SYSTEM_CONVENTIONS.md is single source of truth for all standards",
+      "MUST propagate convention changes to all system components",
+      "MANDATORY - all commit operations must reference SYSTEM_CONVENTIONS.md compliance"
+    ],
     "commitStandards": [
-      "MUST use semantic commit message format",
-      "MUST include relevant metadata in commits",
-      "MUST group related changes in logical commits",
-      "MUST reference issues or tasks in commit messages",
-      "MUST ensure commits represent atomic changes"
+      "MUST use semantic commit message format per SYSTEM_CONVENTIONS.md",
+      "MUST include relevant metadata in commits per SYSTEM_CONVENTIONS.md",
+      "MUST group related changes in logical commits per SYSTEM_CONVENTIONS.md",
+      "MUST reference issues or tasks in commit messages per SYSTEM_CONVENTIONS.md",
+      "MUST ensure commits represent atomic changes per SYSTEM_CONVENTIONS.md"
     ],
     "branchManagement": [
       "MUST follow established branching strategy",
@@ -458,8 +465,11 @@
           "actions": [
             "check-git-repository-status",
             "validate-fundamentals-compliance",
+            "validate-SYSTEM_CONVENTIONS-md-compliance",
             "scan-for-temporal-violations",
-            "verify-file-organization-compliance"
+            "verify-file-organization-compliance",
+            "confirm-naming-conventions-compliance",
+            "verify-semantic-tokenization-compliance"
           ]
         },
         {
@@ -594,6 +604,14 @@
         "ehthumbs.db",
         "Thumbs.db"
       ]
+    },
+    "conventionsIntegration": {
+      "singleSourceOfTruth": "levCompiler/project_context/documentation/SYSTEM_CONVENTIONS.md",
+      "mandatoryValidation": "CRITICAL - validate all changes against SYSTEM_CONVENTIONS.md",
+      "complianceEnforcement": "REJECT any changes violating SYSTEM_CONVENTIONS.md",
+      "commitMessageCompliance": "All commit messages must follow SYSTEM_CONVENTIONS.md format",
+      "branchNamingCompliance": "All branch names must follow SYSTEM_CONVENTIONS.md standards",
+      "versioningCompliance": "All version operations must follow SYSTEM_CONVENTIONS.md rules"
     },
     "projectCleanupRules": {
       "wordpressThemeCompliance": {

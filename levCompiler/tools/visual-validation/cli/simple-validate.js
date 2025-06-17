@@ -19,7 +19,8 @@ async function runValidation() {
   const options = {
     url: urlIndex > 0 ? args[urlIndex] : '',
     design: designIndex > 0 ? args[designIndex] : '',
-    output: outputIndex > 0 ? args[outputIndex] : './validation_results',
+    // FIXED: Following fundamentals.json TOOLS_ORGANIZATION_REQUIREMENTS
+    output: outputIndex > 0 ? args[outputIndex] : './levCompiler/tools/visual-validation/results',
     viewports: 'desktop,tablet,mobile',
     threshold: 0.85,
     auto: true,

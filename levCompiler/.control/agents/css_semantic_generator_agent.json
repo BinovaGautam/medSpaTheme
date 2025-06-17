@@ -1,0 +1,273 @@
+{
+  "cssSemanticGeneratorAgent": {
+    "agentId": "CSS-SEMANTIC-GEN-001",
+    "version": "1.0.0",
+    "description": "Specialized agent for generating semantic tokenized CSS that strictly enforces zero hardcoded values and single source of truth from PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
+    "specialization": "semantic-css-generation-and-cleanup",
+    "confidenceThreshold": 0.95,
+    "role": "semantic-css-enforcer",
+    "humanSupervisionRequired": false
+  },
+
+  "objectives": {
+    "primary": "Generate ONLY semantic tokenized CSS from PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md with zero hardcoded values",
+    "secondary": "Cleanup and delete all CSS files containing hardcoded values before generation",
+    "tertiary": "Maintain strict 2-file CSS architecture: semantic-tokens.css and semantic-components.css"
+  },
+
+  "capabilities": {
+    "primary": [
+      "semantic-token-css-generation",
+      "hardcoded-value-detection-and-removal",
+      "css-file-cleanup-and-deletion",
+      "PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN-md-integration",
+      "semantic-color-system-js-integration"
+    ],
+    "secondary": [
+      "duplicate-css-file-detection",
+      "conflicting-token-system-removal",
+      "legacy-design-system-cleanup",
+      "css-validation-and-compliance-checking",
+      "automatic-file-replacement-management"
+    ],
+    "advanced": [
+      "real-time-semantic-compliance-monitoring",
+      "dynamic-token-system-optimization",
+      "cross-file-dependency-validation",
+      "performance-optimized-css-generation",
+      "accessibility-compliant-token-generation"
+    ]
+  },
+
+  "strictRules": {
+    "zeroToleranceHardcodedValues": [
+      "NO #hex values allowed in any CSS output EVER",
+      "NO rgb() or rgba() values allowed in any CSS output EVER",
+      "NO hardcoded px, rem, em values for spacing or fonts EVER",
+      "NO hardcoded font family names EVER",
+      "NO hardcoded shadow values EVER",
+      "AUTOMATIC rejection of any CSS containing hardcoded values",
+      "MANDATORY deletion of existing CSS files with hardcoded values"
+    ],
+    "semanticTokenEnforcement": [
+      "ONLY var(--semantic-token-name) references allowed",
+      "MUST validate semantic-color-system.js integration before generation",
+      "MUST reference PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md as ONLY source",
+      "MUST generate tokens from palette selection in design specification",
+      "MUST ensure 100% semantic token compliance"
+    ],
+    "fileArchitectureEnforcement": [
+      "MAXIMUM 2 CSS files: semantic-tokens.css and semantic-components.css",
+      "AUTOMATIC deletion of any other CSS files in assets/css/",
+      "NO exceptions to 2-file architecture",
+      "MANDATORY cleanup before generation",
+      "PREVENT regeneration of deleted legacy files"
+    ],
+    "singleSourceOfTruth": [
+      "PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md is ONLY config source",
+      "semantic-color-system.js provides ONLY token generation logic",
+      "NO manual CSS generation outside this system",
+      "NO mixing of approaches or token systems",
+      "ESTABLISH and MAINTAIN single source of truth"
+    ]
+  },
+
+  "criticalWatchPoints": {
+    "hardcodedValueDetection": {
+      "priority": "critical",
+      "triggers": [
+        "#[0-9A-Fa-f]{3,6}",
+        "rgb\\([0-9, ]+\\)",
+        "rgba\\([0-9, ,\\.]+\\)",
+        "\\d+px(?!.*var\\()",
+        "font-family:\\s*['\"](?!var\\()",
+        "box-shadow:\\s*(?!var\\()"
+      ],
+      "action": "immediate-file-deletion-and-regeneration",
+      "confidence": 1.0
+    },
+    "cssFileViolations": {
+      "priority": "critical",
+      "triggers": [
+        "more-than-2-css-files-in-assets",
+        "design-system-compiled.css-exists",
+        "medical-spa-theme.css-exists",
+        "*-tokenized.css-pattern-exists",
+        "*-luxury.css-pattern-exists"
+      ],
+      "action": "delete-violating-files-immediately",
+      "confidence": 1.0
+    },
+    "tokenSystemViolations": {
+      "priority": "critical",
+      "triggers": [
+        "css-generation-without-semantic-color-system-integration",
+        "bypassing-PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN-md",
+        "multiple-token-systems-detected",
+        "conflicting-semantic-approaches"
+      ],
+      "action": "halt-and-enforce-compliance",
+      "confidence": 1.0
+    }
+  },
+
+  "cleanupProtocol": {
+    "phase1Detection": {
+      "scanAllCSSFiles": "SCAN every CSS file for hardcoded values",
+      "identifyDuplicates": "IDENTIFY duplicate/conflicting CSS approaches",
+      "flagViolations": "FLAG all files violating semantic tokenization",
+      "assessConflicts": "ASSESS conflicts with semantic token system"
+    },
+    "phase2Removal": {
+      "deleteHardcodedFiles": "DELETE all files containing hardcoded values",
+      "removeDuplicateSystems": "REMOVE conflicting token system files",
+      "clearLegacyFiles": "CLEAR legacy design system implementations",
+      "purgeContradictions": "PURGE contradictory approaches"
+    },
+    "phase3Validation": {
+      "verifyCleanState": "VERIFY project clean of hardcoded values",
+      "validateIntegration": "VALIDATE semantic-color-system.js integration",
+      "confirmSourceTruth": "CONFIRM PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md accessibility",
+      "ensureCompliance": "ENSURE zero violations remain"
+    }
+  },
+
+  "generationProtocol": {
+    "preGeneration": {
+      "mandatoryCleanup": "EXECUTE full cleanup protocol",
+      "validateSource": "VALIDATE PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
+      "checkSemanticSystem": "CHECK semantic-color-system.js integration",
+      "ensureCleanState": "ENSURE zero existing violations"
+    },
+    "generation": {
+      "tokenGeneration": "GENERATE semantic-tokens.css from design specification",
+      "componentGeneration": "GENERATE semantic-components.css with token references",
+      "validateOutput": "VALIDATE 100% semantic token compliance",
+      "checkIntegration": "CHECK integration with semantic-color-system.js"
+    },
+    "postGeneration": {
+      "scanOutput": "SCAN generated CSS for any hardcoded values",
+      "validateCompliance": "VALIDATE semantic tokenization compliance",
+      "confirmArchitecture": "CONFIRM 2-file architecture maintained",
+      "testIntegration": "TEST integration with semantic color system"
+    }
+  },
+
+  "semanticTokenMapping": {
+    "colorTokens": {
+      "primary": "var(--color-primary)",
+      "secondary": "var(--color-secondary)",
+      "accent": "var(--color-accent)",
+      "surface": "var(--color-surface)",
+      "background": "var(--color-background)",
+      "textPrimary": "var(--color-text-primary)",
+      "textSecondary": "var(--color-text-secondary)",
+      "textMuted": "var(--color-text-muted)"
+    },
+    "typographyTokens": {
+      "fontPrimary": "var(--font-family-primary)",
+      "fontSecondary": "var(--font-family-secondary)",
+      "textDisplay": "var(--text-display)",
+      "textXl": "var(--text-xl)",
+      "textLg": "var(--text-lg)",
+      "textBase": "var(--text-base)",
+      "textSm": "var(--text-sm)"
+    },
+    "spacingTokens": {
+      "spaceXs": "var(--space-xs)",
+      "spaceSm": "var(--space-sm)",
+      "spaceMd": "var(--space-md)",
+      "spaceLg": "var(--space-lg)",
+      "spaceXl": "var(--space-xl)",
+      "space2xl": "var(--space-2xl)",
+      "space3xl": "var(--space-3xl)",
+      "space4xl": "var(--space-4xl)"
+    },
+    "effectTokens": {
+      "shadowSm": "var(--shadow-sm)",
+      "shadowMd": "var(--shadow-md)",
+      "shadowLg": "var(--shadow-lg)",
+      "radiusSm": "var(--radius-sm)",
+      "radiusMd": "var(--radius-md)",
+      "radiusLg": "var(--radius-lg)",
+      "transitionBase": "var(--transition-base)",
+      "transitionFast": "var(--transition-fast)"
+    }
+  },
+
+  "outputStructure": {
+    "semanticTokensCSS": {
+      "description": "Core semantic design tokens derived from PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
+      "content": [
+        "color-tokens-from-palette-selection",
+        "typography-tokens-from-font-selection",
+        "spacing-tokens-semantic-scale",
+        "effect-tokens-shadows-borders-transitions",
+        "responsive-tokens-breakpoints-and-scales"
+      ]
+    },
+    "semanticComponentsCSS": {
+      "description": "Component-specific styles using only semantic tokens",
+      "content": [
+        "component-classes-with-semantic-tokens",
+        "treatment-cards-semantic-implementation",
+        "hero-sections-semantic-styling",
+        "navigation-semantic-styling",
+        "footer-semantic-implementation"
+      ]
+    }
+  },
+
+  "qualityGates": {
+    "zeroHardcodedValues": {
+      "description": "Generated CSS contains absolutely zero hardcoded values",
+      "threshold": 1.0,
+      "validation": "regex-scan-for-hardcoded-patterns"
+    },
+    "semanticTokenCompliance": {
+      "description": "All CSS values use semantic token references",
+      "threshold": 1.0,
+      "validation": "semantic-token-pattern-validation"
+    },
+    "twoFileArchitecture": {
+      "description": "Only semantic-tokens.css and semantic-components.css exist",
+      "threshold": 1.0,
+      "validation": "file-count-and-naming-validation"
+    },
+    "integrationValidation": {
+      "description": "Generated CSS integrates properly with semantic-color-system.js",
+      "threshold": 0.95,
+      "validation": "integration-testing-validation"
+    }
+  },
+
+  "handoffTriggers": {
+    "cleanupCompleted": {
+      "description": "All hardcoded CSS files cleaned up successfully",
+      "nextAgent": "CSS-SEMANTIC-GEN-001",
+      "confidence": 0.95
+    },
+    "generationCompleted": {
+      "description": "Semantic CSS generation completed successfully",
+      "nextAgent": "VERSION-TRACK-001",
+      "confidence": 0.90
+    },
+    "violationDetected": {
+      "description": "Hardcoded values or violations detected",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 1.0
+    },
+    "integrationFailed": {
+      "description": "Failed to integrate with semantic color system",
+      "nextAgent": "human-interaction-agent",
+      "confidence": 0.95
+    }
+  },
+
+  "learningCapabilities": {
+    "hardcodedValueDetection": "Improve detection of hardcoded value patterns",
+    "semanticTokenOptimization": "Optimize semantic token generation efficiency",
+    "cleanupAutomation": "Automate cleanup processes for better reliability",
+    "integrationPatterns": "Learn better integration patterns with semantic systems"
+  }
+}

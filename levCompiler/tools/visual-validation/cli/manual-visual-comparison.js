@@ -69,9 +69,11 @@ program
 class ManualVisualComparisonOrchestrator {
   constructor(options) {
     this.options = options;
-    this.workingDirectory = process.cwd();
-    this.executionDirectory = path.join(this.workingDirectory, 'project_context', 'tasks', 'execution');
-    this.designsDirectory = path.join(this.workingDirectory, 'project_context', 'designs');
+    // FIXED: Use project root regardless of where CLI is executed from
+    this.projectRoot = path.resolve(__dirname, '../../../..');
+    this.workingDirectory = this.projectRoot;
+    this.executionDirectory = path.join(this.projectRoot, 'levCompiler/project_context/tasks/execution');
+    this.designsDirectory = path.join(this.projectRoot, 'levCompiler/project_context/designs');
     this.timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
   }
 
@@ -287,7 +289,8 @@ class ManualVisualComparisonOrchestrator {
   }
 
   formatExecutionReport(context, validationResult) {
-    const relativeTempPath = path.relative(this.executionDirectory, path.join(this.workingDirectory, 'temp', 'screenshots'));
+    // FIXED: Following fundamentals.json TOOLS_ORGANIZATION_REQUIREMENTS
+    const relativeTempPath = path.relative(this.executionDirectory, path.join(this.projectRoot, 'levCompiler/tools/temp/screenshots'));
 
     return `# Visual Comparison Report: ${this.options.pageName.toUpperCase()}
 

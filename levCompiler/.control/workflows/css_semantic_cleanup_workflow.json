@@ -1,0 +1,295 @@
+{
+  "cssSemanticCleanupWorkflow": {
+    "workflowId": "CSS-SEMANTIC-CLEANUP-WF-001",
+    "version": "1.0.0",
+    "description": "Comprehensive workflow for cleaning up hardcoded CSS violations and establishing semantic token system as single source of truth",
+    "category": "cleanup-and-regeneration",
+    "priority": "critical",
+    "estimatedDuration": "15-30 minutes"
+  },
+
+  "objectives": {
+    "primary": "Clean up all CSS files with hardcoded values and establish semantic token system",
+    "secondary": "Generate clean semantic-tokens.css and semantic-components.css from PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
+    "tertiary": "Ensure zero violations of SEMANTIC_TOKENIZATION_REQUIREMENTS"
+  },
+
+  "workflowStages": {
+    "stage1Audit": {
+      "name": "Comprehensive CSS Audit",
+      "description": "Scan entire project for hardcoded value violations",
+      "primaryAgent": "CSS-SEMANTIC-GEN-001",
+      "estimatedTime": "5 minutes",
+      "tasks": [
+        "scan-all-css-files-for-hardcoded-values",
+        "identify-duplicate-token-systems",
+        "catalog-violating-files",
+        "assess-cleanup-scope",
+        "generate-violation-report"
+      ],
+      "qualityGates": [
+        "complete-file-catalog-generated",
+        "violation-patterns-identified",
+        "cleanup-scope-assessed"
+      ]
+    },
+
+    "stage2Cleanup": {
+      "name": "Hardcoded Value Cleanup",
+      "description": "Delete all CSS files containing hardcoded values",
+      "primaryAgent": "CSS-SEMANTIC-GEN-001",
+      "estimatedTime": "5 minutes",
+      "tasks": [
+        "delete-all-css-files-with-hardcoded-values",
+        "remove-conflicting-token-system-files",
+        "clear-legacy-design-implementations",
+        "purge-contradictory-approaches",
+        "verify-cleanup-completion"
+      ],
+      "qualityGates": [
+        "zero-hardcoded-value-files-remaining",
+        "conflicting-systems-removed",
+        "clean-state-achieved"
+      ]
+    },
+
+    "stage3Validation": {
+      "name": "System Validation",
+      "description": "Validate semantic token system integrity",
+      "primaryAgent": "CSS-SEMANTIC-GEN-001",
+      "estimatedTime": "3 minutes",
+      "tasks": [
+        "validate-semantic-color-system-js-integration",
+        "verify-PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN-md-accessibility",
+        "check-token-system-completeness",
+        "confirm-single-source-of-truth",
+        "validate-project-clean-state"
+      ],
+      "qualityGates": [
+        "semantic-color-system-js-operational",
+        "design-specification-accessible",
+        "zero-conflicts-detected"
+      ]
+    },
+
+    "stage4Generation": {
+      "name": "Semantic CSS Generation",
+      "description": "Generate clean semantic CSS from design specification",
+      "primaryAgent": "CSS-SEMANTIC-GEN-001",
+      "estimatedTime": "7 minutes",
+      "tasks": [
+        "generate-semantic-tokens-css-from-design-spec",
+        "generate-semantic-components-css-with-tokens",
+        "validate-zero-hardcoded-values-in-output",
+        "verify-semantic-token-compliance",
+        "test-integration-with-color-system"
+      ],
+      "qualityGates": [
+        "semantic-tokens-css-generated-successfully",
+        "semantic-components-css-generated-successfully",
+        "zero-hardcoded-values-in-output",
+        "100-percent-semantic-token-compliance"
+      ]
+    },
+
+    "stage5Verification": {
+      "name": "Final Compliance Verification",
+      "description": "Verify complete compliance with semantic tokenization requirements",
+      "primaryAgent": "CSS-SEMANTIC-GEN-001",
+      "estimatedTime": "5 minutes",
+      "tasks": [
+        "scan-final-css-files-for-hardcoded-values",
+        "verify-2-file-architecture-compliance",
+        "test-semantic-color-system-integration",
+        "validate-PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN-md-compliance",
+        "confirm-zero-violations"
+      ],
+      "qualityGates": [
+        "zero-hardcoded-values-detected",
+        "2-file-architecture-confirmed",
+        "semantic-integration-verified",
+        "fundamentals-compliance-achieved"
+      ]
+    },
+
+    "stage6Documentation": {
+      "name": "Documentation and Version Tracking",
+      "description": "Document changes and track version",
+      "primaryAgent": "VERSION-TRACK-001",
+      "estimatedTime": "3 minutes",
+      "tasks": [
+        "document-cleanup-actions-taken",
+        "record-files-deleted-and-reasons",
+        "document-new-semantic-system-implementation",
+        "update-version-tracking",
+        "create-compliance-report"
+      ],
+      "qualityGates": [
+        "cleanup-actions-documented",
+        "version-tracking-updated",
+        "compliance-report-generated"
+      ]
+    }
+  },
+
+  "triggerConditions": {
+    "hardcodedValueDetection": {
+      "condition": "Any CSS file contains hardcoded hex, rgb, or pixel values",
+      "priority": "critical",
+      "autoTrigger": true
+    },
+    "duplicateCSSFiles": {
+      "condition": "More than 2 CSS files detected in assets/css/",
+      "priority": "high",
+      "autoTrigger": true
+    },
+    "conflictingTokenSystems": {
+      "condition": "Multiple token systems detected",
+      "priority": "critical",
+      "autoTrigger": true
+    },
+    "manualTrigger": {
+      "condition": "Manual cleanup requested",
+      "priority": "high",
+      "autoTrigger": false
+    }
+  },
+
+  "criticalWatchPoints": {
+    "cleanupFailure": {
+      "priority": "critical",
+      "triggers": [
+        "unable-to-delete-hardcoded-files",
+        "cleanup-incomplete",
+        "violations-still-present"
+      ],
+      "action": "escalate-to-human-intervention",
+      "confidence": 1.0
+    },
+    "generationFailure": {
+      "priority": "critical",
+      "triggers": [
+        "semantic-css-generation-failed",
+        "hardcoded-values-in-generated-css",
+        "token-system-integration-failed"
+      ],
+      "action": "halt-and-retry-with-validation",
+      "confidence": 0.95
+    },
+    "complianceViolation": {
+      "priority": "critical",
+      "triggers": [
+        "hardcoded-values-detected-in-final-output",
+        "more-than-2-css-files-after-cleanup",
+        "semantic-token-compliance-failed"
+      ],
+      "action": "restart-cleanup-process",
+      "confidence": 1.0
+    }
+  },
+
+  "rollbackProcedures": {
+    "cleanupRollback": {
+      "description": "Rollback if cleanup fails",
+      "steps": [
+        "restore-from-backup-if-available",
+        "document-failure-reason",
+        "escalate-to-human-intervention",
+        "preserve-current-state-for-analysis"
+      ]
+    },
+    "generationRollback": {
+      "description": "Rollback if generation fails",
+      "steps": [
+        "delete-failed-generation-files",
+        "restore-clean-state",
+        "retry-generation-with-validation",
+        "escalate-if-retry-fails"
+      ]
+    }
+  },
+
+  "inputRequirements": {
+    "semanticColorSystem": {
+      "file": "assets/js/semantic-color-system.js",
+      "status": "must-exist-and-be-functional",
+      "validation": "integration-test-required"
+    },
+    "designSpecification": {
+      "file": "levCompiler/project_context/designs/PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
+      "status": "must-exist-and-be-readable",
+      "validation": "content-validation-required"
+    },
+    "projectState": {
+      "cssFiles": "scan-all-css-files-in-assets",
+      "tokenSystems": "identify-existing-token-approaches",
+      "conflicts": "detect-conflicting-implementations"
+    }
+  },
+
+  "outputDeliverables": {
+    "cleanedProject": {
+      "description": "Project with zero hardcoded CSS values",
+      "validation": "zero-hardcoded-values-confirmed"
+    },
+    "semanticTokensCSS": {
+      "file": "assets/css/semantic-tokens.css",
+      "description": "Core semantic design tokens",
+      "validation": "100-percent-semantic-token-usage"
+    },
+    "semanticComponentsCSS": {
+      "file": "assets/css/semantic-components.css",
+      "description": "Component styles using semantic tokens",
+      "validation": "zero-hardcoded-values-confirmed"
+    },
+    "complianceReport": {
+      "description": "Detailed compliance verification report",
+      "validation": "fundamentals-compliance-confirmed"
+    }
+  },
+
+  "monitoringAndAlerts": {
+    "realTimeMonitoring": [
+      "file-deletion-progress",
+      "cleanup-completion-status",
+      "generation-progress",
+      "violation-detection-alerts"
+    ],
+    "alertThresholds": {
+      "cleanupTime": "15 minutes maximum",
+      "generationTime": "10 minutes maximum",
+      "violationTolerance": "zero violations allowed"
+    }
+  },
+
+  "successCriteria": {
+    "primarySuccess": [
+      "zero-hardcoded-values-in-entire-project",
+      "semantic-tokens-css-and-semantic-components-css-only",
+      "100-percent-semantic-token-compliance",
+      "integration-with-semantic-color-system-js-confirmed"
+    ],
+    "secondarySuccess": [
+      "PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN-md-compliance-verified",
+      "fundamentals-json-requirements-met",
+      "version-tracking-completed",
+      "documentation-updated"
+    ]
+  },
+
+  "failureHandling": {
+    "automaticRetry": {
+      "maxRetries": 2,
+      "retryDelay": "1 minute",
+      "escalationAfterRetries": "human-intervention-required"
+    },
+    "humanIntervention": {
+      "triggers": [
+        "cleanup-failure-after-retries",
+        "generation-failure-after-retries",
+        "compliance-violation-after-retries"
+      ],
+      "escalationAgent": "human-interaction-agent"
+    }
+  }
+}
