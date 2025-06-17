@@ -527,6 +527,14 @@ function medspa_theme_styles() {
     wp_enqueue_style(
         'hero-component-styles',
         get_template_directory_uri() . '/assets/css/components/hero.css',
+        array('component-system-styles'),
+        PREETIDREAMS_VERSION
+    );
+
+    // Hero Section component (luxury hero with quiz integration)
+    wp_enqueue_style(
+        'hero-section-component',
+        get_template_directory_uri() . '/assets/css/components/hero-section.css',
         array('medical-spa-theme'),
         PREETIDREAMS_VERSION
     );
@@ -552,6 +560,15 @@ function medspa_theme_styles() {
     wp_enqueue_script(
         'hero-component-scripts',
         get_template_directory_uri() . '/assets/js/components/premium-hero.js',
+        array('jquery', 'wp-util'),
+        PREETIDREAMS_VERSION,
+        true
+    );
+
+    // Hero Section component scripts (luxury hero with quiz integration)
+    wp_enqueue_script(
+        'hero-section-component-scripts',
+        get_template_directory_uri() . '/assets/js/components/hero-section.js',
         array('jquery', 'wp-util'),
         PREETIDREAMS_VERSION,
         true

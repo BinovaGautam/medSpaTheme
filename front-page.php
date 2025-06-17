@@ -2,69 +2,89 @@
 
 <main id="main" class="site-main homepage">
 
-    <!-- Premium Hero Section -->
-    <section class="hero-section premium-hero" id="hero">
-        <!-- Hero Content -->
-        <div class="container">
-            <div class="hero-layout">
-                <!-- Left: Content Section -->
-                <div class="hero-content-section">
-                    <div class="hero-text-content">
-                        <h1 class="hero-title">
-                            <?php echo get_theme_mod('hero_title', 'Transform Your Beauty with Advanced Medical Spa Treatments'); ?>
-                        </h1>
+    <!-- Luxury Hero Section with Integrated Quiz -->
+    <section class="hero-section with-quiz" id="hero">
+        <!-- Hero Content Section -->
+        <div class="hero-content">
+            <div class="hero-content-inner">
+                <!-- Brand Introduction -->
+                <div class="hero-brand-intro">
+                    <span class="hero-brand-tagline">
+                        <?php esc_html_e('Where Medical Artistry Meets Luxury', 'medspa-theme'); ?>
+                    </span>
+                </div>
 
-                        <p class="hero-subtitle">
-                            <?php echo get_theme_mod('hero_subtitle', 'Experience the latest in non-surgical aesthetic treatments performed by board-certified professionals in a luxurious, comfortable environment.'); ?>
-                        </p>
+                <!-- Main Hero Content -->
+                <h1 class="hero-title">
+                    <?php echo get_theme_mod('hero_title', __('Transform Your Beauty with Precision & Artistry', 'medspa-theme')); ?>
+                </h1>
 
-                        <!-- Trust Indicators -->
-                        <div class="trust-indicators">
-                            <div class="trust-item">
-                                <span class="trust-icon">✅</span>
-                                <span class="trust-text">Board Certified</span>
-                            </div>
-                            <div class="trust-item">
-                                <span class="trust-icon">🏆</span>
-                                <span class="trust-text">Award Winning</span>
-                            </div>
-                            <div class="trust-item">
-                                <span class="trust-icon">💯</span>
-                                <span class="trust-text">2000+ Happy Patients</span>
-                            </div>
-                            <div class="trust-item">
-                                <span class="trust-icon">🔒</span>
-                                <span class="trust-text">HIPAA Compliant</span>
-                            </div>
-                        </div>
+                <p class="hero-subtitle">
+                    <?php echo get_theme_mod('hero_subtitle', __('Discover your perfect aesthetic journey with our board-certified professionals, cutting-edge treatments, and personalized approach to medical beauty.', 'medspa-theme')); ?>
+                </p>
 
-                        <!-- Hero Actions -->
-                        <div class="hero-actions">
-                            <a href="#consultation" class="btn btn-primary btn-lg cta-primary">
-                                <span class="btn-icon">📅</span>
-                                <span class="btn-text">Book Free Consultation</span>
-                            </a>
-                            <a href="tel:+1234567890" class="btn btn-secondary btn-lg cta-secondary">
-                                <span class="btn-icon">📞</span>
-                                <span class="btn-text">Call Now</span>
-                            </a>
-                        </div>
+                <!-- Trust Indicators -->
+                <div class="hero-trust-indicators">
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">🏆</span>
+                        <span class="hero-trust-text"><?php esc_html_e('Board Certified', 'medspa-theme'); ?></span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">⭐</span>
+                        <span class="hero-trust-text"><?php esc_html_e('Award Winning', 'medspa-theme'); ?></span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">👥</span>
+                        <span class="hero-trust-text"><?php esc_html_e('2000+ Happy Patients', 'medspa-theme'); ?></span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">🔒</span>
+                        <span class="hero-trust-text"><?php esc_html_e('HIPAA Compliant', 'medspa-theme'); ?></span>
                     </div>
                 </div>
 
-                <!-- Right: Interactive Treatment Selection -->
-                <div class="hero-interactive-section">
-                    <?php
-                    // Include the elegant quiz component
-                    get_template_part('template-parts/components/elegant-quiz', null, array(
-                        'title' => __('Find Your Perfect Treatment', 'medspa-theme'),
-                        'subtitle' => __('Answer a few questions to get personalized recommendations', 'medspa-theme'),
-                        'css_class' => 'hero-quiz-instance',
-                        'show_progress' => false
-                    ));
-                    ?>
+                <!-- Hero Features -->
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <span class="hero-feature-icon" aria-hidden="true">✨</span>
+                        <span class="hero-feature-text"><?php esc_html_e('Personalized Treatment Plans', 'medspa-theme'); ?></span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="hero-feature-icon" aria-hidden="true">🔬</span>
+                        <span class="hero-feature-text"><?php esc_html_e('Latest Medical Technology', 'medspa-theme'); ?></span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="hero-feature-icon" aria-hidden="true">💎</span>
+                        <span class="hero-feature-text"><?php esc_html_e('Luxury Spa Experience', 'medspa-theme'); ?></span>
+                    </div>
                 </div>
 
+                <!-- Primary CTA -->
+                <div class="hero-primary-cta">
+                    <a href="#consultation" class="hero-cta-button" aria-describedby="hero-cta-description">
+                        <span class="hero-cta-icon" aria-hidden="true">📅</span>
+                        <span class="hero-cta-text"><?php esc_html_e('Start Your Journey Today', 'medspa-theme'); ?></span>
+                        <span class="hero-cta-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <p id="hero-cta-description" class="hero-cta-description">
+                        <?php esc_html_e('Free consultation • No obligation • Personalized recommendations', 'medspa-theme'); ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Quiz Section -->
+        <div class="hero-quiz-container">
+            <div class="hero-quiz-wrapper">
+                <?php
+                // Include the elegant quiz component with hero-specific configuration
+                get_template_part('template-parts/components/elegant-quiz', null, array(
+                    'title' => __('Find Your Perfect Treatment', 'medspa-theme'),
+                    'subtitle' => __('Answer a few questions to get personalized recommendations', 'medspa-theme'),
+                    'css_class' => 'hero-integrated-quiz',
+                    'show_progress' => true
+                ));
+                ?>
             </div>
         </div>
     </section>
