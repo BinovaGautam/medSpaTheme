@@ -106,19 +106,11 @@ article {
     margin: 2rem 0;
 }
 
-.treatment-card {
-    background: var(--warm-white);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 6px 24px rgba(74, 93, 74, 0.1);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(230, 201, 84, 0.1);
-}
-
-.treatment-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 40px rgba(74, 93, 74, 0.15);
-}
+/*
+ * TREATMENT CARD STYLES MOVED TO treatments-consolidated.css
+ * This prevents duplicate CSS declarations and ensures single source of truth.
+ * All .treatment-card styles are now in: assets/css/treatments-consolidated.css
+ */
 
 /* Professional Button Styling */
 .button, button, input[type="submit"] {

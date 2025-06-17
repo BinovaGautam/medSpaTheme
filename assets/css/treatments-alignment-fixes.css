@@ -11,47 +11,46 @@
  */
 
 /* =============================================================================
+   TREATMENTS PAGE ALIGNMENT FIXES - SEMANTIC TOKEN COMPLIANT
+   ============================================================================= */
+
+/* =============================================================================
    HERO SECTION - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
 .treatments-hero {
-    text-align: center;
-    padding: var(--space-4xl) 0;
-    background: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
     color: var(--color-text-inverse);
+    padding: var(--space-4xl) 0;
+    text-align: center;
 }
 
 .treatments-hero .container {
-    max-width: var(--content-width-lg);
+    max-width: var(--container-max-width);
     margin: 0 auto;
     padding: 0 var(--space-lg);
 }
 
 .treatments-hero .hero-content {
-    text-align: center;
     max-width: 800px;
     margin: 0 auto;
 }
 
 .treatments-hero .hero-title {
     font-family: var(--font-family-display);
-    font-size: var(--text-4xl);
+    font-size: var(--text-5xl);
     font-weight: var(--font-weight-bold);
-    line-height: var(--leading-tight);
     margin: 0 0 var(--space-lg) 0;
     text-align: center;
-    color: var(--color-text-inverse);
+    line-height: var(--leading-tight);
 }
 
 .treatments-hero .hero-description {
     font-family: var(--font-family-primary);
     font-size: var(--text-lg);
-    font-weight: var(--font-weight-normal);
     line-height: var(--leading-relaxed);
-    margin: 0 auto var(--space-xl) auto;
+    margin: 0 0 var(--space-xl) 0;
     text-align: center;
-    max-width: 600px;
-    color: var(--color-text-inverse);
     opacity: 0.95;
 }
 
@@ -60,10 +59,8 @@
    ============================================================================= */
 
 .treatments-page .section-header,
-.treatments-page .section-header--centered {
+.treatments-page .section-header * {
     text-align: center;
-    margin-bottom: var(--space-3xl);
-    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -73,23 +70,25 @@
     font-size: var(--text-3xl);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
-    margin: 0 0 var(--space-md) 0;
+    margin: 0 0 var(--space-lg) 0;
     text-align: center;
     line-height: var(--leading-tight);
 }
 
 .treatments-page .section-description {
     font-family: var(--font-family-primary);
-    font-size: var(--text-base);
+    font-size: var(--text-lg);
     color: var(--color-text-secondary);
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
     line-height: var(--leading-relaxed);
+    margin: 0 0 var(--space-2xl) 0;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* =============================================================================
-   TREATMENTS GRID - PROPER CSS SPECIFICITY WITHOUT !IMPORTANT
+   TREATMENTS GRID LAYOUT - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
 .treatments-page .treatments-grid {
@@ -98,147 +97,36 @@
     gap: var(--space-xl);
     margin-top: var(--space-2xl);
     align-items: stretch;
-
-    /* Container properties */
     width: 100%;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 var(--space-md);
-
-    /* Reset list styling */
     list-style: none;
-    padding-left: 0;
-    margin-bottom: 0;
-
-    /* Layout containment */
-    contain: layout style;
-    isolation: isolate;
-    position: relative;
-    z-index: 1;
 }
 
-/* Remove pseudo-elements that might interfere */
 .treatments-page .treatments-grid::before,
 .treatments-page .treatments-grid::after {
-    display: none;
     content: none;
 }
 
-/* Hide non-treatment-card elements */
 .treatments-page .treatments-grid > *:not(.treatment-card) {
     display: none;
 }
 
 /* =============================================================================
-   TREATMENT CARDS - SEMANTIC TOKEN COMPLIANT
+   TREATMENT CARDS - MOVED TO CONSOLIDATED FILE
    ============================================================================= */
 
-.treatments-page .treatment-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-surface-primary);
-    padding: var(--space-xl);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--color-border-light);
-    text-align: left;
-    height: 100%;
-    min-height: 400px;
-
-    /* Grid positioning */
-    grid-column: auto;
-    grid-row: auto;
-    align-self: stretch;
-    justify-self: stretch;
-
-    /* Box model */
-    box-sizing: border-box;
-    width: 100%;
-    position: relative;
-
-    /* Layout containment */
-    contain: layout style paint;
-    isolation: isolate;
-}
-
-.treatments-page .treatment-card__header {
-    margin-bottom: var(--space-md);
-}
-
-.treatments-page .treatment-card__title {
-    font-family: var(--font-family-primary);
-    font-size: var(--text-xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
-    margin: 0 0 var(--space-sm) 0;
-    text-align: left;
-    line-height: var(--leading-tight);
-}
-
-.treatments-page .treatment-card__description {
-    flex-grow: 1;
-    margin-bottom: var(--space-lg);
-}
-
-.treatments-page .treatment-card__description p {
-    font-family: var(--font-family-primary);
-    font-size: var(--text-base);
-    color: var(--color-text-primary);
-    line-height: var(--leading-relaxed);
-    margin: 0;
-    text-align: left;
-}
-
-.treatments-page .treatment-card__actions {
-    margin-top: auto;
-    display: flex;
-    gap: var(--space-sm);
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.treatments-page .treatment-card__button {
-    font-family: var(--font-family-primary);
-    font-size: var(--text-sm);
-    font-weight: var(--font-weight-medium);
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    text-align: center;
-    transition: var(--transition-base);
-    min-width: 100px;
-    min-height: var(--accessibility-touch-target-min);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.treatments-page .treatment-card__button--primary {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverse);
-    border: 2px solid var(--color-primary);
-}
-
-.treatments-page .treatment-card__button--primary:hover,
-.treatments-page .treatment-card__button--primary:focus {
-    background-color: var(--color-primary-dark);
-    border-color: var(--color-primary-dark);
-    transform: translateY(-1px);
-}
-
-.treatments-page .treatment-card__button--secondary {
-    background-color: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
-}
-
-.treatments-page .treatment-card__button--secondary:hover,
-.treatments-page .treatment-card__button--secondary:focus {
-    background-color: var(--color-primary);
-    color: var(--color-text-inverse);
-}
+/*
+ * TREATMENT CARD STYLES MOVED TO treatments-consolidated.css
+ *
+ * This prevents duplicate CSS declarations and ensures single source of truth.
+ * All .treatment-card styles are now in: assets/css/treatments-consolidated.css
+ *
+ * The treatments-page specific layout styles above remain here for proper
+ * grid layout and spacing within the treatments page context.
+ */
 
 /* =============================================================================
    DOCTOR PROFILE & TESTIMONIALS - SEMANTIC TOKEN COMPLIANT

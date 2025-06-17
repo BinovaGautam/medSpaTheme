@@ -17,14 +17,14 @@
     --sage-green: var(--color-brand-secondary);           /* Medical tranquility, natural luxury */
     --premium-gold: var(--color-accent-primary);         /* Luxury accents, consultation emphasis */
     --medical-navy: var(--color-brand-primary);         /* Professional authority, trust */
-    --cream-base: #FDFCFA;           /* Premium backgrounds, sophistication */
+    --cream-base: var(--color-surface-primary);           /* Premium backgrounds, sophistication */
 
     /* Supporting Colors */
-    --sage-light: #A8C487;           /* Lighter sage for hover states */
+    --sage-light: var(--color-brand-secondary-light);           /* Lighter sage for hover states */
     --sage-dark: var(--color-brand-secondary);            /* Darker sage for focus states */
     --gold-light: var(--color-accent-primary);           /* Lighter gold for accents */
-    --navy-light: #2B4A78;           /* Lighter navy for secondary text */
-    --cream-warm: #FBF9F4;           /* Warmer cream for sections */
+    --navy-light: var(--color-brand-primary-light);           /* Lighter navy for secondary text */
+    --cream-warm: var(--color-surface-secondary);           /* Warmer cream for sections */
 
     /* Semantic Colors */
     --text-primary: var(--medical-navy);
@@ -35,18 +35,18 @@
     --border-subtle: rgba(135, 169, 107, 0.2);
 
     /* Typography Scale */
-    --font-display: 'Playfair Display', serif;    /* Luxury elegance */
-    --font-body: 'Inter', sans-serif;             /* Medical professionalism */
+    --font-display: var(--font-family-secondary);    /* Luxury elegance */
+    --font-body: var(--font-family-primary);             /* Medical professionalism */
 
     /* Premium Spacing System */
-    --space-xs: 0.5rem;    /* 8px */
-    --space-sm: 1rem;      /* 16px */
-    --space-md: 1.5rem;    /* 24px */
-    --space-lg: 2rem;      /* 32px */
-    --space-xl: 3rem;      /* 48px */
-    --space-2xl: 4rem;     /* 64px */
-    --space-3xl: 5rem;     /* 80px */
-    --space-4xl: 7.5rem;   /* 120px */
+    --space-xs: var(--space-2);    /* 8px */
+    --space-sm: var(--space-4);      /* 16px */
+    --space-md: var(--space-6);    /* 24px */
+    --space-lg: var(--space-8);      /* 32px */
+    --space-xl: var(--space-12);      /* 48px */
+    --space-2xl: var(--space-16);     /* 64px */
+    --space-3xl: var(--space-20);     /* 80px */
+    --space-4xl: var(--space-24);   /* 120px */
 
     /* Responsive Breakpoints */
     --mobile-max: 767px;

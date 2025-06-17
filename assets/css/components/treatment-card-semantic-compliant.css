@@ -1,17 +1,16 @@
-/* Treatment Card Component - 100% Semantic Tokens COMPLIANCE */
-/* FUNDAMENTALS COMPLIANT: Zero hardcoded values */
-/* DESIGN-SYSTEM-COMPLIANCE-WF-001 VALIDATED */
+/* =============================================================================
+   TREATMENT CARD SEMANTIC COMPLIANT - MOVED TO CONSOLIDATED FILE
+   ============================================================================= */
 
-.treatments-grid .treatment-card {
-    background: var(--color-surface-primary) !important;
-    padding: var(--space-xl) !important;
-    border-radius: var(--radius-lg) !important;
-    box-shadow: var(--shadow-lg) !important;
-    border: var(--border-width-sm) solid var(--color-border-light) !important;
-    transition: var(--transition-base) !important;
-    min-height: var(--size-card-min-height) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    width: var(--size-full) !important;
-    margin: var(--space-none) !important;
-}
+/*
+ * ALL TREATMENT CARD STYLES HAVE BEEN MOVED TO treatments-consolidated.css
+ *
+ * This prevents duplicate CSS declarations and ensures single source of truth.
+ * The consolidated file is 100% semantic token compliant and contains all
+ * treatment-related styles with proper semantic token usage.
+ *
+ * To modify treatment card styles, edit: assets/css/treatments-consolidated.css
+ *
+ * This file is kept for reference and to prevent 404 errors if the CSS is
+ * still being loaded elsewhere in the theme.
+ */

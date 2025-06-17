@@ -499,7 +499,7 @@ a:focus {
    ============================================================================= */
 
 /* Treatment Cards */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   background: var(--color-white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -1580,7 +1580,7 @@ a:focus {
 }
 
 /* Treatment Grid Animation States */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   transition: all var(--transition-normal);
 }
 
@@ -1808,7 +1808,7 @@ a:focus {
 }
 
 /* Make showcase items work with treatment filter */
-/* DUPLICATE TREATMENT-SHOWCASE-ITEM REMOVED - SEE treatments-consolidated.css */
+.treatment-showcase-item.treatment-card {
   /* Inherit all treatment card styles */
 }
 
@@ -3259,7 +3259,7 @@ a:focus {
 }
 
 /* Treatment Grid Animation States */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   transition: all var(--transition-normal);
 }
 
@@ -3487,7 +3487,7 @@ a:focus {
 }
 
 /* Make showcase items work with treatment filter */
-/* DUPLICATE TREATMENT-SHOWCASE-ITEM REMOVED - SEE treatments-consolidated.css */
+.treatment-showcase-item.treatment-card {
   /* Inherit all treatment card styles */
 }
 
@@ -4938,7 +4938,7 @@ a:focus {
 }
 
 /* Treatment Grid Animation States */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   transition: all var(--transition-normal);
 }
 
@@ -5166,7 +5166,7 @@ a:focus {
 }
 
 /* Make showcase items work with treatment filter */
-/* DUPLICATE TREATMENT-SHOWCASE-ITEM REMOVED - SEE treatments-consolidated.css */
+.treatment-showcase-item.treatment-card {
   /* Inherit all treatment card styles */
 }
 
@@ -6617,7 +6617,7 @@ a:focus {
 }
 
 /* Treatment Grid Animation States */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   transition: all var(--transition-normal);
 }
 
@@ -6845,7 +6845,7 @@ a:focus {
 }
 
 /* Make showcase items work with treatment filter */
-/* DUPLICATE TREATMENT-SHOWCASE-ITEM REMOVED - SEE treatments-consolidated.css */
+.treatment-showcase-item.treatment-card {
   /* Inherit all treatment card styles */
 }
 
@@ -8296,7 +8296,7 @@ a:focus {
 }
 
 /* Treatment Grid Animation States */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   transition: all var(--transition-normal);
 }
 
@@ -8524,7 +8524,7 @@ a:focus {
 }
 
 /* Make showcase items work with treatment filter */
-/* DUPLICATE TREATMENT-SHOWCASE-ITEM REMOVED - SEE treatments-consolidated.css */
+.treatment-showcase-item.treatment-card {
   /* Inherit all treatment card styles */
 }
 
@@ -9152,7 +9152,7 @@ a:focus {
    ============================================================================= */
 
 /* Treatment Cards */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   background: var(--color-white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -10233,7 +10233,7 @@ a:focus {
 }
 
 /* Treatment Grid Animation States */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   transition: all var(--transition-normal);
 }
 
@@ -10461,7 +10461,7 @@ a:focus {
 }
 
 /* Make showcase items work with treatment filter */
-/* DUPLICATE TREATMENT-SHOWCASE-ITEM REMOVED - SEE treatments-consolidated.css */
+.treatment-showcase-item.treatment-card {
   /* Inherit all treatment card styles */
 }
 
@@ -11912,7 +11912,7 @@ a:focus {
 }
 
 /* Treatment Grid Animation States */
-/* DUPLICATE TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
+.treatment-card {
   transition: all var(--transition-normal);
 }
 
@@ -12140,7 +12140,7 @@ a:focus {
 }
 
 /* Make showcase items work with treatment filter */
-/* DUPLICATE TREATMENT-SHOWCASE-ITEM REMOVED - SEE treatments-consolidated.css */
+.treatment-showcase-item.treatment-card {
   /* Inherit all treatment card styles */
 }
 

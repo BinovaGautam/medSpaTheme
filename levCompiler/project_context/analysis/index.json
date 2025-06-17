@@ -4,7 +4,7 @@
     "lastUpdated": "{CURRENT_TIMESTAMP}",
     "description": "Index for analysis reports and reviews",
     "managedBy": "CODE-GEN-001",
-    "totalAnalyses": 1,
+    "totalAnalyses": 2,
     "analysisRegistry": {
       "DESIGN-REVIEW-CONTRAST-001": {
         "title": "DESIGN REVIEW: CONTRAST ANALYSIS REPORT",
@@ -18,6 +18,25 @@
         "reviewer": "CODE-GEN-001",
         "findings": "CRITICAL ISSUES IDENTIFIED",
         "recommendation": "REQUIRES IMMEDIATE CONTRAST FIXES"
+      },
+      "TREATMENTS-CLASS-ANALYSIS-001": {
+        "title": "TREATMENTS OVERVIEW PAGE CLASS ANALYSIS",
+        "filePath": "levCompiler/project_context/analysis/treatments-overview-summary.md",
+        "type": "css-architecture-analysis",
+        "status": "completed",
+        "project": "TREATMENTS-OVERVIEW-REMEDIATION",
+        "focus": "Class Duplication & Fundamentals Compliance",
+        "standard": "fundamentals.json compliance",
+        "createdDate": "{CURRENT_DATE}",
+        "reviewer": "ANALYSIS-001",
+        "findings": "47 duplicate classes, 23 hardcoded violations, 12 CSS conflicts",
+        "recommendation": "IMMEDIATE fundamentals compliance required - 18 SP remediation plan",
+        "priority": "CRITICAL",
+        "storyPoints": 18,
+        "phases": 4,
+        "filesAnalyzed": 8,
+        "violationType": "fundamentals-compliance",
+        "nextAction": "DESIGN-SYSTEM-COMPLIANCE-WF-001"
       }
     }
   }

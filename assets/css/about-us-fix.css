@@ -212,7 +212,7 @@
   }
 }
 
-.signature-treatments .treatment-card {
+/* DUPLICATE SIGNATURE-TREATMENTS TREATMENT-CARD REMOVED - SEE treatments-consolidated.css */
   padding: 2rem;
   background: var(--color-light, white);
   border-radius: 12px;

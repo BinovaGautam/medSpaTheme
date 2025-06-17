@@ -366,19 +366,11 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Enhanced Medical Spa Components (Fallback) */
-.treatment-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 2rem;
-}
-
-.treatment-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
+/*
+ * TREATMENT CARD STYLES MOVED TO treatments-consolidated.css
+ * This prevents duplicate CSS declarations and ensures single source of truth.
+ * All .treatment-card styles are now in: assets/css/treatments-consolidated.css
+ */
 
 .consultation-form {
     background: white;
