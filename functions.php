@@ -144,6 +144,17 @@ wp_enqueue_script(
     true
 );
 
+// T8.6: Sprint 8 Integration Validator (Development/Testing)
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    wp_enqueue_script(
+        'sprint8-integration-validator',
+        get_template_directory_uri() . '/assets/js/sprint8-integration-validator.js',
+        array('jquery', 'token-animation-system', 'token-animation-integration'),
+        wp_get_theme()->get('Version'),
+        true
+    );
+}
+
 /**
  * ============================================================================
  * ESSENTIAL THEME SETUP FUNCTION (RESTORED)
