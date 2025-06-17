@@ -1,6 +1,6 @@
 {
-  "validation_id": "1750170410027",
-  "timestamp": "2025-06-17T14:26:56.723Z",
+  "validation_id": "1750190449281",
+  "timestamp": "2025-06-17T20:00:59.887Z",
   "summary": {
     "total_viewports": 3,
     "average_similarity": 0,
@@ -10,15 +10,19 @@
   "detailed_results": {
     "screenshots": {
       "desktop": {
-        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/levCompiler/tools/visual-validation/results/screenshots/1750170410027_desktop_1750170413125.png",
+        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_desktop_1750190453864.png",
         "viewport_info": {
           "name": "desktop",
           "width": 1920,
           "height": 1080
         },
         "comparison": {
-          "error": "Cannot read properties of undefined (reading 'similarity')",
-          "similarity": 0
+          "comparison_type": "semantic_analysis",
+          "design_specification": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+          "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_desktop_1750190453864.png",
+          "analysis_timestamp": "2025-06-17T20:00:59.861Z",
+          "similarity": null,
+          "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
         },
         "ai_analysis": {
           "viewport": "desktop",
@@ -36,7 +40,7 @@
               "details": {
                 "dimensions": {
                   "width": 1920,
-                  "height": 5088
+                  "height": 8326
                 },
                 "expected_layout": "Multi-column grid using desktop breakpoint tokens",
                 "semantic_breakpoint": "var(--breakpoint-desktop-min) and above",
@@ -355,15 +359,19 @@
         }
       },
       "tablet": {
-        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/levCompiler/tools/visual-validation/results/screenshots/1750170410027_tablet_1750170414985.png",
+        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_tablet_1750190456834.png",
         "viewport_info": {
           "name": "tablet",
           "width": 768,
           "height": 1024
         },
         "comparison": {
-          "error": "Cannot read properties of undefined (reading 'similarity')",
-          "similarity": 0
+          "comparison_type": "semantic_analysis",
+          "design_specification": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+          "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_tablet_1750190456834.png",
+          "analysis_timestamp": "2025-06-17T20:00:59.861Z",
+          "similarity": null,
+          "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
         },
         "ai_analysis": {
           "viewport": "tablet",
@@ -380,8 +388,8 @@
               ],
               "details": {
                 "dimensions": {
-                  "width": 768,
-                  "height": 4995
+                  "width": 787,
+                  "height": 7653
                 },
                 "expected_layout": "Two column grid using tablet breakpoint tokens",
                 "semantic_breakpoint": "var(--breakpoint-tablet-min) to var(--breakpoint-tablet-max)",
@@ -700,15 +708,19 @@
         }
       },
       "mobile": {
-        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/levCompiler/tools/visual-validation/results/screenshots/1750170410027_mobile_1750170416715.png",
+        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_mobile_1750190459844.png",
         "viewport_info": {
           "name": "mobile",
           "width": 375,
           "height": 667
         },
         "comparison": {
-          "error": "Cannot read properties of undefined (reading 'similarity')",
-          "similarity": 0
+          "comparison_type": "semantic_analysis",
+          "design_specification": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+          "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_mobile_1750190459844.png",
+          "analysis_timestamp": "2025-06-17T20:00:59.861Z",
+          "similarity": null,
+          "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
         },
         "ai_analysis": {
           "viewport": "mobile",
@@ -726,7 +738,7 @@
               "details": {
                 "dimensions": {
                   "width": 375,
-                  "height": 7005
+                  "height": 9976
                 },
                 "expected_layout": "Single column, stacked services using mobile breakpoint tokens",
                 "semantic_breakpoint": "var(--breakpoint-mobile-min) to var(--breakpoint-mobile-max)",
@@ -1047,16 +1059,28 @@
     },
     "comparison_results": {
       "desktop": {
-        "error": "Cannot read properties of undefined (reading 'similarity')",
-        "similarity": 0
+        "comparison_type": "semantic_analysis",
+        "design_specification": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+        "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_desktop_1750190453864.png",
+        "analysis_timestamp": "2025-06-17T20:00:59.861Z",
+        "similarity": null,
+        "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
       },
       "tablet": {
-        "error": "Cannot read properties of undefined (reading 'similarity')",
-        "similarity": 0
+        "comparison_type": "semantic_analysis",
+        "design_specification": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+        "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_tablet_1750190456834.png",
+        "analysis_timestamp": "2025-06-17T20:00:59.861Z",
+        "similarity": null,
+        "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
       },
       "mobile": {
-        "error": "Cannot read properties of undefined (reading 'similarity')",
-        "similarity": 0
+        "comparison_type": "semantic_analysis",
+        "design_specification": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/project_context/designs/DESIGN_SYSTEM_OVERVIEW.md",
+        "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_mobile_1750190459844.png",
+        "analysis_timestamp": "2025-06-17T20:00:59.861Z",
+        "similarity": null,
+        "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
       }
     },
     "ai_analysis": {
@@ -1076,7 +1100,7 @@
             "details": {
               "dimensions": {
                 "width": 1920,
-                "height": 5088
+                "height": 8326
               },
               "expected_layout": "Multi-column grid using desktop breakpoint tokens",
               "semantic_breakpoint": "var(--breakpoint-desktop-min) and above",
@@ -1408,8 +1432,8 @@
             ],
             "details": {
               "dimensions": {
-                "width": 768,
-                "height": 4995
+                "width": 787,
+                "height": 7653
               },
               "expected_layout": "Two column grid using tablet breakpoint tokens",
               "semantic_breakpoint": "var(--breakpoint-tablet-min) to var(--breakpoint-tablet-max)",
@@ -1742,7 +1766,7 @@
             "details": {
               "dimensions": {
                 "width": 375,
-                "height": 7005
+                "height": 9976
               },
               "expected_layout": "Single column, stacked services using mobile breakpoint tokens",
               "semantic_breakpoint": "var(--breakpoint-mobile-min) to var(--breakpoint-mobile-max)",
@@ -2064,9 +2088,9 @@
   "recommendations": [],
   "assets": {
     "screenshots": [
-      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/levCompiler/tools/visual-validation/results/screenshots/1750170410027_desktop_1750170413125.png",
-      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/levCompiler/tools/visual-validation/results/screenshots/1750170410027_tablet_1750170414985.png",
-      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/levCompiler/tools/visual-validation/results/screenshots/1750170410027_mobile_1750170416715.png"
+      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_desktop_1750190453864.png",
+      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_tablet_1750190456834.png",
+      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750190449281_mobile_1750190459844.png"
     ],
     "diff_images": []
   }

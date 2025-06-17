@@ -1,0 +1,2895 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>PreetiDreams</title>
+<meta name='robots' content='max-image-preview:large' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@font-face { font-display: swap; }
+</style>
+<link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v1/woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://fonts.gstatic.com/s/inter/v1/woff2" as="font" type="font/woff2" crossorigin>
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+    <style id="critical-font-css">
+        /* Critical font loading optimization CSS */
+        * {
+            font-display: swap;
+        }
+
+        /* Prevent layout shifts during font loading */
+        h1, h2, h3, h4, h5, h6 {
+            font-display: block;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Optimize font rendering */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-display: swap;
+        }
+
+        /* Loading state optimization */
+        .typography-loading-state {
+            opacity: 0;
+            animation: fadeInTypography 0.2s ease-in-out forwards;
+        }
+
+        @keyframes fadeInTypography {
+            to { opacity: 1; }
+        }
+    </style>
+    <link rel="alternate" type="application/rss+xml" title="PreetiDreams &raquo; Sample Page Comments Feed" href="http://medspaa.local/sample-page/feed/" />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.1.0\/svg\/","svgExt":".svg","source":{"wpemoji":"http:\/\/medspaa.local\/wp-includes\/js\/wp-emoji.js?ver=6.8.1","twemoji":"http:\/\/medspaa.local\/wp-includes\/js\/twemoji.js?ver=6.8.1"}};
+/**
+ * @output wp-includes/js/wp-emoji-loader.js
+ */
+
+/**
+ * Emoji Settings as exported in PHP via _print_emoji_detection_script().
+ * @typedef WPEmojiSettings
+ * @type {object}
+ * @property {?object} source
+ * @property {?string} source.concatemoji
+ * @property {?string} source.twemoji
+ * @property {?string} source.wpemoji
+ * @property {?boolean} DOMReady
+ * @property {?Function} readyCallback
+ */
+
+/**
+ * Support tests.
+ * @typedef SupportTests
+ * @type {object}
+ * @property {?boolean} flag
+ * @property {?boolean} emoji
+ */
+
+/**
+ * IIFE to detect emoji support and load Twemoji if needed.
+ *
+ * @param {Window} window
+ * @param {Document} document
+ * @param {WPEmojiSettings} settings
+ */
+( function wpEmojiLoader( window, document, settings ) {
+	if ( typeof Promise === 'undefined' ) {
+		return;
+	}
+
+	var sessionStorageKey = 'wpEmojiSettingsSupports';
+	var tests = [ 'flag', 'emoji' ];
+
+	/**
+	 * Checks whether the browser supports offloading to a Worker.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @returns {boolean}
+	 */
+	function supportsWorkerOffloading() {
+		return (
+			typeof Worker !== 'undefined' &&
+			typeof OffscreenCanvas !== 'undefined' &&
+			typeof URL !== 'undefined' &&
+			URL.createObjectURL &&
+			typeof Blob !== 'undefined'
+		);
+	}
+
+	/**
+	 * @typedef SessionSupportTests
+	 * @type {object}
+	 * @property {number} timestamp
+	 * @property {SupportTests} supportTests
+	 */
+
+	/**
+	 * Get support tests from session.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @returns {?SupportTests} Support tests, or null if not set or older than 1 week.
+	 */
+	function getSessionSupportTests() {
+		try {
+			/** @type {SessionSupportTests} */
+			var item = JSON.parse(
+				sessionStorage.getItem( sessionStorageKey )
+			);
+			if (
+				typeof item === 'object' &&
+				typeof item.timestamp === 'number' &&
+				new Date().valueOf() < item.timestamp + 604800 && // Note: Number is a week in seconds.
+				typeof item.supportTests === 'object'
+			) {
+				return item.supportTests;
+			}
+		} catch ( e ) {}
+		return null;
+	}
+
+	/**
+	 * Persist the supports in session storage.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @param {SupportTests} supportTests Support tests.
+	 */
+	function setSessionSupportTests( supportTests ) {
+		try {
+			/** @type {SessionSupportTests} */
+			var item = {
+				supportTests: supportTests,
+				timestamp: new Date().valueOf()
+			};
+
+			sessionStorage.setItem(
+				sessionStorageKey,
+				JSON.stringify( item )
+			);
+		} catch ( e ) {}
+	}
+
+	/**
+	 * Checks if two sets of Emoji characters render the same visually.
+	 *
+	 * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
+	 * scope. Everything must be passed by parameters.
+	 *
+	 * @since 4.9.0
+	 *
+	 * @private
+	 *
+	 * @param {CanvasRenderingContext2D} context 2D Context.
+	 * @param {string} set1 Set of Emoji to test.
+	 * @param {string} set2 Set of Emoji to test.
+	 *
+	 * @return {boolean} True if the two sets render the same.
+	 */
+	function emojiSetsRenderIdentically( context, set1, set2 ) {
+		// Cleanup from previous test.
+		context.clearRect( 0, 0, context.canvas.width, context.canvas.height );
+		context.fillText( set1, 0, 0 );
+		var rendered1 = new Uint32Array(
+			context.getImageData(
+				0,
+				0,
+				context.canvas.width,
+				context.canvas.height
+			).data
+		);
+
+		// Cleanup from previous test.
+		context.clearRect( 0, 0, context.canvas.width, context.canvas.height );
+		context.fillText( set2, 0, 0 );
+		var rendered2 = new Uint32Array(
+			context.getImageData(
+				0,
+				0,
+				context.canvas.width,
+				context.canvas.height
+			).data
+		);
+
+		return rendered1.every( function ( rendered2Data, index ) {
+			return rendered2Data === rendered2[ index ];
+		} );
+	}
+
+	/**
+	 * Determines if the browser properly renders Emoji that Twemoji can supplement.
+	 *
+	 * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
+	 * scope. Everything must be passed by parameters.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @private
+	 *
+	 * @param {CanvasRenderingContext2D} context 2D Context.
+	 * @param {string} type Whether to test for support of "flag" or "emoji".
+	 * @param {Function} emojiSetsRenderIdentically Reference to emojiSetsRenderIdentically function, needed due to minification.
+	 *
+	 * @return {boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( context, type, emojiSetsRenderIdentically ) {
+		var isIdentical;
+
+		switch ( type ) {
+			case 'flag':
+				/*
+				 * Test for Transgender flag compatibility. Added in Unicode 13.
+				 *
+				 * To test for support, we try to render it, and compare the rendering to how it would look if
+				 * the browser doesn't render it correctly (white flag emoji + transgender symbol).
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					'\uD83C\uDFF3\uFE0F\u200D\u26A7\uFE0F', // as a zero-width joiner sequence
+					'\uD83C\uDFF3\uFE0F\u200B\u26A7\uFE0F' // separated by a zero-width space
+				);
+
+				if ( isIdentical ) {
+					return false;
+				}
+
+				/*
+				 * Test for UN flag compatibility. This is the least supported of the letter locale flags,
+				 * so gives us an easy test for full support.
+				 *
+				 * To test for support, we try to render it, and compare the rendering to how it would look if
+				 * the browser doesn't render it correctly ([U] + [N]).
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					'\uD83C\uDDFA\uD83C\uDDF3', // as the sequence of two code points
+					'\uD83C\uDDFA\u200B\uD83C\uDDF3' // as the two code points separated by a zero-width space
+				);
+
+				if ( isIdentical ) {
+					return false;
+				}
+
+				/*
+				 * Test for English flag compatibility. England is a country in the United Kingdom, it
+				 * does not have a two letter locale code but rather a five letter sub-division code.
+				 *
+				 * To test for support, we try to render it, and compare the rendering to how it would look if
+				 * the browser doesn't render it correctly (black flag emoji + [G] + [B] + [E] + [N] + [G]).
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					// as the flag sequence
+					'\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F',
+					// with each code point separated by a zero-width space
+					'\uD83C\uDFF4\u200B\uDB40\uDC67\u200B\uDB40\uDC62\u200B\uDB40\uDC65\u200B\uDB40\uDC6E\u200B\uDB40\uDC67\u200B\uDB40\uDC7F'
+				);
+
+				return ! isIdentical;
+			case 'emoji':
+				/*
+				 * Rise Like a Phoenix.
+				 *
+				 * To test for Emoji 15.1 support, try to render a new emoji: Phoenix.
+				 *
+				 * A phoenix, a mythical immortal bird with flame-like feathers found in the folklore of many global
+				 * cultures. Often used to symbolize renewal or rebirth.
+				 *
+				 * The Phoenix emoji is a ZWJ sequence combining 🐦 Bird, Zero Width Joiner and 🔥 Fire.
+				 * These display as a single emoji on supported platforms.
+				 *
+				 * 0xD83D 0xDC26 (\uD83D\uDC26) == 🐦 Bird
+				 * 0x200D                       == Zero-Width Joiner (ZWJ) that links the code points for the new emoji or
+				 * 0x200B                       == Zero-Width Space (ZWS) that is rendered for clients not supporting the new emoji.
+				 * 0xD83D 0xDD25 (\uD83D\uDD25) == 🔥 Fire
+				 *
+				 * When updating this test for future Emoji releases, ensure that individual emoji that make up the
+				 * sequence come from older emoji standards.
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					'\uD83D\uDC26\u200D\uD83D\uDD25', // as the zero-width joiner sequence
+					'\uD83D\uDC26\u200B\uD83D\uDD25' // separated by a zero-width space
+				);
+
+				return ! isIdentical;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks emoji support tests.
+	 *
+	 * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
+	 * scope. Everything must be passed by parameters.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @param {string[]} tests Tests.
+	 * @param {Function} browserSupportsEmoji Reference to browserSupportsEmoji function, needed due to minification.
+	 * @param {Function} emojiSetsRenderIdentically Reference to emojiSetsRenderIdentically function, needed due to minification.
+	 *
+	 * @return {SupportTests} Support tests.
+	 */
+	function testEmojiSupports( tests, browserSupportsEmoji, emojiSetsRenderIdentically ) {
+		var canvas;
+		if (
+			typeof WorkerGlobalScope !== 'undefined' &&
+			self instanceof WorkerGlobalScope
+		) {
+			canvas = new OffscreenCanvas( 300, 150 ); // Dimensions are default for HTMLCanvasElement.
+		} else {
+			canvas = document.createElement( 'canvas' );
+		}
+
+		var context = canvas.getContext( '2d', { willReadFrequently: true } );
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		var supports = {};
+		tests.forEach( function ( test ) {
+			supports[ test ] = browserSupportsEmoji( context, test, emojiSetsRenderIdentically );
+		} );
+		return supports;
+	}
+
+	/**
+	 * Adds a script to the head of the document.
+	 *
+	 * @ignore
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param {string} src The url where the script is located.
+	 *
+	 * @return {void}
+	 */
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+		script.src = src;
+		script.defer = true;
+		document.head.appendChild( script );
+	}
+
+	settings.supports = {
+		everything: true,
+		everythingExceptFlag: true
+	};
+
+	// Create a promise for DOMContentLoaded since the worker logic may finish after the event has fired.
+	var domReadyPromise = new Promise( function ( resolve ) {
+		document.addEventListener( 'DOMContentLoaded', resolve, {
+			once: true
+		} );
+	} );
+
+	// Obtain the emoji support from the browser, asynchronously when possible.
+	new Promise( function ( resolve ) {
+		var supportTests = getSessionSupportTests();
+		if ( supportTests ) {
+			resolve( supportTests );
+			return;
+		}
+
+		if ( supportsWorkerOffloading() ) {
+			try {
+				// Note that the functions are being passed as arguments due to minification.
+				var workerScript =
+					'postMessage(' +
+					testEmojiSupports.toString() +
+					'(' +
+					[
+						JSON.stringify( tests ),
+						browserSupportsEmoji.toString(),
+						emojiSetsRenderIdentically.toString()
+					].join( ',' ) +
+					'));';
+				var blob = new Blob( [ workerScript ], {
+					type: 'text/javascript'
+				} );
+				var worker = new Worker( URL.createObjectURL( blob ), { name: 'wpTestEmojiSupports' } );
+				worker.onmessage = function ( event ) {
+					supportTests = event.data;
+					setSessionSupportTests( supportTests );
+					worker.terminate();
+					resolve( supportTests );
+				};
+				return;
+			} catch ( e ) {}
+		}
+
+		supportTests = testEmojiSupports( tests, browserSupportsEmoji, emojiSetsRenderIdentically );
+		setSessionSupportTests( supportTests );
+		resolve( supportTests );
+	} )
+		// Once the browser emoji support has been obtained from the session, finalize the settings.
+		.then( function ( supportTests ) {
+			/*
+			 * Tests the browser support for flag emojis and other emojis, and adjusts the
+			 * support settings accordingly.
+			 */
+			for ( var test in supportTests ) {
+				settings.supports[ test ] = supportTests[ test ];
+
+				settings.supports.everything =
+					settings.supports.everything && settings.supports[ test ];
+
+				if ( 'flag' !== test ) {
+					settings.supports.everythingExceptFlag =
+						settings.supports.everythingExceptFlag &&
+						settings.supports[ test ];
+				}
+			}
+
+			settings.supports.everythingExceptFlag =
+				settings.supports.everythingExceptFlag &&
+				! settings.supports.flag;
+
+			// Sets DOMReady to false and assigns a ready function to settings.
+			settings.DOMReady = false;
+			settings.readyCallback = function () {
+				settings.DOMReady = true;
+			};
+		} )
+		.then( function () {
+			return domReadyPromise;
+		} )
+		.then( function () {
+			// When the browser can not render everything we need to load a polyfill.
+			if ( ! settings.supports.everything ) {
+				settings.readyCallback();
+
+				var src = settings.source || {};
+
+				if ( src.concatemoji ) {
+					addScript( src.concatemoji );
+				} else if ( src.wpemoji && src.twemoji ) {
+					addScript( src.twemoji );
+					addScript( src.wpemoji );
+				}
+			}
+		} );
+} )( window, document, window._wpemojiSettings );
+
+/* ]]> */
+</script>
+<link rel='stylesheet' id='selected-typography-fonts-css' href='https://fonts.googleapis.com/css2?family=Cormorant%20Garamond:wght@400;500;600;700&#038;family=Inter:wght@400;500&#038;display=swap' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='http://medspaa.local/wp-includes/css/dist/block-library/style.css?ver=6.8.1' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:root { --wp--style--global--content-size: 48rem;--wp--style--global--wide-size: 48rem; }:where(body) { margin: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}.is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}a:where(:not(.wp-element-button)){text-decoration: underline;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;line-height: inherit;padding: calc(0.667em + 2px) calc(1.333em + 2px);text-decoration: none;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='sidebar-visual-interfaces-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/sidebar-visual-interfaces.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='customizer-enhancements-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/customizer-enhancements.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='design-system-foundation-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/design-system-compiled.css?ver=2.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='semantic-tokens-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/semantic-tokens.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='semantic-design-tokens-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/semantic-design-tokens.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='semantic-components-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/semantic-components.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='medical-spa-theme-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/style.css?ver=1.0.0' type='text/css' media='all' />
+<style id='medical-spa-theme-inline-css' type='text/css'>
+:root {
+  /* Semantic Color Tokens - Generated from professional-trust */
+  --color-brand-primary: #1B365D; /* Deep Medical Blue */
+  --color-brand-secondary: #8B4B7A; /* Calming Sage */
+  --color-surface-primary: #F8FAFC; /* Clean White-Blue */
+  --color-surface-background: #FFFFFF; /* Pure Clinical */
+  --color-accent-primary: #D4AF37; /* Premium Gold */
+
+  /* Extended Semantic Tokens */
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-text-inverse: #ffffff;
+  --color-border-primary: #d1d5db;
+  --color-border-secondary: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-feedback-success: #10b981;
+  --color-feedback-warning: #f59e0b;
+  --color-feedback-error: #ef4444;
+  --color-feedback-info: #3b82f6;
+  --color-interactive-hover: #4f46e5;
+  --color-interactive-focus: #6366f1;
+  --color-interactive-active: #4338ca;
+
+  /* Component-specific tokens */
+  --btn-primary-bg: var(--color-brand-primary);
+  --btn-primary-text: var(--color-text-inverse);
+  --btn-primary-border: var(--color-brand-primary);
+  --btn-secondary-bg: var(--color-brand-secondary);
+  --btn-secondary-text: var(--color-text-inverse);
+  --btn-secondary-border: var(--color-brand-secondary);
+  --btn-accent-bg: var(--color-accent-primary);
+  --btn-accent-text: var(--color-text-primary);
+  --btn-accent-border: var(--color-accent-primary);
+  --card-bg: var(--color-surface-primary);
+  --modal-bg: var(--color-surface-primary);
+  --form-bg: var(--color-surface-primary);
+  --page-bg: var(--color-surface-background);
+  --section-bg: var(--color-surface-background);
+  --input-bg: var(--color-surface-primary);
+  --input-border: var(--color-border-secondary);
+  --input-border-focus: var(--color-interactive-focus);
+  --input-text: var(--color-text-primary);
+  --input-placeholder: var(--color-text-muted);
+  --link-color: var(--color-brand-primary);
+  --link-hover: var(--color-interactive-hover);
+  --link-active: var(--color-interactive-active);
+  --card-border: var(--color-border-light);
+  --section-border: var(--color-border-secondary);
+}
+
+</style>
+<link rel='stylesheet' id='component-system-styles-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/components/components.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='hero-component-styles-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/components/hero.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='hero-section-component-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/components/hero-section.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='header-fix-styles-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/header-fix.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='modal-component-styles-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/components/modal.css?ver=6.8.1' type='text/css' media='all' />
+<link rel='stylesheet' id='medspatheme-accessibility-wcag-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/accessibility-wcag-compliance.css?ver=2.0.0' type='text/css' media='all' />
+<script type="text/javascript" src="http://medspaa.local/wp-includes/js/jquery/jquery.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-includes/js/jquery/jquery-migrate.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<link rel="https://api.w.org/" href="http://medspaa.local/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://medspaa.local/wp-json/wp/v2/pages/2" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://medspaa.local/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.8.1" />
+<link rel="canonical" href="http://medspaa.local/" />
+<link rel='shortlink' href='http://medspaa.local/' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="http://medspaa.local/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fmedspaa.local%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="http://medspaa.local/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fmedspaa.local%2F&#038;format=xml" />
+<style id='button-component-tokens'>
+:root {
+  --button-border_radius: 8px;
+  --button-padding_horizontal: 16px;
+  --button-padding_vertical: 12px;
+  --button-font_weight: 600;
+  --button-font_family: var(--font-family-primary);
+  --button-transition_duration: 200ms;
+  --button-focus_outline_offset: 2px;
+  --button-focus_outline_width: 2px;
+  --button-primary_background_color: #2563eb;
+  --button-primary_text_color: #ffffff;
+  --button-primary_hover_background_color: #1d4ed8;
+  --button-primary_focus_background_color: #1e40af;
+  --button-secondary_background_color: #64748b;
+  --button-secondary_text_color: #ffffff;
+  --button-secondary_hover_background_color: #475569;
+  --button-secondary_focus_background_color: #374151;
+  --button-outline_border_color: #2563eb;
+  --button-outline_text_color: #2563eb;
+  --button-outline_hover_background_color: #2563eb;
+  --button-outline_hover_text_color: #ffffff;
+  --button-outline_focus_border_color: #1e40af;
+  --button-ghost_text_color: #1f2937;
+  --button-ghost_hover_background_color: #f3f4f6;
+  --button-ghost_focus_background_color: #e5e7eb;
+  --button-small_padding_horizontal: 12px;
+  --button-small_padding_vertical: 8px;
+  --button-small_font_size: 0.875rem;
+  --button-medium_padding_horizontal: 16px;
+  --button-medium_padding_vertical: 12px;
+  --button-medium_font_size: 1rem;
+  --button-large_padding_horizontal: 24px;
+  --button-large_padding_vertical: 16px;
+  --button-large_font_size: 1.125rem;
+  --button-icon_spacing: 8px;
+  --button-icon_only_padding: 12px;
+}
+</style>
+<style id='demo-button-component-tokens'>
+:root {
+  --demo-button-primary_color: #007cba;
+  --demo-button-secondary_color: #6c757d;
+  --demo-button-text_color: #ffffff;
+  --demo-button-border_radius: 4px;
+  --demo-button-padding_x: 1rem;
+  --demo-button-padding_y: 0.5rem;
+  --demo-button-font_weight: 600;
+  --demo-button-font_size: 1rem;
+  --demo-button-transition: all 0.3s ease;
+  --demo-button-hover_transform: translateY(-2px);
+  --demo-button-focus_outline: 2px solid #005a87;
+}
+</style>
+<style id='card-component-tokens'>
+:root {
+  --card-border_radius: 8px;
+  --card-padding: 24px;
+  --card-card_gap: 24px;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --card-border_width: 0px;
+  --card-border_color: #e5e7eb;
+  --card-background_color: #ffffff;
+  --card-transition: 0.3s ease;
+  --card-hover_transform: translateY(-2px);
+  --card-title_font_size: 20px;
+  --card-title_font_weight: 600;
+  --card-title_line_height: 1.3;
+  --card-content_font_size: 16px;
+  --card-content_line_height: 1.6;
+  --card-meta_font_size: 14px;
+  --card-meta_text_color: #6b7280;
+  --card-image_border_radius: 4px;
+  --card-image_aspect_ratio: 16/9;
+  --card-title_margin_bottom: 8px;
+  --card-content_margin_bottom: 16px;
+  --card-action_button_spacing: 16px;
+  --card-shadow_small: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --card-shadow_medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --card-shadow_large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --card-hover_lift: translateY(-2px);
+  --card-hover_scale: scale(1.02);
+  --card-hover_shadow_increase: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>
+<style id='treatment-card-component-tokens'>
+:root {
+  --treatment-card-border_radius: 8px;
+  --treatment-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --treatment-card-border_width: 0px;
+  --treatment-card-border_color: #e5e7eb;
+  --treatment-card-hover_transform: translateY(-2px);
+  --treatment-card-content_font_size: 16px;
+  --treatment-card-content_line_height: 1.6;
+  --treatment-card-image_border_radius: 4px;
+  --treatment-card-image_aspect_ratio: 16/9;
+  --treatment-card-content_margin_bottom: 16px;
+  --treatment-card-action_button_spacing: 16px;
+  --treatment-card-shadow_small: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --treatment-card-shadow_medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --treatment-card-shadow_large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --treatment-card-hover_lift: translateY(-2px);
+  --treatment-card-hover_scale: scale(1.02);
+  --treatment-card-hover_shadow_increase: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --treatment-card-card_background: var(--color-surface);
+  --treatment-card-card_padding: var(--space-xl);
+  --treatment-card-card_border-radius: var(--radius-lg);
+  --treatment-card-card_box-shadow: var(--shadow-md);
+  --treatment-card-card_transition: var(--transition-base);
+  --treatment-card-header_margin-bottom: var(--space-md);
+  --treatment-card-header_gap: var(--space-sm);
+  --treatment-card-icon_font-size: var(--text-2xl);
+  --treatment-card-icon_line-height: 1;
+  --treatment-card-title_font-family: var(--font-family-primary);
+  --treatment-card-title_font-size: var(--text-2xl);
+  --treatment-card-title_font-weight: var(--font-weight-semibold);
+  --treatment-card-title_color: var(--color-text-primary);
+  --treatment-card-title_line-height: var(--leading-tight);
+  --treatment-card-description_font-family: var(--font-family-secondary);
+  --treatment-card-description_font-size: var(--text-base);
+  --treatment-card-description_color: var(--color-text-secondary);
+  --treatment-card-description_line-height: var(--leading-normal);
+  --treatment-card-description_margin-bottom: var(--space-lg);
+  --treatment-card-benefits_margin-bottom: var(--space-lg);
+  --treatment-card-benefits_gap: var(--space-sm);
+  --treatment-card-benefits_item_font-family: var(--font-family-secondary);
+  --treatment-card-benefits_item_font-size: var(--text-sm);
+  --treatment-card-benefits_item_color: var(--color-text-secondary);
+  --treatment-card-benefits_item_gap: var(--space-xs);
+  --treatment-card-benefits_icon_color: var(--color-accent);
+  --treatment-card-benefits_icon_font-weight: var(--font-weight-bold);
+  --treatment-card-meta_margin-bottom: var(--space-lg);
+  --treatment-card-meta_padding-top: var(--space-md);
+  --treatment-card-meta_border-top: 1px solid var(--color-border);
+  --treatment-card-duration_font-family: var(--font-family-secondary);
+  --treatment-card-duration_font-size: var(--text-sm);
+  --treatment-card-duration_color: var(--color-text-secondary);
+  --treatment-card-duration_gap: var(--space-xs);
+  --treatment-card-consultation_font-family: var(--font-family-secondary);
+  --treatment-card-consultation_font-size: var(--text-sm);
+  --treatment-card-consultation_font-weight: var(--font-weight-medium);
+  --treatment-card-consultation_color: var(--color-accent);
+  --treatment-card-consultation_gap: var(--space-xs);
+  --treatment-card-actions_gap: var(--space-sm);
+  --treatment-card-actions_margin-top: auto;
+  --treatment-card-button_padding: var(--space-sm) var(--space-md);
+  --treatment-card-button_border-radius: var(--radius-md);
+  --treatment-card-button_font-family: var(--font-family-secondary);
+  --treatment-card-button_font-weight: var(--font-weight-medium);
+  --treatment-card-button_transition: var(--transition-base);
+  --treatment-card-button_min-height: var(--touch-target-min);
+  --treatment-card-button_primary_background: var(--color-interactive-primary);
+  --treatment-card-button_primary_color: var(--color-text-inverse);
+  --treatment-card-button_primary_hover_background: var(--color-interactive-hover);
+  --treatment-card-button_secondary_background: transparent;
+  --treatment-card-button_secondary_color: var(--color-interactive-secondary);
+  --treatment-card-button_secondary_border: 1px solid var(--color-interactive-secondary);
+  --treatment-card-button_secondary_hover_background: var(--color-interactive-hover);
+  --treatment-card-button_secondary_hover_color: var(--color-text-inverse);
+  --treatment-card-button_secondary_hover_border-color: var(--color-interactive-hover);
+}
+</style>
+<style id='testimonial-card-component-tokens'>
+:root {
+  --testimonial-card-border_radius: 8px;
+  --testimonial-card-padding: 24px;
+  --testimonial-card-card_gap: 24px;
+  --testimonial-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --testimonial-card-border_width: 0px;
+  --testimonial-card-border_color: #e5e7eb;
+  --testimonial-card-background_color: #ffffff;
+  --testimonial-card-transition: 0.3s ease;
+  --testimonial-card-hover_transform: translateY(-2px);
+  --testimonial-card-title_font_size: 20px;
+  --testimonial-card-title_font_weight: 600;
+  --testimonial-card-title_line_height: 1.3;
+  --testimonial-card-content_font_size: 16px;
+  --testimonial-card-content_line_height: 1.6;
+  --testimonial-card-meta_font_size: 12px;
+  --testimonial-card-meta_text_color: #6b7280;
+  --testimonial-card-image_border_radius: 4px;
+  --testimonial-card-image_aspect_ratio: 16/9;
+  --testimonial-card-title_margin_bottom: 8px;
+  --testimonial-card-content_margin_bottom: 16px;
+  --testimonial-card-action_button_spacing: 16px;
+  --testimonial-card-shadow_small: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --testimonial-card-shadow_medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --testimonial-card-shadow_large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --testimonial-card-hover_lift: translateY(-2px);
+  --testimonial-card-hover_scale: scale(1.02);
+  --testimonial-card-hover_shadow_increase: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --testimonial-card-quote_font_size: 48px;
+  --testimonial-card-quote_color: #d1d5db;
+  --testimonial-card-quote_font_weight: 700;
+  --testimonial-card-star_color_filled: #fbbf24;
+  --testimonial-card-star_color_empty: #e5e7eb;
+  --testimonial-card-star_size: 20px;
+  --testimonial-card-rating_margin_bottom: 16px;
+  --testimonial-card-author_image_size: 60px;
+  --testimonial-card-author_image_border_radius: 50%;
+  --testimonial-card-author_name_font_size: 16px;
+  --testimonial-card-author_name_font_weight: 600;
+  --testimonial-card-author_name_color: #111827;
+  --testimonial-card-author_title_font_size: 14px;
+  --testimonial-card-author_title_color: #6b7280;
+  --testimonial-card-author_location_font_size: 13px;
+  --testimonial-card-author_location_color: #9ca3af;
+  --testimonial-card-verified_icon_color: #10b981;
+  --testimonial-card-verified_icon_size: 16px;
+  --testimonial-card-treatment_background: #f9fafb;
+  --testimonial-card-treatment_padding: 12px;
+  --testimonial-card-treatment_border_radius: 8px;
+  --testimonial-card-treatment_border: 1px solid #e5e7eb;
+  --testimonial-card-treatment_link_color: #3b82f6;
+  --testimonial-card-results_background: #ecfdf5;
+  --testimonial-card-results_border: 1px solid #10b981;
+  --testimonial-card-results_padding: 12px;
+  --testimonial-card-results_border_radius: 8px;
+  --testimonial-card-results_item_color: #059669;
+  --testimonial-card-featured_badge_background: linear-gradient(45deg, #f59e0b, #d97706);
+  --testimonial-card-featured_badge_color: #ffffff;
+  --testimonial-card-featured_badge_padding: 4px 12px;
+  --testimonial-card-featured_badge_border_radius: 16px;
+  --testimonial-card-featured_badge_font_size: 12px;
+  --testimonial-card-featured_badge_font_weight: 600;
+  --testimonial-card-meta_color: #9ca3af;
+  --testimonial-card-meta_margin_top: 16px;
+  --testimonial-card-video_button_background: #ef4444;
+  --testimonial-card-video_button_color: #ffffff;
+  --testimonial-card-video_button_padding: 8px 16px;
+  --testimonial-card-video_button_border_radius: 20px;
+  --testimonial-card-video_button_font_size: 14px;
+  --testimonial-card-video_button_hover_background: #dc2626;
+  --testimonial-card-helpful_background: #f3f4f6;
+  --testimonial-card-helpful_color: #374151;
+  --testimonial-card-helpful_padding: 8px 12px;
+  --testimonial-card-helpful_border_radius: 16px;
+  --testimonial-card-helpful_font_size: 13px;
+  --testimonial-card-compact_padding: 16px;
+  --testimonial-card-featured_border: 2px solid #f59e0b;
+  --testimonial-card-featured_shadow: 0 8px 25px -5px rgba(245, 158, 11, 0.2);
+}
+</style>
+<style id='feature-card-component-tokens'>
+:root {
+  --feature-card-border_radius: 8px;
+  --feature-card-padding: 24px;
+  --feature-card-card_gap: 24px;
+  --feature-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --feature-card-border_width: 0px;
+  --feature-card-border_color: #e5e7eb;
+  --feature-card-background_color: #ffffff;
+  --feature-card-transition: 0.3s ease;
+  --feature-card-hover_transform: translateY(-2px);
+  --feature-card-title_font_size: 20px;
+  --feature-card-title_font_weight: 600;
+  --feature-card-title_line_height: 1.3;
+  --feature-card-content_font_size: 16px;
+  --feature-card-content_line_height: 1.6;
+  --feature-card-meta_font_size: 14px;
+  --feature-card-meta_text_color: #6b7280;
+  --feature-card-image_border_radius: 4px;
+  --feature-card-image_aspect_ratio: 16/9;
+  --feature-card-title_margin_bottom: 8px;
+  --feature-card-content_margin_bottom: 16px;
+  --feature-card-action_button_spacing: 16px;
+  --feature-card-shadow_small: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --feature-card-shadow_medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --feature-card-shadow_large: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --feature-card-hover_lift: translateY(-2px);
+  --feature-card-hover_scale: scale(1.02);
+  --feature-card-hover_shadow_increase: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --feature-card-icon_size_small: 32px;
+  --feature-card-icon_size_medium: 48px;
+  --feature-card-icon_size_large: 64px;
+  --feature-card-icon_background_color: #f3f4f6;
+  --feature-card-icon_color: #374151;
+  --feature-card-icon_border_radius: 50%;
+  --feature-card-icon_padding: 16px;
+  --feature-card-badge_background: #3b82f6;
+  --feature-card-badge_color: #ffffff;
+  --feature-card-badge_padding: 4px 8px;
+  --feature-card-badge_border_radius: 12px;
+  --feature-card-badge_font_size: 11px;
+  --feature-card-badge_font_weight: 600;
+  --feature-card-tag_background: #f3f4f6;
+  --feature-card-tag_color: #374151;
+  --feature-card-tag_padding: 2px 8px;
+  --feature-card-tag_border_radius: 4px;
+  --feature-card-tag_font_size: 12px;
+  --feature-card-step_number_background: #3b82f6;
+  --feature-card-step_number_color: #ffffff;
+  --feature-card-step_number_size: 32px;
+  --feature-card-step_number_border_radius: 50%;
+  --feature-card-step_number_font_size: 14px;
+  --feature-card-step_number_font_weight: 700;
+  --feature-card-subtitle_color: #6b7280;
+  --feature-card-subtitle_font_size: 14px;
+  --feature-card-subtitle_margin_bottom: 12px;
+  --feature-card-highlight_background: #fef3c7;
+  --feature-card-highlight_color: #92400e;
+  --feature-card-highlight_padding: 8px 12px;
+  --feature-card-highlight_border_radius: 6px;
+  --feature-card-highlight_font_weight: 500;
+  --feature-card-benefits_item_color: #059669;
+  --feature-card-benefits_item_font_size: 14px;
+  --feature-card-benefits_list_margin: 12px 0;
+  --feature-card-spec_title_color: #374151;
+  --feature-card-spec_title_font_size: 14px;
+  --feature-card-spec_title_font_weight: 600;
+  --feature-card-spec_item_color: #6b7280;
+  --feature-card-spec_item_font_size: 13px;
+  --feature-card-spec_item_margin: 4px 0;
+  --feature-card-stat_value_color: #111827;
+  --feature-card-stat_value_font_size: 24px;
+  --feature-card-stat_value_font_weight: 700;
+  --feature-card-stat_label_color: #6b7280;
+  --feature-card-stat_label_font_size: 12px;
+  --feature-card-stat_item_text_align: center;
+  --feature-card-expand_toggle_background: #f9fafb;
+  --feature-card-expand_toggle_color: #374151;
+  --feature-card-expand_toggle_border: 1px solid #d1d5db;
+  --feature-card-expand_toggle_padding: 8px 16px;
+  --feature-card-expand_toggle_border_radius: 6px;
+  --feature-card-expand_toggle_font_size: 14px;
+  --feature-card-expanded_content_margin_top: 16px;
+  --feature-card-expanded_content_padding: 16px;
+  --feature-card-expanded_content_background: #f9fafb;
+  --feature-card-expanded_content_border_radius: 8px;
+  --feature-card-primary_accent_color: #3b82f6;
+  --feature-card-secondary_accent_color: #6b7280;
+  --feature-card-success_accent_color: #10b981;
+  --feature-card-warning_accent_color: #f59e0b;
+  --feature-card-info_accent_color: #06b6d4;
+  --feature-card-minimal_padding: 16px;
+  --feature-card-elevated_shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --feature-card-bordered_border: 2px solid #e5e7eb;
+  --feature-card-glow_shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  --feature-card-pulse_animation_duration: 2s;
+}
+</style>
+<style id='form-component-tokens'>
+:root {
+  --form-container_background_color: #ffffff;
+  --form-container_border_radius: 8px;
+  --form-container_padding: 32px;
+  --form-container_shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --form-container_border: 1px solid #e5e7eb;
+  --form-input_background_color: #f9fafb;
+  --form-input_border_color: #d1d5db;
+  --form-input_border_width: 1px;
+  --form-input_border_radius: 6px;
+  --form-input_padding: 12px 16px;
+  --form-input_font_size: 16px;
+  --form-input_line_height: 1.5;
+  --form-input_text_color: #111827;
+  --form-input_focus_color: #3b82f6;
+  --form-input_focus_shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  --form-input_transition: 0.15s ease-in-out;
+  --form-label_font_size: 14px;
+  --form-label_font_weight: 500;
+  --form-label_text_color: #374151;
+  --form-label_margin_bottom: 6px;
+  --form-error_message_color: #ef4444;
+  --form-error_background_color: #fef2f2;
+  --form-error_border_color: #fca5a5;
+  --form-error_font_size: 14px;
+  --form-error_margin_top: 4px;
+  --form-success_message_color: #10b981;
+  --form-success_background_color: #ecfdf5;
+  --form-success_border_color: #6ee7b7;
+  --form-success_font_size: 14px;
+  --form-placeholder_text_color: #9ca3af;
+  --form-placeholder_font_style: italic;
+  --form-required_indicator_color: #ef4444;
+  --form-required_indicator_font_size: 14px;
+  --form-field_spacing: 20px;
+  --form-group_spacing: 32px;
+  --form-transition_duration: 0.15s;
+  --form-animation_speed: 300ms;
+}
+</style>
+<style id='modal-component-tokens'>
+:root {
+  --modal-backdrop_color: rgba(0, 0, 0, 0.6);
+  --modal-backdrop_blur: 4px;
+  --modal-backdrop_z_index: 9998;
+  --modal-container_background: #ffffff;
+  --modal-container_border_radius: 12px;
+  --modal-container_shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --modal-container_border: 1px solid #e2e8f0;
+  --modal-container_padding: 32px;
+  --modal-container_max_width: 600px;
+  --modal-container_max_height: 90vh;
+  --modal-container_z_index: 9999;
+  --modal-animation_duration: 300ms;
+  --modal-animation_timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --modal-animation_scale_enter: 0.9;
+  --modal-animation_scale_exit: 0.95;
+  --modal-header_background: #f8fafc;
+  --modal-header_border_bottom: 1px solid #e2e8f0;
+  --modal-header_padding: 24px;
+  --modal-title_font_size: 24px;
+  --modal-title_font_weight: 600;
+  --modal-title_line_height: 1.2;
+  --modal-title_color: #1e293b;
+  --modal-content_padding: 32px;
+  --modal-content_max_height: 60vh;
+  --modal-content_overflow: auto;
+  --modal-footer_background: #f8fafc;
+  --modal-footer_border_top: 1px solid #e2e8f0;
+  --modal-footer_padding: 24px;
+  --modal-close_button_size: 24px;
+  --modal-close_button_color: #64748b;
+  --modal-close_button_hover_color: #334155;
+  --modal-close_button_background: transparent;
+  --modal-close_button_hover_background: #f1f5f9;
+  --modal-close_button_border_radius: 6px;
+  --modal-close_button_padding: 8px;
+  --modal-focus_outline_color: #3b82f6;
+  --modal-focus_outline_width: 3px;
+  --modal-focus_outline_offset: 2px;
+  --modal-medical_accent_color: #059669;
+  --modal-medical_secondary_color: #0d9488;
+  --modal-medical_background: #ecfdf5;
+}
+</style>
+<style id='accordion-component-tokens'>
+:root {
+  --accordion-container_background: #ffffff;
+  --accordion-container_border: 1px solid #e2e8f0;
+  --accordion-container_border_radius: 8px;
+  --accordion-container_spacing: 4px;
+  --accordion-container_shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --accordion-header_background: #f8fafc;
+  --accordion-header_hover_background: #e2e8f0;
+  --accordion-header_active_background: #e2e8f0;
+  --accordion-header_text_color: #1e293b;
+  --accordion-header_hover_text_color: #0f172a;
+  --accordion-header_padding: 16px;
+  --accordion-header_font_size: 16px;
+  --accordion-header_font_weight: 500;
+  --accordion-header_line_height: 1.5;
+  --accordion-header_border_bottom: 1px solid #e2e8f0;
+  --accordion-content_background: #ffffff;
+  --accordion-content_text_color: #475569;
+  --accordion-content_padding: 16px;
+  --accordion-content_border_top: 1px solid #f1f5f9;
+  --accordion-content_line_height: 1.6;
+  --accordion-icon_size: 20px;
+  --accordion-icon_color: #64748b;
+  --accordion-icon_hover_color: #475569;
+  --accordion-icon_transition: transform 0.3s ease;
+  --accordion-animation_duration: 300ms;
+  --accordion-animation_timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --accordion-animation_slide_distance: 10px;
+  --accordion-focus_outline_color: #3b82f6;
+  --accordion-focus_outline_width: 2px;
+  --accordion-focus_outline_offset: 2px;
+  --accordion-medical_accent_color: #059669;
+  --accordion-medical_secondary_color: #0d9488;
+  --accordion-medical_background: #ecfdf5;
+  --accordion-medical_border_color: #a7f3d0;
+}
+</style>
+<style id='consultation-form-component-tokens'>
+:root {
+  --consultation-form-container_background_color: #ffffff;
+  --consultation-form-container_border_radius: 8px;
+  --consultation-form-container_padding: 32px;
+  --consultation-form-container_shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --consultation-form-container_border: 1px solid #e5e7eb;
+  --consultation-form-input_background_color: #f9fafb;
+  --consultation-form-input_border_color: #d1d5db;
+  --consultation-form-input_border_width: 1px;
+  --consultation-form-input_border_radius: 6px;
+  --consultation-form-input_padding: 12px 16px;
+  --consultation-form-input_font_size: 16px;
+  --consultation-form-input_line_height: 1.5;
+  --consultation-form-input_text_color: #111827;
+  --consultation-form-input_focus_color: #3b82f6;
+  --consultation-form-input_focus_shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  --consultation-form-input_transition: 0.15s ease-in-out;
+  --consultation-form-label_font_size: 14px;
+  --consultation-form-label_font_weight: 500;
+  --consultation-form-label_text_color: #374151;
+  --consultation-form-label_margin_bottom: 6px;
+  --consultation-form-error_message_color: #ef4444;
+  --consultation-form-error_background_color: #fef2f2;
+  --consultation-form-error_border_color: #fca5a5;
+  --consultation-form-error_font_size: 14px;
+  --consultation-form-error_margin_top: 4px;
+  --consultation-form-success_message_color: #10b981;
+  --consultation-form-success_background_color: #ecfdf5;
+  --consultation-form-success_border_color: #6ee7b7;
+  --consultation-form-success_font_size: 14px;
+  --consultation-form-placeholder_text_color: #9ca3af;
+  --consultation-form-placeholder_font_style: italic;
+  --consultation-form-required_indicator_color: #ef4444;
+  --consultation-form-required_indicator_font_size: 14px;
+  --consultation-form-field_spacing: 20px;
+  --consultation-form-group_spacing: 32px;
+  --consultation-form-transition_duration: 0.15s;
+  --consultation-form-animation_speed: 300ms;
+}
+</style>
+<style id='visual-customizer-global-css' data-generated='2025-06-17T19:33:27+00:00' data-palette='rose-gold-elegance' data-typography='classic-elegant'>
+/* Visual Customizer Global CSS */
+/* Applied Palette: rose-gold-elegance */
+/* PURE TOKENIZATION: Semantic component tokens only */
+/* SERVER CSS OVERRIDE - Priority 50 with specificity boost */
+body:root, html:root {
+    --component-bg-color-primary: #8B4B7A !important;
+    --component-text-color-primary: #FDF2F8 !important;
+    --component-border-color-primary: #8B4B7A !important;
+    --component-bg-color-secondary: #E4A853 !important;
+    --component-text-color-secondary: #FDF2F8 !important;
+    --component-border-color-secondary: #E4A853 !important;
+    --component-bg-color-accent: #C2847A !important;
+    --component-text-color-accent: #FDF2F8 !important;
+    --component-border-color-accent: #C2847A !important;
+    --component-surface-color: #FDF2F8 !important;
+    --component-neutral-color: #ffffff !important;
+    --component-dark-color: #34495e !important;
+    --color-primary: #8B4B7A !important;
+    --color-primary-rgb: 139, 75, 122 !important;
+    --color-secondary: #E4A853 !important;
+    --color-secondary-rgb: 228, 168, 83 !important;
+    --color-accent: #C2847A !important;
+    --color-accent-rgb: 194, 132, 122 !important;
+    --color-surface: #FDF2F8 !important;
+    --color-neutral: #ffffff !important;
+    --color-dark: #34495e !important;
+    --palette-primary: #8B4B7A !important;
+    --palette-primary-contrast: #FDF2F8 !important;
+    --palette-primary-hover: #642453 !important;
+    --palette-secondary: #E4A853 !important;
+    --palette-secondary-contrast: #FDF2F8 !important;
+    --palette-secondary-hover: #bd812c !important;
+    --palette-accent: #C2847A !important;
+    --palette-accent-contrast: #FDF2F8 !important;
+    --palette-accent-hover: #9b5d53 !important;
+    --color-primary-hover: #642453 !important;
+    --color-primary-focus: #713160 !important;
+    --color-primary-active: #581847 !important;
+    --color-secondary-hover: #bd812c !important;
+    --color-secondary-focus: #ca8e39 !important;
+    --color-secondary-active: #b17520 !important;
+    --color-accent-hover: #9b5d53 !important;
+    --color-accent-focus: #a86a60 !important;
+    --color-accent-active: #8f5147 !important;
+    --gradient-primary: linear-gradient(135deg, #8B4B7A 0%, #E4A853 100%) !important;
+    --gradient-accent: linear-gradient(135deg, #C2847A 0%, #a86a60 100%) !important;
+    --gradient-surface: linear-gradient(135deg, #FDF2F8 0%, #f0e5eb 100%) !important;
+    --color-success: #10b981 !important;
+    --color-success-hover: #00925a !important;
+    --color-success-light: #36dfa7 !important;
+    --color-success-rgb: 16, 185, 129 !important;
+    --color-warning: #f59e0b !important;
+    --color-warning-hover: #ce7700 !important;
+    --color-warning-light: #ffc431 !important;
+    --color-warning-rgb: 245, 158, 11 !important;
+    --color-error: #ef4444 !important;
+    --color-error-hover: #c81d1d !important;
+    --color-error-light: #ff6a6a !important;
+    --color-error-rgb: 239, 68, 68 !important;
+    --color-info: #3b82f6 !important;
+    --color-info-hover: #145bcf !important;
+    --color-info-light: #61a8ff !important;
+    --color-info-rgb: 59, 130, 246 !important;
+}
+
+/* SEMANTIC BUTTON TOKENIZATION - Works with ANY palette */
+
+
+/* PRIMARY BUTTONS - Semantic Tokenization */
+html body button.btn.btn--primary[class],
+html body button.cta-primary[class],
+html body a.btn-consultation[class],
+html body button.btn--consultation[class] {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--primary[class]:hover,
+html body button.cta-primary[class]:hover,
+html body a.btn-consultation[class]:hover,
+html body button.btn--consultation[class]:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+    color: var(--component-text-color-primary) !important;
+}
+
+/* SECONDARY BUTTONS - Semantic Tokenization */
+html body button.btn.btn--secondary[class],
+html body button.cta-secondary[class] {
+    background-color: var(--component-bg-color-secondary) !important;
+    color: var(--component-text-color-secondary) !important;
+    border-color: var(--component-border-color-secondary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--secondary[class]:hover,
+html body button.cta-secondary[class]:hover {
+    background-color: var(--color-secondary-hover) !important;
+    border-color: var(--color-secondary-hover) !important;
+}
+
+/* ACCENT BUTTONS - Semantic Tokenization */
+html body button.btn.btn--accent[class],
+html body button.btn.btn--accent.btn--sm[class] {
+    background-color: var(--component-bg-color-accent) !important;
+    color: var(--component-text-color-accent) !important;
+    border-color: var(--component-border-color-accent) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--accent[class]:hover,
+html body button.btn.btn--accent.btn--sm[class]:hover {
+    background-color: var(--color-accent-hover) !important;
+    border-color: var(--color-accent-hover) !important;
+}
+
+/* OUTLINE BUTTONS - Semantic Tokenization */
+html body button.btn.btn--outline[class],
+html body button.btn.btn--outline.btn--sm[class] {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: var(--component-bg-color-primary) !important;
+    border: 2px solid var(--component-bg-color-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--outline[class]:hover,
+html body button.btn.btn--outline.btn--sm[class]:hover {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+}
+
+/* GHOST BUTTONS - Semantic Tokenization */
+html body button.btn.btn--ghost[class] {
+    background-color: transparent !important;
+    color: var(--component-bg-color-primary) !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+}
+
+html body button.btn.btn--ghost[class]:hover {
+    background-color: var(--color-primary-focus) !important;
+    color: var(--component-text-color-primary) !important;
+}
+
+/* GENERIC BUTTON FALLBACKS - Semantic Tokenization */
+button:not([class*='wp-']):not([class*='admin']),
+.btn:not([class*='wp-']),
+input[type='submit']:not([class*='wp-']) {
+    background-color: var(--component-bg-color-primary) !important;
+    color: var(--component-text-color-primary) !important;
+    border-color: var(--component-border-color-primary) !important;
+}
+
+button:not([class*='wp-']):not([class*='admin']):hover,
+.btn:not([class*='wp-']):hover,
+input[type='submit']:not([class*='wp-']):hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+}
+
+/* Applied Typography: classic-elegant */
+/* TYPOGRAPHY TOKENIZATION: Component font tokens */
+/* Typography CSS File - Classic Elegant */
+/* Generated: 2025-06-17 19:33:27 */
+
+:root {
+    --typography-heading-family: "Cormorant Garamond", Georgia, serif;
+    --typography-body-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --component-font-family-primary: "Cormorant Garamond", Georgia, serif;
+    --component-font-family-secondary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-family-primary: "Cormorant Garamond", Georgia, serif;
+    --font-family-secondary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant%20Garamond:wght@400;500;600;700&family=Inter:wght@400;500&display=swap');
+
+/* Typography Rules with High Specificity */
+
+html body h1, html body h1[class],
+html body h2, html body h2[class],
+html body h3, html body h3[class],
+html body h4, html body h4[class],
+html body h5, html body h5[class],
+html body h6, html body h6[class],
+html body .heading, html body .heading[class],
+html body .title, html body .title[class],
+html body .site-title, html body .site-title[class],
+html body .hero-title, html body .hero-title[class],
+html body .section-title, html body .section-title[class] {
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+    transition: font-family 0.3s ease !important;
+}
+
+html body, html body[class],
+html body p, html body p[class],
+html body div:not([class*='wp-']), html body div[class]:not([class*='wp-']),
+html body span:not([class*='wp-']), html body span[class]:not([class*='wp-']),
+html body a:not([class*='wp-']), html body a[class]:not([class*='wp-']),
+html body li, html body li[class],
+html body td, html body td[class],
+html body th, html body th[class],
+html body .body-text, html body .body-text[class],
+html body .content, html body .content[class],
+html body .description, html body .description[class] {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif !important;
+    transition: font-family 0.3s ease !important;
+}
+
+html body .nav-menu a, html body .nav-menu[class] a,
+html body .menu-item a, html body .menu-item[class] a,
+html body button, html body button[class],
+html body .btn, html body .btn[class],
+html body input[type="submit"], html body input[type="submit"][class] {
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+    transition: font-family 0.3s ease !important;
+}
+
+/* Medical Spa Theme Specific */
+html body .professional-header .site-title,
+html body .professional-header[class] .site-title[class],
+html body .professional-header .nav-menu a,
+html body .professional-header[class] .nav-menu[class] a {
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+}
+
+html body .luxury-footer, html body .luxury-footer[class] {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+html body .treatment-card h3, html body .treatment-card[class] h3,
+html body .treatment-card .treatment-title, html body .treatment-card[class] .treatment-title[class] {
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+}
+
+html body .treatment-card p, html body .treatment-card[class] p,
+html body .treatment-card .treatment-description, html body .treatment-card[class] .treatment-description[class] {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+html body .entry-title, html body .entry-title[class],
+html body .post-title, html body .post-title[class],
+html body .page-title, html body .page-title[class] {
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+}
+
+html body .entry-content, html body .entry-content[class],
+html body .post-content, html body .post-content[class],
+html body .page-content, html body .page-content[class] {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+
+/* Total CSS Length: 10723 characters */
+/* Generated at: 2025-06-17T19:33:27+00:00 */
+</style>
+<link rel="icon" href="http://medspaa.local/wp-content/uploads/2025/05/preetiDreamsLogo-150x150.png" sizes="32x32" />
+<link rel="icon" href="http://medspaa.local/wp-content/uploads/2025/05/preetiDreamsLogo.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="http://medspaa.local/wp-content/uploads/2025/05/preetiDreamsLogo.png" />
+<meta name="msapplication-TileImage" content="http://medspaa.local/wp-content/uploads/2025/05/preetiDreamsLogo.png" />
+</head>
+
+<body class="home wp-singular page-template-default page page-id-2 wp-theme-medSpaTheme transparent-header has-hero-section">
+
+<!-- Skip Link for Accessibility -->
+<a class="skip-link sr-only sr-only-focusable" href="#main">Skip to main content</a>
+
+<!-- Professional Header -->
+<header class="site-header professional-header" role="banner">
+    <div class="container">
+        <div class="header-inner">
+
+            <!-- Logo Section -->
+            <div class="site-branding">
+                                    <div class="logo-fallback">
+                        <div class="logo-medical-cross">✚</div>
+                        <div class="logo-text">
+                            <h1 class="site-title">
+                                <a href="http://medspaa.local/" rel="home">
+                                    PreetiDreams                                </a>
+                            </h1>
+                        </div>
+                    </div>
+                            </div>
+
+            <!-- Main Navigation -->
+            <nav class="main-navigation" role="navigation" aria-label="Primary navigation">
+                                    <!-- Clean fallback menu with proper page links -->
+                    <ul class="nav-menu">
+                        <li class="menu-item current-menu-item">
+                            <a href="http://medspaa.local/">Home</a>
+                        </li>
+                        <li class="menu-item ">
+                            <a href="http://medspaa.local/treatments/">Treatments</a>
+                        </li>
+                        <li class="menu-item ">
+                            <a href="http://medspaa.local/about/">About Us</a>
+                        </li>
+                        <li class="menu-item ">
+                            <a href="http://medspaa.local/testimonials/">Testimonials</a>
+                        </li>
+                        <li class="menu-item ">
+                            <a href="http://medspaa.local/contact/">Contact</a>
+                        </li>
+                    </ul>
+                            </nav>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+
+                <!-- Book Consultation Button -->
+                <div class="header-cta">
+                    <a href="http://medspaa.local/contact/" class="btn-consultation">
+                        <span class="btn-icon">📋</span>
+                        <span class="btn-text">Book Consultation</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle"
+                        type="button"
+                        aria-controls="mobile-menu"
+                        aria-expanded="false"
+                        aria-label="Toggle mobile menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu-overlay" aria-hidden="true"></div>
+<nav class="mobile-menu" id="mobile-menu" aria-hidden="true" role="navigation">
+    <div class="mobile-menu-header">
+        <div class="mobile-logo">
+            <div class="logo-medical-cross">✚</div>
+            <span class="mobile-site-name">PreetiDreams</span>
+        </div>
+        <button class="mobile-menu-close" aria-label="Close menu">
+            ✕
+        </button>
+    </div>
+
+    <div class="mobile-menu-content">
+        <ul class="mobile-nav-list">
+            <li class="current">
+                <a href="http://medspaa.local/">
+                    <span class="nav-icon">🏠</span>
+                    Home
+                </a>
+            </li>
+            <li class="">
+                <a href="http://medspaa.local/treatments/">
+                    <span class="nav-icon">💉</span>
+                    Treatments
+                </a>
+            </li>
+            <li class="">
+                <a href="http://medspaa.local/about/">
+                    <span class="nav-icon">👥</span>
+                    About Us
+                </a>
+            </li>
+            <li class="">
+                <a href="http://medspaa.local/testimonials/">
+                    <span class="nav-icon">💬</span>
+                    Testimonials
+                </a>
+            </li>
+            <li class="">
+                <a href="http://medspaa.local/contact/">
+                    <span class="nav-icon">📞</span>
+                    Contact
+                </a>
+            </li>
+        </ul>
+
+        <div class="mobile-menu-actions">
+                        <a href="http://medspaa.local/contact/" class="mobile-consultation-btn">
+                📋 Book Free Consultation
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+
+<main id="main" class="site-main homepage">
+
+    <!-- Luxury Hero Section with Integrated Quiz -->
+    <section class="hero-section with-quiz" id="hero">
+        <!-- Hero Content Section -->
+        <div class="hero-content">
+            <div class="hero-content-inner">
+                <!-- Brand Introduction -->
+                <div class="hero-brand-intro">
+                    <span class="hero-brand-tagline">
+                        Where Medical Artistry Meets Luxury                    </span>
+                </div>
+
+                <!-- Main Hero Content -->
+                <h1 class="hero-title">
+                    Transform Your Beauty with Advanced Treatments                </h1>
+
+                <p class="hero-subtitle">
+                    Discover your perfect aesthetic journey with our board-certified professionals, cutting-edge treatments, and personalized approach to medical beauty.                </p>
+
+                <!-- Trust Indicators -->
+                <div class="hero-trust-indicators">
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">🏆</span>
+                        <span class="hero-trust-text">Board Certified</span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">⭐</span>
+                        <span class="hero-trust-text">Award Winning</span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">👥</span>
+                        <span class="hero-trust-text">2000+ Happy Patients</span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <span class="hero-trust-icon" aria-hidden="true">🔒</span>
+                        <span class="hero-trust-text">HIPAA Compliant</span>
+                    </div>
+                </div>
+
+                <!-- Hero Features -->
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <span class="hero-feature-icon" aria-hidden="true">✨</span>
+                        <span class="hero-feature-text">Personalized Treatment Plans</span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="hero-feature-icon" aria-hidden="true">🔬</span>
+                        <span class="hero-feature-text">Latest Medical Technology</span>
+                    </div>
+                    <div class="hero-feature">
+                        <span class="hero-feature-icon" aria-hidden="true">💎</span>
+                        <span class="hero-feature-text">Luxury Spa Experience</span>
+                    </div>
+                </div>
+
+                <!-- Primary CTA -->
+                <div class="hero-primary-cta">
+                    <a href="#consultation" class="hero-cta-button" aria-describedby="hero-cta-description">
+                        <span class="hero-cta-icon" aria-hidden="true">📅</span>
+                        <span class="hero-cta-text">Start Your Journey Today</span>
+                        <span class="hero-cta-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <p id="hero-cta-description" class="hero-cta-description">
+                        Free consultation • No obligation • Personalized recommendations                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Quiz Section -->
+        <div class="hero-quiz-container ">
+            <div class="hero-quiz-wrapper">
+
+            <div class="elegant-quiz treatment-selection-interface hero-integrated-quiz"
+                id="elegant-quiz-6851c3076d936"
+                data-quiz-nonce="3ca9e094a8"
+                role="application"
+                aria-label="Treatment Selection Quiz">
+
+                <!-- Quiz Header -->
+                <header class="quiz-header">
+                    <h3 class="quiz-main-title">Find Your Perfect Treatment</h3>
+                    <p class="quiz-subtitle">Answer a few questions to get personalized recommendations</p>
+                </header>
+
+                <!-- Progress Indicator (if enabled) -->
+                    <div class="quiz-progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5">
+                    <div class="progress-steps">
+                                    <span class="progress-step active"
+                              aria-label="Step 1 of 5"></span>
+                                    <span class="progress-step "
+                              aria-label="Step 2 of 5"></span>
+                                    <span class="progress-step "
+                              aria-label="Step 3 of 5"></span>
+                                    <span class="progress-step "
+                              aria-label="Step 4 of 5"></span>
+                                    <span class="progress-step "
+                              aria-label="Step 5 of 5"></span>
+                                </div>
+                </div>
+
+                <!-- Quiz Steps Container -->
+                <div class="quiz-steps-container" role="main">
+
+                    <!-- Step 1: Treatment Categories -->
+                    <section class="quiz-step active"
+                            data-step="1"
+                            id="quiz-step-1"
+                            aria-live="polite">
+                        <h4 class="quiz-question">What are you interested in?</h4>
+                        <div class="quiz-grid" role="group" aria-label="Treatment options">
+                                            <button class="quiz-pill"
+                                    data-category="injectable-artistry"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">��</span>
+                                <span class="quiz-pill-text">Botox / Fillers</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-category="facial-renaissance"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">🌊</span>
+                                <span class="quiz-pill-text">HydraFacial</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-category="precision-dermaplanning"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">✨</span>
+                                <span class="quiz-pill-text">Dermaplanning</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-category="regenerative-prp"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">🩸</span>
+                                <span class="quiz-pill-text">Microneedling PRP</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-category="wellness-infusions"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">💊</span>
+                                <span class="quiz-pill-text">IV Vitamins</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-category="artistry-enhancement"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">💄</span>
+                                <span class="quiz-pill-text">Permanent Makeup</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-category="laser-precision"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">🔥</span>
+                                <span class="quiz-pill-text">Laser Hair Reduction</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-category="carbon-rejuvenation"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">🌟</span>
+                                <span class="quiz-pill-text">Carbon Peel Laser</span>
+                            </button>
+                                            <button class="quiz-pill quiz-pill-wide"
+                                    data-category="body-sculpting"
+                                    data-step="category"
+                                    type="button"
+                                    aria-describedby="quiz-step-1-desc">
+                                <span class="quiz-icon" aria-hidden="true">💪</span>
+                                <span class="quiz-pill-text">EMSCULPT Muscle Builder</span>
+                            </button>
+                                        </div>
+                        <div id="quiz-step-1-desc" class="sr-only">
+                            Select the treatment you are most interested in to continue to the next step.            </div>
+                    </section>
+
+                    <!-- Step 2: Specific Treatment Areas -->
+                    <section class="quiz-step"
+                            data-step="2"
+                            id="quiz-step-2"
+                            aria-live="polite">
+                        <nav class="quiz-navigation">
+                            <button class="quiz-back-btn" type="button" aria-label="Go back to previous step">
+                                <span class="quiz-back-icon" aria-hidden="true">←</span>
+                                Back                </button>
+                        </nav>
+                        <h4 class="quiz-question">Where do you want treatment?</h4>
+                        <div class="quiz-grid"
+                            id="treatment-areas-grid"
+                            role="group"
+                            aria-label="Treatment areas">
+                            <!-- Dynamically populated via JavaScript -->
+                        </div>
+                    </section>
+
+                    <!-- Step 3: Experience Level -->
+                    <section class="quiz-step"
+                            data-step="3"
+                            id="quiz-step-3"
+                            aria-live="polite">
+                        <nav class="quiz-navigation">
+                            <button class="quiz-back-btn" type="button" aria-label="Go back to previous step">
+                                <span class="quiz-back-icon" aria-hidden="true">←</span>
+                                Back                </button>
+                        </nav>
+                        <h4 class="quiz-question">How many times have you had this treatment?</h4>
+                        <div class="quiz-grid" role="group" aria-label="Experience level">
+                                            <button class="quiz-pill"
+                                    data-experience="0"
+                                    data-step="experience"
+                                    type="button">
+                                <span class="quiz-pill-text">0</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-experience="1-2"
+                                    data-step="experience"
+                                    type="button">
+                                <span class="quiz-pill-text">1-2</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-experience="3-4"
+                                    data-step="experience"
+                                    type="button">
+                                <span class="quiz-pill-text">3-4</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-experience="5-6"
+                                    data-step="experience"
+                                    type="button">
+                                <span class="quiz-pill-text">5-6</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-experience="7-8"
+                                    data-step="experience"
+                                    type="button">
+                                <span class="quiz-pill-text">7-8</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-experience="9+"
+                                    data-step="experience"
+                                    type="button">
+                                <span class="quiz-pill-text">9+</span>
+                            </button>
+                                        </div>
+                    </section>
+
+                    <!-- Step 4: Demographics -->
+                    <section class="quiz-step"
+                            data-step="4"
+                            id="quiz-step-4"
+                            aria-live="polite">
+                        <nav class="quiz-navigation">
+                            <button class="quiz-back-btn" type="button" aria-label="Go back to previous step">
+                                <span class="quiz-back-icon" aria-hidden="true">←</span>
+                                Back                </button>
+                        </nav>
+                        <h4 class="quiz-question">What age group are you in?</h4>
+                        <div class="quiz-grid" role="group" aria-label="Age group">
+                                            <button class="quiz-pill"
+                                    data-age="under-18"
+                                    data-step="age"
+                                    type="button">
+                                <span class="quiz-pill-text">&lt; 18</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-age="18-24"
+                                    data-step="age"
+                                    type="button">
+                                <span class="quiz-pill-text">18-24</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-age="25-34"
+                                    data-step="age"
+                                    type="button">
+                                <span class="quiz-pill-text">25-34</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-age="35-44"
+                                    data-step="age"
+                                    type="button">
+                                <span class="quiz-pill-text">35-44</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-age="45-54"
+                                    data-step="age"
+                                    type="button">
+                                <span class="quiz-pill-text">45-54</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-age="55-64"
+                                    data-step="age"
+                                    type="button">
+                                <span class="quiz-pill-text">55-64</span>
+                            </button>
+                                            <button class="quiz-pill"
+                                    data-age="65+"
+                                    data-step="age"
+                                    type="button">
+                                <span class="quiz-pill-text">65+</span>
+                            </button>
+                                        </div>
+                        <div class="quiz-step-actions">
+                            <button class="quiz-continue-btn" type="button">
+                                Next                    <span class="quiz-continue-icon" aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Step 5: Contact Information -->
+                    <section class="quiz-step"
+                            data-step="5"
+                            id="quiz-step-5"
+                            aria-live="polite">
+                        <nav class="quiz-navigation">
+                            <button class="quiz-back-btn" type="button" aria-label="Go back to previous step">
+                                <span class="quiz-back-icon" aria-hidden="true">←</span>
+                                Back                </button>
+                        </nav>
+                        <h4 class="quiz-question">What is your full name?</h4>
+                        <form class="quiz-contact-form"
+                              id="elegant-quiz-form"
+                              method="post"
+                              novalidate>
+
+                            <input type="hidden" id="quiz_nonce" name="quiz_nonce" value="3ca9e094a8" /><input type="hidden" name="_wp_http_referer" value="/" />                <input type="hidden" name="action" value="submit_elegant_quiz">
+                            <input type="hidden" name="quiz_id" value="elegant-quiz-6851c3076d936">
+
+                            <div class="quiz-form-field" data-field="name">
+                                <label for="quiz-name" class="sr-only">Full Name</label>
+                                <input type="text"
+                                      id="quiz-name"
+                                      name="full_name"
+                                      placeholder="Enter your full name"
+                                      autocomplete="name"
+                                      required
+                                      aria-describedby="quiz-name-error">
+                                <div id="quiz-name-error" class="field-error" role="alert" aria-live="polite"></div>
+                            </div>
+
+                            <div class="quiz-form-field quiz-form-field-hidden" data-field="email">
+                                <label for="quiz-email" class="sr-only">Email Address</label>
+                                <input type="email"
+                                      id="quiz-email"
+                                      name="email"
+                                      placeholder="Enter your email address"
+                                      autocomplete="email"
+                                      required
+                                      aria-describedby="quiz-email-error">
+                                <div id="quiz-email-error" class="field-error" role="alert" aria-live="polite"></div>
+                            </div>
+
+                            <div class="quiz-form-field quiz-form-field-hidden" data-field="phone">
+                                <label for="quiz-phone" class="sr-only">Phone Number</label>
+                                <input type="tel"
+                                      id="quiz-phone"
+                                      name="phone"
+                                      placeholder="Enter your phone number"
+                                      autocomplete="tel"
+                                      required
+                                      aria-describedby="quiz-phone-error">
+                                <div id="quiz-phone-error" class="field-error" role="alert" aria-live="polite"></div>
+                            </div>
+
+                            <div class="quiz-form-actions quiz-form-actions-hidden">
+                                <button type="submit" class="quiz-submit-btn">
+                                    <span class="btn-text">Get My Personalized Plan</span>
+                                    <span class="quiz-submit-icon" aria-hidden="true">📧</span>
+                                    <span class="loading-spinner" aria-hidden="true"></span>
+                                </button>
+                            </div>
+
+                            <div class="quiz-error-message" role="alert" aria-live="assertive"></div>
+                        </form>
+                    </section>
+
+                    <!-- Success State -->
+                    <section class="quiz-step quiz-success"
+                            data-step="success"
+                            role="status"
+                            aria-live="polite">
+                        <div class="quiz-success-content">
+                            <div class="quiz-success-icon" aria-hidden="true">✅</div>
+                            <h4 class="quiz-success-title">Thank You!</h4>
+                            <p class="quiz-success-message">
+                                We&#039;ve received your personalized treatment quiz. You&#039;ll receive a confirmation email shortly, and we&#039;ll contact you within 24 hours with customized recommendations based on your preferences.                </p>
+                            <div class="quiz-success-actions">
+                                                    <a href="tel:+1 (555) 123-4567"
+                                  class="btn btn-primary">
+                                    <span class="btn-icon" aria-hidden="true">📞</span>
+                                    Call Us Now                    </a>
+                                                    <button class="btn btn-outline" onclick="location.reload()">
+                                    Take Quiz Again                    </button>
+                            </div>
+                        </div>
+                    </section>
+
+                </div><!-- .quiz-steps-container -->
+
+                <!-- Screen Reader Status Updates -->
+                <div class="sr-only" role="status" aria-live="polite" id="quiz-status-elegant-quiz-6851c3076d936"></div>
+
+            </div><!-- .elegant-quiz -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Treatments Section -->
+    <section class="featured-treatments modern-section">
+        <div class="container">
+            <header class="section-header text-center">
+                <h2 class="section-title">Popular Treatments</h2>
+                <p class="section-subtitle">Discover our most sought-after aesthetic treatments designed to enhance your natural beauty.</p>
+            </header>
+
+            <!-- Treatment Filters for Homepage -->
+            <div class="treatment-filters">
+                <!-- This container will be populated by JavaScript -->
+                <div class="filter-loading-placeholder loading-container">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <p class="loading-primary-text">🔍 Treatment Filter Loading...</p>
+                        <p class="loading-secondary-text">Enhancing your browsing experience...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="treatments-showcase treatment-grid modern-grid">
+                        <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                <article class="treatment-card" id="treatment-"
+                                    itemscope itemtype="https://schema.org/MedicalProcedure"
+                >
+
+            <header class="treatment-card__header">
+
+                <h3 class="treatment-card__title" itemprop="name">
+                                    </h3>
+            </header>
+
+            <div class="treatment-card__description" itemprop="description">
+                            </div>
+
+
+            <div class="treatment-card__meta">
+
+                <div class="treatment-card__consultation">
+                    <span class="treatment-card__consultation-icon" aria-hidden="true">💬</span>
+                    <span class="treatment-card__consultation-text">Consultation Required</span>
+                </div>
+            </div>
+
+            <div class="treatment-card__actions">
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--primary">
+                        Book Now                    </a>
+
+                                    <a href="#"
+                       class="treatment-card__button treatment-card__button--secondary">
+                        Learn More                    </a>
+                            </div>
+
+                            <script type="application/ld+json">
+                    {"@type":"MedicalProcedure","name":"","description":"","bodyLocation":"","procedureType":""}                </script>
+                    </article>
+                    </div>
+
+            <div class="section-cta text-center">
+                <a href="http://medspaa.local/treatments/" class="btn btn-outline btn-large">
+                    View All Treatments                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section modern-section bg-soft">
+        <div class="container">
+            <div class="about-layout">
+                <div class="about-content">
+                    <h2 class="about-title section-title">Why Choose Our Medical Spa?</h2>
+
+                    <div class="about-text">
+                        <p class="lead-text">We combine advanced medical expertise with luxurious spa comfort to deliver exceptional aesthetic results. Our board-certified professionals use the latest technology and techniques to help you achieve your beauty goals safely and effectively.</p>
+                    </div>
+
+                    <div class="features-grid modern-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">👨‍⚕️</div>
+                            <h3>Expert Professionals</h3>
+                            <p>Board-certified doctors and experienced aestheticians.</p>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">🔬</div>
+                            <h3>Advanced Technology</h3>
+                            <p>State-of-the-art equipment for optimal results.</p>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">🏥</div>
+                            <h3>Medical-Grade Safety</h3>
+                            <p>Highest standards of safety and cleanliness.</p>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">💎</div>
+                            <h3>Luxury Experience</h3>
+                            <p>Comfortable, spa-like environment for relaxation.</p>
+                        </div>
+                    </div>
+
+                    <div class="about-cta">
+                        <a href="" class="btn btn-outline btn-large">
+                            Meet Our Team                        </a>
+                    </div>
+                </div>
+
+                <div class="about-image">
+                                            <!-- Placeholder about image -->
+                        <div class="about-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">🏥</div>
+                                <p>Professional Medical Spa Interior</p>
+                            </div>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section modern-section">
+        <div class="container">
+            <header class="section-header text-center">
+                <h2 class="section-title">What Our Patients Say</h2>
+                <p class="section-subtitle">Real stories from real patients who have transformed their confidence with our treatments.</p>
+            </header>
+
+            <div class="testimonials-grid modern-testimonials">
+                                    <!-- Sample testimonials placeholder -->
+                    <div class="sample-testimonials">
+                        <div class="testimonial-card modern-testimonial">
+                            <div class="testimonial-photo testimonial-placeholder">
+                                <div class="placeholder-avatar">👤</div>
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-text">
+                                    "Amazing results from my Botox treatment! The staff is professional and the environment is so relaxing. I highly recommend this medical spa."
+                                </div>
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Sarah M.</h4>
+                                    <p class="treatment-received">Botox Treatment</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card modern-testimonial">
+                            <div class="testimonial-photo testimonial-placeholder">
+                                <div class="placeholder-avatar">👤</div>
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-text">
+                                    "The HydraFacial was incredible! My skin looks and feels years younger. The entire team made me feel comfortable throughout the process."
+                                </div>
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Jennifer L.</h4>
+                                    <p class="treatment-received">HydraFacial</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card modern-testimonial">
+                            <div class="testimonial-photo testimonial-placeholder">
+                                <div class="placeholder-avatar">👤</div>
+                            </div>
+                            <div class="testimonial-content">
+                                <div class="testimonial-text">
+                                    "Exceptional service and results! The laser treatment exceeded my expectations. I'll definitely be back for more treatments."
+                                </div>
+                                <div class="testimonial-author">
+                                    <h4 class="author-name">Michael K.</h4>
+                                    <p class="treatment-received">Laser Treatment</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+
+            <div class="section-cta text-center">
+                <a href="" class="btn btn-outline btn-large">
+                    Read More Reviews                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation CTA Section -->
+    <section id="consultation" class="consultation-section modern-section bg-primary">
+        <div class="container">
+            <div class="consultation-content consultation-layout">
+                <div class="consultation-text">
+                    <h2 class="consultation-title">Ready to Start Your Transformation?</h2>
+                    <p class="consultation-subtitle">Book your complimentary consultation today and discover how our personalized treatments can help you achieve your aesthetic goals.</p>
+
+                    <div class="consultation-benefits">
+                        <div class="benefit-item">
+                            <span class="icon">✅</span>
+                            <span class="text">Complimentary consultation</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="icon">✅</span>
+                            <span class="text">Personalized treatment plan</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="icon">✅</span>
+                            <span class="text">No pressure, just expert advice</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="consultation-form-wrapper">
+                    <form class="consultation-form modern-form" action="#" method="post">
+                        <h3 class="form-title">Book Your Free Consultation</h3>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="consultation-name">Full Name</label>
+                                <input type="text" id="consultation-name" name="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="consultation-phone">Phone Number</label>
+                                <input type="tel" id="consultation-phone" name="phone" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consultation-email">Email Address</label>
+                            <input type="email" id="consultation-email" name="email" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consultation-treatment">Treatment Interest</label>
+                            <select id="consultation-treatment" name="treatment" class="form-control">
+                                <option value="">Select a treatment (optional)</option>
+                                <option value="botox">Botox</option>
+                                <option value="fillers">Dermal Fillers</option>
+                                <option value="hydrafacial">HydraFacial</option>
+                                <option value="laser">Laser Treatments</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consultation-message">Message (Optional)</label>
+                            <textarea id="consultation-message" name="message" class="form-control" rows="3" placeholder="Tell us about your aesthetic goals..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="consent" required>
+                                <span class="checkmark"></span>
+                                I consent to receive communications about my consultation and treatment options.                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block btn-large">
+                            Schedule My Consultation                        </button>
+
+                        <p class="form-privacy">
+                            Your information is secure and confidential. We follow HIPAA guidelines.                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+// Initialize Treatment Filter on Homepage when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🏠 Homepage Ready - Initializing Treatment Filter...');
+
+    // Remove loading placeholder
+    const placeholder = document.querySelector('.filter-loading-placeholder');
+    if (placeholder) {
+        setTimeout(() => {
+            placeholder.remove();
+        }, 1000); // Show loading for 1 second for better UX
+    }
+
+    if (typeof TreatmentFilter !== 'undefined') {
+        const treatmentFilter = new TreatmentFilter('.treatment-filters');
+        treatmentFilter.init();
+
+        // Store reference globally for debugging
+        window.homePageFilterInstance = treatmentFilter;
+
+        console.log('✅ Homepage Treatment Filter initialized successfully');
+
+        // Add success indicator for visual confirmation
+        const filterContainer = document.querySelector('.treatment-filters');
+        if (filterContainer && filterContainer.children.length > 0) {
+            console.log('🎯 Homepage filter interface rendered with', filterContainer.children.length, 'elements');
+        }
+
+        // Track homepage filter initialization
+        if (window.MedicalSpaApp) {
+            window.MedicalSpaApp.getModule('analytics')?.track('homepage_filter_initialized', {
+                treatments_count: document.querySelectorAll('.treatment-card').length,
+                page_location: 'homepage'
+            });
+        }
+    } else {
+        console.error('❌ TreatmentFilter class not loaded on homepage - Check if JavaScript files are properly enqueued');
+
+        // Show error message to user in debug mode
+        const filterContainer = document.querySelector('.treatment-filters');
+        if (filterContainer && window.location.hostname.includes('localhost')) {
+                            filterContainer.innerHTML = '<div class="debug-message error-message"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded on homepage. Check console for details.</div>';
+        }
+    }
+
+    // Debug information for homepage
+    console.log('📊 Homepage Medical Spa Theme Debug Info:');
+    console.log('- medicalSpaTheme config:', window.medicalSpaTheme);
+    console.log('- MedicalSpaApp available:', typeof window.MedicalSpaApp !== 'undefined');
+    console.log('- TreatmentFilter available:', typeof TreatmentFilter !== 'undefined');
+    console.log('- Treatment cards found:', document.querySelectorAll('.treatment-card').length);
+});
+</script>
+
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="footer-container">
+
+			<!-- Main Footer Content -->
+			<div class="footer-main">
+				<div class="container">
+					<div class="footer-grid">
+
+						<!-- Brand Section -->
+						<div class="footer-brand">
+															<div class="footer-brand-text">
+									<h2 class="footer-site-title">
+										<a href="http://medspaa.local/" rel="home">
+											PreetiDreams										</a>
+									</h2>
+																	</div>
+
+							<!-- Social Media Links -->
+							<div class="footer-social" role="navigation" aria-label="Social Media Links">
+															</div>
+						</div>
+
+						<!-- Company Links -->
+						<div class="footer-section footer-company">
+							<h3 class="footer-section-title">Company</h3>
+							<nav class="footer-nav" role="navigation" aria-label="Company Links">
+								<ul class="footer-nav-list">
+									<li><a href="http://medspaa.local/about">About Us</a></li>
+									<li><a href="http://medspaa.local/treatments">Our Treatments</a></li>
+									<li><a href="http://medspaa.local/staff">Our Team</a></li>
+									<li><a href="http://medspaa.local/testimonials">Patient Reviews</a></li>
+									<li><a href="http://medspaa.local/before-after">Before &amp; After</a></li>
+									<li><a href="http://medspaa.local/contact">Contact Us</a></li>
+								</ul>
+							</nav>
+						</div>
+
+						<!-- Resources Links -->
+						<div class="footer-section footer-resources">
+							<h3 class="footer-section-title">Resources</h3>
+							<nav class="footer-nav" role="navigation" aria-label="Resources Links">
+								<ul class="footer-nav-list">
+									<li><a href="http://medspaa.local/pre-post-care">Pre &amp; Post-Treatment Care</a></li>
+									<li><a href="http://medspaa.local/treatment-guide">Treatment Guide</a></li>
+									<li><a href="http://medspaa.local/blog">Articles</a></li>
+									<li><a href="http://medspaa.local/faq">FAQs</a></li>
+									<li><a href="http://medspaa.local/accessibility">Accessibility</a></li>
+									<li><a href="http://medspaa.local/financing">Financing Options</a></li>
+								</ul>
+							</nav>
+						</div>
+
+						<!-- Newsletter Signup -->
+						<div class="footer-section footer-newsletter">
+							<h3 class="footer-section-title">Keep Up With Us</h3>
+							<p class="newsletter-description">
+								Stay informed about our latest treatments, special offers, and wellness tips.							</p>
+
+							<form class="newsletter-form" action="#" method="post" aria-label="Newsletter Signup">
+								<div class="newsletter-input-group">
+									<label for="footer-email" class="screen-reader-text">Email Address</label>
+									<input type="email"
+										   id="footer-email"
+										   name="email"
+										   placeholder="Email*"
+										   required
+										   class="newsletter-input"
+										   aria-describedby="newsletter-privacy-note">
+									<button type="submit" class="newsletter-submit" aria-label="Subscribe to Newsletter">
+										<span class="submit-icon" aria-hidden="true">→</span>
+									</button>
+								</div>
+
+								<p id="newsletter-privacy-note" class="newsletter-privacy">
+									By providing this information you agree to the <a href="http://medspaa.local/terms-conditions">Terms &amp; Conditions</a> and acknowledge that the collection and use of your data will be governed by the <a href="http://medspaa.local/privacy-policy">Privacy Policy</a>.								</p>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="footer-bottom-content">
+
+						<!-- Copyright -->
+						<div class="footer-copyright">
+							<p>&copy; {CURRENT_YEAR} PreetiDreams. All rights reserved.</p>
+						</div>
+
+						<!-- Legal Links -->
+						<nav class="footer-legal-nav" role="navigation" aria-label="Legal Links">
+							<ul class="footer-legal-list">
+								<li><a href="http://medspaa.local/terms-conditions">Terms &amp; Conditions</a></li>
+								<li><a href="http://medspaa.local/privacy-policy">Privacy Policy</a></li>
+								<li><a href="http://medspaa.local/hipaa-notice">HIPAA Notice</a></li>
+								<li><a href="http://medspaa.local/accessibility">Accessibility Statement</a></li>
+							</ul>
+						</nav>
+
+						<!-- Privacy Controls -->
+						<div class="footer-privacy-controls">
+							<button type="button" class="privacy-control-btn" id="cookie-preferences">
+								Cookie Preferences							</button>
+							<button type="button" class="privacy-control-btn" id="privacy-choices">
+								Your Privacy Choices								<span class="privacy-icon" aria-hidden="true">🔒</span>
+							</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</footer><!-- #colophon -->
+
+</div><!-- #page -->
+
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/medSpaTheme\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+        <script>
+        // Performance monitoring for font loading
+        if (window.performance && window.performance.measure) {
+            window.addEventListener('load', function() {
+                // Measure font loading performance
+                const fontLoadStart = performance.now();
+
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(function() {
+                        const fontLoadEnd = performance.now();
+                        const fontLoadTime = fontLoadEnd - fontLoadStart;
+
+                        console.log('🚀 Font Loading Performance: ' + fontLoadTime.toFixed(2) + 'ms');
+
+                        // Log to server for performance monitoring
+                        if (fontLoadTime > 500) {
+                            console.warn('⚠️ Slow font loading detected: ' + fontLoadTime.toFixed(2) + 'ms');
+                        }
+                    });
+                }
+            });
+        }
+        </script>
+        <script>
+            (function() {
+                // Enhanced keyboard navigation for button component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.button-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for demobutton component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.demobutton-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for card component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.card-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for testimonialcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.testimonialcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for featurecard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.featurecard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for form component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.form-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for modal component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.modal-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for accordion component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.accordion-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for consultationform component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.consultationform-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><script>
+            (function() {
+                // Enhanced keyboard navigation for treatmentcard component
+                document.addEventListener('keydown', function(e) {
+                    var componentElements = document.querySelectorAll('.treatmentcard-component');
+                    // Keyboard navigation logic here
+                });
+            })();
+            </script><link rel='stylesheet' id='elegant-quiz-component-css' href='http://medspaa.local/wp-content/themes/medSpaTheme/assets/css/components/elegant-quiz.css?ver=1.0.0' type='text/css' media='all' />
+<style id='core-block-supports-inline-css' type='text/css'>
+/**
+ * Core styles: block-supports
+ */
+
+</style>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/token-animation-system.js?ver=2.0.0" id="token-animation-system-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/token-animation-integration.js?ver=2.0.0" id="token-animation-integration-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/sprint8-integration-validator.js?ver=2.0.0" id="sprint8-integration-validator-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/semantic-color-system.js?ver=1749372155" id="semantic-color-system-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/color-system-manager.js?ver=1749139814" id="color-system-manager-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/color-palette-interface.js?ver=1749291649" id="color-palette-interface-js"></script>
+<script type="text/javascript" id="simple-visual-customizer-js-extra">
+/* <![CDATA[ */
+var simpleCustomizer = {"ajaxUrl":"http:\/\/medspaa.local\/wp-admin\/admin-ajax.php","nonce":"3cdab70173","debug":"1","currentUserId":"0","canManageOptions":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/simple-visual-customizer.js?ver=1750178958" id="simple-visual-customizer-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/design-token-registry.js?ver=1.0.0" id="design-token-registry-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/token-relationship-engine.js?ver=1.0.0" id="token-relationship-engine-js"></script>
+<script type="text/javascript" id="universal-customization-engine-js-extra">
+/* <![CDATA[ */
+var designTokenConfig = {"ajaxUrl":"http:\/\/medspaa.local\/wp-admin\/admin-ajax.php","nonce":"eb0240d554","debugMode":"1","version":"1.0.0","isCustomizer":"","isAdmin":"","isLoggedInAdmin":"","sidebarIntegration":"1","currentTheme":"medSpaTheme"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/universal-customization-engine.js?ver=1.0.0" id="universal-customization-engine-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/color-domain-generator.js?ver=1.0.0" id="color-domain-system-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/typography-domain-system.js?ver=1.0.0" id="typography-domain-system-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/spacing-domain-generator.js?ver=1.0.0" id="spacing-domain-generator-js"></script>
+<script type="text/javascript" id="sidebar-token-bridge-js-extra">
+/* <![CDATA[ */
+var sidebarBridgeConfig = {"sprintVersion":"SPRINT-002-EXT-001","integrationMode":"visual-customizer-sidebar","wordpressCustomizerDisabled":"","visualCustomizerEnabled":"1","debugOutput":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/sidebar-token-bridge.js?ver=1.0.0" id="sidebar-token-bridge-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/sidebar-color-palette-interface.js?ver=1.0.0" id="sidebar-color-palette-interface-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/sidebar-typography-interface.js?ver=1.0.0" id="sidebar-typography-interface-js"></script>
+<script type="text/javascript" id="sidebar-typography-interface-js-after">
+/* <![CDATA[ */
+                console.log("🔧 Typography Interface Script Loaded");
+                console.log("🔧 Window.SidebarTypographyInterface:", typeof window.SidebarTypographyInterface);
+
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://medspaa.local/wp-includes/js/underscore.min.js?ver=1.13.7" id="underscore-js"></script>
+<script type="text/javascript" id="wp-util-js-extra">
+/* <![CDATA[ */
+var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://medspaa.local/wp-includes/js/wp-util.js?ver=6.8.1" id="wp-util-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/components/premium-hero.js?ver=1.0.0" id="hero-component-scripts-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/components/hero-section.js?ver=1.0.0" id="hero-section-component-scripts-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/header-scroll-transparency.js?ver=1.0.0" id="header-scroll-transparency-js"></script>
+<script type="text/javascript" id="modal-component-scripts-js-extra">
+/* <![CDATA[ */
+var modalSettings = {"ajaxurl":"http:\/\/medspaa.local\/wp-admin\/admin-ajax.php","nonce":"0ccf2359b5","closeText":"Close","loadingText":"Loading...","errorText":"An error occurred. Please try again.","confirmText":"Are you sure?","cancelText":"Cancel","okText":"OK"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/components/modal.js?ver=1749549629" id="modal-component-scripts-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/components/treatment-filter.js?ver=1.0.0" id="treatment-filter-component-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/header-functionality.js?ver=1.0.0" id="header-functionality-js"></script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/components/footer.js?ver=1.0.0" id="footer-component-js"></script>
+<script type="text/javascript" id="elegant-quiz-component-js-extra">
+/* <![CDATA[ */
+var elegantQuizConfig = {"ajaxUrl":"http:\/\/medspaa.local\/wp-admin\/admin-ajax.php","nonce":"3ca9e094a8","quizId":"elegant-quiz-6851c3076d936","i18n":{"loading":"Loading...","error":"An error occurred. Please try again.","required":"This field is required.","invalidEmail":"Please enter a valid email address.","stepOf":"Step %1$d of %2$d"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://medspaa.local/wp-content/themes/medSpaTheme/assets/js/components/elegant-quiz.js?ver=1.0.0" id="elegant-quiz-component-js"></script>
+
+</body>
+</html>

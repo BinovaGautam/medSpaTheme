@@ -523,13 +523,7 @@ function medspa_theme_styles() {
         PREETIDREAMS_VERSION
     );
 
-    // Hero component
-    wp_enqueue_style(
-        'hero-component-styles',
-        get_template_directory_uri() . '/assets/css/components/hero.css',
-        array('component-system-styles'),
-        PREETIDREAMS_VERSION
-    );
+    // Hero component (removed - using hero-section-component instead)
 
     // Hero Section component (luxury hero with quiz integration)
     wp_enqueue_style(
@@ -557,13 +551,7 @@ function medspa_theme_styles() {
         );
     }
 
-    wp_enqueue_script(
-        'hero-component-scripts',
-        get_template_directory_uri() . '/assets/js/components/premium-hero.js',
-        array('jquery', 'wp-util'),
-        PREETIDREAMS_VERSION,
-        true
-    );
+    // Hero component scripts (removed - using hero-section-component-scripts instead)
 
     // Hero Section component scripts (luxury hero with quiz integration)
     wp_enqueue_script(

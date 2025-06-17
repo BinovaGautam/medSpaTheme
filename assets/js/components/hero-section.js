@@ -64,15 +64,15 @@
                     rootMargin: '50px'
                 });
 
-                // Observe hero elements
-                this.heroSection.find('.hero-title, .hero-subtitle, .hero-trust-indicators, .hero-features, .hero-primary-cta').each(function() {
+                // Observe hero elements including quiz container
+                this.heroSection.find('.hero-title, .hero-subtitle, .hero-trust-indicators, .hero-features, .hero-primary-cta, .hero-quiz-container').each(function() {
                     observer.observe(this);
                 });
             }
 
             // Fallback for browsers without IntersectionObserver
             if (!('IntersectionObserver' in window)) {
-                this.heroSection.find('.hero-title, .hero-subtitle, .hero-trust-indicators, .hero-features, .hero-primary-cta').addClass('animate-in');
+                this.heroSection.find('.hero-title, .hero-subtitle, .hero-trust-indicators, .hero-features, .hero-primary-cta, .hero-quiz-container').addClass('animate-in');
             }
         }
 
