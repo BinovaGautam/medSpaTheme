@@ -36,6 +36,7 @@
     let lastScrollY = 0;
     let currentOpacityClass = '';
     let ticking = false;
+    let hasPassedTransparencyArea = false;
 
     // Mobile menu elements
     let mobileMenuToggle = null;
@@ -226,7 +227,41 @@
     function updateHeaderTransparency(scrollY) {
         if (!isHeroPage) return;
 
-        // Find appropriate opacity step
+        // Check if we've passed the transparency area
+        if (scrollY >= CONFIG.transparencyMaxScroll) {
+            hasPassedTransparencyArea = true;
+        }
+
+        // Once we've passed the transparency area, maintain solid color
+        // Only allow returning to transparency if we scroll back to the very top
+        if (hasPassedTransparencyArea && scrollY > CONFIG.scrollThreshold) {
+            // Maintain solid color - use the final opacity step
+            const solidStep = CONFIG.opacitySteps[CONFIG.opacitySteps.length - 1];
+
+            if (solidStep.className !== currentOpacityClass) {
+                // Remove previous opacity classes
+                CONFIG.opacitySteps.forEach(step => {
+                    if (step.className) {
+                        header.classList.remove(step.className);
+                    }
+                });
+
+                // Add solid opacity class
+                if (solidStep.className) {
+                    header.classList.add(solidStep.className);
+                }
+
+                currentOpacityClass = solidStep.className;
+            }
+            return;
+        }
+
+        // Reset transparency state if we're back at the top
+        if (scrollY <= CONFIG.scrollThreshold) {
+            hasPassedTransparencyArea = false;
+        }
+
+        // Normal transparency progression for initial scroll down
         let targetStep = CONFIG.opacitySteps[0];
 
         for (const step of CONFIG.opacitySteps) {

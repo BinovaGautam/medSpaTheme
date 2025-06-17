@@ -64,9 +64,85 @@
       "purpose": "Compare flyer services with current implementation for brand consistency"
     }
   ],
+  "fixes": [
+    {
+      "name": "header-transparency-scroll-logic-fix",
+      "path": "fixes/header-transparency-scroll-logic-fix-complete.md",
+      "type": "bug_fix",
+      "status": "complete",
+      "created": "{CURRENT_DATE}",
+      "issue": "Header opacity reversion on scroll up after passing transparency area",
+      "solution": "Enhanced state management with hasPassedTransparencyArea flag",
+      "compliance": {
+        "semantic_tokens": "100_percent_compliant",
+        "fundamentals_json": "fully_compliant",
+        "hardcoded_values": "zero_violations"
+      },
+      "files_modified": [
+        "assets/js/header-functionality.js",
+        "assets/css/semantic-components.css"
+      ],
+      "performance_impact": "positive",
+      "user_experience": "improved"
+    },
+    {
+      "name": "visual-customizer-sidebar-positioning-fix",
+      "path": "fixes/visual-customizer-sidebar-positioning-fix-complete.md",
+      "type": "ui_fix",
+      "status": "complete",
+      "created": "{CURRENT_DATE}",
+      "issue": "Visual customizer sidebar appearing at bottom instead of professional fixed sidebar",
+      "solution": "Created professional CSS architecture with semantic token compliance",
+      "compliance": {
+        "semantic_tokens": "100_percent_compliant",
+        "fundamentals_json": "fully_compliant",
+        "hardcoded_values": "zero_violations"
+      },
+      "files_modified": [
+        "assets/css/customizer-enhancements.css",
+        "assets/js/simple-visual-customizer.js"
+      ],
+      "performance_impact": "positive",
+      "user_experience": "significantly_improved"
+    }
+  ],
+  "tasks": [
+    {
+      "name": "sprint-9-treatments-remediation",
+      "path": "tasks/SPRINT-9-TREATMENTS-REMEDIATION-COMPLETION-REPORT.md",
+      "type": "sprint_completion",
+      "status": "complete",
+      "created": "{CURRENT_DATE}",
+      "sprint_id": "sprint-9",
+      "focus": "treatments_page_remediation",
+      "deliverables": [
+        "treatments-content.php",
+        "page-treatments.php",
+        "single-treatment.php",
+        "archive-treatment.php"
+      ],
+      "compliance": {
+        "semantic_tokens": "compliant",
+        "fundamentals_json": "compliant"
+      },
+      "performance_impact": "positive",
+      "user_experience": "improved"
+    }
+  ],
   "compliance": {
     "fundamentals": "in_progress",
     "semantic_tokens": "in_progress",
-    "design_system": "in_progress"
+    "design_system": "in_progress",
+    "file_organization": {
+      "status": "complete",
+      "report": "compliance/file-organization-compliance-report.md",
+      "created": "{CURRENT_DATE}",
+      "violations_resolved": [
+        "root_file_documentation",
+        "missing_index_registration",
+        "improper_directory_structure"
+      ],
+      "compliance_level": "100_percent"
+    }
   }
 }

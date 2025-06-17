@@ -1726,10 +1726,10 @@ body:not(.has-hero-section) .site-header {
 
 /* Header scroll states */
 .site-header.scrolled {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-surface);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-lg);
-  border-bottom: var(--border-width-sm) solid rgba(0, 0, 0, 0.1);
+  border-bottom: var(--border-width-sm) solid var(--color-surface-tertiary);
 }
 
 .site-header.hidden {
@@ -1742,35 +1742,35 @@ body:not(.has-hero-section) .site-header {
 
 /* Opacity states for transparency transition */
 .site-header.scroll-opacity-10 {
-  background: rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--color-surface) 10%, transparent);
   backdrop-filter: blur(2px);
 }
 
 .site-header.scroll-opacity-25 {
-  background: rgba(255, 255, 255, 0.25);
+  background: color-mix(in srgb, var(--color-surface) 25%, transparent);
   backdrop-filter: blur(4px);
 }
 
 .site-header.scroll-opacity-50 {
-  background: rgba(255, 255, 255, 0.5);
+  background: color-mix(in srgb, var(--color-surface) 50%, transparent);
   backdrop-filter: blur(6px);
   box-shadow: var(--shadow-sm);
 }
 
 .site-header.scroll-opacity-75 {
-  background: rgba(255, 255, 255, 0.75);
+  background: color-mix(in srgb, var(--color-surface) 75%, transparent);
   backdrop-filter: blur(8px);
   box-shadow: var(--shadow-md);
 }
 
 .site-header.scroll-opacity-90 {
-  background: rgba(255, 255, 255, 0.9);
+  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
   backdrop-filter: blur(9px);
   box-shadow: var(--shadow-lg);
 }
 
 .site-header.scroll-opacity-100 {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-surface);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-lg);
 }
@@ -2008,7 +2008,7 @@ body:not(.has-hero-section) .site-header {
 }
 
 .mobile-menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+  background: color-mix(in srgb, var(--color-surface) 10%, transparent);
   transform: scale(1.05); /* Slight scale on hover */
 }
 
@@ -2051,7 +2051,7 @@ body:not(.has-hero-section) .site-header {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: color-mix(in srgb, var(--color-text-primary) 50%, transparent);
   backdrop-filter: blur(4px);
   z-index: 998;
   opacity: 0;
