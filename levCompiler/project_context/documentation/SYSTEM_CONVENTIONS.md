@@ -54,6 +54,7 @@ Workflow Files:      {workflow_name}_workflow.json
 Task Files:          sprint-{number}-{descriptive-name}.md
 Documentation:       {TOPIC}_DOCUMENTATION.md
 CSS Files:           semantic-{purpose}.css
+SCSS Files:          FORBIDDEN - use semantic CSS only
 ```
 
 ### Variable Naming Standards
@@ -97,11 +98,12 @@ Hotfix Branches:     hotfix/{issue-description}
 - rgba(135, 169, 107, 0.8)
 ```
 
-### CSS Architecture Standards
+### Stylesheet Architecture Standards
 - **MAXIMUM:** 2 CSS files allowed (semantic-tokens.css, semantic-components.css)
+- **FORBIDDEN:** SCSS files - all styling must be in semantic CSS files
 - **SOURCE:** All CSS generated from PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md
 - **SYSTEM:** semantic-color-system.js as single source of truth
-- **CLEANUP:** Automatic deletion of old CSS files when new config applied
+- **CLEANUP:** Automatic deletion of old CSS and SCSS files when new config applied
 
 ## 💻 CODING CONVENTIONS
 

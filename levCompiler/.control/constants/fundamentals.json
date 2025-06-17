@@ -636,16 +636,16 @@
 
   "SEMANTIC_TOKENIZATION_REQUIREMENTS": {
     "NEVER_VIOLATE": [
-      "NO hardcoded color values (e.g., #87A96B, #D4AF37, rgb(135, 169, 107))",
-      "NO hardcoded font families (e.g., 'Playfair Display', 'Inter')",
-      "NO hardcoded font sizes (e.g., 2.5rem, 24px, 1.125rem)",
-      "NO hardcoded spacing values (e.g., 32px, 1.5rem, 24px)",
-      "NO hardcoded border radius values (e.g., 8px, 0.5rem)",
-      "NO hardcoded shadow values (e.g., 0 4px 6px rgba(0,0,0,0.1))",
-      "ALWAYS use semantic CSS custom properties and design tokens",
-      "ZERO TOLERANCE for hardcoded values in any CSS generation",
-      "MANDATORY semantic token validation before any CSS output",
-      "AUTOMATIC rejection of any CSS containing hardcoded values"
+      "NO hardcoded color values in CSS or SCSS files (e.g., #87A96B, #D4AF37, rgb(135, 169, 107))",
+      "NO hardcoded font families in CSS or SCSS files (e.g., 'Playfair Display', 'Inter')",
+      "NO hardcoded font sizes in CSS or SCSS files (e.g., 2.5rem, 24px, 1.125rem)",
+      "NO hardcoded spacing values in CSS or SCSS files (e.g., 32px, 1.5rem, 24px)",
+      "NO hardcoded border radius values in CSS or SCSS files (e.g., 8px, 0.5rem)",
+      "NO hardcoded shadow values in CSS or SCSS files (e.g., 0 4px 6px rgba(0,0,0,0.1))",
+      "ALWAYS use semantic CSS custom properties and design tokens in all stylesheets",
+      "ZERO TOLERANCE for hardcoded values in any CSS or SCSS generation",
+      "MANDATORY semantic token validation before any CSS or SCSS output",
+      "AUTOMATIC rejection of any CSS or SCSS containing hardcoded values"
     ],
     "mandatorySemanticTokenUsage": {
       "colorTokens": "var(--color-primary), var(--color-secondary), var(--color-accent)",
@@ -656,12 +656,13 @@
       "transitionTokens": "var(--transition-base), var(--transition-fast)"
     },
     "semanticTokenEnforcement": {
-      "detection": "Scan all design outputs for hardcoded values",
+      "detection": "Scan all CSS and SCSS files for hardcoded values",
       "replacement": "Replace hardcoded values with appropriate semantic tokens",
-      "validation": "CRITICAL ERROR if hardcoded values found in design outputs",
+      "validation": "CRITICAL ERROR if hardcoded values found in any stylesheet",
       "complianceWorkflow": "DESIGN-SYSTEM-COMPLIANCE-WF-001",
-      "automaticRejection": "REJECT any code containing hardcoded values immediately",
-      "zeroTolerance": "NO exceptions, NO bypass, NO hardcoded values EVER"
+      "automaticRejection": "REJECT any CSS or SCSS containing hardcoded values immediately",
+      "zeroTolerance": "NO exceptions, NO bypass, NO hardcoded values EVER in any stylesheet",
+      "scssCompliance": "SCSS files must use semantic tokens, no SCSS variables with hardcoded values"
     },
     "allowedDesignReferences": [
       "semantic-token-references (e.g., 'var(--color-primary)', 'var(--text-xl)')",
@@ -671,20 +672,21 @@
     ]
   },
 
-  "CSS_GENERATION_GOVERNANCE": {
+  "STYLESHEET_GENERATION_GOVERNANCE": {
     "NEVER_VIOLATE": [
       "ONLY generate CSS through semantic-color-system.js and PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md",
       "MAXIMUM 2 CSS files allowed: semantic-tokens.css and semantic-components.css",
-      "NO duplicate CSS files with different token systems",
-      "NO mixing of hardcoded values with semantic tokens",
-      "MANDATORY deletion of old CSS files when new config applied",
-      "ZERO exceptions to semantic tokenization requirements"
+      "NO SCSS files allowed - all styling must be in semantic CSS files",
+      "NO duplicate CSS or SCSS files with different token systems",
+      "NO mixing of hardcoded values with semantic tokens in any stylesheet",
+      "MANDATORY deletion of old CSS and SCSS files when new config applied",
+      "ZERO exceptions to semantic tokenization requirements in any stylesheet"
     ],
-    "cssFileStructure": {
+    "stylesheetFileStructure": {
       "allowedFiles": ["semantic-tokens.css", "semantic-components.css"],
-      "forbiddenPatterns": ["*-tokenized.css", "*-luxury.css", "design-system-compiled.css", "medical-spa-theme.css"],
+      "forbiddenFiles": ["*.scss", "*-tokenized.css", "*-luxury.css", "design-system-compiled.css", "medical-spa-theme.css"],
       "generationTrigger": "PROFESSIONAL_VISUAL_CUSTOMIZER_DESIGN.md config changes only",
-      "replacementPolicy": "DELETE all existing CSS, generate new semantic files"
+      "replacementPolicy": "DELETE all existing CSS and SCSS, generate new semantic CSS files only"
     },
     "duplicateFileDetection": {
       "scanForDuplicates": "MANDATORY before any CSS generation",
