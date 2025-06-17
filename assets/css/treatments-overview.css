@@ -14,15 +14,15 @@
    ================================ */
 :root {
     /* Primary Luxury Colors */
-    --sage-green: #8B4B7A;           /* Medical tranquility, natural luxury */
-    --premium-gold: #D4AF37;         /* Luxury accents, consultation emphasis */
-    --medical-navy: #1B365D;         /* Professional authority, trust */
+    --sage-green: var(--color-brand-secondary);           /* Medical tranquility, natural luxury */
+    --premium-gold: var(--color-accent-primary);         /* Luxury accents, consultation emphasis */
+    --medical-navy: var(--color-brand-primary);         /* Professional authority, trust */
     --cream-base: #FDFCFA;           /* Premium backgrounds, sophistication */
 
     /* Supporting Colors */
     --sage-light: #A8C487;           /* Lighter sage for hover states */
-    --sage-dark: #642453;            /* Darker sage for focus states */
-    --gold-light: #E8C962;           /* Lighter gold for accents */
+    --sage-dark: var(--color-brand-secondary);            /* Darker sage for focus states */
+    --gold-light: var(--color-accent-primary);           /* Lighter gold for accents */
     --navy-light: #2B4A78;           /* Lighter navy for secondary text */
     --cream-warm: #FBF9F4;           /* Warmer cream for sections */
 
@@ -967,13 +967,13 @@
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
     :root {
-        --text-primary: #000000;
-        --text-secondary: #333333;
-        --border-subtle: #666666;
+        --text-primary: var(--color-text-primary);
+        --text-secondary: var(--color-text-primary)333;
+        --border-subtle: var(--color-text-secondary)666;
     }
 
     .artistry-category {
-        border: 2px solid #666666;
+        border: 2px solid var(--color-text-secondary)666;
     }
 
     .category-explore-btn,
@@ -1110,7 +1110,7 @@
     .artistry-category {
         break-inside: avoid;
         box-shadow: none;
-        border: 1px solid #ccc;
+        border: 1px solid var(--color-border-primary);
     }
 
     .category-visual-container {

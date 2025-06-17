@@ -25,22 +25,22 @@
   --quiz-animation-duration: 0.3s;
 
   /* Color scheme - integrated with theme */
-  --quiz-bg: var(--color-white, var(--color-surface-primary));
-  --quiz-surface: var(--color-neutral-light, var(--color-surface-background));
+  --quiz-bg: var(--color-white, #ffffff);
+  --quiz-surface: var(--color-neutral-light, #f8f9fa);
   --quiz-border: var(--color-neutral-200, #e9ecef);
   --quiz-text: var(--color-text-primary, #212529);
   --quiz-text-muted: var(--color-text-secondary, #6c757d);
 
   /* Interactive elements */
-  --quiz-pill-bg: var(--color-neutral-light, var(--color-surface-background));
+  --quiz-pill-bg: var(--color-neutral-light, #f8f9fa);
   --quiz-pill-border: var(--color-neutral-200, #e9ecef);
   --quiz-pill-hover-bg: var(--color-primary-forest, #2c3e50);
-  --quiz-pill-hover-text: var(--color-white, var(--color-surface-primary));
+  --quiz-pill-hover-text: var(--color-white, #ffffff);
   --quiz-pill-selected-bg: var(--color-primary-forest, #2c3e50);
-  --quiz-pill-selected-text: var(--color-white, var(--color-surface-primary));
+  --quiz-pill-selected-text: var(--color-white, #ffffff);
 
   /* Form elements */
-  --quiz-input-bg: var(--color-white, var(--color-surface-primary));
+  --quiz-input-bg: var(--color-white, #ffffff);
   --quiz-input-border: var(--color-neutral-300, #dee2e6);
   --quiz-input-focus-border: var(--color-primary-forest, #2c3e50);
   --quiz-input-error-border: var(--color-error, #dc3545);
@@ -53,7 +53,7 @@
     --quiz-bg: var(--color-dark-800, #1a1d23);
     --quiz-surface: var(--color-dark-700, #252930);
     --quiz-border: var(--color-dark-600, #363c4a);
-    --quiz-text: var(--color-white, var(--color-surface-primary));
+    --quiz-text: var(--color-white, #ffffff);
     --quiz-text-muted: var(--color-neutral-400, #9ca3af);
 
     --quiz-pill-bg: var(--color-dark-600, #363c4a);
@@ -778,7 +778,7 @@
   .elegant-quiz {
     background: transparent !important;
     box-shadow: none !important;
-    border: 1px solid var(--color-text-primary) !important;
+    border: 1px solid #000 !important;
   }
 
   .quiz-step:not(.active) {
@@ -790,7 +790,7 @@
   .quiz-continue-btn,
   .quiz-submit-btn {
     background: transparent !important;
-    border: 1px solid var(--color-text-primary) !important;
-    color: var(--color-text-primary) !important;
+    border: 1px solid #000 !important;
+    color: #000 !important;
   }
 }

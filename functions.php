@@ -121,6 +121,29 @@ require_once get_template_directory() . '/inc/visual-customizer-integration.php'
 // Include the Simple Visual Customizer (Admin Bar Integration)
 require_once get_template_directory() . '/inc/visual-customizer-simple.php';
 
+// T8.1: Include Semantic Token Bridge (JavaScript to PHP Integration)
+require_once get_template_directory() . '/inc/semantic-token-bridge.php';
+
+// T8.4: Include Palette Validation System
+require_once get_template_directory() . '/inc/palette-validation-system.php';
+
+// T8.5: Token Animation System
+wp_enqueue_script(
+    'token-animation-system',
+    get_template_directory_uri() . '/assets/js/token-animation-system.js',
+    array(),
+    wp_get_theme()->get('Version'),
+    true
+);
+
+wp_enqueue_script(
+    'token-animation-integration',
+    get_template_directory_uri() . '/assets/js/token-animation-integration.js',
+    array('jquery', 'token-animation-system'),
+    wp_get_theme()->get('Version'),
+    true
+);
+
 /**
  * ============================================================================
  * ESSENTIAL THEME SETUP FUNCTION (RESTORED)
@@ -231,7 +254,7 @@ function preetidreams_enqueue_design_token_system() {
         // Domain-Specific Systems
         wp_enqueue_script(
             'color-domain-system',
-            get_template_directory_uri() . '/assets/js/color-domain-system.js',
+            get_template_directory_uri() . '/assets/js/color-domain-generator.js',
             ['universal-customization-engine'],
             PREETIDREAMS_VERSION,
             true
@@ -262,13 +285,16 @@ function preetidreams_enqueue_design_token_system() {
         );
 
         // Enhanced Design Token Customizer Preview (WordPress Customizer integration)
-        wp_enqueue_script(
-            'design-token-customizer-preview',
-            get_template_directory_uri() . '/assets/js/design-token-customizer-preview.js',
-            ['universal-customization-engine', 'typography-domain-system'],
-            PREETIDREAMS_VERSION,
-            true
-        );
+        // Only load in customizer context where wp.customize is available
+        if (is_customize_preview()) {
+            wp_enqueue_script(
+                'design-token-customizer-preview',
+                get_template_directory_uri() . '/assets/js/design-token-customizer-preview.js',
+                ['universal-customization-engine', 'typography-domain-system'],
+                PREETIDREAMS_VERSION,
+                true
+            );
+        }
 
         // CRITICAL: Sidebar Token Bridge for Visual Customizer Integration
         wp_enqueue_script(
@@ -306,6 +332,14 @@ function preetidreams_enqueue_design_token_system() {
             'sidebar-visual-interfaces',
             get_template_directory_uri() . '/assets/css/sidebar-visual-interfaces.css',
             [],
+            PREETIDREAMS_VERSION
+        );
+
+        // CRITICAL: Customizer Enhancements CSS - Foundation for Visual Customizer
+        wp_enqueue_style(
+            'customizer-enhancements',
+            get_template_directory_uri() . '/assets/css/customizer-enhancements.css',
+            ['sidebar-visual-interfaces'],
             PREETIDREAMS_VERSION
         );
 
@@ -479,7 +513,7 @@ function medspa_theme_styles() {
 
     wp_enqueue_script(
         'hero-component-scripts',
-        get_template_directory_uri() . '/assets/js/components/hero.js',
+        get_template_directory_uri() . '/assets/js/components/premium-hero.js',
         array('jquery', 'wp-util'),
         PREETIDREAMS_VERSION,
         true
@@ -557,6 +591,15 @@ function medspatheme_scripts() {
     if (file_exists(get_template_directory() . '/js/navigation.js')) {
         wp_enqueue_script('medspatheme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), PREETIDREAMS_VERSION, true);
     }
+
+    // CRITICAL: Treatment Filter Component - Required for homepage and archive pages
+    wp_enqueue_script(
+        'treatment-filter-component',
+        get_template_directory_uri() . '/assets/js/components/treatment-filter.js',
+        array('jquery'),
+        PREETIDREAMS_VERSION,
+        true
+    );
 
     // Footer component JavaScript
     wp_enqueue_script(

@@ -392,14 +392,14 @@ class MedSpa_Semantic_Token_Customizer {
      */
     public function setup_preview_scripts() {
         wp_enqueue_script(
-            'semantic-token-customizer-preview',
-            get_template_directory_uri() . '/assets/js/semantic-token-customizer-preview.js',
+            'semantic-token-customizer-preview-enhanced',
+            get_template_directory_uri() . '/assets/js/semantic-token-customizer-preview-enhanced.js',
             array('jquery', 'customize-preview'),
-            '4.1.0-t7.3.3',
+            '2.0.0-t8.3',
             true
         );
 
-        wp_localize_script('semantic-token-customizer-preview', 'semanticTokenCustomizer', array(
+        wp_localize_script('semantic-token-customizer-preview-enhanced', 'semanticTokenCustomizer', array(
             'palettes' => $this->get_available_palettes(),
             'optimizedTokens' => $this->optimized_tokens,
             'componentTokens' => $this->component_tokens,
@@ -422,10 +422,10 @@ class MedSpa_Semantic_Token_Customizer {
         );
 
         wp_enqueue_style(
-            'semantic-token-customizer-controls',
-            get_template_directory_uri() . '/assets/css/semantic-token-customizer-controls.css',
+            'semantic-token-customizer-controls-enhanced',
+            get_template_directory_uri() . '/assets/css/semantic-token-customizer-controls-enhanced.css',
             array(),
-            '4.1.0-t7.3.3'
+            '2.0.0-t8.3'
         );
     }
 

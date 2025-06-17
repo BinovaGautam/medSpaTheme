@@ -16,7 +16,7 @@
 
 .dr-preeti-hero {
   padding: var(--space-4xl) 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.05) 100%);
+  background: linear-gradient(135deg, var(--color-surface-background) 0%, rgba(135, 169, 107, 0.05) 100%);
   overflow: hidden;
   position: relative;
 }
@@ -241,7 +241,7 @@
   display: flex;
   gap: var(--space-lg);
   padding: var(--space-xl);
-  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.05) 100%);
+  background: linear-gradient(135deg, var(--color-surface-background) 0%, rgba(135, 169, 107, 0.05) 100%);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
@@ -277,7 +277,7 @@
 
 .signature-treatments {
   padding: var(--space-4xl) 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.02) 100%);
+  background: linear-gradient(135deg, var(--color-surface-background) 0%, rgba(135, 169, 107, 0.02) 100%);
 }
 
 .signature-treatments .container {
@@ -422,7 +422,7 @@
 }
 
 .expert-team .team-member {
-  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.05) 100%);
+  background: linear-gradient(135deg, var(--color-surface-background) 0%, rgba(135, 169, 107, 0.05) 100%);
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
   text-align: center;
@@ -496,7 +496,7 @@
 
 .arizona-locations {
   padding: var(--space-4xl) 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, rgba(135, 169, 107, 0.02) 100%);
+  background: linear-gradient(135deg, var(--color-surface-background) 0%, rgba(135, 169, 107, 0.02) 100%);
 }
 
 .arizona-locations .container {

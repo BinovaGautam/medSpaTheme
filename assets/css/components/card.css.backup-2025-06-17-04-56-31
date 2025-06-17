@@ -26,7 +26,7 @@
     /* Design tokens */
     border-radius: var(--card-border-radius, 8px);
     padding: var(--card-padding, 24px);
-    background-color: var(--card-background-color, var(--color-surface-primary));
+    background-color: var(--card-background-color, #ffffff);
 
     /* Border */
     border: var(--card-border-width, 0px) solid var(--card-border-color, #e5e7eb);
@@ -101,7 +101,7 @@
 }
 
 .card-clickable:focus {
-    outline: 2px solid var(--focus-color, var(--color-feedback-info));
+    outline: 2px solid var(--focus-color, #3b82f6);
     outline-offset: 2px;
 }
 
@@ -164,7 +164,7 @@
 }
 
 .card-title:hover {
-    color: var(--primary-color, var(--color-feedback-info));
+    color: var(--primary-color, #3b82f6);
     text-decoration: none;
 }
 
@@ -210,10 +210,10 @@
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border: 1px solid var(--primary-color, var(--color-feedback-info));
+    border: 1px solid var(--primary-color, #3b82f6);
     border-radius: var(--button-border-radius, 6px);
-    background-color: var(--primary-color, var(--color-feedback-info));
-    color: var(--primary-text-color, var(--color-surface-primary));
+    background-color: var(--primary-color, #3b82f6);
+    color: var(--primary-text-color, #ffffff);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -229,12 +229,12 @@
 
 .card-action-button.button-secondary {
     background-color: transparent;
-    color: var(--primary-color, var(--color-feedback-info));
+    color: var(--primary-color, #3b82f6);
 }
 
 .card-action-button.button-secondary:hover {
-    background-color: var(--primary-color, var(--color-feedback-info));
-    color: var(--primary-text-color, var(--color-surface-primary));
+    background-color: var(--primary-color, #3b82f6);
+    color: var(--primary-text-color, #ffffff);
 }
 
 .card-action-button.button-outline {
@@ -282,8 +282,8 @@
     position: absolute;
     top: 12px;
     right: 12px;
-    background-color: var(--badge-background-color, var(--color-feedback-warning));
-    color: var(--badge-text-color, var(--color-surface-primary));
+    background-color: var(--badge-background-color, #f59e0b);
+    color: var(--badge-text-color, #ffffff);
     padding: var(--badge-padding, 4px 12px);
     border-radius: var(--badge-border-radius, 16px);
     font-size: var(--badge-font-size, 12px);
@@ -292,15 +292,15 @@
 }
 
 .treatment-badge.badge-popular {
-    background: linear-gradient(45deg, var(--color-feedback-warning), #d97706);
+    background: linear-gradient(45deg, #f59e0b, #d97706);
 }
 
 .treatment-badge.badge-trending {
-    background: linear-gradient(45deg, var(--color-feedback-success), #059669);
+    background: linear-gradient(45deg, #10b981, #059669);
 }
 
 .treatment-badge.badge-new {
-    background: linear-gradient(45deg, var(--color-feedback-info), #2563eb);
+    background: linear-gradient(45deg, #3b82f6, #2563eb);
 }
 
 /* Popular Overlay */
@@ -308,8 +308,8 @@
     position: absolute;
     top: 8px;
     left: 8px;
-    background: var(--popular-overlay-background, linear-gradient(45deg, var(--color-feedback-warning), #d97706));
-    color: var(--popular-overlay-color, var(--color-surface-primary));
+    background: var(--popular-overlay-background, linear-gradient(45deg, #f59e0b, #d97706));
+    color: var(--popular-overlay-color, #ffffff);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: var(--popular-overlay-font-size, 12px);
@@ -355,7 +355,7 @@
 }
 
 .treatment-benefit-item {
-    color: var(--benefits-item-color, var(--color-feedback-success));
+    color: var(--benefits-item-color, #10b981);
     font-size: var(--benefits-item-font-size, 14px);
     margin: 4px 0;
     display: flex;
@@ -419,7 +419,7 @@
 }
 
 .treatment-financing {
-    color: var(--financing-color, var(--color-feedback-info));
+    color: var(--financing-color, #3b82f6);
     font-size: var(--financing-font-size, 13px);
     font-weight: 500;
 }
@@ -434,7 +434,7 @@
 
 /* Featured Testimonial */
 .testimonial-featured {
-    border: var(--featured-border, 2px solid var(--color-feedback-warning));
+    border: var(--featured-border, 2px solid #f59e0b);
     box-shadow: var(--featured-shadow, 0 8px 25px -5px rgba(245, 158, 11, 0.2));
 }
 
@@ -443,8 +443,8 @@
     position: absolute;
     top: -8px;
     left: 16px;
-    background: var(--featured-badge-background, linear-gradient(45deg, var(--color-feedback-warning), #d97706));
-    color: var(--featured-badge-color, var(--color-surface-primary));
+    background: var(--featured-badge-background, linear-gradient(45deg, #f59e0b, #d97706));
+    color: var(--featured-badge-color, #ffffff);
     padding: var(--featured-badge-padding, 4px 12px);
     border-radius: var(--featured-badge-border-radius, 16px);
     font-size: var(--featured-badge-font-size, 12px);
@@ -518,7 +518,7 @@
 /* Results Section */
 .testimonial-results {
     background-color: var(--results-background, #ecfdf5);
-    border: var(--results-border, 1px solid var(--color-feedback-success));
+    border: var(--results-border, 1px solid #10b981);
     padding: var(--results-padding, 12px);
     border-radius: var(--results-border-radius, 8px);
     margin: 16px 0;
@@ -566,7 +566,7 @@
 }
 
 .verified-icon {
-    color: var(--verified-icon-color, var(--color-feedback-success));
+    color: var(--verified-icon-color, #10b981);
     font-size: var(--verified-icon-size, 16px);
 }
 
@@ -596,7 +596,7 @@
 }
 
 .testimonial-treatment-link {
-    color: var(--treatment-link-color, var(--color-feedback-info));
+    color: var(--treatment-link-color, #3b82f6);
     text-decoration: none;
 }
 
@@ -630,8 +630,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--video-button-background, var(--color-feedback-error));
-    color: var(--video-button-color, var(--color-surface-primary));
+    background-color: var(--video-button-background, #ef4444);
+    color: var(--video-button-color, #ffffff);
     padding: var(--video-button-padding, 8px 16px);
     border-radius: var(--video-button-border-radius, 20px);
     text-decoration: none;
@@ -689,8 +689,8 @@
 }
 
 .feature-badge {
-    background-color: var(--badge-background, var(--color-feedback-info));
-    color: var(--badge-color, var(--color-surface-primary));
+    background-color: var(--badge-background, #3b82f6);
+    color: var(--badge-color, #ffffff);
     padding: var(--badge-padding, 4px 8px);
     border-radius: var(--badge-border-radius, 12px);
     font-size: var(--badge-font-size, 11px);
@@ -712,8 +712,8 @@
     left: 16px;
     width: var(--step-number-size, 32px);
     height: var(--step-number-size, 32px);
-    background-color: var(--step-number-background, var(--color-feedback-info));
-    color: var(--step-number-color, var(--color-surface-primary));
+    background-color: var(--step-number-background, #3b82f6);
+    color: var(--step-number-color, #ffffff);
     border-radius: var(--step-number-border-radius, 50%);
     display: flex;
     align-items: center;
@@ -938,7 +938,7 @@
 }
 
 .feature-action-link {
-    color: var(--primary-color, var(--color-feedback-info));
+    color: var(--primary-color, #3b82f6);
     text-decoration: none;
     font-weight: 500;
     border: none;
@@ -970,32 +970,32 @@
 /* Color Schemes */
 .feature-color-primary .feature-icon,
 .feature-color-primary .feature-badge {
-    background-color: var(--primary-accent-color, var(--color-feedback-info));
-    color: var(--color-surface-primary);
+    background-color: var(--primary-accent-color, #3b82f6);
+    color: #ffffff;
 }
 
 .feature-color-secondary .feature-icon,
 .feature-color-secondary .feature-badge {
     background-color: var(--secondary-accent-color, #6b7280);
-    color: var(--color-surface-primary);
+    color: #ffffff;
 }
 
 .feature-color-success .feature-icon,
 .feature-color-success .feature-badge {
-    background-color: var(--success-accent-color, var(--color-feedback-success));
-    color: var(--color-surface-primary);
+    background-color: var(--success-accent-color, #10b981);
+    color: #ffffff;
 }
 
 .feature-color-warning .feature-icon,
 .feature-color-warning .feature-badge {
-    background-color: var(--warning-accent-color, var(--color-feedback-warning));
-    color: var(--color-surface-primary);
+    background-color: var(--warning-accent-color, #f59e0b);
+    color: #ffffff;
 }
 
 .feature-color-info .feature-icon,
 .feature-color-info .feature-badge {
     background-color: var(--info-accent-color, #06b6d4);
-    color: var(--color-surface-primary);
+    color: #ffffff;
 }
 
 /* Hover Effects */
@@ -1077,14 +1077,14 @@
 /* Focus Management */
 .card-component:focus,
 .card-clickable:focus {
-    outline: 2px solid var(--focus-color, var(--color-feedback-info));
+    outline: 2px solid var(--focus-color, #3b82f6);
     outline-offset: 2px;
 }
 
 .card-action-button:focus,
 .feature-expand-toggle:focus,
 .testimonial-video-button:focus {
-    outline: 2px solid var(--focus-color, var(--color-feedback-info));
+    outline: 2px solid var(--focus-color, #3b82f6);
     outline-offset: 2px;
 }
 
@@ -1145,7 +1145,7 @@
 @media print {
     .card-component {
         box-shadow: none;
-        border: 1px solid var(--color-text-primary);
+        border: 1px solid #000;
         break-inside: avoid;
         page-break-inside: avoid;
     }

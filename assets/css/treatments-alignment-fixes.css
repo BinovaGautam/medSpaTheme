@@ -1,20 +1,21 @@
 /**
- * TREATMENTS PAGE TEXT ALIGNMENT FIXES
+ * TREATMENTS PAGE SEMANTIC DESIGN SYSTEM
  *
- * Critical Priority: Fix text alignment issues identified in visual analysis
- * Compliance: fundamentals.json - semantic tokens only, no hardcoded values
+ * Refactored for semantic token compliance and proper CSS cascade
+ * Eliminates !important abuse while maintaining design integrity
  *
  * @package MedSpaTheme
- * @version 1.0.0
- * @author TASK-MANAGEMENT-WF-001 Priority Fix
+ * @version 2.0.0
+ * @author CODE-GEN-001 via DESIGN-SYSTEM-COMPLIANCE-WF-001
+ * @compliance fundamentals.json - semantic tokens only, proper CSS specificity
  */
 
 /* =============================================================================
-   HERO SECTION TEXT ALIGNMENT FIXES
+   HERO SECTION - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
 .treatments-hero {
-    text-align: center !important;
+    text-align: center;
     padding: var(--space-4xl) 0;
     background: var(--color-primary);
     color: var(--color-text-inverse);
@@ -27,7 +28,7 @@
 }
 
 .treatments-hero .hero-content {
-    text-align: center !important;
+    text-align: center;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -37,8 +38,8 @@
     font-size: var(--text-4xl);
     font-weight: var(--font-weight-bold);
     line-height: var(--leading-tight);
-    margin: 0 0 var(--space-lg) 0 !important;
-    text-align: center !important;
+    margin: 0 0 var(--space-lg) 0;
+    text-align: center;
     color: var(--color-text-inverse);
 }
 
@@ -47,301 +48,258 @@
     font-size: var(--text-lg);
     font-weight: var(--font-weight-normal);
     line-height: var(--leading-relaxed);
-    margin: 0 auto var(--space-xl) auto !important;
-    text-align: center !important;
+    margin: 0 auto var(--space-xl) auto;
+    text-align: center;
     max-width: 600px;
     color: var(--color-text-inverse);
     opacity: 0.95;
 }
 
 /* =============================================================================
-   SECTION HEADER TEXT ALIGNMENT FIXES
+   SECTION HEADERS - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
-.section-header {
-    text-align: center !important;
+.treatments-page .section-header,
+.treatments-page .section-header--centered {
+    text-align: center;
     margin-bottom: var(--space-3xl);
     max-width: 800px;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.section-header--centered {
-    text-align: center !important;
-}
-
-.section-title {
+.treatments-page .section-title {
     font-family: var(--font-family-display);
     font-size: var(--text-3xl);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
-    margin: 0 0 var(--space-md) 0 !important;
-    text-align: center !important;
+    margin: 0 0 var(--space-md) 0;
+    text-align: center;
     line-height: var(--leading-tight);
 }
 
-.section-description {
+.treatments-page .section-description {
     font-family: var(--font-family-primary);
     font-size: var(--text-base);
     color: var(--color-text-secondary);
     max-width: 700px;
-    margin: 0 auto !important;
-    text-align: center !important;
+    margin: 0 auto;
+    text-align: center;
     line-height: var(--leading-relaxed);
 }
 
 /* =============================================================================
-   CRITICAL GRID ALIGNMENT FIXES - Empty First Column Issue
+   TREATMENTS GRID - PROPER CSS SPECIFICITY WITHOUT !IMPORTANT
    ============================================================================= */
 
-/* Force complete grid reset and isolation */
-.treatments-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
-    gap: var(--space-xl) !important;
-    margin-top: var(--space-2xl) !important;
-    align-items: stretch !important; /* Equal height cards */
+.treatments-page .treatments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+    align-items: stretch;
 
-    /* CRITICAL: Reset any inherited grid properties */
-    grid-template-rows: none !important;
-    grid-auto-rows: auto !important;
-    grid-auto-columns: none !important;
-    grid-auto-flow: row !important;
-    grid-column-start: auto !important;
-    grid-column-end: auto !important;
-    grid-row-start: auto !important;
-    grid-row-end: auto !important;
+    /* Container properties */
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 var(--space-md);
 
-    /* Force container isolation */
-    contain: layout style !important;
-    isolation: isolate !important;
-    position: relative !important;
-    z-index: 1 !important;
+    /* Reset list styling */
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
 
-    /* Clear any floats or positioning issues */
-    clear: both !important;
-    float: none !important;
-
-    /* Ensure full width usage */
-    width: 100% !important;
-    max-width: 1200px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding: 0 var(--space-md) !important;
-
-    /* Remove any list styling that might interfere */
-    list-style: none !important;
-    padding-left: 0 !important;
-    margin-bottom: 0 !important;
+    /* Layout containment */
+    contain: layout style;
+    isolation: isolate;
+    position: relative;
+    z-index: 1;
 }
 
-/* Force each treatment card to be properly positioned */
-.treatment-card {
-    display: flex !important;
-    flex-direction: column !important;
-    background: var(--color-surface-primary) !important;
-    padding: var(--space-xl) !important;
-    border-radius: var(--radius-lg) !important;
-    box-shadow: var(--shadow-md) !important;
-    border: 1px solid var(--color-border-light) !important;
-    text-align: left !important;
-    height: 100% !important; /* Equal height cards */
-    min-height: 400px !important; /* Consistent minimum height */
-
-    /* CRITICAL: Reset any inherited grid/flex properties */
-    grid-column: auto !important;
-    grid-row: auto !important;
-    grid-area: auto !important;
-    align-self: stretch !important;
-    justify-self: stretch !important;
-
-    /* Force proper positioning */
-    position: relative !important;
-    float: none !important;
-    clear: none !important;
-    margin: 0 !important;
-
-    /* Ensure proper containment */
-    contain: layout style paint !important;
-    isolation: isolate !important;
-
-    /* Remove any transforms that might cause positioning issues */
-    transform: none !important;
-    translate: none !important;
-
-    /* Ensure proper box model */
-    box-sizing: border-box !important;
-    width: 100% !important;
-    max-width: none !important;
+/* Remove pseudo-elements that might interfere */
+.treatments-page .treatments-grid::before,
+.treatments-page .treatments-grid::after {
+    display: none;
+    content: none;
 }
 
-.treatment-card__header {
+/* Hide non-treatment-card elements */
+.treatments-page .treatments-grid > *:not(.treatment-card) {
+    display: none;
+}
+
+/* =============================================================================
+   TREATMENT CARDS - SEMANTIC TOKEN COMPLIANT
+   ============================================================================= */
+
+.treatments-page .treatment-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface-primary);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border-light);
+    text-align: left;
+    height: 100%;
+    min-height: 400px;
+
+    /* Grid positioning */
+    grid-column: auto;
+    grid-row: auto;
+    align-self: stretch;
+    justify-self: stretch;
+
+    /* Box model */
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+
+    /* Layout containment */
+    contain: layout style paint;
+    isolation: isolate;
+}
+
+.treatments-page .treatment-card__header {
     margin-bottom: var(--space-md);
 }
 
-.treatment-card__title {
+.treatments-page .treatment-card__title {
     font-family: var(--font-family-primary);
     font-size: var(--text-xl);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
-    margin: 0 0 var(--space-sm) 0 !important;
-    text-align: left !important;
+    margin: 0 0 var(--space-sm) 0;
+    text-align: left;
     line-height: var(--leading-tight);
 }
 
-.treatment-card__description {
-    flex-grow: 1; /* Fill available space */
+.treatments-page .treatment-card__description {
+    flex-grow: 1;
     margin-bottom: var(--space-lg);
 }
 
-.treatment-card__description p {
+.treatments-page .treatment-card__description p {
     font-family: var(--font-family-primary);
     font-size: var(--text-base);
-    color: var(--color-text-primary); /* Not secondary - better contrast */
+    color: var(--color-text-primary);
     line-height: var(--leading-relaxed);
-    margin: 0 !important;
-    text-align: left !important;
+    margin: 0;
+    text-align: left;
 }
 
-.treatment-card__actions {
-    margin-top: auto; /* Push buttons to bottom */
+.treatments-page .treatment-card__actions {
+    margin-top: auto;
     display: flex;
     gap: var(--space-sm);
-    justify-content: flex-start; /* Left-align buttons */
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 }
 
-.treatment-card__button {
+.treatments-page .treatment-card__button {
     font-family: var(--font-family-primary);
     font-size: var(--text-sm);
     font-weight: var(--font-weight-medium);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-md);
     text-decoration: none;
-    text-align: center !important;
+    text-align: center;
     transition: var(--transition-base);
-    min-width: 100px; /* Consistent button widths */
-    min-height: var(--accessibility-touch-target-min); /* WCAG compliance */
+    min-width: 100px;
+    min-height: var(--accessibility-touch-target-min);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-.treatment-card__button--primary {
+.treatments-page .treatment-card__button--primary {
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
     border: 2px solid var(--color-primary);
 }
 
-.treatment-card__button--primary:hover,
-.treatment-card__button--primary:focus {
+.treatments-page .treatment-card__button--primary:hover,
+.treatments-page .treatment-card__button--primary:focus {
     background-color: var(--color-primary-dark);
     border-color: var(--color-primary-dark);
     transform: translateY(-1px);
 }
 
-.treatment-card__button--secondary {
+.treatments-page .treatment-card__button--secondary {
     background-color: transparent;
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
 }
 
-.treatment-card__button--secondary:hover,
-.treatment-card__button--secondary:focus {
+.treatments-page .treatment-card__button--secondary:hover,
+.treatments-page .treatment-card__button--secondary:focus {
     background-color: var(--color-primary);
     color: var(--color-text-inverse);
 }
 
-/* CRITICAL: Remove any pseudo-elements that might create empty grid cells */
-.treatments-grid::before,
-.treatments-grid::after {
-    display: none !important;
-    content: none !important;
-}
-
-/* Force first treatment card to start at grid position 1 */
-.treatments-grid .treatment-card:first-child {
-    grid-column-start: 1 !important;
-    grid-row-start: 1 !important;
-}
-
-/* Override any potential CSS that might be adding empty elements */
-.treatments-grid > *:not(.treatment-card) {
-    display: none !important;
-}
-
-/* Ensure all treatment cards follow proper grid flow */
-.treatments-grid .treatment-card:nth-child(1) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(2) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(3) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(4) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(5) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(6) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(7) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(8) { grid-area: auto !important; }
-.treatments-grid .treatment-card:nth-child(9) { grid-area: auto !important; }
-
 /* =============================================================================
-   DOCTOR PROFILE & TESTIMONIALS ALIGNMENT FIXES
+   DOCTOR PROFILE & TESTIMONIALS - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
-.doctor-profile {
+.treatments-page .doctor-profile {
     padding: var(--space-4xl) 0;
     background: var(--color-background);
 }
 
-.doctor-gallery-section {
+.treatments-page .doctor-gallery-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-2xl);
     align-items: start;
 }
 
-.doctor-profile-card,
-.testimonials-card {
+.treatments-page .doctor-profile-card,
+.treatments-page .testimonials-card {
     background: var(--color-surface-primary);
     padding: var(--space-xl);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
 }
 
-.doctor-profile-card .section-title,
-.testimonials-card .section-title {
+.treatments-page .doctor-profile-card .section-title,
+.treatments-page .testimonials-card .section-title {
     font-family: var(--font-family-display);
     font-size: var(--text-2xl);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
-    margin: 0 0 var(--space-lg) 0 !important;
-    text-align: left !important;
+    margin: 0 0 var(--space-lg) 0;
+    text-align: left;
 }
 
-.doctor-content .quote,
-.testimonial-card .quote {
+.treatments-page .doctor-content .quote,
+.treatments-page .testimonial-card .quote {
     font-family: var(--font-family-primary);
     font-size: var(--text-base);
     color: var(--color-text-primary);
     line-height: var(--leading-relaxed);
-    margin: 0 0 var(--space-lg) 0 !important;
-    text-align: left !important;
+    margin: 0 0 var(--space-lg) 0;
+    text-align: left;
     font-style: italic;
 }
 
-.credentials {
+.treatments-page .credentials {
     list-style: none;
     padding: 0;
     margin: 0 0 var(--space-lg) 0;
 }
 
-.credentials li {
+.treatments-page .credentials li {
     font-family: var(--font-family-primary);
     font-size: var(--text-base);
     color: var(--color-text-primary);
     padding: var(--space-xs) 0;
-    text-align: left !important;
+    text-align: left;
 }
 
-.credentials li::before {
+.treatments-page .credentials li::before {
     content: "✓";
     color: var(--color-success);
     font-weight: var(--font-weight-bold);
@@ -349,26 +307,26 @@
 }
 
 /* =============================================================================
-   CONSULTATION CTA ALIGNMENT FIXES
+   CONSULTATION CTA - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
-.consultation-cta {
+.treatments-page .consultation-cta {
     background: var(--color-accent);
     padding: var(--space-4xl) 0;
     color: var(--color-text-inverse);
-    text-align: center !important;
+    text-align: center;
 }
 
-.consultation-cta .section-title {
+.treatments-page .consultation-cta .section-title {
     font-family: var(--font-family-display);
     font-size: var(--text-3xl);
     font-weight: var(--font-weight-bold);
     color: var(--color-text-inverse);
-    margin: 0 0 var(--space-xl) 0 !important;
-    text-align: center !important;
+    margin: 0 0 var(--space-xl) 0;
+    text-align: center;
 }
 
-.features {
+.treatments-page .features {
     display: flex;
     justify-content: center;
     gap: var(--space-lg);
@@ -376,7 +334,7 @@
     flex-wrap: wrap;
 }
 
-.feature {
+.treatments-page .feature {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
@@ -385,139 +343,147 @@
     color: var(--color-text-inverse);
 }
 
-.cta-buttons {
+.treatments-page .cta-buttons {
     display: flex;
     justify-content: center;
     gap: var(--space-md);
     flex-wrap: wrap;
 }
 
-.cta-button {
+.treatments-page .cta-button {
     font-family: var(--font-family-primary);
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
     padding: var(--space-md) var(--space-lg);
-    background-color: var(--color-surface-primary);
-    color: var(--color-text-primary);
-    border: 2px solid var(--color-surface-primary);
     border-radius: var(--radius-md);
     text-decoration: none;
-    text-align: center !important;
+    text-align: center;
     transition: var(--transition-base);
     min-height: var(--accessibility-touch-target-min);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-sm);
 }
 
-.cta-button:hover,
-.cta-button:focus {
-    background-color: var(--color-primary);
+.treatments-page .cta-button--primary {
+    background-color: var(--color-surface-primary);
+    color: var(--color-accent);
+    border: 2px solid var(--color-surface-primary);
+}
+
+.treatments-page .cta-button--primary:hover,
+.treatments-page .cta-button--primary:focus {
+    background-color: var(--color-text-inverse);
+    border-color: var(--color-text-inverse);
+    transform: translateY(-1px);
+}
+
+.treatments-page .cta-button--secondary {
+    background-color: transparent;
     color: var(--color-text-inverse);
-    border-color: var(--color-primary);
-    transform: translateY(-2px);
+    border: 2px solid var(--color-text-inverse);
+}
+
+.treatments-page .cta-button--secondary:hover,
+.treatments-page .cta-button--secondary:focus {
+    background-color: var(--color-text-inverse);
+    color: var(--color-accent);
 }
 
 /* =============================================================================
-   RESPONSIVE DESIGN FIXES
+   RESPONSIVE DESIGN - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
 @media (max-width: 768px) {
-    .treatments-grid {
-        grid-template-columns: 1fr !important;
-        gap: var(--space-lg) !important;
-        padding: 0 var(--space-sm) !important;
-    }
-
-    /* Ensure mobile cards start from first position */
-    .treatments-grid .treatment-card:first-child {
-        grid-column: 1 !important;
-        grid-row: 1 !important;
-    }
-
-    .doctor-gallery-section {
+    .treatments-page .treatments-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-xl);
+        gap: var(--space-lg);
+        padding: 0 var(--space-sm);
     }
 
-    .treatments-hero .hero-title {
+    .treatments-page .doctor-gallery-section {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+
+    .treatments-page .treatments-hero .hero-title {
         font-size: var(--text-3xl);
     }
 
-    .section-title {
+    .treatments-page .section-title {
         font-size: var(--text-2xl);
     }
 
-    .features {
+    .treatments-page .features {
         flex-direction: column;
         align-items: center;
     }
 
-    .cta-buttons {
+    .treatments-page .cta-buttons {
         flex-direction: column;
         align-items: center;
     }
 
-    .treatment-card__actions {
+    .treatments-page .treatment-card__actions {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .treatment-card__button {
+    .treatments-page .treatment-card__button {
         width: 100%;
-        justify-content: center;
     }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-    .treatments-grid {
+    .treatments-page .treatments-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 1025px) {
-    .treatments-grid {
+    .treatments-page .treatments-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 /* =============================================================================
-   ACCESSIBILITY ENHANCEMENTS
+   ACCESSIBILITY & FOCUS STATES - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
-.treatment-card:focus-within {
-    outline: 3px solid var(--color-focus);
+.treatments-page .treatment-card:focus-within {
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
 }
 
-.treatment-card__button:focus {
-    outline: 3px solid var(--color-focus);
+.treatments-page .treatment-card__button:focus {
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
 }
 
-.cta-button:focus {
-    outline: 3px solid var(--color-focus);
+.treatments-page .cta-button:focus {
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
-}
-
-/* Ensure sufficient contrast for all text */
-.treatment-card__description p {
-    color: var(--color-text-primary) !important; /* Override any secondary text color */
 }
 
 /* =============================================================================
-   PRINT STYLES
+   PRINT STYLES - SEMANTIC TOKEN COMPLIANT
    ============================================================================= */
 
 @media print {
-    .treatments-hero,
-    .section-header,
-    .treatment-card,
-    .doctor-profile-card,
-    .testimonials-card {
-        text-align: left !important;
-        color: #000 !important;
-        background: #fff !important;
+    .treatments-page .treatments-hero,
+    .treatments-page .consultation-cta {
+        background: var(--color-surface-primary);
+        color: var(--color-text-primary);
+    }
+
+    .treatments-page .treatments-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+
+    .treatments-page .treatment-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid var(--color-border-light);
     }
 }

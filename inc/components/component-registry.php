@@ -347,6 +347,28 @@ class ComponentRegistry {
     }
 
     /**
+     * Output nested tokens as flattened CSS variables
+     *
+     * @param string $component_name Component name
+     * @param string $parent_key Parent token key
+     * @param array $tokens Nested token array
+     * @param string $prefix Current prefix for nesting
+     */
+    private static function output_nested_tokens($component_name, $parent_key, $tokens, $prefix = '') {
+        foreach ($tokens as $key => $value) {
+            $full_key = $prefix ? "{$prefix}_{$key}" : "{$parent_key}_{$key}";
+
+            if (is_array($value)) {
+                // Recursively handle nested arrays
+                self::output_nested_tokens($component_name, $parent_key, $value, $full_key);
+            } else if (!empty($value)) {
+
+                echo "  --{$component_name}-{$full_key}: {$value};\n";
+            }
+        }
+    }
+
+    /**
      * Setup design token inheritance for a component
      *
      * @param string $name Component name
@@ -361,13 +383,58 @@ class ComponentRegistry {
                     $instance = new $class();
                     $tokens = $instance->get_default_tokens();
 
+
+
                     if (!empty($tokens)) {
                         echo "<style id='{$name}-component-tokens'>\n";
                         echo ":root {\n";
 
+                        // First pass: collect all nested token keys to avoid conflicts
+                        $nested_token_keys = [];
+                        foreach ($tokens as $token_name => $token_value) {
+                            if (is_array($token_value)) {
+                                $nested_token_keys[] = $token_name;
+                            }
+                        }
+
+                        // Second pass: output tokens, prioritizing nested over flat
                         foreach ($tokens as $token_name => $token_value) {
                             if (!empty($token_value)) {
-                                echo "  --{$name}-{$token_name}: {$token_value};\n";
+                                // Handle nested arrays by flattening them
+                                if (is_array($token_value)) {
+                                    self::output_nested_tokens($name, $token_name, $token_value);
+                                } else {
+                                    // Skip flat tokens that have nested equivalents
+                                    $has_nested_equivalent = false;
+                                    foreach ($nested_token_keys as $nested_key) {
+                                        // Check if this flat token conflicts with any nested token structure
+                                        // For example: 'padding' conflicts with 'card' -> 'padding'
+                                        if (strpos($token_name, $nested_key) === 0 || strpos($nested_key, $token_name) === 0) {
+                                            $has_nested_equivalent = true;
+                                            break;
+                                        }
+
+                                        // Also check if the flat token name appears as a nested property
+                                        // This handles cases like 'padding' vs 'card' -> 'padding'
+                                        if (isset($tokens[$nested_key]) && is_array($tokens[$nested_key])) {
+                                            if (array_key_exists($token_name, $tokens[$nested_key])) {
+                                                $has_nested_equivalent = true;
+                                                break;
+                                            }
+
+                                            // Check for semantic equivalents (e.g., 'background_color' vs 'background')
+                                            $token_base = str_replace(['_color', '_size', '_weight'], '', $token_name);
+                                            if (array_key_exists($token_base, $tokens[$nested_key])) {
+                                                $has_nested_equivalent = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if (!$has_nested_equivalent) {
+                                        echo "  --{$name}-{$token_name}: {$token_value};\n";
+                                    }
+                                }
                             }
                         }
 

@@ -879,5 +879,10 @@ class TreatmentFilter {
     }
 }
 
-// Export for module usage
-export default TreatmentFilter;
+// Make TreatmentFilter globally available
+window.TreatmentFilter = TreatmentFilter;
+
+// Export for module usage (if needed)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = TreatmentFilter;
+}

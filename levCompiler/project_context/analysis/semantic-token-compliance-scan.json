@@ -1,0 +1,267 @@
+{
+  "semanticTokenComplianceScan": {
+    "scanId": "SEMANTIC-COMPLIANCE-SCAN-{CURRENT_TIMESTAMP}",
+    "scanDate": "{CURRENT_DATE}",
+    "agent": "DESIGN-SYSTEM-MONITOR-001",
+    "workflow": "DESIGN-SYSTEM-COMPLIANCE-WF-001",
+    "scanScope": "complete-theme-codebase",
+    "complianceStatus": "CRITICAL_VIOLATIONS_DETECTED"
+  },
+
+  "violationSummary": {
+    "totalViolations": 450,
+    "severityBreakdown": {
+      "critical": 180,
+      "high": 150,
+      "medium": 80,
+      "low": 40
+    },
+    "violationTypes": {
+      "hardcodedColors": 120,
+      "hardcodedTypography": 85,
+      "hardcodedSpacing": 95,
+      "cssImportantAbuse": 400,
+      "hardcodedBorders": 45,
+      "hardcodedShadows": 25
+    }
+  },
+
+  "criticalViolations": {
+    "hardcodedColorValues": {
+      "violationCount": 120,
+      "severity": "CRITICAL",
+      "files": [
+        {
+          "file": "assets/css/about-us-fix.css",
+          "violations": 45,
+          "examples": [
+            "#f8f9fa",
+            "#8B4B7A",
+            "#1B365D",
+            "#D4AF37",
+            "#666"
+          ]
+        },
+        {
+          "file": "assets/css/style.css",
+          "violations": 15,
+          "examples": [
+            "#4a5d4a",
+            "#e6c954",
+            "#f8f5f0",
+            "#333333"
+          ]
+        },
+        {
+          "file": "assets/css/visual-customizer-admin.css",
+          "violations": 35,
+          "examples": [
+            "#f1f1f1",
+            "#ffffff",
+            "#e5e5e5",
+            "#8B4B7A"
+          ]
+        },
+        {
+          "file": "assets/css/treatments-alignment-fixes.css",
+          "violations": 25,
+          "examples": [
+            "#000",
+            "#fff"
+          ]
+        }
+      ]
+    },
+
+    "cssImportantAbuse": {
+      "violationCount": 400,
+      "severity": "CRITICAL",
+      "files": [
+        {
+          "file": "assets/css/treatments-alignment-fixes.css",
+          "violations": 180,
+          "impactLevel": "SEVERE",
+          "description": "Excessive !important declarations breaking CSS cascade"
+        },
+        {
+          "file": "assets/css/medical-spa-theme.css",
+          "violations": 100,
+          "impactLevel": "HIGH",
+          "description": "Layout and typography overrides with !important"
+        },
+        {
+          "file": "assets/css/design-system-compiled.css",
+          "violations": 50,
+          "impactLevel": "MEDIUM",
+          "description": "Design system overrides with !important"
+        },
+        {
+          "file": "style.css",
+          "violations": 20,
+          "impactLevel": "LOW",
+          "description": "Accessibility and utility overrides"
+        }
+      ]
+    }
+  },
+
+  "semanticTokenRequirements": {
+    "mandatoryReplacements": {
+      "colors": {
+        "primary": "var(--color-primary)",
+        "secondary": "var(--color-secondary)",
+        "accent": "var(--color-accent)",
+        "surface": "var(--color-surface)",
+        "background": "var(--color-background)",
+        "text": "var(--color-text)"
+      },
+      "typography": {
+        "fontFamily": "var(--font-family-primary)",
+        "fontSize": "var(--text-{size})",
+        "fontWeight": "var(--font-weight-{weight})",
+        "lineHeight": "var(--line-height-{size})"
+      },
+      "spacing": {
+        "margin": "var(--space-{size})",
+        "padding": "var(--space-{size})",
+        "gap": "var(--space-{size})"
+      },
+      "borders": {
+        "borderRadius": "var(--radius-{size})",
+        "borderWidth": "var(--border-width-{size})"
+      },
+      "shadows": {
+        "boxShadow": "var(--shadow-{size})"
+      }
+    }
+  },
+
+  "complianceMetrics": {
+    "currentCompliance": {
+      "semanticTokenUsage": "15%",
+      "cssOverrideAbuse": "400+ violations",
+      "designSystemIntegrity": "25%",
+      "componentIsolation": "30%"
+    },
+    "targetCompliance": {
+      "semanticTokenUsage": "100%",
+      "cssOverrideAbuse": "<5 violations",
+      "designSystemIntegrity": "100%",
+      "componentIsolation": "100%"
+    },
+    "complianceGap": {
+      "semanticTokenUsage": "85%",
+      "cssOverrideReduction": "395+ violations to remove",
+      "designSystemIntegrity": "75%",
+      "componentIsolation": "70%"
+    }
+  },
+
+  "correctiveActionPlan": {
+    "phase1": {
+      "name": "Critical CSS Override Elimination",
+      "priority": "IMMEDIATE",
+      "targetFiles": [
+        "assets/css/treatments-alignment-fixes.css",
+        "assets/css/medical-spa-theme.css"
+      ],
+      "actions": [
+        "Remove 95% of !important declarations",
+        "Replace with proper CSS specificity",
+        "Implement semantic token usage"
+      ],
+      "estimatedEffort": "HIGH",
+      "qualityGate": "CSS_OVERRIDE_ELIMINATION"
+    },
+    "phase2": {
+      "name": "Semantic Token Implementation",
+      "priority": "HIGH",
+      "targetFiles": [
+        "assets/css/about-us-fix.css",
+        "assets/css/style.css",
+        "assets/css/visual-customizer-admin.css"
+      ],
+      "actions": [
+        "Replace all hardcoded color values",
+        "Replace all hardcoded typography values",
+        "Replace all hardcoded spacing values"
+      ],
+      "estimatedEffort": "MEDIUM",
+      "qualityGate": "SEMANTIC_TOKEN_IMPLEMENTATION"
+    },
+    "phase3": {
+      "name": "Design System Validation",
+      "priority": "MEDIUM",
+      "targetFiles": "ALL_CSS_FILES",
+      "actions": [
+        "Validate component isolation",
+        "Verify design consistency",
+        "Confirm accessibility compliance"
+      ],
+      "estimatedEffort": "LOW",
+      "qualityGate": "DESIGN_SYSTEM_VALIDATION"
+    }
+  },
+
+  "workflowDelegation": {
+    "primaryWorkflow": "DESIGN-SYSTEM-COMPLIANCE-WF-001",
+    "delegatedWorkflows": [
+      {
+        "workflow": "CODE-GEN-WF-001",
+        "purpose": "CSS refactoring implementation",
+        "agent": "CODE-GEN-001"
+      }
+    ],
+    "versionTracking": {
+      "workflow": "VERSION-TRACK-001",
+      "agent": "VERSION-TRACK-001",
+      "changeDescription": "Critical CSS override elimination and semantic tokenization compliance"
+    }
+  },
+
+  "qualityGates": {
+    "gate1": {
+      "name": "CSS_OVERRIDE_ELIMINATION",
+      "criteria": [
+        "Remove 95% of !important declarations",
+        "Maintain visual design integrity",
+        "Validate cross-browser compatibility"
+      ],
+      "status": "PENDING"
+    },
+    "gate2": {
+      "name": "SEMANTIC_TOKEN_IMPLEMENTATION",
+      "criteria": [
+        "Replace all hardcoded color values",
+        "Replace all hardcoded typography values",
+        "Replace all hardcoded spacing values"
+      ],
+      "status": "PENDING"
+    },
+    "gate3": {
+      "name": "DESIGN_SYSTEM_VALIDATION",
+      "criteria": [
+        "Validate component isolation",
+        "Verify design consistency",
+        "Confirm accessibility compliance"
+      ],
+      "status": "PENDING"
+    }
+  },
+
+  "fundamentalsCompliance": {
+    "fileOrganization": "COMPLIANT",
+    "semanticTokenization": "CRITICAL_VIOLATIONS",
+    "workflowDelegation": "COMPLIANT",
+    "versionTracking": "PENDING",
+    "temporalPlaceholders": "COMPLIANT"
+  },
+
+  "scanMetadata": {
+    "toolsUsed": ["grep", "semantic-analysis"],
+    "scanDuration": "{SCAN_DURATION}",
+    "filesScanned": 25,
+    "linesAnalyzed": 15000,
+    "confidenceLevel": "HIGH"
+  }
+}

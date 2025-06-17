@@ -9,6 +9,12 @@
 (function($) {
     'use strict';
 
+    // Check if WordPress Customizer is available
+    if (typeof wp === 'undefined' || typeof wp.customize === 'undefined') {
+        console.warn('[Design Token Customizer] WordPress Customizer not available, skipping initialization');
+        return;
+    }
+
     // Wait for WordPress Customizer and our systems to be ready
     wp.customize.bind('ready', function() {
         console.log('[Design Token Customizer] Initializing real-time preview...');

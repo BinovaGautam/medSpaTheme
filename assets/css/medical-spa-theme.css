@@ -21,30 +21,65 @@ Author: PreetiDreams Development Team
 
 :root {
   /* Premium Medical Spa Color Palette - Modern Flat UI */
+/* SEMANTIC FOUNDATION TOKENS - FUNDAMENTALS.JSON COMPLIANT */
+
+/* SEMANTIC FOUNDATION - BRAND */
+--color-brand-primary: #16a085;     /* Teal - Primary brand color */
+--color-brand-secondary: #3498db;   /* Blue - Secondary brand color */
+--color-brand-dark: #2c3e50;        /* Navy - Dark brand variant */
+
+/* SEMANTIC FOUNDATION - SURFACES */
+--color-surface-primary: var(--color-surface-primary);   /* White - Primary surface */
+--color-surface-secondary: #ecf0f1; /* Light gray - Secondary surface */
+--color-surface-tertiary: #f8fafc;  /* Very light - Tertiary surface */
+--color-surface-error-light: #fef2f2; /* Light error background */
+
+/* SEMANTIC FOUNDATION - TEXT */
+--color-text-primary: #1e293b;      /* Dark - Primary text */
+--color-text-secondary: #34495e;    /* Medium dark - Secondary text */
+
+/* SEMANTIC FOUNDATION - BORDERS */
+--color-border-primary: #bdc3c7;    /* Medium gray - Primary borders */
+--color-border-secondary: #e2e8f0;  /* Light gray - Secondary borders */
+
+/* SEMANTIC FOUNDATION - ACCENTS */
+--color-accent-primary: var(--color-feedback-error);    /* Coral - Primary accent */
+--color-accent-secondary: #9b59b6;  /* Lavender - Secondary accent */
+
+/* SEMANTIC FOUNDATION - FEEDBACK */
+--color-feedback-success: var(--color-feedback-success);  /* Green - Success states */
+--color-feedback-warning: var(--color-feedback-warning);  /* Orange - Warning states */
+--color-feedback-error: #e67e22;    /* Red-orange - Error states */
+--color-feedback-info: #3498db;     /* Blue - Info states */
+
+/* SEMANTIC FOUNDATION - INTERACTIVE */
+--color-interactive-primary: #6366f1; /* Indigo - Primary interactive */
+--color-interactive-accent: var(--color-feedback-success);  /* Emerald - Accent interactive */
+--color-interactive-hover: #4f46e5;   /* Dark indigo - Hover states */
 
   /* Primary Colors */
-  --color-primary-teal: #16a085;
-  --color-primary-blue: #3498db;
-  --color-primary-navy: #2c3e50;
-  --color-accent-coral: #e74c3c;
+  --color-primary-teal: var(--color-brand-primary); /* SEMANTIC: Primary brand color */
+  --color-primary-blue: var(--color-brand-secondary); /* SEMANTIC: Secondary brand color */
+  --color-primary-navy: var(--color-brand-dark); /* SEMANTIC: Dark brand variant */
+  --color-accent-coral: var(--color-accent-primary); /* SEMANTIC: Primary accent color */
 
   /* Secondary Colors */
-  --color-secondary-sage: #95a5a6;
-  --color-secondary-lavender: #9b59b6;
-  --color-secondary-mint: #1abc9c;
-  --color-secondary-peach: #f39c12;
+  --color-secondary-sage: var(--color-border-primary); /* SEMANTIC: Primary border color */
+  --color-secondary-lavender: var(--color-accent-secondary); /* SEMANTIC: Secondary accent color */
+  --color-secondary-mint: var(--color-feedback-success); /* SEMANTIC: Success feedback color */
+  --color-secondary-peach: var(--color-feedback-warning); /* SEMANTIC: Warning feedback color */
 
   /* Neutral Palette */
-  --color-neutral-white: #ffffff;
-  --color-neutral-light: #ecf0f1;
-  --color-neutral-medium: #bdc3c7;
-  --color-neutral-dark: #34495e;
+  --color-neutral-white: var(--color-surface-primary); /* SEMANTIC: Primary surface color */
+  --color-neutral-light: var(--color-surface-secondary); /* SEMANTIC: Secondary surface color */
+  --color-neutral-medium: var(--color-border-primary); /* SEMANTIC: Primary border color */
+  --color-neutral-dark: var(--color-text-secondary); /* SEMANTIC: Secondary text color */
 
   /* Accent & Interaction Colors */
-  --color-accent-success: #27ae60;
-  --color-accent-warning: #f1c40f;
-  --color-accent-error: #e67e22;
-  --color-accent-info: #3498db;
+  --color-accent-success: var(--color-feedback-success); /* SEMANTIC: Success feedback color */
+  --color-accent-warning: var(--color-feedback-warning); /* SEMANTIC: Warning feedback color */
+  --color-accent-error: var(--color-feedback-error); /* SEMANTIC: Error feedback color */
+  --color-accent-info: var(--color-feedback-info); /* SEMANTIC: Info feedback color */
 
   /* Legacy Color Mappings for Compatibility */
   --color-primary-forest: var(--color-primary-navy);
@@ -53,7 +88,7 @@ Author: PreetiDreams Development Team
   --color-primary-soft-gold: var(--color-neutral-light);
   --color-white: var(--color-neutral-white);
   --color-soft-gray: var(--color-neutral-light);
-  --color-charcoal: var(--color-neutral-dark);
+  --color-charcoal: var(--color-text-primary); /* SEMANTIC: Primary text color for high contrast */
   --color-rose-gold: var(--color-accent-coral);
   --color-success: var(--color-accent-success);
   --color-warning: var(--color-accent-warning);
@@ -132,15 +167,15 @@ Author: PreetiDreams Development Team
   --container-2xl: 1320px;
 
   /* Quiz-specific custom properties */
-  --quiz-primary: #6366f1;
-  --quiz-accent: #10b981;
-  --quiz-neutral-bg: #f8fafc;
-  --quiz-text-primary: #1e293b;
-  --quiz-progress-bar: #e2e8f0;
-  --quiz-hover-state: #4f46e5;
-  --quiz-success: #059669;
-  --quiz-error: #dc2626;
-  --quiz-warning: #d97706;
+  --quiz-primary: var(--color-interactive-primary); /* SEMANTIC: Primary interactive color */
+  --quiz-accent: var(--color-interactive-accent); /* SEMANTIC: Accent interactive color */
+  --quiz-neutral-bg: var(--color-surface-tertiary); /* SEMANTIC: Tertiary surface color */
+  --quiz-text-primary: var(--color-text-primary); /* SEMANTIC: Primary text color */
+  --quiz-progress-bar: var(--color-border-secondary); /* SEMANTIC: Secondary border color */
+  --quiz-hover-state: var(--color-interactive-hover); /* SEMANTIC: Interactive hover color */
+  --quiz-success: var(--color-feedback-success); /* SEMANTIC: Success feedback color */
+  --quiz-error: var(--color-feedback-error); /* SEMANTIC: Error feedback color */
+  --quiz-warning: var(--color-feedback-warning); /* SEMANTIC: Warning feedback color */
 }
 
 /* =============================================================================
@@ -205,7 +240,7 @@ body {
   font-family: var(--font-secondary);
   font-size: var(--text-base);
   line-height: 1.6;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   background-color: var(--color-white);
   font-weight: 400;
   text-rendering: optimizeLegibility;
@@ -572,7 +607,7 @@ a:focus {
 .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .treatment-actions {
@@ -644,7 +679,7 @@ a:focus {
 
 .staff-specialties h4 {
   font-size: var(--text-sm);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-sm);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -701,7 +736,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.5;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .testimonial-author {
@@ -762,7 +797,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-light);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -781,7 +816,7 @@ a:focus {
 }
 
 .form-control::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 /* Consultation Form Specific */
@@ -790,7 +825,7 @@ a:focus {
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 .consultation-form h3 {
@@ -886,9 +921,9 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary-forest: #000000;
-    --color-charcoal: #000000;
-    --shadow-md: 0 0 0 2px #000000;
+    --color-primary-forest: var(--color-text-primary); /* SEMANTIC: High contrast primary */
+    --color-charcoal: var(--color-text-primary); /* SEMANTIC: Replaced hardcoded var(--color-text-primary) */
+    --shadow-md: 0 0 0 2px var(--color-text-primary); /* SEMANTIC: High contrast shadow */
   }
 }
 
@@ -1253,7 +1288,7 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .mobile-menu {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .mobile-menu-overlay {
@@ -1266,7 +1301,7 @@ a:focus {
 
   .mobile-nav-list a:hover,
   .mobile-nav-list a:focus {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   }
 }
 
@@ -1381,7 +1416,7 @@ a:focus {
 .treatment-search {
   width: 100%;
   padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -1397,7 +1432,7 @@ a:focus {
 }
 
 .treatment-search::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -1415,12 +1450,12 @@ a:focus {
 .filter-select {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
   background: var(--color-white);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
@@ -1461,7 +1496,7 @@ a:focus {
   padding: var(--space-xs) var(--space-md);
   background: var(--color-soft-gray);
   border-radius: var(--radius-full);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 /* Loading State */
@@ -1520,7 +1555,7 @@ a:focus {
 }
 
 .no-results-message {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-size: var(--text-base);
   margin-bottom: var(--space-xl);
   max-width: 400px;
@@ -1623,20 +1658,20 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .treatment-filters-wrapper {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .treatment-search,
   .filter-select {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .clear-filters {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .no-results {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 }
 
@@ -1743,7 +1778,7 @@ a:focus {
 }
 
 .featured-treatments .section-subtitle {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto var(--space-xl);
 }
@@ -1838,7 +1873,7 @@ a:focus {
 .treatment-showcase-item .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -1932,7 +1967,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 500px;
 }
 
@@ -2078,7 +2113,7 @@ a:focus {
 
 .section-subtitle {
   font-size: var(--text-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -2217,7 +2252,7 @@ a:focus {
 
 .treatment-description {
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -2262,7 +2297,7 @@ a:focus {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .placeholder-actions {
@@ -2307,7 +2342,7 @@ a:focus {
 }
 
 .feature-item p {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -2322,7 +2357,7 @@ a:focus {
 .lead-text {
   font-size: var(--text-lg);
   line-height: 1.7;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-xl);
 }
 
@@ -2402,7 +2437,7 @@ a:focus {
   font-size: var(--text-base);
   line-height: 1.6;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-style: italic;
 }
 
@@ -2441,7 +2476,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -2460,7 +2495,7 @@ a:focus {
 }
 
 .form-control::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 /* Consultation Form Specific */
@@ -2469,7 +2504,7 @@ a:focus {
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 .consultation-form h3 {
@@ -2565,9 +2600,9 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary-forest: #000000;
-    --color-charcoal: #000000;
-    --shadow-md: 0 0 0 2px #000000;
+    --color-primary-forest: var(--color-text-primary); /* SEMANTIC: High contrast primary */
+    --color-charcoal: var(--color-text-primary); /* SEMANTIC: Replaced hardcoded var(--color-text-primary) */
+    --shadow-md: 0 0 0 2px var(--color-text-primary); /* SEMANTIC: High contrast shadow */
   }
 }
 
@@ -2932,7 +2967,7 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .mobile-menu {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .mobile-menu-overlay {
@@ -2945,7 +2980,7 @@ a:focus {
 
   .mobile-nav-list a:hover,
   .mobile-nav-list a:focus {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   }
 }
 
@@ -3060,7 +3095,7 @@ a:focus {
 .treatment-search {
   width: 100%;
   padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -3076,7 +3111,7 @@ a:focus {
 }
 
 .treatment-search::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -3094,12 +3129,12 @@ a:focus {
 .filter-select {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
   background: var(--color-white);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
@@ -3140,7 +3175,7 @@ a:focus {
   padding: var(--space-xs) var(--space-md);
   background: var(--color-soft-gray);
   border-radius: var(--radius-full);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 /* Loading State */
@@ -3199,7 +3234,7 @@ a:focus {
 }
 
 .no-results-message {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-size: var(--text-base);
   margin-bottom: var(--space-xl);
   max-width: 400px;
@@ -3302,20 +3337,20 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .treatment-filters-wrapper {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .treatment-search,
   .filter-select {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .clear-filters {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .no-results {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 }
 
@@ -3422,7 +3457,7 @@ a:focus {
 }
 
 .featured-treatments .section-subtitle {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto var(--space-xl);
 }
@@ -3517,7 +3552,7 @@ a:focus {
 .treatment-showcase-item .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -3611,7 +3646,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 500px;
 }
 
@@ -3757,7 +3792,7 @@ a:focus {
 
 .section-subtitle {
   font-size: var(--text-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -3896,7 +3931,7 @@ a:focus {
 
 .treatment-description {
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -3941,7 +3976,7 @@ a:focus {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .placeholder-actions {
@@ -3986,7 +4021,7 @@ a:focus {
 }
 
 .feature-item p {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -4001,7 +4036,7 @@ a:focus {
 .lead-text {
   font-size: var(--text-lg);
   line-height: 1.7;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-xl);
 }
 
@@ -4081,7 +4116,7 @@ a:focus {
   font-size: var(--text-base);
   line-height: 1.6;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-style: italic;
 }
 
@@ -4120,7 +4155,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -4139,7 +4174,7 @@ a:focus {
 }
 
 .form-control::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 /* Consultation Form Specific */
@@ -4148,7 +4183,7 @@ a:focus {
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 .consultation-form h3 {
@@ -4244,9 +4279,9 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary-forest: #000000;
-    --color-charcoal: #000000;
-    --shadow-md: 0 0 0 2px #000000;
+    --color-primary-forest: var(--color-text-primary); /* SEMANTIC: High contrast primary */
+    --color-charcoal: var(--color-text-primary); /* SEMANTIC: Replaced hardcoded var(--color-text-primary) */
+    --shadow-md: 0 0 0 2px var(--color-text-primary); /* SEMANTIC: High contrast shadow */
   }
 }
 
@@ -4611,7 +4646,7 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .mobile-menu {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .mobile-menu-overlay {
@@ -4624,7 +4659,7 @@ a:focus {
 
   .mobile-nav-list a:hover,
   .mobile-nav-list a:focus {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   }
 }
 
@@ -4739,7 +4774,7 @@ a:focus {
 .treatment-search {
   width: 100%;
   padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -4755,7 +4790,7 @@ a:focus {
 }
 
 .treatment-search::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -4773,12 +4808,12 @@ a:focus {
 .filter-select {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
   background: var(--color-white);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
@@ -4819,7 +4854,7 @@ a:focus {
   padding: var(--space-xs) var(--space-md);
   background: var(--color-soft-gray);
   border-radius: var(--radius-full);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 /* Loading State */
@@ -4878,7 +4913,7 @@ a:focus {
 }
 
 .no-results-message {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-size: var(--text-base);
   margin-bottom: var(--space-xl);
   max-width: 400px;
@@ -4981,20 +5016,20 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .treatment-filters-wrapper {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .treatment-search,
   .filter-select {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .clear-filters {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .no-results {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 }
 
@@ -5101,7 +5136,7 @@ a:focus {
 }
 
 .featured-treatments .section-subtitle {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto var(--space-xl);
 }
@@ -5196,7 +5231,7 @@ a:focus {
 .treatment-showcase-item .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -5290,7 +5325,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 500px;
 }
 
@@ -5436,7 +5471,7 @@ a:focus {
 
 .section-subtitle {
   font-size: var(--text-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -5575,7 +5610,7 @@ a:focus {
 
 .treatment-description {
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -5620,7 +5655,7 @@ a:focus {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .placeholder-actions {
@@ -5665,7 +5700,7 @@ a:focus {
 }
 
 .feature-item p {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -5680,7 +5715,7 @@ a:focus {
 .lead-text {
   font-size: var(--text-lg);
   line-height: 1.7;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-xl);
 }
 
@@ -5760,7 +5795,7 @@ a:focus {
   font-size: var(--text-base);
   line-height: 1.6;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-style: italic;
 }
 
@@ -5799,7 +5834,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -5818,7 +5853,7 @@ a:focus {
 }
 
 .form-control::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 /* Consultation Form Specific */
@@ -5827,7 +5862,7 @@ a:focus {
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 .consultation-form h3 {
@@ -5923,9 +5958,9 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary-forest: #000000;
-    --color-charcoal: #000000;
-    --shadow-md: 0 0 0 2px #000000;
+    --color-primary-forest: var(--color-text-primary); /* SEMANTIC: High contrast primary */
+    --color-charcoal: var(--color-text-primary); /* SEMANTIC: Replaced hardcoded var(--color-text-primary) */
+    --shadow-md: 0 0 0 2px var(--color-text-primary); /* SEMANTIC: High contrast shadow */
   }
 }
 
@@ -6290,7 +6325,7 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .mobile-menu {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .mobile-menu-overlay {
@@ -6303,7 +6338,7 @@ a:focus {
 
   .mobile-nav-list a:hover,
   .mobile-nav-list a:focus {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   }
 }
 
@@ -6418,7 +6453,7 @@ a:focus {
 .treatment-search {
   width: 100%;
   padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -6434,7 +6469,7 @@ a:focus {
 }
 
 .treatment-search::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -6452,12 +6487,12 @@ a:focus {
 .filter-select {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
   background: var(--color-white);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
@@ -6498,7 +6533,7 @@ a:focus {
   padding: var(--space-xs) var(--space-md);
   background: var(--color-soft-gray);
   border-radius: var(--radius-full);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 /* Loading State */
@@ -6557,7 +6592,7 @@ a:focus {
 }
 
 .no-results-message {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-size: var(--text-base);
   margin-bottom: var(--space-xl);
   max-width: 400px;
@@ -6660,20 +6695,20 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .treatment-filters-wrapper {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .treatment-search,
   .filter-select {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .clear-filters {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .no-results {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 }
 
@@ -6780,7 +6815,7 @@ a:focus {
 }
 
 .featured-treatments .section-subtitle {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto var(--space-xl);
 }
@@ -6875,7 +6910,7 @@ a:focus {
 .treatment-showcase-item .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -6969,7 +7004,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 500px;
 }
 
@@ -7115,7 +7150,7 @@ a:focus {
 
 .section-subtitle {
   font-size: var(--text-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -7254,7 +7289,7 @@ a:focus {
 
 .treatment-description {
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -7299,7 +7334,7 @@ a:focus {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .placeholder-actions {
@@ -7344,7 +7379,7 @@ a:focus {
 }
 
 .feature-item p {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -7359,7 +7394,7 @@ a:focus {
 .lead-text {
   font-size: var(--text-lg);
   line-height: 1.7;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-xl);
 }
 
@@ -7439,7 +7474,7 @@ a:focus {
   font-size: var(--text-base);
   line-height: 1.6;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-style: italic;
 }
 
@@ -7478,7 +7513,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -7497,7 +7532,7 @@ a:focus {
 }
 
 .form-control::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 /* Consultation Form Specific */
@@ -7506,7 +7541,7 @@ a:focus {
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 .consultation-form h3 {
@@ -7602,9 +7637,9 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary-forest: #000000;
-    --color-charcoal: #000000;
-    --shadow-md: 0 0 0 2px #000000;
+    --color-primary-forest: var(--color-text-primary); /* SEMANTIC: High contrast primary */
+    --color-charcoal: var(--color-text-primary); /* SEMANTIC: Replaced hardcoded var(--color-text-primary) */
+    --shadow-md: 0 0 0 2px var(--color-text-primary); /* SEMANTIC: High contrast shadow */
   }
 }
 
@@ -7969,7 +8004,7 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .mobile-menu {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .mobile-menu-overlay {
@@ -7982,7 +8017,7 @@ a:focus {
 
   .mobile-nav-list a:hover,
   .mobile-nav-list a:focus {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   }
 }
 
@@ -8097,7 +8132,7 @@ a:focus {
 .treatment-search {
   width: 100%;
   padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -8113,7 +8148,7 @@ a:focus {
 }
 
 .treatment-search::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -8131,12 +8166,12 @@ a:focus {
 .filter-select {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
   background: var(--color-white);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
@@ -8177,7 +8212,7 @@ a:focus {
   padding: var(--space-xs) var(--space-md);
   background: var(--color-soft-gray);
   border-radius: var(--radius-full);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 /* Loading State */
@@ -8236,7 +8271,7 @@ a:focus {
 }
 
 .no-results-message {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-size: var(--text-base);
   margin-bottom: var(--space-xl);
   max-width: 400px;
@@ -8339,20 +8374,20 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .treatment-filters-wrapper {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .treatment-search,
   .filter-select {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .clear-filters {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .no-results {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 }
 
@@ -8459,7 +8494,7 @@ a:focus {
 }
 
 .featured-treatments .section-subtitle {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto var(--space-xl);
 }
@@ -8554,7 +8589,7 @@ a:focus {
 .treatment-showcase-item .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -8648,7 +8683,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 500px;
 }
 /*
@@ -8676,28 +8711,28 @@ Author: PreetiDreams Development Team
   /* Premium Medical Spa Color Palette - Modern Flat UI */
 
   /* Primary Colors */
-  --color-primary-teal: #16a085;
-  --color-primary-blue: #3498db;
-  --color-primary-navy: #2c3e50;
-  --color-accent-coral: #e74c3c;
+  --color-primary-teal: var(--color-brand-primary); /* SEMANTIC: Primary brand color */
+  --color-primary-blue: var(--color-brand-secondary); /* SEMANTIC: Secondary brand color */
+  --color-primary-navy: var(--color-brand-dark); /* SEMANTIC: Dark brand variant */
+  --color-accent-coral: var(--color-accent-primary); /* SEMANTIC: Primary accent color */
 
   /* Secondary Colors */
-  --color-secondary-sage: #95a5a6;
-  --color-secondary-lavender: #9b59b6;
-  --color-secondary-mint: #1abc9c;
-  --color-secondary-peach: #f39c12;
+  --color-secondary-sage: var(--color-border-primary); /* SEMANTIC: Primary border color */
+  --color-secondary-lavender: var(--color-accent-secondary); /* SEMANTIC: Secondary accent color */
+  --color-secondary-mint: var(--color-feedback-success); /* SEMANTIC: Success feedback color */
+  --color-secondary-peach: var(--color-feedback-warning); /* SEMANTIC: Warning feedback color */
 
   /* Neutral Palette */
-  --color-neutral-white: #ffffff;
-  --color-neutral-light: #ecf0f1;
-  --color-neutral-medium: #bdc3c7;
-  --color-neutral-dark: #34495e;
+  --color-neutral-white: var(--color-surface-primary); /* SEMANTIC: Primary surface color */
+  --color-neutral-light: var(--color-surface-secondary); /* SEMANTIC: Secondary surface color */
+  --color-neutral-medium: var(--color-border-primary); /* SEMANTIC: Primary border color */
+  --color-neutral-dark: var(--color-text-secondary); /* SEMANTIC: Secondary text color */
 
   /* Accent & Interaction Colors */
-  --color-accent-success: #27ae60;
-  --color-accent-warning: #f1c40f;
-  --color-accent-error: #e67e22;
-  --color-accent-info: #3498db;
+  --color-accent-success: var(--color-feedback-success); /* SEMANTIC: Success feedback color */
+  --color-accent-warning: var(--color-feedback-warning); /* SEMANTIC: Warning feedback color */
+  --color-accent-error: var(--color-feedback-error); /* SEMANTIC: Error feedback color */
+  --color-accent-info: var(--color-feedback-info); /* SEMANTIC: Info feedback color */
 
   /* Legacy Color Mappings for Compatibility */
   --color-primary-forest: var(--color-primary-navy);
@@ -8706,7 +8741,7 @@ Author: PreetiDreams Development Team
   --color-primary-soft-gold: var(--color-neutral-light);
   --color-white: var(--color-neutral-white);
   --color-soft-gray: var(--color-neutral-light);
-  --color-charcoal: var(--color-neutral-dark);
+  --color-charcoal: var(--color-text-primary); /* SEMANTIC: Primary text color for high contrast */
   --color-rose-gold: var(--color-accent-coral);
   --color-success: var(--color-accent-success);
   --color-warning: var(--color-accent-warning);
@@ -8785,15 +8820,15 @@ Author: PreetiDreams Development Team
   --container-2xl: 1320px;
 
   /* Quiz-specific custom properties */
-  --quiz-primary: #6366f1;
-  --quiz-accent: #10b981;
-  --quiz-neutral-bg: #f8fafc;
-  --quiz-text-primary: #1e293b;
-  --quiz-progress-bar: #e2e8f0;
-  --quiz-hover-state: #4f46e5;
-  --quiz-success: #059669;
-  --quiz-error: #dc2626;
-  --quiz-warning: #d97706;
+  --quiz-primary: var(--color-interactive-primary); /* SEMANTIC: Primary interactive color */
+  --quiz-accent: var(--color-interactive-accent); /* SEMANTIC: Accent interactive color */
+  --quiz-neutral-bg: var(--color-surface-tertiary); /* SEMANTIC: Tertiary surface color */
+  --quiz-text-primary: var(--color-text-primary); /* SEMANTIC: Primary text color */
+  --quiz-progress-bar: var(--color-border-secondary); /* SEMANTIC: Secondary border color */
+  --quiz-hover-state: var(--color-interactive-hover); /* SEMANTIC: Interactive hover color */
+  --quiz-success: var(--color-feedback-success); /* SEMANTIC: Success feedback color */
+  --quiz-error: var(--color-feedback-error); /* SEMANTIC: Error feedback color */
+  --quiz-warning: var(--color-feedback-warning); /* SEMANTIC: Warning feedback color */
 }
 
 /* =============================================================================
@@ -8858,7 +8893,7 @@ body {
   font-family: var(--font-secondary);
   font-size: var(--text-base);
   line-height: 1.6;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   background-color: var(--color-white);
   font-weight: 400;
   text-rendering: optimizeLegibility;
@@ -9225,7 +9260,7 @@ a:focus {
 .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .treatment-actions {
@@ -9297,7 +9332,7 @@ a:focus {
 
 .staff-specialties h4 {
   font-size: var(--text-sm);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-sm);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -9354,7 +9389,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.5;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .testimonial-author {
@@ -9415,7 +9450,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -9434,7 +9469,7 @@ a:focus {
 }
 
 .form-control::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 /* Consultation Form Specific */
@@ -9443,7 +9478,7 @@ a:focus {
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 .consultation-form h3 {
@@ -9539,9 +9574,9 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary-forest: #000000;
-    --color-charcoal: #000000;
-    --shadow-md: 0 0 0 2px #000000;
+    --color-primary-forest: var(--color-text-primary); /* SEMANTIC: High contrast primary */
+    --color-charcoal: var(--color-text-primary); /* SEMANTIC: Replaced hardcoded var(--color-text-primary) */
+    --shadow-md: 0 0 0 2px var(--color-text-primary); /* SEMANTIC: High contrast shadow */
   }
 }
 
@@ -9906,7 +9941,7 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .mobile-menu {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .mobile-menu-overlay {
@@ -9919,7 +9954,7 @@ a:focus {
 
   .mobile-nav-list a:hover,
   .mobile-nav-list a:focus {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   }
 }
 
@@ -10034,7 +10069,7 @@ a:focus {
 .treatment-search {
   width: 100%;
   padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -10050,7 +10085,7 @@ a:focus {
 }
 
 .treatment-search::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -10068,12 +10103,12 @@ a:focus {
 .filter-select {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
   background: var(--color-white);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
@@ -10114,7 +10149,7 @@ a:focus {
   padding: var(--space-xs) var(--space-md);
   background: var(--color-soft-gray);
   border-radius: var(--radius-full);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 /* Loading State */
@@ -10173,7 +10208,7 @@ a:focus {
 }
 
 .no-results-message {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-size: var(--text-base);
   margin-bottom: var(--space-xl);
   max-width: 400px;
@@ -10276,20 +10311,20 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .treatment-filters-wrapper {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .treatment-search,
   .filter-select {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .clear-filters {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .no-results {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 }
 
@@ -10396,7 +10431,7 @@ a:focus {
 }
 
 .featured-treatments .section-subtitle {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto var(--space-xl);
 }
@@ -10491,7 +10526,7 @@ a:focus {
 .treatment-showcase-item .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -10585,7 +10620,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 500px;
 }
 
@@ -10731,7 +10766,7 @@ a:focus {
 
 .section-subtitle {
   font-size: var(--text-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -10870,7 +10905,7 @@ a:focus {
 
 .treatment-description {
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -10915,7 +10950,7 @@ a:focus {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .placeholder-actions {
@@ -10960,7 +10995,7 @@ a:focus {
 }
 
 .feature-item p {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -10975,7 +11010,7 @@ a:focus {
 .lead-text {
   font-size: var(--text-lg);
   line-height: 1.7;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-xl);
 }
 
@@ -11055,7 +11090,7 @@ a:focus {
   font-size: var(--text-base);
   line-height: 1.6;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-style: italic;
 }
 
@@ -11094,7 +11129,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -11113,7 +11148,7 @@ a:focus {
 }
 
 .form-control::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 /* Consultation Form Specific */
@@ -11122,7 +11157,7 @@ a:focus {
   padding: var(--space-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 .consultation-form h3 {
@@ -11218,9 +11253,9 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-primary-forest: #000000;
-    --color-charcoal: #000000;
-    --shadow-md: 0 0 0 2px #000000;
+    --color-primary-forest: var(--color-text-primary); /* SEMANTIC: High contrast primary */
+    --color-charcoal: var(--color-text-primary); /* SEMANTIC: Replaced hardcoded var(--color-text-primary) */
+    --shadow-md: 0 0 0 2px var(--color-text-primary); /* SEMANTIC: High contrast shadow */
   }
 }
 
@@ -11585,7 +11620,7 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .mobile-menu {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .mobile-menu-overlay {
@@ -11598,7 +11633,7 @@ a:focus {
 
   .mobile-nav-list a:hover,
   .mobile-nav-list a:focus {
-    border-color: var(--color-charcoal);
+    border-color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   }
 }
 
@@ -11713,7 +11748,7 @@ a:focus {
 .treatment-search {
   width: 100%;
   padding: var(--space-md) var(--space-md) var(--space-md) 3rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -11729,7 +11764,7 @@ a:focus {
 }
 
 .treatment-search::placeholder {
-  color: #999;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -11747,12 +11782,12 @@ a:focus {
 .filter-select {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
   background: var(--color-white);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   cursor: pointer;
   transition: all var(--transition-fast);
   min-height: 48px;
@@ -11793,7 +11828,7 @@ a:focus {
   padding: var(--space-xs) var(--space-md);
   background: var(--color-soft-gray);
   border-radius: var(--radius-full);
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border-secondary);
 }
 
 /* Loading State */
@@ -11852,7 +11887,7 @@ a:focus {
 }
 
 .no-results-message {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-size: var(--text-base);
   margin-bottom: var(--space-xl);
   max-width: 400px;
@@ -11955,20 +11990,20 @@ a:focus {
 /* High Contrast Support */
 @media (prefers-contrast: high) {
   .treatment-filters-wrapper {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .treatment-search,
   .filter-select {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .clear-filters {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 
   .no-results {
-    border: 2px solid var(--color-charcoal);
+    border: 2px solid var(--color-text-primary); /* SEMANTIC: High contrast border */
   }
 }
 
@@ -12075,7 +12110,7 @@ a:focus {
 }
 
 .featured-treatments .section-subtitle {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto var(--space-xl);
 }
@@ -12170,7 +12205,7 @@ a:focus {
 .treatment-showcase-item .treatment-description {
   margin-bottom: var(--space-lg);
   flex-grow: 1;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -12264,7 +12299,7 @@ a:focus {
   font-size: var(--text-lg);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 500px;
 }
 
@@ -12410,7 +12445,7 @@ a:focus {
 
 .section-subtitle {
   font-size: var(--text-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -12549,7 +12584,7 @@ a:focus {
 
 .treatment-description {
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -12594,7 +12629,7 @@ a:focus {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
 }
 
 .placeholder-actions {
@@ -12639,7 +12674,7 @@ a:focus {
 }
 
 .feature-item p {
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   line-height: 1.6;
 }
 
@@ -12654,7 +12689,7 @@ a:focus {
 .lead-text {
   font-size: var(--text-lg);
   line-height: 1.7;
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   margin-bottom: var(--space-xl);
 }
 
@@ -12734,7 +12769,7 @@ a:focus {
   font-size: var(--text-base);
   line-height: 1.6;
   margin-bottom: var(--space-lg);
-  color: var(--color-charcoal);
+  color: var(--color-text-primary); /* SEMANTIC: Primary text color */
   font-style: italic;
 }
 
@@ -12820,7 +12855,7 @@ a:focus {
 .form-control {
   width: 100%;
   padding: var(--space-md);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-border-secondary);
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-family: var(--font-secondary);
@@ -12855,7 +12890,7 @@ a:focus {
   display: inline-block;
   width: 24px;
   height: 24px;
-  border: 3px solid #f3f3f3;
+  border: 3px solid var(--color-border-light);
   border-top: 3px solid var(--color-primary-gold);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -12963,7 +12998,7 @@ a:focus {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+  background: linear-gradient(135deg, var(--color-surface-background) 0%, var(--color-border-secondary) 50%, var(--color-border-secondary) 100%);
   padding: 0;
   overflow: hidden;
   /* Hero extends to top of page - absolutely no spacing */
@@ -13203,7 +13238,7 @@ a:focus {
 
 .category-btn.selected {
   border-color: var(--quiz-primary);
-  background: linear-gradient(135deg, #eef2ff, #f0f9ff);
+  background: linear-gradient(135deg, var(--color-surface-background), var(--color-surface-primary));
   box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
 }
 
@@ -13904,7 +13939,7 @@ a:focus {
 
 .category-btn.selected {
   border-color: var(--quiz-primary);
-  background: linear-gradient(135deg, #eef2ff, #f0f9ff);
+  background: linear-gradient(135deg, var(--color-surface-background), var(--color-surface-primary));
   box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
 }
 
@@ -13985,7 +14020,7 @@ a:focus {
 
 .treatment-btn.selected {
   border-color: var(--quiz-accent);
-  background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+  background: linear-gradient(135deg, var(--color-feedback-success), var(--color-surface-primary));
   box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
 }
 
@@ -14099,7 +14134,7 @@ a:focus {
 
 .radio-option:has(input:checked) {
   border-color: var(--quiz-primary);
-  background: linear-gradient(135deg, #eef2ff, #f0f9ff);
+  background: linear-gradient(135deg, var(--color-surface-background), var(--color-surface-primary));
 }
 
 .radio-label {
@@ -14342,8 +14377,8 @@ a:focus {
 
 /* Error handling */
 .submission-error {
-  background: #fef2f2;
-  border: 2px solid #fecaca;
+  background: var(--color-surface-error-light); /* SEMANTIC: Light error background */
+  border: 2px solid var(--color-feedback-error);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;

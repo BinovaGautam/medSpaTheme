@@ -6,7 +6,7 @@
 
 .dr-preeti-hero {
   padding: 4rem 0;
-  background: linear-gradient(135deg, var(--color-light, #f8f9fa) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
+  background: linear-gradient(135deg, var(--color-light, var(--color-surface-background)) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
 }
 
 .dr-preeti-hero .hero-content {
@@ -26,14 +26,14 @@
 .dr-preeti-hero .hero-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .dr-preeti-hero .hero-subtitle {
   font-size: 1.25rem;
-  color: var(--color-secondary, #8B4B7A);
+  color: var(--color-secondary, var(--color-brand-secondary));
   margin-bottom: 1.5rem;
   font-weight: 500;
 }
@@ -41,7 +41,7 @@
 .dr-preeti-hero .hero-quote blockquote {
   font-size: 1.125rem;
   font-style: italic;
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin: 0 0 2rem 0;
   padding: 0;
@@ -51,7 +51,7 @@
 .dr-preeti-hero .hero-quote blockquote::before {
   content: '"';
   font-size: 3em;
-  color: var(--color-accent, #D4AF37);
+  color: var(--color-accent, var(--color-accent-primary));
   position: absolute;
   top: -0.2em;
   left: -0.3em;
@@ -78,16 +78,16 @@
 .dr-preeti-hero .credential-icon {
   font-size: 1.5rem;
   flex-shrink: 0;
-  color: var(--color-secondary, #8B4B7A);
+  color: var(--color-secondary, var(--color-brand-secondary));
 }
 
 .dr-preeti-hero .credential-text {
   font-weight: 600;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
 }
 
 .dr-preeti-hero .placeholder-image {
-  background: linear-gradient(135deg, var(--color-secondary, #8B4B7A) 0%, var(--color-primary, #1B365D) 100%);
+  background: linear-gradient(135deg, var(--color-secondary, var(--color-brand-secondary)) 0%, var(--color-primary, var(--color-brand-primary)) 100%);
   border-radius: 16px;
   padding: 4rem;
   text-align: center;
@@ -113,7 +113,7 @@
 .practice-story .story-header h2 {
   text-align: center;
   font-size: 2.5rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 2rem;
 }
 
@@ -126,7 +126,7 @@
 .practice-story .story-text p {
   font-size: 1.125rem;
   line-height: 1.7;
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   margin-bottom: 2rem;
 }
 
@@ -146,7 +146,7 @@
   display: flex;
   gap: 1.5rem;
   padding: 2rem;
-  background: linear-gradient(135deg, var(--color-light, #f8f9fa) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
+  background: linear-gradient(135deg, var(--color-light, var(--color-surface-background)) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -161,18 +161,18 @@
   font-size: 2.5rem;
   flex-shrink: 0;
   margin-top: 0.5rem;
-  color: var(--color-secondary, #8B4B7A);
+  color: var(--color-secondary, var(--color-brand-secondary));
 }
 
 .practice-story .differentiator-content h4 {
   font-size: 1.25rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
 .practice-story .differentiator-content p {
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin: 0;
 }
@@ -180,7 +180,7 @@
 /* Signature Treatments Section */
 .signature-treatments {
   padding: 4rem 0;
-  background: linear-gradient(135deg, var(--color-light, #f8f9fa) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.02) 100%);
+  background: linear-gradient(135deg, var(--color-light, var(--color-surface-background)) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.02) 100%);
 }
 
 .signature-treatments .section-header {
@@ -190,7 +190,7 @@
 
 .signature-treatments .section-header h2 {
   font-size: 2.5rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1.5rem;
 }
 
@@ -229,18 +229,18 @@
 .signature-treatments .treatment-icon {
   font-size: 3rem;
   margin-bottom: 1.5rem;
-  color: var(--color-accent, #D4AF37);
+  color: var(--color-accent, var(--color-accent-primary));
 }
 
 .signature-treatments .treatment-card h3 {
   font-size: 1.25rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1rem;
   font-weight: 600;
 }
 
 .signature-treatments .treatment-card p {
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin: 0;
 }
@@ -255,12 +255,12 @@
 
 .signature-treatments .additional-treatments h4 {
   font-size: 1.125rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1rem;
 }
 
 .signature-treatments .additional-treatments p {
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin: 0;
 }
@@ -278,13 +278,13 @@
 
 .expert-team .section-header h2 {
   font-size: 2.5rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1.5rem;
 }
 
 .expert-team .section-header p {
   font-size: 1.125rem;
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   max-width: 600px;
   margin: 0 auto;
@@ -310,7 +310,7 @@
 
 .expert-team .team-member {
   padding: 2rem;
-  background: linear-gradient(135deg, var(--color-light, #f8f9fa) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
+  background: linear-gradient(135deg, var(--color-light, var(--color-surface-background)) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
   border-radius: 12px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -324,18 +324,18 @@
 .expert-team .member-icon {
   font-size: 3rem;
   margin-bottom: 1.5rem;
-  color: var(--color-secondary, #8B4B7A);
+  color: var(--color-secondary, var(--color-brand-secondary));
 }
 
 .expert-team .team-member h3 {
   font-size: 1.25rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1rem;
   font-weight: 600;
 }
 
 .expert-team .team-member p {
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin: 0;
 }
@@ -350,7 +350,7 @@
 
 .expert-team .team-summary p {
   font-size: 1.125rem;
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin: 0;
 }
@@ -358,7 +358,7 @@
 /* Arizona Locations Section */
 .arizona-locations {
   padding: 4rem 0;
-  background: linear-gradient(135deg, var(--color-light, #f8f9fa) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.02) 100%);
+  background: linear-gradient(135deg, var(--color-light, var(--color-surface-background)) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.02) 100%);
 }
 
 .arizona-locations .section-header {
@@ -368,7 +368,7 @@
 
 .arizona-locations .section-header h2 {
   font-size: 2.5rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1.5rem;
 }
 
@@ -400,21 +400,21 @@
 
 .arizona-locations h3 {
   font-size: 1.5rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1.5rem;
   font-weight: 600;
 }
 
 .arizona-locations h4 {
   font-size: 1.125rem;
-  color: var(--color-secondary, #8B4B7A);
+  color: var(--color-secondary, var(--color-brand-secondary));
   margin-bottom: 1rem;
   font-weight: 600;
 }
 
 .arizona-locations .location-details p,
 .arizona-locations .outreach-details p {
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -424,12 +424,12 @@
 }
 
 .arizona-locations .contact-item a {
-  color: var(--color-secondary, #8B4B7A);
+  color: var(--color-secondary, var(--color-brand-secondary));
   text-decoration: none;
 }
 
 .arizona-locations .contact-item a:hover {
-  color: var(--color-accent, #D4AF37);
+  color: var(--color-accent, var(--color-accent-primary));
 }
 
 .arizona-locations .area-item {
@@ -437,7 +437,7 @@
 }
 
 .arizona-locations .area-item h4 {
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 0.5rem;
 }
 
@@ -447,7 +447,7 @@
   border-radius: 8px;
   margin-top: 1rem;
   font-style: italic;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
 }
 
 /* Success Metrics Section */
@@ -463,7 +463,7 @@
 
 .success-metrics .section-header h2 {
   font-size: 2.5rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 1.5rem;
 }
 
@@ -487,7 +487,7 @@
 
 .success-metrics .metric-item {
   padding: 2rem;
-  background: linear-gradient(135deg, var(--color-light, #f8f9fa) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
+  background: linear-gradient(135deg, var(--color-light, var(--color-surface-background)) 0%, rgba(var(--color-secondary-rgb, 135, 169, 107), 0.05) 100%);
   border-radius: 12px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -501,20 +501,20 @@
 .success-metrics .metric-number {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--color-accent, #D4AF37);
+  color: var(--color-accent, var(--color-accent-primary));
   margin-bottom: 0.5rem;
   line-height: 1;
 }
 
 .success-metrics .metric-item h3 {
   font-size: 1.125rem;
-  color: var(--color-primary, #1B365D);
+  color: var(--color-primary, var(--color-brand-primary));
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
 .success-metrics .metric-item p {
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin: 0;
 }
@@ -531,14 +531,14 @@
 .success-metrics .testimonial-quote blockquote {
   font-size: 1.125rem;
   font-style: italic;
-  color: var(--color-neutral-dark, #666);
+  color: var(--color-neutral-dark, var(--color-text-secondary));
   line-height: 1.6;
   margin-bottom: 1rem;
 }
 
 .success-metrics .testimonial-quote cite {
   font-size: 0.875rem;
-  color: var(--color-secondary, #8B4B7A);
+  color: var(--color-secondary, var(--color-brand-secondary));
   font-weight: 600;
   font-style: normal;
 }

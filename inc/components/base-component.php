@@ -351,6 +351,23 @@ abstract class BaseComponent {
      * Apply design tokens as CSS custom properties
      */
     protected function apply_css_custom_properties() {
+        // Check if this component has nested arrays in its tokens
+        // If so, let ComponentRegistry handle the token generation
+        $has_nested_arrays = false;
+        $default_tokens = $this->get_default_tokens();
+
+        foreach ($default_tokens as $token_value) {
+            if (is_array($token_value)) {
+                $has_nested_arrays = true;
+                break;
+            }
+        }
+
+        // Skip if ComponentRegistry will handle nested tokens
+        if ($has_nested_arrays) {
+            return;
+        }
+
         $css_vars = [];
 
         foreach ($this->design_tokens as $token_name => $token_value) {

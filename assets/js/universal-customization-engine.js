@@ -61,43 +61,62 @@ class UniversalCustomizationEngine {
      * Register built-in domains that come with the system
      */
     registerBuiltInDomains() {
+        // Check for generator availability before registration
+        const generators = {
+            color: window.colorDomainGenerator,
+            typography: window.typographyDomainSystem,
+            component: window.componentTokenSystem
+        };
+
         // Color domain (already implemented)
-        this.registerDomain('color', {
-            name: 'Color Customization',
-            version: '1.0.0',
-            generator: window.colorDomainGenerator,
-            priority: 1,
-            dependencies: [],
-            wpControls: 'auto-generate',
-            previewMode: 'live',
-            tokens: ['primary', 'secondary', 'accent', 'surface', 'background', 'text-primary', 'text-secondary', 'border', 'success', 'warning', 'error']
-        });
+        if (generators.color) {
+            this.registerDomain('color', {
+                name: 'Color Customization',
+                version: '1.0.0',
+                generator: generators.color,
+                priority: 1,
+                dependencies: [],
+                wpControls: 'auto-generate',
+                previewMode: 'live',
+                tokens: ['primary', 'secondary', 'accent', 'surface', 'background', 'text-primary', 'text-secondary', 'border', 'success', 'warning', 'error']
+            });
+        } else {
+            console.warn('[UniversalCustomizationEngine] Color domain generator not available, skipping registration');
+        }
 
         // Typography domain (already implemented)
-        this.registerDomain('typography', {
-            name: 'Typography Customization',
-            version: '1.0.0',
-            generator: window.typographyDomainSystem,
-            priority: 2,
-            dependencies: ['color'],
-            wpControls: 'auto-generate',
-            previewMode: 'live',
-            tokens: ['heading-1', 'heading-2', 'heading-3', 'heading-4', 'body', 'body-large', 'body-small', 'caption', 'button', 'label']
-        });
+        if (generators.typography) {
+            this.registerDomain('typography', {
+                name: 'Typography Customization',
+                version: '1.0.0',
+                generator: generators.typography,
+                priority: 2,
+                dependencies: ['color'],
+                wpControls: 'auto-generate',
+                previewMode: 'live',
+                tokens: ['heading-1', 'heading-2', 'heading-3', 'heading-4', 'body', 'body-large', 'body-small', 'caption', 'button', 'label']
+            });
+        } else {
+            console.warn('[UniversalCustomizationEngine] Typography domain generator not available, skipping registration');
+        }
 
         // Component domain (already implemented)
-        this.registerDomain('component', {
-            name: 'Component Customization',
-            version: '1.0.0',
-            generator: window.componentTokenSystem,
-            priority: 3,
-            dependencies: ['color', 'typography'],
-            wpControls: 'auto-generate',
-            previewMode: 'live',
-            tokens: ['button', 'card', 'input', 'modal', 'navbar', 'alert', 'tooltip']
-        });
+        if (generators.component) {
+            this.registerDomain('component', {
+                name: 'Component Customization',
+                version: '1.0.0',
+                generator: generators.component,
+                priority: 3,
+                dependencies: ['color', 'typography'],
+                wpControls: 'auto-generate',
+                previewMode: 'live',
+                tokens: ['button', 'card', 'input', 'modal', 'navbar', 'alert', 'tooltip']
+            });
+        } else {
+            console.warn('[UniversalCustomizationEngine] Component domain generator not available, skipping registration');
+        }
 
-        console.log('[UniversalCustomizationEngine] Built-in domains registered');
+        console.log('[UniversalCustomizationEngine] Built-in domains registration completed');
     }
 
     /**

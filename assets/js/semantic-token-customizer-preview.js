@@ -1,467 +1,384 @@
 /**
- * T7.3.3 Semantic Token Customizer Preview
- * Real-time preview functionality for semantic token customizer
+ * Semantic Token Customizer Preview
+ *
+ * T8.1 Live Preview Enhancement - Real-time palette preview in customizer
+ * Enables live updates when users change color palettes in WordPress Customizer
  *
  * @package MedSpaTheme
- * @version 4.1.0 - Sprint 7 T7.3.3 Implementation
+ * @version 1.0.0
  * @author CODE-GEN-001
  * @workflow CODE-GEN-WF-001
+ * @sprint SPRINT-8-EXTENSIBLE-SEMANTIC-INTEGRATION
  */
 
-(function($, wp) {
+(function($) {
     'use strict';
 
+    // Ensure wp.customize is available
+    if (typeof wp === 'undefined' || typeof wp.customize === 'undefined') {
+        console.warn('SemanticTokenPreview: WordPress Customizer API not available');
+        return;
+    }
+
     /**
-     * T7.3.3 Semantic Token Preview Handler
+     * Semantic Token Customizer Preview Class
      */
-    var SemanticTokenPreview = {
+    class SemanticTokenCustomizerPreview {
+        constructor() {
+            this.palettes = semanticTokenData.palettes || {};
+            this.ajaxUrl = semanticTokenData.ajaxUrl || '';
+            this.nonce = semanticTokenData.nonce || '';
+            this.currentPalette = null;
+            this.cssCache = new Map();
+            this.updateQueue = [];
+            this.isUpdating = false;
+
+            this.init();
+        }
 
         /**
-         * Performance tracking
+         * Initialize the preview system
          */
-        performance: {
-            updateCount: 0,
-            totalUpdateTime: 0,
-            averageUpdateTime: 0
-        },
+        init() {
+            console.log('SemanticTokenPreview: Initializing preview system');
+            console.log('Available palettes:', Object.keys(this.palettes));
 
-        /**
-         * Token cache for performance
-         */
-        tokenCache: {},
+            // Bind to customizer setting changes
+            this.bindCustomizerEvents();
 
-        /**
-         * Update queue for batched operations
-         */
-        updateQueue: [],
-        updateTimeout: null,
-
-        /**
-         * Initialize preview functionality
-         */
-        init: function() {
-            console.log('🎨 Initializing T7.3.3 Semantic Token Preview...');
-
-            this.setupPalettePreview();
-            this.setupColorOverridePreview();
-            this.setupComponentPreview();
+            // Setup performance monitoring
             this.setupPerformanceMonitoring();
-            this.setupAccessibilityEnhancements();
 
-            // Add preview body class
-            $('body').addClass('semantic-token-preview-active');
+            // Initialize CSS injection system
+            this.initCSSInjection();
 
-            console.log('✅ T7.3.3 Semantic Token Preview Ready');
-        },
-
-        /**
-         * Setup palette preview with real-time updates
-         */
-        setupPalettePreview: function() {
-            wp.customize('semantic_color_palette', function(value) {
-                value.bind(function(newPalette) {
-                    SemanticTokenPreview.handlePaletteChange(newPalette);
-                });
-            });
-        },
+            console.log('SemanticTokenPreview: Initialization complete');
+        }
 
         /**
-         * Setup color override previews
+         * Bind to WordPress Customizer events
          */
-        setupColorOverridePreview: function() {
-            // Primary color override
-            wp.customize('semantic_primary_override', function(value) {
-                value.bind(function(newColor) {
-                    SemanticTokenPreview.handlePrimaryColorChange(newColor);
+        bindCustomizerEvents() {
+            // Listen for palette changes
+            wp.customize('semantic_active_palette', (value) => {
+                value.bind((newPalette) => {
+                    this.handlePaletteChange(newPalette);
                 });
             });
 
-            // Accent color override
-            wp.customize('semantic_accent_override', function(value) {
-                value.bind(function(newColor) {
-                    SemanticTokenPreview.handleAccentColorChange(newColor);
-                });
+            // Listen for customizer ready event
+            wp.customize.bind('ready', () => {
+                console.log('SemanticTokenPreview: Customizer ready');
+                this.onCustomizerReady();
             });
-        },
+        }
 
         /**
-         * Setup component preview updates
+         * Handle customizer ready event
          */
-        setupComponentPreview: function() {
-            wp.customize('semantic_button_style', function(value) {
-                value.bind(function(newStyle) {
-                    SemanticTokenPreview.handleButtonStyleChange(newStyle);
+        onCustomizerReady() {
+            // Get initial palette value
+            const initialPalette = wp.customize('semantic_active_palette')();
+            if (initialPalette && this.palettes[initialPalette]) {
+                this.currentPalette = initialPalette;
+                console.log('SemanticTokenPreview: Initial palette:', initialPalette);
+            }
+        }
+
+        /**
+         * Handle palette change
+         */
+        handlePaletteChange(newPalette) {
+            console.log('SemanticTokenPreview: Palette changed to:', newPalette);
+
+            if (!this.palettes[newPalette]) {
+                console.error('SemanticTokenPreview: Unknown palette:', newPalette);
+                return;
+            }
+
+            // Add to update queue to prevent rapid changes
+            this.queueUpdate(newPalette);
+        }
+
+        /**
+         * Queue palette update to prevent rapid changes
+         */
+        queueUpdate(palette) {
+            this.updateQueue.push(palette);
+
+            // Debounce updates
+            clearTimeout(this.updateTimeout);
+            this.updateTimeout = setTimeout(() => {
+                this.processUpdateQueue();
+            }, 150); // 150ms debounce
+        }
+
+        /**
+         * Process queued updates
+         */
+        processUpdateQueue() {
+            if (this.isUpdating || this.updateQueue.length === 0) {
+                return;
+            }
+
+            // Get the latest palette from queue
+            const latestPalette = this.updateQueue[this.updateQueue.length - 1];
+            this.updateQueue = [];
+
+            this.updatePalette(latestPalette);
+        }
+
+        /**
+         * Update the current palette
+         */
+        async updatePalette(paletteId) {
+            if (this.isUpdating || this.currentPalette === paletteId) {
+                return;
+            }
+
+            this.isUpdating = true;
+            const startTime = performance.now();
+
+            try {
+                console.log('SemanticTokenPreview: Updating to palette:', paletteId);
+
+                // Generate CSS for the new palette
+                const css = this.generatePaletteCSS(paletteId);
+
+                // Apply CSS to the preview
+                this.applyCSSToPreview(css);
+
+                // Update current palette
+                this.currentPalette = paletteId;
+
+                // Send update to backend for persistence
+                await this.updateBackendPalette(paletteId);
+
+                const duration = performance.now() - startTime;
+                console.log(`SemanticTokenPreview: Palette update completed in ${duration.toFixed(2)}ms`);
+
+                // Trigger custom event for other scripts
+                $(document).trigger('semanticPaletteChanged', {
+                    palette: paletteId,
+                    duration: duration
                 });
+
+            } catch (error) {
+                console.error('SemanticTokenPreview: Error updating palette:', error);
+            } finally {
+                this.isUpdating = false;
+            }
+        }
+
+        /**
+         * Generate CSS for a specific palette
+         */
+        generatePaletteCSS(paletteId) {
+            // Check cache first
+            if (this.cssCache.has(paletteId)) {
+                return this.cssCache.get(paletteId);
+            }
+
+            const palette = this.palettes[paletteId];
+            if (!palette || !palette.colors) {
+                console.error('SemanticTokenPreview: Invalid palette data:', paletteId);
+                return '';
+            }
+
+            let css = `:root {\n`;
+            css += `  /* Semantic Color Tokens - Generated from ${paletteId} */\n`;
+
+            // Semantic role mapping
+            const roleMapping = {
+                'primary': 'color-brand-primary',
+                'secondary': 'color-brand-secondary',
+                'surface': 'color-surface-primary',
+                'background': 'color-surface-background',
+                'accent': 'color-accent-primary'
+            };
+
+            // Generate semantic foundation tokens
+            Object.keys(palette.colors).forEach(role => {
+                const color = palette.colors[role];
+                if (color && color.hex) {
+                    const semanticToken = roleMapping[role] || `color-${role.replace('_', '-')}`;
+                    css += `  --${semanticToken}: ${color.hex}; /* ${color.name || role} */\n`;
+                }
             });
-        },
+
+            css += '\n  /* Component-specific tokens */\n';
+
+            // Generate component tokens
+            if (palette.colors.primary && palette.colors.primary.hex) {
+                css += '  --btn-primary-bg: var(--color-brand-primary);\n';
+                css += '  --btn-primary-text: var(--color-surface-primary);\n';
+            }
+
+            if (palette.colors.secondary && palette.colors.secondary.hex) {
+                css += '  --btn-secondary-bg: var(--color-brand-secondary);\n';
+                css += '  --btn-secondary-text: var(--color-surface-primary);\n';
+            }
+
+            if (palette.colors.accent && palette.colors.accent.hex) {
+                css += '  --btn-accent-bg: var(--color-accent-primary);\n';
+                css += '  --btn-accent-text: var(--color-text-primary);\n';
+            }
+
+            // Surface tokens
+            if (palette.colors.surface && palette.colors.surface.hex) {
+                css += '  --card-bg: var(--color-surface-primary);\n';
+                css += '  --modal-bg: var(--color-surface-primary);\n';
+            }
+
+            if (palette.colors.background && palette.colors.background.hex) {
+                css += '  --page-bg: var(--color-surface-background);\n';
+                css += '  --section-bg: var(--color-surface-background);\n';
+            }
+
+            css += '}\n';
+
+            // Cache the generated CSS
+            this.cssCache.set(paletteId, css);
+
+            return css;
+        }
+
+        /**
+         * Apply CSS to the preview iframe
+         */
+        applyCSSToPreview(css) {
+            // Remove existing semantic token styles
+            $('#semantic-token-preview-styles').remove();
+
+            // Inject new styles
+            $('<style id="semantic-token-preview-styles">')
+                .text(css)
+                .appendTo('head');
+
+            console.log('SemanticTokenPreview: CSS applied to preview');
+        }
+
+        /**
+         * Update backend palette setting
+         */
+        async updateBackendPalette(paletteId) {
+            if (!this.ajaxUrl || !this.nonce) {
+                console.warn('SemanticTokenPreview: AJAX URL or nonce not available');
+                return;
+            }
+
+            try {
+                const response = await $.ajax({
+                    url: this.ajaxUrl,
+                    type: 'POST',
+                    data: {
+                        action: 'update_semantic_palette',
+                        palette_id: paletteId,
+                        nonce: this.nonce
+                    }
+                });
+
+                if (response.success) {
+                    console.log('SemanticTokenPreview: Backend updated successfully');
+                } else {
+                    console.error('SemanticTokenPreview: Backend update failed:', response.data);
+                }
+            } catch (error) {
+                console.error('SemanticTokenPreview: AJAX error:', error);
+            }
+        }
 
         /**
          * Setup performance monitoring
          */
-        setupPerformanceMonitoring: function() {
-            // Monitor real-time performance
-            setInterval(function() {
-                SemanticTokenPreview.updatePerformanceMetrics();
-            }, 1000);
-        },
+        setupPerformanceMonitoring() {
+            // Monitor CSS cache performance
+            setInterval(() => {
+                console.log('SemanticTokenPreview: CSS cache size:', this.cssCache.size);
+            }, 30000); // Log every 30 seconds
 
-        /**
-         * Setup accessibility enhancements
-         */
-        setupAccessibilityEnhancements: function() {
-            // Add visual feedback for changes
-            this.setupVisualFeedback();
-
-            // Add screen reader announcements
-            this.setupScreenReaderAnnouncements();
-        },
-
-        /**
-         * Handle palette change with optimized updates
-         */
-        handlePaletteChange: function(paletteId) {
-            var startTime = performance.now();
-
-            if (!semanticTokenCustomizer || !semanticTokenCustomizer.palettes) {
-                console.warn('Semantic token palette data not available');
-                return;
+            // Clear cache if it gets too large
+            if (this.cssCache.size > 50) {
+                console.log('SemanticTokenPreview: Clearing CSS cache');
+                this.cssCache.clear();
             }
-
-            var palette = semanticTokenCustomizer.palettes[paletteId];
-            if (!palette) {
-                console.warn('Palette not found:', paletteId);
-                return;
-            }
-
-            // Cache the palette for performance
-            this.tokenCache.currentPalette = palette;
-
-            // Queue the update for batched processing
-            this.queueUpdate(function() {
-                SemanticTokenPreview.applyPaletteColors(palette);
-                SemanticTokenPreview.updateComponentTokens(palette);
-                SemanticTokenPreview.triggerVisualFeedback('palette-change');
-            });
-
-            this.recordPerformance(startTime);
-        },
+        }
 
         /**
-         * Handle primary color override
+         * Initialize CSS injection system
          */
-        handlePrimaryColorChange: function(color) {
-            var startTime = performance.now();
+        initCSSInjection() {
+            // Create a MutationObserver to watch for DOM changes
+            if (typeof MutationObserver !== 'undefined') {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'childList') {
+                            // Re-apply current palette if DOM structure changed significantly
+                            this.handleDOMChange();
+                        }
+                    });
+                });
 
-            this.queueUpdate(function() {
-                if (color) {
-                    document.documentElement.style.setProperty('--color-primary', color);
-                    document.documentElement.style.setProperty('--btn-primary-bg', color);
-                    SemanticTokenPreview.updatePrimaryColorDerivatives(color);
-                } else {
-                    // Reset to palette default
-                    var palette = SemanticTokenPreview.tokenCache.currentPalette;
-                    if (palette) {
-                        document.documentElement.style.setProperty('--color-primary', palette.primary);
-                        document.documentElement.style.setProperty('--btn-primary-bg', palette.primary);
-                    }
-                }
-
-                SemanticTokenPreview.triggerVisualFeedback('primary-color-change');
-            });
-
-            this.recordPerformance(startTime);
-        },
-
-        /**
-         * Handle accent color override
-         */
-        handleAccentColorChange: function(color) {
-            var startTime = performance.now();
-
-            this.queueUpdate(function() {
-                if (color) {
-                    document.documentElement.style.setProperty('--color-accent', color);
-                    document.documentElement.style.setProperty('--btn-accent-bg', color);
-                    SemanticTokenPreview.updateAccentColorDerivatives(color);
-                } else {
-                    // Reset to palette default
-                    var palette = SemanticTokenPreview.tokenCache.currentPalette;
-                    if (palette) {
-                        document.documentElement.style.setProperty('--color-accent', palette.accent);
-                        document.documentElement.style.setProperty('--btn-accent-bg', palette.accent);
-                    }
-                }
-
-                SemanticTokenPreview.triggerVisualFeedback('accent-color-change');
-            });
-
-            this.recordPerformance(startTime);
-        },
-
-        /**
-         * Handle button style changes
-         */
-        handleButtonStyleChange: function(style) {
-            var startTime = performance.now();
-
-            this.queueUpdate(function() {
-                var borderRadius = '6px';
-
-                switch (style) {
-                    case 'rounded':
-                        borderRadius = '8px';
-                        break;
-                    case 'sharp':
-                        borderRadius = '2px';
-                        break;
-                    case 'pill':
-                        borderRadius = '50px';
-                        break;
-                    default:
-                        borderRadius = '6px';
-                }
-
-                document.documentElement.style.setProperty('--btn-border-radius', borderRadius);
-                SemanticTokenPreview.triggerVisualFeedback('button-style-change');
-            });
-
-            this.recordPerformance(startTime);
-        },
-
-        /**
-         * Apply palette colors to CSS custom properties
-         */
-        applyPaletteColors: function(palette) {
-            var root = document.documentElement;
-
-            // Primary colors
-            root.style.setProperty('--color-primary', palette.primary);
-            root.style.setProperty('--color-primary-hover', this.darkenColor(palette.primary, 20));
-            root.style.setProperty('--color-primary-light', this.lightenColor(palette.primary, 20));
-
-            // Secondary colors
-            root.style.setProperty('--color-secondary', palette.secondary);
-            root.style.setProperty('--color-secondary-hover', this.darkenColor(palette.secondary, 20));
-            root.style.setProperty('--color-secondary-light', this.lightenColor(palette.secondary, 20));
-
-            // Accent colors
-            root.style.setProperty('--color-accent', palette.accent);
-            root.style.setProperty('--color-accent-hover', this.darkenColor(palette.accent, 15));
-            root.style.setProperty('--color-accent-light', this.lightenColor(palette.accent, 30));
-        },
-
-        /**
-         * Update component tokens based on palette
-         */
-        updateComponentTokens: function(palette) {
-            var root = document.documentElement;
-
-            // Button component tokens
-            root.style.setProperty('--btn-primary-bg', palette.primary);
-            root.style.setProperty('--btn-primary-hover-bg', this.darkenColor(palette.primary, 20));
-            root.style.setProperty('--btn-secondary-bg', palette.secondary);
-            root.style.setProperty('--btn-accent-bg', palette.accent);
-
-            // Other component tokens
-            root.style.setProperty('--nav-link-color', palette.primary);
-            root.style.setProperty('--nav-link-hover', palette.accent);
-        },
-
-        /**
-         * Update primary color derivatives
-         */
-        updatePrimaryColorDerivatives: function(color) {
-            var root = document.documentElement;
-            root.style.setProperty('--color-primary-hover', this.darkenColor(color, 20));
-            root.style.setProperty('--color-primary-light', this.lightenColor(color, 20));
-            root.style.setProperty('--btn-primary-hover-bg', this.darkenColor(color, 20));
-        },
-
-        /**
-         * Update accent color derivatives
-         */
-        updateAccentColorDerivatives: function(color) {
-            var root = document.documentElement;
-            root.style.setProperty('--color-accent-hover', this.darkenColor(color, 15));
-            root.style.setProperty('--color-accent-light', this.lightenColor(color, 30));
-        },
-
-        /**
-         * Queue update for batched processing
-         */
-        queueUpdate: function(updateFunction) {
-            this.updateQueue.push(updateFunction);
-
-            if (this.updateTimeout) {
-                clearTimeout(this.updateTimeout);
-            }
-
-            // Batch updates for performance (< 100ms target)
-            this.updateTimeout = setTimeout(function() {
-                var startTime = performance.now();
-
-                while (SemanticTokenPreview.updateQueue.length > 0) {
-                    var updateFn = SemanticTokenPreview.updateQueue.shift();
-                    updateFn();
-                }
-
-                var endTime = performance.now();
-                SemanticTokenPreview.performance.totalUpdateTime += (endTime - startTime);
-                SemanticTokenPreview.performance.updateCount++;
-            }, 50); // 50ms delay for batching
-        },
-
-        /**
-         * Setup visual feedback for changes
-         */
-        setupVisualFeedback: function() {
-            // Add visual feedback styles
-            if (!document.getElementById('semantic-token-feedback-styles')) {
-                var style = document.createElement('style');
-                style.id = 'semantic-token-feedback-styles';
-                style.textContent = `
-                    .semantic-token-updating * {
-                        transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
-                    }
-
-                    .semantic-token-highlight {
-                        box-shadow: 0 0 10px rgba(212, 175, 55, 0.5) !important;
-                        animation: semanticTokenPulse 0.6s ease;
-                    }
-
-                    @keyframes semanticTokenPulse {
-                        0% { transform: scale(1); }
-                        50% { transform: scale(1.02); }
-                        100% { transform: scale(1); }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-        },
-
-        /**
-         * Trigger visual feedback for changes
-         */
-        triggerVisualFeedback: function(changeType) {
-            $('body').addClass('semantic-token-updating');
-
-            // Highlight affected elements based on change type
-            var selectors = {
-                'palette-change': '.btn, .site-header, h1, h2, h3, a',
-                'primary-color-change': '.btn-primary, .site-title, h1, h2, h3',
-                'accent-color-change': '.btn-accent, .accent-elements',
-                'button-style-change': '.btn, button, input[type="submit"]'
-            };
-
-            var selector = selectors[changeType] || '.btn';
-            $(selector).addClass('semantic-token-highlight');
-
-            // Remove feedback classes after animation
-            setTimeout(function() {
-                $('body').removeClass('semantic-token-updating');
-                $(selector).removeClass('semantic-token-highlight');
-            }, 600);
-        },
-
-        /**
-         * Setup screen reader announcements
-         */
-        setupScreenReaderAnnouncements: function() {
-            // Create announcement region
-            if (!document.getElementById('semantic-token-announcements')) {
-                var announcer = document.createElement('div');
-                announcer.id = 'semantic-token-announcements';
-                announcer.setAttribute('aria-live', 'polite');
-                announcer.setAttribute('aria-atomic', 'true');
-                announcer.style.position = 'absolute';
-                announcer.style.left = '-10000px';
-                announcer.style.width = '1px';
-                announcer.style.height = '1px';
-                announcer.style.overflow = 'hidden';
-                document.body.appendChild(announcer);
-            }
-        },
-
-        /**
-         * Announce changes to screen readers
-         */
-        announceChange: function(message) {
-            var announcer = document.getElementById('semantic-token-announcements');
-            if (announcer) {
-                announcer.textContent = message;
-            }
-        },
-
-        /**
-         * Record performance metrics
-         */
-        recordPerformance: function(startTime) {
-            var endTime = performance.now();
-            this.performance.totalUpdateTime += (endTime - startTime);
-            this.performance.updateCount++;
-            this.performance.averageUpdateTime = this.performance.totalUpdateTime / this.performance.updateCount;
-        },
-
-        /**
-         * Update performance metrics display
-         */
-        updatePerformanceMetrics: function() {
-            // Send performance data to parent frame if available
-            if (wp.customize && wp.customize.preview) {
-                wp.customize.preview.send('semantic-token-performance', {
-                    updateCount: this.performance.updateCount,
-                    averageUpdateTime: Math.round(this.performance.averageUpdateTime),
-                    totalUpdateTime: Math.round(this.performance.totalUpdateTime)
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
                 });
             }
-        },
-
-        /**
-         * Utility: Darken color by percentage
-         */
-        darkenColor: function(hex, percent) {
-            hex = hex.replace('#', '');
-            var num = parseInt(hex, 16);
-            var amt = Math.round(2.55 * percent);
-            var R = (num >> 16) - amt;
-            var G = (num >> 8 & 0x00FF) - amt;
-            var B = (num & 0x0000FF) - amt;
-
-            return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
-                (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
-        },
-
-        /**
-         * Utility: Lighten color by percentage
-         */
-        lightenColor: function(hex, percent) {
-            hex = hex.replace('#', '');
-            var num = parseInt(hex, 16);
-            var amt = Math.round(2.55 * percent);
-            var R = (num >> 16) + amt;
-            var G = (num >> 8 & 0x00FF) + amt;
-            var B = (num & 0x0000FF) + amt;
-
-            return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
-                (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
         }
-    };
+
+        /**
+         * Handle significant DOM changes
+         */
+        handleDOMChange() {
+            // Debounce DOM change handling
+            clearTimeout(this.domChangeTimeout);
+            this.domChangeTimeout = setTimeout(() => {
+                if (this.currentPalette) {
+                    console.log('SemanticTokenPreview: Re-applying palette after DOM change');
+                    const css = this.generatePaletteCSS(this.currentPalette);
+                    this.applyCSSToPreview(css);
+                }
+            }, 500);
+        }
+
+        /**
+         * Get current palette information
+         */
+        getCurrentPalette() {
+            return {
+                id: this.currentPalette,
+                data: this.palettes[this.currentPalette] || null
+            };
+        }
+
+        /**
+         * Get performance metrics
+         */
+        getPerformanceMetrics() {
+            return {
+                cacheSize: this.cssCache.size,
+                queueLength: this.updateQueue.length,
+                isUpdating: this.isUpdating,
+                availablePalettes: Object.keys(this.palettes).length
+            };
+        }
+    }
 
     /**
-     * Initialize when preview is ready
+     * Initialize when document is ready
      */
-    wp.customize.preview.bind('ready', function() {
-        console.log('🎨 WordPress Customizer Preview Ready - Initializing T7.3.3...');
+    $(document).ready(function() {
+        // Only initialize if we're in the customizer preview
+        if (typeof semanticTokenData !== 'undefined') {
+            window.semanticTokenPreview = new SemanticTokenCustomizerPreview();
 
-        // Small delay to ensure all systems are ready
-        setTimeout(function() {
-            SemanticTokenPreview.init();
-        }, 100);
+            // Expose to global scope for debugging
+            if (window.wp && window.wp.customize) {
+                window.wp.customize.semanticTokenPreview = window.semanticTokenPreview;
+            }
+        } else {
+            console.warn('SemanticTokenPreview: semanticTokenData not available');
+        }
     });
 
-    // Export for global access
-    window.SemanticTokenPreview = SemanticTokenPreview;
-
-})(jQuery, wp);
+})(jQuery);

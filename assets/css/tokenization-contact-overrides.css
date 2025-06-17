@@ -296,7 +296,7 @@ body.page-template-contact .btn {
 .contact-page [class*="button"],
 .contact-page [class*="contact"] {
     background-color: var(--component-bg-color-primary, var(--color-primary, #87A96B)) !important;
-    color: var(--component-text-color-primary, var(--color-surface, #ffffff)) !important;
+    color: var(--component-text-color-primary, var(--color-surface, var(--color-surface-primary))) !important;
 }
 
 /* ==============================================
@@ -449,7 +449,7 @@ button[class],
 /* Final fallback for any missed elements */
 .contact-page * {
     --fallback-primary: var(--component-bg-color-primary, var(--color-primary, #87A96B));
-    --fallback-text: var(--component-text-color-primary, var(--color-surface, #ffffff));
+    --fallback-text: var(--component-text-color-primary, var(--color-surface, var(--color-surface-primary)));
 }
 
 /* ==============================================
@@ -624,21 +624,21 @@ html body button.btn.btn--ghost[class]:hover {
 
 /* SPECIFIC BUTTON STATE VARIANTS */
 html body button.btn.btn--primary.success[class] {
-    background-color: var(--color-success, #10b981) !important;
-    color: #ffffff !important;
-    border-color: var(--color-success, #10b981) !important;
+    background-color: var(--color-success, var(--color-feedback-success)) !important;
+    color: var(--color-surface-primary) !important;
+    border-color: var(--color-success, var(--color-feedback-success)) !important;
 }
 
 html body button.btn.btn--primary.warning[class] {
-    background-color: var(--color-warning, #f59e0b) !important;
-    color: #ffffff !important;
-    border-color: var(--color-warning, #f59e0b) !important;
+    background-color: var(--color-warning, var(--color-feedback-warning)) !important;
+    color: var(--color-surface-primary) !important;
+    border-color: var(--color-warning, var(--color-feedback-warning)) !important;
 }
 
 html body button.btn.btn--primary.error[class] {
-    background-color: var(--color-error, #ef4444) !important;
-    color: #ffffff !important;
-    border-color: var(--color-error, #ef4444) !important;
+    background-color: var(--color-error, var(--color-feedback-error)) !important;
+    color: var(--color-surface-primary) !important;
+    border-color: var(--color-error, var(--color-feedback-error)) !important;
 }
 
 /* LOADING STATE */
@@ -664,8 +664,8 @@ html body button.btn.btn--primary.loading[class] {
     position: absolute;
     top: -20px;
     left: 0;
-    background: #000;
-    color: #fff;
+    background: var(--color-text-primary);
+    color: var(--color-surface-primary);
     font-size: 10px;
     padding: 2px 4px;
     border-radius: 2px;

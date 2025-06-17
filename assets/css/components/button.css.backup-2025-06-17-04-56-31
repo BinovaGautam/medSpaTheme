@@ -124,7 +124,7 @@
 /* Primary Button */
 .medspa-button--primary {
     background-color: var(--button-primary-background-color, #2563eb);
-    color: var(--button-primary-text-color, var(--color-surface-primary));
+    color: var(--button-primary-text-color, #ffffff);
     border-color: var(--button-primary-background-color, #2563eb);
 }
 
@@ -147,9 +147,9 @@
 
 /* Secondary Button */
 .medspa-button--secondary {
-    background-color: var(--button-secondary-background-color, var(--color-text-secondary));
-    color: var(--button-secondary-text-color, var(--color-surface-primary));
-    border-color: var(--button-secondary-background-color, var(--color-text-secondary));
+    background-color: var(--button-secondary-background-color, #64748b);
+    color: var(--button-secondary-text-color, #ffffff);
+    border-color: var(--button-secondary-background-color, #64748b);
 }
 
 .medspa-button--secondary:hover:not(:disabled) {
@@ -178,7 +178,7 @@
 
 .medspa-button--outline:hover:not(:disabled) {
     background-color: var(--button-outline-hover-background-color, #2563eb);
-    color: var(--button-outline-hover-text-color, var(--color-surface-primary));
+    color: var(--button-outline-hover-text-color, #ffffff);
     border-color: var(--button-outline-hover-background-color, #2563eb);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
@@ -187,7 +187,7 @@
 .medspa-button--outline:focus-visible {
     border-color: var(--button-outline-focus-border-color, #1e40af);
     background-color: var(--button-outline-hover-background-color, #2563eb);
-    color: var(--button-outline-hover-text-color, var(--color-surface-primary));
+    color: var(--button-outline-hover-text-color, #ffffff);
 }
 
 .medspa-button--outline:active:not(:disabled) {
@@ -256,7 +256,7 @@
 /* Disabled Button */
 .medspa-button--disabled,
 .medspa-button:disabled {
-    color: var(--color-text-muted, var(--color-text-secondary));
+    color: var(--color-text-muted, #64748b);
     cursor: not-allowed;
     opacity: 0.6;
     transform: none !important;
@@ -402,9 +402,9 @@
 
 @media print {
     .medspa-button {
-        color: var(--color-text-primary) !important;
+        color: #000 !important;
         background: transparent !important;
-        border: 1px solid var(--color-text-primary) !important;
+        border: 1px solid #000 !important;
         box-shadow: none !important;
         text-decoration: underline;
     }
@@ -416,7 +416,7 @@
     .medspa-button::after {
         content: " (" attr(href) ")";
         font-size: 0.8em;
-        color: var(--color-text-muted, var(--color-text-secondary));
+        color: var(--color-text-muted, #64748b);
     }
 
     .medspa-button:not([href])::after {

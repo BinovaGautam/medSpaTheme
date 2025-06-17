@@ -30,7 +30,7 @@ class TokenRelationshipEngine {
         // Bind methods for performance
         this.resolveRelationships = this.resolveRelationships.bind(this);
         this.validateConstraints = this.validateConstraints.bind(this);
-        this.updateDependencies = this.updateDependencies.bind(this);
+        this.updateDependencyGraph = this.updateDependencyGraph.bind(this);
     }
 
     /**
