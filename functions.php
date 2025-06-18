@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Theme version
-define('PREETIDREAMS_VERSION', '1.0.0');
+define('PREETIDREAMS_VERSION', '1.0.10.1750219240');
 
 // CRITICAL FIX: Define _S_VERSION constant to prevent undefined constant error
 if (!defined('_S_VERSION')) {
