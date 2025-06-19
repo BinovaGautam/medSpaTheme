@@ -92,14 +92,14 @@ Based on A New Dawn Wellness Center analysis and our available 9 treatment servi
 
 ---
 
-## **🎭 SECTION 2: SERVICES OVERVIEW SECTION**
+## **🎭 SECTION 2: SERVICES OVERVIEW SECTION - ALTERNATING HORIZONTAL LAYOUT**
 
-### **🌟 OUR 9 TREATMENT CATEGORIES**
+### **🌟 ALTERNATING TEXT/VISUAL LAYOUT WITH TREATMENT BUTTONS**
 
-Based on our available treatments from the codebase analysis:
+Based on the correct layout pattern with alternating horizontal sections, text/visual content splits, and simple treatment buttons:
 
 ```css
-/* SERVICES OVERVIEW SECTION */
+/* SERVICES OVERVIEW SECTION - ALTERNATING LAYOUT */
 .services-overview {
   background: var(--color-background);
   padding: var(--space-4xl) var(--space-md);
@@ -108,7 +108,7 @@ Based on our available treatments from the codebase analysis:
 
 .services-header {
   text-align: center;
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--space-4xl);
   max-width: var(--content-width-lg);
   margin-left: auto;
   margin-right: auto;
@@ -136,121 +136,186 @@ Based on our available treatments from the codebase analysis:
   line-height: var(--leading-relaxed);
 }
 
-/* SERVICES GRID */
-.services-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-xl);
+/* SERVICE SECTION CONTAINER */
+.service-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-4xl);
   max-width: var(--content-width-xl);
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.service-category {
+/* ALTERNATING LAYOUT CLASSES */
+.service-section--text-left {
+  flex-direction: column;
+}
+
+.service-section--text-right {
+  flex-direction: column;
+}
+
+/* SERVICE CONTENT AREAS */
+.service-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.service-text-content {
+  flex: 1;
+  padding: var(--space-2xl);
+}
+
+.service-visual-content {
+  flex: 1;
+  padding: var(--space-xl);
   background: var(--color-surface);
   border-radius: var(--radius-lg);
-  padding: var(--space-2xl);
-  box-shadow: var(--shadow-md);
-  transition: var(--transition-base);
-  position: relative;
-  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
-.service-category:hover {
-  transform: translateY(calc(var(--space-xs) * -1));
-  box-shadow: var(--shadow-lg);
-}
-
-.service-category::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--space-xs);
-  background: linear-gradient(90deg, 
-    var(--color-primary) 0%, 
-    var(--color-accent) 50%, 
-    var(--color-secondary) 100%);
-}
-
-.service-icon {
-  font-size: var(--text-4xl);
-  margin-bottom: var(--space-lg);
-  display: block;
-}
-
-.service-name {
+/* SERVICE TEXT ELEMENTS */
+.service-section-title {
   font-family: var(--font-family-primary);
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
   line-height: var(--leading-tight);
 }
 
-.service-description {
-  font-size: var(--text-base);
+.service-section-description {
+  font-size: var(--text-lg);
   color: var(--color-text-secondary);
   line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-xl);
 }
 
-.service-treatments {
+/* TREATMENT BUTTONS LIST */
+.treatment-buttons-list {
   list-style: none;
   padding: 0;
   margin: 0 0 var(--space-xl) 0;
-}
-
-.service-treatment {
   display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) 0;
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  border-bottom: var(--border-width-sm) solid var(--color-border-light);
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
-.service-treatment:last-child {
-  border-bottom: none;
-}
-
-.service-treatment-icon {
-  color: var(--color-primary);
-  font-size: var(--text-base);
-}
-
-.service-cta {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
-  border: none;
-  border-radius: var(--radius-md);
+.treatment-button {
+  background: var(--color-surface);
+  border: var(--border-width-sm) solid var(--color-border-light);
+  border-radius: var(--radius-full);
   padding: var(--space-md) var(--space-lg);
   font-size: var(--text-base);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
+  justify-content: center;
   cursor: pointer;
   transition: var(--transition-base);
   min-height: var(--touch-target-min);
+  text-align: center;
 }
 
-.service-cta:hover {
-  background: var(--color-interactive-hover);
+.treatment-button:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-text-primary);
   transform: translateY(calc(var(--space-xs) * -1));
+  box-shadow: var(--shadow-md);
 }
 
-.service-cta-icon {
+.treatment-button:focus {
+  outline: var(--ring-width) solid var(--color-interactive-focus);
+  outline-offset: var(--space-xs);
+}
+
+.treatment-button:active {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  transform: translateY(var(--space-xs));
+}
+
+
+
+/* VISUAL CONTENT ELEMENTS */
+.before-after-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.before-after-item {
+  text-align: center;
+}
+
+.before-after-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+}
+
+.before-after-label {
   font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.video-player {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-background);
+}
+
+.video-player-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: color-mix(in srgb, var(--color-background) 80%, transparent);
+  border-radius: var(--radius-full);
+  padding: var(--space-lg);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.video-player-overlay:hover {
+  background: color-mix(in srgb, var(--color-primary) 80%, transparent);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.play-icon {
+  font-size: var(--text-4xl);
+  color: var(--color-text-inverse);
 }
 
 /* TABLET RESPONSIVE */
 @media (min-width: var(--breakpoint-tablet)) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-2xl);
+  .service-content {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .service-section--text-right .service-content {
+    flex-direction: row-reverse;
+  }
+  
+  .treatment-buttons-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+  
+  .treatment-button {
+    flex: 0 1 auto;
   }
   
   .services-title {
@@ -264,14 +329,28 @@ Based on our available treatments from the codebase analysis:
     padding: var(--space-4xl) var(--space-2xl);
   }
   
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .service-content {
     gap: var(--space-3xl);
+  }
+  
+  .service-text-content {
+    padding: var(--space-3xl);
+  }
+  
+  .service-visual-content {
+    padding: var(--space-2xl);
+  }
+}
+
+/* WIDE SCREEN RESPONSIVE */
+@media (min-width: var(--breakpoint-wide)) {
+  .service-section {
+    max-width: var(--content-width-2xl);
   }
 }
 ```
 
-### **🎨 SERVICES CONTENT STRUCTURE**
+### **🎨 SERVICES CONTENT STRUCTURE - ALTERNATING HORIZONTAL LAYOUT**
 
 ```php
 <!-- Services Overview Section -->
@@ -289,177 +368,256 @@ Based on our available treatments from the codebase analysis:
       </p>
     </header>
 
-    <div class="services-grid">
-      <!-- Injectable Artistry -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">💉</span>
-        <h3 class="service-name">Injectable Artistry</h3>
-        <p class="service-description">
-          Enhance your natural beauty with precision injectable treatments for wrinkle reduction and volume restoration.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            Botox / Fillers
-          </li>
-        </ul>
-        <a href="/treatments/injectable-artistry" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
+    <!-- Injectable Artistry Section - TEXT LEFT | VISUAL RIGHT -->
+    <div class="service-section service-section--text-left">
+      <div class="service-content">
+        <div class="service-text-content">
+          <h3 class="service-section-title">Injectables</h3>
+          <p class="service-section-description">
+            Enhance your natural beauty with precision injectable treatments for wrinkle reduction and volume restoration. Our advanced injectable services include expert administration and natural results.
+          </p>
+          
+          <ul class="treatment-buttons-list">
+            <li>
+              <a href="/treatments/botox-dysport" class="treatment-button">
+                Botox & Dysport
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/facial-fillers" class="treatment-button">
+                Facial Fillers
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/pdo-thread-lifts" class="treatment-button">
+                PDO Thread Lifts
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/sculptra" class="treatment-button">
+                Sculptra®
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="service-visual-content">
+          <div class="before-after-gallery">
+            <div class="before-after-item">
+              <img src="/images/injectable-before-1.jpg" alt="Before injectable treatment" class="before-after-image">
+              <p class="before-after-label">Before</p>
+            </div>
+            <div class="before-after-item">
+              <img src="/images/injectable-after-1.jpg" alt="After injectable treatment" class="before-after-image">
+              <p class="before-after-label">After</p>
+            </div>
+            <div class="before-after-item">
+              <img src="/images/injectable-before-2.jpg" alt="Before injectable treatment" class="before-after-image">
+              <p class="before-after-label">Before</p>
+            </div>
+            <div class="before-after-item">
+              <img src="/images/injectable-after-2.jpg" alt="After injectable treatment" class="before-after-image">
+              <p class="before-after-label">After</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Facial Renaissance -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">🌊</span>
-        <h3 class="service-name">Facial Renaissance</h3>
-        <p class="service-description">
-          Advanced skincare treatments for deep cleansing, hydration, and skin renewal with immediate results.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            HydraFacial
-          </li>
-        </ul>
-        <a href="/treatments/facial-renaissance" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
+    <!-- Laser Services Section - VISUAL LEFT | TEXT RIGHT -->
+    <div class="service-section service-section--text-right">
+      <div class="service-content">
+        <div class="service-visual-content">
+          <div class="video-player">
+            <video poster="/images/co2-laser-poster.jpg" controls>
+              <source src="/videos/co2-laser-treatment.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-player-overlay">
+              <span class="play-icon" aria-hidden="true">▶️</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="service-text-content">
+          <h3 class="service-section-title">Laser Services</h3>
+          <p class="service-section-description">
+            Reverse sun damage, remove sun spots, lines, and wrinkles, and tighten your skin with our advanced laser services. Award-winning laser hair removal voted 'Best in Scottsdale' three years running.
+          </p>
+          
+          <ul class="treatment-buttons-list">
+            <li>
+              <a href="/treatments/non-ablative-resurfacing" class="treatment-button">
+                Non-Ablative Resurfacing
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/co2-resurfacing" class="treatment-button">
+                CO2 Resurfacing
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/ipl-photofacials" class="treatment-button">
+                IPL Photofacials
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/laser-hair-removal" class="treatment-button">
+                Laser Hair Removal
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-      <!-- Precision Treatments -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">✨</span>
-        <h3 class="service-name">Precision Treatments</h3>
-        <p class="service-description">
-          Gentle exfoliation and skin refinement treatments for smooth, luminous texture.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            Dermaplanning
-          </li>
-        </ul>
-        <a href="/treatments/precision-dermaplanning" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
+    <!-- Facial Renaissance Section - TEXT LEFT | VISUAL RIGHT -->
+    <div class="service-section service-section--text-left">
+      <div class="service-content">
+        <div class="service-text-content">
+          <h3 class="service-section-title">Facial Renaissance</h3>
+          <p class="service-section-description">
+            Advanced skincare treatments for deep cleansing, hydration, and skin renewal with immediate results. Experience the difference of medical-grade facial treatments.
+          </p>
+          
+          <ul class="treatment-buttons-list">
+            <li>
+              <a href="/treatments/hydrafacial" class="treatment-button">
+                HydraFacial
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/chemical-peels" class="treatment-button">
+                Chemical Peels
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/microneedling" class="treatment-button">
+                Microneedling
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/led-therapy" class="treatment-button">
+                LED Therapy
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="service-visual-content">
+          <div class="treatment-results-gallery">
+            <div class="treatment-result-item">
+              <h4>HydraFacial Results</h4>
+              <div class="before-after-gallery">
+                <div class="before-after-item">
+                  <img src="/images/hydrafacial-before.jpg" alt="Before HydraFacial" class="before-after-image">
+                  <p class="before-after-label">Before</p>
+                </div>
+                <div class="before-after-item">
+                  <img src="/images/hydrafacial-after.jpg" alt="After HydraFacial" class="before-after-image">
+                  <p class="before-after-label">After</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Regenerative Treatments -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">🩸</span>
-        <h3 class="service-name">Regenerative Treatments</h3>
-        <p class="service-description">
-          Advanced microneedling with PRP for natural collagen stimulation and skin renewal.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            Microneedling PRP
-          </li>
-        </ul>
-        <a href="/treatments/regenerative-prp" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
+    <!-- Body Sculpting Section - VISUAL LEFT | TEXT RIGHT -->
+    <div class="service-section service-section--text-right">
+      <div class="service-content">
+        <div class="service-visual-content">
+          <div class="body-transformation-gallery">
+            <div class="before-after-gallery">
+              <div class="before-after-item">
+                <img src="/images/coolsculpting-before.jpg" alt="Before CoolSculpting" class="before-after-image">
+                <p class="before-after-label">Before</p>
+              </div>
+              <div class="before-after-item">
+                <img src="/images/coolsculpting-after.jpg" alt="After CoolSculpting" class="before-after-image">
+                <p class="before-after-label">After</p>
+              </div>
+              <div class="before-after-item">
+                <img src="/images/body-contouring-before.jpg" alt="Before Body Contouring" class="before-after-image">
+                <p class="before-after-label">Before</p>
+              </div>
+              <div class="before-after-item">
+                <img src="/images/body-contouring-after.jpg" alt="After Body Contouring" class="before-after-image">
+                <p class="before-after-label">After</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="service-text-content">
+          <h3 class="service-section-title">Body Sculpting</h3>
+          <p class="service-section-description">
+            Body contouring and muscle building technology for complete transformation and wellness enhancement. Achieve your body goals with advanced technology.
+          </p>
+          
+          <ul class="treatment-buttons-list">
+            <li>
+              <a href="/treatments/coolsculpting" class="treatment-button">
+                CoolSculpting
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/body-contouring" class="treatment-button">
+                Body Contouring
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/cellulite-treatment" class="treatment-button">
+                Cellulite Treatment
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-      <!-- Wellness Infusions -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">💊</span>
-        <h3 class="service-name">Wellness Infusions</h3>
-        <p class="service-description">
-          Customized vitamin infusions for enhanced wellness, energy, and immune support.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            IV Vitamins
-          </li>
-        </ul>
-        <a href="/treatments/wellness-infusions" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
-
-      <!-- Artistry Enhancement -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">💄</span>
-        <h3 class="service-name">Artistry Enhancement</h3>
-        <p class="service-description">
-          Professional permanent makeup and cosmetic tattooing for time-saving beauty enhancement.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            Permanent Makeup
-          </li>
-        </ul>
-        <a href="/treatments/artistry-enhancement" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
-
-      <!-- Laser Precision -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">🔥</span>
-        <h3 class="service-name">Laser Precision</h3>
-        <p class="service-description">
-          Advanced laser technology for permanent hair reduction with precision and safety.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            Laser Hair Reduction
-          </li>
-        </ul>
-        <a href="/treatments/laser-precision" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
-
-      <!-- Carbon Rejuvenation -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">🌟</span>
-        <h3 class="service-name">Carbon Rejuvenation</h3>
-        <p class="service-description">
-          Revolutionary carbon peel laser for deep pore cleansing and immediate skin glow.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            Carbon Peel Laser
-          </li>
-        </ul>
-        <a href="/treatments/carbon-rejuvenation" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
-
-      <!-- Body Sculpting -->
-      <article class="service-category">
-        <span class="service-icon" aria-hidden="true">💪</span>
-        <h3 class="service-name">Body Sculpting</h3>
-        <p class="service-description">
-          EMSCULPT muscle building and body contouring technology for enhanced physique.
-        </p>
-        <ul class="service-treatments">
-          <li class="service-treatment">
-            <span class="service-treatment-icon" aria-hidden="true">✓</span>
-            EMSCULPT Muscle Builder
-          </li>
-        </ul>
-        <a href="/treatments/body-sculpting" class="service-cta">
-          Explore Treatments
-          <span class="service-cta-icon" aria-hidden="true">→</span>
-        </a>
-      </article>
+    <!-- Wellness Sanctuary Section - TEXT LEFT | VISUAL RIGHT -->
+    <div class="service-section service-section--text-left">
+      <div class="service-content">
+        <div class="service-text-content">
+          <h3 class="service-section-title">Wellness Sanctuary</h3>
+          <p class="service-section-description">
+            Holistic wellness treatments for enhanced health, energy, and complete rejuvenation. Personalized wellness programs designed for your optimal health and vitality.
+          </p>
+          
+          <ul class="treatment-buttons-list">
+            <li>
+              <a href="/treatments/iv-therapy" class="treatment-button">
+                IV Therapy
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/hormone-optimization" class="treatment-button">
+                Hormone Optimization
+              </a>
+            </li>
+            <li>
+              <a href="/treatments/weight-management" class="treatment-button">
+                Weight Management
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="service-visual-content">
+          <div class="wellness-experience-gallery">
+            <div class="wellness-experience-item">
+              <img src="/images/iv-therapy-room.jpg" alt="IV Therapy Treatment Room" class="wellness-image">
+              <h4>IV Therapy Treatment Room</h4>
+            </div>
+            <div class="wellness-experience-item">
+              <img src="/images/consultation-room.jpg" alt="Hormone Consultation Room" class="wellness-image">
+              <h4>Hormone Consultation Room</h4>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

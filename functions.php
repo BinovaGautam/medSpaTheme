@@ -124,6 +124,10 @@ require_once get_template_directory() . '/inc/visual-customizer-simple.php';
 // T8.1: Include Semantic Token Bridge (JavaScript to PHP Integration)
 require_once get_template_directory() . '/inc/semantic-token-bridge.php';
 
+// T11.6: Include Homepage Sections Customizer Controls
+require_once get_template_directory() . '/inc/customizer/homepage-sections-customizer.php';
+require_once get_template_directory() . '/inc/customizer/visual-content-customizer.php';
+
 // T8.4: Include Palette Validation System
 require_once get_template_directory() . '/inc/palette-validation-system.php';
 

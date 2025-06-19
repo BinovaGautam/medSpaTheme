@@ -198,6 +198,97 @@
 
   /* Navigation System */
   --component-nav-bg: var(--color-background);
+
+  /* =================================================================
+     HOMEPAGE SECTIONS - T11.4 Semantic CSS Architecture Enhancement
+     Specialized tokens for grouped service sections and trust indicators
+     ================================================================= */
+
+  /* Services Overview Section */
+  --component-services-overview-bg: var(--color-background);
+  --component-services-overview-padding: var(--space-4xl) 0;
+  --component-services-grid-gap: var(--space-xl);
+  --component-services-grid-gap-desktop: var(--space-2xl);
+
+  /* Service Section Cards */
+  --component-service-section-bg: var(--color-surface);
+  --component-service-section-border: var(--color-surface-tertiary);
+  --component-service-section-hover-bg: var(--color-surface-hover);
+  --component-service-section-padding: var(--space-xl);
+  --component-service-section-radius: var(--radius-lg);
+  --component-service-section-shadow: var(--shadow-sm);
+  --component-service-section-hover-shadow: var(--shadow-md);
+  --component-service-section-transition: var(--transition-base);
+
+  /* Service Section Typography */
+  --component-service-title-size: var(--text-lg);
+  --component-service-title-weight: var(--font-weight-semibold);
+  --component-service-title-color: var(--color-text-primary);
+  --component-service-description-size: var(--text-base);
+  --component-service-description-color: var(--color-text-secondary);
+
+  /* Service Section Icons */
+  --component-service-icon-size: var(--text-xl);
+  --component-service-icon-margin: var(--space-md);
+
+  /* Treatment List Styling */
+  --component-treatment-list-bg: var(--color-background-secondary);
+  --component-treatment-list-padding: var(--space-md);
+  --component-treatment-list-radius: var(--radius-md);
+  --component-treatment-item-padding: var(--space-sm) 0;
+  --component-treatment-item-border: var(--border-width-sm) solid var(--color-surface-tertiary);
+
+  /* Trust Indicators Section */
+  --component-trust-section-bg: var(--color-background-secondary);
+  --component-trust-section-padding: var(--space-4xl) 0;
+  --component-trust-grid-gap: var(--space-xl);
+  --component-trust-grid-gap-desktop: var(--space-xl);
+
+  /* Trust Indicator Cards */
+  --component-trust-card-bg: var(--color-surface);
+  --component-trust-card-border: var(--color-surface-tertiary);
+  --component-trust-card-hover-bg: var(--color-surface-hover);
+  --component-trust-card-padding: var(--space-xl);
+  --component-trust-card-radius: var(--radius-lg);
+  --component-trust-card-shadow: var(--shadow-sm);
+  --component-trust-card-hover-shadow: var(--shadow-lg);
+  --component-trust-card-transition: var(--transition-base);
+
+  /* Trust Indicator Icons */
+  --component-trust-icon-size: var(--text-3xl);
+  --component-trust-icon-margin: var(--space-lg);
+  --component-trust-icon-bg: var(--color-background-secondary);
+  --component-trust-icon-width: var(--space-4xl);
+  --component-trust-icon-height: var(--space-4xl);
+  --component-trust-icon-radius: var(--radius-full);
+
+  /* Trust Indicator Typography */
+  --component-trust-title-size: var(--text-lg);
+  --component-trust-title-weight: var(--font-weight-semibold);
+  --component-trust-title-color: var(--color-text-primary);
+  --component-trust-description-size: var(--text-base);
+  --component-trust-description-color: var(--color-text-secondary);
+
+  /* Color Variants for Trust Indicators */
+  --component-trust-primary-icon-bg: var(--color-primary);
+  --component-trust-primary-icon-text: var(--color-text-primary-inverse);
+  --component-trust-secondary-icon-bg: var(--color-secondary);
+  --component-trust-secondary-icon-text: var(--color-text-primary-inverse);
+  --component-trust-accent-icon-bg: var(--color-accent);
+  --component-trust-accent-icon-text: var(--color-text-primary);
+
+  /* Performance Optimization Tokens */
+  --component-hover-transform: translateY(-2px);
+  --component-trust-hover-transform: translateY(-4px);
+  --component-will-change: transform, box-shadow;
+
+  /* Grid System Responsive Tokens */
+  --grid-services-mobile: 1fr;
+  --grid-services-tablet: 1fr;
+  --grid-services-desktop: repeat(2, 1fr);
+  --grid-trust-mobile: 1fr;
+  --grid-trust-tablet: repeat(2, 1fr);
+  --grid-trust-desktop: repeat(4, 1fr);
   --component-nav-text: var(--color-text-primary);
   --component-nav-hover: var(--color-surface);
   --component-nav-active: var(--color-primary);

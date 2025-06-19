@@ -1,0 +1,2097 @@
+{
+  "validation_id": "1750300563432",
+  "timestamp": "2025-06-19T02:36:11.683Z",
+  "summary": {
+    "total_viewports": 3,
+    "average_similarity": 0,
+    "overall_score": 0.15,
+    "status": "NEEDS_IMPROVEMENT"
+  },
+  "detailed_results": {
+    "screenshots": {
+      "desktop": {
+        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_desktop_1750300567533.png",
+        "viewport_info": {
+          "name": "desktop",
+          "width": 1920,
+          "height": 1080
+        },
+        "comparison": {
+          "comparison_type": "semantic_analysis",
+          "design_specification": "../../project_context/designs/HOMEPAGE_DESIGN.md",
+          "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_desktop_1750300567533.png",
+          "analysis_timestamp": "2025-06-19T02:36:11.679Z",
+          "similarity": null,
+          "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
+        },
+        "ai_analysis": {
+          "viewport": "desktop",
+          "timestamp": "{CURRENT_TIMESTAMP}",
+          "overall_score": 0.8214285714285714,
+          "categories": {
+            "visual_hierarchy": {
+              "category": "Visual Hierarchy",
+              "score": 0.85,
+              "issues": [],
+              "strengths": [
+                "Desktop viewport properly sized within semantic breakpoint",
+                "Visual hierarchy defined using semantic design tokens"
+              ],
+              "details": {
+                "dimensions": {
+                  "width": 1920,
+                  "height": 5490
+                },
+                "expected_layout": "Multi-column grid using desktop breakpoint tokens",
+                "semantic_breakpoint": "var(--breakpoint-desktop-min) and above",
+                "expected_spacing": {
+                  "mobile": "var(--space-sm) margins, var(--space-xs) padding",
+                  "tablet": "var(--space-md) margins, var(--space-sm) padding",
+                  "desktop": "var(--space-lg) margins, var(--space-md) padding"
+                },
+                "expected_typography": {
+                  "h1": "var(--text-4xl) with var(--font-family-display)",
+                  "h2": "var(--text-3xl) with var(--font-family-display)",
+                  "h3": "var(--text-xl) with var(--font-family-primary)",
+                  "body": "var(--text-base) with var(--font-family-primary)"
+                }
+              }
+            },
+            "semantic_token_compliance": {
+              "category": "Semantic Token Compliance",
+              "score": 0.8,
+              "issues": [
+                "Manual verification needed to confirm semantic token usage in implementation",
+                "Hardcoded values may exist in CSS that need token replacement"
+              ],
+              "strengths": [
+                "Design system tokens defined for comprehensive coverage",
+                "Semantic approach prevents hardcoded value violations",
+                "Token-based system enables consistent theming"
+              ],
+              "details": {
+                "expected_color_tokens": [
+                  "var(--color-primary)",
+                  "var(--color-accent)",
+                  "var(--color-background)",
+                  "var(--color-text-primary)",
+                  "var(--color-text-secondary)"
+                ],
+                "expected_typography_tokens": [
+                  "var(--font-family-display)",
+                  "var(--font-family-primary)",
+                  "var(--text-4xl)",
+                  "var(--text-3xl)",
+                  "var(--text-xl)",
+                  "var(--text-base)"
+                ],
+                "expected_spacing_tokens": [
+                  "var(--space-xs)",
+                  "var(--space-sm)",
+                  "var(--space-md)",
+                  "var(--space-lg)",
+                  "var(--space-xl)"
+                ],
+                "compliance_status": "Requires manual verification",
+                "color_token_compliance": {
+                  "primary_brand": "Should use var(--color-primary) instead of hardcoded sage green",
+                  "accent_color": "Should use var(--color-accent) instead of hardcoded gold",
+                  "background": "Should use var(--color-background) instead of hardcoded off-white",
+                  "text_colors": "Should use var(--color-text-primary) and var(--color-text-secondary)"
+                },
+                "typography_token_compliance": {
+                  "headings": "Should use var(--font-family-display) for headings",
+                  "body_text": "Should use var(--font-family-primary) for body text",
+                  "sizes": "Should use var(--text-*) tokens instead of hardcoded sizes",
+                  "weights": "Should use var(--font-weight-*) tokens"
+                },
+                "spacing_token_compliance": {
+                  "margins": "Should use var(--space-*) tokens for consistent margins",
+                  "padding": "Should use var(--space-*) tokens for consistent padding",
+                  "gaps": "Should use var(--space-*) tokens for grid and flex gaps"
+                }
+              }
+            },
+            "spacing_alignment": {
+              "category": "Spacing & Alignment",
+              "score": 0.8,
+              "issues": [],
+              "strengths": [
+                "Semantic spacing tokens defined for desktop viewport",
+                "Desktop grid system with semantic tokens",
+                "Spacing system prevents hardcoded pixel values",
+                "Semantic tokens enable consistent spacing across components"
+              ],
+              "details": {
+                "semantic_spacing_system": "Using var(--space-*) token system",
+                "alignment_system": "Grid-based with semantic breakpoints",
+                "expected_semantic_spacing": {
+                  "margin": "var(--space-lg)",
+                  "padding": "var(--space-md)",
+                  "cardGap": "var(--space-lg)"
+                },
+                "spacing_token_usage": {
+                  "container_margins": "var(--space-lg)",
+                  "card_padding": "var(--space-md)",
+                  "grid_gaps": "var(--space-lg)",
+                  "section_spacing": "var(--space-xl) for major sections",
+                  "component_spacing": "var(--space-md) for component internal spacing"
+                },
+                "layout_type": "Multi-column grid using var(--breakpoint-desktop-*)"
+              }
+            },
+            "accessibility_compliance": {
+              "category": "Accessibility Compliance",
+              "score": 0.85,
+              "issues": [],
+              "strengths": [
+                "Color Contrast: Using semantic token var(--accessibility-contrast-min)",
+                "Touch Targets: Using semantic token var(--accessibility-touch-target-min)",
+                "Text Size: Using semantic token var(--text-base)",
+                "Line Length: Using semantic token var(--accessibility-line-length-max)",
+                "Accessibility standards defined using semantic tokens",
+                "Token-based approach ensures consistent accessibility compliance"
+              ],
+              "details": {
+                "wcag_level": "AAA Target using semantic accessibility tokens",
+                "semantic_contrast_token": "var(--accessibility-contrast-min)",
+                "semantic_touch_target_token": "var(--accessibility-touch-target-min)",
+                "semantic_line_length_token": "var(--accessibility-line-length-max)",
+                "compliance_areas": [
+                  {
+                    "area": "Color Contrast",
+                    "requirement": "var(--accessibility-contrast-min) ratio",
+                    "status": "Defined in semantic tokens",
+                    "token": "var(--accessibility-contrast-min)"
+                  },
+                  {
+                    "area": "Touch Targets",
+                    "requirement": "var(--accessibility-touch-target-min) minimum",
+                    "status": "Defined in semantic tokens",
+                    "token": "var(--accessibility-touch-target-min)"
+                  },
+                  {
+                    "area": "Text Size",
+                    "requirement": "var(--text-base) minimum",
+                    "status": "Semantic token compliance",
+                    "token": "var(--text-base)"
+                  },
+                  {
+                    "area": "Line Length",
+                    "requirement": "var(--accessibility-line-length-max) maximum",
+                    "status": "Semantic token defined",
+                    "token": "var(--accessibility-line-length-max)"
+                  }
+                ],
+                "semantic_contrast_pairs": {
+                  "primary_text": "var(--color-text-primary) on var(--color-background)",
+                  "secondary_text": "var(--color-text-secondary) on var(--color-background)",
+                  "primary_button": "white text on var(--color-primary)",
+                  "accent_button": "dark text on var(--color-accent)"
+                }
+              }
+            },
+            "responsive_design": {
+              "category": "Responsive Design",
+              "score": 0.9,
+              "issues": [],
+              "strengths": [
+                "Desktop experience optimized with semantic tokens",
+                "Breakpoint system prevents hardcoded media query values",
+                "Semantic tokens enable consistent responsive behavior"
+              ],
+              "details": {
+                "semantic_breakpoint_system": "Using var(--breakpoint-*) token system",
+                "layout_adaptation": "Semantic token-driven responsive behavior",
+                "expected_behavior": [
+                  "Multi-column service grid using var(--breakpoint-desktop-min) and above",
+                  "Full navigation menu with var(--space-lg) spacing",
+                  "Rich content display with var(--space-xl) containers",
+                  "Hover interactions with semantic transition tokens"
+                ],
+                "semantic_breakpoint_range": "var(--breakpoint-desktop-min) and above"
+              }
+            },
+            "content_structure": {
+              "category": "Content Structure",
+              "score": 0.8,
+              "issues": [],
+              "strengths": [
+                "Comprehensive content structure using semantic tokens (7 sections)",
+                "Multi-level CTA hierarchy using semantic design tokens"
+              ],
+              "details": {
+                "semantic_content_organization": "Using semantic HTML and token-based styling",
+                "information_hierarchy": "Semantic heading structure with token-based typography",
+                "expected_services": [
+                  "Botox / Fillers",
+                  "Hydrafacial",
+                  "Dermaplanning",
+                  "Microneedling PRP",
+                  "IV Vitamins",
+                  "Permanent Makeup",
+                  "Laser Hair Reduction",
+                  "Carbon Peel Laser",
+                  "EMSCULT Muscle Builder"
+                ],
+                "service_count": 9,
+                "expected_sections": [
+                  "Hero Section with var(--text-4xl) heading and primary CTA",
+                  "Treatment Services Grid with var(--space-lg) gaps",
+                  "Doctor Profile Section with var(--text-3xl) heading",
+                  "Transformation Gallery with semantic image tokens",
+                  "Patient Testimonials with var(--text-xl) quotes",
+                  "Consultation Booking with semantic button tokens",
+                  "Contact Information with var(--text-base) typography"
+                ],
+                "expected_ctas": [
+                  "Book Consultation (Primary) - var(--color-primary) with var(--space-md) padding",
+                  "Call Now (Secondary) - var(--color-accent) with semantic spacing",
+                  "Learn More (Per service) - semantic link tokens",
+                  "Book Now (Per service) - semantic button tokens"
+                ]
+              }
+            },
+            "design_system_consistency": {
+              "category": "Design System Consistency",
+              "score": 0.75,
+              "issues": [],
+              "strengths": [
+                "Design system components defined with semantic tokens",
+                "Brand guidelines established using semantic design tokens",
+                "Token-based system prevents hardcoded value violations"
+              ],
+              "details": {
+                "semantic_design_system": "Token-based design system compliance",
+                "component_consistency": "Semantic token-driven component library",
+                "semantic_components": [
+                  "Service Cards - using var(--radius-md) and var(--shadow-sm)",
+                  "CTA Buttons - using var(--color-primary) and var(--space-md)",
+                  "Navigation Elements - using var(--font-family-primary)",
+                  "Typography Styles - using var(--text-*) and var(--font-weight-*)",
+                  "Color Usage - using var(--color-*) tokens exclusively",
+                  "Spacing Patterns - using var(--space-*) tokens consistently",
+                  "Icon Styles - using semantic icon tokens"
+                ],
+                "token_consistency_checks": {
+                  "color_tokens": "All colors should use var(--color-*) tokens",
+                  "typography_tokens": "All text should use var(--text-*) and var(--font-*) tokens",
+                  "spacing_tokens": "All spacing should use var(--space-*) tokens",
+                  "border_tokens": "All borders should use var(--radius-*) and var(--border-*) tokens",
+                  "shadow_tokens": "All shadows should use var(--shadow-*) tokens"
+                },
+                "semantic_brand_elements": {
+                  "logo_usage": "Semantic logo tokens for consistent sizing",
+                  "color_palette": "var(--color-*) token system for brand colors",
+                  "typography": "var(--font-family-display) + var(--font-family-primary) combination",
+                  "tone_of_voice": "Professional medical spa with semantic content tokens"
+                }
+              }
+            }
+          },
+          "recommendations": [
+            {
+              "priority": "Medium",
+              "category": "Semantic Token Compliance",
+              "recommendation": "Optimize semantic token compliance for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": [
+                "Manual verification needed to confirm semantic token usage in implementation",
+                "Hardcoded values may exist in CSS that need token replacement"
+              ]
+            },
+            {
+              "priority": "Medium",
+              "category": "Spacing & Alignment",
+              "recommendation": "Optimize spacing & alignment for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "Medium",
+              "category": "Content Structure",
+              "recommendation": "Optimize content structure for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "Medium",
+              "category": "Design System Consistency",
+              "recommendation": "Optimize design system consistency for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "High",
+              "category": "Semantic Compliance",
+              "recommendation": "Ensure all design values use semantic tokens (var(--*)) instead of hardcoded values",
+              "semantic_approach": "Implement comprehensive token-based design system",
+              "issues": [
+                "Hardcoded values violate fundamentals.json requirements"
+              ]
+            },
+            {
+              "priority": "Medium",
+              "category": "Design System",
+              "recommendation": "Validate semantic token usage across all components",
+              "semantic_approach": "Audit for var(--*) token compliance",
+              "issues": [
+                "Manual verification needed for token adherence"
+              ]
+            }
+          ],
+          "critical_issues": [
+            {
+              "category": "Semantic Token Compliance",
+              "issue": "Manual verification needed to confirm semantic token usage in implementation",
+              "severity": "Critical",
+              "impact": "Semantic tokenization compliance violation",
+              "solution": "Replace with var(--*) semantic tokens"
+            },
+            {
+              "category": "Semantic Token Compliance",
+              "issue": "Hardcoded values may exist in CSS that need token replacement",
+              "severity": "Critical",
+              "impact": "Semantic tokenization compliance violation",
+              "solution": "Replace with var(--*) semantic tokens"
+            }
+          ]
+        }
+      },
+      "tablet": {
+        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_tablet_1750300569733.png",
+        "viewport_info": {
+          "name": "tablet",
+          "width": 768,
+          "height": 1024
+        },
+        "comparison": {
+          "comparison_type": "semantic_analysis",
+          "design_specification": "../../project_context/designs/HOMEPAGE_DESIGN.md",
+          "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_tablet_1750300569733.png",
+          "analysis_timestamp": "2025-06-19T02:36:11.679Z",
+          "similarity": null,
+          "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
+        },
+        "ai_analysis": {
+          "viewport": "tablet",
+          "timestamp": "{CURRENT_TIMESTAMP}",
+          "overall_score": 0.8214285714285714,
+          "categories": {
+            "visual_hierarchy": {
+              "category": "Visual Hierarchy",
+              "score": 0.85,
+              "issues": [],
+              "strengths": [
+                "Correct tablet viewport within semantic breakpoint range",
+                "Visual hierarchy defined using semantic design tokens"
+              ],
+              "details": {
+                "dimensions": {
+                  "width": 777,
+                  "height": 7639
+                },
+                "expected_layout": "Two column grid using tablet breakpoint tokens",
+                "semantic_breakpoint": "var(--breakpoint-tablet-min) to var(--breakpoint-tablet-max)",
+                "expected_spacing": {
+                  "mobile": "var(--space-sm) margins, var(--space-xs) padding",
+                  "tablet": "var(--space-md) margins, var(--space-sm) padding",
+                  "desktop": "var(--space-lg) margins, var(--space-md) padding"
+                },
+                "expected_typography": {
+                  "h1": "var(--text-4xl) with var(--font-family-display)",
+                  "h2": "var(--text-3xl) with var(--font-family-display)",
+                  "h3": "var(--text-xl) with var(--font-family-primary)",
+                  "body": "var(--text-base) with var(--font-family-primary)"
+                }
+              }
+            },
+            "semantic_token_compliance": {
+              "category": "Semantic Token Compliance",
+              "score": 0.8,
+              "issues": [
+                "Manual verification needed to confirm semantic token usage in implementation",
+                "Hardcoded values may exist in CSS that need token replacement"
+              ],
+              "strengths": [
+                "Design system tokens defined for comprehensive coverage",
+                "Semantic approach prevents hardcoded value violations",
+                "Token-based system enables consistent theming"
+              ],
+              "details": {
+                "expected_color_tokens": [
+                  "var(--color-primary)",
+                  "var(--color-accent)",
+                  "var(--color-background)",
+                  "var(--color-text-primary)",
+                  "var(--color-text-secondary)"
+                ],
+                "expected_typography_tokens": [
+                  "var(--font-family-display)",
+                  "var(--font-family-primary)",
+                  "var(--text-4xl)",
+                  "var(--text-3xl)",
+                  "var(--text-xl)",
+                  "var(--text-base)"
+                ],
+                "expected_spacing_tokens": [
+                  "var(--space-xs)",
+                  "var(--space-sm)",
+                  "var(--space-md)",
+                  "var(--space-lg)",
+                  "var(--space-xl)"
+                ],
+                "compliance_status": "Requires manual verification",
+                "color_token_compliance": {
+                  "primary_brand": "Should use var(--color-primary) instead of hardcoded sage green",
+                  "accent_color": "Should use var(--color-accent) instead of hardcoded gold",
+                  "background": "Should use var(--color-background) instead of hardcoded off-white",
+                  "text_colors": "Should use var(--color-text-primary) and var(--color-text-secondary)"
+                },
+                "typography_token_compliance": {
+                  "headings": "Should use var(--font-family-display) for headings",
+                  "body_text": "Should use var(--font-family-primary) for body text",
+                  "sizes": "Should use var(--text-*) tokens instead of hardcoded sizes",
+                  "weights": "Should use var(--font-weight-*) tokens"
+                },
+                "spacing_token_compliance": {
+                  "margins": "Should use var(--space-*) tokens for consistent margins",
+                  "padding": "Should use var(--space-*) tokens for consistent padding",
+                  "gaps": "Should use var(--space-*) tokens for grid and flex gaps"
+                }
+              }
+            },
+            "spacing_alignment": {
+              "category": "Spacing & Alignment",
+              "score": 0.8,
+              "issues": [],
+              "strengths": [
+                "Semantic spacing tokens defined for tablet viewport",
+                "Responsive grid adaptation with semantic breakpoints",
+                "Spacing system prevents hardcoded pixel values",
+                "Semantic tokens enable consistent spacing across components"
+              ],
+              "details": {
+                "semantic_spacing_system": "Using var(--space-*) token system",
+                "alignment_system": "Grid-based with semantic breakpoints",
+                "expected_semantic_spacing": {
+                  "margin": "var(--space-md)",
+                  "padding": "var(--space-sm)",
+                  "cardGap": "var(--space-md)"
+                },
+                "spacing_token_usage": {
+                  "container_margins": "var(--space-md)",
+                  "card_padding": "var(--space-sm)",
+                  "grid_gaps": "var(--space-md)",
+                  "section_spacing": "var(--space-xl) for major sections",
+                  "component_spacing": "var(--space-md) for component internal spacing"
+                },
+                "layout_type": "Two column grid using var(--breakpoint-tablet-*)"
+              }
+            },
+            "accessibility_compliance": {
+              "category": "Accessibility Compliance",
+              "score": 0.85,
+              "issues": [],
+              "strengths": [
+                "Color Contrast: Using semantic token var(--accessibility-contrast-min)",
+                "Touch Targets: Using semantic token var(--accessibility-touch-target-min)",
+                "Text Size: Using semantic token var(--text-base)",
+                "Line Length: Using semantic token var(--accessibility-line-length-max)",
+                "Accessibility standards defined using semantic tokens",
+                "Token-based approach ensures consistent accessibility compliance"
+              ],
+              "details": {
+                "wcag_level": "AAA Target using semantic accessibility tokens",
+                "semantic_contrast_token": "var(--accessibility-contrast-min)",
+                "semantic_touch_target_token": "var(--accessibility-touch-target-min)",
+                "semantic_line_length_token": "var(--accessibility-line-length-max)",
+                "compliance_areas": [
+                  {
+                    "area": "Color Contrast",
+                    "requirement": "var(--accessibility-contrast-min) ratio",
+                    "status": "Defined in semantic tokens",
+                    "token": "var(--accessibility-contrast-min)"
+                  },
+                  {
+                    "area": "Touch Targets",
+                    "requirement": "var(--accessibility-touch-target-min) minimum",
+                    "status": "Defined in semantic tokens",
+                    "token": "var(--accessibility-touch-target-min)"
+                  },
+                  {
+                    "area": "Text Size",
+                    "requirement": "var(--text-base) minimum",
+                    "status": "Semantic token compliance",
+                    "token": "var(--text-base)"
+                  },
+                  {
+                    "area": "Line Length",
+                    "requirement": "var(--accessibility-line-length-max) maximum",
+                    "status": "Semantic token defined",
+                    "token": "var(--accessibility-line-length-max)"
+                  }
+                ],
+                "semantic_contrast_pairs": {
+                  "primary_text": "var(--color-text-primary) on var(--color-background)",
+                  "secondary_text": "var(--color-text-secondary) on var(--color-background)",
+                  "primary_button": "white text on var(--color-primary)",
+                  "accent_button": "dark text on var(--color-accent)"
+                }
+              }
+            },
+            "responsive_design": {
+              "category": "Responsive Design",
+              "score": 0.9,
+              "issues": [],
+              "strengths": [
+                "Tablet optimization with semantic breakpoint tokens",
+                "Breakpoint system prevents hardcoded media query values",
+                "Semantic tokens enable consistent responsive behavior"
+              ],
+              "details": {
+                "semantic_breakpoint_system": "Using var(--breakpoint-*) token system",
+                "layout_adaptation": "Semantic token-driven responsive behavior",
+                "expected_behavior": [
+                  "Two column service grid within var(--breakpoint-tablet-*) range",
+                  "Condensed navigation with var(--space-md) spacing",
+                  "Balanced content layout using var(--space-lg) containers",
+                  "Touch + mouse support with semantic target sizes"
+                ],
+                "semantic_breakpoint_range": "var(--breakpoint-tablet-min) to var(--breakpoint-tablet-max)"
+              }
+            },
+            "content_structure": {
+              "category": "Content Structure",
+              "score": 0.8,
+              "issues": [],
+              "strengths": [
+                "Comprehensive content structure using semantic tokens (7 sections)",
+                "Multi-level CTA hierarchy using semantic design tokens"
+              ],
+              "details": {
+                "semantic_content_organization": "Using semantic HTML and token-based styling",
+                "information_hierarchy": "Semantic heading structure with token-based typography",
+                "expected_services": [
+                  "Botox / Fillers",
+                  "Hydrafacial",
+                  "Dermaplanning",
+                  "Microneedling PRP",
+                  "IV Vitamins",
+                  "Permanent Makeup",
+                  "Laser Hair Reduction",
+                  "Carbon Peel Laser",
+                  "EMSCULT Muscle Builder"
+                ],
+                "service_count": 9,
+                "expected_sections": [
+                  "Hero Section with var(--text-4xl) heading and primary CTA",
+                  "Treatment Services Grid with var(--space-lg) gaps",
+                  "Doctor Profile Section with var(--text-3xl) heading",
+                  "Transformation Gallery with semantic image tokens",
+                  "Patient Testimonials with var(--text-xl) quotes",
+                  "Consultation Booking with semantic button tokens",
+                  "Contact Information with var(--text-base) typography"
+                ],
+                "expected_ctas": [
+                  "Book Consultation (Primary) - var(--color-primary) with var(--space-md) padding",
+                  "Call Now (Secondary) - var(--color-accent) with semantic spacing",
+                  "Learn More (Per service) - semantic link tokens",
+                  "Book Now (Per service) - semantic button tokens"
+                ]
+              }
+            },
+            "design_system_consistency": {
+              "category": "Design System Consistency",
+              "score": 0.75,
+              "issues": [],
+              "strengths": [
+                "Design system components defined with semantic tokens",
+                "Brand guidelines established using semantic design tokens",
+                "Token-based system prevents hardcoded value violations"
+              ],
+              "details": {
+                "semantic_design_system": "Token-based design system compliance",
+                "component_consistency": "Semantic token-driven component library",
+                "semantic_components": [
+                  "Service Cards - using var(--radius-md) and var(--shadow-sm)",
+                  "CTA Buttons - using var(--color-primary) and var(--space-md)",
+                  "Navigation Elements - using var(--font-family-primary)",
+                  "Typography Styles - using var(--text-*) and var(--font-weight-*)",
+                  "Color Usage - using var(--color-*) tokens exclusively",
+                  "Spacing Patterns - using var(--space-*) tokens consistently",
+                  "Icon Styles - using semantic icon tokens"
+                ],
+                "token_consistency_checks": {
+                  "color_tokens": "All colors should use var(--color-*) tokens",
+                  "typography_tokens": "All text should use var(--text-*) and var(--font-*) tokens",
+                  "spacing_tokens": "All spacing should use var(--space-*) tokens",
+                  "border_tokens": "All borders should use var(--radius-*) and var(--border-*) tokens",
+                  "shadow_tokens": "All shadows should use var(--shadow-*) tokens"
+                },
+                "semantic_brand_elements": {
+                  "logo_usage": "Semantic logo tokens for consistent sizing",
+                  "color_palette": "var(--color-*) token system for brand colors",
+                  "typography": "var(--font-family-display) + var(--font-family-primary) combination",
+                  "tone_of_voice": "Professional medical spa with semantic content tokens"
+                }
+              }
+            }
+          },
+          "recommendations": [
+            {
+              "priority": "Medium",
+              "category": "Semantic Token Compliance",
+              "recommendation": "Optimize semantic token compliance for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": [
+                "Manual verification needed to confirm semantic token usage in implementation",
+                "Hardcoded values may exist in CSS that need token replacement"
+              ]
+            },
+            {
+              "priority": "Medium",
+              "category": "Spacing & Alignment",
+              "recommendation": "Optimize spacing & alignment for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "Medium",
+              "category": "Content Structure",
+              "recommendation": "Optimize content structure for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "Medium",
+              "category": "Design System Consistency",
+              "recommendation": "Optimize design system consistency for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "High",
+              "category": "Semantic Compliance",
+              "recommendation": "Ensure all design values use semantic tokens (var(--*)) instead of hardcoded values",
+              "semantic_approach": "Implement comprehensive token-based design system",
+              "issues": [
+                "Hardcoded values violate fundamentals.json requirements"
+              ]
+            },
+            {
+              "priority": "Medium",
+              "category": "Design System",
+              "recommendation": "Validate semantic token usage across all components",
+              "semantic_approach": "Audit for var(--*) token compliance",
+              "issues": [
+                "Manual verification needed for token adherence"
+              ]
+            }
+          ],
+          "critical_issues": [
+            {
+              "category": "Semantic Token Compliance",
+              "issue": "Manual verification needed to confirm semantic token usage in implementation",
+              "severity": "Critical",
+              "impact": "Semantic tokenization compliance violation",
+              "solution": "Replace with var(--*) semantic tokens"
+            },
+            {
+              "category": "Semantic Token Compliance",
+              "issue": "Hardcoded values may exist in CSS that need token replacement",
+              "severity": "Critical",
+              "impact": "Semantic tokenization compliance violation",
+              "solution": "Replace with var(--*) semantic tokens"
+            }
+          ]
+        }
+      },
+      "mobile": {
+        "image_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_mobile_1750300571669.png",
+        "viewport_info": {
+          "name": "mobile",
+          "width": 375,
+          "height": 667
+        },
+        "comparison": {
+          "comparison_type": "semantic_analysis",
+          "design_specification": "../../project_context/designs/HOMEPAGE_DESIGN.md",
+          "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_mobile_1750300571669.png",
+          "analysis_timestamp": "2025-06-19T02:36:11.679Z",
+          "similarity": null,
+          "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
+        },
+        "ai_analysis": {
+          "viewport": "mobile",
+          "timestamp": "{CURRENT_TIMESTAMP}",
+          "overall_score": 0.8214285714285714,
+          "categories": {
+            "visual_hierarchy": {
+              "category": "Visual Hierarchy",
+              "score": 0.85,
+              "issues": [],
+              "strengths": [
+                "Proper mobile viewport width within semantic breakpoint range",
+                "Visual hierarchy defined using semantic design tokens"
+              ],
+              "details": {
+                "dimensions": {
+                  "width": 375,
+                  "height": 10241
+                },
+                "expected_layout": "Single column, stacked services using mobile breakpoint tokens",
+                "semantic_breakpoint": "var(--breakpoint-mobile-min) to var(--breakpoint-mobile-max)",
+                "expected_spacing": {
+                  "mobile": "var(--space-sm) margins, var(--space-xs) padding",
+                  "tablet": "var(--space-md) margins, var(--space-sm) padding",
+                  "desktop": "var(--space-lg) margins, var(--space-md) padding"
+                },
+                "expected_typography": {
+                  "h1": "var(--text-4xl) with var(--font-family-display)",
+                  "h2": "var(--text-3xl) with var(--font-family-display)",
+                  "h3": "var(--text-xl) with var(--font-family-primary)",
+                  "body": "var(--text-base) with var(--font-family-primary)"
+                }
+              }
+            },
+            "semantic_token_compliance": {
+              "category": "Semantic Token Compliance",
+              "score": 0.8,
+              "issues": [
+                "Manual verification needed to confirm semantic token usage in implementation",
+                "Hardcoded values may exist in CSS that need token replacement"
+              ],
+              "strengths": [
+                "Design system tokens defined for comprehensive coverage",
+                "Semantic approach prevents hardcoded value violations",
+                "Token-based system enables consistent theming"
+              ],
+              "details": {
+                "expected_color_tokens": [
+                  "var(--color-primary)",
+                  "var(--color-accent)",
+                  "var(--color-background)",
+                  "var(--color-text-primary)",
+                  "var(--color-text-secondary)"
+                ],
+                "expected_typography_tokens": [
+                  "var(--font-family-display)",
+                  "var(--font-family-primary)",
+                  "var(--text-4xl)",
+                  "var(--text-3xl)",
+                  "var(--text-xl)",
+                  "var(--text-base)"
+                ],
+                "expected_spacing_tokens": [
+                  "var(--space-xs)",
+                  "var(--space-sm)",
+                  "var(--space-md)",
+                  "var(--space-lg)",
+                  "var(--space-xl)"
+                ],
+                "compliance_status": "Requires manual verification",
+                "color_token_compliance": {
+                  "primary_brand": "Should use var(--color-primary) instead of hardcoded sage green",
+                  "accent_color": "Should use var(--color-accent) instead of hardcoded gold",
+                  "background": "Should use var(--color-background) instead of hardcoded off-white",
+                  "text_colors": "Should use var(--color-text-primary) and var(--color-text-secondary)"
+                },
+                "typography_token_compliance": {
+                  "headings": "Should use var(--font-family-display) for headings",
+                  "body_text": "Should use var(--font-family-primary) for body text",
+                  "sizes": "Should use var(--text-*) tokens instead of hardcoded sizes",
+                  "weights": "Should use var(--font-weight-*) tokens"
+                },
+                "spacing_token_compliance": {
+                  "margins": "Should use var(--space-*) tokens for consistent margins",
+                  "padding": "Should use var(--space-*) tokens for consistent padding",
+                  "gaps": "Should use var(--space-*) tokens for grid and flex gaps"
+                }
+              }
+            },
+            "spacing_alignment": {
+              "category": "Spacing & Alignment",
+              "score": 0.8,
+              "issues": [],
+              "strengths": [
+                "Semantic spacing tokens defined for mobile viewport",
+                "Mobile-first approach with semantic breakpoint tokens",
+                "Spacing system prevents hardcoded pixel values",
+                "Semantic tokens enable consistent spacing across components"
+              ],
+              "details": {
+                "semantic_spacing_system": "Using var(--space-*) token system",
+                "alignment_system": "Grid-based with semantic breakpoints",
+                "expected_semantic_spacing": {
+                  "margin": "var(--space-sm)",
+                  "padding": "var(--space-xs)",
+                  "cardGap": "var(--space-sm)"
+                },
+                "spacing_token_usage": {
+                  "container_margins": "var(--space-sm)",
+                  "card_padding": "var(--space-xs)",
+                  "grid_gaps": "var(--space-sm)",
+                  "section_spacing": "var(--space-xl) for major sections",
+                  "component_spacing": "var(--space-md) for component internal spacing"
+                },
+                "layout_type": "Single column stack using var(--breakpoint-mobile-*)"
+              }
+            },
+            "accessibility_compliance": {
+              "category": "Accessibility Compliance",
+              "score": 0.85,
+              "issues": [],
+              "strengths": [
+                "Color Contrast: Using semantic token var(--accessibility-contrast-min)",
+                "Touch Targets: Using semantic token var(--accessibility-touch-target-min)",
+                "Text Size: Using semantic token var(--text-base)",
+                "Line Length: Using semantic token var(--accessibility-line-length-max)",
+                "Accessibility standards defined using semantic tokens",
+                "Token-based approach ensures consistent accessibility compliance"
+              ],
+              "details": {
+                "wcag_level": "AAA Target using semantic accessibility tokens",
+                "semantic_contrast_token": "var(--accessibility-contrast-min)",
+                "semantic_touch_target_token": "var(--accessibility-touch-target-min)",
+                "semantic_line_length_token": "var(--accessibility-line-length-max)",
+                "compliance_areas": [
+                  {
+                    "area": "Color Contrast",
+                    "requirement": "var(--accessibility-contrast-min) ratio",
+                    "status": "Defined in semantic tokens",
+                    "token": "var(--accessibility-contrast-min)"
+                  },
+                  {
+                    "area": "Touch Targets",
+                    "requirement": "var(--accessibility-touch-target-min) minimum",
+                    "status": "Defined in semantic tokens",
+                    "token": "var(--accessibility-touch-target-min)"
+                  },
+                  {
+                    "area": "Text Size",
+                    "requirement": "var(--text-base) minimum",
+                    "status": "Semantic token compliance",
+                    "token": "var(--text-base)"
+                  },
+                  {
+                    "area": "Line Length",
+                    "requirement": "var(--accessibility-line-length-max) maximum",
+                    "status": "Semantic token defined",
+                    "token": "var(--accessibility-line-length-max)"
+                  }
+                ],
+                "semantic_contrast_pairs": {
+                  "primary_text": "var(--color-text-primary) on var(--color-background)",
+                  "secondary_text": "var(--color-text-secondary) on var(--color-background)",
+                  "primary_button": "white text on var(--color-primary)",
+                  "accent_button": "dark text on var(--color-accent)"
+                }
+              }
+            },
+            "responsive_design": {
+              "category": "Responsive Design",
+              "score": 0.9,
+              "issues": [],
+              "strengths": [
+                "Mobile-first responsive approach with semantic breakpoints",
+                "Breakpoint system prevents hardcoded media query values",
+                "Semantic tokens enable consistent responsive behavior"
+              ],
+              "details": {
+                "semantic_breakpoint_system": "Using var(--breakpoint-*) token system",
+                "layout_adaptation": "Semantic token-driven responsive behavior",
+                "expected_behavior": [
+                  "Single column layout within var(--breakpoint-mobile-*) range",
+                  "Stacked service cards with var(--space-sm) gaps",
+                  "Hamburger navigation using var(--space-md) touch targets",
+                  "Large touch targets using var(--accessibility-touch-target-min)"
+                ],
+                "semantic_breakpoint_range": "var(--breakpoint-mobile-min) to var(--breakpoint-mobile-max)"
+              }
+            },
+            "content_structure": {
+              "category": "Content Structure",
+              "score": 0.8,
+              "issues": [],
+              "strengths": [
+                "Comprehensive content structure using semantic tokens (7 sections)",
+                "Multi-level CTA hierarchy using semantic design tokens"
+              ],
+              "details": {
+                "semantic_content_organization": "Using semantic HTML and token-based styling",
+                "information_hierarchy": "Semantic heading structure with token-based typography",
+                "expected_services": [
+                  "Botox / Fillers",
+                  "Hydrafacial",
+                  "Dermaplanning",
+                  "Microneedling PRP",
+                  "IV Vitamins",
+                  "Permanent Makeup",
+                  "Laser Hair Reduction",
+                  "Carbon Peel Laser",
+                  "EMSCULT Muscle Builder"
+                ],
+                "service_count": 9,
+                "expected_sections": [
+                  "Hero Section with var(--text-4xl) heading and primary CTA",
+                  "Treatment Services Grid with var(--space-lg) gaps",
+                  "Doctor Profile Section with var(--text-3xl) heading",
+                  "Transformation Gallery with semantic image tokens",
+                  "Patient Testimonials with var(--text-xl) quotes",
+                  "Consultation Booking with semantic button tokens",
+                  "Contact Information with var(--text-base) typography"
+                ],
+                "expected_ctas": [
+                  "Book Consultation (Primary) - var(--color-primary) with var(--space-md) padding",
+                  "Call Now (Secondary) - var(--color-accent) with semantic spacing",
+                  "Learn More (Per service) - semantic link tokens",
+                  "Book Now (Per service) - semantic button tokens"
+                ]
+              }
+            },
+            "design_system_consistency": {
+              "category": "Design System Consistency",
+              "score": 0.75,
+              "issues": [],
+              "strengths": [
+                "Design system components defined with semantic tokens",
+                "Brand guidelines established using semantic design tokens",
+                "Token-based system prevents hardcoded value violations"
+              ],
+              "details": {
+                "semantic_design_system": "Token-based design system compliance",
+                "component_consistency": "Semantic token-driven component library",
+                "semantic_components": [
+                  "Service Cards - using var(--radius-md) and var(--shadow-sm)",
+                  "CTA Buttons - using var(--color-primary) and var(--space-md)",
+                  "Navigation Elements - using var(--font-family-primary)",
+                  "Typography Styles - using var(--text-*) and var(--font-weight-*)",
+                  "Color Usage - using var(--color-*) tokens exclusively",
+                  "Spacing Patterns - using var(--space-*) tokens consistently",
+                  "Icon Styles - using semantic icon tokens"
+                ],
+                "token_consistency_checks": {
+                  "color_tokens": "All colors should use var(--color-*) tokens",
+                  "typography_tokens": "All text should use var(--text-*) and var(--font-*) tokens",
+                  "spacing_tokens": "All spacing should use var(--space-*) tokens",
+                  "border_tokens": "All borders should use var(--radius-*) and var(--border-*) tokens",
+                  "shadow_tokens": "All shadows should use var(--shadow-*) tokens"
+                },
+                "semantic_brand_elements": {
+                  "logo_usage": "Semantic logo tokens for consistent sizing",
+                  "color_palette": "var(--color-*) token system for brand colors",
+                  "typography": "var(--font-family-display) + var(--font-family-primary) combination",
+                  "tone_of_voice": "Professional medical spa with semantic content tokens"
+                }
+              }
+            }
+          },
+          "recommendations": [
+            {
+              "priority": "Medium",
+              "category": "Semantic Token Compliance",
+              "recommendation": "Optimize semantic token compliance for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": [
+                "Manual verification needed to confirm semantic token usage in implementation",
+                "Hardcoded values may exist in CSS that need token replacement"
+              ]
+            },
+            {
+              "priority": "Medium",
+              "category": "Spacing & Alignment",
+              "recommendation": "Optimize spacing & alignment for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "Medium",
+              "category": "Content Structure",
+              "recommendation": "Optimize content structure for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "Medium",
+              "category": "Design System Consistency",
+              "recommendation": "Optimize design system consistency for better semantic token compliance",
+              "semantic_approach": "Enhance token usage consistency",
+              "issues": []
+            },
+            {
+              "priority": "High",
+              "category": "Semantic Compliance",
+              "recommendation": "Ensure all design values use semantic tokens (var(--*)) instead of hardcoded values",
+              "semantic_approach": "Implement comprehensive token-based design system",
+              "issues": [
+                "Hardcoded values violate fundamentals.json requirements"
+              ]
+            },
+            {
+              "priority": "Medium",
+              "category": "Design System",
+              "recommendation": "Validate semantic token usage across all components",
+              "semantic_approach": "Audit for var(--*) token compliance",
+              "issues": [
+                "Manual verification needed for token adherence"
+              ]
+            }
+          ],
+          "critical_issues": [
+            {
+              "category": "Semantic Token Compliance",
+              "issue": "Manual verification needed to confirm semantic token usage in implementation",
+              "severity": "Critical",
+              "impact": "Semantic tokenization compliance violation",
+              "solution": "Replace with var(--*) semantic tokens"
+            },
+            {
+              "category": "Semantic Token Compliance",
+              "issue": "Hardcoded values may exist in CSS that need token replacement",
+              "severity": "Critical",
+              "impact": "Semantic tokenization compliance violation",
+              "solution": "Replace with var(--*) semantic tokens"
+            }
+          ]
+        }
+      }
+    },
+    "comparison_results": {
+      "desktop": {
+        "comparison_type": "semantic_analysis",
+        "design_specification": "../../project_context/designs/HOMEPAGE_DESIGN.md",
+        "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_desktop_1750300567533.png",
+        "analysis_timestamp": "2025-06-19T02:36:11.679Z",
+        "similarity": null,
+        "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
+      },
+      "tablet": {
+        "comparison_type": "semantic_analysis",
+        "design_specification": "../../project_context/designs/HOMEPAGE_DESIGN.md",
+        "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_tablet_1750300569733.png",
+        "analysis_timestamp": "2025-06-19T02:36:11.679Z",
+        "similarity": null,
+        "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
+      },
+      "mobile": {
+        "comparison_type": "semantic_analysis",
+        "design_specification": "../../project_context/designs/HOMEPAGE_DESIGN.md",
+        "screenshot_path": "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_mobile_1750300571669.png",
+        "analysis_timestamp": "2025-06-19T02:36:11.679Z",
+        "similarity": null,
+        "note": "Pixel comparison skipped - using design specification for semantic compliance analysis"
+      }
+    },
+    "ai_analysis": {
+      "desktop": {
+        "viewport": "desktop",
+        "timestamp": "{CURRENT_TIMESTAMP}",
+        "overall_score": 0.8214285714285714,
+        "categories": {
+          "visual_hierarchy": {
+            "category": "Visual Hierarchy",
+            "score": 0.85,
+            "issues": [],
+            "strengths": [
+              "Desktop viewport properly sized within semantic breakpoint",
+              "Visual hierarchy defined using semantic design tokens"
+            ],
+            "details": {
+              "dimensions": {
+                "width": 1920,
+                "height": 5490
+              },
+              "expected_layout": "Multi-column grid using desktop breakpoint tokens",
+              "semantic_breakpoint": "var(--breakpoint-desktop-min) and above",
+              "expected_spacing": {
+                "mobile": "var(--space-sm) margins, var(--space-xs) padding",
+                "tablet": "var(--space-md) margins, var(--space-sm) padding",
+                "desktop": "var(--space-lg) margins, var(--space-md) padding"
+              },
+              "expected_typography": {
+                "h1": "var(--text-4xl) with var(--font-family-display)",
+                "h2": "var(--text-3xl) with var(--font-family-display)",
+                "h3": "var(--text-xl) with var(--font-family-primary)",
+                "body": "var(--text-base) with var(--font-family-primary)"
+              }
+            }
+          },
+          "semantic_token_compliance": {
+            "category": "Semantic Token Compliance",
+            "score": 0.8,
+            "issues": [
+              "Manual verification needed to confirm semantic token usage in implementation",
+              "Hardcoded values may exist in CSS that need token replacement"
+            ],
+            "strengths": [
+              "Design system tokens defined for comprehensive coverage",
+              "Semantic approach prevents hardcoded value violations",
+              "Token-based system enables consistent theming"
+            ],
+            "details": {
+              "expected_color_tokens": [
+                "var(--color-primary)",
+                "var(--color-accent)",
+                "var(--color-background)",
+                "var(--color-text-primary)",
+                "var(--color-text-secondary)"
+              ],
+              "expected_typography_tokens": [
+                "var(--font-family-display)",
+                "var(--font-family-primary)",
+                "var(--text-4xl)",
+                "var(--text-3xl)",
+                "var(--text-xl)",
+                "var(--text-base)"
+              ],
+              "expected_spacing_tokens": [
+                "var(--space-xs)",
+                "var(--space-sm)",
+                "var(--space-md)",
+                "var(--space-lg)",
+                "var(--space-xl)"
+              ],
+              "compliance_status": "Requires manual verification",
+              "color_token_compliance": {
+                "primary_brand": "Should use var(--color-primary) instead of hardcoded sage green",
+                "accent_color": "Should use var(--color-accent) instead of hardcoded gold",
+                "background": "Should use var(--color-background) instead of hardcoded off-white",
+                "text_colors": "Should use var(--color-text-primary) and var(--color-text-secondary)"
+              },
+              "typography_token_compliance": {
+                "headings": "Should use var(--font-family-display) for headings",
+                "body_text": "Should use var(--font-family-primary) for body text",
+                "sizes": "Should use var(--text-*) tokens instead of hardcoded sizes",
+                "weights": "Should use var(--font-weight-*) tokens"
+              },
+              "spacing_token_compliance": {
+                "margins": "Should use var(--space-*) tokens for consistent margins",
+                "padding": "Should use var(--space-*) tokens for consistent padding",
+                "gaps": "Should use var(--space-*) tokens for grid and flex gaps"
+              }
+            }
+          },
+          "spacing_alignment": {
+            "category": "Spacing & Alignment",
+            "score": 0.8,
+            "issues": [],
+            "strengths": [
+              "Semantic spacing tokens defined for desktop viewport",
+              "Desktop grid system with semantic tokens",
+              "Spacing system prevents hardcoded pixel values",
+              "Semantic tokens enable consistent spacing across components"
+            ],
+            "details": {
+              "semantic_spacing_system": "Using var(--space-*) token system",
+              "alignment_system": "Grid-based with semantic breakpoints",
+              "expected_semantic_spacing": {
+                "margin": "var(--space-lg)",
+                "padding": "var(--space-md)",
+                "cardGap": "var(--space-lg)"
+              },
+              "spacing_token_usage": {
+                "container_margins": "var(--space-lg)",
+                "card_padding": "var(--space-md)",
+                "grid_gaps": "var(--space-lg)",
+                "section_spacing": "var(--space-xl) for major sections",
+                "component_spacing": "var(--space-md) for component internal spacing"
+              },
+              "layout_type": "Multi-column grid using var(--breakpoint-desktop-*)"
+            }
+          },
+          "accessibility_compliance": {
+            "category": "Accessibility Compliance",
+            "score": 0.85,
+            "issues": [],
+            "strengths": [
+              "Color Contrast: Using semantic token var(--accessibility-contrast-min)",
+              "Touch Targets: Using semantic token var(--accessibility-touch-target-min)",
+              "Text Size: Using semantic token var(--text-base)",
+              "Line Length: Using semantic token var(--accessibility-line-length-max)",
+              "Accessibility standards defined using semantic tokens",
+              "Token-based approach ensures consistent accessibility compliance"
+            ],
+            "details": {
+              "wcag_level": "AAA Target using semantic accessibility tokens",
+              "semantic_contrast_token": "var(--accessibility-contrast-min)",
+              "semantic_touch_target_token": "var(--accessibility-touch-target-min)",
+              "semantic_line_length_token": "var(--accessibility-line-length-max)",
+              "compliance_areas": [
+                {
+                  "area": "Color Contrast",
+                  "requirement": "var(--accessibility-contrast-min) ratio",
+                  "status": "Defined in semantic tokens",
+                  "token": "var(--accessibility-contrast-min)"
+                },
+                {
+                  "area": "Touch Targets",
+                  "requirement": "var(--accessibility-touch-target-min) minimum",
+                  "status": "Defined in semantic tokens",
+                  "token": "var(--accessibility-touch-target-min)"
+                },
+                {
+                  "area": "Text Size",
+                  "requirement": "var(--text-base) minimum",
+                  "status": "Semantic token compliance",
+                  "token": "var(--text-base)"
+                },
+                {
+                  "area": "Line Length",
+                  "requirement": "var(--accessibility-line-length-max) maximum",
+                  "status": "Semantic token defined",
+                  "token": "var(--accessibility-line-length-max)"
+                }
+              ],
+              "semantic_contrast_pairs": {
+                "primary_text": "var(--color-text-primary) on var(--color-background)",
+                "secondary_text": "var(--color-text-secondary) on var(--color-background)",
+                "primary_button": "white text on var(--color-primary)",
+                "accent_button": "dark text on var(--color-accent)"
+              }
+            }
+          },
+          "responsive_design": {
+            "category": "Responsive Design",
+            "score": 0.9,
+            "issues": [],
+            "strengths": [
+              "Desktop experience optimized with semantic tokens",
+              "Breakpoint system prevents hardcoded media query values",
+              "Semantic tokens enable consistent responsive behavior"
+            ],
+            "details": {
+              "semantic_breakpoint_system": "Using var(--breakpoint-*) token system",
+              "layout_adaptation": "Semantic token-driven responsive behavior",
+              "expected_behavior": [
+                "Multi-column service grid using var(--breakpoint-desktop-min) and above",
+                "Full navigation menu with var(--space-lg) spacing",
+                "Rich content display with var(--space-xl) containers",
+                "Hover interactions with semantic transition tokens"
+              ],
+              "semantic_breakpoint_range": "var(--breakpoint-desktop-min) and above"
+            }
+          },
+          "content_structure": {
+            "category": "Content Structure",
+            "score": 0.8,
+            "issues": [],
+            "strengths": [
+              "Comprehensive content structure using semantic tokens (7 sections)",
+              "Multi-level CTA hierarchy using semantic design tokens"
+            ],
+            "details": {
+              "semantic_content_organization": "Using semantic HTML and token-based styling",
+              "information_hierarchy": "Semantic heading structure with token-based typography",
+              "expected_services": [
+                "Botox / Fillers",
+                "Hydrafacial",
+                "Dermaplanning",
+                "Microneedling PRP",
+                "IV Vitamins",
+                "Permanent Makeup",
+                "Laser Hair Reduction",
+                "Carbon Peel Laser",
+                "EMSCULT Muscle Builder"
+              ],
+              "service_count": 9,
+              "expected_sections": [
+                "Hero Section with var(--text-4xl) heading and primary CTA",
+                "Treatment Services Grid with var(--space-lg) gaps",
+                "Doctor Profile Section with var(--text-3xl) heading",
+                "Transformation Gallery with semantic image tokens",
+                "Patient Testimonials with var(--text-xl) quotes",
+                "Consultation Booking with semantic button tokens",
+                "Contact Information with var(--text-base) typography"
+              ],
+              "expected_ctas": [
+                "Book Consultation (Primary) - var(--color-primary) with var(--space-md) padding",
+                "Call Now (Secondary) - var(--color-accent) with semantic spacing",
+                "Learn More (Per service) - semantic link tokens",
+                "Book Now (Per service) - semantic button tokens"
+              ]
+            }
+          },
+          "design_system_consistency": {
+            "category": "Design System Consistency",
+            "score": 0.75,
+            "issues": [],
+            "strengths": [
+              "Design system components defined with semantic tokens",
+              "Brand guidelines established using semantic design tokens",
+              "Token-based system prevents hardcoded value violations"
+            ],
+            "details": {
+              "semantic_design_system": "Token-based design system compliance",
+              "component_consistency": "Semantic token-driven component library",
+              "semantic_components": [
+                "Service Cards - using var(--radius-md) and var(--shadow-sm)",
+                "CTA Buttons - using var(--color-primary) and var(--space-md)",
+                "Navigation Elements - using var(--font-family-primary)",
+                "Typography Styles - using var(--text-*) and var(--font-weight-*)",
+                "Color Usage - using var(--color-*) tokens exclusively",
+                "Spacing Patterns - using var(--space-*) tokens consistently",
+                "Icon Styles - using semantic icon tokens"
+              ],
+              "token_consistency_checks": {
+                "color_tokens": "All colors should use var(--color-*) tokens",
+                "typography_tokens": "All text should use var(--text-*) and var(--font-*) tokens",
+                "spacing_tokens": "All spacing should use var(--space-*) tokens",
+                "border_tokens": "All borders should use var(--radius-*) and var(--border-*) tokens",
+                "shadow_tokens": "All shadows should use var(--shadow-*) tokens"
+              },
+              "semantic_brand_elements": {
+                "logo_usage": "Semantic logo tokens for consistent sizing",
+                "color_palette": "var(--color-*) token system for brand colors",
+                "typography": "var(--font-family-display) + var(--font-family-primary) combination",
+                "tone_of_voice": "Professional medical spa with semantic content tokens"
+              }
+            }
+          }
+        },
+        "recommendations": [
+          {
+            "priority": "Medium",
+            "category": "Semantic Token Compliance",
+            "recommendation": "Optimize semantic token compliance for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": [
+              "Manual verification needed to confirm semantic token usage in implementation",
+              "Hardcoded values may exist in CSS that need token replacement"
+            ]
+          },
+          {
+            "priority": "Medium",
+            "category": "Spacing & Alignment",
+            "recommendation": "Optimize spacing & alignment for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "Medium",
+            "category": "Content Structure",
+            "recommendation": "Optimize content structure for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "Medium",
+            "category": "Design System Consistency",
+            "recommendation": "Optimize design system consistency for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "High",
+            "category": "Semantic Compliance",
+            "recommendation": "Ensure all design values use semantic tokens (var(--*)) instead of hardcoded values",
+            "semantic_approach": "Implement comprehensive token-based design system",
+            "issues": [
+              "Hardcoded values violate fundamentals.json requirements"
+            ]
+          },
+          {
+            "priority": "Medium",
+            "category": "Design System",
+            "recommendation": "Validate semantic token usage across all components",
+            "semantic_approach": "Audit for var(--*) token compliance",
+            "issues": [
+              "Manual verification needed for token adherence"
+            ]
+          }
+        ],
+        "critical_issues": [
+          {
+            "category": "Semantic Token Compliance",
+            "issue": "Manual verification needed to confirm semantic token usage in implementation",
+            "severity": "Critical",
+            "impact": "Semantic tokenization compliance violation",
+            "solution": "Replace with var(--*) semantic tokens"
+          },
+          {
+            "category": "Semantic Token Compliance",
+            "issue": "Hardcoded values may exist in CSS that need token replacement",
+            "severity": "Critical",
+            "impact": "Semantic tokenization compliance violation",
+            "solution": "Replace with var(--*) semantic tokens"
+          }
+        ]
+      },
+      "tablet": {
+        "viewport": "tablet",
+        "timestamp": "{CURRENT_TIMESTAMP}",
+        "overall_score": 0.8214285714285714,
+        "categories": {
+          "visual_hierarchy": {
+            "category": "Visual Hierarchy",
+            "score": 0.85,
+            "issues": [],
+            "strengths": [
+              "Correct tablet viewport within semantic breakpoint range",
+              "Visual hierarchy defined using semantic design tokens"
+            ],
+            "details": {
+              "dimensions": {
+                "width": 777,
+                "height": 7639
+              },
+              "expected_layout": "Two column grid using tablet breakpoint tokens",
+              "semantic_breakpoint": "var(--breakpoint-tablet-min) to var(--breakpoint-tablet-max)",
+              "expected_spacing": {
+                "mobile": "var(--space-sm) margins, var(--space-xs) padding",
+                "tablet": "var(--space-md) margins, var(--space-sm) padding",
+                "desktop": "var(--space-lg) margins, var(--space-md) padding"
+              },
+              "expected_typography": {
+                "h1": "var(--text-4xl) with var(--font-family-display)",
+                "h2": "var(--text-3xl) with var(--font-family-display)",
+                "h3": "var(--text-xl) with var(--font-family-primary)",
+                "body": "var(--text-base) with var(--font-family-primary)"
+              }
+            }
+          },
+          "semantic_token_compliance": {
+            "category": "Semantic Token Compliance",
+            "score": 0.8,
+            "issues": [
+              "Manual verification needed to confirm semantic token usage in implementation",
+              "Hardcoded values may exist in CSS that need token replacement"
+            ],
+            "strengths": [
+              "Design system tokens defined for comprehensive coverage",
+              "Semantic approach prevents hardcoded value violations",
+              "Token-based system enables consistent theming"
+            ],
+            "details": {
+              "expected_color_tokens": [
+                "var(--color-primary)",
+                "var(--color-accent)",
+                "var(--color-background)",
+                "var(--color-text-primary)",
+                "var(--color-text-secondary)"
+              ],
+              "expected_typography_tokens": [
+                "var(--font-family-display)",
+                "var(--font-family-primary)",
+                "var(--text-4xl)",
+                "var(--text-3xl)",
+                "var(--text-xl)",
+                "var(--text-base)"
+              ],
+              "expected_spacing_tokens": [
+                "var(--space-xs)",
+                "var(--space-sm)",
+                "var(--space-md)",
+                "var(--space-lg)",
+                "var(--space-xl)"
+              ],
+              "compliance_status": "Requires manual verification",
+              "color_token_compliance": {
+                "primary_brand": "Should use var(--color-primary) instead of hardcoded sage green",
+                "accent_color": "Should use var(--color-accent) instead of hardcoded gold",
+                "background": "Should use var(--color-background) instead of hardcoded off-white",
+                "text_colors": "Should use var(--color-text-primary) and var(--color-text-secondary)"
+              },
+              "typography_token_compliance": {
+                "headings": "Should use var(--font-family-display) for headings",
+                "body_text": "Should use var(--font-family-primary) for body text",
+                "sizes": "Should use var(--text-*) tokens instead of hardcoded sizes",
+                "weights": "Should use var(--font-weight-*) tokens"
+              },
+              "spacing_token_compliance": {
+                "margins": "Should use var(--space-*) tokens for consistent margins",
+                "padding": "Should use var(--space-*) tokens for consistent padding",
+                "gaps": "Should use var(--space-*) tokens for grid and flex gaps"
+              }
+            }
+          },
+          "spacing_alignment": {
+            "category": "Spacing & Alignment",
+            "score": 0.8,
+            "issues": [],
+            "strengths": [
+              "Semantic spacing tokens defined for tablet viewport",
+              "Responsive grid adaptation with semantic breakpoints",
+              "Spacing system prevents hardcoded pixel values",
+              "Semantic tokens enable consistent spacing across components"
+            ],
+            "details": {
+              "semantic_spacing_system": "Using var(--space-*) token system",
+              "alignment_system": "Grid-based with semantic breakpoints",
+              "expected_semantic_spacing": {
+                "margin": "var(--space-md)",
+                "padding": "var(--space-sm)",
+                "cardGap": "var(--space-md)"
+              },
+              "spacing_token_usage": {
+                "container_margins": "var(--space-md)",
+                "card_padding": "var(--space-sm)",
+                "grid_gaps": "var(--space-md)",
+                "section_spacing": "var(--space-xl) for major sections",
+                "component_spacing": "var(--space-md) for component internal spacing"
+              },
+              "layout_type": "Two column grid using var(--breakpoint-tablet-*)"
+            }
+          },
+          "accessibility_compliance": {
+            "category": "Accessibility Compliance",
+            "score": 0.85,
+            "issues": [],
+            "strengths": [
+              "Color Contrast: Using semantic token var(--accessibility-contrast-min)",
+              "Touch Targets: Using semantic token var(--accessibility-touch-target-min)",
+              "Text Size: Using semantic token var(--text-base)",
+              "Line Length: Using semantic token var(--accessibility-line-length-max)",
+              "Accessibility standards defined using semantic tokens",
+              "Token-based approach ensures consistent accessibility compliance"
+            ],
+            "details": {
+              "wcag_level": "AAA Target using semantic accessibility tokens",
+              "semantic_contrast_token": "var(--accessibility-contrast-min)",
+              "semantic_touch_target_token": "var(--accessibility-touch-target-min)",
+              "semantic_line_length_token": "var(--accessibility-line-length-max)",
+              "compliance_areas": [
+                {
+                  "area": "Color Contrast",
+                  "requirement": "var(--accessibility-contrast-min) ratio",
+                  "status": "Defined in semantic tokens",
+                  "token": "var(--accessibility-contrast-min)"
+                },
+                {
+                  "area": "Touch Targets",
+                  "requirement": "var(--accessibility-touch-target-min) minimum",
+                  "status": "Defined in semantic tokens",
+                  "token": "var(--accessibility-touch-target-min)"
+                },
+                {
+                  "area": "Text Size",
+                  "requirement": "var(--text-base) minimum",
+                  "status": "Semantic token compliance",
+                  "token": "var(--text-base)"
+                },
+                {
+                  "area": "Line Length",
+                  "requirement": "var(--accessibility-line-length-max) maximum",
+                  "status": "Semantic token defined",
+                  "token": "var(--accessibility-line-length-max)"
+                }
+              ],
+              "semantic_contrast_pairs": {
+                "primary_text": "var(--color-text-primary) on var(--color-background)",
+                "secondary_text": "var(--color-text-secondary) on var(--color-background)",
+                "primary_button": "white text on var(--color-primary)",
+                "accent_button": "dark text on var(--color-accent)"
+              }
+            }
+          },
+          "responsive_design": {
+            "category": "Responsive Design",
+            "score": 0.9,
+            "issues": [],
+            "strengths": [
+              "Tablet optimization with semantic breakpoint tokens",
+              "Breakpoint system prevents hardcoded media query values",
+              "Semantic tokens enable consistent responsive behavior"
+            ],
+            "details": {
+              "semantic_breakpoint_system": "Using var(--breakpoint-*) token system",
+              "layout_adaptation": "Semantic token-driven responsive behavior",
+              "expected_behavior": [
+                "Two column service grid within var(--breakpoint-tablet-*) range",
+                "Condensed navigation with var(--space-md) spacing",
+                "Balanced content layout using var(--space-lg) containers",
+                "Touch + mouse support with semantic target sizes"
+              ],
+              "semantic_breakpoint_range": "var(--breakpoint-tablet-min) to var(--breakpoint-tablet-max)"
+            }
+          },
+          "content_structure": {
+            "category": "Content Structure",
+            "score": 0.8,
+            "issues": [],
+            "strengths": [
+              "Comprehensive content structure using semantic tokens (7 sections)",
+              "Multi-level CTA hierarchy using semantic design tokens"
+            ],
+            "details": {
+              "semantic_content_organization": "Using semantic HTML and token-based styling",
+              "information_hierarchy": "Semantic heading structure with token-based typography",
+              "expected_services": [
+                "Botox / Fillers",
+                "Hydrafacial",
+                "Dermaplanning",
+                "Microneedling PRP",
+                "IV Vitamins",
+                "Permanent Makeup",
+                "Laser Hair Reduction",
+                "Carbon Peel Laser",
+                "EMSCULT Muscle Builder"
+              ],
+              "service_count": 9,
+              "expected_sections": [
+                "Hero Section with var(--text-4xl) heading and primary CTA",
+                "Treatment Services Grid with var(--space-lg) gaps",
+                "Doctor Profile Section with var(--text-3xl) heading",
+                "Transformation Gallery with semantic image tokens",
+                "Patient Testimonials with var(--text-xl) quotes",
+                "Consultation Booking with semantic button tokens",
+                "Contact Information with var(--text-base) typography"
+              ],
+              "expected_ctas": [
+                "Book Consultation (Primary) - var(--color-primary) with var(--space-md) padding",
+                "Call Now (Secondary) - var(--color-accent) with semantic spacing",
+                "Learn More (Per service) - semantic link tokens",
+                "Book Now (Per service) - semantic button tokens"
+              ]
+            }
+          },
+          "design_system_consistency": {
+            "category": "Design System Consistency",
+            "score": 0.75,
+            "issues": [],
+            "strengths": [
+              "Design system components defined with semantic tokens",
+              "Brand guidelines established using semantic design tokens",
+              "Token-based system prevents hardcoded value violations"
+            ],
+            "details": {
+              "semantic_design_system": "Token-based design system compliance",
+              "component_consistency": "Semantic token-driven component library",
+              "semantic_components": [
+                "Service Cards - using var(--radius-md) and var(--shadow-sm)",
+                "CTA Buttons - using var(--color-primary) and var(--space-md)",
+                "Navigation Elements - using var(--font-family-primary)",
+                "Typography Styles - using var(--text-*) and var(--font-weight-*)",
+                "Color Usage - using var(--color-*) tokens exclusively",
+                "Spacing Patterns - using var(--space-*) tokens consistently",
+                "Icon Styles - using semantic icon tokens"
+              ],
+              "token_consistency_checks": {
+                "color_tokens": "All colors should use var(--color-*) tokens",
+                "typography_tokens": "All text should use var(--text-*) and var(--font-*) tokens",
+                "spacing_tokens": "All spacing should use var(--space-*) tokens",
+                "border_tokens": "All borders should use var(--radius-*) and var(--border-*) tokens",
+                "shadow_tokens": "All shadows should use var(--shadow-*) tokens"
+              },
+              "semantic_brand_elements": {
+                "logo_usage": "Semantic logo tokens for consistent sizing",
+                "color_palette": "var(--color-*) token system for brand colors",
+                "typography": "var(--font-family-display) + var(--font-family-primary) combination",
+                "tone_of_voice": "Professional medical spa with semantic content tokens"
+              }
+            }
+          }
+        },
+        "recommendations": [
+          {
+            "priority": "Medium",
+            "category": "Semantic Token Compliance",
+            "recommendation": "Optimize semantic token compliance for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": [
+              "Manual verification needed to confirm semantic token usage in implementation",
+              "Hardcoded values may exist in CSS that need token replacement"
+            ]
+          },
+          {
+            "priority": "Medium",
+            "category": "Spacing & Alignment",
+            "recommendation": "Optimize spacing & alignment for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "Medium",
+            "category": "Content Structure",
+            "recommendation": "Optimize content structure for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "Medium",
+            "category": "Design System Consistency",
+            "recommendation": "Optimize design system consistency for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "High",
+            "category": "Semantic Compliance",
+            "recommendation": "Ensure all design values use semantic tokens (var(--*)) instead of hardcoded values",
+            "semantic_approach": "Implement comprehensive token-based design system",
+            "issues": [
+              "Hardcoded values violate fundamentals.json requirements"
+            ]
+          },
+          {
+            "priority": "Medium",
+            "category": "Design System",
+            "recommendation": "Validate semantic token usage across all components",
+            "semantic_approach": "Audit for var(--*) token compliance",
+            "issues": [
+              "Manual verification needed for token adherence"
+            ]
+          }
+        ],
+        "critical_issues": [
+          {
+            "category": "Semantic Token Compliance",
+            "issue": "Manual verification needed to confirm semantic token usage in implementation",
+            "severity": "Critical",
+            "impact": "Semantic tokenization compliance violation",
+            "solution": "Replace with var(--*) semantic tokens"
+          },
+          {
+            "category": "Semantic Token Compliance",
+            "issue": "Hardcoded values may exist in CSS that need token replacement",
+            "severity": "Critical",
+            "impact": "Semantic tokenization compliance violation",
+            "solution": "Replace with var(--*) semantic tokens"
+          }
+        ]
+      },
+      "mobile": {
+        "viewport": "mobile",
+        "timestamp": "{CURRENT_TIMESTAMP}",
+        "overall_score": 0.8214285714285714,
+        "categories": {
+          "visual_hierarchy": {
+            "category": "Visual Hierarchy",
+            "score": 0.85,
+            "issues": [],
+            "strengths": [
+              "Proper mobile viewport width within semantic breakpoint range",
+              "Visual hierarchy defined using semantic design tokens"
+            ],
+            "details": {
+              "dimensions": {
+                "width": 375,
+                "height": 10241
+              },
+              "expected_layout": "Single column, stacked services using mobile breakpoint tokens",
+              "semantic_breakpoint": "var(--breakpoint-mobile-min) to var(--breakpoint-mobile-max)",
+              "expected_spacing": {
+                "mobile": "var(--space-sm) margins, var(--space-xs) padding",
+                "tablet": "var(--space-md) margins, var(--space-sm) padding",
+                "desktop": "var(--space-lg) margins, var(--space-md) padding"
+              },
+              "expected_typography": {
+                "h1": "var(--text-4xl) with var(--font-family-display)",
+                "h2": "var(--text-3xl) with var(--font-family-display)",
+                "h3": "var(--text-xl) with var(--font-family-primary)",
+                "body": "var(--text-base) with var(--font-family-primary)"
+              }
+            }
+          },
+          "semantic_token_compliance": {
+            "category": "Semantic Token Compliance",
+            "score": 0.8,
+            "issues": [
+              "Manual verification needed to confirm semantic token usage in implementation",
+              "Hardcoded values may exist in CSS that need token replacement"
+            ],
+            "strengths": [
+              "Design system tokens defined for comprehensive coverage",
+              "Semantic approach prevents hardcoded value violations",
+              "Token-based system enables consistent theming"
+            ],
+            "details": {
+              "expected_color_tokens": [
+                "var(--color-primary)",
+                "var(--color-accent)",
+                "var(--color-background)",
+                "var(--color-text-primary)",
+                "var(--color-text-secondary)"
+              ],
+              "expected_typography_tokens": [
+                "var(--font-family-display)",
+                "var(--font-family-primary)",
+                "var(--text-4xl)",
+                "var(--text-3xl)",
+                "var(--text-xl)",
+                "var(--text-base)"
+              ],
+              "expected_spacing_tokens": [
+                "var(--space-xs)",
+                "var(--space-sm)",
+                "var(--space-md)",
+                "var(--space-lg)",
+                "var(--space-xl)"
+              ],
+              "compliance_status": "Requires manual verification",
+              "color_token_compliance": {
+                "primary_brand": "Should use var(--color-primary) instead of hardcoded sage green",
+                "accent_color": "Should use var(--color-accent) instead of hardcoded gold",
+                "background": "Should use var(--color-background) instead of hardcoded off-white",
+                "text_colors": "Should use var(--color-text-primary) and var(--color-text-secondary)"
+              },
+              "typography_token_compliance": {
+                "headings": "Should use var(--font-family-display) for headings",
+                "body_text": "Should use var(--font-family-primary) for body text",
+                "sizes": "Should use var(--text-*) tokens instead of hardcoded sizes",
+                "weights": "Should use var(--font-weight-*) tokens"
+              },
+              "spacing_token_compliance": {
+                "margins": "Should use var(--space-*) tokens for consistent margins",
+                "padding": "Should use var(--space-*) tokens for consistent padding",
+                "gaps": "Should use var(--space-*) tokens for grid and flex gaps"
+              }
+            }
+          },
+          "spacing_alignment": {
+            "category": "Spacing & Alignment",
+            "score": 0.8,
+            "issues": [],
+            "strengths": [
+              "Semantic spacing tokens defined for mobile viewport",
+              "Mobile-first approach with semantic breakpoint tokens",
+              "Spacing system prevents hardcoded pixel values",
+              "Semantic tokens enable consistent spacing across components"
+            ],
+            "details": {
+              "semantic_spacing_system": "Using var(--space-*) token system",
+              "alignment_system": "Grid-based with semantic breakpoints",
+              "expected_semantic_spacing": {
+                "margin": "var(--space-sm)",
+                "padding": "var(--space-xs)",
+                "cardGap": "var(--space-sm)"
+              },
+              "spacing_token_usage": {
+                "container_margins": "var(--space-sm)",
+                "card_padding": "var(--space-xs)",
+                "grid_gaps": "var(--space-sm)",
+                "section_spacing": "var(--space-xl) for major sections",
+                "component_spacing": "var(--space-md) for component internal spacing"
+              },
+              "layout_type": "Single column stack using var(--breakpoint-mobile-*)"
+            }
+          },
+          "accessibility_compliance": {
+            "category": "Accessibility Compliance",
+            "score": 0.85,
+            "issues": [],
+            "strengths": [
+              "Color Contrast: Using semantic token var(--accessibility-contrast-min)",
+              "Touch Targets: Using semantic token var(--accessibility-touch-target-min)",
+              "Text Size: Using semantic token var(--text-base)",
+              "Line Length: Using semantic token var(--accessibility-line-length-max)",
+              "Accessibility standards defined using semantic tokens",
+              "Token-based approach ensures consistent accessibility compliance"
+            ],
+            "details": {
+              "wcag_level": "AAA Target using semantic accessibility tokens",
+              "semantic_contrast_token": "var(--accessibility-contrast-min)",
+              "semantic_touch_target_token": "var(--accessibility-touch-target-min)",
+              "semantic_line_length_token": "var(--accessibility-line-length-max)",
+              "compliance_areas": [
+                {
+                  "area": "Color Contrast",
+                  "requirement": "var(--accessibility-contrast-min) ratio",
+                  "status": "Defined in semantic tokens",
+                  "token": "var(--accessibility-contrast-min)"
+                },
+                {
+                  "area": "Touch Targets",
+                  "requirement": "var(--accessibility-touch-target-min) minimum",
+                  "status": "Defined in semantic tokens",
+                  "token": "var(--accessibility-touch-target-min)"
+                },
+                {
+                  "area": "Text Size",
+                  "requirement": "var(--text-base) minimum",
+                  "status": "Semantic token compliance",
+                  "token": "var(--text-base)"
+                },
+                {
+                  "area": "Line Length",
+                  "requirement": "var(--accessibility-line-length-max) maximum",
+                  "status": "Semantic token defined",
+                  "token": "var(--accessibility-line-length-max)"
+                }
+              ],
+              "semantic_contrast_pairs": {
+                "primary_text": "var(--color-text-primary) on var(--color-background)",
+                "secondary_text": "var(--color-text-secondary) on var(--color-background)",
+                "primary_button": "white text on var(--color-primary)",
+                "accent_button": "dark text on var(--color-accent)"
+              }
+            }
+          },
+          "responsive_design": {
+            "category": "Responsive Design",
+            "score": 0.9,
+            "issues": [],
+            "strengths": [
+              "Mobile-first responsive approach with semantic breakpoints",
+              "Breakpoint system prevents hardcoded media query values",
+              "Semantic tokens enable consistent responsive behavior"
+            ],
+            "details": {
+              "semantic_breakpoint_system": "Using var(--breakpoint-*) token system",
+              "layout_adaptation": "Semantic token-driven responsive behavior",
+              "expected_behavior": [
+                "Single column layout within var(--breakpoint-mobile-*) range",
+                "Stacked service cards with var(--space-sm) gaps",
+                "Hamburger navigation using var(--space-md) touch targets",
+                "Large touch targets using var(--accessibility-touch-target-min)"
+              ],
+              "semantic_breakpoint_range": "var(--breakpoint-mobile-min) to var(--breakpoint-mobile-max)"
+            }
+          },
+          "content_structure": {
+            "category": "Content Structure",
+            "score": 0.8,
+            "issues": [],
+            "strengths": [
+              "Comprehensive content structure using semantic tokens (7 sections)",
+              "Multi-level CTA hierarchy using semantic design tokens"
+            ],
+            "details": {
+              "semantic_content_organization": "Using semantic HTML and token-based styling",
+              "information_hierarchy": "Semantic heading structure with token-based typography",
+              "expected_services": [
+                "Botox / Fillers",
+                "Hydrafacial",
+                "Dermaplanning",
+                "Microneedling PRP",
+                "IV Vitamins",
+                "Permanent Makeup",
+                "Laser Hair Reduction",
+                "Carbon Peel Laser",
+                "EMSCULT Muscle Builder"
+              ],
+              "service_count": 9,
+              "expected_sections": [
+                "Hero Section with var(--text-4xl) heading and primary CTA",
+                "Treatment Services Grid with var(--space-lg) gaps",
+                "Doctor Profile Section with var(--text-3xl) heading",
+                "Transformation Gallery with semantic image tokens",
+                "Patient Testimonials with var(--text-xl) quotes",
+                "Consultation Booking with semantic button tokens",
+                "Contact Information with var(--text-base) typography"
+              ],
+              "expected_ctas": [
+                "Book Consultation (Primary) - var(--color-primary) with var(--space-md) padding",
+                "Call Now (Secondary) - var(--color-accent) with semantic spacing",
+                "Learn More (Per service) - semantic link tokens",
+                "Book Now (Per service) - semantic button tokens"
+              ]
+            }
+          },
+          "design_system_consistency": {
+            "category": "Design System Consistency",
+            "score": 0.75,
+            "issues": [],
+            "strengths": [
+              "Design system components defined with semantic tokens",
+              "Brand guidelines established using semantic design tokens",
+              "Token-based system prevents hardcoded value violations"
+            ],
+            "details": {
+              "semantic_design_system": "Token-based design system compliance",
+              "component_consistency": "Semantic token-driven component library",
+              "semantic_components": [
+                "Service Cards - using var(--radius-md) and var(--shadow-sm)",
+                "CTA Buttons - using var(--color-primary) and var(--space-md)",
+                "Navigation Elements - using var(--font-family-primary)",
+                "Typography Styles - using var(--text-*) and var(--font-weight-*)",
+                "Color Usage - using var(--color-*) tokens exclusively",
+                "Spacing Patterns - using var(--space-*) tokens consistently",
+                "Icon Styles - using semantic icon tokens"
+              ],
+              "token_consistency_checks": {
+                "color_tokens": "All colors should use var(--color-*) tokens",
+                "typography_tokens": "All text should use var(--text-*) and var(--font-*) tokens",
+                "spacing_tokens": "All spacing should use var(--space-*) tokens",
+                "border_tokens": "All borders should use var(--radius-*) and var(--border-*) tokens",
+                "shadow_tokens": "All shadows should use var(--shadow-*) tokens"
+              },
+              "semantic_brand_elements": {
+                "logo_usage": "Semantic logo tokens for consistent sizing",
+                "color_palette": "var(--color-*) token system for brand colors",
+                "typography": "var(--font-family-display) + var(--font-family-primary) combination",
+                "tone_of_voice": "Professional medical spa with semantic content tokens"
+              }
+            }
+          }
+        },
+        "recommendations": [
+          {
+            "priority": "Medium",
+            "category": "Semantic Token Compliance",
+            "recommendation": "Optimize semantic token compliance for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": [
+              "Manual verification needed to confirm semantic token usage in implementation",
+              "Hardcoded values may exist in CSS that need token replacement"
+            ]
+          },
+          {
+            "priority": "Medium",
+            "category": "Spacing & Alignment",
+            "recommendation": "Optimize spacing & alignment for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "Medium",
+            "category": "Content Structure",
+            "recommendation": "Optimize content structure for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "Medium",
+            "category": "Design System Consistency",
+            "recommendation": "Optimize design system consistency for better semantic token compliance",
+            "semantic_approach": "Enhance token usage consistency",
+            "issues": []
+          },
+          {
+            "priority": "High",
+            "category": "Semantic Compliance",
+            "recommendation": "Ensure all design values use semantic tokens (var(--*)) instead of hardcoded values",
+            "semantic_approach": "Implement comprehensive token-based design system",
+            "issues": [
+              "Hardcoded values violate fundamentals.json requirements"
+            ]
+          },
+          {
+            "priority": "Medium",
+            "category": "Design System",
+            "recommendation": "Validate semantic token usage across all components",
+            "semantic_approach": "Audit for var(--*) token compliance",
+            "issues": [
+              "Manual verification needed for token adherence"
+            ]
+          }
+        ],
+        "critical_issues": [
+          {
+            "category": "Semantic Token Compliance",
+            "issue": "Manual verification needed to confirm semantic token usage in implementation",
+            "severity": "Critical",
+            "impact": "Semantic tokenization compliance violation",
+            "solution": "Replace with var(--*) semantic tokens"
+          },
+          {
+            "category": "Semantic Token Compliance",
+            "issue": "Hardcoded values may exist in CSS that need token replacement",
+            "severity": "Critical",
+            "impact": "Semantic tokenization compliance violation",
+            "solution": "Replace with var(--*) semantic tokens"
+          }
+        ]
+      }
+    }
+  },
+  "recommendations": [],
+  "assets": {
+    "screenshots": [
+      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_desktop_1750300567533.png",
+      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_tablet_1750300569733.png",
+      "/Users/ysingh/DevKinsta/public/medspaa/wp-content/themes/medSpaTheme/levCompiler/tools/visual-validation/results/screenshots/1750300563432_mobile_1750300571669.png"
+    ],
+    "diff_images": []
+  }
+}

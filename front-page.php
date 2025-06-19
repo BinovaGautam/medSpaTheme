@@ -89,451 +89,606 @@
         </div>
     </section>
 
-    <!-- Featured Treatments Section -->
-    <section class="featured-treatments modern-section">
-        <div class="container">
-            <header class="section-header text-center">
-                <h2 class="section-title"><?php esc_html_e('Popular Treatments', 'preetidreams'); ?></h2>
-                <p class="section-subtitle"><?php esc_html_e('Discover our most sought-after aesthetic treatments designed to enhance your natural beauty.', 'preetidreams'); ?></p>
+    <!-- Services Overview Section - HOMEPAGE_VISUAL_DESIGN.md Alternating Layout Implementation -->
+    <?php if (get_theme_mod('show_services_overview_section', true)) : ?>
+    <section class="services-overview-grouped" aria-labelledby="services-overview-heading">
+        <div class="services-container">
+            <!-- Services Header -->
+            <header class="services-header">
+                <h2 id="services-overview-heading" class="services-main-title">
+                    <?php echo get_theme_mod('services_overview_title', 'Our Treatment Artistry'); ?>
+                </h2>
+                <p class="services-main-subtitle">
+                    <?php echo get_theme_mod('services_overview_subtitle', 'Discover Personalized Medical Aesthetics'); ?>
+                </p>
+                <p class="services-main-description">
+                    <?php echo get_theme_mod('services_overview_description', 'Each treatment is carefully curated to enhance your natural beauty with precision, artistry, and innovation.'); ?>
+                </p>
             </header>
 
-            <!-- Treatment Filters for Homepage -->
-            <div class="treatment-filters">
-                <!-- This container will be populated by JavaScript -->
-                <div class="filter-loading-placeholder loading-container">
-                    <div class="loading-content">
-                        <div class="loading-spinner"></div>
-                        <p class="loading-primary-text">🔍 Treatment Filter Loading...</p>
-                        <p class="loading-secondary-text">Enhancing your browsing experience...</p>
+            <!-- Injectable Artistry Section - TEXT LEFT | VISUAL RIGHT -->
+            <div class="service-section layout-text-left" aria-labelledby="injectable-artistry-heading">
+                <div class="service-text-content">
+                    <div class="service-header">
+                        <span class="service-icon" aria-hidden="true">💉</span>
+                        <h3 id="injectable-artistry-heading" class="service-title">Injectable Artistry</h3>
+                        <p class="service-subtitle">Precision Enhancement & Natural Beauty</p>
+                    </div>
+                    <p class="service-description">
+                        Enhance your natural beauty with precision injectable treatments for wrinkle reduction and volume restoration. Our advanced injectable services include expert administration and natural results.
+                    </p>
+
+                    <div class="service-treatments">
+                        <h4 class="treatments-heading">Our Injectable Services</h4>
+                        <div class="treatment-buttons">
+                            <a href="/treatments/botox-dysport" class="treatment-button">
+                                <span class="treatment-name">Botox & Dysport</span>
+                                <span class="treatment-description">Smooth wrinkles and fine lines</span>
+                            </a>
+                            <a href="/treatments/facial-fillers" class="treatment-button">
+                                <span class="treatment-name">Facial Fillers</span>
+                                <span class="treatment-description">Restore volume and contour</span>
+                            </a>
+                            <a href="/treatments/pdo-thread-lifts" class="treatment-button">
+                                <span class="treatment-name">PDO Thread Lifts</span>
+                                <span class="treatment-description">Lift and tighten skin naturally</span>
+                            </a>
+                            <a href="/treatments/sculptra" class="treatment-button">
+                                <span class="treatment-name">Sculptra®</span>
+                                <span class="treatment-description">Stimulate natural collagen production</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-visual-content">
+                    <div class="before-after-gallery">
+                        <h4 class="gallery-title">Injectable Results Gallery</h4>
+                        <div class="gallery-grid">
+                            <div class="before-after-pair">
+                                <div class="before-image">
+                                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=300&h=300&fit=crop&crop=face" alt="Before Botox treatment - natural expression lines" loading="lazy">
+                                    <span class="image-label">Before</span>
+                                </div>
+                                <div class="after-image">
+                                    <img src="https://images.unsplash.com/photo-1594824369039-a8c2e8d3c8c4?w=300&h=300&fit=crop&crop=face" alt="After Botox treatment - smooth, natural results" loading="lazy">
+                                    <span class="image-label">After</span>
+                                </div>
+                            </div>
+                            <div class="before-after-pair">
+                                <div class="before-image">
+                                    <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=300&h=300&fit=crop&crop=face" alt="Before dermal filler treatment - loss of volume" loading="lazy">
+                                    <span class="image-label">Before</span>
+                                </div>
+                                <div class="after-image">
+                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face" alt="After dermal filler treatment - restored youthful contours" loading="lazy">
+                                    <span class="image-label">After</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="treatments-showcase treatment-grid modern-grid">
-                <?php
-                // Use our TreatmentsDataStore to get all treatment data
-                if (class_exists('TreatmentsDataStore')) {
-                    $all_treatments = TreatmentsDataStore::get_treatments();
-
-                    if ($all_treatments) :
-                        foreach ($all_treatments as $treatment_data) :
-                            // Render the treatment card using our component
-                            if (class_exists('TreatmentCard')) {
-                                $card = new TreatmentCard($treatment_data);
-                                echo $card->render();
-                            }
-                        endforeach;
-                    else : ?>
-                        <div class="no-treatments-message">
-                            <p><?php esc_html_e('No treatments found.', 'preetidreams'); ?></p>
+            <!-- Laser Services Section - VISUAL LEFT | TEXT RIGHT -->
+            <div class="service-section layout-visual-left" aria-labelledby="laser-services-heading">
+                <div class="service-visual-content">
+                    <div class="treatment-video">
+                        <h4 class="video-title">CO2 Laser Treatment</h4>
+                        <div class="video-container">
+                            <div class="video-poster">
+                                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop" alt="Advanced laser treatment technology in modern medical spa" loading="lazy">
+                                <button class="video-play-button" aria-label="Play CO2 laser treatment video">
+                                    <span class="play-icon" aria-hidden="true">▶️</span>
+                                </button>
+                            </div>
+                            <p class="video-description">Watch our advanced CO2 laser treatment process</p>
                         </div>
-                    <?php endif;
-                } else {
-                    // Fallback to WordPress posts if TreatmentsDataStore is not available
-                    $all_treatments = get_posts([
-                        'post_type' => 'treatment',
-                        'posts_per_page' => 12,
-                        'orderby' => 'menu_order',
-                        'order' => 'ASC'
-                    ]);
+                    </div>
+                </div>
 
-                    if ($all_treatments) :
-                        foreach ($all_treatments as $treatment) : setup_postdata($treatment);
-                            // Get treatment metadata
-                            $treatment_data = [
-                                'id' => $treatment->ID,
-                                'title' => get_the_title($treatment->ID),
-                                'description' => get_the_excerpt($treatment->ID),
-                                'duration' => get_post_meta($treatment->ID, '_treatment_duration', true),
-                                'price' => [
-                                    'from' => get_post_meta($treatment->ID, '_treatment_price_from', true),
-                                    'amount' => get_post_meta($treatment->ID, '_treatment_price', true),
-                                    'currency' => 'USD'
-                                ],
-                                'cta' => [
-                                    'primary' => [
-                                        'text' => __('Learn More', 'preetidreams'),
-                                        'url' => get_permalink($treatment->ID)
-                                    ],
-                                    'secondary' => [
-                                        'text' => __('Book Consultation', 'preetidreams'),
-                                        'url' => '#consultation'
-                                    ]
-                                ]
-                            ];
+                <div class="service-text-content">
+                    <div class="service-header">
+                        <span class="service-icon" aria-hidden="true">🔥</span>
+                        <h3 id="laser-services-heading" class="service-title">Laser Services</h3>
+                        <p class="service-subtitle">Advanced Technology & Expert Care</p>
+                    </div>
+                    <p class="service-description">
+                        Reverse sun damage, remove sun spots, lines, and wrinkles, and tighten your skin with our advanced laser services. Award-winning laser hair removal voted 'Best in Scottsdale' three years running.
+                    </p>
 
-                            // Get treatment categories
-                            $categories = get_the_terms($treatment->ID, 'treatment_category');
-                            if ($categories && !is_wp_error($categories)) {
-                                $treatment_data['category'] = $categories[0]->name;
-                            }
-
-                            // Get treatment features
-                            $features = get_the_terms($treatment->ID, 'treatment_feature');
-                            if ($features && !is_wp_error($features)) {
-                                $treatment_data['features'] = array_map(function($feature) {
-                                    return $feature->name;
-                                }, $features);
-                            }
-
-                            // Get treatment benefits
-                            $benefits = get_the_terms($treatment->ID, 'treatment_benefit');
-                            if ($benefits && !is_wp_error($benefits)) {
-                                $treatment_data['benefits'] = array_map(function($benefit) {
-                                    return $benefit->name;
-                                }, $benefits);
-                            }
-
-                            // Render the treatment card using our component
-                            if (class_exists('TreatmentCard')) {
-                                $card = new TreatmentCard($treatment_data);
-                                echo $card->render();
-                            }
-                        endforeach;
-                        wp_reset_postdata();
-                    else : ?>
-                        <div class="no-treatments-message">
-                            <p><?php esc_html_e('No treatments found.', 'preetidreams'); ?></p>
+                    <div class="service-treatments">
+                        <h4 class="treatments-heading">Our Laser Treatments</h4>
+                        <div class="treatment-buttons">
+                            <a href="/treatments/non-ablative-resurfacing" class="treatment-button">
+                                <span class="treatment-name">Non-Ablative Resurfacing</span>
+                                <span class="treatment-description">Gentle skin renewal</span>
+                            </a>
+                            <a href="/treatments/co2-resurfacing" class="treatment-button">
+                                <span class="treatment-name">CO2 Resurfacing</span>
+                                <span class="treatment-description">Advanced skin rejuvenation</span>
+                            </a>
+                            <a href="/treatments/ipl-photofacials" class="treatment-button">
+                                <span class="treatment-name">IPL Photofacials</span>
+                                <span class="treatment-description">Light-based skin improvement</span>
+                            </a>
+                            <a href="/treatments/laser-hair-removal" class="treatment-button">
+                                <span class="treatment-name">Laser Hair Removal</span>
+                                <span class="treatment-description">Permanent hair reduction</span>
+                            </a>
                         </div>
-                    <?php endif;
-                } ?>
+                    </div>
+                </div>
             </div>
 
-            <div class="section-cta text-center">
-                <a href="<?php echo esc_url(home_url('/treatments/')); ?>" class="btn btn-outline btn-large">
-                    <?php esc_html_e('View All Treatments', 'preetidreams'); ?>
-                </a>
+            <!-- Facial Renaissance Section - TEXT LEFT | VISUAL RIGHT -->
+            <div class="service-section layout-text-left" aria-labelledby="facial-renaissance-heading">
+                <div class="service-text-content">
+                    <div class="service-header">
+                        <span class="service-icon" aria-hidden="true">🌊</span>
+                        <h3 id="facial-renaissance-heading" class="service-title">Facial Renaissance</h3>
+                        <p class="service-subtitle">Rejuvenation & Renewal</p>
+                    </div>
+                    <p class="service-description">
+                        Advanced skincare treatments for deep cleansing, hydration, and skin renewal with immediate results. Experience the difference of medical-grade facial treatments.
+                    </p>
+
+                    <div class="service-treatments">
+                        <h4 class="treatments-heading">Our Facial Treatments</h4>
+                        <div class="treatment-buttons">
+                            <a href="/treatments/hydrafacial" class="treatment-button">
+                                <span class="treatment-name">HydraFacial</span>
+                                <span class="treatment-description">Deep cleansing and hydration</span>
+                            </a>
+                            <a href="/treatments/chemical-peels" class="treatment-button">
+                                <span class="treatment-name">Chemical Peels</span>
+                                <span class="treatment-description">Skin renewal and rejuvenation</span>
+                            </a>
+                            <a href="/treatments/microneedling" class="treatment-button">
+                                <span class="treatment-name">Microneedling</span>
+                                <span class="treatment-description">Collagen induction therapy</span>
+                            </a>
+                            <a href="/treatments/led-therapy" class="treatment-button">
+                                <span class="treatment-name">LED Therapy</span>
+                                <span class="treatment-description">Light-based skin healing</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-visual-content">
+                    <div class="treatment-results-gallery">
+                        <h4 class="gallery-title">Treatment Results Gallery</h4>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=300&h=200&fit=crop" alt="HydraFacial treatment results - glowing, hydrated skin" loading="lazy">
+                                <span class="result-label">HydraFacial Results</span>
+                            </div>
+                            <div class="result-item">
+                                <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=300&h=200&fit=crop" alt="Chemical peel results - smooth, renewed skin texture" loading="lazy">
+                                <span class="result-label">Chemical Peel Results</span>
+                            </div>
+                            <div class="result-item">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" alt="Microneedling results - improved skin firmness and texture" loading="lazy">
+                                <span class="result-label">Microneedling Results</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Body Sculpting Section - VISUAL LEFT | TEXT RIGHT -->
+            <div class="service-section layout-visual-left" aria-labelledby="body-sculpting-heading">
+                <div class="service-visual-content">
+                    <div class="transformation-gallery">
+                        <h4 class="gallery-title">Body Transformation Gallery</h4>
+                        <div class="transformation-grid">
+                            <div class="transformation-item">
+                                <div class="transformation-before">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=300&fit=crop" alt="Before CoolSculpting treatment" loading="lazy">
+                                    <span class="transformation-label">Before</span>
+                                </div>
+                                <div class="transformation-after">
+                                    <img src="https://images.unsplash.com/photo-1594824369039-a8c2e8d3c8c4?w=200&h=300&fit=crop" alt="After CoolSculpting treatment" loading="lazy">
+                                    <span class="transformation-label">After</span>
+                                </div>
+                                <div class="transformation-overlay">
+                                    <span class="treatment-name">CoolSculpting Results</span>
+                                </div>
+                            </div>
+                            <div class="transformation-item">
+                                <div class="transformation-before">
+                                    <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=200&h=300&fit=crop" alt="Before body contouring treatment" loading="lazy">
+                                    <span class="transformation-label">Before</span>
+                                </div>
+                                <div class="transformation-after">
+                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&h=300&fit=crop" alt="After body contouring treatment" loading="lazy">
+                                    <span class="transformation-label">After</span>
+                                </div>
+                                <div class="transformation-overlay">
+                                    <span class="treatment-name">Body Contouring Results</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-text-content">
+                    <div class="service-header">
+                        <span class="service-icon" aria-hidden="true">💪</span>
+                        <h3 id="body-sculpting-heading" class="service-title">Body Sculpting</h3>
+                        <p class="service-subtitle">Transformation & Confidence</p>
+                    </div>
+                    <p class="service-description">
+                        Body contouring and muscle building technology for complete transformation and wellness enhancement. Achieve your body goals with advanced technology.
+                    </p>
+
+                    <div class="service-treatments">
+                        <h4 class="treatments-heading">Our Body Treatments</h4>
+                        <div class="treatment-buttons">
+                            <a href="/treatments/coolsculpting" class="treatment-button">
+                                <span class="treatment-name">CoolSculpting</span>
+                                <span class="treatment-description">Non-invasive fat reduction</span>
+                            </a>
+                            <a href="/treatments/body-contouring" class="treatment-button">
+                                <span class="treatment-name">Body Contouring</span>
+                                <span class="treatment-description">Sculpt and define body shape</span>
+                            </a>
+                            <a href="/treatments/cellulite-treatment" class="treatment-button">
+                                <span class="treatment-name">Cellulite Treatment</span>
+                                <span class="treatment-description">Smooth skin texture improvement</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wellness Sanctuary Section - TEXT LEFT | VISUAL RIGHT -->
+            <div class="service-section layout-text-left" aria-labelledby="wellness-sanctuary-heading">
+                <div class="service-text-content">
+                    <div class="service-header">
+                        <span class="service-icon" aria-hidden="true">💊</span>
+                        <h3 id="wellness-sanctuary-heading" class="service-title">Wellness Sanctuary</h3>
+                        <p class="service-subtitle">Holistic Health & Vitality</p>
+                    </div>
+                    <p class="service-description">
+                        Holistic wellness treatments for enhanced health, energy, and complete rejuvenation. Personalized wellness programs designed for your optimal health and vitality.
+                    </p>
+
+                    <div class="service-treatments">
+                        <h4 class="treatments-heading">Our Wellness Services</h4>
+                        <div class="treatment-buttons">
+                            <a href="/treatments/iv-therapy" class="treatment-button">
+                                <span class="treatment-name">IV Therapy</span>
+                                <span class="treatment-description">Nutrient infusion therapy</span>
+                            </a>
+                            <a href="/treatments/hormone-optimization" class="treatment-button">
+                                <span class="treatment-name">Hormone Optimization</span>
+                                <span class="treatment-description">Balance and restore hormones</span>
+                            </a>
+                            <a href="/treatments/weight-management" class="treatment-button">
+                                <span class="treatment-name">Weight Management</span>
+                                <span class="treatment-description">Comprehensive wellness programs</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-visual-content">
+                    <div class="wellness-experience-gallery">
+                        <h4 class="gallery-title">Wellness Experience Gallery</h4>
+                        <div class="experience-grid">
+                            <div class="experience-item">
+                                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=200&fit=crop" alt="IV Therapy treatment room - comfortable and modern" loading="lazy">
+                                <span class="experience-label">IV Therapy Treatment Room</span>
+                            </div>
+                            <div class="experience-item">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" alt="Hormone consultation room - private and professional" loading="lazy">
+                                <span class="experience-label">Hormone Consultation Room</span>
+                            </div>
+                            <div class="experience-item">
+                                <img src="https://images.unsplash.com/photo-1594824369039-a8c2e8d3c8c4?w=300&h=200&fit=crop" alt="Weight management lifestyle plan consultation" loading="lazy">
+                                <span class="experience-label">Weight Management Consultation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
-    <!-- About Section -->
-    <section class="about-section modern-section bg-soft">
+    <!-- Trust Indicators Section - Sprint 11 Implementation -->
+    <?php if (get_theme_mod('show_trust_indicators_section', true)) : ?>
+        <?php
+        // Render Trust Indicators Component via ComponentRegistry
+        if (class_exists('ComponentRegistry') && ComponentRegistry::is_registered('trust-indicators')) {
+            echo ComponentRegistry::render('trust-indicators', [
+                'section_title' => get_theme_mod('trust_indicators_title', 'Why Choose PreetiDreams'),
+                'section_subtitle' => get_theme_mod('trust_indicators_subtitle', 'Experience the difference of medical artistry combined with luxury care'),
+                'active_indicators' => function_exists('medspa_get_active_trust_indicators') ? medspa_get_active_trust_indicators() : [
+                    'board-certified', 'award-winning', 'happy-patients', 'hipaa-compliant'
+                ],
+                'trust_content' => [
+                    'board_certified' => [
+                        'title' => get_theme_mod('trust_board_certified_title', 'Board Certified'),
+                        'description' => get_theme_mod('trust_board_certified_description', 'Expert medical professionals with advanced training in aesthetic medicine and patient safety.')
+                    ],
+                    'award_winning' => [
+                        'title' => get_theme_mod('trust_award_winning_title', 'Award Winning'),
+                        'description' => get_theme_mod('trust_award_winning_description', 'Recognized excellence in medical aesthetics with industry awards and patient satisfaction.')
+                    ],
+                    'happy_patients' => [
+                        'title' => get_theme_mod('trust_happy_patients_title', '2000+ Happy Patients'),
+                        'description' => get_theme_mod('trust_happy_patients_description', 'Trusted by thousands of patients for natural-looking results and exceptional care.')
+                    ],
+                    'hipaa_compliant' => [
+                        'title' => get_theme_mod('trust_hipaa_compliant_title', 'HIPAA Compliant'),
+                        'description' => get_theme_mod('trust_hipaa_compliant_description', 'Your privacy and medical information are protected with the highest security standards.')
+                    ]
+                ]
+            ]);
+        }
+        ?>
+    <?php endif; ?>
+
+    <!-- Featured Treatments Section - HOMEPAGE_DESIGN.md v6.0 Implementation -->
+    <?php if (get_theme_mod('show_featured_treatments_section', true)) : ?>
+    <section class="featured-treatments" aria-labelledby="featured-treatments-heading">
         <div class="container">
-            <div class="about-layout">
-                <div class="about-content">
-                    <h2 class="about-title section-title"><?php esc_html_e('Why Choose Our Medical Spa?', 'preetidreams'); ?></h2>
+            <header class="featured-header">
+                <h2 id="featured-treatments-heading" class="featured-title">
+                    <?php echo get_theme_mod('featured_treatments_title', 'Signature Treatments'); ?>
+                </h2>
+                <p class="featured-subtitle">
+                    <?php echo get_theme_mod('featured_treatments_subtitle', 'Discover our most popular and transformative treatments'); ?>
+                </p>
+            </header>
 
-                    <div class="about-text">
-                        <p class="lead-text"><?php esc_html_e('We combine advanced medical expertise with luxurious spa comfort to deliver exceptional aesthetic results. Our board-certified professionals use the latest technology and techniques to help you achieve your beauty goals safely and effectively.', 'preetidreams'); ?></p>
-                    </div>
-
-                    <div class="features-grid modern-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">👨‍⚕️</div>
-                            <h3><?php esc_html_e('Expert Professionals', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('Board-certified doctors and experienced aestheticians.', 'preetidreams'); ?></p>
-                        </div>
-
-                        <div class="feature-item">
-                            <div class="feature-icon">🔬</div>
-                            <h3><?php esc_html_e('Advanced Technology', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('State-of-the-art equipment for optimal results.', 'preetidreams'); ?></p>
-                        </div>
-
-                        <div class="feature-item">
-                            <div class="feature-icon">🏥</div>
-                            <h3><?php esc_html_e('Medical-Grade Safety', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('Highest standards of safety and cleanliness.', 'preetidreams'); ?></p>
-                        </div>
-
-                        <div class="feature-item">
-                            <div class="feature-icon">💎</div>
-                            <h3><?php esc_html_e('Luxury Experience', 'preetidreams'); ?></h3>
-                            <p><?php esc_html_e('Comfortable, spa-like environment for relaxation.', 'preetidreams'); ?></p>
-                        </div>
-                    </div>
-
-                    <div class="about-cta">
-                        <a href="<?php echo esc_url(get_post_type_archive_link('staff')); ?>" class="btn btn-outline btn-large">
-                            <?php esc_html_e('Meet Our Team', 'preetidreams'); ?>
+            <div class="featured-grid">
+                <!-- HydraFacial Treatment -->
+                <article class="featured-treatment">
+                    <div class="featured-treatment-content">
+                        <span class="featured-treatment-badge">Most Popular</span>
+                        <h3 class="featured-treatment-title">HydraFacial</h3>
+                        <p class="featured-treatment-description">
+                            The ultimate skin resurfacing treatment that combines cleansing, exfoliation, extraction, hydration, and antioxidant protection.
+                        </p>
+                        <ul class="featured-treatment-benefits">
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                Immediate visible results
+                            </li>
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                No downtime required
+                            </li>
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                Suitable for all skin types
+                            </li>
+                        </ul>
+                        <a href="/treatments/hydrafacial" class="featured-treatment-cta">
+                            Learn More
+                            <span aria-hidden="true">→</span>
                         </a>
                     </div>
-                </div>
+                </article>
 
-                <div class="about-image">
-                    <?php
-                    $about_image = get_theme_mod('about_image');
-                    if ($about_image) : ?>
-                        <img src="<?php echo esc_url($about_image); ?>" alt="<?php esc_attr_e('Medical Spa Interior', 'preetidreams'); ?>" loading="lazy">
-                    <?php else : ?>
-                        <!-- Placeholder about image -->
-                        <div class="about-placeholder">
-                            <div class="placeholder-content">
-                                <div class="placeholder-icon">🏥</div>
-                                <p><?php esc_html_e('Professional Medical Spa Interior', 'preetidreams'); ?></p>
-                            </div>
-                        </div>
-                    <?php endif; ?>
+                <!-- Botox & Dysport Treatment -->
+                <article class="featured-treatment">
+                    <div class="featured-treatment-content">
+                        <span class="featured-treatment-badge">Precision Artistry</span>
+                        <h3 class="featured-treatment-title">Botox & Dysport</h3>
+                        <p class="featured-treatment-description">
+                            Expert injectable treatments to smooth wrinkles and prevent signs of aging with natural-looking results.
+                        </p>
+                        <ul class="featured-treatment-benefits">
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                Quick 15-minute treatment
+                            </li>
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                Results last 3-4 months
+                            </li>
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                Board-certified administration
+                            </li>
+                        </ul>
+                        <a href="/treatments/botox-dysport" class="featured-treatment-cta">
+                            Learn More
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Laser Hair Removal Treatment -->
+                <article class="featured-treatment">
+                    <div class="featured-treatment-content">
+                        <span class="featured-treatment-badge">Award Winning</span>
+                        <h3 class="featured-treatment-title">Laser Hair Removal</h3>
+                        <p class="featured-treatment-description">
+                            Voted "Best in Scottsdale" three years running. Permanent hair reduction with the latest laser technology.
+                        </p>
+                        <ul class="featured-treatment-benefits">
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                Latest laser technology
+                            </li>
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                All skin types welcome
+                            </li>
+                            <li class="featured-treatment-benefit">
+                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
+                                Permanent results
+                            </li>
+                        </ul>
+                        <a href="/treatments/laser-hair-removal" class="featured-treatment-cta">
+                            Learn More
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- Medical Excellence Section - HOMEPAGE_DESIGN.md v6.0 Implementation -->
+    <?php if (get_theme_mod('show_medical_excellence_section', true)) : ?>
+    <section class="medical-excellence" aria-labelledby="medical-excellence-heading">
+        <div class="container">
+            <div class="excellence-content">
+                <header class="excellence-header">
+                    <h2 id="medical-excellence-heading" class="excellence-title">
+                        <?php echo get_theme_mod('medical_excellence_title', 'Medical Excellence & Safety'); ?>
+                    </h2>
+                    <p class="excellence-subtitle">
+                        <?php echo get_theme_mod('medical_excellence_subtitle', 'Your safety and satisfaction are our highest priorities'); ?>
+                    </p>
+                </header>
+
+                <div class="excellence-grid">
+                    <article class="excellence-item">
+                        <h3 class="excellence-item-title">Board-Certified Professionals</h3>
+                        <p class="excellence-item-description">
+                            Our medical team consists of board-certified physicians and licensed practitioners with extensive training in aesthetic medicine.
+                        </p>
+                    </article>
+
+                    <article class="excellence-item">
+                        <h3 class="excellence-item-title">State-of-the-Art Facility</h3>
+                        <p class="excellence-item-description">
+                            Our modern medical spa features the latest technology and equipment in a luxurious, sterile environment designed for your comfort.
+                        </p>
+                    </article>
+
+                    <article class="excellence-item">
+                        <h3 class="excellence-item-title">Rigorous Safety Protocols</h3>
+                        <p class="excellence-item-description">
+                            We maintain the highest safety standards with comprehensive protocols, sterile procedures, and continuous staff training.
+                        </p>
+                    </article>
                 </div>
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials-section modern-section">
+    <!-- Patient Testimonials Section - HOMEPAGE_DESIGN.md v6.0 Implementation -->
+    <?php if (get_theme_mod('show_testimonials_section', true)) : ?>
+    <section class="testimonials" aria-labelledby="testimonials-heading">
         <div class="container">
-            <header class="section-header text-center">
-                <h2 class="section-title"><?php esc_html_e('What Our Patients Say', 'preetidreams'); ?></h2>
-                <p class="section-subtitle"><?php esc_html_e('Real stories from real patients who have transformed their confidence with our treatments.', 'preetidreams'); ?></p>
+            <header class="testimonials-header">
+                <h2 id="testimonials-heading" class="testimonials-title">
+                    <?php echo get_theme_mod('testimonials_title', 'Patient Stories'); ?>
+                </h2>
+                <p class="testimonials-subtitle">
+                    <?php echo get_theme_mod('testimonials_subtitle', 'Real results from real patients who trusted us with their aesthetic journey'); ?>
+                </p>
             </header>
 
-            <div class="testimonials-grid modern-testimonials">
-                <?php
-                // Get featured testimonials
-                $testimonials = get_posts([
-                    'post_type' => 'testimonial',
-                    'posts_per_page' => 3,
-                    'orderby' => 'rand'
-                ]);
-
-                if ($testimonials) :
-                    foreach ($testimonials as $testimonial) : setup_postdata($testimonial); ?>
-
-                        <div class="testimonial-card modern-testimonial">
-                            <?php if (has_post_thumbnail($testimonial->ID)) : ?>
-                                <div class="testimonial-photo">
-                                    <?php echo get_the_post_thumbnail($testimonial->ID, 'thumbnail', ['alt' => get_the_title($testimonial->ID)]); ?>
-                                </div>
-                            <?php else : ?>
-                                <div class="testimonial-photo testimonial-placeholder">
-                                    <div class="placeholder-avatar">👤</div>
-                                </div>
-                            <?php endif; ?>
-
-                            <div class="testimonial-content">
-                                <div class="testimonial-text">
-                                    <?php echo wp_trim_words(get_the_content(null, false, $testimonial->ID), 30); ?>
-                                </div>
-
-                                <div class="testimonial-author">
-                                    <h4 class="author-name"><?php echo get_the_title($testimonial->ID); ?></h4>
-                                    <?php
-                                    $treatment = get_post_meta($testimonial->ID, 'testimonial_treatment', true);
-                                    if ($treatment) : ?>
-                                        <p class="treatment-received"><?php echo esc_html($treatment); ?></p>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="testimonial-rating">
-                                    <span class="stars">⭐⭐⭐⭐⭐</span>
-                                </div>
-                            </div>
-                        </div>
-
-                    <?php endforeach;
-                    wp_reset_postdata();
-                else : ?>
-                    <!-- Sample testimonials placeholder -->
-                    <div class="sample-testimonials">
-                        <div class="testimonial-card modern-testimonial">
-                            <div class="testimonial-photo testimonial-placeholder">
-                                <div class="placeholder-avatar">👤</div>
-                            </div>
-                            <div class="testimonial-content">
-                                <div class="testimonial-text">
-                                    "Amazing results from my Botox treatment! The staff is professional and the environment is so relaxing. I highly recommend this medical spa."
-                                </div>
-                                <div class="testimonial-author">
-                                    <h4 class="author-name">Sarah M.</h4>
-                                    <p class="treatment-received">Botox Treatment</p>
-                                </div>
-                                <div class="testimonial-rating">
-                                    <span class="stars">⭐⭐⭐⭐⭐</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="testimonial-card modern-testimonial">
-                            <div class="testimonial-photo testimonial-placeholder">
-                                <div class="placeholder-avatar">👤</div>
-                            </div>
-                            <div class="testimonial-content">
-                                <div class="testimonial-text">
-                                    "The HydraFacial was incredible! My skin looks and feels years younger. The entire team made me feel comfortable throughout the process."
-                                </div>
-                                <div class="testimonial-author">
-                                    <h4 class="author-name">Jennifer L.</h4>
-                                    <p class="treatment-received">HydraFacial</p>
-                                </div>
-                                <div class="testimonial-rating">
-                                    <span class="stars">⭐⭐⭐⭐⭐</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="testimonial-card modern-testimonial">
-                            <div class="testimonial-photo testimonial-placeholder">
-                                <div class="placeholder-avatar">👤</div>
-                            </div>
-                            <div class="testimonial-content">
-                                <div class="testimonial-text">
-                                    "Exceptional service and results! The laser treatment exceeded my expectations. I'll definitely be back for more treatments."
-                                </div>
-                                <div class="testimonial-author">
-                                    <h4 class="author-name">Michael K.</h4>
-                                    <p class="treatment-received">Laser Treatment</p>
-                                </div>
-                                <div class="testimonial-rating">
-                                    <span class="stars">⭐⭐⭐⭐⭐</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <div class="section-cta text-center">
-                <a href="<?php echo esc_url(get_post_type_archive_link('testimonial')); ?>" class="btn btn-outline btn-large">
-                    <?php esc_html_e('Read More Reviews', 'preetidreams'); ?>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Consultation CTA Section -->
-    <section id="consultation" class="consultation-section modern-section bg-primary">
-        <div class="container">
-            <div class="consultation-content consultation-layout">
-                <div class="consultation-text">
-                    <h2 class="consultation-title"><?php esc_html_e('Ready to Start Your Transformation?', 'preetidreams'); ?></h2>
-                    <p class="consultation-subtitle"><?php esc_html_e('Book your complimentary consultation today and discover how our personalized treatments can help you achieve your aesthetic goals.', 'preetidreams'); ?></p>
-
-                    <div class="consultation-benefits">
-                        <div class="benefit-item">
-                            <span class="icon">✅</span>
-                            <span class="text"><?php esc_html_e('Complimentary consultation', 'preetidreams'); ?></span>
-                        </div>
-                        <div class="benefit-item">
-                            <span class="icon">✅</span>
-                            <span class="text"><?php esc_html_e('Personalized treatment plan', 'preetidreams'); ?></span>
-                        </div>
-                        <div class="benefit-item">
-                            <span class="icon">✅</span>
-                            <span class="text"><?php esc_html_e('No pressure, just expert advice', 'preetidreams'); ?></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="consultation-form-wrapper">
-                    <form class="consultation-form modern-form" action="#" method="post">
-                        <h3 class="form-title"><?php esc_html_e('Book Your Free Consultation', 'preetidreams'); ?></h3>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="consultation-name"><?php esc_html_e('Full Name', 'preetidreams'); ?></label>
-                                <input type="text" id="consultation-name" name="name" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="consultation-phone"><?php esc_html_e('Phone Number', 'preetidreams'); ?></label>
-                                <input type="tel" id="consultation-phone" name="phone" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="consultation-email"><?php esc_html_e('Email Address', 'preetidreams'); ?></label>
-                            <input type="email" id="consultation-email" name="email" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="consultation-treatment"><?php esc_html_e('Treatment Interest', 'preetidreams'); ?></label>
-                            <select id="consultation-treatment" name="treatment" class="form-control">
-                                <option value=""><?php esc_html_e('Select a treatment (optional)', 'preetidreams'); ?></option>
-                                <option value="botox"><?php esc_html_e('Botox', 'preetidreams'); ?></option>
-                                <option value="fillers"><?php esc_html_e('Dermal Fillers', 'preetidreams'); ?></option>
-                                <option value="hydrafacial"><?php esc_html_e('HydraFacial', 'preetidreams'); ?></option>
-                                <option value="laser"><?php esc_html_e('Laser Treatments', 'preetidreams'); ?></option>
-                                <option value="other"><?php esc_html_e('Other', 'preetidreams'); ?></option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="consultation-message"><?php esc_html_e('Message (Optional)', 'preetidreams'); ?></label>
-                            <textarea id="consultation-message" name="message" class="form-control" rows="3" placeholder="<?php esc_attr_e('Tell us about your aesthetic goals...', 'preetidreams'); ?>"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="consent" required>
-                                <span class="checkmark"></span>
-                                <?php esc_html_e('I consent to receive communications about my consultation and treatment options.', 'preetidreams'); ?>
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-block btn-large">
-                            <?php esc_html_e('Schedule My Consultation', 'preetidreams'); ?>
-                        </button>
-
-                        <p class="form-privacy">
-                            <?php esc_html_e('Your information is secure and confidential. We follow HIPAA guidelines.', 'preetidreams'); ?>
+            <div class="testimonials-grid">
+                <article class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">
+                            The HydraFacial completely transformed my skin! The results were immediate and my skin has never looked better. The team was professional and made me feel so comfortable throughout the entire process.
                         </p>
-                    </form>
-                </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-info">
+                                <p class="testimonial-author-name">Sarah M.</p>
+                                <p class="testimonial-author-treatment">HydraFacial Patient</p>
+                            </div>
+                            <div class="testimonial-rating" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">
+                            I was nervous about Botox, but Dr. Preeti made me feel at ease. The results are so natural - people keep asking if I've been on vacation! I couldn't be happier with my decision.
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-info">
+                                <p class="testimonial-author-name">Jennifer L.</p>
+                                <p class="testimonial-author-treatment">Botox Patient</p>
+                            </div>
+                            <div class="testimonial-rating" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">
+                            After years of shaving, laser hair removal has been life-changing! The process was comfortable and the results exceeded my expectations. I wish I had done this sooner.
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-info">
+                                <p class="testimonial-author-name">Michael R.</p>
+                                <p class="testimonial-author-treatment">Laser Hair Removal Patient</p>
+                            </div>
+                            <div class="testimonial-rating" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
+    <?php endif; ?>
+
+    <!-- Consultation Invitation Section - HOMEPAGE_DESIGN.md v6.0 Implementation -->
+    <?php if (get_theme_mod('show_consultation_invitation_section', true)) : ?>
+    <section class="consultation-invitation" aria-labelledby="consultation-heading">
+        <div class="container">
+            <div class="consultation-content">
+                <h2 id="consultation-heading" class="consultation-title">
+                    <?php echo get_theme_mod('consultation_title', 'Begin Your Transformation Journey'); ?>
+                </h2>
+                <p class="consultation-description">
+                    <?php echo get_theme_mod('consultation_description', 'Schedule your complimentary consultation and discover how we can help you achieve your aesthetic goals with personalized treatment plans.'); ?>
+                </p>
+
+                <div class="consultation-cta-group">
+                    <a href="#consultation" class="consultation-cta-primary">
+                        <span aria-hidden="true">📅</span>
+                        Schedule Free Consultation
+                    </a>
+                    <a href="tel:<?php echo esc_attr(preetidreams_get_phone()); ?>" class="consultation-cta-secondary">
+                        <span aria-hidden="true">📞</span>
+                        Call Now
+                    </a>
+                </div>
+
+                <ul class="consultation-features">
+                    <li class="consultation-feature">
+                        <span class="consultation-feature-icon" aria-hidden="true">✓</span>
+                        Complimentary consultation
+                    </li>
+                    <li class="consultation-feature">
+                        <span class="consultation-feature-icon" aria-hidden="true">✓</span>
+                        Personalized treatment plan
+                    </li>
+                    <li class="consultation-feature">
+                        <span class="consultation-feature-icon" aria-hidden="true">✓</span>
+                        No obligation required
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
 
 </main>
-
-<style>
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
-
-<script>
-// Initialize Treatment Filter on Homepage when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🏠 Homepage Ready - Initializing Treatment Filter...');
-
-    // Remove loading placeholder
-    const placeholder = document.querySelector('.filter-loading-placeholder');
-    if (placeholder) {
-        setTimeout(() => {
-            placeholder.remove();
-        }, 1000); // Show loading for 1 second for better UX
-    }
-
-    if (typeof TreatmentFilter !== 'undefined') {
-        const treatmentFilter = new TreatmentFilter('.treatment-filters');
-        treatmentFilter.init();
-
-        // Store reference globally for debugging
-        window.homePageFilterInstance = treatmentFilter;
-
-        console.log('✅ Homepage Treatment Filter initialized successfully');
-
-        // Add success indicator for visual confirmation
-        const filterContainer = document.querySelector('.treatment-filters');
-        if (filterContainer && filterContainer.children.length > 0) {
-            console.log('🎯 Homepage filter interface rendered with', filterContainer.children.length, 'elements');
-        }
-
-        // Track homepage filter initialization
-        if (window.MedicalSpaApp) {
-            window.MedicalSpaApp.getModule('analytics')?.track('homepage_filter_initialized', {
-                treatments_count: document.querySelectorAll('.treatment-card').length,
-                page_location: 'homepage'
-            });
-        }
-    } else {
-        console.error('❌ TreatmentFilter class not loaded on homepage - Check if JavaScript files are properly enqueued');
-
-        // Show error message to user in debug mode
-        const filterContainer = document.querySelector('.treatment-filters');
-        if (filterContainer && window.location.hostname.includes('localhost')) {
-                            filterContainer.innerHTML = '<div class="debug-message error-message"><strong>Debug Mode:</strong> TreatmentFilter JavaScript not loaded on homepage. Check console for details.</div>';
-        }
-    }
-
-    // Debug information for homepage
-    console.log('📊 Homepage Medical Spa Theme Debug Info:');
-    console.log('- medicalSpaTheme config:', window.medicalSpaTheme);
-    console.log('- MedicalSpaApp available:', typeof window.MedicalSpaApp !== 'undefined');
-    console.log('- TreatmentFilter available:', typeof TreatmentFilter !== 'undefined');
-    console.log('- Treatment cards found:', document.querySelectorAll('.treatment-card').length);
-});
-</script>
 
 <?php get_footer(); ?>

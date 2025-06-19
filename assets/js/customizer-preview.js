@@ -1,216 +1,359 @@
 /**
- * Medical Spa Theme Customizer Preview
- * Live preview functionality for theme customization
+ * Customizer Preview JavaScript
+ *
+ * Real-time preview functionality for Sprint 11 homepage sections
+ *
+ * @package MedSpaTheme
+ * @since 1.0.0
+ * @author CODE-GEN-001
+ * @workflow CODE-GEN-WF-001
+ * @task T11.6 WordPress Integration & Customizer Controls
  */
 
 (function($) {
     'use strict';
 
-    // Color palette changes
-    wp.customize('medspaa_color_palette', function(value) {
-        value.bind(function(newval) {
-            // Trigger a refresh since we need to regenerate CSS variables
-            wp.customize.preview.send('refresh');
+    // Wait for DOM to be ready
+    $(document).ready(function() {
+
+        // =====================================================================
+        // SERVICES OVERVIEW SECTION PREVIEW UPDATES
+        // =====================================================================
+
+        // Services Overview Title
+        wp.customize('services_overview_title', function(value) {
+            value.bind(function(newval) {
+                $('.services-overview .section-title').text(newval);
+            });
         });
-    });
 
-    // Custom color changes
-    wp.customize('medspaa_primary_color', function(value) {
-        value.bind(function(newval) {
-            updateCSSVariable('--color-primary', newval);
+        // Services Overview Subtitle
+        wp.customize('services_overview_subtitle', function(value) {
+            value.bind(function(newval) {
+                $('.services-overview .section-subtitle').text(newval);
+            });
         });
-    });
 
-    wp.customize('medspaa_secondary_color', function(value) {
-        value.bind(function(newval) {
-            updateCSSVariable('--color-secondary', newval);
+        // Services Overview Description
+        wp.customize('services_overview_description', function(value) {
+            value.bind(function(newval) {
+                $('.services-overview .section-description').text(newval);
+            });
         });
-    });
 
-    wp.customize('medspaa_accent_color', function(value) {
-        value.bind(function(newval) {
-            updateCSSVariable('--color-accent', newval);
+        // Services Overview Section Visibility
+        wp.customize('show_services_overview_section', function(value) {
+            value.bind(function(newval) {
+                if (newval) {
+                    $('.services-overview').show();
+                } else {
+                    $('.services-overview').hide();
+                }
+            });
         });
-    });
 
-    // Font changes
-    wp.customize('medspaa_heading_font', function(value) {
-        value.bind(function(newval) {
-            wp.customize.preview.send('refresh');
-        });
-    });
+        // Individual Service Section Visibility
+        const serviceSections = [
+            'injectable_artistry',
+            'facial_renaissance',
+            'laser_precision',
+            'body_sculpting',
+            'wellness_sanctuary'
+        ];
 
-    wp.customize('medspaa_body_font', function(value) {
-        value.bind(function(newval) {
-            wp.customize.preview.send('refresh');
-        });
-    });
-
-    // Font scale changes
-    wp.customize('medspaa_font_scale', function(value) {
-        value.bind(function(newval) {
-            let scale = 1.0;
-            switch(newval) {
-                case 'small': scale = 0.9; break;
-                case 'large': scale = 1.1; break;
-                default: scale = 1.0;
-            }
-            updateCSSVariable('--font-scale', scale);
-            $('body').css('font-size', 'calc(16px * ' + scale + ')');
-        });
-    });
-
-    // Button style changes
-    wp.customize('medspaa_button_style', function(value) {
-        value.bind(function(newval) {
-            let radius = '8px';
-            switch(newval) {
-                case 'sharp': radius = '0px'; break;
-                case 'pill': radius = '50px'; break;
-                default: radius = '8px';
-            }
-            updateCSSVariable('--button-radius', radius);
-            $('.btn, button, input[type="submit"], .button').css('border-radius', radius);
-        });
-    });
-
-    // Header style changes
-    wp.customize('medspaa_header_style', function(value) {
-        value.bind(function(newval) {
-            const $header = $('.site-header');
-            $header.removeClass('header-transparent header-solid header-gradient');
-
-            switch(newval) {
-                case 'solid':
-                    $header.addClass('header-solid');
-                    break;
-                case 'gradient':
-                    $header.addClass('header-gradient');
-                    break;
-                default:
-                    $header.addClass('header-transparent');
-            }
-        });
-    });
-
-    // Animation preferences
-    wp.customize('medspaa_animations', function(value) {
-        value.bind(function(newval) {
-            const $body = $('body');
-            $body.removeClass('animations-enabled animations-reduced animations-disabled');
-            $body.addClass('animations-' + newval);
-
-            if (newval === 'disabled') {
-                $('*').css({
-                    'transition': 'none !important',
-                    'animation': 'none !important'
-                });
-            } else {
-                // Remove inline styles to restore CSS animations
-                $('*').css({
-                    'transition': '',
-                    'animation': ''
-                });
-            }
-        });
-    });
-
-    /**
-     * Update CSS custom property
-     */
-    function updateCSSVariable(property, value) {
-        $(':root').css(property, value);
-
-        // If no native support, update via style element
-        if (!CSS.supports('color', 'var(--test)')) {
-            updateDynamicStyles();
-        }
-    }
-
-    /**
-     * Update dynamic styles for browsers without CSS custom properties support
-     */
-    function updateDynamicStyles() {
-        const colors = {
-            primary: wp.customize('medspaa_primary_color')() || '#1B365D',
-            secondary: wp.customize('medspaa_secondary_color')() || '#8B4B7A',
-            accent: wp.customize('medspaa_accent_color')() || '#D4AF37'
-        };
-
-        const fontScale = wp.customize('medspaa_font_scale')() || 'normal';
-        const scale = fontScale === 'small' ? 0.9 : fontScale === 'large' ? 1.1 : 1.0;
-
-        const buttonStyle = wp.customize('medspaa_button_style')() || 'rounded';
-        const radius = buttonStyle === 'sharp' ? '0px' : buttonStyle === 'pill' ? '50px' : '8px';
-
-        // Generate fallback CSS
-        const fallbackCSS = `
-            .btn, button, input[type='submit'], .button {
-                background-color: ${colors.primary};
-                border-color: ${colors.primary};
-                border-radius: ${radius};
-            }
-            .btn:hover, button:hover, input[type='submit']:hover, .button:hover {
-                background-color: ${colors.secondary};
-                border-color: ${colors.secondary};
-            }
-            body {
-                font-size: ${16 * scale}px;
-            }
-        `;
-
-        // Update or create fallback style element
-        let $fallbackStyles = $('#medspaa-customizer-fallback');
-        if ($fallbackStyles.length === 0) {
-            $fallbackStyles = $('<style id="medspaa-customizer-fallback"></style>');
-            $('head').append($fallbackStyles);
-        }
-        $fallbackStyles.text(fallbackCSS);
-    }
-
-    /**
-     * Initialize preview enhancements
-     */
-    function initPreview() {
-        // Add customizer body class
-        $('body').addClass('customizer-preview');
-
-        // Add visual indicators for customizable elements
-        if (wp.customize.settings.preview.activeControls) {
-            addCustomizerHighlights();
-        }
-    }
-
-    /**
-     * Add visual highlights for customizable elements
-     */
-    function addCustomizerHighlights() {
-        // Highlight elements when corresponding controls are focused
-        const highlights = {
-            'medspaa_primary_color': '.btn, .site-header, h1, h2, h3',
-            'medspaa_secondary_color': '.btn:hover, .secondary-elements',
-            'medspaa_accent_color': '.accent-elements, .highlight',
-            'medspaa_heading_font': 'h1, h2, h3, h4, h5, h6',
-            'medspaa_body_font': 'body, p, div',
-            'medspaa_button_style': '.btn, button, input[type="submit"]'
-        };
-
-        $.each(highlights, function(control, selector) {
-            wp.customize(control, function(value) {
-                value.bind(function() {
-                    // Add temporary highlight
-                    $(selector).addClass('customizer-highlight');
-                    setTimeout(function() {
-                        $(selector).removeClass('customizer-highlight');
-                    }, 1000);
+        serviceSections.forEach(function(sectionKey) {
+            wp.customize('show_service_' + sectionKey, function(value) {
+                value.bind(function(newval) {
+                    const sectionClass = '.' + sectionKey.replace('_', '-');
+                    if (newval) {
+                        $(sectionClass).show().addClass('animate-in');
+                    } else {
+                        $(sectionClass).hide().removeClass('animate-in');
+                    }
                 });
             });
         });
-    }
 
-    // Initialize when document is ready
-    $(document).ready(function() {
-        initPreview();
+        // =====================================================================
+        // TRUST INDICATORS SECTION PREVIEW UPDATES
+        // =====================================================================
+
+        // Trust Indicators Title
+        wp.customize('trust_indicators_title', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicators-section .section-title').text(newval);
+            });
+        });
+
+        // Trust Indicators Subtitle
+        wp.customize('trust_indicators_subtitle', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicators-section .section-subtitle').text(newval);
+            });
+        });
+
+        // Trust Indicators Section Visibility
+        wp.customize('show_trust_indicators_section', function(value) {
+            value.bind(function(newval) {
+                if (newval) {
+                    $('.trust-indicators-section').show();
+                } else {
+                    $('.trust-indicators-section').hide();
+                }
+            });
+        });
+
+        // Individual Trust Indicator Visibility
+        const trustIndicators = [
+            'board_certified',
+            'award_winning',
+            'happy_patients',
+            'hipaa_compliant'
+        ];
+
+        trustIndicators.forEach(function(indicatorKey) {
+            wp.customize('show_trust_' + indicatorKey, function(value) {
+                value.bind(function(newval) {
+                    const indicatorClass = '.' + indicatorKey.replace('_', '-');
+                    if (newval) {
+                        $(indicatorClass).show().addClass('animate-in');
+                    } else {
+                        $(indicatorClass).hide().removeClass('animate-in');
+                    }
+                });
+            });
+        });
+
+        // =====================================================================
+        // CUSTOMIZABLE TRUST INDICATOR CONTENT UPDATES
+        // =====================================================================
+
+        // Board Certified Content Updates
+        wp.customize('trust_board_certified_title', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.board-certified .trust-title').text(newval);
+            });
+        });
+
+        wp.customize('trust_board_certified_description', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.board-certified .trust-description').text(newval);
+            });
+        });
+
+        // Award Winning Content Updates
+        wp.customize('trust_award_winning_title', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.award-winning .trust-title').text(newval);
+            });
+        });
+
+        wp.customize('trust_award_winning_description', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.award-winning .trust-description').text(newval);
+            });
+        });
+
+        // Happy Patients Content Updates
+        wp.customize('trust_happy_patients_title', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.happy-patients .trust-title').text(newval);
+            });
+        });
+
+        wp.customize('trust_happy_patients_description', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.happy-patients .trust-description').text(newval);
+            });
+        });
+
+        // HIPAA Compliant Content Updates
+        wp.customize('trust_hipaa_compliant_title', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.hipaa-compliant .trust-title').text(newval);
+            });
+        });
+
+        wp.customize('trust_hipaa_compliant_description', function(value) {
+            value.bind(function(newval) {
+                $('.trust-indicator.hipaa-compliant .trust-description').text(newval);
+            });
+        });
+
+        // =====================================================================
+        // ENHANCED PREVIEW ANIMATIONS
+        // =====================================================================
+
+        /**
+         * Add smooth animations for section visibility changes
+         */
+        function addPreviewAnimations() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .animate-in {
+                    animation: customizer-fade-in 0.3s ease-in-out;
+                }
+
+                @keyframes customizer-fade-in {
+                    from {
+                        opacity: 0;
+                        transform: translateY(10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .customizer-preview-highlight {
+                    box-shadow: 0 0 0 2px #0073aa;
+                    transition: box-shadow 0.2s ease-in-out;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Initialize preview animations
+        addPreviewAnimations();
+
+        /**
+         * Highlight elements when they're being customized
+         */
+        function highlightElement(selector, duration = 1000) {
+            const $element = $(selector);
+            $element.addClass('customizer-preview-highlight');
+
+            setTimeout(function() {
+                $element.removeClass('customizer-preview-highlight');
+            }, duration);
+        }
+
+        // Add highlighting for focused elements
+        wp.customize.bind('ready', function() {
+            wp.customize.control.each(function(control) {
+                control.container.on('focus', function() {
+                    const settingId = control.id;
+
+                    // Map setting IDs to selectors for highlighting
+                    const highlightMap = {
+                        'services_overview_title': '.services-overview .section-title',
+                        'services_overview_subtitle': '.services-overview .section-subtitle',
+                        'services_overview_description': '.services-overview .section-description',
+                        'trust_indicators_title': '.trust-indicators-section .section-title',
+                        'trust_indicators_subtitle': '.trust-indicators-section .section-subtitle',
+                        'trust_board_certified_title': '.trust-indicator.board-certified .trust-title',
+                        'trust_award_winning_title': '.trust-indicator.award-winning .trust-title',
+                        'trust_happy_patients_title': '.trust-indicator.happy-patients .trust-title',
+                        'trust_hipaa_compliant_title': '.trust-indicator.hipaa-compliant .trust-title'
+                    };
+
+                    if (highlightMap[settingId]) {
+                        highlightElement(highlightMap[settingId]);
+                    }
+                });
+            });
+        });
+
+        // =====================================================================
+        // RESPONSIVE PREVIEW ENHANCEMENTS
+        // =====================================================================
+
+        /**
+         * Ensure responsive behavior works in customizer preview
+         */
+        function enhanceResponsivePreview() {
+            // Listen for device preview changes
+            wp.customize.previewedDevice.bind(function(device) {
+                // Add device-specific classes for enhanced preview
+                $('body').removeClass('customizer-preview-desktop customizer-preview-tablet customizer-preview-mobile');
+                $('body').addClass('customizer-preview-' + device);
+
+                // Trigger resize event to ensure proper layout
+                $(window).trigger('resize');
+            });
+        }
+
+        // Initialize responsive preview enhancements
+        enhanceResponsivePreview();
+
+        // =====================================================================
+        // PERFORMANCE OPTIMIZATIONS
+        // =====================================================================
+
+        /**
+         * Debounce function to limit rapid updates
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        /**
+         * Optimized text updates with debouncing
+         */
+        function createDebouncedTextUpdate(setting, selector, delay = 300) {
+            wp.customize(setting, function(value) {
+                value.bind(debounce(function(newval) {
+                    $(selector).text(newval);
+                }, delay));
+            });
+        }
+
+        // Apply debounced updates for better performance
+        const textUpdates = [
+            ['services_overview_title', '.services-overview .section-title'],
+            ['services_overview_subtitle', '.services-overview .section-subtitle'],
+            ['services_overview_description', '.services-overview .section-description'],
+            ['trust_indicators_title', '.trust-indicators-section .section-title'],
+            ['trust_indicators_subtitle', '.trust-indicators-section .section-subtitle']
+        ];
+
+        textUpdates.forEach(function([setting, selector]) {
+            createDebouncedTextUpdate(setting, selector);
+        });
+
+        // =====================================================================
+        // ACCESSIBILITY ENHANCEMENTS
+        // =====================================================================
+
+        /**
+         * Ensure accessibility is maintained during preview updates
+         */
+        function maintainAccessibility() {
+            // Update ARIA labels when content changes
+            wp.customize('services_overview_title', function(value) {
+                value.bind(function(newval) {
+                    $('.services-overview').attr('aria-label', 'Services section: ' + newval);
+                });
+            });
+
+            wp.customize('trust_indicators_title', function(value) {
+                value.bind(function(newval) {
+                    $('.trust-indicators-section').attr('aria-label', 'Trust indicators section: ' + newval);
+                });
+            });
+        }
+
+        // Initialize accessibility enhancements
+        maintainAccessibility();
+
+        // =====================================================================
+        // CONSOLE LOGGING FOR DEBUGGING
+        // =====================================================================
+
+        if (window.console && window.console.log) {
+            console.log('🎨 MedSpa Customizer Preview: Initialized successfully');
+            console.log('📱 Responsive preview enhancements: Active');
+            console.log('♿ Accessibility enhancements: Active');
+            console.log('⚡ Performance optimizations: Active');
+        }
     });
 
 })(jQuery);

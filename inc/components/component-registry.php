@@ -667,6 +667,54 @@ class ComponentRegistry {
             'security_level' => 'low'
         ]);
 
+        // T11.2 Service Section Component (Sprint 11 Implementation)
+        if (file_exists($component_dir . 'service-section-component.php')) {
+            require_once $component_dir . 'service-section-component.php';
+            self::register('service-section', 'ServiceSectionComponent', [
+                'priority' => 80,
+                'cacheable' => true,
+                'lazy_load' => false,
+                'accessibility_required' => true,
+                'schema_markup' => true,
+                'customizer_section' => 'services_overview',
+                'security_level' => 'low'
+            ]);
+        }
+
+        // T11.3 Trust Indicators Component (Sprint 11 Implementation)
+        if (file_exists($component_dir . 'trust-indicators-component.php')) {
+            require_once $component_dir . 'trust-indicators-component.php';
+            self::register('trust-indicators', 'TrustIndicatorsComponent', [
+                'priority' => 81,
+                'cacheable' => true,
+                'lazy_load' => false,
+                'accessibility_required' => true,
+                'schema_markup' => true,
+                'customizer_section' => 'trust_indicators',
+                'security_level' => 'low'
+            ]);
+        }
+
+        // T11.7 Visual Content Component (Sprint 11 Enhancement Implementation)
+        if (file_exists($component_dir . 'visual-content-component.php')) {
+            require_once $component_dir . 'visual-content-component.php';
+            self::register('visual-content', 'VisualContentComponent', [
+                'priority' => 82,
+                'cacheable' => true,
+                'lazy_load' => true, // T11.9: Performance optimization with lazy loading
+                'accessibility_required' => true,
+                'javascript_required' => true,
+                'css_dependencies' => ['visual-content-interactions'],
+                'js_dependencies' => ['visual-content-interactions'],
+                'customizer_section' => 'visual_content_panel',
+                'security_level' => 'medium',
+                'performance_critical' => true, // T11.9: Performance monitoring
+                'unsplash_integration' => true, // T11.7: Unsplash API integration
+                'webp_support' => true, // T11.9: WebP optimization
+                'lazy_loading' => true // T11.9: Intersection observer lazy loading
+            ]);
+        }
+
         // Log registration completion
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('ComponentRegistry: Core components registration completed - ' . count(self::$components) . ' components registered');
