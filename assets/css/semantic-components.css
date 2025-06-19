@@ -2483,417 +2483,9 @@ body:not(.has-hero-section) .site-header {
   }
 }
 
-/* Individual Service Section Cards */
-.service-section {
-  background-color: var(--component-service-section-bg);
-  border: var(--border-width-sm) solid var(--component-service-section-border);
-  border-radius: var(--component-service-section-radius);
-  padding: var(--component-service-section-padding);
-  box-shadow: var(--component-service-section-shadow);
-  transition: var(--component-service-section-transition);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  will-change: var(--component-will-change);
-}
-
-.service-section:hover {
-  background-color: var(--component-service-section-hover-bg);
-  box-shadow: var(--component-service-section-hover-shadow);
-  transform: var(--component-hover-transform);
-}
-
-/* Service Section Icon */
-.service-section__icon {
-  font-size: var(--text-xl);
-  margin-bottom: var(--space-md);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-/* Service Section Content */
-.service-section__content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.service-section__title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-md);
-  font-family: var(--font-family-primary);
-}
-
-.service-section__description {
-  font-size: var(--text-base);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--space-lg);
-  flex: 1;
-}
-
-/* Treatment List Styling */
-.service-section__treatments {
-  margin-bottom: var(--space-lg);
-}
-
-.treatment-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  background-color: var(--color-background-secondary);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-}
-
-.treatment-item {
-  display: flex;
-  align-items: center;
-  padding: var(--space-sm) 0;
-  border-bottom: var(--border-width-sm) solid var(--color-surface-tertiary);
-}
-
-.treatment-item:last-child {
-  border-bottom: none;
-}
-
-.treatment-icon {
-  margin-right: var(--space-sm);
-  font-size: var(--text-base);
-}
-
-.treatment-name {
-  font-size: var(--text-base);
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-}
-
-/* Service Section CTA */
-.service-section__cta {
-  margin-top: auto;
-  padding-top: var(--space-lg);
-}
-
-.service-cta-button {
-  width: 100%;
-  text-align: center;
-  justify-content: center;
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  font-weight: var(--font-weight-medium);
-  transition: var(--transition-base);
-}
-
-.service-cta-button:hover {
-  background-color: var(--color-primary);
-  color: var(--color-text-primary-inverse);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.service-cta-button:focus {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-}
-
-/* Specific Service Section Variants */
-.service-section--injectable-artistry .service-section__icon {
-  color: var(--color-primary);
-}
-
-.service-section--facial-renaissance .service-section__icon {
-  color: var(--color-secondary);
-}
-
-.service-section--laser-precision .service-section__icon {
-  color: var(--color-accent);
-}
-
-.service-section--body-sculpting .service-section__icon {
-  color: var(--color-primary);
-}
-
-.service-section--wellness-sanctuary .service-section__icon {
-  color: var(--color-secondary);
-}
-
-/* Accessibility Enhancements */
-.service-section:focus-within {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-}
-
-/* Touch Target Optimization */
-.service-cta-button {
-  min-height: var(--touch-target-min);
-  min-width: var(--touch-target-min);
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-  .service-section {
-    border-width: var(--border-width-md);
-    border-color: var(--color-text-primary);
-  }
-
-  .service-section__title {
-    font-weight: var(--font-weight-bold);
-  }
-
-  .service-cta-button {
-    border-width: var(--border-width-md);
-    font-weight: var(--font-weight-bold);
-  }
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .service-section,
-  .service-cta-button {
-    transition: none !important;
-  }
-
-  .service-section:hover,
-  .service-cta-button:hover {
-    transform: none !important;
-  }
-}
-
-/* Print Styles */
-@media print {
-  .services-overview {
-    page-break-inside: avoid;
-  }
-
-  .service-section {
-    border: var(--border-width-sm) solid var(--color-text-primary);
-    box-shadow: none;
-    margin-bottom: var(--space-lg);
-  }
-
-  .service-cta-button {
-    display: none;
-  }
-}
-
 /* =================================================================
-   TRUST INDICATORS SECTION - Why Choose Us
-   T11.3 Implementation with 100% semantic tokenization
-   ================================================================= */
-
-.trust-indicators-section {
-  padding: var(--component-trust-section-padding);
-  background-color: var(--component-trust-section-bg);
-  will-change: var(--component-will-change);
-}
-
-.trust-indicators-section .section__header {
-  margin-bottom: var(--space-4xl);
-}
-
-.trust-indicators-section .section__title {
-  font-size: var(--text-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-md);
-}
-
-.trust-indicators-section .section__subtitle {
-  font-size: var(--text-lg);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-/* Trust Indicators Grid Layout - Mobile First Responsive */
-.trust-indicators-grid {
-  display: grid;
-  grid-template-columns: var(--grid-trust-mobile);
-  gap: var(--component-trust-grid-gap);
-  margin-top: var(--space-4xl);
-}
-
-@media (min-width: 768px) {
-  .trust-indicators-grid {
-    grid-template-columns: var(--grid-trust-tablet);
-    gap: var(--component-trust-grid-gap);
-  }
-}
-
-@media (min-width: 1024px) {
-  .trust-indicators-grid {
-    grid-template-columns: var(--grid-trust-desktop);
-    gap: var(--component-trust-grid-gap);
-  }
-}
-
-@media (min-width: 1200px) {
-  .trust-indicators-grid {
-    gap: var(--component-trust-grid-gap-desktop);
-  }
-}
-
-/* Individual Trust Indicator Cards */
-.trust-indicator-card {
-  background-color: var(--color-surface);
-  border: var(--border-width-sm) solid var(--color-surface-tertiary);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition-base);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-}
-
-.trust-indicator-card:hover {
-  background-color: var(--color-surface-hover);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
-}
-
-/* Trust Indicator Icon */
-.trust-indicator__icon {
-  font-size: var(--text-3xl);
-  margin-bottom: var(--space-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--space-4xl);
-  height: var(--space-4xl);
-  border-radius: var(--radius-full);
-  background-color: var(--color-background-secondary);
-}
-
-/* Trust Indicator Content */
-.trust-indicator__content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.trust-indicator__title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-md);
-  font-family: var(--font-family-primary);
-  line-height: var(--line-height-tight);
-}
-
-.trust-indicator__description {
-  font-size: var(--text-base);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
-  margin: 0;
-  flex: 1;
-}
-
-/* Color Variants for Different Trust Indicators */
-.trust-indicator--primary .trust-indicator__icon {
-  background-color: var(--color-primary);
-  color: var(--color-text-primary-inverse);
-}
-
-.trust-indicator--secondary .trust-indicator__icon {
-  background-color: var(--color-secondary);
-  color: var(--color-text-primary-inverse);
-}
-
-.trust-indicator--accent .trust-indicator__icon {
-  background-color: var(--color-accent);
-  color: var(--color-text-primary);
-}
-
-/* Specific Trust Indicator Styling */
-.trust-indicator--board-certified .trust-indicator__icon {
-  background-color: var(--color-primary);
-  color: var(--color-text-primary-inverse);
-}
-
-.trust-indicator--award-winning .trust-indicator__icon {
-  background-color: var(--color-secondary);
-  color: var(--color-text-primary-inverse);
-}
-
-.trust-indicator--happy-patients .trust-indicator__icon {
-  background-color: var(--color-accent);
-  color: var(--color-text-primary);
-}
-
-.trust-indicator--hipaa-compliant .trust-indicator__icon {
-  background-color: var(--color-primary);
-  color: var(--color-text-primary-inverse);
-}
-
-/* Accessibility Enhancements */
-.trust-indicator-card:focus-within {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-}
-
-/* Touch Target Optimization */
-.trust-indicator-card {
-  min-height: var(--touch-target-min);
-}
-
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-  .trust-indicator-card {
-    border-width: var(--border-width-md);
-    border-color: var(--color-text-primary);
-  }
-
-  .trust-indicator__title {
-    font-weight: var(--font-weight-bold);
-  }
-
-  .trust-indicator__icon {
-    border: var(--border-width-sm) solid var(--color-text-primary);
-  }
-}
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .trust-indicator-card {
-    transition: none !important;
-  }
-
-  .trust-indicator-card:hover {
-    transform: none !important;
-  }
-}
-
-/* Print Styles */
-@media print {
-  .trust-indicators-section {
-    page-break-inside: avoid;
-  }
-
-  .trust-indicator-card {
-    border: var(--border-width-sm) solid var(--color-text-primary);
-    box-shadow: none;
-    margin-bottom: var(--space-lg);
-  }
-
-  .trust-indicators-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-/* =================================================================
-   SERVICE SECTIONS - Alternating Layout Implementation
-   Following HOMEPAGE_DESIGN.md v7.0 alternating layout pattern
-   100% semantic tokenization compliance - zero hardcoded values
+   SERVICES OVERVIEW GROUPED SECTION - Main Header
+   Proper alignment and centering for section header
    ================================================================= */
 
 .services-overview-grouped {
@@ -2920,6 +2512,14 @@ body:not(.has-hero-section) .site-header {
   font-family: var(--font-family-primary);
 }
 
+.services-main-subtitle {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+  font-family: var(--font-family-secondary);
+}
+
 .services-main-description {
   font-size: var(--text-lg);
   color: var(--color-text-secondary);
@@ -2934,7 +2534,8 @@ body:not(.has-hero-section) .site-header {
   gap: var(--space-3xl);
   align-items: center;
   margin-bottom: var(--space-5xl);
-  padding: var(--space-3xl) 0;
+  padding: var(--space-3xl) var(--space-2xl);
+  /* ADDED: Proper section padding to prevent edge-to-edge expansion */
 }
 
 .service-section:last-child {
@@ -2960,32 +2561,57 @@ body:not(.has-hero-section) .site-header {
 
 /* Text Content Area */
 .service-text-content {
-  padding: var(--space-xl);
+  /* REMOVED: Card padding - using minimal padding */
+  padding: var(--space-lg);
+  /* ADDED: Restored some padding for content readability */
 }
 
 .service-header {
   margin-bottom: var(--space-xl);
+  /* NEW: Icon and title in same row */
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .service-icon {
   font-size: var(--text-3xl);
-  margin-bottom: var(--space-md);
-  display: block;
+  /* REMOVED: Block display and margin-bottom */
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.service-title-group {
+  flex: 1;
 }
 
 .service-title {
   font-size: var(--text-2xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
   font-family: var(--font-family-primary);
+  /* UPDATED: More subtle underline styling to match screenshot */
+  position: relative;
+  padding-bottom: var(--space-sm);
+}
+
+.service-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: 1px;
 }
 
 .service-subtitle {
   font-size: var(--text-lg);
   font-weight: var(--font-weight-medium);
   color: var(--color-primary);
-  margin-bottom: var(--space-md);
+  margin-bottom: 0;
   font-family: var(--font-family-secondary);
 }
 
@@ -2994,6 +2620,7 @@ body:not(.has-hero-section) .site-header {
   color: var(--color-text-secondary);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--space-xl);
+  margin-top: var(--space-lg);
 }
 
 /* Treatment Buttons */
@@ -3056,7 +2683,9 @@ body:not(.has-hero-section) .site-header {
 
 /* Visual Content Area */
 .service-visual-content {
+  /* REMOVED: Card padding */
   padding: var(--space-lg);
+  /* ADDED: Restored some padding for visual content */
 }
 
 /* Before/After Gallery */
@@ -4081,4 +3710,171 @@ body:not(.has-hero-section) .site-header {
 .consultation-cta-secondary {
   min-height: var(--touch-target-min);
   min-width: var(--touch-target-min);
+}
+
+/* =================================================================
+   VISUAL SEPARATORS - Ready to Schedule CTA & Testimonials
+   Efficient visual breaks between service sections
+   ================================================================= */
+
+.visual-separator {
+  padding: var(--space-4xl) var(--space-2xl);
+  margin: var(--space-5xl) 0;
+  text-align: center;
+}
+
+.visual-separator .separator-content {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* Ready to Schedule CTA Separator */
+.ready-to-schedule-cta {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: var(--color-text-inverse);
+}
+
+.ready-to-schedule-cta .separator-title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-inverse);
+  margin-bottom: var(--space-md);
+  font-family: var(--font-family-primary);
+}
+
+.ready-to-schedule-cta .separator-description {
+  font-size: var(--text-lg);
+  color: var(--color-text-inverse);
+  margin-bottom: var(--space-xl);
+  line-height: var(--line-height-relaxed);
+  opacity: 0.9;
+}
+
+.separator-actions {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ready-to-schedule-cta .btn--primary {
+  background-color: var(--color-text-inverse);
+  color: var(--color-primary);
+  border-color: var(--color-text-inverse);
+}
+
+.ready-to-schedule-cta .btn--primary:hover {
+  background-color: var(--color-surface);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ready-to-schedule-cta .btn--secondary {
+  background-color: transparent;
+  color: var(--color-text-inverse);
+  border-color: var(--color-text-inverse);
+}
+
+.ready-to-schedule-cta .btn--secondary:hover {
+  background-color: var(--color-text-inverse);
+  color: var(--color-primary);
+}
+
+/* Patient Testimonial Separator */
+.patient-testimonial {
+  background-color: var(--color-surface);
+  border-top: var(--border-width-sm) solid var(--color-surface-secondary);
+  border-bottom: var(--border-width-sm) solid var(--color-surface-secondary);
+}
+
+.testimonial-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.testimonial-stars {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-lg);
+  letter-spacing: var(--space-xs);
+}
+
+.testimonial-quote {
+  font-size: var(--text-xl);
+  font-style: italic;
+  color: var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-family-secondary);
+  position: relative;
+}
+
+.testimonial-quote::before {
+  content: '"';
+  font-size: var(--text-4xl);
+  color: var(--color-primary);
+  position: absolute;
+  left: -20px;
+  top: -10px;
+  font-family: serif;
+}
+
+.testimonial-quote::after {
+  content: '"';
+  font-size: var(--text-4xl);
+  color: var(--color-primary);
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  font-family: serif;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.author-name {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+}
+
+.author-treatment {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-secondary);
+}
+
+/* Responsive Design for Visual Separators */
+@media (max-width: 768px) {
+  .visual-separator {
+    padding: var(--space-3xl) var(--space-lg);
+    margin: var(--space-4xl) 0;
+  }
+
+  .ready-to-schedule-cta .separator-title {
+    font-size: var(--text-2xl);
+  }
+
+  .ready-to-schedule-cta .separator-description {
+    font-size: var(--text-base);
+  }
+
+  .separator-actions {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .testimonial-quote {
+    font-size: var(--text-lg);
+  }
+
+  .testimonial-quote::before,
+  .testimonial-quote::after {
+    font-size: var(--text-3xl);
+  }
 }

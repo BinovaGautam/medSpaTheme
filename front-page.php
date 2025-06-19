@@ -107,35 +107,37 @@
             </header>
 
             <!-- Injectable Artistry Section - TEXT LEFT | VISUAL RIGHT -->
-            <div class="service-section layout-text-left" aria-labelledby="injectable-artistry-heading">
+            <section class="service-section layout-text-left" aria-labelledby="injectable-artistry-heading">
                 <div class="service-text-content">
                     <div class="service-header">
                         <span class="service-icon" aria-hidden="true">💉</span>
-                        <h3 id="injectable-artistry-heading" class="service-title">Injectable Artistry</h3>
-                        <p class="service-subtitle">Precision Enhancement & Natural Beauty</p>
+                        <div class="service-title-group">
+                            <h3 id="injectable-artistry-heading" class="service-title">Injectable Artistry</h3>
+                            <p class="service-subtitle">Precision Enhancement & Natural Beauty</p>
+                        </div>
                     </div>
                     <p class="service-description">
                         Enhance your natural beauty with precision injectable treatments for wrinkle reduction and volume restoration. Our advanced injectable services include expert administration and natural results.
                     </p>
 
                     <div class="service-treatments">
-                        <h4 class="treatments-heading">Our Injectable Services</h4>
+                        <h4 class="treatments-heading">Available Treatments</h4>
                         <div class="treatment-buttons">
                             <a href="/treatments/botox-dysport" class="treatment-button">
                                 <span class="treatment-name">Botox & Dysport</span>
-                                <span class="treatment-description">Smooth wrinkles and fine lines</span>
+                                <span class="treatment-description">Wrinkle reduction</span>
                             </a>
                             <a href="/treatments/facial-fillers" class="treatment-button">
                                 <span class="treatment-name">Facial Fillers</span>
-                                <span class="treatment-description">Restore volume and contour</span>
+                                <span class="treatment-description">Volume restoration</span>
                             </a>
                             <a href="/treatments/pdo-thread-lifts" class="treatment-button">
                                 <span class="treatment-name">PDO Thread Lifts</span>
-                                <span class="treatment-description">Lift and tighten skin naturally</span>
+                                <span class="treatment-description">Non-surgical lifting</span>
                             </a>
                             <a href="/treatments/sculptra" class="treatment-button">
                                 <span class="treatment-name">Sculptra®</span>
-                                <span class="treatment-description">Stimulate natural collagen production</span>
+                                <span class="treatment-description">Collagen stimulation</span>
                             </a>
                         </div>
                     </div>
@@ -143,46 +145,61 @@
 
                 <div class="service-visual-content">
                     <div class="before-after-gallery">
-                        <h4 class="gallery-title">Injectable Results Gallery</h4>
+                        <h4 class="gallery-title">Before/After Gallery</h4>
                         <div class="gallery-grid">
                             <div class="before-after-pair">
                                 <div class="before-image">
-                                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=300&h=300&fit=crop&crop=face" alt="Before Botox treatment - natural expression lines" loading="lazy">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/before-after/botox-before-1.jpg" alt="Before Botox treatment" loading="lazy">
                                     <span class="image-label">Before</span>
                                 </div>
                                 <div class="after-image">
-                                    <img src="https://images.unsplash.com/photo-1594824369039-a8c2e8d3c8c4?w=300&h=300&fit=crop&crop=face" alt="After Botox treatment - smooth, natural results" loading="lazy">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/before-after/botox-after-1.jpg" alt="After Botox treatment" loading="lazy">
                                     <span class="image-label">After</span>
                                 </div>
                             </div>
                             <div class="before-after-pair">
                                 <div class="before-image">
-                                    <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=300&h=300&fit=crop&crop=face" alt="Before dermal filler treatment - loss of volume" loading="lazy">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/before-after/fillers-before-1.jpg" alt="Before filler treatment" loading="lazy">
                                     <span class="image-label">Before</span>
                                 </div>
                                 <div class="after-image">
-                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face" alt="After dermal filler treatment - restored youthful contours" loading="lazy">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/before-after/fillers-after-1.jpg" alt="After filler treatment" loading="lazy">
                                     <span class="image-label">After</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Visual Separator: Ready to Schedule CTA -->
+            <section class="visual-separator ready-to-schedule-cta" aria-labelledby="ready-schedule-heading">
+                <div class="separator-content">
+                    <h3 id="ready-schedule-heading" class="separator-title">Ready to Schedule?</h3>
+                    <p class="separator-description">Book your consultation today and discover your personalized treatment plan.</p>
+                    <div class="separator-actions">
+                        <a href="/book-consultation" class="btn btn--primary">Schedule Consultation</a>
+                        <a href="tel:+1-480-555-0123" class="btn btn--secondary">Call Now</a>
+                    </div>
+                </div>
+            </section>
 
             <!-- Laser Services Section - VISUAL LEFT | TEXT RIGHT -->
-            <div class="service-section layout-visual-left" aria-labelledby="laser-services-heading">
+            <section class="service-section layout-visual-left" aria-labelledby="laser-services-heading">
                 <div class="service-visual-content">
                     <div class="treatment-video">
-                        <h4 class="video-title">CO2 Laser Treatment</h4>
+                        <h4 class="gallery-title">CO2 Laser Treatment Video</h4>
                         <div class="video-container">
                             <div class="video-poster">
-                                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop" alt="Advanced laser treatment technology in modern medical spa" loading="lazy">
-                                <button class="video-play-button" aria-label="Play CO2 laser treatment video">
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/videos/co2-laser-poster.jpg" alt="CO2 Laser Treatment Video" loading="lazy">
+                                <button class="video-play-button" aria-label="Play CO2 Laser Treatment Video">
                                     <span class="play-icon" aria-hidden="true">▶️</span>
                                 </button>
                             </div>
-                            <p class="video-description">Watch our advanced CO2 laser treatment process</p>
+                            <div class="video-description">
+                                <p><strong>Duration:</strong> 2:45</p>
+                                <p>"CO2 Lasers: An Advanced Skin Treatment"</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -190,15 +207,17 @@
                 <div class="service-text-content">
                     <div class="service-header">
                         <span class="service-icon" aria-hidden="true">🔥</span>
-                        <h3 id="laser-services-heading" class="service-title">Laser Services</h3>
-                        <p class="service-subtitle">Advanced Technology & Expert Care</p>
+                        <div class="service-title-group">
+                            <h3 id="laser-services-heading" class="service-title">Laser Services</h3>
+                            <p class="service-subtitle">Advanced Technology & Expert Care</p>
+                        </div>
                     </div>
                     <p class="service-description">
                         Reverse sun damage, remove sun spots, lines, and wrinkles, and tighten your skin with our advanced laser services. Award-winning laser hair removal voted 'Best in Scottsdale' three years running.
                     </p>
 
                     <div class="service-treatments">
-                        <h4 class="treatments-heading">Our Laser Treatments</h4>
+                        <h4 class="treatments-heading">Available Treatments</h4>
                         <div class="treatment-buttons">
                             <a href="/treatments/non-ablative-resurfacing" class="treatment-button">
                                 <span class="treatment-name">Non-Ablative Resurfacing</span>
@@ -206,28 +225,48 @@
                             </a>
                             <a href="/treatments/co2-resurfacing" class="treatment-button">
                                 <span class="treatment-name">CO2 Resurfacing</span>
-                                <span class="treatment-description">Advanced skin rejuvenation</span>
+                                <span class="treatment-description">Advanced skin tightening</span>
                             </a>
                             <a href="/treatments/ipl-photofacials" class="treatment-button">
                                 <span class="treatment-name">IPL Photofacials</span>
-                                <span class="treatment-description">Light-based skin improvement</span>
+                                <span class="treatment-description">Sun damage removal</span>
                             </a>
                             <a href="/treatments/laser-hair-removal" class="treatment-button">
                                 <span class="treatment-name">Laser Hair Removal</span>
-                                <span class="treatment-description">Permanent hair reduction</span>
+                                <span class="treatment-description">Award-winning service</span>
                             </a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Visual Separator: Patient Testimonial -->
+            <section class="visual-separator patient-testimonial" aria-labelledby="testimonial-heading">
+                <div class="separator-content">
+                    <div class="testimonial-content">
+                        <div class="testimonial-stars" aria-label="5 star rating">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "I have found my Fountain of Youth. The staff is professional, knowledgeable, and truly cares about their patients. My results exceeded my expectations!"
+                        </blockquote>
+                        <cite class="testimonial-author">
+                            <span class="author-name">Jennifer L.</span>
+                            <span class="author-treatment">Botox & Fillers Patient</span>
+                        </cite>
+                    </div>
+                </div>
+            </section>
 
             <!-- Facial Renaissance Section - TEXT LEFT | VISUAL RIGHT -->
             <div class="service-section layout-text-left" aria-labelledby="facial-renaissance-heading">
                 <div class="service-text-content">
                     <div class="service-header">
                         <span class="service-icon" aria-hidden="true">🌊</span>
-                        <h3 id="facial-renaissance-heading" class="service-title">Facial Renaissance</h3>
-                        <p class="service-subtitle">Rejuvenation & Renewal</p>
+                        <div class="service-title-group">
+                            <h3 id="facial-renaissance-heading" class="service-title">Facial Renaissance</h3>
+                            <p class="service-subtitle">Rejuvenation & Renewal</p>
+                        </div>
                     </div>
                     <p class="service-description">
                         Advanced skincare treatments for deep cleansing, hydration, and skin renewal with immediate results. Experience the difference of medical-grade facial treatments.
@@ -316,8 +355,10 @@
                 <div class="service-text-content">
                     <div class="service-header">
                         <span class="service-icon" aria-hidden="true">💪</span>
-                        <h3 id="body-sculpting-heading" class="service-title">Body Sculpting</h3>
-                        <p class="service-subtitle">Transformation & Confidence</p>
+                        <div class="service-title-group">
+                            <h3 id="body-sculpting-heading" class="service-title">Body Sculpting</h3>
+                            <p class="service-subtitle">Transformation & Confidence</p>
+                        </div>
                     </div>
                     <p class="service-description">
                         Body contouring and muscle building technology for complete transformation and wellness enhancement. Achieve your body goals with advanced technology.
@@ -348,8 +389,10 @@
                 <div class="service-text-content">
                     <div class="service-header">
                         <span class="service-icon" aria-hidden="true">💊</span>
-                        <h3 id="wellness-sanctuary-heading" class="service-title">Wellness Sanctuary</h3>
-                        <p class="service-subtitle">Holistic Health & Vitality</p>
+                        <div class="service-title-group">
+                            <h3 id="wellness-sanctuary-heading" class="service-title">Wellness Sanctuary</h3>
+                            <p class="service-subtitle">Holistic Health & Vitality</p>
+                        </div>
                     </div>
                     <p class="service-description">
                         Holistic wellness treatments for enhanced health, energy, and complete rejuvenation. Personalized wellness programs designed for your optimal health and vitality.
