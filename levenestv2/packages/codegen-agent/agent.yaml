@@ -1,0 +1,11 @@
+name: codegen-agent
+version: 0.1.0
+description: "Generates code from requirements using project context"
+inputs:
+  - requirements
+  - context
+outputs:
+  - code
+capabilities:
+  - code-generation
+  - context-aware

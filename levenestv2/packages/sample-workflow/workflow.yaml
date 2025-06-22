@@ -1,0 +1,13 @@
+name: sample-codegen-workflow
+version: 0.1.0
+description: "Extracts context, generates code, and validates output"
+steps:
+  - id: extract-context
+    agent: context-extractor@0.1.0
+  - id: generate-code
+    agent: codegen-agent@0.1.0
+  - id: validate
+    agent: visual-validation@0.1.0
+on_error:
+  escalate: true
+  log: true

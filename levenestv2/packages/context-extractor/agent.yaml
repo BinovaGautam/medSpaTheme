@@ -1,0 +1,10 @@
+name: context-extractor
+version: 0.1.0
+description: "Extracts basic project context (tech stack, main language, dependencies) from a project directory or file."
+inputs:
+  - project-path
+outputs:
+  - context
+capabilities:
+  - context-extraction
+  - project-analysis

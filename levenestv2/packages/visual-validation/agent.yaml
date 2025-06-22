@@ -1,0 +1,11 @@
+name: visual-validation
+version: 0.1.0
+description: "Performs visual validation of generated code against design requirements"
+inputs:
+  - code
+  - design-reference
+outputs:
+  - validation-report
+capabilities:
+  - visual-testing
+  - diff-analysis

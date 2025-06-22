@@ -1,0 +1,8 @@
+# Registry for agents, tools, and workflows
+# To be expanded as the platform grows
+agents:
+  - codegen-agent@0.1.0
+  - visual-validation@0.1.0
+  - context-extractor@0.1.0
+workflows:
+  - sample-codegen-workflow@0.1.0
