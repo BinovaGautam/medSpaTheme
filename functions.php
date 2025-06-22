@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Theme version
-define('PREETIDREAMS_VERSION', '1.0.10.1750219240');
+define('PREETIDREAMS_VERSION', '1.0.11.' . time());
 
 // CRITICAL FIX: Define _S_VERSION constant to prevent undefined constant error
 if (!defined('_S_VERSION')) {
@@ -475,29 +475,11 @@ require_once get_template_directory() . '/inc/typography-performance.php';
  * Enqueue theme styles and scripts
  */
 function medspa_theme_styles() {
-    // CRITICAL: Design System Foundation CSS - HIGHEST PRIORITY
-    wp_enqueue_style(
-        'design-system-foundation',
-        get_template_directory_uri() . '/assets/css/design-system-compiled.css',
-        array(), // No dependencies - must load first
-        wp_get_theme()->get('Version'),
-        'all'
-    );
-
-    // Semantic Tokens CSS - Core semantic token definitions
+    // Semantic Tokens CSS - Core semantic token definitions (HIGHEST PRIORITY)
     wp_enqueue_style(
         'semantic-tokens',
         get_template_directory_uri() . '/assets/css/semantic-tokens.css',
-        array('design-system-foundation'),
-        PREETIDREAMS_VERSION,
-        'all'
-    );
-
-    // Semantic Design Tokens CSS - Extended token system
-    wp_enqueue_style(
-        'semantic-design-tokens',
-        get_template_directory_uri() . '/assets/css/semantic-design-tokens.css',
-        array('semantic-tokens'),
+        array(), // No dependencies - must load first
         PREETIDREAMS_VERSION,
         'all'
     );
@@ -506,7 +488,7 @@ function medspa_theme_styles() {
     wp_enqueue_style(
         'semantic-components',
         get_template_directory_uri() . '/assets/css/semantic-components.css',
-        array('semantic-design-tokens'),
+        array('semantic-tokens'),
         PREETIDREAMS_VERSION,
         'all'
     );
@@ -648,6 +630,15 @@ function medspatheme_scripts() {
         true
     );
 
+    // Patient Stories Slider Component - Auto-timer horizontal slider
+    wp_enqueue_script(
+        'patient-stories-slider',
+        get_template_directory_uri() . '/assets/js/patient-stories-slider.js',
+        array(),
+        PREETIDREAMS_VERSION,
+        true
+    );
+
     // Header functionality JavaScript - Mobile menu and interactions
     wp_enqueue_script(
         'header-functionality',
@@ -720,3 +711,539 @@ if (current_user_can('manage_options')) {
         require_once $layout_debugger_path;
     }
 }
+
+// Register Testimonials Custom Post Type and Meta Fields
+function register_testimonials_post_type() {
+    $labels = array(
+        'name'                  => _x('Testimonials', 'Post type general name', 'textdomain'),
+        'singular_name'         => _x('Testimonial', 'Post type singular name', 'textdomain'),
+        'menu_name'             => _x('Testimonials', 'Admin Menu text', 'textdomain'),
+        'name_admin_bar'        => _x('Testimonial', 'Add New on Toolbar', 'textdomain'),
+        'add_new'               => __('Add New', 'textdomain'),
+        'add_new_item'          => __('Add New Testimonial', 'textdomain'),
+        'new_item'              => __('New Testimonial', 'textdomain'),
+        'edit_item'             => __('Edit Testimonial', 'textdomain'),
+        'view_item'             => __('View Testimonial', 'textdomain'),
+        'all_items'             => __('All Testimonials', 'textdomain'),
+        'search_items'          => __('Search Testimonials', 'textdomain'),
+        'parent_item_colon'     => __('Parent Testimonials:', 'textdomain'),
+        'not_found'             => __('No testimonials found.', 'textdomain'),
+        'not_found_in_trash'    => __('No testimonials found in Trash.', 'textdomain'),
+        'featured_image'        => _x('Patient Photo', 'Overrides the "Featured Image" phrase', 'textdomain'),
+        'set_featured_image'    => _x('Set patient photo', 'Overrides the "Set featured image" phrase', 'textdomain'),
+        'remove_featured_image' => _x('Remove patient photo', 'Overrides the "Remove featured image" phrase', 'textdomain'),
+        'use_featured_image'    => _x('Use as patient photo', 'Overrides the "Use as featured image" phrase', 'textdomain'),
+        'archives'              => _x('Testimonial archives', 'The post type archive label', 'textdomain'),
+        'insert_into_item'      => _x('Insert into testimonial', 'Overrides the "Insert into post" phrase', 'textdomain'),
+        'uploaded_to_this_item' => _x('Uploaded to this testimonial', 'Overrides the "Uploaded to this post" phrase', 'textdomain'),
+        'filter_items_list'     => _x('Filter testimonials list', 'Screen reader text for the filter links', 'textdomain'),
+        'items_list_navigation' => _x('Testimonials list navigation', 'Screen reader text for the pagination', 'textdomain'),
+        'items_list'            => _x('Testimonials list', 'Screen reader text for the items list', 'textdomain'),
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => false,
+        'publicly_queryable' => false,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'testimonial'),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_position'      => 20,
+        'menu_icon'          => 'dashicons-format-quote',
+        'supports'           => array('title', 'editor', 'thumbnail', 'custom-fields'),
+        'show_in_rest'       => true,
+    );
+
+    register_post_type('testimonial', $args);
+}
+add_action('init', 'register_testimonials_post_type');
+
+// Add custom meta boxes for testimonial fields
+function add_testimonial_meta_boxes() {
+    add_meta_box(
+        'testimonial-details',
+        __('Testimonial Details', 'textdomain'),
+        'testimonial_details_callback',
+        'testimonial',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'add_testimonial_meta_boxes');
+
+// Meta box callback function
+function testimonial_details_callback($post) {
+    wp_nonce_field('testimonial_details_nonce', 'testimonial_details_nonce');
+
+    $patient_name = get_post_meta($post->ID, '_testimonial_patient_name', true);
+    $treatment_type = get_post_meta($post->ID, '_testimonial_treatment_type', true);
+    $rating = get_post_meta($post->ID, '_testimonial_rating', true);
+    $bubble_color = get_post_meta($post->ID, '_testimonial_bubble_color', true);
+    $display_order = get_post_meta($post->ID, '_testimonial_display_order', true);
+    $is_featured = get_post_meta($post->ID, '_testimonial_is_featured', true);
+
+    // Set defaults
+    if (empty($rating)) $rating = 5;
+    if (empty($bubble_color)) $bubble_color = 'primary';
+    if (empty($display_order)) $display_order = 0;
+
+    echo '<table class="form-table">';
+
+    // Patient Name
+    echo '<tr>';
+    echo '<th scope="row"><label for="testimonial_patient_name">' . __('Patient Name', 'textdomain') . '</label></th>';
+    echo '<td><input type="text" id="testimonial_patient_name" name="testimonial_patient_name" value="' . esc_attr($patient_name) . '" class="regular-text" /></td>';
+    echo '</tr>';
+
+    // Treatment Type
+    echo '<tr>';
+    echo '<th scope="row"><label for="testimonial_treatment_type">' . __('Treatment Type', 'textdomain') . '</label></th>';
+    echo '<td><input type="text" id="testimonial_treatment_type" name="testimonial_treatment_type" value="' . esc_attr($treatment_type) . '" class="regular-text" placeholder="e.g., Botox & Fillers Patient" /></td>';
+    echo '</tr>';
+
+    // Rating
+    echo '<tr>';
+    echo '<th scope="row"><label for="testimonial_rating">' . __('Rating', 'textdomain') . '</label></th>';
+    echo '<td>';
+    echo '<select id="testimonial_rating" name="testimonial_rating">';
+    for ($i = 1; $i <= 5; $i++) {
+        echo '<option value="' . $i . '"' . selected($rating, $i, false) . '>' . $i . ' Star' . ($i > 1 ? 's' : '') . '</option>';
+    }
+    echo '</select>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Bubble Color
+    echo '<tr>';
+    echo '<th scope="row"><label for="testimonial_bubble_color">' . __('Speech Bubble Color', 'textdomain') . '</label></th>';
+    echo '<td>';
+    echo '<select id="testimonial_bubble_color" name="testimonial_bubble_color">';
+    echo '<option value="primary"' . selected($bubble_color, 'primary', false) . '>' . __('Primary (Blue)', 'textdomain') . '</option>';
+    echo '<option value="secondary"' . selected($bubble_color, 'secondary', false) . '>' . __('Secondary (Purple)', 'textdomain') . '</option>';
+    echo '<option value="accent"' . selected($bubble_color, 'accent', false) . '>' . __('Accent (Gold)', 'textdomain') . '</option>';
+    echo '</select>';
+    echo '</td>';
+    echo '</tr>';
+
+    // Display Order
+    echo '<tr>';
+    echo '<th scope="row"><label for="testimonial_display_order">' . __('Display Order', 'textdomain') . '</label></th>';
+    echo '<td><input type="number" id="testimonial_display_order" name="testimonial_display_order" value="' . esc_attr($display_order) . '" min="0" class="small-text" /></td>';
+    echo '</tr>';
+
+    // Featured
+    echo '<tr>';
+    echo '<th scope="row"><label for="testimonial_is_featured">' . __('Featured in Slider', 'textdomain') . '</label></th>';
+    echo '<td><input type="checkbox" id="testimonial_is_featured" name="testimonial_is_featured" value="1"' . checked($is_featured, 1, false) . ' /> ' . __('Show this testimonial in the homepage slider', 'textdomain') . '</td>';
+    echo '</tr>';
+
+    echo '</table>';
+
+    echo '<p><strong>' . __('Instructions:', 'textdomain') . '</strong></p>';
+    echo '<ul>';
+    echo '<li>' . __('Use the main content area above to enter the testimonial quote.', 'textdomain') . '</li>';
+    echo '<li>' . __('Set a featured image to use as the patient photo.', 'textdomain') . '</li>';
+    echo '<li>' . __('Only testimonials marked as "Featured" will appear in the homepage slider.', 'textdomain') . '</li>';
+    echo '<li>' . __('Display order determines the sequence in the slider (0 = first).', 'textdomain') . '</li>';
+    echo '</ul>';
+}
+
+// Save meta box data
+function save_testimonial_meta_box_data($post_id) {
+    if (!isset($_POST['testimonial_details_nonce'])) {
+        return;
+    }
+
+    if (!wp_verify_nonce($_POST['testimonial_details_nonce'], 'testimonial_details_nonce')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (isset($_POST['post_type']) && 'testimonial' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id)) {
+            return;
+        }
+    } else {
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+    }
+
+    // Save the data
+    if (isset($_POST['testimonial_patient_name'])) {
+        update_post_meta($post_id, '_testimonial_patient_name', sanitize_text_field($_POST['testimonial_patient_name']));
+    }
+
+    if (isset($_POST['testimonial_treatment_type'])) {
+        update_post_meta($post_id, '_testimonial_treatment_type', sanitize_text_field($_POST['testimonial_treatment_type']));
+    }
+
+    if (isset($_POST['testimonial_rating'])) {
+        update_post_meta($post_id, '_testimonial_rating', intval($_POST['testimonial_rating']));
+    }
+
+    if (isset($_POST['testimonial_bubble_color'])) {
+        update_post_meta($post_id, '_testimonial_bubble_color', sanitize_text_field($_POST['testimonial_bubble_color']));
+    }
+
+    if (isset($_POST['testimonial_display_order'])) {
+        update_post_meta($post_id, '_testimonial_display_order', intval($_POST['testimonial_display_order']));
+    }
+
+    // Handle checkbox
+    if (isset($_POST['testimonial_is_featured'])) {
+        update_post_meta($post_id, '_testimonial_is_featured', 1);
+    } else {
+        update_post_meta($post_id, '_testimonial_is_featured', 0);
+    }
+}
+add_action('save_post', 'save_testimonial_meta_box_data');
+
+// Create default testimonials on theme activation
+function create_default_testimonials() {
+    // Check if testimonials already exist
+    $existing_testimonials = get_posts(array(
+        'post_type' => 'testimonial',
+        'numberposts' => 1,
+        'post_status' => 'any'
+    ));
+
+    if (!empty($existing_testimonials)) {
+        return; // Testimonials already exist
+    }
+
+    // Default testimonials data
+    $default_testimonials = array(
+        array(
+            'title' => 'Jennifer L. - Fountain of Youth Experience',
+            'content' => 'I have found my Fountain of Youth. The staff is professional, knowledgeable, and truly cares about their patients. My results exceeded my expectations!',
+            'patient_name' => 'Jennifer L.',
+            'treatment_type' => 'Botox & Fillers Patient',
+            'rating' => 5,
+            'bubble_color' => 'primary',
+            'display_order' => 1,
+            'featured_image_url' => 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=150&h=150&fit=crop&crop=face'
+        ),
+        array(
+            'title' => 'Sarah M. - HydraFacial Transformation',
+            'content' => 'The HydraFacial completely transformed my skin! The results were immediate and my skin has never looked better. The team was professional and made me feel so comfortable throughout the entire process.',
+            'patient_name' => 'Sarah M.',
+            'treatment_type' => 'HydraFacial Patient',
+            'rating' => 5,
+            'bubble_color' => 'secondary',
+            'display_order' => 2,
+            'featured_image_url' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face'
+        ),
+        array(
+            'title' => 'Michael R. - Laser Hair Removal Success',
+            'content' => 'After years of shaving, laser hair removal has been life-changing! The process was comfortable and the results exceeded my expectations. I wish I had done this sooner.',
+            'patient_name' => 'Michael R.',
+            'treatment_type' => 'Laser Hair Removal Patient',
+            'rating' => 5,
+            'bubble_color' => 'accent',
+            'display_order' => 3,
+            'featured_image_url' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
+        )
+    );
+
+    foreach ($default_testimonials as $testimonial_data) {
+        // Create the post
+        $post_id = wp_insert_post(array(
+            'post_title' => $testimonial_data['title'],
+            'post_content' => $testimonial_data['content'],
+            'post_status' => 'publish',
+            'post_type' => 'testimonial'
+        ));
+
+        if ($post_id && !is_wp_error($post_id)) {
+            // Add meta data
+            update_post_meta($post_id, '_testimonial_patient_name', $testimonial_data['patient_name']);
+            update_post_meta($post_id, '_testimonial_treatment_type', $testimonial_data['treatment_type']);
+            update_post_meta($post_id, '_testimonial_rating', $testimonial_data['rating']);
+            update_post_meta($post_id, '_testimonial_bubble_color', $testimonial_data['bubble_color']);
+            update_post_meta($post_id, '_testimonial_display_order', $testimonial_data['display_order']);
+            update_post_meta($post_id, '_testimonial_is_featured', 1);
+
+            // Set featured image from URL (optional - requires WordPress to download the image)
+            if (!empty($testimonial_data['featured_image_url'])) {
+                $image_id = media_sideload_image($testimonial_data['featured_image_url'], $post_id, $testimonial_data['patient_name'] . ' photo', 'id');
+                if (!is_wp_error($image_id)) {
+                    set_post_thumbnail($post_id, $image_id);
+                }
+            }
+        }
+    }
+}
+
+// Hook to run on theme activation
+add_action('after_switch_theme', 'create_default_testimonials');
+
+// Function to get featured testimonials for the slider
+function get_featured_testimonials() {
+    $testimonials = get_posts(array(
+        'post_type' => 'testimonial',
+        'numberposts' => -1,
+        'post_status' => 'publish',
+        'meta_query' => array(
+            array(
+                'key' => '_testimonial_is_featured',
+                'value' => '1',
+                'compare' => '='
+            )
+        ),
+        'meta_key' => '_testimonial_display_order',
+        'orderby' => 'meta_value_num',
+        'order' => 'ASC'
+    ));
+
+    return $testimonials;
+}
+
+// Add admin notice for testimonials
+function testimonials_admin_notice() {
+    $screen = get_current_screen();
+    if ($screen->post_type == 'testimonial') {
+        echo '<div class="notice notice-info"><p>';
+        echo '<strong>' . __('Testimonials Help:', 'textdomain') . '</strong> ';
+        echo __('Create compelling patient testimonials with photos and treatment details. Mark testimonials as "Featured" to include them in the homepage slider.', 'textdomain');
+        echo '</p></div>';
+    }
+}
+add_action('admin_notices', 'testimonials_admin_notice');
+
+// Add admin styles for testimonials
+function testimonials_admin_styles() {
+    $screen = get_current_screen();
+    if ($screen->post_type == 'testimonial') {
+        ?>
+        <style>
+        .testimonial-meta-preview {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .testimonial-bubble-preview {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin: 10px 0;
+            color: white;
+            font-weight: 500;
+        }
+        .testimonial-bubble-preview.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .testimonial-bubble-preview.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .testimonial-bubble-preview.accent {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
+        }
+        .testimonials-help-box {
+            background: #e7f3ff;
+            border-left: 4px solid #0073aa;
+            padding: 12px;
+            margin: 15px 0;
+        }
+        .testimonials-help-box h4 {
+            margin-top: 0;
+            color: #0073aa;
+        }
+        .testimonial-quick-stats {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .testimonial-stat {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            min-width: 80px;
+        }
+        .testimonial-stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0073aa;
+        }
+        .testimonial-stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        </style>
+        <?php
+    }
+}
+add_action('admin_head', 'testimonials_admin_styles');
+
+// Enhanced admin notice with stats
+function testimonials_admin_notice_enhanced() {
+    $screen = get_current_screen();
+    if ($screen->post_type == 'testimonial') {
+        // Get testimonial stats
+        $total_testimonials = wp_count_posts('testimonial');
+        $featured_count = get_posts(array(
+            'post_type' => 'testimonial',
+            'numberposts' => -1,
+            'post_status' => 'publish',
+            'meta_query' => array(
+                array(
+                    'key' => '_testimonial_is_featured',
+                    'value' => '1',
+                    'compare' => '='
+                )
+            ),
+            'fields' => 'ids'
+        ));
+
+        echo '<div class="notice notice-info">';
+        echo '<div class="testimonials-help-box">';
+        echo '<h4>' . __('Testimonials Management', 'textdomain') . '</h4>';
+        echo '<p>' . __('Create compelling patient testimonials with photos and treatment details. Mark testimonials as "Featured" to include them in the homepage slider.', 'textdomain') . '</p>';
+
+        echo '<div class="testimonial-quick-stats">';
+        echo '<div class="testimonial-stat">';
+        echo '<div class="testimonial-stat-number">' . intval($total_testimonials->publish) . '</div>';
+        echo '<div class="testimonial-stat-label">Total</div>';
+        echo '</div>';
+        echo '<div class="testimonial-stat">';
+        echo '<div class="testimonial-stat-number">' . count($featured_count) . '</div>';
+        echo '<div class="testimonial-stat-label">Featured</div>';
+        echo '</div>';
+        echo '<div class="testimonial-stat">';
+        echo '<div class="testimonial-stat-number">' . (count($featured_count) > 0 ? '✓' : '!') . '</div>';
+        echo '<div class="testimonial-stat-label">Slider</div>';
+        echo '</div>';
+        echo '</div>';
+
+        if (count($featured_count) === 0) {
+            echo '<p style="color: #d63638;"><strong>' . __('Notice:', 'textdomain') . '</strong> ' . __('No testimonials are currently featured in the homepage slider. Mark at least one testimonial as "Featured" to display them.', 'textdomain') . '</p>';
+        }
+
+        echo '</div>';
+        echo '</div>';
+    }
+}
+// Replace the previous admin notice
+remove_action('admin_notices', 'testimonials_admin_notice');
+add_action('admin_notices', 'testimonials_admin_notice_enhanced');
+
+// Add custom columns to testimonials list
+function testimonials_custom_columns($columns) {
+    $new_columns = array();
+    $new_columns['cb'] = $columns['cb'];
+    $new_columns['title'] = $columns['title'];
+    $new_columns['patient_name'] = __('Patient Name', 'textdomain');
+    $new_columns['treatment'] = __('Treatment', 'textdomain');
+    $new_columns['rating'] = __('Rating', 'textdomain');
+    $new_columns['bubble_color'] = __('Bubble Color', 'textdomain');
+    $new_columns['featured'] = __('Featured', 'textdomain');
+    $new_columns['order'] = __('Order', 'textdomain');
+    $new_columns['date'] = $columns['date'];
+
+    return $new_columns;
+}
+add_filter('manage_testimonial_posts_columns', 'testimonials_custom_columns');
+
+// Fill custom columns with data
+function testimonials_custom_column_data($column, $post_id) {
+    switch ($column) {
+        case 'patient_name':
+            $patient_name = get_post_meta($post_id, '_testimonial_patient_name', true);
+            echo $patient_name ? esc_html($patient_name) : '—';
+            break;
+
+        case 'treatment':
+            $treatment = get_post_meta($post_id, '_testimonial_treatment_type', true);
+            echo $treatment ? esc_html($treatment) : '—';
+            break;
+
+        case 'rating':
+            $rating = get_post_meta($post_id, '_testimonial_rating', true);
+            if ($rating) {
+                echo str_repeat('⭐', intval($rating)) . ' (' . $rating . ')';
+            } else {
+                echo '—';
+            }
+            break;
+
+        case 'bubble_color':
+            $color = get_post_meta($post_id, '_testimonial_bubble_color', true);
+            $color_labels = array(
+                'primary' => __('Primary (Blue)', 'textdomain'),
+                'secondary' => __('Secondary (Purple)', 'textdomain'),
+                'accent' => __('Accent (Gold)', 'textdomain')
+            );
+            echo '<span class="testimonial-bubble-preview ' . esc_attr($color) . '">' . ($color_labels[$color] ?? '—') . '</span>';
+            break;
+
+        case 'featured':
+            $featured = get_post_meta($post_id, '_testimonial_is_featured', true);
+            if ($featured) {
+                echo '<span style="color: #00a32a;">✓ ' . __('Yes', 'textdomain') . '</span>';
+            } else {
+                echo '<span style="color: #d63638;">✗ ' . __('No', 'textdomain') . '</span>';
+            }
+            break;
+
+        case 'order':
+            $order = get_post_meta($post_id, '_testimonial_display_order', true);
+            echo $order !== '' ? intval($order) : '0';
+            break;
+    }
+}
+add_action('manage_testimonial_posts_custom_column', 'testimonials_custom_column_data', 10, 2);
+
+// Make custom columns sortable
+function testimonials_sortable_columns($columns) {
+    $columns['patient_name'] = 'patient_name';
+    $columns['rating'] = 'rating';
+    $columns['featured'] = 'featured';
+    $columns['order'] = 'order';
+    return $columns;
+}
+add_filter('manage_edit-testimonial_sortable_columns', 'testimonials_sortable_columns');
+
+// Handle sorting for custom columns
+function testimonials_column_orderby($query) {
+    if (!is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    $orderby = $query->get('orderby');
+
+    switch ($orderby) {
+        case 'patient_name':
+            $query->set('meta_key', '_testimonial_patient_name');
+            $query->set('orderby', 'meta_value');
+            break;
+
+        case 'rating':
+            $query->set('meta_key', '_testimonial_rating');
+            $query->set('orderby', 'meta_value_num');
+            break;
+
+        case 'featured':
+            $query->set('meta_key', '_testimonial_is_featured');
+            $query->set('orderby', 'meta_value_num');
+            break;
+
+        case 'order':
+            $query->set('meta_key', '_testimonial_display_order');
+            $query->set('orderby', 'meta_value_num');
+            break;
+    }
+}
+add_action('pre_get_posts', 'testimonials_column_orderby');

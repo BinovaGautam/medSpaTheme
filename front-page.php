@@ -106,38 +106,34 @@
                 </p>
             </header>
 
-            <!-- Injectable Artistry Section - TEXT LEFT | VISUAL RIGHT -->
-            <section class="service-section layout-text-left" aria-labelledby="injectable-artistry-heading">
+            <!-- Injectable & Aesthetic Treatments Section - TEXT LEFT | VISUAL RIGHT -->
+            <section class="service-section layout-text-left" aria-labelledby="injectable-aesthetic-heading">
                 <div class="service-text-content">
                     <div class="service-header">
                         <span class="service-icon" aria-hidden="true">💉</span>
                         <div class="service-title-group">
-                            <h3 id="injectable-artistry-heading" class="service-title">Injectable Artistry</h3>
+                            <h3 id="injectable-aesthetic-heading" class="service-title">Injectable & Aesthetic Treatments</h3>
                             <p class="service-subtitle">Precision Enhancement & Natural Beauty</p>
                         </div>
                     </div>
                     <p class="service-description">
-                        Enhance your natural beauty with precision injectable treatments for wrinkle reduction and volume restoration. Our advanced injectable services include expert administration and natural results.
+                        Enhance your natural beauty with precision injectable treatments and permanent makeup artistry. Our advanced services include expert administration for natural, lasting results that enhance your features.
                     </p>
 
                     <div class="service-treatments">
                         <h4 class="treatments-heading">Available Treatments</h4>
                         <div class="treatment-buttons">
-                            <a href="/treatments/botox-dysport" class="treatment-button">
-                                <span class="treatment-name">Botox & Dysport</span>
-                                <span class="treatment-description">Wrinkle reduction</span>
+                            <a href="/treatments/botox-fillers" class="treatment-button">
+                                <span class="treatment-name">Botox / Fillers</span>
+                                <span class="treatment-description">Wrinkle reduction & volume restoration</span>
                             </a>
-                            <a href="/treatments/facial-fillers" class="treatment-button">
-                                <span class="treatment-name">Facial Fillers</span>
-                                <span class="treatment-description">Volume restoration</span>
+                            <a href="/treatments/permanent-makeup" class="treatment-button">
+                                <span class="treatment-name">Permanent Makeup</span>
+                                <span class="treatment-description">Long-lasting cosmetic enhancement</span>
                             </a>
-                            <a href="/treatments/pdo-thread-lifts" class="treatment-button">
-                                <span class="treatment-name">PDO Thread Lifts</span>
-                                <span class="treatment-description">Non-surgical lifting</span>
-                            </a>
-                            <a href="/treatments/sculptra" class="treatment-button">
-                                <span class="treatment-name">Sculptra®</span>
-                                <span class="treatment-description">Collagen stimulation</span>
+                            <a href="/treatments/microneedling-prp" class="treatment-button">
+                                <span class="treatment-name">Microneedling PRP</span>
+                                <span class="treatment-description">Collagen induction therapy</span>
                             </a>
                         </div>
                     </div>
@@ -240,20 +236,133 @@
                 </div>
             </section>
 
-            <!-- Visual Separator: Patient Testimonial -->
-            <section class="visual-separator patient-testimonial" aria-labelledby="testimonial-heading">
+            <!-- Patient Stories Slider Section -->
+            <section class="visual-separator patient-stories-slider" aria-labelledby="patient-stories-heading">
                 <div class="separator-content">
-                    <div class="testimonial-content">
-                        <div class="testimonial-stars" aria-label="5 star rating">
-                            ⭐⭐⭐⭐⭐
+                    <header class="patient-stories-header">
+                        <h3 id="patient-stories-heading" class="patient-stories-title">
+                            <?php echo get_theme_mod('patient_stories_title', 'Patient Stories'); ?>
+                        </h3>
+                        <p class="patient-stories-subtitle">
+                            <?php echo get_theme_mod('patient_stories_subtitle', 'Real results from real patients who trusted us with their aesthetic journey'); ?>
+                        </p>
+                    </header>
+
+                    <div class="patient-stories-slider-container">
+                        <div class="patient-stories-slider-wrapper" data-auto-timer="5000">
+                            <div class="patient-stories-slides">
+                                <?php
+                                // Get featured testimonials from CMS
+                                $featured_testimonials = get_featured_testimonials();
+
+                                if (!empty($featured_testimonials)) {
+                                    $slide_count = 0;
+                                    foreach ($featured_testimonials as $testimonial) {
+                                        $slide_count++;
+
+                                        // Get testimonial meta data
+                                        $patient_name = get_post_meta($testimonial->ID, '_testimonial_patient_name', true);
+                                        $treatment_type = get_post_meta($testimonial->ID, '_testimonial_treatment_type', true);
+                                        $rating = get_post_meta($testimonial->ID, '_testimonial_rating', true);
+                                        $bubble_color = get_post_meta($testimonial->ID, '_testimonial_bubble_color', true);
+
+                                        // Set defaults
+                                        if (empty($rating)) $rating = 5;
+                                        if (empty($bubble_color)) $bubble_color = 'primary';
+                                        if (empty($patient_name)) $patient_name = 'Anonymous Patient';
+                                        if (empty($treatment_type)) $treatment_type = 'Medical Spa Patient';
+
+                                        // Generate star rating
+                                        $stars = str_repeat('⭐', intval($rating));
+
+                                        // Get featured image
+                                        $featured_image = get_the_post_thumbnail_url($testimonial->ID, 'thumbnail');
+                                        if (empty($featured_image)) {
+                                            // Fallback to default patient photo based on bubble color
+                                            $fallback_images = array(
+                                                'primary' => 'https://images.unsplash.com/photo-1494790108755-2616b612b647?w=150&h=150&fit=crop&crop=face',
+                                                'secondary' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+                                                'accent' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
+                                            );
+                                            $featured_image = $fallback_images[$bubble_color] ?? $fallback_images['primary'];
+                                        }
+
+                                        $active_class = ($slide_count === 1) ? ' active' : '';
+                                        ?>
+
+                                        <!-- Slide <?php echo $slide_count; ?>: <?php echo esc_html($patient_name); ?> -->
+                                        <article class="patient-story-slide<?php echo $active_class; ?>" data-slide="<?php echo $slide_count; ?>">
+                                            <div class="patient-story-content">
+                                                <div class="testimonial-bubble testimonial-bubble--<?php echo esc_attr($bubble_color); ?>">
+                                                    <div class="patient-story-stars" aria-label="<?php echo intval($rating); ?> star rating">
+                                                        <?php echo $stars; ?>
+                                                    </div>
+                                                    <blockquote class="patient-story-quote">
+                                                        "<?php echo wp_kses_post($testimonial->post_content); ?>"
+                                                    </blockquote>
+                                                </div>
+                                                <cite class="patient-story-author">
+                                                    <div class="author-profile">
+                                                        <img src="<?php echo esc_url($featured_image); ?>" alt="<?php echo esc_attr($patient_name); ?> profile photo" class="author-photo" loading="lazy">
+                                                    </div>
+                                                    <div class="author-info">
+                                                        <span class="author-name"><?php echo esc_html($patient_name); ?></span>
+                                                        <span class="author-treatment"><?php echo esc_html($treatment_type); ?></span>
+                                                    </div>
+                                                </cite>
+                                            </div>
+                                        </article>
+
+                                        <?php
+                                    }
+                                } else {
+                                    // Fallback content if no testimonials are found
+                                    ?>
+                                    <article class="patient-story-slide active" data-slide="1">
+                                        <div class="patient-story-content">
+                                            <div class="testimonial-bubble testimonial-bubble--primary">
+                                                <div class="patient-story-stars" aria-label="5 star rating">
+                                                    ⭐⭐⭐⭐⭐
+                                                </div>
+                                                <blockquote class="patient-story-quote">
+                                                    "Welcome to our medical spa! Please add your patient testimonials in the WordPress admin area to see them displayed here."
+                                                </blockquote>
+                                            </div>
+                                            <cite class="patient-story-author">
+                                                <div class="author-profile">
+                                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b647?w=150&h=150&fit=crop&crop=face" alt="Default patient photo" class="author-photo" loading="lazy">
+                                                </div>
+                                                <div class="author-info">
+                                                    <span class="author-name">Admin Notice</span>
+                                                    <span class="author-treatment">Setup Required</span>
+                                                </div>
+                                            </cite>
+                                        </div>
+                                    </article>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+
+                            <!-- Slider Navigation -->
+                            <div class="patient-stories-navigation">
+                                <button class="patient-stories-nav-btn patient-stories-prev" aria-label="Previous testimonial">
+                                    <span aria-hidden="true">‹</span>
+                                </button>
+                                <div class="patient-stories-indicators">
+                                    <?php
+                                    $testimonial_count = !empty($featured_testimonials) ? count($featured_testimonials) : 1;
+                                    for ($i = 1; $i <= $testimonial_count; $i++) {
+                                        $active_class = ($i === 1) ? ' active' : '';
+                                        echo '<button class="patient-stories-indicator' . $active_class . '" data-slide="' . $i . '" aria-label="Go to testimonial ' . $i . '"></button>';
+                                    }
+                                    ?>
+                                </div>
+                                <button class="patient-stories-nav-btn patient-stories-next" aria-label="Next testimonial">
+                                    <span aria-hidden="true">›</span>
+                                </button>
+                            </div>
                         </div>
-                        <blockquote class="testimonial-quote">
-                            "I have found my Fountain of Youth. The staff is professional, knowledgeable, and truly cares about their patients. My results exceeded my expectations!"
-                        </blockquote>
-                        <cite class="testimonial-author">
-                            <span class="author-name">Jennifer L.</span>
-                            <span class="author-treatment">Botox & Fillers Patient</span>
-                        </cite>
                     </div>
                 </div>
             </section>
@@ -475,111 +584,6 @@
         ?>
     <?php endif; ?>
 
-    <!-- Featured Treatments Section - HOMEPAGE_DESIGN.md v6.0 Implementation -->
-    <?php if (get_theme_mod('show_featured_treatments_section', true)) : ?>
-    <section class="featured-treatments" aria-labelledby="featured-treatments-heading">
-        <div class="container">
-            <header class="featured-header">
-                <h2 id="featured-treatments-heading" class="featured-title">
-                    <?php echo get_theme_mod('featured_treatments_title', 'Signature Treatments'); ?>
-                </h2>
-                <p class="featured-subtitle">
-                    <?php echo get_theme_mod('featured_treatments_subtitle', 'Discover our most popular and transformative treatments'); ?>
-                </p>
-            </header>
-
-            <div class="featured-grid">
-                <!-- HydraFacial Treatment -->
-                <article class="featured-treatment">
-                    <div class="featured-treatment-content">
-                        <span class="featured-treatment-badge">Most Popular</span>
-                        <h3 class="featured-treatment-title">HydraFacial</h3>
-                        <p class="featured-treatment-description">
-                            The ultimate skin resurfacing treatment that combines cleansing, exfoliation, extraction, hydration, and antioxidant protection.
-                        </p>
-                        <ul class="featured-treatment-benefits">
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                Immediate visible results
-                            </li>
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                No downtime required
-                            </li>
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                Suitable for all skin types
-                            </li>
-                        </ul>
-                        <a href="/treatments/hydrafacial" class="featured-treatment-cta">
-                            Learn More
-                            <span aria-hidden="true">→</span>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Botox & Dysport Treatment -->
-                <article class="featured-treatment">
-                    <div class="featured-treatment-content">
-                        <span class="featured-treatment-badge">Precision Artistry</span>
-                        <h3 class="featured-treatment-title">Botox & Dysport</h3>
-                        <p class="featured-treatment-description">
-                            Expert injectable treatments to smooth wrinkles and prevent signs of aging with natural-looking results.
-                        </p>
-                        <ul class="featured-treatment-benefits">
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                Quick 15-minute treatment
-                            </li>
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                Results last 3-4 months
-                            </li>
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                Board-certified administration
-                            </li>
-                        </ul>
-                        <a href="/treatments/botox-dysport" class="featured-treatment-cta">
-                            Learn More
-                            <span aria-hidden="true">→</span>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Laser Hair Removal Treatment -->
-                <article class="featured-treatment">
-                    <div class="featured-treatment-content">
-                        <span class="featured-treatment-badge">Award Winning</span>
-                        <h3 class="featured-treatment-title">Laser Hair Removal</h3>
-                        <p class="featured-treatment-description">
-                            Voted "Best in Scottsdale" three years running. Permanent hair reduction with the latest laser technology.
-                        </p>
-                        <ul class="featured-treatment-benefits">
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                Latest laser technology
-                            </li>
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                All skin types welcome
-                            </li>
-                            <li class="featured-treatment-benefit">
-                                <span class="featured-treatment-benefit-icon" aria-hidden="true">✓</span>
-                                Permanent results
-                            </li>
-                        </ul>
-                        <a href="/treatments/laser-hair-removal" class="featured-treatment-cta">
-                            Learn More
-                            <span aria-hidden="true">→</span>
-                        </a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-    <?php endif; ?>
-
     <!-- Medical Excellence Section - HOMEPAGE_DESIGN.md v6.0 Implementation -->
     <?php if (get_theme_mod('show_medical_excellence_section', true)) : ?>
     <section class="medical-excellence" aria-labelledby="medical-excellence-heading">
@@ -616,75 +620,6 @@
                         </p>
                     </article>
                 </div>
-            </div>
-        </div>
-    </section>
-    <?php endif; ?>
-
-    <!-- Patient Testimonials Section - HOMEPAGE_DESIGN.md v6.0 Implementation -->
-    <?php if (get_theme_mod('show_testimonials_section', true)) : ?>
-    <section class="testimonials" aria-labelledby="testimonials-heading">
-        <div class="container">
-            <header class="testimonials-header">
-                <h2 id="testimonials-heading" class="testimonials-title">
-                    <?php echo get_theme_mod('testimonials_title', 'Patient Stories'); ?>
-                </h2>
-                <p class="testimonials-subtitle">
-                    <?php echo get_theme_mod('testimonials_subtitle', 'Real results from real patients who trusted us with their aesthetic journey'); ?>
-                </p>
-            </header>
-
-            <div class="testimonials-grid">
-                <article class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">
-                            The HydraFacial completely transformed my skin! The results were immediate and my skin has never looked better. The team was professional and made me feel so comfortable throughout the entire process.
-                        </p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-author-info">
-                                <p class="testimonial-author-name">Sarah M.</p>
-                                <p class="testimonial-author-treatment">HydraFacial Patient</p>
-                            </div>
-                            <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                                ⭐⭐⭐⭐⭐
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">
-                            I was nervous about Botox, but Dr. Preeti made me feel at ease. The results are so natural - people keep asking if I've been on vacation! I couldn't be happier with my decision.
-                        </p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-author-info">
-                                <p class="testimonial-author-name">Jennifer L.</p>
-                                <p class="testimonial-author-treatment">Botox Patient</p>
-                            </div>
-                            <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                                ⭐⭐⭐⭐⭐
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="testimonial">
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">
-                            After years of shaving, laser hair removal has been life-changing! The process was comfortable and the results exceeded my expectations. I wish I had done this sooner.
-                        </p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-author-info">
-                                <p class="testimonial-author-name">Michael R.</p>
-                                <p class="testimonial-author-treatment">Laser Hair Removal Patient</p>
-                            </div>
-                            <div class="testimonial-rating" aria-label="5 out of 5 stars">
-                                ⭐⭐⭐⭐⭐
-                            </div>
-                        </div>
-                    </div>
-                </article>
             </div>
         </div>
     </section>
