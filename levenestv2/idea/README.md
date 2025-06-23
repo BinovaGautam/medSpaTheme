@@ -32,6 +32,23 @@ A platform where:
 - The process is always faster and more reliable than manual production
 - **Workflows can be created for any SDLC phase, not just codegen**
 
+## Chain of Actions (Workflow Transparency)
+A key feature is to make the sequence of workflow steps and agent actions visible to users—similar to "chain-of-thought" in LLMs or how CI/CD pipelines visualize each stage. This chain of actions provides:
+- **Transparency:** Users can see exactly what is happening at each step.
+- **Debuggability:** If something fails, it's clear where and why.
+- **Progress Tracking:** Users know what has been completed and what is pending.
+- **Educational Value:** Users can learn how workflows are structured and how agents interact.
+
+**Purpose:**
+- Improve user trust and understanding of the automation process.
+- Make troubleshooting and optimization easier.
+- Enable richer UI/UX for workflow visualization in IDEs or dashboards.
+
+**Implementation:**
+- Log or visualize each step/action as it happens.
+- Optionally, provide a graphical or textual pipeline view (like CI/CD dashboards).
+- Allow users to drill down into each action for details or logs.
+
 ## Context Map/Castle (Context Management Idea)
 A structured, queryable map of project context (like a mindmap or "brain castle") that allows agents and workflows to fetch only the relevant context needed for each step. This avoids bloating LLMs with unnecessary information, improves prompt relevance, and scales as projects grow.
 
